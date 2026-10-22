@@ -566,12 +566,15 @@ footer {
 .budget-settings label {
   margin-top: 14px;
 }
-.budget-settings .price-toggle {
+.settings-modal .budget-settings .price-toggle {
+  display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 8px;
 }
-.price-toggle input {
+.settings-modal .price-toggle input[type="checkbox"] {
   width: auto;
+  margin: 0;
 }
 .generation-estimate {
   color: var(--muted);
@@ -848,6 +851,79 @@ footer {
 .proposal-modal {
   width: min(900px, 90vw) !important;
   max-width: 900px !important;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.candidate-diff {
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.candidate-diff summary {
+  cursor: pointer;
+  color: var(--text);
+}
+.diff-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+.diff-block {
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+.diff-block .diff-choice {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+.diff-choice input[type="checkbox"] {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.diff-choice span {
+  font-size: 13px;
+}
+.diff-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+.diff-pair h4 {
+  margin: 12px 0 5px;
+  font-size: 13px;
+  color: var(--text);
+}
+.diff-pair pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 200px;
+  overflow: auto;
+  margin: 0;
+  padding: 10px;
+  border-left: 3px solid var(--border);
+  font: inherit;
+  background: var(--paper);
+}
+.diff-pair > div:last-child pre {
+  border-left-color: var(--accent);
+}
+@media (max-width: 900px) {
+  .diff-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .proposal-modal textarea {
   width: 100%;

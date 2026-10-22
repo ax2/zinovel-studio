@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
 import { TaskHistory, type StoredTask } from "./task-history";
+import { CandidateReview } from "./candidate-review";
 import {
   BudgetSettingsEditor,
   formatCost,
@@ -369,89 +370,34 @@ export function WritingAssistant({
       )}
       {proposal &&
         createPortal(
-          <div className="modal-backdrop">
-            <div
-              className="modal proposal-modal"
-              role="dialog"
-              aria-modal="true"
-              aria-label="审阅 AI 候选"
-            >
-              <div className="modal-heading">
-                <h2>审阅 AI 候选</h2>
-                <button
-                  aria-label="关闭候选"
-                  disabled={applying}
-                  onClick={() => setProposal(null)}
-                >
-                  <X />
-                </button>
-              </div>
-              <p className="muted">
-                接受后保存正文，并保留历史版本。正文如有变化，将拒绝替换。关闭窗口后可从写作任务记录找回候选。
-              </p>
-              <div className="conflict-columns">
-                <section>
-                  <h3>原文选区</h3>
-                  <pre>
-                    {proposal.base.body.slice(
-                      proposal.base.start,
-                      proposal.base.end,
-                    ) || "（插入新内容）"}
-                  </pre>
-                </section>
-                <section>
-                  <h3>候选文本</h3>
-                  <textarea
-                    aria-label="候选文本"
-                    value={proposal.text}
-                    readOnly={applying}
-                    onChange={(e) =>
-                      setProposal({ ...proposal, text: e.target.value })
-                    }
-                  />
-                </section>
-              </div>
-              {proposalError && (
-                <p role="alert" className="inline-error">
-                  {proposalError}
-                </p>
-              )}
-              <div className="modal-actions">
-                <button disabled={applying} onClick={() => setProposal(null)}>
-                  暂不采用
-                </button>
-                <button
-                  className="primary"
-                  disabled={applying || !proposal.text.trim()}
-                  onClick={async () => {
-                    setApplying(true);
-                    setProposalError("");
-                    try {
-                      if (
-                        !(await apply(
-                          proposal.base,
-                          proposal.text,
-                          proposal.id,
-                        ))
-                      ) {
-                        setProposalError(
-                          "当前正文或保存状态不允许接受，请保留候选并检查正文提示。",
-                        );
-                        return;
-                      }
-                      setProposal(null);
-                    } catch (e) {
-                      setProposalError(`接受未完成：${(e as Error).message}`);
-                    } finally {
-                      setApplying(false);
-                    }
-                  }}
-                >
-                  {applying ? "正在保存…" : "接受候选"}
-                </button>
-              </div>
-            </div>
-          </div>,
+          <CandidateReview
+            key={proposal.id}
+            original={proposal.base.body.slice(
+              proposal.base.start,
+              proposal.base.end,
+            )}
+            candidate={proposal.text}
+            applying={applying}
+            error={proposalError}
+            onClose={() => setProposal(null)}
+            onAccept={async (text) => {
+              setApplying(true);
+              setProposalError("");
+              try {
+                if (!(await apply(proposal.base, text, proposal.id))) {
+                  setProposalError(
+                    "当前正文或保存状态不允许接受，请保留候选并检查正文提示。",
+                  );
+                  return;
+                }
+                setProposal(null);
+              } catch (e) {
+                setProposalError(`接受未完成：${(e as Error).message}`);
+              } finally {
+                setApplying(false);
+              }
+            }}
+          />,
           document.body,
         )}
     </section>
