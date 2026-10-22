@@ -49,6 +49,7 @@ pnpm test:library
 pnpm test:editor-tools
 pnpm test:recovery
 pnpm test:merge
+pnpm test:tasks
 pnpm test:benchmark
 pnpm package:win
 pnpm test:installer
@@ -62,6 +63,8 @@ pnpm release:manifest
 开发切片定期提交到 GitHub，每次 push 触发检查。`v*` 版本标签触发 Windows 发行工作流：版本/来源检查、回归、打包、真实安装和运行通过后才创建预览 Release，附件为安装 EXE、SHA-256 和运行时清单。当前尚未代码签名；GitHub 自动发布与应用自动升级是不同能力，后者仍待实现。
 
 ## 时间线
+
+Stage-003 已增加按书任务记录及恢复审阅：新任务绑定准确书章与选区，实际桌面强杀后中断状态和已落盘提案可找回，不自动重发模型。正文保存与接受回执之间的崩溃对账仍待完善，详见任务恢复设计和阶段日志。
 
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。

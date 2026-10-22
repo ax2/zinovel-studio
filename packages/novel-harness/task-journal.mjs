@@ -31,9 +31,13 @@ export class TaskJournal {
   constructor(root) {
     this.root = root;
   }
+  /** @template T @param {() => Promise<T>} operation @returns {Promise<T>} */
   #exclusive(operation) {
     const next = this.#queue.then(operation);
-    this.#queue = next.catch(() => {});
+    this.#queue = next.then(
+      () => {},
+      () => {},
+    );
     return next;
   }
   async #directory(id) {
@@ -100,6 +104,7 @@ export class TaskJournal {
         "appliedHash",
         "reviewedAt",
         "sessionId",
+        "acceptedText",
       ];
       if (Object.keys(changes).some((key) => !allowed.includes(key)))
         throw new Error("不支持修改任务身份或范围");
@@ -129,7 +134,7 @@ export class TaskJournal {
         try {
           const record = await this.#record(entry.name);
           if (bookId && record.bookId !== bookId) continue;
-          const { candidate, ...metadata } = record;
+          const { candidate, acceptedText, ...metadata } = record;
           result.push({
             ...metadata,
             hasCandidate: typeof candidate === "string" && candidate.length > 0,
@@ -164,8 +169,24 @@ export class TaskJournal {
           continue;
         }
         if (["preparing", "running"].includes(record.status)) {
+          let partial = {};
+          try {
+            const proposal = await this.#json(record.id, "proposal.json");
+            if (
+              typeof proposal.replacement === "string" &&
+              proposal.replacement.trim() &&
+              proposal.replacement.length <= 120000
+            )
+              partial = {
+                candidate: proposal.replacement,
+                partialCandidate: true,
+              };
+          } catch {
+            /* Keep an incomplete or damaged proposal on disk for recovery. */
+          }
           await this.#write(record.id, "task.json", {
             ...record,
+            ...partial,
             schemaVersion: 1,
             status: "interrupted",
             errorCode: "application-restarted",

@@ -20,6 +20,7 @@
     "test:merge": "node scripts/smoke-merge.mjs",
     "test:shelf": "node scripts/smoke-shelf.mjs",
     "test:writing-views": "node scripts/smoke-writing-views.mjs",
+    "test:tasks": "node scripts/smoke-tasks.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",
     "package:dir": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs",
     "package:win": "pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never",

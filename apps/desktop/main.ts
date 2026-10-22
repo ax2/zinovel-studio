@@ -9,6 +9,10 @@ import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
 import { ModelSettings } from "./settings";
 import { previewImport } from "../../packages/novel-storage/importer.mjs";
 import { randomUUID } from "node:crypto";
+import {
+  bindWritingTarget,
+  validateAcceptance,
+} from "../../packages/novel-harness/target.mjs";
 
 app.setName("ZiNovel Studio");
 const dataRoot =
@@ -282,6 +286,16 @@ if (
                 );
                 break;
               case "ai.generate": {
+                const chapter = await store.readChapter(
+                  payload.target?.bookId,
+                  payload.target?.chapterId,
+                );
+                const target = bindWritingTarget(
+                  payload.target,
+                  payload.context,
+                  payload.selectedText,
+                  chapter,
+                );
                 const config = await settings.secret();
                 value = await harness.generate(
                   {
@@ -289,10 +303,39 @@ if (
                     instruction: payload.instruction,
                     context: payload.context,
                     selectedText: payload.selectedText,
+                    target,
                   },
                   config.settings,
                   config.apiKey,
                 );
+                break;
+              }
+              case "ai.tasks":
+                value = await harness.tasks(payload.bookId);
+                break;
+              case "ai.task":
+                value = await harness.task(payload.id);
+                break;
+              case "ai.discard":
+                await harness.review(payload.id, "discarded", {
+                  reviewedAt: new Date().toISOString(),
+                });
+                value = { discarded: true };
+                break;
+              case "ai.applied": {
+                const task = await harness.task(payload.id);
+                const target = task.snapshot.target;
+                if (!target) throw new Error("旧任务未绑定章节，不能记录接受");
+                const chapter = await store.readChapter(
+                  target.bookId,
+                  target.chapterId,
+                );
+                await harness.review(
+                  payload.id,
+                  "applied",
+                  validateAcceptance(task, payload.candidate, chapter),
+                );
+                value = { applied: true };
                 break;
               }
               case "ai.cancel":

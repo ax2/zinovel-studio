@@ -393,9 +393,11 @@ function App() {
       setError("保存期间正文发生改变，未替换正文。");
       return false;
     }
-    setBody(
-      base.body.slice(0, base.start) + candidate + base.body.slice(base.end),
-    );
+    const accepted =
+      base.body.slice(0, base.start) + candidate + base.body.slice(base.end);
+    latest.current = { ...latest.current, body: accepted };
+    setBody(accepted);
+    if (!(await save())) return false;
     setNotice("已接受候选，原稿保留在历史版本中");
     return true;
   }
@@ -697,18 +699,23 @@ function App() {
             <div hidden={referenceOpen}>
               <WritingAssistant
                 key={book.id}
+                bookId={book.id}
                 snapshot={
                   chapter
                     ? {
                         bookId: book.id,
                         chapterId: chapter.id,
                         body,
+                        baseHash: chapter.diskHash,
                         start: Math.min(selection.start, body.length),
                         end: Math.min(selection.end, body.length),
                       }
                     : null
                 }
                 apply={applyCandidate}
+                openChapter={async (id) => {
+                  await openChapter(book, id);
+                }}
                 openSettings={() => setSettingsOpen(true)}
               />
               <section>

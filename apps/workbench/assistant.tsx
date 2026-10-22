@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
+import { TaskHistory } from "./task-history";
 
 type Settings = {
   baseURL: string;
@@ -126,24 +127,34 @@ export type WritingSnapshot = {
   body: string;
   start: number;
   end: number;
+  baseHash?: string;
 };
 export function WritingAssistant({
   snapshot,
   apply,
   openSettings,
+  openChapter,
+  bookId,
 }: {
   snapshot: WritingSnapshot | null;
   apply: (base: WritingSnapshot, candidate: string) => Promise<boolean>;
   openSettings: () => void;
+  openChapter: (id: string) => Promise<void>;
+  bookId: string;
 }) {
   const [skills, setSkills] = useState<{ id: string; name: string }[]>([]),
     [skillId, setSkillId] = useState("novel-polish"),
     [instruction, setInstruction] = useState("保留情节和人物意图，改善表达。");
   const [running, setRunning] = useState(false),
     [error, setError] = useState(""),
+    [tasksOpen, setTasksOpen] = useState(false),
+    [applying, setApplying] = useState(false),
+    [proposalError, setProposalError] = useState(""),
     [proposal, setProposal] = useState<{
+      id: string;
       text: string;
       base: WritingSnapshot;
+      saved?: boolean;
     } | null>(null);
   useEffect(() => {
     api<typeof skills>("skills.list")
@@ -165,13 +176,15 @@ export function WritingAssistant({
     setError("");
     setRunning(true);
     try {
-      const result = await api<{ text: string }>("ai.generate", {
+      const result = await api<{ id: string; text: string }>("ai.generate", {
         skillId,
         instruction,
         context: base.body,
         selectedText: base.body.slice(base.start, base.end),
+        target: base,
       });
-      setProposal({ text: result.text, base });
+      setProposalError("");
+      setProposal({ id: result.id, text: result.text, base });
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -240,6 +253,28 @@ export function WritingAssistant({
           {error}
         </p>
       )}
+      <button
+        className="task-history-trigger"
+        onClick={() => setTasksOpen(true)}
+      >
+        写作任务记录
+      </button>
+      {tasksOpen && (
+        <TaskHistory
+          bookId={bookId}
+          onClose={() => setTasksOpen(false)}
+          openChapter={openChapter}
+          onReview={(task) => {
+            setTasksOpen(false);
+            setProposalError("");
+            setProposal({
+              id: task.record.id,
+              text: task.record.candidate!,
+              base: task.snapshot.target!,
+            });
+          }}
+        />
+      )}
       {proposal &&
         createPortal(
           <div className="modal-backdrop">
@@ -251,12 +286,16 @@ export function WritingAssistant({
             >
               <div className="modal-heading">
                 <h2>审阅 AI 候选</h2>
-                <button aria-label="关闭候选" onClick={() => setProposal(null)}>
+                <button
+                  aria-label="关闭候选"
+                  disabled={applying}
+                  onClick={() => setProposal(null)}
+                >
                   <X />
                 </button>
               </div>
               <p className="muted">
-                接受后成为编辑中的正文，并保留历史版本。生成期间正文如有变化，将拒绝替换。
+                接受后保存正文，并保留历史版本。正文如有变化，将拒绝替换。关闭窗口后可从写作任务记录找回候选。
               </p>
               <div className="conflict-columns">
                 <section>
@@ -273,22 +312,56 @@ export function WritingAssistant({
                   <textarea
                     aria-label="候选文本"
                     value={proposal.text}
+                    readOnly={proposal.saved || applying}
                     onChange={(e) =>
                       setProposal({ ...proposal, text: e.target.value })
                     }
                   />
                 </section>
               </div>
+              {proposalError && (
+                <p role="alert" className="inline-error">
+                  {proposalError}
+                </p>
+              )}
               <div className="modal-actions">
-                <button onClick={() => setProposal(null)}>暂不采用</button>
+                <button disabled={applying} onClick={() => setProposal(null)}>
+                  暂不采用
+                </button>
                 <button
                   className="primary"
+                  disabled={applying || !proposal.text.trim()}
                   onClick={async () => {
-                    if (await apply(proposal.base, proposal.text))
+                    setApplying(true);
+                    setProposalError("");
+                    try {
+                      if (
+                        !proposal.saved &&
+                        !(await apply(proposal.base, proposal.text))
+                      ) {
+                        setProposalError(
+                          "当前正文或保存状态不允许接受，请保留候选并检查正文提示。",
+                        );
+                        return;
+                      }
+                      setProposal({ ...proposal, saved: true });
+                      await api("ai.applied", {
+                        id: proposal.id,
+                        candidate: proposal.text,
+                      });
                       setProposal(null);
+                    } catch (e) {
+                      setProposalError(`接受未完成：${(e as Error).message}`);
+                    } finally {
+                      setApplying(false);
+                    }
                   }}
                 >
-                  接受候选
+                  {applying
+                    ? "正在保存…"
+                    : proposal.saved
+                      ? "更新接受记录"
+                      : "接受候选"}
                 </button>
               </div>
             </div>

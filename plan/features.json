@@ -489,9 +489,15 @@
       "name": "编辑中冲突检测",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "旧提案不得覆盖新正文",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "validation": "assessments/task-recovery-acceptance.md",
+      "evidence": [
+        "iterations/stage-003/WORKLOG.md",
+        "screenshots/stage-001/desktop-smoke.json",
+        "screenshots/stage-003/tasks/task-smoke.json",
+        "tests/task-target.test.mjs"
+      ]
     },
     {
       "id": "MEM-01",
@@ -891,6 +897,7 @@
       "evidence": [
         "packages/novel-harness/task-journal.mjs",
         "tests/task-journal.test.mjs",
+        "screenshots/stage-003/tasks/task-smoke.json",
         "iterations/stage-003/WORKLOG.md"
       ]
     },

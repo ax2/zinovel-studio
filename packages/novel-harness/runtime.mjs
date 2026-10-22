@@ -74,6 +74,12 @@ export class NovelHarness {
     await this.initialize();
     return this.#journal.read(id);
   }
+  async review(id, status, changes = {}) {
+    await this.initialize();
+    if (!["applied", "discarded"].includes(status))
+      throw new Error("审阅状态无效");
+    return this.#journal.transition(id, status, changes);
+  }
   async skills() {
     const catalog = JSON.parse(
       await readFile(join(this.resources, "skills/catalog.json"), "utf8"),
@@ -96,7 +102,7 @@ export class NovelHarness {
     }
   }
   async generate(
-    { skillId, instruction, context, selectedText },
+    { skillId, instruction, context, selectedText, target },
     settings,
     apiKey,
   ) {
@@ -112,11 +118,18 @@ export class NovelHarness {
       selectedText.length > 60000
     )
       throw new Error("写作输入超过当前上下文限制，请缩小选区");
+    const frozenTarget = target ? structuredClone(target) : undefined;
     // Claim the slot before the first await, including skill and disk reads.
     const task = { cancelled: false, harness: undefined, done: undefined };
     this.#active = task;
     const operation = this.#generate(
-      { skillId, instruction, context, selectedText },
+      {
+        skillId,
+        instruction,
+        context,
+        selectedText,
+        target: frozenTarget,
+      },
       settings,
       apiKey,
       task,
@@ -133,7 +146,7 @@ export class NovelHarness {
     }
   }
   async #generate(
-    { skillId, instruction, context, selectedText },
+    { skillId, instruction, context, selectedText, target },
     settings,
     apiKey,
     task,
@@ -162,10 +175,13 @@ export class NovelHarness {
         skillId,
         skillVersion: skill.version,
         model: config.model,
+        bookId: target?.bookId,
+        chapterId: target?.chapterId,
+        chapterTitle: target?.chapterTitle,
         status: "preparing",
         startedAt: new Date().toISOString(),
       },
-      { context, selectedText, instruction },
+      { context, selectedText, instruction, target },
     );
     let timeout;
     try {

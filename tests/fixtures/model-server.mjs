@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-export async function modelFixture({ delayMs = 0 } = {}) {
+export async function modelFixture({ delayMs = 0, beforeReply } = {}) {
   const requests = [];
   const replacement = "灯塔熄灭时，林舟终于拆开了旧信。";
   const server = createServer(async (request, response) => {
@@ -70,6 +70,7 @@ export async function modelFixture({ delayMs = 0 } = {}) {
         },
         { type: "message_stop" },
       ];
+      await beforeReply?.(requests.length);
       if (delayMs) await new Promise((resolve) => setTimeout(resolve, delayMs));
       if (response.destroyed) return;
       response.writeHead(200, { "content-type": "text/event-stream" });
