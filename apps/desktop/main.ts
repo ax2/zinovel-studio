@@ -334,6 +334,13 @@ if (
               case "ai.task":
                 value = await harness.task(payload.id);
                 break;
+              case "ai.saveReview":
+                value = await journal.saveReviewDraft(
+                  payload.id,
+                  payload.text,
+                  payload.expectedRevision,
+                );
+                break;
               case "ai.discard":
                 await harness.review(payload.id, "discarded", {
                   reviewedAt: new Date().toISOString(),

@@ -1,5 +1,6 @@
 import { mkdir, readdir, readFile, lstat } from "node:fs/promises";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { readStreamPartial } from "./stream-capture.mjs";
 import { budgetSummary } from "./budget.mjs";
@@ -162,10 +163,80 @@ export class TaskJournal {
         ["cancelled", "failed", "interrupted"].includes(record.status)
           ? await this.#partial(id)
           : {};
+      let reviewDraft = null,
+        reviewDraftError;
+      try {
+        reviewDraft = await this.#reviewDraft(id, record);
+      } catch {
+        reviewDraftError =
+          "审阅草稿无法读取，已保留原文件；原候选仍可核对，不能覆盖损坏草稿。";
+      }
       return {
         record: { ...record, ...partial, usage: await this.#usage(id) },
         snapshot: await this.#json(id, "snapshot.json"),
+        reviewDraft,
+        reviewDraftError,
       };
+    });
+  }
+  async #reviewDraft(id, record) {
+    let draft;
+    try {
+      draft = await this.#json(id, "review.json");
+    } catch (error) {
+      if (error.code === "ENOENT") return null;
+      throw error;
+    }
+    if (
+      draft.schemaVersion !== 1 ||
+      draft.taskId !== id ||
+      typeof record.candidate !== "string" ||
+      draft.sourceCandidateHash !==
+        createHash("sha256").update(record.candidate).digest("hex") ||
+      !Number.isSafeInteger(draft.revision) ||
+      draft.revision < 1 ||
+      typeof draft.text !== "string" ||
+      draft.text.length > 120000 ||
+      typeof draft.updatedAt !== "string" ||
+      !Number.isFinite(Date.parse(draft.updatedAt))
+    )
+      throw new Error("审阅草稿无效或来源不一致");
+    return draft;
+  }
+  saveReviewDraft(id, text, expectedRevision) {
+    return this.#exclusive(async () => {
+      if (
+        typeof text !== "string" ||
+        text.length > 120000 ||
+        !Number.isSafeInteger(expectedRevision) ||
+        expectedRevision < 0
+      )
+        throw new Error("审阅草稿文本或版本无效");
+      const record = await this.#record(id);
+      if (
+        record.status !== "awaiting-review" ||
+        !record.bookId ||
+        !record.chapterId ||
+        typeof record.candidate !== "string"
+      )
+        throw new Error("此任务当前不能保存审阅草稿");
+      const previous = await this.#reviewDraft(id, record);
+      if ((previous?.revision || 0) !== expectedRevision)
+        throw new Error("审阅草稿已改变，请关闭后重新审阅；本次内容尚未保存");
+      if (expectedRevision >= Number.MAX_SAFE_INTEGER)
+        throw new Error("审阅草稿版本超出范围");
+      const draft = {
+        schemaVersion: 1,
+        taskId: id,
+        sourceCandidateHash: createHash("sha256")
+          .update(record.candidate)
+          .digest("hex"),
+        revision: expectedRevision + 1,
+        text,
+        updatedAt: new Date().toISOString(),
+      };
+      await this.#write(id, "review.json", draft);
+      return draft;
     });
   }
   async #usage(id) {

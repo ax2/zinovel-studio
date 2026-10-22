@@ -839,6 +839,9 @@ footer {
   font-size: 13px;
   line-height: 1.6;
 }
+[data-theme="dark"] .inline-error {
+  color: #ff9b9b;
+}
 .settings-modal label {
   display: block;
   margin: 16px 0;

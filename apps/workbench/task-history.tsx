@@ -30,6 +30,8 @@ type TaskSummary = {
   hasCandidate: boolean;
 };
 export type StoredTask = {
+  reviewDraft?: { text: string; revision: number; updatedAt: string } | null;
+  reviewDraftError?: string;
   record: TaskSummary & {
     candidate?: string;
     acceptedText?: string;
@@ -271,6 +273,21 @@ export function TaskHistory({
             ) : (
               <p className="muted">
                 此任务没有完整候选，可保留记录，重新选择正文后另开任务。
+              </p>
+            )}
+            {selected.reviewDraft && (
+              <label>
+                已保存的审阅草稿（版本 {selected.reviewDraft.revision}）
+                <textarea
+                  readOnly
+                  aria-label="已保存的审阅草稿"
+                  value={selected.reviewDraft.text}
+                />
+              </label>
+            )}
+            {selected.reviewDraftError && (
+              <p className="inline-error" role="alert">
+                {selected.reviewDraftError}
               </p>
             )}
             {selected.record.acceptedText &&

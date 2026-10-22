@@ -8,19 +8,30 @@ import {
 export function CandidateReview({
   original,
   candidate,
+  initialText,
+  reviewRevision,
   applying,
   error,
   onClose,
   onAccept,
+  onSave,
 }: {
   original: string;
   candidate: string;
+  initialText?: string;
+  reviewRevision: number;
   applying: boolean;
   error: string;
   onClose: () => void;
   onAccept: (text: string) => Promise<void>;
+  onSave?: (text: string) => Promise<void>;
 }) {
-  const [comparison, setComparison] = useState(candidate);
+  const [comparison, setComparison] = useState(initialText ?? candidate);
+  const [savedText, setSavedText] = useState(initialText ?? candidate);
+  const [hasSaved, setHasSaved] = useState(reviewRevision > 0);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
+  const locked = applying || saving;
   const [rejected, setRejected] = useState<Set<number>>(new Set());
   const [page, setPage] = useState(0);
   const diff = useMemo(
@@ -44,12 +55,12 @@ export function CandidateReview({
       >
         <div className="modal-heading">
           <h2>审阅 AI 候选</h2>
-          <button aria-label="关闭候选" disabled={applying} onClick={onClose}>
+          <button aria-label="关闭候选" disabled={locked} onClick={onClose}>
             <X />
           </button>
         </div>
         <p className="muted">
-          接受后保存正文，并保留历史版本。正文如有变化，将拒绝替换。关闭窗口后可从写作任务记录找回原候选；尚未接受的逐块选择和手工调整不会保存。
+          接受后保存正文，并保留历史版本。正文如有变化，将拒绝替换。可先保存审阅草稿，关闭或重启后从任务记录继续；未保存的调整会丢失，草稿不会改动正文。
         </p>
         <div className="conflict-columns">
           <section>
@@ -61,7 +72,7 @@ export function CandidateReview({
             <textarea
               aria-label="候选文本"
               value={text}
-              readOnly={applying}
+              readOnly={locked}
               onChange={(event) => reset(event.target.value)}
             />
             <small className="muted">
@@ -82,20 +93,20 @@ export function CandidateReview({
           {!changes.length && <p className="muted">候选与原文一致。</p>}
           <div className="diff-actions">
             <button
-              disabled={applying || !changes.length}
+              disabled={locked || !changes.length}
               onClick={() => setRejected(new Set())}
             >
               全部采用修改
             </button>
             <button
-              disabled={applying || !changes.length}
+              disabled={locked || !changes.length}
               onClick={() =>
                 setRejected(new Set(changes.map((part) => part.id!)))
               }
             >
               全部保留原文
             </button>
-            <button disabled={applying} onClick={() => reset(candidate)}>
+            <button disabled={locked} onClick={() => reset(candidate)}>
               恢复本次候选
             </button>
           </div>
@@ -109,7 +120,7 @@ export function CandidateReview({
                 <input
                   type="checkbox"
                   checked={!rejected.has(part.id!)}
-                  disabled={applying}
+                  disabled={locked}
                   onChange={(event) =>
                     setRejected((previous) => {
                       const next = new Set(previous);
@@ -153,18 +164,45 @@ export function CandidateReview({
             </div>
           )}
         </details>
-        {error && (
+        <p className="muted" role="status" aria-label="审阅草稿状态">
+          {saving
+            ? "正在保存审阅草稿…"
+            : text !== savedText
+              ? "审阅调整尚未保存"
+              : hasSaved
+                ? "审阅草稿已保存"
+                : "原候选已保留"}
+        </p>
+        {(error || saveError) && (
           <p role="alert" className="inline-error">
-            {error}
+            {error || saveError}
           </p>
         )}
         <div className="modal-actions">
-          <button disabled={applying} onClick={onClose}>
+          <button disabled={locked} onClick={onClose}>
             暂不采用
           </button>
           <button
+            disabled={locked || !onSave || (hasSaved && text === savedText)}
+            onClick={async () => {
+              setSaving(true);
+              setSaveError("");
+              try {
+                await onSave!(text);
+                setSavedText(text);
+                setHasSaved(true);
+              } catch (failure) {
+                setSaveError(`草稿未保存：${(failure as Error).message}`);
+              } finally {
+                setSaving(false);
+              }
+            }}
+          >
+            保存审阅草稿
+          </button>
+          <button
             className="primary"
-            disabled={applying || !text.trim()}
+            disabled={locked || !text.trim()}
             onClick={() => void onAccept(text)}
           >
             {applying ? "正在保存…" : "接受候选"}

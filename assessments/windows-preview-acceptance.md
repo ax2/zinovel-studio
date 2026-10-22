@@ -46,3 +46,5 @@ alpha.2 已由 Windows release 39814293616 于 2026-10-22T16:33:28Z 公开发布
 真实安装/安装后完整套件/重装/卸载最终 passed。首次安装 15,383ms、重装 21,362ms、卸载 7,205ms；同版本重装后实际打开原稿，卸载后稿件字节保留。安装后增加流式取消/强杀恢复和完整预算/自定义价格 UI 验证。代表截图在 screenshots/release/installed/stream 与 budget，已查看费用明细和窄窗设置，文字可读，操作可达。安装用 Harness 的模型仍为本机 fixture，不是云端账单或文学质量证明。
 
 alpha.2 完整目录归档在 release/v0.1.0-alpha.2/win-unpacked，报告归档在 assessments/release/v0.1.0-alpha.2/local-installer-smoke.json。alpha.3 标签工作流和公开附件待单独核验，本机哈希不能代替 CI 产物哈希。
+
+alpha.3 公开补核：Windows release 39820858936 completed/success，四附件 uploaded，非草稿 prerelease，未登录 HTTP 200。公开 EXE 222,812,075 字节，SHA-256 e88243c6ed68ba4430bdcb100743db42ff808363abd5a6500ac5a6f21b83abd6，与公开 manifest/checksum、GitHub digest 和标签 edbd695 一致。完整回执在 assessments/release/v0.1.0-alpha.3/publication-verification.json。未本机重装公开 EXE；它的安装资格来自同一 CI 构建/安装/上传链路。

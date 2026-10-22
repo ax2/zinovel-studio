@@ -178,6 +178,9 @@ export function WritingAssistant({
       id: string;
       text: string;
       base: WritingSnapshot;
+      initialText?: string;
+      reviewRevision?: number;
+      reviewDraftError?: string;
     } | null>(null);
   useEffect(() => {
     api<typeof skills>("skills.list")
@@ -358,11 +361,14 @@ export function WritingAssistant({
             setProposalError("");
             setProposal({
               id: task.record.id,
-              text:
+              text: task.record.candidate!,
+              initialText:
                 task.record.acceptanceRecovery === "original-text-retained"
                   ? task.record.acceptance?.acceptedText ||
                     task.record.candidate!
-                  : task.record.candidate!,
+                  : (task.reviewDraft?.text ?? task.record.candidate!),
+              reviewRevision: task.reviewDraft?.revision || 0,
+              reviewDraftError: task.reviewDraftError,
               base: task.snapshot.target!,
             });
           }}
@@ -377,9 +383,30 @@ export function WritingAssistant({
               proposal.base.end,
             )}
             candidate={proposal.text}
+            initialText={proposal.initialText}
+            reviewRevision={proposal.reviewRevision || 0}
             applying={applying}
-            error={proposalError}
+            error={proposalError || proposal.reviewDraftError || ""}
             onClose={() => setProposal(null)}
+            onSave={
+              proposal.reviewDraftError
+                ? undefined
+                : async (text) => {
+                    const result = await api<{ revision: number }>(
+                      "ai.saveReview",
+                      {
+                        id: proposal.id,
+                        text,
+                        expectedRevision: proposal.reviewRevision || 0,
+                      },
+                    );
+                    setProposal((current) =>
+                      current?.id === proposal.id
+                        ? { ...current, reviewRevision: result.revision }
+                        : current,
+                    );
+                  }
+            }
             onAccept={async (text) => {
               setApplying(true);
               setProposalError("");

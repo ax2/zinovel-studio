@@ -93,7 +93,7 @@ async function saved(expected) {
   );
   assert.equal(await readFile(file, "utf8"), expected);
 }
-try {
+async function launch() {
   application = await electron.launch({
     executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
     args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
@@ -104,6 +104,9 @@ try {
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
+}
+try {
+  await launch();
   report.viewport = await page.evaluate(() => ({
     width: innerWidth,
     height: innerHeight,
@@ -159,7 +162,7 @@ try {
   assert.equal(
     await page.getByLabel("候选文本", { exact: true }).inputValue(),
     candidate,
-    "unaccepted drafts are explicitly not persisted",
+    "unsaved drafts are explicitly not persisted",
   );
   await page.locator(".candidate-diff summary").click();
   await page.getByRole("checkbox", { name: /采用修改 1/ }).uncheck();
@@ -181,6 +184,57 @@ try {
       .locator(".proposal-modal")
       .evaluate((element) => element.scrollWidth <= element.clientWidth + 1),
   );
+  await page.getByRole("button", { name: "保存审阅草稿", exact: true }).click();
+  await page
+    .getByLabel("审阅草稿状态")
+    .filter({ hasText: "审阅草稿已保存" })
+    .waitFor();
+  assert.equal((await journal.read(id)).reviewDraft.text, mixed);
+  assert.equal(await readFile(file, "utf8"), body);
+  await application.close();
+  await launch();
+  await review();
+  assert.equal(
+    await page.getByLabel("候选文本", { exact: true }).inputValue(),
+    mixed,
+  );
+  await page
+    .getByLabel("审阅草稿状态")
+    .filter({ hasText: "审阅草稿已保存" })
+    .waitFor();
+  await page.screenshot({
+    path: join(screenshots, "saved-draft-restarted.png"),
+  });
+  // Simulate a competing writer after this editor loaded revision 1.
+  await journal.saveReviewDraft(id, "外部审阅草稿", 1);
+  await page
+    .getByLabel("候选文本", { exact: true })
+    .fill(mixed + "本窗口调整。");
+  await page.getByRole("button", { name: "保存审阅草稿", exact: true }).click();
+  await page.getByRole("alert").filter({ hasText: "草稿已改变" }).waitFor();
+  assert.equal(
+    await page.getByLabel("候选文本", { exact: true }).inputValue(),
+    mixed + "本窗口调整。",
+  );
+  assert.equal((await journal.read(id)).reviewDraft.text, "外部审阅草稿");
+  await page.screenshot({
+    path: join(screenshots, "stale-draft-retained.png"),
+  });
+  await page.getByLabel("关闭候选").click();
+  await review();
+  assert.equal(
+    await page.getByLabel("候选文本", { exact: true }).inputValue(),
+    "外部审阅草稿",
+  );
+  await page.locator(".candidate-diff summary").click();
+  await page.getByRole("button", { name: "恢复本次候选", exact: true }).click();
+  await page.getByRole("checkbox", { name: /采用修改 1/ }).uncheck();
+  await page.getByRole("button", { name: "保存审阅草稿", exact: true }).click();
+  await page
+    .getByLabel("审阅草稿状态")
+    .filter({ hasText: "审阅草稿已保存" })
+    .waitFor();
+  assert.equal((await journal.read(id)).reviewDraft.revision, 3);
   await page.getByRole("button", { name: "接受候选", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
@@ -199,7 +253,8 @@ try {
   await saved(accepted);
   report.checks.push(
     "real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
-    "close preserves formal manuscript and original task candidate; reopen honestly resets unaccepted local choices",
+    "close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
+    "stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
     "partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
     "light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
   );

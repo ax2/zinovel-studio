@@ -20,6 +20,7 @@ const allowed = new Set([
   "ai.task",
   "ai.discard",
   "ai.accept",
+  "ai.saveReview",
   "ai.reconcile",
   "book.structure",
   "book.search",
