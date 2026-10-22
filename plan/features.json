@@ -383,9 +383,14 @@
       "name": "外部修改冲突",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "保留两版并提示三方合并",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "tests/merge.test.mjs",
+        "scripts/smoke-merge.mjs",
+        "screenshots/stage-002/merge/merge-smoke.json"
+      ],
+      "validation": "assessments/merge-recovery-acceptance.md"
     },
     {
       "id": "AI-01",

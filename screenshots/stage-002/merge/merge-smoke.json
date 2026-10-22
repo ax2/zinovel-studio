@@ -1,0 +1,10 @@
+{
+  "checks": [
+    "disjoint edits combine against common baseline; modal Ctrl+S cannot save background; explicit acceptance persists exact merge",
+    "overlap remains manual; second external edit blocks stale choice; refreshed disk acceptance preserves all discarded sides in history",
+    "a discarded unsaved local side can be restored through the real history UI",
+    "dialog Tab/Shift+Tab wrap inside, Escape closes and restores trigger focus"
+  ],
+  "errors": [],
+  "status": "passed"
+}

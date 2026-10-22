@@ -32,6 +32,7 @@ jobs:
       - run: node scripts/smoke-library.mjs
       - run: pnpm test:editor-tools
       - run: pnpm test:recovery
+      - run: pnpm test:merge
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

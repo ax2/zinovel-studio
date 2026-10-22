@@ -32,6 +32,8 @@ import "./style.css";
 import { ChapterTree } from "./chapter-tree";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
+import { ConflictDialog } from "./conflict-dialog";
+import { useModalAccessibility } from "./modal-accessibility";
 import { ManuscriptEditor, type ManuscriptHandle } from "./manuscript-editor";
 import {
   WritingAssistant,
@@ -40,6 +42,7 @@ import {
 } from "./assistant";
 
 function App() {
+  useModalAccessibility();
   const editorRef = useRef<ManuscriptHandle>(null);
   const [reveal, setReveal] = useState<{
     documentKey: string;
@@ -69,9 +72,10 @@ function App() {
   const [dialog, setDialog] = useState<"book" | "chapter" | null>(null),
     [name, setName] = useState("");
   const [history, setHistory] = useState<
-      { id: string; at: string; body: string }[] | null
+      { id: string; at: string; body: string; label?: string }[] | null
     >(null),
     [conflict, setConflict] = useState<Chapter | null>(null);
+  const [conflictBase, setConflictBase] = useState<string | null>(null);
   const [importOpen, setImportOpen] = useState(false),
     [structureOpen, setStructureOpen] = useState(false),
     [searchOpen, setSearchOpen] = useState(false);
@@ -124,6 +128,7 @@ function App() {
           expectedHash: current.chapter.diskHash,
         });
         if (result.status === "conflict") {
+          setConflictBase(current.chapter.body);
           setConflict(result.current);
           setStatus("存在冲突");
           return false;
@@ -187,7 +192,12 @@ function App() {
     try {
       localStorage.setItem(
         draftKey(book.id, chapter.id),
-        JSON.stringify({ body, title, baseHash: chapter.diskHash }),
+        JSON.stringify({
+          body,
+          title,
+          baseHash: chapter.diskHash,
+          baseBody: chapter.body,
+        }),
       );
     } catch {
       setError("本地恢复缓冲无法写入，请尽快保存正文。");
@@ -239,6 +249,9 @@ function App() {
           setBody(draft.body);
           setTitle(draft.title);
           setConflict(next);
+          setConflictBase(
+            typeof draft.baseBody === "string" ? draft.baseBody : null,
+          );
           setStatus("存在冲突");
         }
       }
@@ -849,6 +862,9 @@ function App() {
         <div className="modal-backdrop">
           <form
             className="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={dialog === "book" ? "新建作品" : "新建章节"}
             onSubmit={(e) => {
               e.preventDefault();
               create();
@@ -880,7 +896,12 @@ function App() {
       )}
       {history && (
         <div className="modal-backdrop">
-          <div className="modal history-modal">
+          <div
+            className="modal history-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="历史版本"
+          >
             <div className="modal-heading">
               <h2>历史版本</h2>
               <button title="关闭历史版本" onClick={() => setHistory(null)}>
@@ -893,6 +914,7 @@ function App() {
             {history.map((v) => (
               <div className="history-row" key={v.id}>
                 <time>{new Date(v.at).toLocaleString("zh-CN")}</time>
+                {v.label && <span className="muted"> · {v.label}</span>}
                 <p>{v.body.slice(0, 120) || "空白初稿"}</p>
                 <button
                   onClick={() => {
@@ -909,46 +931,47 @@ function App() {
         </div>
       )}
       {conflict && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <h2>正文已在其他地方修改</h2>
-            <p>你的编辑仍在恢复缓冲中。请比较磁盘稿与当前稿，选择如何继续。</p>
-            <div className="conflict-columns">
-              <section>
-                <h3>磁盘稿</h3>
-                <pre>{conflict.body}</pre>
-              </section>
-              <section>
-                <h3>当前编辑</h3>
-                <pre>{body}</pre>
-              </section>
-            </div>
-            <div className="modal-actions">
-              <button
-                onClick={() => {
-                  setChapter(conflict);
-                  setBody(conflict.body);
-                  setTitle(conflict.title);
-                  localStorage.removeItem(draftKey(book!.id, conflict.id));
-                  setConflict(null);
-                  setStatus("已保存");
-                }}
-              >
-                使用磁盘稿
-              </button>
-              <button
-                className="primary"
-                onClick={() => {
-                  setChapter(conflict);
-                  setConflict(null);
-                  setNotice("保留当前编辑，保存时将保留磁盘稿的历史副本");
-                }}
-              >
-                保留当前编辑
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConflictDialog
+          key={`${book!.id}.${conflict.id}.${conflict.diskHash}`}
+          base={conflictBase}
+          local={body}
+          remote={conflict.body}
+          localTitle={title}
+          remoteTitle={conflict.title}
+          onReload={async () => {
+            setConflict(
+              await api<Chapter>("chapter.read", {
+                bookId: book!.id,
+                chapterId: conflict.id,
+              }),
+            );
+          }}
+          onResolve={async (merged, mergedTitle) => {
+            if (new Blob([merged]).size > 8 * 1024 * 1024)
+              throw new Error("合并稿超过单章 8 MiB，请缩小内容后重试。");
+            const archived = await api("chapter.archive-conflict", {
+              bookId: book!.id,
+              chapterId: conflict.id,
+              expectedRemoteHash: conflict.diskHash,
+              expectedRemoteRevision: conflict.revision,
+              localBody: body,
+              localTitle: title,
+              baseBody: conflictBase,
+            });
+            setChapter(archived.current);
+            setBody(merged);
+            setTitle(mergedTitle);
+            setConflict(null);
+            if (
+              merged === archived.current.body &&
+              mergedTitle === archived.current.title
+            ) {
+              localStorage.removeItem(draftKey(book!.id, conflict.id));
+              setStatus("已保存");
+            }
+            setNotice("冲突两侧已保存在历史版本中；合并内容可继续编辑和撤销。");
+          }}
+        />
       )}
     </div>
   );

@@ -711,6 +711,52 @@ export class NovelStore {
       };
     });
   }
+  archiveConflict(input) {
+    return this.#exclusive(async () => {
+      for (const value of [input.localBody, input.baseBody ?? ""])
+        if (
+          typeof value !== "string" ||
+          Buffer.byteLength(value) > 8 * 1024 * 1024
+        )
+          throw new Error("冲突副本格式无效或过大");
+      const root = await this.#bookRoot(input.bookId),
+        book = await this.#manifest(root);
+      const chapter = book.chapters.find(
+        (item) => item.id === checkedId(input.chapterId) && !item.deletedAt,
+      );
+      if (!chapter) throw new Error("章节不存在或已回收");
+      const remoteBody = await readFile(
+        await this.#path(root, `manuscript/${chapter.id}.md`),
+        "utf8",
+      );
+      if (
+        digest(remoteBody) !== input.expectedRemoteHash ||
+        chapter.revision !== input.expectedRemoteRevision
+      )
+        throw new Error(
+          "磁盘稿再次改变，请重新打开章节核对；当前编辑仍在缓存中",
+        );
+      const record = {
+        schemaVersion: 1,
+        id: randomUUID(),
+        chapterId: chapter.id,
+        at: new Date().toISOString(),
+        baseBody: input.baseBody ?? null,
+        localBody: input.localBody,
+        localTitle: titleOf(input.localTitle),
+        remoteBody,
+        remoteTitle: chapter.title,
+        remoteHash: digest(remoteBody),
+      };
+      await this.#transaction(root, {
+        [`.zinovel/conflicts/${record.id}.json`]: json(record),
+      });
+      return {
+        archiveId: record.id,
+        current: { ...chapter, body: remoteBody, diskHash: record.remoteHash },
+      };
+    });
+  }
   history(bookId, chapterId) {
     return this.#exclusive(async () => {
       const root = await this.#bookRoot(bookId),
@@ -739,6 +785,24 @@ export class NovelStore {
               at: transaction.at,
               body: change.before,
             });
+        }
+        for (const entry of transaction.entries) {
+          if (!entry.path.startsWith(".zinovel/conflicts/") || !entry.after)
+            continue;
+          const record = JSON.parse(entry.after);
+          if (record.chapterId !== chapterId) continue;
+          for (const [key, label] of [
+            ["localBody", "冲突前当前稿"],
+            ["remoteBody", "冲突前磁盘稿"],
+            ["baseBody", "冲突共同基线"],
+          ])
+            if (typeof record[key] === "string")
+              versions.push({
+                id: `${record.id}-${key}`,
+                at: record.at,
+                body: record[key],
+                label,
+              });
         }
       }
       const seen = new Set();

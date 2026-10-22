@@ -144,6 +144,9 @@ if (
               case "chapter.history":
                 value = await store.history(payload.bookId, payload.chapterId);
                 break;
+              case "chapter.archive-conflict":
+                value = await store.archiveConflict(payload);
+                break;
               case "book.structure":
                 value = await store.updateStructure(
                   payload.bookId,

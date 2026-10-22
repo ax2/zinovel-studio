@@ -6,6 +6,7 @@ const allowed = new Set([
   "chapter.read",
   "chapter.save",
   "chapter.history",
+  "chapter.archive-conflict",
   "chapter.export",
   "app.close-ready",
   "app.close-cancelled",

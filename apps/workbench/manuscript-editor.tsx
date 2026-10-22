@@ -45,6 +45,7 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
   function ManuscriptEditor(props, ref) {
     const host = useRef<HTMLDivElement>(null),
       editor = useRef<EditorView | null>(null),
+      revealed = useRef<Props["reveal"]>(null),
       latest = useRef(props);
     latest.current = props;
     useImperativeHandle(
@@ -208,6 +209,8 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
       const view = editor.current,
         target = props.reveal;
       if (!view || !target || target.documentKey !== props.documentKey) return;
+      if (revealed.current === target) return;
+      revealed.current = target;
       view.dispatch({
         selection: {
           anchor: Math.max(0, Math.min(target.start, view.state.doc.length)),
@@ -215,7 +218,12 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
         },
         scrollIntoView: true,
       });
-      view.focus();
+      // The modal boundary removes background inertness in a MutationObserver.
+      // Focus on the frame after this already-committed document, not before that cleanup.
+      const frame = requestAnimationFrame(() => {
+        if (editor.current === view) view.focus();
+      });
+      return () => cancelAnimationFrame(frame);
     }, [props.reveal, props.documentKey]);
     return <div className="manuscript-editor" ref={host} />;
   },

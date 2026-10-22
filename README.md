@@ -29,7 +29,7 @@
 | [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
 | [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
 | [来源记录](design/sources.md) | 本地技能的方法提炼、官方源码链接 |
-| [内置技能源目录](skills/README.md) | 可阅读技能源；尚未接入运行时 |
+| [内置技能源目录](skills/README.md) | 21 项技能源可选，逐项文学质量尚未验收 |
 
 ## 本地开发与检查
 
@@ -42,11 +42,15 @@ node scripts/smoke-harness.mjs
 node scripts/smoke-novel-agent.mjs
 pnpm test:desktop
 pnpm test:library
+pnpm test:editor-tools
+pnpm test:recovery
+pnpm test:merge
+pnpm test:benchmark
 ```
 
 当前使用 Node 26、pnpm 10.3.0、Electron 44.7.0。前两个 Agent 探针运行官方 Harness 与本机模型 fixture，不消耗真实模型额度。桌面冒烟使用独立临时书库和合成小说，截图保存在 screenshots/stage-001。普通运行在用户应用数据目录保存作品。模型设置通过系统安全存储加密凭据；手工写作无需模型 Key。
 
-已实现的开发切片：书库/章节、Markdown 编辑与恢复日志、外部冲突、历史、阅读主题、官方 Harness 的技能候选与两个受约束工具。功能矩阵中的 `in-progress` 表示部分实现，仍有原验收条件待满足。尚无正式安装包，不是上架版本。
+已实现的开发切片：卷章/导入/检索、Markdown 编辑与恢复日志、备份恢复、三方冲突合并、历史、批注书签、逐项替换、阅读主题、官方 Harness 的技能候选与两个受约束工具。真实 Electron 验证涵盖渲染进程崩溃恢复和卡死关闭；1,000 章/约 305 万字符合成基准已运行。功能矩阵中的 `verified` 仅表示条目的验收范围通过，`in-progress` 仍有原验收条件待满足。尚无正式安装包，不是上架版本。
 
 ## 时间线
 
@@ -54,6 +58,7 @@ pnpm test:library
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。
 - 2026-10-22：完成 Stage-000 规划及首批技能源，应用开发尚未开始。
 - 2026-10-22：公开仓库 [ax2/zinovel-studio](https://github.com/ax2/zinovel-studio) 已创建并推送，首轮 GitHub Actions 规划检查通过。
+- 2026-10-22：官方 Harness 候选链路和小说桌面贯通；随后完成卷章、导入、备份、CodeMirror、长篇基准、锚点与故障恢复切片，工作日志持续记录实测和修正。安装、全部创作功能和文学质量验收仍在后续阶段。
 
 ## 开源边界
 

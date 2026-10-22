@@ -526,12 +526,43 @@ footer {
   grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
+.conflict-columns.three-way {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.merge-modal {
+  max-height: 90vh;
+  overflow: auto;
+}
+.merge-modal .conflict-columns pre {
+  height: 150px;
+  overflow-wrap: anywhere;
+}
+.merge-modal > label {
+  margin: 10px 0;
+}
+.merge-modal textarea {
+  padding: 12px;
+  color: var(--text);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  resize: vertical;
+}
+@media (max-width: 850px) {
+  .conflict-columns.three-way {
+    grid-template-columns: 1fr;
+  }
+  .merge-modal .conflict-columns pre {
+    height: 80px;
+  }
+}
 .conflict-columns h3 {
   font-size: 14px;
 }
 .conflict-columns pre {
   white-space: pre-wrap;
-  font: 14px/1.8 inherit;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.8;
   max-height: 260px;
   overflow: auto;
   border: 1px solid var(--border);
