@@ -71,9 +71,9 @@ export class NovelHarness {
     // Merely constructing a second launcher must not interrupt a running task.
     return (this.#ready ??= this.#journal.recoverInterrupted());
   }
-  async tasks(bookId) {
+  async tasks(bookId, options = {}) {
     await this.initialize();
-    return this.#journal.list(bookId);
+    return this.#journal.list(bookId, 100, options);
   }
   async task(id) {
     await this.initialize();
@@ -107,7 +107,7 @@ export class NovelHarness {
     }
   }
   async generate(
-    { skillId, instruction, context, selectedText, target },
+    { skillId, instruction, context, selectedText, target, retryOf },
     settings,
     apiKey,
   ) {
@@ -134,6 +134,7 @@ export class NovelHarness {
         context,
         selectedText,
         target: frozenTarget,
+        retryOf,
       },
       settings,
       apiKey,
@@ -151,7 +152,7 @@ export class NovelHarness {
     }
   }
   async #generate(
-    { skillId, instruction, context, selectedText, target },
+    { skillId, instruction, context, selectedText, target, retryOf },
     settings,
     apiKey,
     task,
@@ -163,6 +164,18 @@ export class NovelHarness {
     checkCancelled();
     const skill = (await this.skills()).find((item) => item.id === skillId);
     if (!skill) throw new Error("未找到内置小说技能");
+    if (retryOf) {
+      const previous = await this.#journal.read(retryOf);
+      if (
+        !["cancelled", "failed", "interrupted"].includes(
+          previous.record.status,
+        ) ||
+        !target ||
+        previous.record.bookId !== target.bookId ||
+        previous.record.chapterId !== target.chapterId
+      )
+        throw new Error("重试任务必须绑定同一章节，并使用当前重新选择的范围");
+    }
     const config = validateSettings(settings),
       id = randomUUID(),
       work = join(this.root, "tasks", id);
@@ -183,6 +196,7 @@ export class NovelHarness {
         bookId: target?.bookId,
         chapterId: target?.chapterId,
         chapterTitle: target?.chapterTitle,
+        retryOf,
         status: "preparing",
         startedAt: new Date().toISOString(),
       },

@@ -1,4 +1,4 @@
-# AI-08 与任务恢复切片验收
+# AI-08 / OPS-04 与任务恢复切片验收
 
 2026-10-22，Windows 本机 Electron 44.7.0，官方 DeepSeek Harness 0.2.1-rc.2。本机 SSE fixture 只提供确定响应，底层 SDK、Agent 循环、两个小说工具、桌面和文件存储均实际运行；不是云模型或文学质量验收。
 
@@ -31,4 +31,10 @@ AI-08 的 verified 仅指“旧提案不得覆盖新正文”，不意味着模�
 
 证据：[接受恢复实测](../screenshots/stage-003/acceptance/acceptance-smoke.json)、[待核对界面](../screenshots/stage-003/acceptance/uncertain-acceptance.png)、[后续改稿与历史回执](../screenshots/stage-003/acceptance/receipt-after-later-edit.png)。查看截图后修正通知层级，提示不再盖住模态框操作；长详情可滚动。官方 Harness 桌面回归再次通过，包括接受/撤销/重做与过期候选拒绝。
 
-OPS-04 仍进行中：旧版无书章绑定任务没有统一检索入口；正常取消后的部分结果展示、费用预算、真实云模型行为、多候选差异与持续恢复均继续按完整规划开发。当前代码尚未成为新安装版；已发布 v0.1.0-alpha.1 不包含本切片。
+2026-10-23 旧版/重试补充：`pnpm test:task-compatibility` 实际 UI 查看 101 条无 schema/无书章绑定的 alpha.1 形状记录，跨页读取最后一条，逐个验证源文件字节未变；无直接接受/猜测章节动作。全局列表可打开正确书章。已取消的部分提案只读，修改当前正文后点击重试，真实官方 Harness 生成新的 retryOf 任务，冻结输入为最新正文及选区，旧任务保留，正式稿不自动改变。[运行记录](../screenshots/stage-003/compatibility/compatibility-smoke.json)。
+
+`scripts/smoke-novel-agent.mjs` 还在真实提案工具写盘后取消，验证 partialCandidate 与取消状态保留；不同章节重试在供应商请求前被拒，正确重试创建新任务且不覆盖原任务。32 项单元测试通过，包括 201 条任务恢复不受分页影响、旧版字段兼容、路径和状态边界。已查看旧版详情和重试选区截图。
+
+OPS-04 当前验收范围为：schema 1 与 alpha.1 旧记录的范围/状态恢复、完整候选和提案部分结果保留、接受事务恢复及保守不确定状态。证据包括 `tests/task-journal.test.mjs`、`tests/acceptance.test.mjs`、真实桌面 tasks/acceptance/task-compatibility 三组测试。此条标 verified，不代表任意未来格式迁移、磁盘毁损或物理断电矩阵通过。
+
+OPS-03 仍在进行中：已保留落盘提案，但纯流式文本在提案写盘之前的片段保留尚未完成。费用预算、真实云模型行为、多候选差异等继续开发。当前代码尚未成为新安装版；已发布 v0.1.0-alpha.1 不包含本切片。

@@ -258,7 +258,7 @@ try {
     0,
   );
   await page
-    .getByText("这是中断前已保存的部分结果", { exact: false })
+    .getByText("这是任务停止前已保存的部分结果", { exact: false })
     .waitFor();
   await page.screenshot({
     path: join(screenshots, "interrupted-proposal.png"),

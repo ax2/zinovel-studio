@@ -8,7 +8,9 @@
     "simultaneous generation is rejected before asynchronous preparation",
     "completed candidate and frozen input survive runtime restart without provider replay",
     "cancelling during preparation starts no model request and releases the task slot",
-    "cancelling an in-flight real Harness task settles and closes the runtime"
+    "cancelling an in-flight real Harness task settles and closes the runtime",
+    "cancellation after proposal persistence retains a view-only partial result",
+    "retry uses a new task with the current frozen input, retains original task and refuses a different chapter before any provider request"
   ],
   "status": "passed"
 }

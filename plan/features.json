@@ -883,8 +883,13 @@
       "name": "取消与重试",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "保留部分结果，避免重复写章"
+      "status": "in-progress",
+      "acceptance": "保留部分结果，避免重复写章",
+      "evidence": [
+        "assessments/stage-001/novel-agent-smoke.json",
+        "screenshots/stage-003/compatibility/compatibility-smoke.json",
+        "iterations/stage-003/WORKLOG.md"
+      ]
     },
     {
       "id": "OPS-04",
@@ -892,12 +897,15 @@
       "name": "任务检查点",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "重启恢复范围与状态准确",
+      "validation": "assessments/task-recovery-acceptance.md",
       "evidence": [
         "packages/novel-harness/task-journal.mjs",
         "tests/task-journal.test.mjs",
         "screenshots/stage-003/tasks/task-smoke.json",
+        "screenshots/stage-003/acceptance/acceptance-smoke.json",
+        "screenshots/stage-003/compatibility/compatibility-smoke.json",
         "iterations/stage-003/WORKLOG.md"
       ]
     },

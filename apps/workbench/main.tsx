@@ -32,6 +32,7 @@ import "./style.css";
 import { ChapterTree } from "./chapter-tree";
 import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
+import { TaskHistory } from "./task-history";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
 import { ConflictDialog } from "./conflict-dialog";
@@ -84,6 +85,7 @@ function App() {
     [structureOpen, setStructureOpen] = useState(false),
     [searchOpen, setSearchOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false),
+    [tasksOpen, setTasksOpen] = useState(false),
     [panelOpen, setPanelOpen] = useState(false),
     [selection, setSelection] = useState({ start: 0, end: 0 });
   const latest = useRef({ book, chapter, body, title }),
@@ -269,6 +271,12 @@ function App() {
     } catch (e) {
       setError((e as Error).message);
     }
+  }
+  async function openTaskChapter(id: string, bookId?: string) {
+    const target = (await refresh()).find((item) => item.id === bookId);
+    if (!target) throw new Error("作品已移除或暂时不可读，任务原文仍可查看");
+    if (!(await openChapter(target, id)))
+      throw new Error("章节未能打开，请保留任务并检查正文提示");
   }
   async function openBook(selected: Book) {
     if (!(await save())) return;
@@ -479,6 +487,9 @@ function App() {
           <span>写作</span>
         </button>
         <div className="rail-bottom">
+          <button title="写作任务" onClick={() => setTasksOpen(true)}>
+            <History size={20} />
+          </button>
           <button title="模型设置" onClick={() => setSettingsOpen(true)}>
             <Sparkles size={20} />
           </button>
@@ -507,6 +518,12 @@ function App() {
           </div>
         )}
       </header>
+      {tasksOpen && (
+        <TaskHistory
+          onClose={() => setTasksOpen(false)}
+          openChapter={openTaskChapter}
+        />
+      )}
       {error && (
         <div className="alert error" role="alert">
           <AlertTriangle size={18} />
@@ -756,9 +773,7 @@ function App() {
                     : null
                 }
                 apply={applyCandidate}
-                openChapter={async (id) => {
-                  await openChapter(book, id);
-                }}
+                openChapter={openTaskChapter}
                 openSettings={() => setSettingsOpen(true)}
               />
               <section>

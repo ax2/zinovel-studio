@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
-import { TaskHistory } from "./task-history";
+import { TaskHistory, type StoredTask } from "./task-history";
 
 type Settings = {
   baseURL: string;
@@ -143,7 +143,7 @@ export function WritingAssistant({
     taskId?: string,
   ) => Promise<boolean>;
   openSettings: () => void;
-  openChapter: (id: string) => Promise<void>;
+  openChapter: (id: string, bookId?: string) => Promise<void>;
   bookId: string;
 }) {
   const [skills, setSkills] = useState<{ id: string; name: string }[]>([]),
@@ -173,15 +173,16 @@ export function WritingAssistant({
   const selected = snapshot
     ? snapshot.body.slice(snapshot.start, snapshot.end)
     : "";
-  async function generate() {
+  async function generate(retry?: StoredTask) {
     if (!snapshot) return;
     const base = { ...snapshot };
     setError("");
     setRunning(true);
     try {
       const result = await api<{ id: string; text: string }>("ai.generate", {
-        skillId,
-        instruction,
+        skillId: retry?.record.skillId || skillId,
+        instruction: retry?.snapshot.instruction || instruction,
+        retryOf: retry?.record.id,
         context: base.body,
         selectedText: base.body.slice(base.start, base.end),
         target: base,
@@ -245,7 +246,7 @@ export function WritingAssistant({
         <button
           className="primary"
           disabled={!snapshot || !instruction.trim()}
-          onClick={generate}
+          onClick={() => void generate()}
         >
           <Sparkles size={16} />
           生成候选
@@ -267,6 +268,17 @@ export function WritingAssistant({
           bookId={bookId}
           onClose={() => setTasksOpen(false)}
           openChapter={openChapter}
+          retryTarget={snapshot}
+          onRetry={
+            running
+              ? undefined
+              : (task) => {
+                  setTasksOpen(false);
+                  setSkillId(task.record.skillId);
+                  setInstruction(task.snapshot.instruction!);
+                  void generate(task);
+                }
+          }
           onReview={(task) => {
             setTasksOpen(false);
             setProposalError("");

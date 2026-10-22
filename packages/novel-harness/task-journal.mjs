@@ -83,6 +83,20 @@ export class TaskJournal {
       JSON.stringify(value, null, 2) + "\n",
     );
   }
+  async #partial(id) {
+    try {
+      const proposal = await this.#json(id, "proposal.json");
+      if (
+        typeof proposal.replacement === "string" &&
+        proposal.replacement.trim() &&
+        proposal.replacement.length <= 120000
+      )
+        return { candidate: proposal.replacement, partialCandidate: true };
+    } catch {
+      /* An incomplete or damaged proposal is preserved on disk. */
+    }
+    return {};
+  }
   create(record, snapshot) {
     return this.#exclusive(async () => {
       if (!identifier.test(record.id) || record.status !== "preparing")
@@ -119,19 +133,38 @@ export class TaskJournal {
       ];
       if (Object.keys(changes).some((key) => !allowed.includes(key)))
         throw new Error("不支持修改任务身份或范围");
-      const next = { ...record, ...changes, schemaVersion: 1, status };
+      const partial = ["cancelled", "failed"].includes(status)
+        ? await this.#partial(id)
+        : {};
+      const next = {
+        ...record,
+        ...partial,
+        ...changes,
+        schemaVersion: 1,
+        status,
+      };
       await this.#write(id, "task.json", next);
       return next;
     });
   }
   read(id) {
-    return this.#exclusive(async () => ({
-      record: await this.#record(id),
-      snapshot: await this.#json(id, "snapshot.json"),
-    }));
-  }
-  list(bookId, limit = 100) {
     return this.#exclusive(async () => {
+      const record = await this.#record(id);
+      const partial =
+        !record.candidate &&
+        ["cancelled", "failed", "interrupted"].includes(record.status)
+          ? await this.#partial(id)
+          : {};
+      return {
+        record: { ...record, ...partial },
+        snapshot: await this.#json(id, "snapshot.json"),
+      };
+    });
+  }
+  list(bookId, limit = 100, { unbound = false, offset = 0 } = {}) {
+    return this.#exclusive(async () => {
+      if (!Number.isInteger(offset) || offset < 0 || offset > 1000000)
+        throw new Error("任务分页无效");
       const result = [];
       let entries;
       try {
@@ -144,7 +177,12 @@ export class TaskJournal {
         if (!entry.isDirectory() || !identifier.test(entry.name)) continue;
         try {
           const record = await this.#record(entry.name);
-          if (bookId && record.bookId !== bookId) continue;
+          if (
+            unbound
+              ? record.bookId && record.chapterId
+              : bookId && record.bookId !== bookId
+          )
+            continue;
           const { candidate, acceptedText, acceptance, ...metadata } = record;
           result.push({
             ...metadata,
@@ -155,8 +193,12 @@ export class TaskJournal {
         }
       }
       return result
-        .sort((a, b) => String(b.startedAt).localeCompare(String(a.startedAt)))
-        .slice(0, Math.max(1, Math.min(200, limit)));
+        .sort(
+          (a, b) =>
+            String(b.startedAt).localeCompare(String(a.startedAt)) ||
+            a.id.localeCompare(b.id),
+        )
+        .slice(offset, offset + Math.max(1, Math.min(200, limit)));
     });
   }
   recoverInterrupted() {
@@ -180,21 +222,7 @@ export class TaskJournal {
           continue;
         }
         if (["preparing", "running"].includes(record.status)) {
-          let partial = {};
-          try {
-            const proposal = await this.#json(record.id, "proposal.json");
-            if (
-              typeof proposal.replacement === "string" &&
-              proposal.replacement.trim() &&
-              proposal.replacement.length <= 120000
-            )
-              partial = {
-                candidate: proposal.replacement,
-                partialCandidate: true,
-              };
-          } catch {
-            /* Keep an incomplete or damaged proposal on disk for recovery. */
-          }
+          const partial = await this.#partial(record.id);
           await this.#write(record.id, "task.json", {
             ...record,
             ...partial,

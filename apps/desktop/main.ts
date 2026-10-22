@@ -308,15 +308,26 @@ if (
                     context: payload.context,
                     selectedText: payload.selectedText,
                     target,
+                    retryOf: payload.retryOf,
                   },
                   config.settings,
                   config.apiKey,
                 );
                 break;
               }
-              case "ai.tasks":
-                value = await harness.tasks(payload.bookId);
+              case "ai.tasks": {
+                const tasks = await harness.tasks(payload.bookId, {
+                  unbound: payload.unbound === true,
+                  offset: payload.offset ?? 0,
+                });
+                const { books } = await store.listBooks();
+                value = tasks.map((task) => ({
+                  ...task,
+                  bookTitle: books.find((book) => book.id === task.bookId)
+                    ?.title,
+                }));
                 break;
+              }
               case "ai.task":
                 value = await harness.task(payload.id);
                 break;

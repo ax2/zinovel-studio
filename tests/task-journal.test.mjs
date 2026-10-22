@@ -41,8 +41,60 @@ test("startup recovery reaches tasks beyond the bounded UI list", async () => {
     );
   }
   assert.equal((await journal.list(undefined, 1000)).length, 200);
+  const pages = [];
+  for (const offset of [0, 100, 200])
+    pages.push(...(await journal.list(undefined, 100, { offset })));
+  assert.equal(new Set(pages.map((task) => task.id)).size, 201);
+  await assert.rejects(journal.list(undefined, 100, { offset: -1 }), /分页/);
   assert.equal(await journal.recoverInterrupted(), 201);
   assert.equal(await journal.recoverInterrupted(), 0);
+});
+
+test("legacy unbound records remain readable without guessing a target and cancelled proposals remain available", async () => {
+  const root = await mkdtemp(join(tmpdir(), "zinovel-legacy-task-"));
+  const journal = new TaskJournal(root),
+    legacy = randomUUID(),
+    bound = randomUUID();
+  await journal.create(
+    { id: legacy, status: "preparing" },
+    { context: "旧正文", selectedText: "旧" },
+  );
+  await journal.transition(legacy, "running");
+  await writeFile(
+    join(root, legacy, "proposal.json"),
+    JSON.stringify({ replacement: "留下的部分候选" }),
+  );
+  await journal.transition(legacy, "cancelled");
+  const oldRecord = (await journal.read(legacy)).record;
+  delete oldRecord.schemaVersion;
+  delete oldRecord.candidate;
+  delete oldRecord.partialCandidate;
+  await writeFile(join(root, legacy, "task.json"), JSON.stringify(oldRecord));
+  await journal.create(
+    {
+      id: bound,
+      status: "preparing",
+      bookId: randomUUID(),
+      chapterId: randomUUID(),
+    },
+    { context: "新正文" },
+  );
+  assert.deepEqual(
+    (await journal.list(undefined, 100, { unbound: true })).map(
+      (task) => task.id,
+    ),
+    [legacy],
+  );
+  const read = await journal.read(legacy);
+  assert.equal(read.snapshot.target, undefined);
+  assert.equal(read.record.status, "cancelled");
+  assert.equal(read.record.candidate, "留下的部分候选");
+  assert.equal(read.record.partialCandidate, true);
+  assert.equal(
+    JSON.parse(await readFile(join(root, legacy, "task.json"), "utf8"))
+      .schemaVersion,
+    undefined,
+  );
 });
 
 test("task journal preserves frozen Chinese input and candidate across restart without replaying interrupted work", async () => {

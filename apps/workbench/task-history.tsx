@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X, RefreshCw } from "lucide-react";
 import { api } from "./api";
@@ -18,6 +18,8 @@ const statusLabels: Record<string, string> = {
 };
 type TaskSummary = {
   id: string;
+  bookId?: string;
+  bookTitle?: string;
   chapterId?: string;
   chapterTitle?: string;
   skillId: string;
@@ -33,6 +35,7 @@ export type StoredTask = {
     partialCandidate?: boolean;
     acceptance?: { acceptedText: string };
     acceptanceRecovery?: string;
+    retryOf?: string;
   };
   snapshot: {
     context: string;
@@ -47,31 +50,44 @@ export function TaskHistory({
   onClose,
   onReview,
   openChapter,
+  onRetry,
+  retryTarget,
 }: {
-  bookId: string;
+  bookId?: string;
   onClose: () => void;
-  onReview: (task: StoredTask) => void;
-  openChapter: (id: string) => Promise<void>;
+  onReview?: (task: StoredTask) => void;
+  openChapter: (id: string, bookId?: string) => Promise<void>;
+  onRetry?: (task: StoredTask) => void;
+  retryTarget?: { bookId: string; chapterId: string } | null;
 }) {
   const [tasks, setTasks] = useState<TaskSummary[]>([]),
     [selected, setSelected] = useState<StoredTask | null>(null),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [scope, setScope] = useState(bookId ? "book" : "all"),
+    [offset, setOffset] = useState(0);
+  const requestSequence = useRef(0);
   async function refresh() {
+    const request = ++requestSequence.current;
     setLoading(true);
     setError("");
     try {
-      setTasks(await api("ai.tasks", { bookId }));
+      const result = await api<TaskSummary[]>("ai.tasks", {
+        bookId: scope === "book" ? bookId : undefined,
+        unbound: scope === "unbound",
+        offset,
+      });
+      if (request === requestSequence.current) setTasks(result);
     } catch (e) {
-      setError((e as Error).message);
+      if (request === requestSequence.current) setError((e as Error).message);
     } finally {
-      setLoading(false);
+      if (request === requestSequence.current) setLoading(false);
     }
   }
   useEffect(() => {
     void refresh();
-  }, [bookId]);
+  }, [bookId, scope, offset]);
   return createPortal(
     <div className="modal-backdrop">
       <div
@@ -104,6 +120,16 @@ export function TaskHistory({
               {selected.record.model} ·{" "}
               {new Date(selected.record.startedAt).toLocaleString("zh-CN")}
             </p>
+            {!selected.snapshot.target && (
+              <p className="inline-error">
+                这是没有章节绑定的旧版任务，仅供查看和复制。不会猜测原章节，也不能直接应用到当前作品。
+              </p>
+            )}
+            {selected.record.retryOf && (
+              <p className="muted">
+                本次为作者主动重试的新任务，使用重新选择的当前正文；原任务仍保留。
+              </p>
+            )}
             <label>
               当时的写作要求
               <textarea
@@ -122,7 +148,7 @@ export function TaskHistory({
             </label>
             {selected.record.partialCandidate && (
               <p className="inline-error">
-                这是中断前已保存的部分结果，仅供查看和复制；任务没有正常完成。
+                这是任务停止前已保存的部分结果，仅供查看和复制；任务没有正常完成。
               </p>
             )}
             {selected.record.candidate ? (
@@ -203,13 +229,16 @@ export function TaskHistory({
                 </button>
               )}
               <button onClick={() => setSelected(null)}>返回列表</button>
-              {selected.record.chapterId && (
+              {selected.record.chapterId && selected.record.bookId && (
                 <button
                   disabled={busy}
                   onClick={async () => {
                     setBusy(true);
                     try {
-                      await openChapter(selected.record.chapterId!);
+                      await openChapter(
+                        selected.record.chapterId!,
+                        selected.record.bookId,
+                      );
                       onClose();
                     } catch (e) {
                       setError((e as Error).message);
@@ -246,7 +275,9 @@ export function TaskHistory({
                   标记放弃
                 </button>
               )}
-              {selected.record.status === "awaiting-review" &&
+              {onReview &&
+                selected.record.bookId === bookId &&
+                selected.record.status === "awaiting-review" &&
                 selected.record.candidate &&
                 selected.snapshot.target && (
                   <button
@@ -256,12 +287,45 @@ export function TaskHistory({
                     继续审阅
                   </button>
                 )}
+              {onRetry &&
+                retryTarget?.bookId === selected.record.bookId &&
+                retryTarget?.chapterId === selected.record.chapterId &&
+                selected.snapshot.instruction &&
+                ["cancelled", "failed", "interrupted"].includes(
+                  selected.record.status,
+                ) && (
+                  <button className="primary" onClick={() => onRetry(selected)}>
+                    用当前选区重试
+                  </button>
+                )}
             </div>
+            {onRetry &&
+              ["cancelled", "failed", "interrupted"].includes(
+                selected.record.status,
+              ) && (
+                <p className="muted">
+                  重试会重新调用模型，使用当前章节和选区生成新候选；原任务与部分结果保留。请先打开对应章节。
+                </p>
+              )}
           </>
         ) : (
           <>
             <div className="task-list-heading">
-              <span className="muted">本书最近 100 个任务</span>
+              <label>
+                任务范围
+                <select
+                  aria-label="任务范围"
+                  value={scope}
+                  onChange={(event) => {
+                    setScope(event.target.value);
+                    setOffset(0);
+                  }}
+                >
+                  {bookId && <option value="book">当前作品</option>}
+                  <option value="all">全部作品</option>
+                  <option value="unbound">未绑定的旧版任务</option>
+                </select>
+              </label>
               <button
                 aria-label="刷新任务记录"
                 disabled={loading}
@@ -282,14 +346,28 @@ export function TaskHistory({
                       onClick={async () => {
                         setError("");
                         try {
-                          setSelected(await api("ai.task", { id: task.id }));
+                          const detail = await api<StoredTask>("ai.task", {
+                            id: task.id,
+                          });
+                          setSelected({
+                            ...detail,
+                            record: {
+                              ...detail.record,
+                              bookTitle: task.bookTitle,
+                            },
+                          });
                         } catch (e) {
                           setError((e as Error).message);
                         }
                       }}
                     >
                       <span>
-                        <strong>{task.chapterTitle || "未绑定章节"}</strong>
+                        <strong>
+                          {scope === "all" && task.bookTitle
+                            ? `${task.bookTitle} · `
+                            : ""}
+                          {task.chapterTitle || "未绑定章节"}
+                        </strong>
                         <small>
                           {new Date(task.startedAt).toLocaleString("zh-CN")} ·{" "}
                           {task.model}
@@ -305,8 +383,23 @@ export function TaskHistory({
                 ))}
               </ul>
             ) : (
-              <p className="empty-note">这部作品还没有写作任务。</p>
+              <p className="empty-note">当前范围没有更多写作任务。</p>
             )}
+            <div className="modal-actions">
+              <button
+                disabled={loading || offset === 0}
+                onClick={() => setOffset(Math.max(0, offset - 100))}
+              >
+                上一页任务
+              </button>
+              <span className="muted">第 {offset / 100 + 1} 页</span>
+              <button
+                disabled={loading || tasks.length < 100}
+                onClick={() => setOffset(offset + 100)}
+              >
+                下一页任务
+              </button>
+            </div>
           </>
         )}
       </div>

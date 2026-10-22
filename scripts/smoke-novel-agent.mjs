@@ -3,10 +3,18 @@ import { modelFixture } from "../tests/fixtures/model-server.mjs";
 import { mkdtemp, mkdir, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
 const home = await mkdtemp(join(root, ".cache", "novel-agent-qa-"));
-const model = await modelFixture({ delayMs: 250 });
+let releasePartial;
+const partialGate = new Promise((resolve) => {
+  releasePartial = resolve;
+});
+const model = await modelFixture({
+  delayMs: 250,
+  beforeReply: (index) => (index === 7 ? partialGate : undefined),
+});
 const runtime = new NovelHarness({
   root: home,
   resources: join(root, "dist/resources"),
@@ -106,12 +114,80 @@ try {
   report.checks.push(
     "cancelling an in-flight real Harness task settles and closes the runtime",
   );
+  const target = {
+    bookId: randomUUID(),
+    chapterId: randomUUID(),
+    body: input.context,
+    start: 6,
+    end: 8,
+  };
+  const partialTask = runtime.generate(
+    { ...input, selectedText: "旧信", target },
+    settings,
+    "fixture-local-only",
+  );
+  const partialRejected = assert.rejects(partialTask, /取消/);
+  const partialDeadline = Date.now() + 60000;
+  while (model.requests.length < 7) {
+    assert.ok(
+      Date.now() < partialDeadline,
+      "proposal tool did not complete before cancel checkpoint",
+    );
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  await runtime.cancel();
+  await partialRejected;
+  releasePartial();
+  const partialRecord = (await runtime.tasks(target.bookId))[0];
+  const partialSaved = await runtime.task(partialRecord.id);
+  assert.equal(partialSaved.record.status, "cancelled");
+  assert.equal(partialSaved.record.candidate, model.replacement);
+  assert.equal(partialSaved.record.partialCandidate, true);
+  await assert.rejects(
+    runtime.generate(
+      {
+        ...input,
+        target: { ...target, chapterId: randomUUID() },
+        retryOf: partialRecord.id,
+      },
+      settings,
+      "fixture-local-only",
+    ),
+    /同一章节/,
+  );
+  assert.equal(model.requests.length, 7);
+  const fresh = { ...target, body: target.body + "作者增加了新的背景。" };
+  const retry = await runtime.generate(
+    {
+      ...input,
+      context: fresh.body,
+      selectedText: "旧信",
+      target: fresh,
+      retryOf: partialRecord.id,
+    },
+    settings,
+    "fixture-local-only",
+  );
+  assert.notEqual(retry.id, partialRecord.id);
+  const retried = await runtime.task(retry.id);
+  assert.equal(retried.record.retryOf, partialRecord.id);
+  assert.equal(retried.snapshot.context, fresh.body);
+  assert.equal(
+    (await runtime.task(partialRecord.id)).record.status,
+    "cancelled",
+  );
+  assert.equal(model.requests.length, 10);
+  report.checks.push(
+    "cancellation after proposal persistence retains a view-only partial result",
+    "retry uses a new task with the current frozen input, retains original task and refuses a different chapter before any provider request",
+  );
   report.status = "passed";
 } catch (error) {
   report.status = "failed";
   report.error = String(error.cause || error);
   throw error;
 } finally {
+  releasePartial();
   await runtime.cancel();
   await model.close();
   await mkdir(join(root, "assessments/stage-001"), { recursive: true });
