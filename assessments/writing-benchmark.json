@@ -1,0 +1,24 @@
+{
+  "platform": "win32",
+  "osRelease": "10.0.26300",
+  "cpu": "Intel(R) Core(TM) i9-14900HX",
+  "memoryGiB": 64,
+  "chapters": 1000,
+  "totalCharacters": 3048004,
+  "longChapterCharacters": 50998,
+  "fixtureBuildMs": 2600,
+  "checks": [
+    "50k-character chapter receives 25 native text insertions and saves exact bytes",
+    "three-million-character book search finds exact final-chapter source",
+    "synthetic composition defers saving until compositionend; not a system IME certification"
+  ],
+  "errors": [],
+  "metrics": {
+    "launchToLibraryMs": 340,
+    "openLongChapterMs": 296,
+    "inputToTwoFramesP95Ms": 13,
+    "autosaveAfterLastInputMs": 709,
+    "search1000ChaptersMs": 325
+  },
+  "status": "passed"
+}

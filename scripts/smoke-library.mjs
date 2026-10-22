@@ -87,12 +87,13 @@ try {
   await page.getByLabel("全文检索词").fill("终于读懂");
   await page.getByRole("button", { name: "搜索", exact: true }).click();
   await page.locator(".search-results button").click();
+  await page.waitForFunction(
+    () => window.getSelection()?.toString() === "终于读懂",
+  );
   assert.equal(
     await page
       .getByLabel("正文编辑器")
-      .evaluate((element) =>
-        element.value.slice(element.selectionStart, element.selectionEnd),
-      ),
+      .evaluate((element) => window.getSelection().toString()),
     "终于读懂",
   );
   report.checks.push(

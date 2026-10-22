@@ -382,8 +382,12 @@
       "name": "查找替换预览",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "逐项接受，支持撤销"
+      "status": "in-progress",
+      "acceptance": "逐项接受，支持撤销",
+      "evidence": [
+        "design/editor-decision.md",
+        "scripts/smoke-desktop.mjs"
+      ]
     },
     {
       "id": "EDIT-08",

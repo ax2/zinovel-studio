@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createRoot } from "react-dom/client";
 import {
   BookOpen,
@@ -29,6 +29,9 @@ import {
   type SearchHit,
 } from "./library-tools";
 import "./style.css";
+import { ChapterTree } from "./chapter-tree";
+import { ReplaceDialog } from "./replace-dialog";
+import { ManuscriptEditor, type ManuscriptHandle } from "./manuscript-editor";
 import {
   WritingAssistant,
   ModelSettingsDialog,
@@ -36,6 +39,9 @@ import {
 } from "./assistant";
 
 function App() {
+  const editorRef = useRef<ManuscriptHandle>(null);
+  const [replaceSnapshot, setReplaceSnapshot] =
+    useState<WritingSnapshot | null>(null);
   const [books, setBooks] = useState<Book[]>([]),
     [book, setBook] = useState<Book | null>(null),
     [chapter, setChapter] = useState<Chapter | null>(null);
@@ -222,6 +228,7 @@ function App() {
       }
       if (next.externalChange)
         setNotice("已读取外部编辑后的正文，下一次保存将建立新版本。");
+      localStorage.setItem(`zinovel.lastChapter.${selectedBook.id}`, next.id);
       return next;
     } catch (e) {
       setError((e as Error).message);
@@ -232,7 +239,14 @@ function App() {
     setQuery("");
     setBook(selected);
     if (orderedChapters(selected).length)
-      await openChapter(selected, orderedChapters(selected)[0].id);
+      await openChapter(
+        selected,
+        orderedChapters(selected).find(
+          (ch) =>
+            ch.id ===
+            localStorage.getItem(`zinovel.lastChapter.${selected.id}`),
+        )?.id || orderedChapters(selected)[0].id,
+      );
     else {
       setChapter(null);
       setBody("");
@@ -268,6 +282,19 @@ function App() {
     );
     setDialog(type);
   };
+  const treeActions = useRef({ openChapter, begin, save });
+  treeActions.current = { openChapter, begin, save };
+  const openTreeChapter = useCallback((id: string) => {
+    const selected = latest.current.book;
+    if (selected) void treeActions.current.openChapter(selected, id);
+  }, []);
+  const createTreeChapter = useCallback(
+    () => treeActions.current.begin("chapter"),
+    [],
+  );
+  const manageTreeBook = useCallback(async () => {
+    if (await treeActions.current.save()) setStructureOpen(true);
+  }, []);
   const count = Array.from(body.replace(/\s/g, "")).length;
   const statusLabel =
     chapter?.status === "final"
@@ -304,9 +331,7 @@ function App() {
       return;
     }
     requestAnimationFrame(() => {
-      const editor = document.querySelector<HTMLTextAreaElement>(".manuscript");
-      editor?.focus();
-      editor?.setSelectionRange(hit.start, hit.end);
+      editorRef.current?.select(hit.start, hit.end);
     });
   }
 
@@ -362,7 +387,7 @@ function App() {
           title="写作"
           onClick={() => {
             setReading(false);
-            document.querySelector<HTMLTextAreaElement>(".manuscript")?.focus();
+            editorRef.current?.focus();
           }}
         >
           <PenLine />
@@ -477,59 +502,14 @@ function App() {
         </main>
       ) : (
         <>
-          <aside className="chapters">
-            <div className="chapter-heading">
-              <h2>{book.title}</h2>
-              <button title="新建章节" onClick={() => begin("chapter")}>
-                <Plus size={18} />
-              </button>
-            </div>
-            <div className="chapter-list">
-              {[{ id: null, title: "未分卷" }, ...(book.volumes || [])].map(
-                (volume) => (
-                  <div key={volume.id || "unassigned"}>
-                    {((book.volumes?.length || 0) > 0 || volume.id) && (
-                      <h3 className="volume-label">{volume.title}</h3>
-                    )}
-                    {book.chapters
-                      .filter(
-                        (c) =>
-                          !c.deletedAt &&
-                          (c.volumeId || null) === volume.id &&
-                          c.title.includes(query),
-                      )
-                      .map((c) => (
-                        <button
-                          key={c.id}
-                          className={c.id === chapter?.id ? "selected" : ""}
-                          onClick={() => openChapter(book, c.id)}
-                        >
-                          <FileText size={17} />
-                          <span>{c.title}</span>
-                          {c.status === "final" && <small>正式</small>}
-                        </button>
-                      ))}
-                  </div>
-                ),
-              )}
-              {query &&
-                !book.chapters.some(
-                  (c) => !c.deletedAt && c.title.includes(query),
-                ) && <p className="muted">没有匹配的章节</p>}
-            </div>
-            <button
-              className="book-manage"
-              onClick={async () => {
-                if (await save()) setStructureOpen(true);
-              }}
-            >
-              管理作品 / 回收站
-            </button>
-            <button className="add-chapter" onClick={() => begin("chapter")}>
-              <Plus size={18} />
-              新建章节
-            </button>
-          </aside>
+          <ChapterTree
+            book={book}
+            chapterId={chapter?.id}
+            query={query}
+            onOpen={openTreeChapter}
+            onCreate={createTreeChapter}
+            onManage={manageTreeBook}
+          />
           <main className="workspace">
             <div className="toolbar">
               <button
@@ -558,6 +538,36 @@ function App() {
                 }}
               >
                 <Search size={16} />
+              </button>
+              <button
+                title="撤销（Ctrl+Z）"
+                disabled={!chapter || reading}
+                onClick={() => editorRef.current?.undo()}
+              >
+                撤销
+              </button>
+              <button
+                title="重做（Ctrl+Y）"
+                disabled={!chapter || reading}
+                onClick={() => editorRef.current?.redo()}
+              >
+                重做
+              </button>
+              <button
+                title="查找替换预览"
+                disabled={!chapter || reading}
+                onClick={() => {
+                  if (book && chapter)
+                    setReplaceSnapshot({
+                      bookId: book.id,
+                      chapterId: chapter.id,
+                      body,
+                      start: 0,
+                      end: body.length,
+                    });
+                }}
+              >
+                替换
               </button>
               <span className="toolbar-label">
                 {reading ? "阅读模式" : "正文"}
@@ -599,35 +609,26 @@ function App() {
                   readOnly={reading}
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                {reading ? (
+                {reading && (
                   <article className="reading">
                     {body.split("\n").map((p, i) => (
                       <p key={i}>{p || "\u00a0"}</p>
                     ))}
                   </article>
-                ) : (
-                  <textarea
-                    aria-label="正文编辑器"
-                    className="manuscript"
+                )}
+                <div className="editor-slot" hidden={reading}>
+                  <ManuscriptEditor
+                    ref={editorRef}
+                    documentKey={`${book.id}.${chapter.id}`}
                     value={body}
-                    placeholder="在这里写下故事的第一句话……"
-                    onSelect={(e) =>
-                      setSelection({
-                        start: e.currentTarget.selectionStart,
-                        end: e.currentTarget.selectionEnd,
-                      })
-                    }
-                    onChange={(e) => setBody(e.target.value)}
-                    onCompositionStart={() => {
-                      composing.current = true;
-                      setComposition(true);
-                    }}
-                    onCompositionEnd={() => {
-                      composing.current = false;
-                      setComposition(false);
+                    onChange={setBody}
+                    onSelection={setSelection}
+                    onComposition={(active) => {
+                      composing.current = active;
+                      setComposition(active);
                     }}
                   />
-                )}
+                </div>
               </div>
             ) : (
               <div className="empty-chapter">
@@ -777,6 +778,13 @@ function App() {
           book={book}
           onClose={() => setSearchOpen(false)}
           onOpen={openHit}
+        />
+      )}
+      {replaceSnapshot && (
+        <ReplaceDialog
+          snapshot={replaceSnapshot}
+          onApply={applyCandidate}
+          onClose={() => setReplaceSnapshot(null)}
         />
       )}
       {settingsOpen && (

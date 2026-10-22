@@ -97,7 +97,9 @@ try {
   page = await launch();
   await page.getByRole("button", { name: /雾港来信/ }).click();
   assert.equal(
-    await page.getByLabel("正文编辑器").inputValue(),
+    (
+      await page.getByLabel("正文编辑器").locator(".cm-line").allTextContents()
+    ).join("\n"),
     manuscript + "\n新增段落。",
   );
   evidence.checks.push(
@@ -146,9 +148,9 @@ try {
   await editor.focus();
   await editor.press("Control+Home");
   await editor.press("Shift+End");
-  const range = await editor.evaluate((element) => ({
-    start: element.selectionStart,
-    end: element.selectionEnd,
+  const range = await editor.evaluate(() => ({
+    start: 0,
+    end: window.getSelection().toString().length,
   }));
   assert.ok(range.end > range.start);
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
@@ -178,6 +180,49 @@ try {
   evidence.checks.push(
     "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
   );
+  const generated = await readFile(file, "utf8");
+  await editor.press("Control+z");
+  await editor.press("Control+s");
+  await page.waitForFunction(
+    () => document.querySelector(".save-state")?.textContent === "已保存",
+  );
+  assert.equal(await readFile(file, "utf8"), external);
+  await editor.press("Control+y");
+  await editor.press("Control+s");
+  await page.waitForFunction(
+    () => document.querySelector(".save-state")?.textContent === "已保存",
+  );
+  assert.equal(await readFile(file, "utf8"), generated);
+  evidence.checks.push(
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+  );
+  await page.getByTitle("查找替换预览", { exact: true }).click();
+  await page.getByLabel("查找内容", { exact: true }).fill("林舟");
+  await page.getByLabel("替换为", { exact: true }).fill("林远");
+  await page.getByRole("button", { name: "预览替换位置", exact: true }).click();
+  assert.equal(await readFile(file, "utf8"), generated);
+  await page.getByRole("button", { name: "应用本章替换", exact: true }).click();
+  await page
+    .getByRole("dialog", { name: "查找替换预览", exact: true })
+    .waitFor({ state: "hidden" });
+  await editor.press("Control+s");
+  await page.waitForFunction(
+    () => document.querySelector(".save-state")?.textContent === "已保存",
+  );
+  assert.equal(
+    await readFile(file, "utf8"),
+    generated.replaceAll("林舟", "林远"),
+  );
+  await editor.press("Control+z");
+  await editor.press("Control+s");
+  await page.waitForFunction(
+    () => document.querySelector(".save-state")?.textContent === "已保存",
+  );
+  assert.equal(await readFile(file, "utf8"), generated);
+  evidence.checks.push(
+    "literal find/replace previews before mutation and undoes as one transaction",
+  );
+
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
   const changed = "作者在生成期间继续修改的正文。";
   await editor.fill(changed);
@@ -189,7 +234,10 @@ try {
     .getByRole("alert")
     .filter({ hasText: "生成期间正文已改变" })
     .waitFor();
-  assert.equal(await editor.inputValue(), changed);
+  assert.equal(
+    (await editor.locator(".cm-line").allTextContents()).join("\n"),
+    changed,
+  );
   await page.getByRole("button", { name: "关闭候选", exact: true }).click();
   await page.getByRole("button", { name: "关闭错误", exact: true }).click();
   evidence.checks.push(

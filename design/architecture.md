@@ -12,7 +12,7 @@
 
 实测官方 Agent 完成了选区读取→候选工具→最终响应三个模型请求；模型服务是本机 SSE fixture，不能代表真实供应商/文本质量验证。详细机器回执在 `assessments/stage-001/`。
 
-首轮编辑器实验使用原生 textarea，以最少依赖验证 IME/保存/选区基线。富文本、虚拟长文和结构化差异仍待 Stage-002 编辑器对比，不把 textarea 当作最终编辑器决定。存储 v1 暂在 book.json 中内嵌稳定 ID 章节目录；卷/场景与索引迁移将保持 Markdown 正文独立。
+首轮编辑器实验使用原生 textarea；Stage-002 已按 [编辑器决策](editor-decision.md) 改用 CodeMirror 纯文本视图与事务历史，实际验证 AI 一次撤销及长章输入。系统 IME/可访问性仍待验收。存储 v1 暂在 book.json 中内嵌稳定 ID 章节目录；卷/场景与索引迁移将保持 Markdown 正文独立。
 
 ```mermaid
 flowchart TD

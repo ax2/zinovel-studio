@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "test:desktop": "node scripts/smoke-desktop.mjs",
     "test:agent": "node scripts/smoke-harness.mjs && node scripts/smoke-novel-agent.mjs",
-    "test:library": "node scripts/smoke-library.mjs"
+    "test:library": "node scripts/smoke-library.mjs",
+    "test:benchmark": "node scripts/benchmark-writing.mjs"
   },
   "engines": {
     "node": ">=26"
@@ -26,6 +27,9 @@
   "main": "dist/desktop/main.cjs",
   "packageManager": "pnpm@10.3.0",
   "dependencies": {
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/view": "6.43.15",
     "@deepseek-ai/dsh": "0.2.1-rc.2",
     "@deepseek-ai/dsh-sdk-client": "0.2.1-rc.2",
     "lucide-react": "0.468.0",

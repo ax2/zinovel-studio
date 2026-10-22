@@ -1,0 +1,201 @@
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from "react";
+import { EditorState } from "@codemirror/state";
+import {
+  EditorView,
+  drawSelection,
+  keymap,
+  placeholder,
+} from "@codemirror/view";
+import {
+  defaultKeymap,
+  history,
+  historyKeymap,
+  isolateHistory,
+  redo,
+  undo,
+} from "@codemirror/commands";
+
+export type ManuscriptHandle = {
+  focus(): void;
+  select(start: number, end: number): void;
+  undo(): void;
+  redo(): void;
+};
+type Props = {
+  documentKey: string;
+  value: string;
+  onChange: (value: string) => void;
+  onSelection: (range: { start: number; end: number }) => void;
+  onComposition: (active: boolean) => void;
+};
+
+export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
+  function ManuscriptEditor(props, ref) {
+    const host = useRef<HTMLDivElement>(null),
+      editor = useRef<EditorView | null>(null),
+      latest = useRef(props);
+    latest.current = props;
+    useImperativeHandle(
+      ref,
+      () => ({
+        focus() {
+          editor.current?.focus();
+        },
+        select(start, end) {
+          const view = editor.current;
+          if (!view) return;
+          view.dispatch({
+            selection: {
+              anchor: Math.min(start, view.state.doc.length),
+              head: Math.min(end, view.state.doc.length),
+            },
+            scrollIntoView: true,
+          });
+          view.focus();
+        },
+        undo() {
+          if (editor.current) undo(editor.current);
+        },
+        redo() {
+          if (editor.current) redo(editor.current);
+        },
+      }),
+      [],
+    );
+    useLayoutEffect(() => {
+      if (!host.current) return;
+      const value = latest.current.value;
+      let saved = { anchor: 0, head: 0 };
+      try {
+        const cached = JSON.parse(
+          localStorage.getItem(`zinovel.cursor.${props.documentKey}`) || "null",
+        );
+        if (
+          cached &&
+          Number.isInteger(cached.anchor) &&
+          Number.isInteger(cached.head)
+        )
+          saved = {
+            anchor: Math.max(0, Math.min(cached.anchor, value.length)),
+            head: Math.max(0, Math.min(cached.head, value.length)),
+          };
+      } catch {}
+      const view = new EditorView({
+        parent: host.current,
+        state: EditorState.create({
+          doc: value,
+          selection: saved,
+          extensions: [
+            history(),
+            keymap.of([...historyKeymap, ...defaultKeymap]),
+            drawSelection(),
+            EditorView.lineWrapping,
+            EditorView.contentAttributes.of({
+              "aria-label": "正文编辑器",
+              "aria-multiline": "true",
+              spellcheck: "false",
+            }),
+            placeholder("在这里写下故事的第一句话……"),
+            EditorView.theme({
+              "&": {
+                height: "100%",
+                backgroundColor: "transparent",
+                color: "var(--text)",
+              },
+              ".cm-scroller": {
+                fontFamily: '"Noto Serif SC", "SimSun", serif',
+                fontSize: "20px",
+                lineHeight: "2.1",
+                overflow: "auto",
+              },
+              ".cm-content": {
+                padding: "0 8px 80px",
+                caretColor: "var(--text)",
+                minHeight: "240px",
+              },
+              ".cm-line": { padding: "0" },
+              "&.cm-focused": { outline: "none" },
+              ".cm-cursor": { borderLeftColor: "var(--text)" },
+              "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
+                backgroundColor: "var(--selected)",
+              },
+            }),
+            EditorView.domEventHandlers({
+              compositionstart() {
+                latest.current.onComposition(true);
+                return false;
+              },
+              compositionend() {
+                latest.current.onComposition(false);
+                return false;
+              },
+            }),
+            EditorView.updateListener.of((update) => {
+              if (update.docChanged)
+                latest.current.onChange(update.state.doc.toString());
+              if (update.selectionSet || update.docChanged) {
+                const range = update.state.selection.main;
+                latest.current.onSelection({
+                  start: range.from,
+                  end: range.to,
+                });
+                try {
+                  localStorage.setItem(
+                    `zinovel.cursor.${latest.current.documentKey}`,
+                    JSON.stringify({ anchor: range.anchor, head: range.head }),
+                  );
+                } catch {}
+              }
+            }),
+          ],
+        }),
+      });
+      editor.current = view;
+      latest.current.onSelection({
+        start: Math.min(saved.anchor, saved.head),
+        end: Math.max(saved.anchor, saved.head),
+      });
+      return () => {
+        view.destroy();
+        editor.current = null;
+      };
+    }, [props.documentKey]);
+    useEffect(() => {
+      const view = editor.current;
+      if (!view) return;
+      const before = view.state.doc.toString(),
+        after = props.value;
+      if (before === after) return;
+      // Preserve unaffected text and make each AI/history replacement one undo step.
+      let from = 0;
+      while (
+        from < before.length &&
+        from < after.length &&
+        before[from] === after[from]
+      )
+        from++;
+      let oldEnd = before.length,
+        newEnd = after.length;
+      while (
+        oldEnd > from &&
+        newEnd > from &&
+        before[oldEnd - 1] === after[newEnd - 1]
+      ) {
+        oldEnd--;
+        newEnd--;
+      }
+      view.dispatch({
+        changes: { from, to: oldEnd, insert: after.slice(from, newEnd) },
+        annotations: isolateHistory.of("full"),
+        userEvent: "input.replace",
+      });
+    }, [props.value]);
+    return <div className="manuscript-editor" ref={host} />;
+  },
+);
