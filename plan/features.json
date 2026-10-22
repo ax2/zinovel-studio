@@ -926,6 +926,29 @@
       "acceptance": "默认日志不带正文或凭据"
     },
     {
+      "id": "OPS-09",
+      "area": "任务与保障",
+      "name": "持续提交与自动 Release",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "in-progress",
+      "acceptance": "GitHub 提交可追踪，版本标签自动验证后发布安装 EXE 与校验清单",
+      "evidence": [
+        ".github/workflows/release.yml",
+        "design/release-engineering.md"
+      ]
+    },
+    {
+      "id": "OPS-10",
+      "area": "任务与保障",
+      "name": "独立 Windows 安装包",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "in-progress",
+      "acceptance": "无开发工具 PATH 可写作并运行 Agent，重装及卸载保留稿件",
+      "evidence": ["electron-builder.config.cjs", "scripts/smoke-installer.mjs"]
+    },
+    {
       "id": "EXT-01",
       "area": "后续小说专用能力",
       "name": "连载日历与排期",

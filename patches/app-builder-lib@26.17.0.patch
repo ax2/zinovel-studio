@@ -1,3 +1,25 @@
+diff --git a/out/node-module-collector/traversalNodeModulesCollector.js b/out/node-module-collector/traversalNodeModulesCollector.js
+index 851c5427b676c0c8e65b7b63bcf8eadef68904a3..add4631b64d5f0059bc6243fec9470ee95a00ae9 100644
+--- a/out/node-module-collector/traversalNodeModulesCollector.js
++++ b/out/node-module-collector/traversalNodeModulesCollector.js
+@@ -99,11 +99,15 @@ class TraversalNodeModulesCollector extends nodeModulesCollector_1.NodeModulesCo
+                 }
+                 return builtPackages;
+             };
+-            const prodDeps = await buildPackage(pkg.dependencies, (depName, version) => {
++            // ZiNovel: pnpm installs peers in each virtual-store package context.
++            // Required runtime peers must remain reachable after flattening.
++            const requiredPeers = Object.fromEntries(Object.entries(pkg.peerDependencies || {}).filter(([name]) => !pkg.peerDependenciesMeta?.[name]?.optional));
++            const optionalPeers = Object.fromEntries(Object.entries(pkg.peerDependencies || {}).filter(([name]) => pkg.peerDependenciesMeta?.[name]?.optional));
++            const prodDeps = await buildPackage({ ...requiredPeers, ...pkg.dependencies }, (depName, version) => {
+                 builder_util_1.log.error({ parent: moduleName, dependency: depName, version }, "production dependency not found");
+                 throw new Error(`Production dependency ${depName} not found for package ${moduleName}`);
+             });
+-            const optionalDeps = await buildPackage(pkg.optionalDependencies, (depName, version) => {
++            const optionalDeps = await buildPackage({ ...optionalPeers, ...pkg.optionalDependencies }, (depName, version) => {
+                 builder_util_1.log.debug({ parent: moduleName, dependency: depName }, "optional dependency not installed, skipping");
+                 this.cache.logSummary[moduleManager_1.LogMessageByKey.PKG_OPTIONAL_NOT_INSTALLED].push(`${depName}@${version}`);
+             });
 diff --git a/out/util/appFileCopier.js b/out/util/appFileCopier.js
 index aa2e321e45762850e83971e13c3865b90521a0dd..7ceb7587407024ab7f551bcf0951d4edeb8372da 100644
 --- a/out/util/appFileCopier.js

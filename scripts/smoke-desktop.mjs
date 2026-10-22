@@ -16,6 +16,13 @@ const screenshots = join(
 await mkdir(screenshots, { recursive: true });
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
+if (process.env.ZINOVEL_TEST_EXECUTABLE) {
+  // A packaged app must not accidentally discover Node/pnpm on the developer PATH.
+  for (const key of Object.keys(env)) {
+    if (key.toLowerCase() === "path") delete env[key];
+  }
+  env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
+}
 let application;
 const model = await modelFixture({ delayMs: 250 });
 const errors = [];
@@ -43,6 +50,20 @@ const evidence = {
 };
 try {
   let page = await launch();
+  if (process.env.ZINOVEL_TEST_EXECUTABLE) {
+    const runtime = await application.evaluate(({ app }) => ({
+      packaged: app.isPackaged,
+      executable: process.execPath,
+    }));
+    assert.equal(runtime.packaged, true);
+    assert.equal(
+      resolve(runtime.executable),
+      resolve(process.env.ZINOVEL_TEST_EXECUTABLE),
+    );
+    evidence.checks.push(
+      "installed executable is packaged; system-only PATH without development Node/pnpm",
+    );
+  }
   evidence.viewport = await page.evaluate(() => ({
     width: innerWidth,
     height: innerHeight,

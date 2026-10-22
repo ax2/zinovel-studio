@@ -77,9 +77,11 @@ async function exists(file) {
 }
 let application;
 try {
+  const startedAt = Date.now();
   // /D must be the last argument. Node supplies it as one native Windows argument.
   await execute(installer, ["/S", `/D=${install}`], childOptions);
   await eventually(() => exists(executable), "Installed executable missing");
+  evidence.installMs = Date.now() - startedAt;
   const manifest = JSON.parse(
     await readFile(join(install, "resources/app/package.json"), "utf8"),
   );

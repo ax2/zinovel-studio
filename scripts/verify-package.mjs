@@ -1,5 +1,5 @@
 import { readFile, readdir, lstat, writeFile } from "node:fs/promises";
-import { join, resolve, relative } from "node:path";
+import { join, resolve, relative, dirname } from "node:path";
 import assert from "node:assert/strict";
 
 const root = resolve(import.meta.dirname, "..");
@@ -40,6 +40,25 @@ assert.deepEqual((await readdir(join(app, "dist"))).sort(), [
 const packages = [];
 let fileCount = 0,
   totalBytes = 0;
+async function findDependency(packageDirectory, name) {
+  let directory = packageDirectory;
+  for (;;) {
+    try {
+      return JSON.parse(
+        await readFile(
+          join(directory, "node_modules", name, "package.json"),
+          "utf8",
+        ),
+      );
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    if (directory === app) return null;
+    const parent = dirname(directory);
+    if (parent === directory || !parent.startsWith(app)) return null;
+    directory = parent;
+  }
+}
 async function inspect(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name),
@@ -57,6 +76,25 @@ async function inspect(directory) {
         path.includes(`${join("node_modules", "")}`)
       ) {
         const pkg = JSON.parse(await readFile(path, "utf8"));
+        // Check actual package roots, not package.json fixtures within their tests.
+        if (
+          pkg.name &&
+          path.endsWith(join("node_modules", pkg.name, "package.json"))
+        ) {
+          const required = { ...pkg.peerDependencies, ...pkg.dependencies };
+          for (const name of Object.keys(required)) {
+            if (
+              pkg.optionalDependencies?.[name] ||
+              (!pkg.dependencies?.[name] &&
+                pkg.peerDependenciesMeta?.[name]?.optional)
+            )
+              continue;
+            assert.ok(
+              await findDependency(dirname(path), name),
+              `Missing runtime dependency ${name} required by ${pkg.name}; must resolve inside the shipped app`,
+            );
+          }
+        }
         if (pkg.name && pkg.version)
           packages.push({
             name: pkg.name,

@@ -12,7 +12,8 @@ module.exports = {
   allowMissingDependencies: false,
   electronDist: path.dirname(require("electron")),
   files: [
-    "dist/desktop/**/*",
+    "dist/desktop/main.cjs",
+    "dist/desktop/preload.cjs",
     "dist/workbench/**/*",
     "dist/resources/**/*",
     "package.json",
