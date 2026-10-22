@@ -214,7 +214,11 @@ export class NovelHarness {
                 id: "zinovel-task-tools",
                 name: pathToFileURL(join(this.resources, "tools-plugin.mjs"))
                   .href,
-                config: { snapshotPath, proposalPath },
+                config: {
+                  snapshotPath,
+                  proposalPath,
+                  streamPath: join(work, "stream.json"),
+                },
               },
             ],
           },
@@ -270,6 +274,9 @@ export class NovelHarness {
       });
       return { id, text: candidate, skillId, model: config.model };
     } catch (error) {
+      // The plugin disposer flushes the last coalesced text before we freeze
+      // the cancelled/failed recovery record. A second close is SDK-idempotent.
+      await task.harness?.close();
       await this.#journal.transition(
         id,
         task.cancelled ? "cancelled" : "failed",

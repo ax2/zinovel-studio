@@ -1,6 +1,7 @@
 import { mkdir, readdir, readFile, lstat } from "node:fs/promises";
 import { join } from "node:path";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
+import { readStreamPartial } from "./stream-capture.mjs";
 
 const identifier =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -94,6 +95,11 @@ export class TaskJournal {
         return { candidate: proposal.replacement, partialCandidate: true };
     } catch {
       /* An incomplete or damaged proposal is preserved on disk. */
+    }
+    try {
+      return readStreamPartial(await this.#json(id, "stream.json"));
+    } catch {
+      /* Captured text is optional and never grants permission to apply. */
     }
     return {};
   }

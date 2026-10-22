@@ -1,5 +1,10 @@
 import { createServer } from "node:http";
-export async function modelFixture({ delayMs = 0, beforeReply } = {}) {
+export async function modelFixture({
+  delayMs = 0,
+  beforeReply,
+  streamText,
+  afterText,
+} = {}) {
   const requests = [];
   const replacement = "灯塔熄灭时，林舟终于拆开了旧信。";
   const server = createServer(async (request, response) => {
@@ -14,7 +19,10 @@ export async function modelFixture({ delayMs = 0, beforeReply } = {}) {
         (block) => block.type === "tool_result",
       );
       let block, stop;
-      if (!previousTool) {
+      if (typeof streamText === "string") {
+        block = { type: "text", text: streamText };
+        stop = "end_turn";
+      } else if (!previousTool) {
         block = {
           type: "tool_use",
           id: "read-selection",
@@ -74,8 +82,11 @@ export async function modelFixture({ delayMs = 0, beforeReply } = {}) {
       if (delayMs) await new Promise((resolve) => setTimeout(resolve, delayMs));
       if (response.destroyed) return;
       response.writeHead(200, { "content-type": "text/event-stream" });
-      for (const event of events)
+      for (const event of events) {
         response.write(`data: ${JSON.stringify(event)}\n\n`);
+        if (event.type === "content_block_delta" && block.type === "text")
+          await afterText?.(requests.length);
+      }
       response.end();
     } catch {
       response.writeHead(500).end("fixture failure");

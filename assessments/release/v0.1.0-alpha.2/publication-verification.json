@@ -1,0 +1,222 @@
+{
+  "status": "published-assets-verified",
+  "workflow": 39814293616,
+  "workflowStatus": "in_progress",
+  "workflowConclusion": null,
+  "publicHttpStatus": 200,
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666429381",
+        "contentType": "application/json",
+        "createdAt": "2026-10-22T16:33:21Z",
+        "digest": "sha256:b17a59adcb38de6ce80ec1b7ed8cb557a3def439321e38044f0ad223ebc18eba",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84nuOfF",
+        "label": "",
+        "name": "release-manifest.json",
+        "size": 3251,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T16:33:21Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.2/release-manifest.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666429376",
+        "contentType": "application/json",
+        "createdAt": "2026-10-22T16:33:21Z",
+        "digest": "sha256:8c529fe37ceccd59b21ff86623d34d95672bfbc819b1aaaa09525f1c05962231",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84nuOfA",
+        "label": "",
+        "name": "runtime-inventory.json",
+        "size": 115148,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T16:33:21Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.2/runtime-inventory.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666429382",
+        "contentType": "text/plain; charset=utf-8",
+        "createdAt": "2026-10-22T16:33:21Z",
+        "digest": "sha256:2038ebec9228b42f6754294be9e60b3e14b512f793f0e15d1bbcb588472c790f",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84nuOfG",
+        "label": "",
+        "name": "SHA256SUMS.txt",
+        "size": 117,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T16:33:21Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.2/SHA256SUMS.txt"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666429377",
+        "contentType": "application/x-msdownload",
+        "createdAt": "2026-10-22T16:33:21Z",
+        "digest": "sha256:ded18a4f18768508c61e3bb73c7a59a7cf22ff15e5699d0e16249310b7a82dae",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84nuOfB",
+        "label": "",
+        "name": "ZiNovel-Studio-0.1.0-alpha.2-windows-x64-setup.exe",
+        "size": 222803309,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T16:33:27Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.2/ZiNovel-Studio-0.1.0-alpha.2-windows-x64-setup.exe"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-10-22T16:33:28Z",
+    "url": "https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.2"
+  },
+  "checks": [
+    "public non-draft prerelease",
+    "four uploaded assets",
+    "installer digest and size match downloaded CI manifest and checksum file",
+    "manifest commit matches version tag",
+    "packaging, installed suite, manifest and publish steps report success"
+  ],
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm/action-setup@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-node@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check version and release notes",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm install --frozen-lockfile",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm check",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run node scripts/check-upstream.mjs",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm build",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:agent",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:library",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:editor-tools",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:recovery",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:merge",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:shelf",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:writing-views",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:tasks",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:acceptance",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm test:task-compatibility",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm package:win",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Install, run packaged Harness, reinstall and uninstall",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run pnpm release:manifest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish verified preview assets",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/upload-artifact@v4",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Post Run actions/setup-node@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run pnpm/action-setup@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@v4",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "limitation": "Overall workflow status still reports in_progress despite all steps including Complete job reporting success; no local redownload or installation of the public EXE",
+  "verifiedAt": "2026-10-22T16:37:55.4481150Z"
+}

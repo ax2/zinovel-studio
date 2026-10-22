@@ -33,4 +33,6 @@
 
 alpha.2 安装包 222,803,223 字节，SHA-256 12fab47a225ed6612b4854e0f5258e25784b9508b84d6c0e112508cd06e54e20。实际安装 13,646ms、同版本重装 19,154ms、卸载 4,750ms；安装后的基础写作、官方 Harness、任务强杀/重启、接受回执恢复、101 条旧记录分页和当前选区重试全部通过。全部安装应用使用仅 System32 的 PATH。查看浅色旧记录详情和深色窄窗任务列表，关键控件可读且可操作。
 
-本地包通过不等于公开 CI 包已通过；alpha.2 远端结果待版本标签触发后另行记录。
+alpha.2 已由 Windows release 39814293616 于 2026-10-22T16:33:28Z 公开发布，非草稿 prerelease、未登录 HTTP 200、四个附件 uploaded。远端安装 EXE 为 222,803,309 字节，SHA-256 ded18a4f18768508c61e3bb73c7a59a7cf22ff15e5699d0e16249310b7a82dae；GitHub digest、下载的 manifest/checksum 及标签提交 93d4a66865e8cc0987303cda273602c4f78f54dc 一致。
+
+打包、安装套件、发布及 Complete job 步骤均报告 success，但核验时总任务状态仍显示 in_progress，暂不把总工作流状态写成成功；原始回执已保存至 assessments/release/v0.1.0-alpha.2/publication-verification.json，后续补核。没有本机重新下载/安装该公开 EXE；CI 安装验收及上传摘要是公开包证据，本地包哈希另列。

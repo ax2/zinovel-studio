@@ -4,7 +4,7 @@
 
 **当前状态：Stage-001/002 继续补全，Stage-003 任务恢复已开始。官方 Harness 与小说桌面已实际贯通，Windows 技术预览已发布。完整功能与上架资格尚未验证。**
 
-Windows 技术预览版：[v0.1.0-alpha.1 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.1)。提供 x64 安装 EXE，自动构建、实际安装/运行/重装/卸载验证通过后发布。当前未代码签名，仍有大量创作功能待完成。
+Windows 技术预览版：[v0.1.0-alpha.2 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.2)。提供 x64 安装 EXE，自动构建、实际安装/运行/重装/卸载验证通过后发布。当前未代码签名，仍有大量创作功能待完成。
 
 ## 产品方向
 
@@ -52,6 +52,7 @@ pnpm test:merge
 pnpm test:tasks
 pnpm test:acceptance
 pnpm test:task-compatibility
+pnpm test:stream
 pnpm test:benchmark
 pnpm package:win
 pnpm test:installer
@@ -66,7 +67,7 @@ pnpm release:manifest
 
 ## 时间线
 
-Stage-003 已增加跨书任务分页、旧版任务只读入口和恢复审阅：新任务绑定准确书章与选区，中断/取消后已落盘提案可找回，作者可用当前选区明确重试。接受意图与书内事务回执支持崩溃对账，并保留作者后续编辑；流式片段、用量预算和其他创作能力仍待补齐，详见任务恢复设计和阶段日志。
+Stage-003 已增加跨书任务分页、旧版任务只读入口和恢复审阅：新任务绑定准确书章与选区，中断/取消后已落盘提案或流式文字可找回，作者可用当前选区明确重试。接受意图与书内事务回执支持崩溃对账，并保留作者后续编辑；用量预算和其他创作能力仍待补齐，详见任务恢复设计和阶段日志。流式片段恢复为 alpha.2 标签之后的开发内容。
 
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。

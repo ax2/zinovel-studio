@@ -1,10 +1,18 @@
 import { readFile } from "node:fs/promises";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
+import { StreamCapture } from "./stream-capture.mjs";
 export const name = "zinovel-task-tools";
 export const inject = ["tools"];
 
 // Paths come only from the desktop-generated task profile, never model arguments.
 export function apply(ctx, config) {
+  const stream = config.streamPath
+    ? new StreamCapture(config.streamPath)
+    : undefined;
+  if (stream) {
+    ctx.on("agent/assistant-stream", (payload) => stream.accept(payload));
+    ctx.on("agent/turn-stopping", () => stream.flush());
+  }
   ctx.tools.register({
     name: "novel_selection_read",
     description:
@@ -75,4 +83,5 @@ export function apply(ctx, config) {
       ? undefined
       : "此写作任务只授权读取冻结选区和提交候选",
   );
+  return () => stream?.close();
 }

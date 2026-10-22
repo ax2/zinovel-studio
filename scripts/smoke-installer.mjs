@@ -119,6 +119,7 @@ try {
     ["smoke-tasks.mjs", "tasks/task-smoke.json"],
     ["smoke-acceptance.mjs", "acceptance/acceptance-smoke.json"],
     ["smoke-task-compatibility.mjs", "compatibility/compatibility-smoke.json"],
+    ["smoke-stream.mjs", "stream/stream-smoke.json"],
   ]) {
     const result = await execute(
       process.execPath,

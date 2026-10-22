@@ -33,6 +33,8 @@ export type StoredTask = {
     candidate?: string;
     acceptedText?: string;
     partialCandidate?: boolean;
+    partialSource?: "stream";
+    streamTruncated?: boolean;
     acceptance?: { acceptedText: string };
     acceptanceRecovery?: string;
     retryOf?: string;
@@ -149,6 +151,13 @@ export function TaskHistory({
             {selected.record.partialCandidate && (
               <p className="inline-error">
                 这是任务停止前已保存的部分结果，仅供查看和复制；任务没有正常完成。
+              </p>
+            )}
+            {selected.record.partialSource === "stream" && (
+              <p className="muted">
+                以下为已保存的模型文字片段，可能包含多次尝试或说明文字，并非完整提案。
+                {selected.record.streamTruncated &&
+                  "片段达到保留上限，后续文字未保留。"}
               </p>
             )}
             {selected.record.candidate ? (

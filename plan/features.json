@@ -883,13 +883,15 @@
       "name": "取消与重试",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "保留部分结果，避免重复写章",
       "evidence": [
         "assessments/stage-001/novel-agent-smoke.json",
         "screenshots/stage-003/compatibility/compatibility-smoke.json",
+        "screenshots/stage-003/stream/stream-smoke.json",
         "iterations/stage-003/WORKLOG.md"
-      ]
+      ],
+      "validation": "assessments/task-recovery-acceptance.md"
     },
     {
       "id": "OPS-04",
