@@ -1020,12 +1020,94 @@ footer {
   margin: 8px 0;
   font-size: 14px;
 }
-.replacement-choice {
+.modal .replacement-choice {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 .replacement-choice input {
   width: auto;
   margin: 0;
+}
+.annotation-layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 1.8fr);
+  gap: 24px;
+}
+.annotation-form {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.annotation-form label {
+  display: grid;
+  gap: 6px;
+}
+.annotation-form select,
+.annotation-form textarea {
+  width: 100%;
+  color: var(--text);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 8px;
+}
+.replace-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+.replace-modal > * {
+  flex-shrink: 0;
+}
+.replace-modal .replacement-matches {
+  flex: 1 1 auto;
+  min-height: 80px;
+  max-height: none;
+  overflow: auto;
+}
+.replace-modal .modal-actions {
+  flex-wrap: wrap;
+}
+.annotation-list {
+  max-height: 58vh;
+  overflow: auto;
+}
+.annotation-card {
+  padding: 14px;
+  margin: 0 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.annotation-card h4 {
+  margin: 0 0 8px;
+}
+.annotation-card blockquote {
+  margin: 10px 0;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+  white-space: pre-wrap;
+}
+.annotation-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.annotation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.annotation-actions button {
+  padding: 6px 8px;
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .annotation-layout {
+    grid-template-columns: 1fr;
+  }
+  .annotation-list {
+    max-height: 35vh;
+  }
 }

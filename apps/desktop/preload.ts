@@ -15,6 +15,8 @@ const allowed = new Set([
   "ai.cancel",
   "book.structure",
   "book.search",
+  "annotations.read",
+  "annotations.mutate",
   "book.backup",
   "library.restore",
   "import.choose",

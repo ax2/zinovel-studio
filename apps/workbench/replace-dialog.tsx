@@ -38,7 +38,7 @@ export function ReplaceDialog({
   return (
     <div className="modal-backdrop">
       <div
-        className="modal wide-modal"
+        className="modal wide-modal replace-modal"
         role="dialog"
         aria-modal="true"
         aria-label="查找替换预览"

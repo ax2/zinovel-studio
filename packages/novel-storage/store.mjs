@@ -10,6 +10,7 @@ import {
 import { join, resolve, dirname, relative, sep, isAbsolute } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
+import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
 
 export const digest = (text) =>
   createHash("sha256").update(text, "utf8").digest("hex");
@@ -402,6 +403,123 @@ export class NovelStore {
       }
       return { hits, truncated: false, offsetUnit: "utf16" };
     });
+  }
+  async #annotationContext(bookId, chapterId) {
+    const root = await this.#bookRoot(bookId),
+      book = await this.#manifest(root);
+    const chapter = book.chapters.find(
+      (item) => item.id === checkedId(chapterId) && !item.deletedAt,
+    );
+    if (!chapter) throw new Error("章节不存在或已移入回收站");
+    const body = await readFile(
+      await this.#path(root, `manuscript/${chapterId}.md`),
+      "utf8",
+    );
+    const path = `annotations/${chapterId}.json`,
+      raw = await readOptional(await this.#path(root, path));
+    const data = raw
+      ? JSON.parse(raw)
+      : { schemaVersion: 1, revision: 0, items: [] };
+    if (
+      data.schemaVersion !== 1 ||
+      !Number.isSafeInteger(data.revision) ||
+      !Array.isArray(data.items)
+    )
+      throw new Error("批注文件格式不支持，未修改原文件");
+    return {
+      root,
+      path,
+      data,
+      body,
+      hash: digest(body),
+      metadataHash: raw === null ? null : digest(raw),
+    };
+  }
+  readAnnotations(bookId, chapterId) {
+    return this.#exclusive(async () => {
+      const { data, body, hash, metadataHash } = await this.#annotationContext(
+        bookId,
+        chapterId,
+      );
+      return {
+        ...data,
+        bodyHash: hash,
+        metadataHash,
+        items: data.items.map((item) => ({
+          ...item,
+          location: resolveAnchor(body, item.anchor, hash),
+        })),
+      };
+    });
+  }
+  mutateAnnotations(
+    bookId,
+    chapterId,
+    expectedRevision,
+    expectedMetadataHash,
+    expectedBodyHash,
+    mutation,
+  ) {
+    return this.#exclusive(async () => {
+      const { root, path, data, body, hash, metadataHash } =
+        await this.#annotationContext(bookId, chapterId);
+      if (
+        data.revision !== expectedRevision ||
+        metadataHash !== expectedMetadataHash
+      )
+        throw new Error("批注已被修改，请重新打开后重试");
+      if (hash !== expectedBodyHash)
+        throw new Error("正文已改变，请重新打开批注以核对定位");
+      const now = new Date().toISOString();
+      if (mutation.type === "create") {
+        if (!["note", "bookmark", "scene"].includes(mutation.kind))
+          throw new Error("不支持的批注类型");
+        if (data.items.length >= 10000)
+          throw new Error("本章标记已达到 10000 个，请先整理");
+        const anchor = createAnchor(body, mutation.start, mutation.end, hash);
+        if (mutation.kind === "scene" && !anchor.quote)
+          throw new Error("请选中场景正文再创建场景");
+        data.items.push({
+          id: randomUUID(),
+          chapterId,
+          kind: mutation.kind,
+          title: titleOf(mutation.title),
+          text: this.#annotationText(mutation.text),
+          anchor,
+          resolved: false,
+          createdAt: now,
+          updatedAt: now,
+        });
+      } else {
+        const item = data.items.find(
+          (item) => item.id === checkedId(mutation.id),
+        );
+        if (!item) throw new Error("批注不存在");
+        if (mutation.type === "edit") {
+          item.title = titleOf(mutation.title);
+          item.text = this.#annotationText(mutation.text);
+        } else if (mutation.type === "resolved") {
+          if (typeof mutation.value !== "boolean")
+            throw new Error("无效的批注状态");
+          item.resolved = mutation.value;
+        } else if (mutation.type === "trash") item.deletedAt = now;
+        else if (mutation.type === "restore") delete item.deletedAt;
+        else if (mutation.type === "reanchor") {
+          item.anchor = createAnchor(body, mutation.start, mutation.end, hash);
+          if (item.kind === "scene" && !item.anchor.quote)
+            throw new Error("场景需要选中正文范围");
+        } else throw new Error("不支持的批注操作");
+        item.updatedAt = now;
+      }
+      data.revision++;
+      await this.#transaction(root, { [path]: json(data) });
+      return { revision: data.revision };
+    });
+  }
+  #annotationText(text) {
+    if (typeof text !== "string" || text.length > 20000)
+      throw new Error("批注内容应不超过 2 万字符");
+    return text;
   }
   exportSnapshot(bookId) {
     return this.#exclusive(async () => {

@@ -9,9 +9,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "按最近编辑/类型/系列筛选，重启后列表一致",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "LIB-02",
@@ -21,9 +19,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "创建、排序和移动保留稳定 ID",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "LIB-03",
@@ -33,9 +29,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "只读试扫，确认后新建书而不改源",
-      "evidence": [
-        "iterations/stage-002/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-002/WORKLOG.md"]
     },
     {
       "id": "LIB-04",
@@ -45,9 +39,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "乱码与章节拆分可修正后导入",
-      "evidence": [
-        "iterations/stage-002/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-002/WORKLOG.md"]
     },
     {
       "id": "LIB-05",
@@ -57,9 +49,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "未审草稿与正式章分开显示",
-      "evidence": [
-        "iterations/stage-002/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-002/WORKLOG.md"]
     },
     {
       "id": "LIB-06",
@@ -69,9 +59,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "删除可恢复，引用冲突可见",
-      "evidence": [
-        "iterations/stage-002/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-002/WORKLOG.md"]
     },
     {
       "id": "LIB-07",
@@ -81,9 +69,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "按正文/标题/设定过滤并跳到出处",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "LIB-08",
@@ -318,9 +304,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "输入法/emoji/长段落/粘贴不丢字",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "EDIT-02",
@@ -330,9 +314,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "崩溃后稿件与待保存内容可恢复",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "EDIT-03",
@@ -342,9 +324,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "手工及 AI 修改均可撤回",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "EDIT-04",
@@ -354,9 +334,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "可关闭侧栏，不丢焦点",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "EDIT-05",
@@ -373,8 +351,15 @@
       "name": "批注书签与定位",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "修改后锚点可追踪或明确失效"
+      "status": "verified",
+      "acceptance": "修改后锚点可追踪或明确失效",
+      "evidence": [
+        "tests/annotations.test.mjs",
+        "tests/replace.test.mjs",
+        "scripts/smoke-editor-tools.mjs",
+        "screenshots/stage-002/annotations/editor-tools-smoke.json"
+      ],
+      "validation": "assessments/editor-tools-acceptance.md"
     },
     {
       "id": "EDIT-07",
@@ -382,12 +367,15 @@
       "name": "查找替换预览",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "逐项接受，支持撤销",
       "evidence": [
-        "design/editor-decision.md",
-        "scripts/smoke-desktop.mjs"
-      ]
+        "tests/annotations.test.mjs",
+        "tests/replace.test.mjs",
+        "scripts/smoke-editor-tools.mjs",
+        "screenshots/stage-002/annotations/editor-tools-smoke.json"
+      ],
+      "validation": "assessments/editor-tools-acceptance.md"
     },
     {
       "id": "EDIT-08",
@@ -397,9 +385,7 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "保留两版并提示三方合并",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-01",
@@ -409,9 +395,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "事实与选区外文本不变",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-02",
@@ -421,9 +405,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "新增场面/信息可见，非简单注水",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-03",
@@ -433,9 +415,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留关键因果并列信息损失",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-04",
@@ -445,9 +425,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "承接实际末段与角色状态",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-05",
@@ -457,9 +435,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留不同人物声音和关系",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-06",
@@ -469,9 +445,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "锁定事件结果且显示影响",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-07",
@@ -481,9 +455,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "逐块接受/拒绝/另存版本",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "AI-08",
@@ -493,9 +465,7 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "旧提案不得覆盖新正文",
-      "evidence": [
-        "iterations/stage-001/WORKLOG.md"
-      ]
+      "evidence": ["iterations/stage-001/WORKLOG.md"]
     },
     {
       "id": "MEM-01",

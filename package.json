@@ -15,6 +15,7 @@
     "test:desktop": "node scripts/smoke-desktop.mjs",
     "test:agent": "node scripts/smoke-harness.mjs && node scripts/smoke-novel-agent.mjs",
     "test:library": "node scripts/smoke-library.mjs",
+    "test:editor-tools": "node scripts/smoke-editor-tools.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs"
   },
   "engines": {

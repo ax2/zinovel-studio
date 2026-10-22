@@ -31,6 +31,7 @@ import {
 import "./style.css";
 import { ChapterTree } from "./chapter-tree";
 import { ReplaceDialog } from "./replace-dialog";
+import { AnnotationsDialog } from "./annotations";
 import { ManuscriptEditor, type ManuscriptHandle } from "./manuscript-editor";
 import {
   WritingAssistant,
@@ -48,6 +49,9 @@ function App() {
   } | null>(null);
   const [replaceSnapshot, setReplaceSnapshot] =
     useState<WritingSnapshot | null>(null);
+  const [annotationSnapshot, setAnnotationSnapshot] = useState<
+    (WritingSnapshot & { hash: string }) | null
+  >(null);
   const [books, setBooks] = useState<Book[]>([]),
     [book, setBook] = useState<Book | null>(null),
     [chapter, setChapter] = useState<Chapter | null>(null);
@@ -681,6 +685,25 @@ function App() {
             />
             <section>
               <h3>当前章节</h3>
+              <button
+                disabled={!chapter}
+                onClick={async () => {
+                  if (await save()) {
+                    const current = latest.current;
+                    if (current.book && current.chapter)
+                      setAnnotationSnapshot({
+                        bookId: current.book.id,
+                        chapterId: current.chapter.id,
+                        body: current.body,
+                        hash: current.chapter.diskHash || current.chapter.hash,
+                        start: Math.min(selection.start, current.body.length),
+                        end: Math.min(selection.end, current.body.length),
+                      });
+                  }
+                }}
+              >
+                批注与书签
+              </button>
               <p className="muted">{chapter?.title || "尚未创建章节"}</p>
               <div className="metadata">
                 <span>正文</span>
@@ -775,6 +798,21 @@ function App() {
         <ImportDialog
           onClose={() => setImportOpen(false)}
           onImported={imported}
+        />
+      )}
+      {annotationSnapshot && (
+        <AnnotationsDialog
+          snapshot={annotationSnapshot}
+          onClose={() => setAnnotationSnapshot(null)}
+          onLocate={(range) => {
+            setReading(false);
+            setReveal({
+              documentKey: `${annotationSnapshot.bookId}.${annotationSnapshot.chapterId}`,
+              ...range,
+              request: Date.now(),
+            });
+            setAnnotationSnapshot(null);
+          }}
         />
       )}
       {structureOpen && book && (

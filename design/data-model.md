@@ -75,3 +75,7 @@ IME 组合输入期间不截断拼音候选；compositionend 后提交编辑事�
 本地版本快照不等于异盘备份。备份目录单独选择，默认完整目录增量复制并带清单；恢复到新目录验证后切换，不能覆盖唯一副本。可选私有 Git/云盘属于后续适配，公开仓库连接须明显提示稿件公开范围。
 
 数据库删除后可重建，schema 迁移先备份和 dry-run；新版本不能打开时提供只读/导出。冲突书库、网络盘、同步盘需要显式能力探测，不承诺远程文件系统具有本地锁与原子替换语义。
+
+## Stage-002 实际存储增量
+
+当前 v1 卷章目录仍保存在 book.json，而非上方规划中的独立 structure.json。章节正文在 manuscript/；标记在 annotations/<chapter-id>.json，含 schemaVersion/revision/items。标记有 stable ID、kind、title/text、resolved/deletedAt、anchor（UTF-16 范围、基线 hash、引文、前后文）。锚点解析结果派生，不覆盖旧引用证据；批注写入使用原有恢复事务。场景标记不是完整场景计划实体，结构化 POV/目标/因果字段将在规划阶段接入。

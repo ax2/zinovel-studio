@@ -108,6 +108,22 @@ if (
               case "book.search":
                 value = await store.search(payload.bookId, payload.query);
                 break;
+              case "annotations.read":
+                value = await store.readAnnotations(
+                  payload.bookId,
+                  payload.chapterId,
+                );
+                break;
+              case "annotations.mutate":
+                value = await store.mutateAnnotations(
+                  payload.bookId,
+                  payload.chapterId,
+                  payload.expectedRevision,
+                  payload.expectedMetadataHash,
+                  payload.expectedBodyHash,
+                  payload.mutation,
+                );
+                break;
               case "book.backup": {
                 const selected = await dialog.showOpenDialog(window, {
                   title: "选择独立备份目录",
