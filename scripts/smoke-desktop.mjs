@@ -68,6 +68,7 @@ try {
   await page.screenshot({ path: join(screenshots, 'conflict.png') });
   await page.getByRole('button', { name: '保留当前编辑', exact: true }).click();
   await page.waitForFunction(() => document.querySelector('.save-state')?.textContent === '已保存');
+  if (!await page.getByRole('button', { name:'查看历史版本' }).isVisible()) await page.getByTitle('打开创作参考').click();
   await page.getByRole('button', { name: '查看历史版本' }).click();
   await page.locator('.history-row').filter({ hasText: '外部编辑的独立段落。' }).getByRole('button', { name: '恢复此版本' }).click();
   await page.getByLabel('正文编辑器').press('Control+s');
@@ -114,7 +115,7 @@ try {
   await application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].setSize(850, 700));
   await page.screenshot({ path: join(screenshots, 'desktop-narrow.png') });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-  await page.getByTitle('打开创作参考').click();
+  if (!await page.getByRole('button',{name:'生成候选',exact:true}).isVisible()) await page.getByTitle('打开创作参考').click();
   await page.getByRole('button',{name:'生成候选',exact:true}).waitFor({state:'visible'});
   await page.getByRole('button',{name:'关闭创作参考',exact:true}).click();
   evidence.checks.push('narrow-window assistant remains reachable through reference drawer');
