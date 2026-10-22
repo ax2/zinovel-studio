@@ -1,0 +1,12 @@
+{
+  "runtime": "@deepseek-ai/dsh@0.2.1-rc.2",
+  "model": "local deterministic SSE fixture, not live DeepSeek",
+  "requests": [
+    {
+      "path": "/v1/messages",
+      "tools": []
+    }
+  ],
+  "status": "passed",
+  "events": 14
+}

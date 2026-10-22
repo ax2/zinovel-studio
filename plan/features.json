@@ -7,8 +7,11 @@
       "name": "多书书架",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "按最近编辑/类型/系列筛选，重启后列表一致"
+      "status": "in-progress",
+      "acceptance": "按最近编辑/类型/系列筛选，重启后列表一致",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-02",
@@ -16,8 +19,11 @@
       "name": "卷章场景树",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "创建、排序和移动保留稳定 ID"
+      "status": "in-progress",
+      "acceptance": "创建、排序和移动保留稳定 ID",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-03",
@@ -61,8 +67,11 @@
       "name": "书内搜索",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "按正文/标题/设定过滤并跳到出处"
+      "status": "in-progress",
+      "acceptance": "按正文/标题/设定过滤并跳到出处",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-08",
@@ -295,8 +304,11 @@
       "name": "中文友好编辑器",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "输入法/emoji/长段落/粘贴不丢字"
+      "status": "in-progress",
+      "acceptance": "输入法/emoji/长段落/粘贴不丢字",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-02",
@@ -304,8 +316,11 @@
       "name": "自动保存与恢复",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "崩溃后稿件与待保存内容可恢复"
+      "status": "in-progress",
+      "acceptance": "崩溃后稿件与待保存内容可恢复",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-03",
@@ -313,8 +328,11 @@
       "name": "撤销重做与快照",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "手工及 AI 修改均可撤回"
+      "status": "in-progress",
+      "acceptance": "手工及 AI 修改均可撤回",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-04",
@@ -322,8 +340,11 @@
       "name": "专注与打字机模式",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "可关闭侧栏，不丢焦点"
+      "status": "in-progress",
+      "acceptance": "可关闭侧栏，不丢焦点",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-05",
@@ -358,8 +379,11 @@
       "name": "外部修改冲突",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "保留两版并提示三方合并"
+      "status": "in-progress",
+      "acceptance": "保留两版并提示三方合并",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-01",
@@ -367,8 +391,11 @@
       "name": "选区润色",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "事实与选区外文本不变"
+      "status": "in-progress",
+      "acceptance": "事实与选区外文本不变",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-02",
@@ -376,8 +403,11 @@
       "name": "有效扩写",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "新增场面/信息可见，非简单注水"
+      "status": "in-progress",
+      "acceptance": "新增场面/信息可见，非简单注水",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-03",
@@ -385,8 +415,11 @@
       "name": "压缩与缩写",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "保留关键因果并列信息损失"
+      "status": "in-progress",
+      "acceptance": "保留关键因果并列信息损失",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-04",
@@ -394,8 +427,11 @@
       "name": "场景续写",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "承接实际末段与角色状态"
+      "status": "in-progress",
+      "acceptance": "承接实际末段与角色状态",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-05",
@@ -403,8 +439,11 @@
       "name": "对白与潜台词",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "保留不同人物声音和关系"
+      "status": "in-progress",
+      "acceptance": "保留不同人物声音和关系",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-06",
@@ -412,8 +451,11 @@
       "name": "视角与节奏重写",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "锁定事件结果且显示影响"
+      "status": "in-progress",
+      "acceptance": "锁定事件结果且显示影响",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-07",
@@ -421,8 +463,11 @@
       "name": "多候选与差异接受",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "逐块接受/拒绝/另存版本"
+      "status": "in-progress",
+      "acceptance": "逐块接受/拒绝/另存版本",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-08",
@@ -430,8 +475,11 @@
       "name": "编辑中冲突检测",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "旧提案不得覆盖新正文"
+      "status": "in-progress",
+      "acceptance": "旧提案不得覆盖新正文",
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "MEM-01",

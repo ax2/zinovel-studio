@@ -2,7 +2,17 @@
 
 ## 决策 ADR-001：官方桌面 + 官方 Agent + 小说领域插件
 
-状态：选定方向，集成待 Stage-001 验证。使用官方 Electron 桌面宿主模式；Agent 是 DeepSeek Harness，不接 Pi。Node/ Electron/ pnpm 版本在实际集成时跟随固定上游锁文件，不凭当前机器环境拼装。
+状态：Stage-001 集成中。Agent 使用官方 DeepSeek Harness 0.2.1-rc.2。Electron 44.7.0 跟随固定上游桌面版本；本项目消费已发布包，使用本地可用的 pnpm 10.3.0 和独立锁文件。上游源码构建要求 pnpm 11.28.5，不混用两份工作区。
+
+### 2026-10-22 集成评估与修正
+
+完整官方 desktop-host 会带入通用 Office 宿主、账户浏览器及其他产品耦合。为满足小说专用要求，派生官方 Electron 生命周期和 Node 子进程启动方法，保留原始文件与 MIT 来源；小说 UI/preload 自行实现，在桌面内启动官方公开 SDK 的 `sdk-minimal` profile。并非原封不动运行整个官方 desktop UI，也不另写 Agent loop。图中的 Host 具体实现为官方 DSH CLI + SDK JSON-RPC。
+
+官方 `sdk-minimal` 默认仍有终端和图片文件读取工具。`novel.patch.yml` 明确禁用这些生产者；每次任务创建独立 home/cwd 和冻结选区文件，只注册 `novel_selection_read`、`novel_change_propose`。工具只接触宿主给定的两个任务文件，无正式稿路径参数。全局 guard 拒绝其他工具。每个任务使用环境变量白名单，避免继承其他项目密钥或 NODE_OPTIONS。
+
+实测官方 Agent 完成了选区读取→候选工具→最终响应三个模型请求；模型服务是本机 SSE fixture，不能代表真实供应商/文本质量验证。详细机器回执在 `assessments/stage-001/`。
+
+首轮编辑器实验使用原生 textarea，以最少依赖验证 IME/保存/选区基线。富文本、虚拟长文和结构化差异仍待 Stage-002 编辑器对比，不把 textarea 当作最终编辑器决定。存储 v1 暂在 book.json 中内嵌稳定 ID 章节目录；卷/场景与索引迁移将保持 Markdown 正文独立。
 
 ```mermaid
 flowchart TD

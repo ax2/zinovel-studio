@@ -7,7 +7,7 @@
   "desktopPackage": "@deepseek-ai/dsh-desktop",
   "observedVersion": "0.2.1-rc.2",
   "license": "MIT",
-  "sourceImported": false,
+  "sourceImported": true,
   "runtimeQualified": false,
-  "notes": "Research baseline only; do not resolve floating master during release builds."
+  "notes": "Official desktop lifecycle source imported with provenance. Official SDK agent round trip and derived desktop verified using local fixture; production runtime qualification remains open."
 }

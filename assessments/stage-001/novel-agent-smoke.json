@@ -1,0 +1,11 @@
+{
+  "runtime": "official DSH SDK + agent-loop + custom Cordis tools",
+  "model": "local deterministic SSE fixture",
+  "checks": [
+    "official runtime performed selection read and proposal tool round trip",
+    "exactly two novel tools visible, no terminal or filesystem tools",
+    "candidate comes from proposal tool, never written to manuscript",
+    "cancelling an in-flight real Harness task settles and closes the runtime"
+  ],
+  "status": "passed"
+}

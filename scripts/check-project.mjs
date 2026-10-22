@@ -13,7 +13,9 @@ for (const [kind, items, key] of [['feature',features,'id'],['skill',skills,'id'
   assert(new Set(items.map(x => x[key])).size === items.length, `Duplicate ${kind} IDs`);
 }
 for (const f of features) {
-  assert(f.status === 'planned', `${f.id}: implementation evidence required before changing status`);
+  assert(['planned','in-progress','verified'].includes(f.status), `${f.id}: invalid implementation status`);
+  if(f.status!=='planned')assert(Array.isArray(f.evidence)&&f.evidence.length>0&&f.evidence.every(p=>existsSync(resolve(root,p))),`${f.id}: implementation evidence missing`);
+  if(f.status==='verified')assert(typeof f.validation==='string'&&existsSync(resolve(root,f.validation)),`${f.id}: acceptance report required`);
   assert(/^Stage-00[1-8]$/.test(f.stage), `${f.id}: invalid stage`);
   assert(['P0','P1','P2'].includes(f.priority) && f.acceptance.length > 0, `${f.id}: missing acceptance`);
 }
@@ -31,7 +33,7 @@ assert(/^[0-9a-f]{40}$/.test(lock.commit) && lock.desktopPath === 'apps/desktop'
 let markdown = 0;
 function walk(dir) {
   for (const e of readdirSync(dir, {withFileTypes:true})) {
-    if (['.git','node_modules','vendor','work','.cache'].includes(e.name)) continue;
+    if (['.git','node_modules','vendor','work','.cache','dist','release'].includes(e.name)) continue;
     const p = resolve(dir,e.name);
     if (e.isDirectory()) { walk(p); continue; }
     if (e.name.endsWith('.json')) { try { JSON.parse(readFileSync(p,'utf8')); } catch { errors.push(`Invalid JSON: ${p}`); } }

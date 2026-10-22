@@ -1,0 +1,20 @@
+{
+  "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
+  "files": [
+    {
+      "name": "single-instance.ts",
+      "source": "apps/desktop/src/single-instance.ts",
+      "sha256": "dc6a6e263a6fdedc3f1cfacb97eb6f60dd5b04ad5d3b02daae4640f2e30a5150"
+    },
+    {
+      "name": "node-environment.ts",
+      "source": "apps/desktop/src/node-environment.ts",
+      "sha256": "cd760fede0ea4838269b09f9d68fd95dde2956d3542f16ed2a6b9629b02339bf"
+    },
+    {
+      "name": "LICENSE",
+      "source": "LICENSE",
+      "sha256": "ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be"
+    }
+  ]
+}

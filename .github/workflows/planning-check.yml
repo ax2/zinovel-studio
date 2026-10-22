@@ -1,4 +1,4 @@
-name: Planning checks
+name: Development checks
 on: [push, pull_request]
 permissions:
   contents: read
@@ -11,3 +11,21 @@ jobs:
         with:
           node-version: '22'
       - run: node scripts/check-project.mjs
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.3.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: node scripts/check-upstream.mjs
+      - run: pnpm build
+      - run: node scripts/smoke-harness.mjs
+      - run: node scripts/smoke-novel-agent.mjs
+      - run: pnpm test:desktop

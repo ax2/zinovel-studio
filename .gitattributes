@@ -3,3 +3,5 @@
 *.json text eol=lf
 *.mjs text eol=lf
 *.yml text eol=lf
+apps/desktop/upstream/*.ts -text
+apps/desktop/upstream/LICENSE -text
