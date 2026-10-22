@@ -47,6 +47,63 @@
       "observedTokens": 144,
       "unknownAttempts": 0
     },
+    {
+      "policy": {
+        "maxEstimatedInputTokens": 1
+      },
+      "requests": 0,
+      "reason": "estimated-input-limit",
+      "observedTokens": 0,
+      "unknownAttempts": 1
+    },
+    {
+      "policy": {
+        "maxSteps": 3,
+        "pricing": {
+          "currency": "CNY",
+          "inputPerMillion": 1,
+          "outputPerMillion": 1,
+          "cacheReadPerMillion": 1,
+          "cacheWritePerMillion": 1
+        }
+      },
+      "requests": 3,
+      "reason": "completed",
+      "observedTokens": 144,
+      "unknownAttempts": 0
+    },
+    {
+      "policy": {
+        "pricing": {
+          "currency": "CNY",
+          "inputPerMillion": 1,
+          "outputPerMillion": 1,
+          "cacheReadPerMillion": 1,
+          "cacheWritePerMillion": 1
+        },
+        "maxCost": 1e-7
+      },
+      "requests": 0,
+      "reason": "estimated-cost-limit",
+      "observedTokens": 0,
+      "unknownAttempts": 1
+    },
+    {
+      "policy": {
+        "pricing": {
+          "currency": "CNY",
+          "inputPerMillion": 1,
+          "outputPerMillion": 1,
+          "cacheReadPerMillion": 1,
+          "cacheWritePerMillion": 1
+        },
+        "maxCost": 0.008527001
+      },
+      "requests": 1,
+      "reason": "estimated-cost-limit",
+      "observedTokens": 48,
+      "unknownAttempts": 1
+    },
     "context limit rejects before any provider request"
   ]
 }

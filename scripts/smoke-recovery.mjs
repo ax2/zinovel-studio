@@ -86,6 +86,7 @@ try {
   );
   assert.deepEqual(Object.keys(settings).sort(), [
     "baseURL",
+    "budget",
     "encryptionAvailable",
     "hasKey",
     "model",

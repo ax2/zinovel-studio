@@ -11,6 +11,7 @@ export function apply(ctx, config) {
     ? new TaskBudget(config.usagePath, config.budget)
     : undefined;
   if (budget) {
+    ctx.on("llm/stream", (options, next) => budget.beforeStream(options, next));
     ctx.on("agent/request", (payload, next) =>
       budget.beforeRequest(payload, next),
     );

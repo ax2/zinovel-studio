@@ -14,6 +14,7 @@ const allowed = new Set([
   "settings.get",
   "settings.save",
   "ai.generate",
+  "ai.estimate",
   "ai.cancel",
   "ai.tasks",
   "ai.task",

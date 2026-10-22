@@ -3,18 +3,18 @@ import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
 import { TaskHistory, type StoredTask } from "./task-history";
+import {
+  BudgetSettingsEditor,
+  formatCost,
+  type BudgetSettings,
+} from "./budget-settings";
 
 type Settings = {
   baseURL: string;
   model: string;
   hasKey: boolean;
   encryptionAvailable: boolean;
-  budget: {
-    maxSteps: number;
-    maxContextCharacters: number;
-    maxOutputTokens: number;
-    maxReportedTokens: number;
-  };
+  budget: BudgetSettings;
 };
 export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
   const [config, setConfig] = useState<Settings | null>(null),
@@ -38,6 +38,7 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
           setSaving(true);
           try {
             await api("settings.save", { ...config, apiKey: key });
+            window.dispatchEvent(new Event("novel-settings-changed"));
             setKey("");
             onClose();
           } catch (e) {
@@ -64,7 +65,11 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
               <input
                 value={config.baseURL}
                 onChange={(e) =>
-                  setConfig({ ...config, baseURL: e.target.value })
+                  setConfig({
+                    ...config,
+                    baseURL: e.target.value,
+                    budget: { ...config.budget, pricing: null, maxCost: 0 },
+                  })
                 }
               />
             </label>
@@ -73,7 +78,11 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
               <input
                 value={config.model}
                 onChange={(e) =>
-                  setConfig({ ...config, model: e.target.value })
+                  setConfig({
+                    ...config,
+                    model: e.target.value,
+                    budget: { ...config.budget, pricing: null, maxCost: 0 },
+                  })
                 }
               />
             </label>
@@ -92,50 +101,10 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
             <p className="muted">
               凭据使用系统安全存储加密，界面不会读回已有密钥。
             </p>
-            <details className="budget-settings">
-              <summary>每次写作任务的预算</summary>
-              <p className="muted">
-                预算在新任务开始时冻结。达到上限后停止后续模型步骤，已保存结果保留。进行中的一次调用可能超过已回报用量上限。
-              </p>
-              {(
-                [
-                  ["maxSteps", "模型步骤上限", 1, 64],
-                  ["maxContextCharacters", "章节上下文字符上限", 100, 120000],
-                  ["maxOutputTokens", "每步输出 Token 上限", 64, 32768],
-                  [
-                    "maxReportedTokens",
-                    "已回报 Token 上限（0 为不启用）",
-                    0,
-                    1000000,
-                  ],
-                ] as const
-              ).map(([field, label, min, max]) => (
-                <label key={field}>
-                  {label}
-                  <input
-                    type="number"
-                    min={min}
-                    max={max}
-                    step={1}
-                    required
-                    value={config.budget[field]}
-                    onChange={(e) =>
-                      setConfig({
-                        ...config,
-                        budget: {
-                          ...config.budget,
-                          [field]: Number(e.target.value),
-                        },
-                      })
-                    }
-                  />
-                </label>
-              ))}
-              <p className="muted">
-                启用已回报 Token
-                上限后，若前一步没有回报用量，也会停止下一步。供应商内部网络重试不等同于模型步骤。当前费用未知，尚未配置价格。
-              </p>
-            </details>
+            <BudgetSettingsEditor
+              value={config.budget}
+              onChange={(budget) => setConfig({ ...config, budget })}
+            />
             {config.hasKey && (
               <button
                 type="button"
@@ -223,6 +192,43 @@ export function WritingAssistant({
   const selected = snapshot
     ? snapshot.body.slice(snapshot.start, snapshot.end)
     : "";
+  const [preview, setPreview] = useState<{
+    inputTokens: number;
+    outputTokenCap: number;
+    projectedCost: number | null;
+    currency?: string;
+  } | null>(null);
+  const [previewRevision, setPreviewRevision] = useState(0);
+  const [previewFailed, setPreviewFailed] = useState(false);
+  useEffect(() => {
+    const changed = () => setPreviewRevision((value) => value + 1);
+    window.addEventListener("novel-settings-changed", changed);
+    return () => window.removeEventListener("novel-settings-changed", changed);
+  }, []);
+  useEffect(() => {
+    let active = true;
+    setPreview(null);
+    setPreviewFailed(false);
+    if (!snapshot) return;
+    const timer = setTimeout(() => {
+      api<NonNullable<typeof preview>>("ai.estimate", {
+        skillId,
+        instruction,
+        context: snapshot.body,
+        selectedText: selected,
+      })
+        .then((value) => {
+          if (active) setPreview(value);
+        })
+        .catch(() => {
+          if (active) setPreviewFailed(true);
+        });
+    }, 250);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [snapshot?.body, selected, instruction, skillId, previewRevision]);
   async function generate(retry?: StoredTask) {
     if (!snapshot) return;
     const base = { ...snapshot };
@@ -284,6 +290,23 @@ export function WritingAssistant({
           ? `已选中 ${Array.from(selected).length} 字`
           : "未选择正文，候选可插入光标位置"}
       </p>
+      {preview && (
+        <p className="generation-estimate" aria-label="生成前预算预览">
+          作者材料约 {preview.inputTokens} Token；每步输出上限{" "}
+          {preview.outputTokenCap} Token。
+          <br />
+          {preview.projectedCost === null
+            ? "费用未知：未配置完整单价。"
+            : `材料加输出上限参考 ${formatCost(preview.projectedCost)} ${preview.currency}。`}
+          <br />
+          不含待装配的系统与工具部分；完整请求会在发送前再次估算，多步任务会累计消耗。
+        </p>
+      )}
+      {previewFailed && (
+        <p className="generation-estimate">
+          暂时无法预估；开始任务时仍会执行预算检查。
+        </p>
+      )}
       {running ? (
         <button
           className="cancel-task"

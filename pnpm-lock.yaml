@@ -28,6 +28,9 @@ importers:
       '@deepseek-ai/dsh-sdk-client':
         specifier: 0.2.1-rc.2
         version: 0.2.1-rc.2(5bcd3edc8a5185d05cb38b890e3e297b)
+      '@deepseek-ai/dsh-token-meter':
+        specifier: 0.2.1-rc.2
+        version: 0.2.1-rc.2(e7ba863eb387b2222cc78a6a6257d49b)
       lucide-react:
         specifier: 0.468.0
         version: 0.468.0(react@18.3.1)

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { X, RefreshCw } from "lucide-react";
 import { api } from "./api";
 import type { WritingSnapshot } from "./assistant";
+import { formatCost, type BudgetSettings } from "./budget-settings";
 
 const statusLabels: Record<string, string> = {
   preparing: "准备中",
@@ -46,11 +47,15 @@ export type StoredTask = {
       unknownAttempts: number;
       observedTokens: number;
       stopReason?: string;
-      policy: {
-        maxSteps: number;
-        maxReportedTokens: number;
-        maxOutputTokens: number;
-      };
+      policy: BudgetSettings;
+      cost: number | null;
+      knownCost: number | null;
+      estimates: {
+        inputTokens: number;
+        outputTokenCap: number;
+        projectedCost: number | null;
+        admitted: boolean;
+      }[];
       counts: Record<string, { value: number; reported: number }>;
     };
   };
@@ -180,9 +185,37 @@ export function TaskHistory({
                   。
                 </p>
                 <p className="muted">
-                  费用未知：尚未配置单价。仅统计供应商回报字段，未回报不等于零；Token
-                  回报不替代服务商账单。
+                  {selected.record.usage.cost !== null
+                    ? `按本任务冻结单价换算：${formatCost(selected.record.usage.cost)} ${selected.record.usage.policy.pricing?.currency}。`
+                    : selected.record.usage.policy.pricing
+                      ? `完整费用未知；可确认部分为 ${formatCost(selected.record.usage.knownCost || 0)} ${selected.record.usage.policy.pricing.currency}。`
+                      : "费用未知：尚未配置单价。"}
+                  未回报不等于零；自定义单价换算不替代服务商账单。
                 </p>
+                {selected.record.usage.estimates?.length > 0 && (
+                  <details>
+                    <summary>完整请求预估明细</summary>
+                    <p className="muted">
+                      官方启发式估算包含系统、消息与工具；金额按输入最高单价和输出上限计算，实际输出和计费可能不同。
+                    </p>
+                    <ol>
+                      {selected.record.usage.estimates.map(
+                        (estimate, index) => (
+                          <li key={index}>
+                            输入约 {estimate.inputTokens} Token，输出上限{" "}
+                            {estimate.outputTokenCap} Token；
+                            {estimate.projectedCost === null
+                              ? "费用未知"
+                              : `估算 ${formatCost(estimate.projectedCost)} ${selected.record.usage!.policy.pricing?.currency}`}
+                            ；
+                            {estimate.admitted ? "已准入" : "预算拦截，未发送"}
+                            。
+                          </li>
+                        ),
+                      )}
+                    </ol>
+                  </details>
+                )}
               </details>
             ) : (
               <p className="muted">本次尚无用量回报；费用未知。</p>

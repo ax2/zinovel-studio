@@ -36,6 +36,16 @@ test("usage updates replace counters and do not double-count total or reasoning;
       schemaVersion: 1,
       steps: 0,
       attempts: [],
+      policy: {},
+      estimates: [null],
+    }),
+    undefined,
+  );
+  assert.equal(
+    budgetSummary({
+      schemaVersion: 1,
+      steps: 0,
+      attempts: [],
       policy: { maxSteps: -1 },
     }),
     undefined,

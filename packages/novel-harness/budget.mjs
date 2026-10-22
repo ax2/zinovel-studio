@@ -1,4 +1,10 @@
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
+import {
+  validatePricing,
+  estimateRequest,
+  estimateCost,
+  priceUsage,
+} from "./pricing.mjs";
 
 export function validateBudget(input = {}) {
   if (!input || typeof input !== "object" || Array.isArray(input))
@@ -9,12 +15,27 @@ export function validateBudget(input = {}) {
     ["maxContextCharacters", 120000, 100, 120000],
     ["maxOutputTokens", 8192, 64, 32768],
     ["maxReportedTokens", 0, 0, 1000000],
+    ["maxEstimatedInputTokens", 0, 0, 1000000],
   ]) {
     const value = input[key] ?? fallback;
     if (!Number.isSafeInteger(value) || value < min || value > max)
       throw new Error("任务预算超出允许范围");
     result[key] = value;
   }
+  result.pricing = validatePricing(input.pricing);
+  result.maxCost = input.maxCost ?? 0;
+  if (
+    typeof result.maxCost !== "number" ||
+    !Number.isFinite(result.maxCost) ||
+    result.maxCost < 0 ||
+    result.maxCost > 1000000
+  )
+    throw new Error("费用阈值无效");
+  if (
+    result.maxCost > 0 &&
+    estimateCost({ inputTokens: 1, outputTokenCap: 1 }, result.pricing) === null
+  )
+    throw new Error("启用费用阈值需要填写四项 Token 单价");
   return result;
 }
 const fields = [
@@ -57,14 +78,40 @@ export function budgetSummary(value) {
   } catch {
     return undefined;
   }
+  const estimates = value.estimates ?? [];
+  if (
+    !Array.isArray(estimates) ||
+    estimates.length > 256 ||
+    estimates.some(
+      (item) =>
+        !item ||
+        !Number.isSafeInteger(item.inputTokens) ||
+        item.inputTokens < 0 ||
+        !Number.isSafeInteger(item.outputTokenCap) ||
+        item.outputTokenCap < 0 ||
+        typeof item.admitted !== "boolean" ||
+        (item.projectedCost !== null &&
+          (typeof item.projectedCost !== "number" ||
+            !Number.isFinite(item.projectedCost) ||
+            item.projectedCost < 0)),
+    )
+  )
+    return undefined;
   const counts = Object.fromEntries(
     fields.map((key) => [key, { value: 0, reported: 0 }]),
   );
   let reportedAttempts = 0;
+  let knownCost = 0,
+    pricedAttempts = 0;
   for (const attempt of value.attempts) {
     const usage = reportedUsage(attempt.usage);
     if (!usage) continue;
     reportedAttempts++;
+    const cost = priceUsage(usage, policy.pricing);
+    if (cost !== null) {
+      knownCost += cost;
+      pricedAttempts++;
+    }
     for (const key of fields)
       if (usage[key] !== undefined) {
         counts[key].value += usage[key];
@@ -90,8 +137,25 @@ export function budgetSummary(value) {
     observedTokens,
     policy,
     stopReason: value.stopReason,
-    cost: null,
-    costReason: "pricing-not-configured",
+    cost:
+      policy.pricing &&
+      pricedAttempts === value.attempts.length &&
+      value.steps <= value.attempts.length
+        ? knownCost
+        : null,
+    knownCost: policy.pricing ? knownCost : null,
+    pricedAttempts,
+    costReason: policy.pricing
+      ? "provider-usage-at-configured-rates"
+      : "pricing-not-configured",
+    estimates: estimates.map(
+      ({ inputTokens, outputTokenCap, projectedCost, admitted }) => ({
+        inputTokens,
+        outputTokenCap,
+        projectedCost,
+        admitted,
+      }),
+    ),
     scope: "provider-reported-fields",
   };
 }
@@ -110,7 +174,50 @@ export class TaskBudget {
       policy: validateBudget(policy),
       steps: 0,
       attempts: [],
+      estimates: [],
     };
+  }
+  async *beforeStream(options, next) {
+    const policy = this.#data.policy;
+    if (options.sessionId !== this.#sessionId || options.purpose) {
+      this.#data.stopReason = "unbudgeted-call";
+      await this.flush();
+      throw new Error("未授权的额外模型调用");
+    }
+    const estimate = estimateRequest(options),
+      summary = budgetSummary(this.#data);
+    const projectedCost = estimateCost(estimate, policy.pricing);
+    let reason = this.#data.stopReason;
+    if (
+      policy.maxEstimatedInputTokens > 0 &&
+      estimate.inputTokens > policy.maxEstimatedInputTokens
+    )
+      reason = "estimated-input-limit";
+    // A new attempt frame may already exist before dispatch; only prior admitted
+    // requests need a settled cost. The current empty attempt is not prior spend.
+    const admitted = this.#data.estimates.filter(
+      (item) => item.admitted,
+    ).length;
+    if (policy.maxCost > 0) {
+      if (projectedCost === null || summary.pricedAttempts < admitted)
+        reason = "cost-unknown";
+      else if (summary.knownCost + projectedCost > policy.maxCost)
+        reason = "estimated-cost-limit";
+    }
+    if (this.#data.estimates.length >= 256) reason = "request-record-limit";
+    else
+      this.#data.estimates.push({
+        ...estimate,
+        projectedCost,
+        admitted: !reason,
+      });
+    if (reason) {
+      this.#data.stopReason = reason;
+      await this.flush();
+      throw new Error("任务预算不足，未发送本次请求");
+    }
+    await this.flush();
+    yield* next();
   }
   async beforeRequest({ agent }, next) {
     this.#sessionId ??= agent.session.id;

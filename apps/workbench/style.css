@@ -566,6 +566,19 @@ footer {
 .budget-settings label {
   margin-top: 14px;
 }
+.budget-settings .price-toggle {
+  flex-direction: row;
+  align-items: center;
+}
+.price-toggle input {
+  width: auto;
+}
+.generation-estimate {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+  margin: 10px 0;
+}
 .modal label {
   display: flex;
   flex-direction: column;

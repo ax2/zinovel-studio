@@ -34,8 +34,13 @@ async function scenario(budget, expected, omitUsage = false) {
       assert.equal(request.max_tokens, budget.maxOutputTokens || 8192);
     const task = await runtime.task((await runtime.tasks())[0].id);
     assert.equal(task.record.usage.stopReason, expected.reason);
-    assert.equal(task.record.usage.steps, expected.requests);
-    assert.equal(task.record.usage.cost, null);
+    assert.equal(task.record.usage.steps, expected.steps ?? expected.requests);
+    if (!budget.pricing) assert.equal(task.record.usage.cost, null);
+    else if (!expected.reason)
+      assert.ok(
+        Math.abs(task.record.usage.cost - (expected.requests * 48) / 1000000) <
+          1e-12,
+      );
     if (!omitUsage) {
       assert.equal(
         task.record.usage.counts.inputTokens.value,
@@ -66,6 +71,7 @@ async function scenario(budget, expected, omitUsage = false) {
       observedTokens: task.record.usage.observedTokens,
       unknownAttempts: task.record.usage.unknownAttempts,
     });
+    return task.record.usage;
   } finally {
     await runtime.cancel();
     await model.close();
@@ -87,6 +93,26 @@ try {
     true,
   );
   await scenario({ maxSteps: 3 }, { requests: 3 });
+  await scenario(
+    { maxEstimatedInputTokens: 1 },
+    { requests: 0, steps: 1, reason: "estimated-input-limit" },
+  );
+  const pricing = {
+    currency: "CNY",
+    inputPerMillion: 1,
+    outputPerMillion: 1,
+    cacheReadPerMillion: 1,
+    cacheWritePerMillion: 1,
+  };
+  const measured = await scenario({ maxSteps: 3, pricing }, { requests: 3 });
+  await scenario(
+    { pricing, maxCost: 0.0000001 },
+    { requests: 0, steps: 1, reason: "estimated-cost-limit" },
+  );
+  await scenario(
+    { pricing, maxCost: measured.estimates[0].projectedCost + 0.000000001 },
+    { requests: 1, steps: 2, reason: "estimated-cost-limit" },
+  );
   const model = await modelFixture();
   const home = await mkdtemp(join(root, ".cache", "budget-preflight-"));
   try {

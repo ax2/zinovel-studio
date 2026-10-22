@@ -166,12 +166,110 @@ try {
     path: join(screenshots, "budget-settings-narrow.png"),
   });
   await page.getByRole("button", { name: "保存设置", exact: true }).click();
+  await application.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].setSize(1440, 960),
+  );
+  await page.getByLabel("主导航").getByTitle("模型设置").click();
+  await page.getByText("每次写作任务的预算", { exact: true }).click();
+  await page.getByLabel("为当前模型配置价格", { exact: true }).check();
+  for (const label of [
+    "非缓存输入单价 / 百万 Token",
+    "输出单价 / 百万 Token",
+    "缓存读取单价 / 百万 Token",
+    "缓存写入单价 / 百万 Token",
+  ])
+    await page.getByLabel(label, { exact: true }).fill("1");
+  await page
+    .getByLabel("每任务费用阈值（0 为不启用）", { exact: true })
+    .fill("0.0000001");
+  await page.getByRole("button", { name: "保存设置", exact: true }).click();
+  await page.getByLabel("生成前预算预览").filter({ hasText: "CNY" }).waitFor();
+  assert.equal(model.requests.length, 4, "preview must be local-only");
+  await page.screenshot({ path: join(screenshots, "price-preview.png") });
+  await page.getByRole("button", { name: "生成候选", exact: true }).click();
+  await page
+    .getByRole("alert")
+    .filter({ hasText: "预算停止" })
+    .waitFor({ timeout: 45000 });
+  assert.equal(
+    model.requests.length,
+    4,
+    "fee limit must reject before network dispatch",
+  );
+  const blockedId = (
+    await page.evaluate(
+      (bookId) => window.novel.request("ai.tasks", { bookId }),
+      book.id,
+    )
+  )[0].id;
+  await page.getByRole("button", { name: "写作任务记录", exact: true }).click();
+  await page.locator(".task-row").first().click();
+  await page.getByText("完整请求预估明细", { exact: true }).click();
+  await page.getByText("预算拦截，未发送", { exact: false }).waitFor();
+  await page.screenshot({
+    path: join(screenshots, "cost-before-dispatch.png"),
+  });
+  await page.getByLabel("关闭任务记录").click();
+  await page.getByLabel("主导航").getByTitle("模型设置").click();
+  await page.getByText("每次写作任务的预算", { exact: true }).click();
+  await page
+    .getByLabel("每任务费用阈值（0 为不启用）", { exact: true })
+    .fill("1");
+  await page
+    .getByLabel("非缓存输入单价 / 百万 Token", { exact: true })
+    .fill("2");
+  await page.getByRole("button", { name: "保存设置", exact: true }).click();
+  await page.getByRole("button", { name: "生成候选", exact: true }).click();
+  await page
+    .getByRole("dialog", { name: "审阅 AI 候选" })
+    .waitFor({ timeout: 45000 });
+  await page.getByLabel("关闭候选").click();
+  assert.equal(model.requests.length, 7);
+  const pricedId = (
+    await page.evaluate(
+      (bookId) => window.novel.request("ai.tasks", { bookId }),
+      book.id,
+    )
+  )[0].id;
+  const priced = await page.evaluate(
+    (id) => window.novel.request("ai.task", { id }),
+    pricedId,
+  );
+  assert.ok(Math.abs(priced.record.usage.cost - 0.000234) < 1e-12);
+  assert.equal(priced.record.usage.estimates.length, 3);
+  const blocked = await page.evaluate(
+    (id) => window.novel.request("ai.task", { id }),
+    blockedId,
+  );
+  assert.equal(blocked.record.usage.policy.pricing.inputPerMillion, 1);
+  assert.equal(blocked.record.usage.policy.maxCost, 0.0000001);
+  await page.getByRole("button", { name: "写作任务记录", exact: true }).click();
+  await page.locator(".task-row").first().click();
+  await page.getByText("本次用量与预算", { exact: true }).click();
+  await page
+    .getByText("按本任务冻结单价换算：0.000234 CNY。", { exact: false })
+    .waitFor();
+  await page.screenshot({ path: join(screenshots, "reported-cost.png") });
+  await page.getByLabel("关闭任务记录").click();
+  await page.getByLabel("主导航").getByTitle("模型设置").click();
+  await page.getByLabel("模型名称", { exact: true }).fill("different-model");
+  await page.getByText("每次写作任务的预算", { exact: true }).click();
+  assert.equal(
+    await page.getByLabel("为当前模型配置价格", { exact: true }).isChecked(),
+    false,
+  );
+  await page.getByLabel("关闭模型设置").click();
+  assert.equal(
+    (await store.readChapter(book.id, book.chapters[0].id)).body,
+    original,
+  );
   assert.deepEqual(report.errors, []);
   report.checks.push(
     "UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs",
     "changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact",
     "settings and exact reported usage survive restart without model replay or manuscript modification",
     "expanded budget settings stay inside the viewport and can be saved in a narrow window",
+    "local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes",
   );
   report.status = "passed";
 } catch (error) {

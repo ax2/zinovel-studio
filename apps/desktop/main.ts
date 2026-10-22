@@ -315,6 +315,9 @@ if (
                 );
                 break;
               }
+              case "ai.estimate":
+                value = await harness.preview(payload, await settings.public());
+                break;
               case "ai.tasks": {
                 const tasks = await harness.tasks(payload.bookId, {
                   unbound: payload.unbound === true,
