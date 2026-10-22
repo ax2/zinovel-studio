@@ -4,6 +4,7 @@ export async function modelFixture({
   beforeReply,
   streamText,
   afterText,
+  omitUsage = false,
 } = {}) {
   const requests = [];
   const replacement = "灯塔熄灭时，林舟终于拆开了旧信。";
@@ -79,6 +80,11 @@ export async function modelFixture({
         { type: "message_stop" },
       ];
       await beforeReply?.(requests.length);
+      if (omitUsage)
+        for (const event of events) {
+          if (event.message) delete event.message.usage;
+          delete event.usage;
+        }
       if (delayMs) await new Promise((resolve) => setTimeout(resolve, delayMs));
       if (response.destroyed) return;
       response.writeHead(200, { "content-type": "text/event-stream" });

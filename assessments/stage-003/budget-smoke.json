@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "policy": {
+        "maxSteps": 1,
+        "maxOutputTokens": 128
+      },
+      "requests": 1,
+      "reason": "step-limit",
+      "observedTokens": 48,
+      "unknownAttempts": 0
+    },
+    {
+      "policy": {
+        "maxSteps": 2
+      },
+      "requests": 2,
+      "reason": "step-limit",
+      "observedTokens": 96,
+      "unknownAttempts": 0
+    },
+    {
+      "policy": {
+        "maxReportedTokens": 40
+      },
+      "requests": 1,
+      "reason": "reported-token-limit",
+      "observedTokens": 48,
+      "unknownAttempts": 0
+    },
+    {
+      "policy": {
+        "maxReportedTokens": 1000
+      },
+      "requests": 1,
+      "reason": "adapter-rejected-missing-usage",
+      "observedTokens": 0,
+      "unknownAttempts": 1
+    },
+    {
+      "policy": {
+        "maxSteps": 3
+      },
+      "requests": 3,
+      "reason": "completed",
+      "observedTokens": 144,
+      "unknownAttempts": 0
+    },
+    "context limit rejects before any provider request"
+  ]
+}

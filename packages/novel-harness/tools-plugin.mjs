@@ -1,11 +1,22 @@
 import { readFile } from "node:fs/promises";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { StreamCapture } from "./stream-capture.mjs";
+import { TaskBudget } from "./budget.mjs";
 export const name = "zinovel-task-tools";
 export const inject = ["tools"];
 
 // Paths come only from the desktop-generated task profile, never model arguments.
 export function apply(ctx, config) {
+  const budget = config.usagePath
+    ? new TaskBudget(config.usagePath, config.budget)
+    : undefined;
+  if (budget) {
+    ctx.on("agent/request", (payload, next) =>
+      budget.beforeRequest(payload, next),
+    );
+    ctx.on("agent/assistant-stream", (payload) => budget.accept(payload));
+    ctx.on("agent/turn-stopping", () => budget.flush());
+  }
   const stream = config.streamPath
     ? new StreamCapture(config.streamPath)
     : undefined;
@@ -83,5 +94,8 @@ export function apply(ctx, config) {
       ? undefined
       : "此写作任务只授权读取冻结选区和提交候选",
   );
-  return () => stream?.close();
+  return async () => {
+    await stream?.close();
+    await budget?.flush();
+  };
 }

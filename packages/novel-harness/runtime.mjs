@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import { TaskJournal } from "./task-journal.mjs";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
+import { validateBudget } from "./budget.mjs";
 
 const environmentKeys = [
   "SystemRoot",
@@ -48,7 +49,11 @@ export function validateSettings(input) {
   const model = input.model || "deepseek-v4-flash";
   if (typeof model !== "string" || !/^[\w.:-]{1,128}$/.test(model))
     throw new Error("模型标识无效");
-  return { baseURL: url.href.replace(/\/$/, ""), model };
+  return {
+    baseURL: url.href.replace(/\/$/, ""),
+    model,
+    budget: validateBudget(input.budget),
+  };
 }
 
 export class NovelHarness {
@@ -179,6 +184,10 @@ export class NovelHarness {
     const config = validateSettings(settings),
       id = randomUUID(),
       work = join(this.root, "tasks", id);
+    if (context.length > config.budget.maxContextCharacters)
+      throw new Error(
+        "当前章节超过设置的上下文字符预算，请缩短上下文或调整预算",
+      );
     const method = await readFile(
       join(this.resources, "skills", skill.id, "SKILL.md"),
       "utf8",
@@ -197,6 +206,7 @@ export class NovelHarness {
         chapterId: target?.chapterId,
         chapterTitle: target?.chapterTitle,
         retryOf,
+        budget: config.budget,
         status: "preparing",
         startedAt: new Date().toISOString(),
       },
@@ -218,6 +228,8 @@ export class NovelHarness {
                   snapshotPath,
                   proposalPath,
                   streamPath: join(work, "stream.json"),
+                  usagePath: join(work, "usage.json"),
+                  budget: config.budget,
                 },
               },
             ],
@@ -238,7 +250,7 @@ export class NovelHarness {
         },
         model: config.model,
         reasoningEffort: "off",
-        maxTokens: 8192,
+        maxTokens: config.budget.maxOutputTokens,
         initializeTimeoutMs: 30000,
         requestTimeoutMs: 120000,
       }));
@@ -252,6 +264,8 @@ export class NovelHarness {
       checkCancelled();
       const result = await harness.run(prompt);
       checkCancelled();
+      if ((await this.#journal.usage(id))?.stopReason)
+        throw new Error("任务预算已停止后续调用");
       let candidate = result.finalResponse;
       try {
         candidate = JSON.parse(
@@ -277,19 +291,26 @@ export class NovelHarness {
       // The plugin disposer flushes the last coalesced text before we freeze
       // the cancelled/failed recovery record. A second close is SDK-idempotent.
       await task.harness?.close();
+      const budgetStopped = !!(await this.#journal.usage(id))?.stopReason;
       await this.#journal.transition(
         id,
         task.cancelled ? "cancelled" : "failed",
         {
-          errorCode: task.cancelled ? "cancelled-or-timeout" : "runtime-failed",
+          errorCode: budgetStopped
+            ? "budget-limit"
+            : task.cancelled
+              ? "cancelled-or-timeout"
+              : "runtime-failed",
           completedAt: new Date().toISOString(),
         },
       );
       // Provider errors can contain response bodies: keep credentials and manuscript out of UI diagnostics.
       throw new Error(
-        task.cancelled
-          ? "写作任务已取消或超时，正式稿未改变"
-          : "官方 Harness 写作任务失败，请检查模型地址、凭据和网络；正式稿未改变",
+        budgetStopped
+          ? "本次任务已因预算停止，已保存结果可在任务记录查看；调整预算后可使用当前选区重试"
+          : task.cancelled
+            ? "写作任务已取消或超时，正式稿未改变"
+            : "官方 Harness 写作任务失败，请检查模型地址、凭据和网络；正式稿未改变",
         { cause: error },
       );
     } finally {

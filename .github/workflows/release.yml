@@ -45,6 +45,7 @@ jobs:
       - run: pnpm test:acceptance
       - run: pnpm test:task-compatibility
       - run: pnpm test:stream
+      - run: pnpm test:budget
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

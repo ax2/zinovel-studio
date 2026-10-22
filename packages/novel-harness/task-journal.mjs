@@ -2,6 +2,7 @@ import { mkdir, readdir, readFile, lstat } from "node:fs/promises";
 import { join } from "node:path";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { readStreamPartial } from "./stream-capture.mjs";
+import { budgetSummary } from "./budget.mjs";
 
 const identifier =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -162,10 +163,20 @@ export class TaskJournal {
           ? await this.#partial(id)
           : {};
       return {
-        record: { ...record, ...partial },
+        record: { ...record, ...partial, usage: await this.#usage(id) },
         snapshot: await this.#json(id, "snapshot.json"),
       };
     });
+  }
+  async #usage(id) {
+    try {
+      return budgetSummary(await this.#json(id, "usage.json", 256 * 1024));
+    } catch {
+      return undefined;
+    }
+  }
+  usage(id) {
+    return this.#exclusive(() => this.#usage(id));
   }
   list(bookId, limit = 100, { unbound = false, offset = 0 } = {}) {
     return this.#exclusive(async () => {

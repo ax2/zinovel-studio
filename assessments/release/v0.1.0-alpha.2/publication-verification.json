@@ -1,8 +1,8 @@
 {
-  "status": "published-assets-verified",
+  "status": "passed",
   "workflow": 39814293616,
-  "workflowStatus": "in_progress",
-  "workflowConclusion": null,
+  "workflowStatus": "completed",
+  "workflowConclusion": "success",
   "publicHttpStatus": 200,
   "release": {
     "assets": [
@@ -217,6 +217,6 @@
       "conclusion": "success"
     }
   ],
-  "limitation": "Overall workflow status still reports in_progress despite all steps including Complete job reporting success; no local redownload or installation of the public EXE",
-  "verifiedAt": "2026-10-22T16:37:55.4481150Z"
+  "limitation": "The public installer was tested by CI before upload; no local redownload or installation of the public EXE",
+  "verifiedAt": "2026-10-22T16:48:30.6435299Z"
 }

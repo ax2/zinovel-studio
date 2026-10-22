@@ -38,6 +38,7 @@ export class ModelSettings {
     model: string;
     apiKey?: string;
     clearKey?: boolean;
+    budget?: Record<string, number>;
   }) {
     const operation = this.queue.then(() => this.saveExclusive(input));
     this.queue = operation.catch(() => {});
@@ -48,6 +49,7 @@ export class ModelSettings {
     model: string;
     apiKey?: string;
     clearKey?: boolean;
+    budget?: Record<string, number>;
   }) {
     if (
       input.apiKey !== undefined &&

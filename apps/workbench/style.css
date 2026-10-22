@@ -554,6 +554,18 @@ footer {
   font-size: 20px;
   margin-bottom: 22px;
 }
+.modal.settings-modal {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.budget-settings summary,
+.task-usage summary {
+  cursor: pointer;
+  margin: 14px 0 8px;
+}
+.budget-settings label {
+  margin-top: 14px;
+}
 .modal label {
   display: flex;
   flex-direction: column;

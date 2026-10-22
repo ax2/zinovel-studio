@@ -874,8 +874,13 @@
       "name": "成本和上下文预算",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "预估/实际/未知分开，超额暂停"
+      "status": "in-progress",
+      "acceptance": "预估/实际/未知分开，超额暂停",
+      "evidence": [
+        "assessments/stage-003/budget-smoke.json",
+        "screenshots/stage-003/budget/budget-smoke.json",
+        "design/task-budget.md"
+      ]
     },
     {
       "id": "OPS-03",

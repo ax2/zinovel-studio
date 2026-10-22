@@ -9,6 +9,12 @@ type Settings = {
   model: string;
   hasKey: boolean;
   encryptionAvailable: boolean;
+  budget: {
+    maxSteps: number;
+    maxContextCharacters: number;
+    maxOutputTokens: number;
+    maxReportedTokens: number;
+  };
 };
 export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
   const [config, setConfig] = useState<Settings | null>(null),
@@ -86,6 +92,50 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
             <p className="muted">
               凭据使用系统安全存储加密，界面不会读回已有密钥。
             </p>
+            <details className="budget-settings">
+              <summary>每次写作任务的预算</summary>
+              <p className="muted">
+                预算在新任务开始时冻结。达到上限后停止后续模型步骤，已保存结果保留。进行中的一次调用可能超过已回报用量上限。
+              </p>
+              {(
+                [
+                  ["maxSteps", "模型步骤上限", 1, 64],
+                  ["maxContextCharacters", "章节上下文字符上限", 100, 120000],
+                  ["maxOutputTokens", "每步输出 Token 上限", 64, 32768],
+                  [
+                    "maxReportedTokens",
+                    "已回报 Token 上限（0 为不启用）",
+                    0,
+                    1000000,
+                  ],
+                ] as const
+              ).map(([field, label, min, max]) => (
+                <label key={field}>
+                  {label}
+                  <input
+                    type="number"
+                    min={min}
+                    max={max}
+                    step={1}
+                    required
+                    value={config.budget[field]}
+                    onChange={(e) =>
+                      setConfig({
+                        ...config,
+                        budget: {
+                          ...config.budget,
+                          [field]: Number(e.target.value),
+                        },
+                      })
+                    }
+                  />
+                </label>
+              ))}
+              <p className="muted">
+                启用已回报 Token
+                上限后，若前一步没有回报用量，也会停止下一步。供应商内部网络重试不等同于模型步骤。当前费用未知，尚未配置价格。
+              </p>
+            </details>
             {config.hasKey && (
               <button
                 type="button"

@@ -38,6 +38,21 @@ export type StoredTask = {
     acceptance?: { acceptedText: string };
     acceptanceRecovery?: string;
     retryOf?: string;
+    errorCode?: string;
+    usage?: {
+      steps: number;
+      attempts: number;
+      reportedAttempts: number;
+      unknownAttempts: number;
+      observedTokens: number;
+      stopReason?: string;
+      policy: {
+        maxSteps: number;
+        maxReportedTokens: number;
+        maxOutputTokens: number;
+      };
+      counts: Record<string, { value: number; reported: number }>;
+    };
   };
   snapshot: {
     context: string;
@@ -122,6 +137,56 @@ export function TaskHistory({
               {selected.record.model} ·{" "}
               {new Date(selected.record.startedAt).toLocaleString("zh-CN")}
             </p>
+            {selected.record.errorCode === "budget-limit" && (
+              <p className="inline-error">
+                本次因预算停止。已保存结果仅供参考，调整预算后可在对应章节用当前选区重试。
+              </p>
+            )}
+            {selected.record.usage ? (
+              <details
+                className="task-usage"
+                open={selected.record.errorCode === "budget-limit"}
+              >
+                <summary>本次用量与预算</summary>
+                <p>
+                  模型步骤：{selected.record.usage.steps} /{" "}
+                  {selected.record.usage.policy.maxSteps}；模型尝试：
+                  {selected.record.usage.attempts}；每步输出上限：
+                  {selected.record.usage.policy.maxOutputTokens} Token。
+                </p>
+                <p>
+                  供应商已回报合计：
+                  {selected.record.usage.reportedAttempts
+                    ? `${selected.record.usage.observedTokens} Token`
+                    : "未知"}
+                  。
+                  {selected.record.usage.unknownAttempts > 0 &&
+                    `另有 ${selected.record.usage.unknownAttempts} 次尝试或步骤未回报完整用量。`}
+                </p>
+                <p>
+                  {(
+                    [
+                      ["inputTokens", "非缓存输入"],
+                      ["outputTokens", "输出"],
+                      ["cacheReadTokens", "缓存读取"],
+                      ["cacheWriteTokens", "缓存写入"],
+                    ] as const
+                  )
+                    .map(([key, label]) => {
+                      const count = selected.record.usage!.counts[key];
+                      return `${label}：${count?.reported ? count.value : "未知"}`;
+                    })
+                    .join("；")}
+                  。
+                </p>
+                <p className="muted">
+                  费用未知：尚未配置单价。仅统计供应商回报字段，未回报不等于零；Token
+                  回报不替代服务商账单。
+                </p>
+              </details>
+            ) : (
+              <p className="muted">本次尚无用量回报；费用未知。</p>
+            )}
             {!selected.snapshot.target && (
               <p className="inline-error">
                 这是没有章节绑定的旧版任务，仅供查看和复制。不会猜测原章节，也不能直接应用到当前作品。

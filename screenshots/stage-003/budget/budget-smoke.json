@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": [
+    "UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs",
+    "changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact",
+    "settings and exact reported usage survive restart without model replay or manuscript modification",
+    "expanded budget settings stay inside the viewport and can be saved in a narrow window"
+  ],
+  "errors": []
+}

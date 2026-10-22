@@ -53,6 +53,7 @@ pnpm test:tasks
 pnpm test:acceptance
 pnpm test:task-compatibility
 pnpm test:stream
+pnpm test:budget
 pnpm test:benchmark
 pnpm package:win
 pnpm test:installer
@@ -68,6 +69,8 @@ pnpm release:manifest
 ## 时间线
 
 Stage-003 已增加跨书任务分页、旧版任务只读入口和恢复审阅：新任务绑定准确书章与选区，中断/取消后已落盘提案或流式文字可找回，作者可用当前选区明确重试。接受意图与书内事务回执支持崩溃对账，并保留作者后续编辑；用量预算和其他创作能力仍待补齐，详见任务恢复设计和阶段日志。流式片段恢复为 alpha.2 标签之后的开发内容。
+
+当前开发版还提供任务步骤、输出与章节上下文限制，以及供应商已回报用量；未知用量/费用明确区分。金额估算与价格预算仍待实现，参见 [用量预算设计](design/task-budget.md)。这些改进也尚未包含在 alpha.2 安装包中。
 
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。
