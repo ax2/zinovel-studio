@@ -49,7 +49,10 @@ try {
   await application.evaluate(({ BrowserWindow }) =>
     BrowserWindow.getAllWindows()[0].setSize(1008, 750),
   );
-  await page.getByRole("button", { name: /编辑工具合成验证/ }).click();
+  await page
+    .locator(".book-card")
+    .filter({ hasText: "编辑工具合成验证" })
+    .click();
   let editor = page.getByLabel("正文编辑器");
   await editor.waitFor();
   await page.getByTitle("查找替换预览", { exact: true }).click();
@@ -102,11 +105,9 @@ try {
     .getByLabel("标记说明", { exact: true })
     .fill("这一细节将在后文回应。\n保留物件的来历。");
   await page.getByRole("button", { name: "添加标记", exact: true }).click();
-  const card = page
-    .locator(".annotation-card")
-    .filter({
-      has: page.getByRole("heading", { name: "追踪旧信", exact: true }),
-    });
+  const card = page.locator(".annotation-card").filter({
+    has: page.getByRole("heading", { name: "追踪旧信", exact: true }),
+  });
   await card.getByText("原位有效", { exact: false }).waitFor();
   await page.getByLabel("标记类型", { exact: true }).selectOption("bookmark");
   await page.getByLabel("标记标题", { exact: true }).fill("回访开头");
@@ -175,7 +176,10 @@ try {
     env,
   });
   page = await application.firstWindow();
-  await page.getByRole("button", { name: /编辑工具合成验证/ }).click();
+  await page
+    .locator(".book-card")
+    .filter({ hasText: "编辑工具合成验证" })
+    .click();
   await openMarkers();
   const recovered = await page.evaluate(
     (ids) => window.novel.request("annotations.read", ids),

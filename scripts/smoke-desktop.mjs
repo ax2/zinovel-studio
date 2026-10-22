@@ -95,7 +95,7 @@ try {
   await closed;
   assert.equal(await readFile(file, "utf8"), manuscript + "\n新增段落。");
   page = await launch();
-  await page.getByRole("button", { name: /雾港来信/ }).click();
+  await page.locator(".book-card").filter({ hasText: "雾港来信" }).click();
   assert.equal(
     (
       await page.getByLabel("正文编辑器").locator(".cm-line").allTextContents()

@@ -30,7 +30,7 @@ try {
   });
   page = await application.firstWindow();
   page.on("pageerror", (error) => report.errors.push(error.message));
-  await page.getByRole("button", { name: /三方合成验证/ }).click();
+  await page.locator(".book-card").filter({ hasText: "三方合成验证" }).click();
   const editor = page.getByLabel("正文编辑器");
   await editor.waitFor();
   const remote = base.replace("旧信", "长信"),

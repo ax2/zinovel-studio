@@ -7,9 +7,14 @@
       "name": "多书书架",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "按最近编辑/类型/系列筛选，重启后列表一致",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "tests/library-filters.test.mjs",
+        "scripts/smoke-shelf.mjs",
+        "screenshots/stage-002/shelf/shelf-smoke.json"
+      ],
+      "validation": "assessments/shelf-acceptance.md"
     },
     {
       "id": "LIB-02",
@@ -47,9 +52,14 @@
       "name": "草稿正式状态",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "未审草稿与正式章分开显示",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "tests/library-filters.test.mjs",
+        "scripts/smoke-shelf.mjs",
+        "screenshots/stage-002/shelf/shelf-smoke.json"
+      ],
+      "validation": "assessments/shelf-acceptance.md"
     },
     {
       "id": "LIB-06",

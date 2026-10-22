@@ -30,6 +30,7 @@ import {
 } from "./library-tools";
 import "./style.css";
 import { ChapterTree } from "./chapter-tree";
+import { BookShelf } from "./book-shelf";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
 import { ConflictDialog } from "./conflict-dialog";
@@ -473,69 +474,32 @@ function App() {
         </div>
       )}
       {!book ? (
-        <main className="library">
-          <div className="library-heading">
-            <div>
-              <h1>把故事写下来</h1>
-              <p>每一个世界，都从第一句话开始。</p>
-            </div>
-            <div className="button-row">
-              <button onClick={() => setImportOpen(true)}>导入作品</button>
-              <button
-                onClick={async () => {
-                  try {
-                    const result = await api("library.restore");
-                    if (result.book) await imported(result.book);
-                  } catch (e) {
-                    setError((e as Error).message);
-                  }
-                }}
-              >
-                恢复备份
-              </button>
-              <button className="primary" onClick={() => begin("book")}>
-                <Plus size={18} />
-                新建作品
-              </button>
-            </div>
-          </div>
-          {books.length ? (
-            <div className="book-grid">
-              {books.map((b) => (
-                <button
-                  className="book-card"
-                  key={b.id}
-                  onClick={() => openBook(b)}
-                >
-                  <div className="book-cover">
-                    <BookOpen size={34} />
-                    <h2>{b.title}</h2>
-                  </div>
-                  <div className="book-card-detail">
-                    <strong>{b.title}</strong>
-                    <span>
-                      {b.chapters.filter((ch) => !ch.deletedAt).length} 章 ·{" "}
-                      {new Date(b.updatedAt).toLocaleDateString("zh-CN")}
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <section className="empty-library">
-              <Feather size={50} />
-              <h2>为你的第一部作品留个位置</h2>
-              <p>作品以本地文件保存。没有网络，也可以安心写作。</p>
-              <button onClick={() => begin("book")}>
-                <Plus size={18} />
-                创建第一部作品
-              </button>
-            </section>
-          )}
-        </main>
+        <BookShelf
+          books={books}
+          onOpen={openBook}
+          onCreate={() => begin("book")}
+          onImport={() => setImportOpen(true)}
+          onRestore={async () => {
+            try {
+              const result = await api("library.restore");
+              if (result.book) await imported(result.book);
+            } catch (e) {
+              setError((e as Error).message);
+            }
+          }}
+          onArchive={async (selected, archived) => {
+            await api("book.structure", {
+              bookId: selected.id,
+              expectedRevision: selected.revision,
+              mutation: { type: "book-archive", archived },
+            });
+            await refresh();
+          }}
+        />
       ) : (
         <>
           <ChapterTree
+            key={book.id}
             book={book}
             chapterId={chapter?.id}
             query={query}

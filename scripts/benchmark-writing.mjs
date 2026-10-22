@@ -53,7 +53,10 @@ try {
   await page.getByRole("heading", { name: "把故事写下来" }).waitFor();
   report.metrics.launchToLibraryMs = Math.round(performance.now() - start);
   const opening = performance.now();
-  await page.getByRole("button", { name: /百万字合成长篇/ }).click();
+  await page
+    .locator(".book-card")
+    .filter({ hasText: "百万字合成长篇" })
+    .click();
   const editor = page.getByLabel("正文编辑器");
   await editor.waitFor();
   report.metrics.openLongChapterMs = Math.round(performance.now() - opening);

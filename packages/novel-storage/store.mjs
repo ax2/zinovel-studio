@@ -201,6 +201,12 @@ export class NovelStore {
         throw new Error("作品目录已经改变，请刷新后重试");
       book.volumes ||= [];
       switch (mutation.type) {
+        case "book-archive":
+          if (typeof mutation.archived !== "boolean")
+            throw new Error("归档状态无效");
+          if (mutation.archived) book.archivedAt = new Date().toISOString();
+          else delete book.archivedAt;
+          break;
         case "book-metadata": {
           book.title = titleOf(mutation.title);
           for (const field of ["genre", "series", "author"]) {
@@ -225,6 +231,27 @@ export class NovelStore {
           );
           if (!volume) throw new Error("分卷不存在");
           volume.title = titleOf(mutation.title);
+          break;
+        }
+        case "volume-move": {
+          const volume = book.volumes.find(
+            (item) => item.id === checkedId(mutation.volumeId),
+          );
+          const target = mutation.beforeId
+            ? book.volumes.find(
+                (item) => item.id === checkedId(mutation.beforeId),
+              )
+            : null;
+          if (!volume || (mutation.beforeId && !target))
+            throw new Error("分卷不存在");
+          if (volume !== target) {
+            book.volumes.splice(book.volumes.indexOf(volume), 1);
+            book.volumes.splice(
+              target ? book.volumes.indexOf(target) : book.volumes.length,
+              0,
+              volume,
+            );
+          }
           break;
         }
         case "chapter-move": {

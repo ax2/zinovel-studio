@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { FileText, Plus } from "lucide-react";
 import type { Book } from "./api";
 type Props = {
@@ -17,6 +17,7 @@ export const ChapterTree = memo(function ChapterTree({
   onCreate,
   onManage,
 }: Props) {
+  const [status, setStatus] = useState("all");
   return (
     <aside className="chapters">
       <div className="chapter-heading">
@@ -25,6 +26,19 @@ export const ChapterTree = memo(function ChapterTree({
           <Plus size={18} />
         </button>
       </div>
+      <label className="chapter-filter">
+        章节状态
+        <select
+          aria-label="筛选章节状态"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="all">全部章节</option>
+          <option value="draft">草稿</option>
+          <option value="reviewed">已审读</option>
+          <option value="final">正式</option>
+        </select>
+      </label>
       <div className="chapter-list">
         {[{ id: null, title: "未分卷" }, ...(book.volumes || [])].map(
           (volume) => {
@@ -32,9 +46,11 @@ export const ChapterTree = memo(function ChapterTree({
               (chapter) =>
                 !chapter.deletedAt &&
                 (chapter.volumeId || null) === volume.id &&
-                chapter.title.includes(query),
+                chapter.title.includes(query) &&
+                (status === "all" || (chapter.status || "draft") === status),
             );
-            if (!volume.id && !chapters.length) return null;
+            if (!chapters.length && (!volume.id || query || status !== "all"))
+              return null;
             return (
               <div key={volume.id || "unassigned"}>
                 {(book.volumes?.length || 0) > 0 && (
@@ -48,16 +64,25 @@ export const ChapterTree = memo(function ChapterTree({
                   >
                     <FileText size={17} />
                     <span>{chapter.title}</span>
-                    {chapter.status === "final" && <small>正式</small>}
+                    <small>
+                      {chapter.status === "final"
+                        ? "正式"
+                        : chapter.status === "reviewed"
+                          ? "已审"
+                          : "草稿"}
+                    </small>
                   </button>
                 ))}
               </div>
             );
           },
         )}
-        {query &&
+        {(query || status !== "all") &&
           !book.chapters.some(
-            (chapter) => !chapter.deletedAt && chapter.title.includes(query),
+            (chapter) =>
+              !chapter.deletedAt &&
+              chapter.title.includes(query) &&
+              (status === "all" || (chapter.status || "draft") === status),
           ) && <p className="muted">没有匹配的章节</p>}
       </div>
       <button className="book-manage" onClick={onManage}>

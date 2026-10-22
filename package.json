@@ -18,6 +18,7 @@
     "test:editor-tools": "node scripts/smoke-editor-tools.mjs",
     "test:recovery": "node scripts/smoke-recovery.mjs",
     "test:merge": "node scripts/smoke-merge.mjs",
+    "test:shelf": "node scripts/smoke-shelf.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs"
   },
   "engines": {

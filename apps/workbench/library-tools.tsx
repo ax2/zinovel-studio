@@ -284,6 +284,30 @@ export function StructureDialog({
           章节 ID 和正文文件保持稳定；删除进入回收站，恢复后保留正文与历史。
         </p>
         <div className="structure-list">
+          {!!current.volumes?.length && (
+            <div className="volume-order">
+              <h3>分卷顺序</h3>
+              {current.volumes.map((volume, index) => (
+                <div className="volume-order-row" key={volume.id}>
+                  <span>{volume.title}</span>
+                  <button
+                    title={`上移分卷 ${volume.title}`}
+                    disabled={busy || index === 0}
+                    onClick={() =>
+                      mutate({
+                        type: "volume-move",
+                        volumeId: volume.id,
+                        beforeId: current.volumes![index - 1].id,
+                      })
+                    }
+                  >
+                    <ArrowUp size={16} />
+                    上移
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           {orderedChapters(current, { includeDeleted: true }).map(
             (chapter, index) => (
               <div

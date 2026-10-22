@@ -21,6 +21,7 @@ export interface Book {
   genre?: string;
   series?: string;
   author?: string;
+  archivedAt?: string;
 }
 declare global {
   interface Window {

@@ -57,7 +57,10 @@ try {
     env,
   });
   page = await application.firstWindow();
-  await page.getByRole("button", { name: /故障恢复合成验证/ }).click();
+  await page
+    .locator(".book-card")
+    .filter({ hasText: "故障恢复合成验证" })
+    .click();
   await page.getByLabel("正文编辑器").waitFor();
   const settings = await page.evaluate(async () => {
     await Promise.all([
