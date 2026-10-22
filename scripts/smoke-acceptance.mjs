@@ -98,17 +98,27 @@ for (const item of cases) {
   );
   if (item.external) await writeFile(item.file, item.external, "utf8");
 }
-const screenshots = join(root, "screenshots/stage-003/acceptance");
+const screenshots = join(
+  root,
+  "screenshots",
+  process.env.ZINOVEL_QA_STAGE || "stage-003",
+  "acceptance",
+);
 await mkdir(screenshots, { recursive: true });
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
+if (process.env.ZINOVEL_TEST_EXECUTABLE) {
+  for (const key of Object.keys(env))
+    if (key.toLowerCase() === "path") delete env[key];
+  env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
+}
 let application, page;
 const report = { status: "running", checks: [], errors: [], cases: [] };
 try {
   application = await electron.launch({
-    executablePath: electronPath,
-    args: [root],
-    cwd: root,
+    executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
+    args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
+    cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
     env,
   });
   page = await application.firstWindow();

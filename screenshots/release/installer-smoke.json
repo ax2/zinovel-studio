@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.1",
-  "installerSha256": "7f3e562601130d6693586f277c6558d27691f900dcf4b5db9bca3883ecf63906",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-n8JA7R\\中文 安装目录",
+  "version": "0.1.0-alpha.2",
+  "installerSha256": "12fab47a225ed6612b4854e0f5258e25784b9508b84d6c0e112508cd06e54e20",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-sTbtlw\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -15,11 +15,20 @@
     "installed: stale AI proposal cannot overwrite edits made during generation",
     "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
     "installed: narrow-window assistant remains reachable through reference drawer",
+    "installed: bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes",
+    "installed: forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded",
+    "installed: task list filters by book and remains bounded, accessible and dismissible in narrow viewport",
+    "installed: four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
+    "installed: acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
+    "installed: before-write interruption retains author-adjusted candidate; explicit UI retry saves exactly once",
+    "installed: library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
+    "installed: all-book task list opens the exact linked book and chapter",
+    "installed: cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 15929,
-  "reinstallMs": 22854,
-  "uninstallMs": 4836
+  "installMs": 13646,
+  "reinstallMs": 19154,
+  "uninstallMs": 4750
 }

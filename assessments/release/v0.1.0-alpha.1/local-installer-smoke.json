@@ -1,0 +1,25 @@
+{
+  "version": "0.1.0-alpha.1",
+  "installerSha256": "7f3e562601130d6693586f277c6558d27691f900dcf4b5db9bca3883ecf63906",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-n8JA7R\\中文 安装目录",
+  "checks": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer",
+    "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
+    "real NSIS uninstall removes app and retains synthetic user manuscript"
+  ],
+  "status": "passed",
+  "installMs": 15929,
+  "reinstallMs": 22854,
+  "uninstallMs": 4836
+}

@@ -115,6 +115,33 @@ try {
   );
   assert.equal(desktop.status, "passed");
   evidence.checks.push(...desktop.checks.map((check) => `installed: ${check}`));
+  for (const [script, receipt] of [
+    ["smoke-tasks.mjs", "tasks/task-smoke.json"],
+    ["smoke-acceptance.mjs", "acceptance/acceptance-smoke.json"],
+    ["smoke-task-compatibility.mjs", "compatibility/compatibility-smoke.json"],
+  ]) {
+    const result = await execute(
+      process.execPath,
+      [join(root, "scripts", script)],
+      {
+        ...childOptions,
+        timeout: 240000,
+        env: {
+          ...process.env,
+          ZINOVEL_TEST_EXECUTABLE: executable,
+          ZINOVEL_QA_STAGE: "release/installed",
+        },
+      },
+    );
+    process.stdout.write(result.stdout);
+    const verified = JSON.parse(
+      await readFile(join(reportRoot, "installed", receipt), "utf8"),
+    );
+    assert.equal(verified.status, "passed");
+    evidence.checks.push(
+      ...verified.checks.map((check) => `installed: ${check}`),
+    );
+  }
   const data = desktop.dataDirectory;
   const books = await readdir(join(data, "library"));
   const book = JSON.parse(
