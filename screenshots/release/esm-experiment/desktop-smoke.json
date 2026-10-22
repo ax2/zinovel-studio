@@ -1,0 +1,9 @@
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-kxgYls",
+  "platform": "win32",
+  "viewport": null,
+  "checks": [],
+  "errors": [],
+  "status": "failed",
+  "failure": "electron.launch: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - <launching> \"D:\\work\\zinovel-studio\\release\\win-unpacked\\ZiNovel Studio.exe\" \"--inspect=0\" \"--remote-debugging-port=0\"\u001b[22m\n\u001b[2m  - <launched> pid=62228\u001b[22m\n\u001b[2m  - [pid=62228][out]\u001b[22m\n\u001b[2m  - [pid=62228][err] Debugger listening on ws://127.0.0.1:28822/ba0dce32-bf62-4d8d-b634-55ca6ed01a0d\u001b[22m\n\u001b[2m  - [pid=62228][err] For help, see: https://nodejs.org/learn/getting-started/debugging\u001b[22m\n\u001b[2m  - <ws connecting> ws://127.0.0.1:28822/ba0dce32-bf62-4d8d-b634-55ca6ed01a0d\u001b[22m\n\u001b[2m  - <ws connected> ws://127.0.0.1:28822/ba0dce32-bf62-4d8d-b634-55ca6ed01a0d\u001b[22m\n\u001b[2m  - [pid=62228][err] Debugger attached.\u001b[22m\n\n    at async launch (D:\\Work\\zinovel-studio\\scripts\\smoke-desktop.mjs:30:17)\n    at async file:///D:/Work/zinovel-studio/scripts/smoke-desktop.mjs:52:14"
+}

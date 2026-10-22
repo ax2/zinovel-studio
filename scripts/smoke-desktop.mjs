@@ -54,8 +54,13 @@ try {
     const runtime = await application.evaluate(({ app }) => ({
       packaged: app.isPackaged,
       executable: process.execPath,
+      versions: {
+        electron: process.versions.electron,
+        node: process.versions.node,
+      },
     }));
     assert.equal(runtime.packaged, true);
+    evidence.runtime = runtime.versions;
     assert.equal(
       resolve(runtime.executable),
       resolve(process.env.ZINOVEL_TEST_EXECUTABLE),

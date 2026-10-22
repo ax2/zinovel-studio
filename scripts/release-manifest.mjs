@@ -1,6 +1,5 @@
 import { readFile, writeFile, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
-import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 
 const root = new URL("../", import.meta.url);
@@ -40,6 +39,12 @@ const manifest = {
   sha256,
   signature: "unsigned-preview",
   electron: pkg.devDependencies.electron,
+  embeddedNode: JSON.parse(
+    await readFile(
+      new URL("screenshots/release/installed/desktop-smoke.json", root),
+      "utf8",
+    ),
+  ).runtime.node,
   harness: pkg.dependencies["@deepseek-ai/dsh"],
   qualification: smoke.checks,
   generatedAt: new Date().toISOString(),

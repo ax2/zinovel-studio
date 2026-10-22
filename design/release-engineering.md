@@ -11,7 +11,7 @@
 
 ## 最小独立运行时
 
-Electron 44.7.0 自带 Node；官方 SDK 通过该 EXE 的 Node 模式启动固定版本 DSH CLI。安装机无需 Node、pnpm、Python 或其他桌面应用。保留普通文件布局（asar=false），避免子进程插件解析依赖开发目录或虚拟归档。
+Electron 44.7.0 自带 Node 24.21.0；官方 SDK 通过该 EXE 的 Node 模式启动固定版本 DSH CLI。安装机无需 Node、pnpm、Python 或其他桌面应用。ASAR 保存 JavaScript/配置等普通资源；原生模块和外部可执行组件由打包器解包。已实测 Node 模式能够解析归档内 ESM、官方 CLI 和小说插件，不能仅凭开发环境可用推断。
 
 仅生产依赖随包进入。官方 CLI 的依赖闭包包含一些未加载的共享插件；小说 profile 继续关闭通用终端、文件工具等入口。npmRebuild=false 保持供应商预构建依赖，首轮必须实际验证打包后的 Agent。该选择不表示未加载的原生模块全部可用。
 

@@ -944,9 +944,13 @@
       "name": "独立 Windows 安装包",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "无开发工具 PATH 可写作并运行 Agent，重装及卸载保留稿件",
-      "evidence": ["electron-builder.config.cjs", "scripts/smoke-installer.mjs"]
+      "evidence": [
+        "electron-builder.config.cjs",
+        "scripts/smoke-installer.mjs"
+      ],
+      "validation": "assessments/windows-preview-acceptance.md"
     },
     {
       "id": "EXT-01",

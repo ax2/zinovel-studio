@@ -5,9 +5,9 @@ module.exports = {
   productName: "ZiNovel Studio",
   copyright: "Copyright © 2026 ZiNovel Studio contributors",
   directories: { output: "release", buildResources: "assets/app" },
-  // The official CLI runs in an Electron Node-mode child. It and its ESM
-  // plugins need ordinary filesystem paths, including on machines without Node.
-  asar: false,
+  // Electron's Node mode supports ASAR ESM loading. Native modules and external
+  // executables are automatically unpacked by electron-builder.
+  asar: true,
   npmRebuild: false,
   allowMissingDependencies: false,
   electronDist: path.dirname(require("electron")),

@@ -1,10 +1,11 @@
 import { readFile, readdir, lstat, writeFile } from "node:fs/promises";
 import { join, resolve, relative, dirname } from "node:path";
 import assert from "node:assert/strict";
+import originalFs from "original-fs";
 
 const root = resolve(import.meta.dirname, "..");
 const unpacked = join(root, "release/win-unpacked");
-const app = join(unpacked, "resources/app");
+const app = join(unpacked, "resources/app.asar");
 const source = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
 const bundled = JSON.parse(await readFile(join(app, "package.json"), "utf8"));
 assert.equal(bundled.version, source.version);
@@ -59,19 +60,24 @@ async function findDependency(packageDirectory, name) {
     directory = parent;
   }
 }
-async function inspect(directory) {
-  for (const entry of await readdir(directory, { withFileTypes: true })) {
+async function inspect(directory, physical) {
+  const readDirectory = physical ? originalFs.promises.readdir : readdir;
+  const getStat = physical ? originalFs.promises.lstat : lstat;
+  for (const entry of await readDirectory(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name),
-      stat = await lstat(path);
+      stat = await getStat(path);
     assert.ok(
       !stat.isSymbolicLink(),
       `Packaged links may depend on a development machine: ${relative(unpacked, path)}`,
     );
-    if (stat.isDirectory()) await inspect(path);
+    if (stat.isDirectory()) await inspect(path, physical);
     else {
-      fileCount++;
-      totalBytes += stat.size;
+      if (physical) {
+        fileCount++;
+        totalBytes += stat.size;
+      }
       if (
+        !physical &&
         entry.name === "package.json" &&
         path.includes(`${join("node_modules", "")}`)
       ) {
@@ -106,7 +112,8 @@ async function inspect(directory) {
     }
   }
 }
-await inspect(unpacked);
+await inspect(unpacked, true);
+await inspect(app, false);
 assert.ok(
   !packages.some((pkg) =>
     ["electron-builder", "playwright", "typescript"].includes(pkg.name),

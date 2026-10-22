@@ -3,7 +3,7 @@ node_modules/
 work/
 vendor/
 dist/
-release/
+/release/
 target/
 *.log
 .env

@@ -82,9 +82,16 @@ try {
   await execute(installer, ["/S", `/D=${install}`], childOptions);
   await eventually(() => exists(executable), "Installed executable missing");
   evidence.installMs = Date.now() - startedAt;
-  const manifest = JSON.parse(
-    await readFile(join(install, "resources/app/package.json"), "utf8"),
+  const manifestResult = await execute(
+    executable,
+    [
+      "-e",
+      'process.stdout.write(require("node:fs").readFileSync(process.argv[1], "utf8"))',
+      join(install, "resources/app.asar/package.json"),
+    ],
+    { ...childOptions, env: { ...process.env, ELECTRON_RUN_AS_NODE: "1" } },
   );
+  const manifest = JSON.parse(manifestResult.stdout);
   assert.equal(manifest.version, pkg.version);
   evidence.checks.push(
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
@@ -121,7 +128,9 @@ try {
     `${book.chapters[0].id}.md`,
   );
   const before = await readFile(file);
+  const reinstallStartedAt = Date.now();
   await execute(installer, ["/S", `/D=${install}`], childOptions);
+  evidence.reinstallMs = Date.now() - reinstallStartedAt;
   assert.deepEqual(await readFile(file), before);
   const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
   delete env.ELECTRON_RUN_AS_NODE;
@@ -152,12 +161,14 @@ try {
     /^Uninstall .*\.exe$/i.test(name),
   );
   assert.ok(uninstaller, "uninstaller is included");
+  const uninstallStartedAt = Date.now();
   await execute(join(install, uninstaller), ["/S"], childOptions);
   await eventually(
     async () => !(await exists(executable)),
     "Uninstaller did not remove the installed executable",
   );
   assert.deepEqual(await readFile(file), before);
+  evidence.uninstallMs = Date.now() - uninstallStartedAt;
   evidence.checks.push(
     "real NSIS uninstall removes app and retains synthetic user manuscript",
   );
