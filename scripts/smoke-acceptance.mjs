@@ -146,11 +146,49 @@ try {
       await page.getByText("恢复检查确认原稿仍在", { exact: false }).waitFor();
       await page.getByRole("button", { name: "继续审阅", exact: true }).click();
       assert.equal(await page.getByLabel("候选文本").inputValue(), authored);
+      const resumedDraft = authored + "恢复后又调整并保存的草稿。";
+      await page.getByLabel("候选文本").fill(resumedDraft);
+      await page
+        .getByRole("button", { name: "保存审阅草稿", exact: true })
+        .click();
+      await page
+        .getByLabel("审阅草稿状态")
+        .filter({ hasText: "审阅草稿已保存" })
+        .waitFor();
+      const savedTask = await journal.read(item.id);
+      assert.equal(
+        savedTask.reviewDraft.afterAcceptanceId,
+        savedTask.record.acceptance.id,
+      );
+      await application.close();
+      application = await electron.launch({
+        executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
+        args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
+        cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
+        env,
+      });
+      page = await application.firstWindow();
+      page.on("pageerror", (error) => report.errors.push(error.message));
+      await page.locator(".book-card").filter({ hasText: item.name }).click();
+      await page.getByLabel("正文编辑器").waitFor();
+      const taskButton = page.getByRole("button", {
+        name: "写作任务记录",
+        exact: true,
+      });
+      if (!(await taskButton.isVisible()))
+        await page.getByTitle("打开创作参考").click();
+      await taskButton.click();
+      await page.locator(".task-row").first().click();
+      await page.getByRole("button", { name: "继续审阅", exact: true }).click();
+      assert.equal(
+        await page.getByLabel("候选文本").inputValue(),
+        resumedDraft,
+      );
       await page.getByRole("button", { name: "接受候选", exact: true }).click();
       await page
         .getByRole("dialog", { name: "审阅 AI 候选" })
         .waitFor({ state: "hidden" });
-      assert.equal(await readFile(item.file, "utf8"), authored);
+      assert.equal(await readFile(item.file, "utf8"), resumedDraft);
       assert.equal(
         (await store.readChapter(item.book.id, item.chapter.id)).revision,
         2,
@@ -204,7 +242,7 @@ try {
   report.checks.push(
     "four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
     "acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
-    "before-write interruption retains author-adjusted candidate; explicit UI retry saves exactly once",
+    "before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once",
   );
   report.status = "passed";
 } catch (error) {

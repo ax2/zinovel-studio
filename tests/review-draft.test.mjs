@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { TaskJournal } from "../packages/novel-harness/task-journal.mjs";
+import { reviewContent } from "../packages/novel-domain/review-content.mjs";
 
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), "zinovel-review-draft-")),
@@ -64,4 +65,20 @@ test("an obstructed review draft path reports failure and preserves prior source
   await assert.rejects(journal.saveReviewDraft(id, "写入受阻", 0));
   assert.deepEqual(await readFile(join(root, id, "task.json")), before);
   assert.equal((await journal.read(id)).reviewDraft, null);
+});
+
+test("a review saved after recovered acceptance supersedes that intent, while an older draft does not", async () => {
+  const { root, id, journal } = await fixture();
+  await journal.saveReviewDraft(id, "接受之前的旧草稿", 0);
+  const intent = { id: randomUUID(), acceptedText: "中断接受时作者确认的文字" };
+  await journal.transition(id, "accepting", { acceptance: intent });
+  await journal.transition(id, "awaiting-review", {
+    acceptanceRecovery: "original-text-retained",
+  });
+  assert.equal(reviewContent(await journal.read(id)).text, intent.acceptedText);
+  const updated = await journal.saveReviewDraft(id, "恢复后新存的草稿𠮷🌊", 1);
+  assert.equal(updated.afterAcceptanceId, intent.id);
+  const restored = await new TaskJournal(root).read(id);
+  assert.equal(reviewContent(restored).text, "恢复后新存的草稿𠮷🌊");
+  assert.equal(reviewContent(restored).source, "saved-review");
 });

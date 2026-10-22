@@ -9,7 +9,7 @@ export function CandidateReview({
   original,
   candidate,
   initialText,
-  reviewRevision,
+  hasSavedDraft,
   applying,
   error,
   onClose,
@@ -19,7 +19,7 @@ export function CandidateReview({
   original: string;
   candidate: string;
   initialText?: string;
-  reviewRevision: number;
+  hasSavedDraft?: boolean;
   applying: boolean;
   error: string;
   onClose: () => void;
@@ -28,7 +28,7 @@ export function CandidateReview({
 }) {
   const [comparison, setComparison] = useState(initialText ?? candidate);
   const [savedText, setSavedText] = useState(initialText ?? candidate);
-  const [hasSaved, setHasSaved] = useState(reviewRevision > 0);
+  const [hasSaved, setHasSaved] = useState(hasSavedDraft === true);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState("");
   const locked = applying || saving;
@@ -171,7 +171,7 @@ export function CandidateReview({
               ? "审阅调整尚未保存"
               : hasSaved
                 ? "审阅草稿已保存"
-                : "原候选已保留"}
+                : "任务文本已保留"}
         </p>
         {(error || saveError) && (
           <p role="alert" className="inline-error">

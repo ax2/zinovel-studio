@@ -197,6 +197,9 @@ export class TaskJournal {
       draft.revision < 1 ||
       typeof draft.text !== "string" ||
       draft.text.length > 120000 ||
+      (draft.afterAcceptanceId !== undefined &&
+        (typeof draft.afterAcceptanceId !== "string" ||
+          !identifier.test(draft.afterAcceptanceId))) ||
       typeof draft.updatedAt !== "string" ||
       !Number.isFinite(Date.parse(draft.updatedAt))
     )
@@ -228,6 +231,9 @@ export class TaskJournal {
       const draft = {
         schemaVersion: 1,
         taskId: id,
+        ...(record.acceptance?.id
+          ? { afterAcceptanceId: record.acceptance.id }
+          : {}),
         sourceCandidateHash: createHash("sha256")
           .update(record.candidate)
           .digest("hex"),

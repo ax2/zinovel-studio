@@ -863,6 +863,39 @@ footer {
   border-radius: 8px;
   padding: 12px;
 }
+.modal.candidate-comparison {
+  width: min(1000px, 90vw);
+  max-height: 88vh;
+  overflow: auto;
+}
+.candidate-comparison label {
+  display: block;
+}
+.candidate-comparison select {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.candidate-comparison textarea {
+  width: 100%;
+  min-height: 240px;
+  resize: vertical;
+  padding: 12px;
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font: inherit;
+  line-height: 1.8;
+}
+.candidate-comparison small {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
 .candidate-diff summary {
   cursor: pointer;
   color: var(--text);

@@ -251,12 +251,165 @@ try {
   await saved(body);
   await page.getByLabel("正文编辑器").press("Control+y");
   await saved(accepted);
+  await page.getByLabel("正文编辑器").press("Control+z");
+  await saved(body);
+  const alternativeId = randomUUID(),
+    staleId = randomUUID();
+  for (const [taskId, model, source] of [
+    [alternativeId, "synthetic-alternative", body],
+    [staleId, "synthetic-stale", body + "外部改稿"],
+  ]) {
+    await journal.create(
+      {
+        id: taskId,
+        status: "preparing",
+        bookId: book.id,
+        chapterId: chapter.id,
+        chapterTitle: chapter.title,
+        skillId: "novel-polish",
+        model,
+        startedAt: new Date().toISOString(),
+      },
+      {
+        context: source,
+        selectedText: selected,
+        instruction: "比较合成候选",
+        target: {
+          bookId: book.id,
+          chapterId: chapter.id,
+          body: source,
+          start: prefix.length,
+          end: prefix.length + selected.length,
+          baseHash: source === body ? chapter.diskHash : "stale-hash",
+        },
+      },
+    );
+    await journal.transition(taskId, "running");
+    await journal.transition(taskId, "awaiting-review", {
+      candidate: "另一版本的模型候选。",
+    });
+  }
+  const alternativeDraft = "另一版本的作者草稿。𠮷🌊";
+  await journal.saveReviewDraft(alternativeId, alternativeDraft, 0);
+  await page.getByTitle("浅色主题", { exact: true }).click();
+  const trigger = page.getByRole("button", {
+    name: "写作任务记录",
+    exact: true,
+  });
+  if (!(await trigger.isVisible()))
+    await page.getByTitle("打开创作参考").click();
+  await trigger.click();
+  await page
+    .locator(".task-row")
+    .filter({ hasText: "synthetic-no-model" })
+    .click();
+  await page.getByRole("button", { name: "比较同章候选", exact: true }).click();
+  await page.getByLabel("对比的任务", { exact: true }).selectOption(staleId);
+  await page
+    .getByLabel("候选基线核对")
+    .filter({ hasText: "原稿或选区不同" })
+    .waitFor();
+  assert.equal(
+    await page
+      .getByRole("button", { name: "审阅另一版", exact: true })
+      .isEnabled(),
+    false,
+  );
+  await page.screenshot({
+    path: join(screenshots, "compare-incompatible-base.png"),
+  });
+  await page
+    .getByLabel("对比的任务", { exact: true })
+    .selectOption(alternativeId);
+  await page
+    .getByLabel("候选基线核对")
+    .filter({ hasText: "来自同一章" })
+    .waitFor();
+  assert.equal(
+    await page.getByLabel("当前对比候选", { exact: true }).inputValue(),
+    mixed,
+  );
+  assert.equal(
+    await page.getByLabel("另一对比候选", { exact: true }).inputValue(),
+    alternativeDraft,
+  );
+  assert.equal(await readFile(file, "utf8"), body);
+  await page.screenshot({
+    path: join(screenshots, "compare-candidates-light.png"),
+  });
+  await page.keyboard.press("Escape");
+  assert.equal(
+    await page.getByRole("dialog", { name: "比较候选", exact: true }).count(),
+    0,
+  );
+  assert.equal(
+    await page
+      .getByRole("dialog", { name: "写作任务记录", exact: true })
+      .isVisible(),
+    true,
+  );
+  await application.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].setSize(820, 700),
+  );
+  await page.getByRole("button", { name: "比较同章候选", exact: true }).click();
+  await page
+    .getByLabel("对比的任务", { exact: true })
+    .selectOption(alternativeId);
+  await page
+    .getByLabel("候选基线核对")
+    .filter({ hasText: "来自同一章" })
+    .waitFor();
+  await page.screenshot({
+    path: join(screenshots, "compare-candidates-narrow.png"),
+  });
+  assert.ok(
+    await page
+      .locator(".candidate-comparison")
+      .evaluate((element) => element.scrollWidth <= element.clientWidth + 1),
+  );
+  await page.getByRole("button", { name: "审阅另一版", exact: true }).click();
+  assert.equal(
+    await page.getByLabel("候选文本", { exact: true }).inputValue(),
+    alternativeDraft,
+  );
+  await page.getByRole("button", { name: "接受候选", exact: true }).click();
+  await page
+    .getByRole("dialog", { name: "审阅 AI 候选" })
+    .waitFor({ state: "hidden" });
+  await saved(prefix + alternativeDraft + suffix);
+  assert.equal(
+    (await journal.read(alternativeId)).record.acceptedText,
+    alternativeDraft,
+  );
+  assert.equal((await journal.read(id)).record.acceptedText, mixed);
+  await page.getByTitle("深色主题", { exact: true }).click();
+  if (!(await trigger.isVisible()))
+    await page.getByTitle("打开创作参考").click();
+  await trigger.click();
+  await page
+    .locator(".task-row")
+    .filter({ hasText: "synthetic-no-model" })
+    .click();
+  await page.getByRole("button", { name: "比较同章候选", exact: true }).click();
+  await page
+    .getByLabel("对比的任务", { exact: true })
+    .selectOption(alternativeId);
+  await page
+    .getByLabel("候选基线核对")
+    .filter({ hasText: "来自同一章" })
+    .waitFor();
+  await page.screenshot({
+    path: join(screenshots, "compare-candidates-dark-narrow.png"),
+  });
+  await page.getByLabel("关闭候选比较").click();
+  await page.getByLabel("关闭任务记录").click();
   report.checks.push(
     "real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
     "close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
     "stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
     "partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
     "light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
+    "same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance",
   );
   assert.deepEqual(report.errors, []);
   report.status = "passed";

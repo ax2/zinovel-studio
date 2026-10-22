@@ -4,6 +4,7 @@ import { X, RefreshCw } from "lucide-react";
 import { api } from "./api";
 import type { WritingSnapshot } from "./assistant";
 import { formatCost, type BudgetSettings } from "./budget-settings";
+import { CandidateComparison } from "./candidate-comparison";
 
 const statusLabels: Record<string, string> = {
   preparing: "准备中",
@@ -30,7 +31,12 @@ type TaskSummary = {
   hasCandidate: boolean;
 };
 export type StoredTask = {
-  reviewDraft?: { text: string; revision: number; updatedAt: string } | null;
+  reviewDraft?: {
+    text: string;
+    revision: number;
+    updatedAt: string;
+    afterAcceptanceId?: string;
+  } | null;
   reviewDraftError?: string;
   record: TaskSummary & {
     candidate?: string;
@@ -38,7 +44,7 @@ export type StoredTask = {
     partialCandidate?: boolean;
     partialSource?: "stream";
     streamTruncated?: boolean;
-    acceptance?: { acceptedText: string };
+    acceptance?: { id?: string; acceptedText: string };
     acceptanceRecovery?: string;
     retryOf?: string;
     errorCode?: string;
@@ -92,6 +98,16 @@ export function TaskHistory({
     [scope, setScope] = useState(bookId ? "book" : "all"),
     [offset, setOffset] = useState(0);
   const requestSequence = useRef(0);
+  const [comparing, setComparing] = useState(false);
+  const comparisons = selected
+    ? tasks.filter(
+        (task) =>
+          task.id !== selected.record.id &&
+          task.bookId === selected.record.bookId &&
+          task.chapterId === selected.record.chapterId &&
+          task.hasCandidate,
+      )
+    : [];
   async function refresh() {
     const request = ++requestSequence.current;
     setLoading(true);
@@ -290,6 +306,11 @@ export function TaskHistory({
                 {selected.reviewDraftError}
               </p>
             )}
+            {selected.snapshot.target &&
+              selected.record.candidate &&
+              comparisons.length > 0 && (
+                <button onClick={() => setComparing(true)}>比较同章候选</button>
+              )}
             {selected.record.acceptedText &&
               selected.record.acceptedText !== selected.record.candidate && (
                 <label>
@@ -527,6 +548,16 @@ export function TaskHistory({
           </>
         )}
       </div>
+      {comparing && selected && (
+        <CandidateComparison
+          first={selected}
+          choices={comparisons}
+          onClose={() => setComparing(false)}
+          onReview={
+            onReview && selected.record.bookId === bookId ? onReview : undefined
+          }
+        />
+      )}
     </div>,
     document.body,
   );

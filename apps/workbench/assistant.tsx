@@ -4,6 +4,7 @@ import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
 import { TaskHistory, type StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
+import { reviewContent } from "../../packages/novel-domain/review-content.mjs";
 import {
   BudgetSettingsEditor,
   formatCost,
@@ -181,6 +182,7 @@ export function WritingAssistant({
       initialText?: string;
       reviewRevision?: number;
       reviewDraftError?: string;
+      hasSavedDraft?: boolean;
     } | null>(null);
   useEffect(() => {
     api<typeof skills>("skills.list")
@@ -362,11 +364,8 @@ export function WritingAssistant({
             setProposal({
               id: task.record.id,
               text: task.record.candidate!,
-              initialText:
-                task.record.acceptanceRecovery === "original-text-retained"
-                  ? task.record.acceptance?.acceptedText ||
-                    task.record.candidate!
-                  : (task.reviewDraft?.text ?? task.record.candidate!),
+              initialText: reviewContent(task).text,
+              hasSavedDraft: reviewContent(task).source === "saved-review",
               reviewRevision: task.reviewDraft?.revision || 0,
               reviewDraftError: task.reviewDraftError,
               base: task.snapshot.target!,
@@ -384,7 +383,7 @@ export function WritingAssistant({
             )}
             candidate={proposal.text}
             initialText={proposal.initialText}
-            reviewRevision={proposal.reviewRevision || 0}
+            hasSavedDraft={proposal.hasSavedDraft}
             applying={applying}
             error={proposalError || proposal.reviewDraftError || ""}
             onClose={() => setProposal(null)}
