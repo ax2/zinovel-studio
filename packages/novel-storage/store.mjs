@@ -693,7 +693,26 @@ export class NovelStore {
       };
     });
   }
-  saveChapter(input) {
+  readAcceptanceReceipt(bookId, receiptId) {
+    return this.#exclusive(async () => {
+      const root = await this.#bookRoot(bookId);
+      await this.#manifest(root);
+      const path = await this.#path(
+        root,
+        `.zinovel/task-receipts/${checkedId(receiptId)}.json`,
+      );
+      try {
+        const info = await lstat(path);
+        if (!info.isFile() || info.size > 16384)
+          throw new Error("接受回执格式无效");
+        return JSON.parse(await readFile(path, "utf8"));
+      } catch (error) {
+        if (error.code === "ENOENT") return null;
+        throw error;
+      }
+    });
+  }
+  saveChapter(input, acceptanceReceipt = undefined) {
     return this.#exclusive(async () => {
       if (
         typeof input.body !== "string" ||
@@ -716,6 +735,31 @@ export class NovelStore {
           status: "conflict",
           current: { ...chapter, body: disk, diskHash: digest(disk) },
         };
+      let receiptChanges = {};
+      if (acceptanceReceipt) {
+        const receipt = acceptanceReceipt;
+        checkedId(receipt.id);
+        checkedId(receipt.taskId);
+        if (
+          receipt.beforeHash !== digest(disk) ||
+          receipt.afterHash !== digest(input.body)
+        )
+          throw new Error("接受回执与正文版本不匹配");
+        const receiptPath = `.zinovel/task-receipts/${receipt.id}.json`;
+        if (await readOptional(await this.#path(root, receiptPath)))
+          throw new Error("接受回执已存在，不能重复改稿");
+        receiptChanges = {
+          [receiptPath]: json({
+            schemaVersion: 1,
+            id: receipt.id,
+            taskId: receipt.taskId,
+            chapterId: chapter.id,
+            beforeHash: receipt.beforeHash,
+            afterHash: receipt.afterHash,
+            at: new Date().toISOString(),
+          }),
+        };
+      }
       chapter.title = titleOf(input.title);
       chapter.revision++;
       chapter.hash = digest(input.body);
@@ -725,6 +769,7 @@ export class NovelStore {
       await this.#transaction(root, {
         [path]: input.body,
         "book.json": json(book),
+        ...receiptChanges,
       });
       return {
         status: "saved",

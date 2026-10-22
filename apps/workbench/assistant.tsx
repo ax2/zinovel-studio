@@ -137,7 +137,11 @@ export function WritingAssistant({
   bookId,
 }: {
   snapshot: WritingSnapshot | null;
-  apply: (base: WritingSnapshot, candidate: string) => Promise<boolean>;
+  apply: (
+    base: WritingSnapshot,
+    candidate: string,
+    taskId?: string,
+  ) => Promise<boolean>;
   openSettings: () => void;
   openChapter: (id: string) => Promise<void>;
   bookId: string;
@@ -154,7 +158,6 @@ export function WritingAssistant({
       id: string;
       text: string;
       base: WritingSnapshot;
-      saved?: boolean;
     } | null>(null);
   useEffect(() => {
     api<typeof skills>("skills.list")
@@ -269,7 +272,11 @@ export function WritingAssistant({
             setProposalError("");
             setProposal({
               id: task.record.id,
-              text: task.record.candidate!,
+              text:
+                task.record.acceptanceRecovery === "original-text-retained"
+                  ? task.record.acceptance?.acceptedText ||
+                    task.record.candidate!
+                  : task.record.candidate!,
               base: task.snapshot.target!,
             });
           }}
@@ -312,7 +319,7 @@ export function WritingAssistant({
                   <textarea
                     aria-label="候选文本"
                     value={proposal.text}
-                    readOnly={proposal.saved || applying}
+                    readOnly={applying}
                     onChange={(e) =>
                       setProposal({ ...proposal, text: e.target.value })
                     }
@@ -336,19 +343,17 @@ export function WritingAssistant({
                     setProposalError("");
                     try {
                       if (
-                        !proposal.saved &&
-                        !(await apply(proposal.base, proposal.text))
+                        !(await apply(
+                          proposal.base,
+                          proposal.text,
+                          proposal.id,
+                        ))
                       ) {
                         setProposalError(
                           "当前正文或保存状态不允许接受，请保留候选并检查正文提示。",
                         );
                         return;
                       }
-                      setProposal({ ...proposal, saved: true });
-                      await api("ai.applied", {
-                        id: proposal.id,
-                        candidate: proposal.text,
-                      });
                       setProposal(null);
                     } catch (e) {
                       setProposalError(`接受未完成：${(e as Error).message}`);
@@ -357,11 +362,7 @@ export function WritingAssistant({
                     }
                   }}
                 >
-                  {applying
-                    ? "正在保存…"
-                    : proposal.saved
-                      ? "更新接受记录"
-                      : "接受候选"}
+                  {applying ? "正在保存…" : "接受候选"}
                 </button>
               </div>
             </div>

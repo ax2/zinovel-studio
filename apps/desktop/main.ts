@@ -9,10 +9,9 @@ import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
 import { ModelSettings } from "./settings";
 import { previewImport } from "../../packages/novel-storage/importer.mjs";
 import { randomUUID } from "node:crypto";
-import {
-  bindWritingTarget,
-  validateAcceptance,
-} from "../../packages/novel-harness/target.mjs";
+import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
+import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
+import { TaskAcceptance } from "../../packages/novel-harness/acceptance.mjs";
 
 app.setName("ZiNovel Studio");
 const dataRoot =
@@ -21,7 +20,10 @@ const dataRoot =
 app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
 const settings = new ModelSettings(dataRoot);
+const journal = new TaskJournal(join(dataRoot, "tasks"));
+const acceptance = new TaskAcceptance(journal, store);
 const harness = new NovelHarness({
+  journal,
   root: dataRoot,
   resources: resolve(__dirname, "../resources"),
   environment: desktopNodeEnvironment(process.execPath, undefined, process.env),
@@ -38,6 +40,7 @@ function cancelCloseAttempt() {
 async function closeAfterRecovery() {
   cancelCloseAttempt();
   await harness.cancel();
+  await acceptance.whenIdle();
   await store.whenIdle();
   if (!window || window.isDestroyed()) return;
   window.webContents.session.flushStorageData();
@@ -91,6 +94,7 @@ if (
     .then(async () => {
       await store.initialize();
       await harness.initialize();
+      await acceptance.recoverAll();
       Menu.setApplicationMenu(
         Menu.buildFromTemplate([
           {
@@ -322,20 +326,13 @@ if (
                 });
                 value = { discarded: true };
                 break;
-              case "ai.applied": {
-                const task = await harness.task(payload.id);
-                const target = task.snapshot.target;
-                if (!target) throw new Error("旧任务未绑定章节，不能记录接受");
-                const chapter = await store.readChapter(
-                  target.bookId,
-                  target.chapterId,
-                );
-                await harness.review(
-                  payload.id,
-                  "applied",
-                  validateAcceptance(task, payload.candidate, chapter),
-                );
-                value = { applied: true };
+              case "ai.accept": {
+                value = await acceptance.accept(payload.id, payload.candidate);
+                break;
+              }
+              case "ai.reconcile": {
+                await acceptance.reconcile(payload.id);
+                value = await harness.task(payload.id);
                 break;
               }
               case "ai.cancel":
@@ -364,6 +361,7 @@ if (
               case "app.close-ready":
                 cancelCloseAttempt();
                 await harness.cancel();
+                await acceptance.whenIdle();
                 await store.whenIdle();
                 closing = true;
                 window.close();

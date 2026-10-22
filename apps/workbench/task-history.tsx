@@ -8,6 +8,8 @@ const statusLabels: Record<string, string> = {
   preparing: "准备中",
   running: "生成中",
   "awaiting-review": "待审阅",
+  accepting: "接受状态待核对",
+  "acceptance-uncertain": "接受结果待核对",
   applied: "已接受",
   discarded: "已放弃",
   cancelled: "已取消",
@@ -29,6 +31,8 @@ export type StoredTask = {
     candidate?: string;
     acceptedText?: string;
     partialCandidate?: boolean;
+    acceptance?: { acceptedText: string };
+    acceptanceRecovery?: string;
   };
   snapshot: {
     context: string;
@@ -148,7 +152,56 @@ export function TaskHistory({
                 上次退出时任务未完成，正式稿未因本任务改变。
               </p>
             )}
+            {selected.record.acceptance && !selected.record.acceptedText && (
+              <label>
+                接受前确认的文本
+                <textarea
+                  readOnly
+                  aria-label="接受前确认文本"
+                  value={selected.record.acceptance.acceptedText}
+                />
+              </label>
+            )}
+            {["accepting", "acceptance-uncertain"].includes(
+              selected.record.status,
+            ) && (
+              <p className="inline-error">
+                接受操作未能完全确认。当前稿与原稿、预期结果可能不一致，请打开对应章节核对；这里不会自动再次改稿。
+              </p>
+            )}
+            {selected.record.acceptanceRecovery ===
+              "original-text-retained" && (
+              <p className="muted">
+                恢复检查确认原稿仍在，候选尚未写入，可重新审阅。
+              </p>
+            )}
+            {selected.record.acceptanceRecovery === "receipt-confirmed" && (
+              <p className="muted">
+                已找到本次接受的存盘回执，已补全任务记录。正文后续编辑不影响这条历史记录。
+              </p>
+            )}
             <div className="modal-actions task-actions">
+              {["accepting", "acceptance-uncertain"].includes(
+                selected.record.status,
+              ) && (
+                <button
+                  disabled={busy}
+                  onClick={async () => {
+                    setBusy(true);
+                    try {
+                      setSelected(
+                        await api("ai.reconcile", { id: selected.record.id }),
+                      );
+                    } catch (e) {
+                      setError((e as Error).message);
+                    } finally {
+                      setBusy(false);
+                    }
+                  }}
+                >
+                  重新核对接受状态
+                </button>
+              )}
               <button onClick={() => setSelected(null)}>返回列表</button>
               {selected.record.chapterId && (
                 <button
@@ -173,6 +226,7 @@ export function TaskHistory({
                 "interrupted",
                 "cancelled",
                 "failed",
+                "acceptance-uncertain",
               ].includes(selected.record.status) && (
                 <button
                   disabled={busy}

@@ -36,6 +36,7 @@ jobs:
       - run: pnpm test:shelf
       - run: pnpm test:writing-views
       - run: pnpm test:tasks
+      - run: pnpm test:acceptance
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

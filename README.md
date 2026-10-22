@@ -50,6 +50,7 @@ pnpm test:editor-tools
 pnpm test:recovery
 pnpm test:merge
 pnpm test:tasks
+pnpm test:acceptance
 pnpm test:benchmark
 pnpm package:win
 pnpm test:installer
@@ -64,7 +65,7 @@ pnpm release:manifest
 
 ## 时间线
 
-Stage-003 已增加按书任务记录及恢复审阅：新任务绑定准确书章与选区，实际桌面强杀后中断状态和已落盘提案可找回，不自动重发模型。正文保存与接受回执之间的崩溃对账仍待完善，详见任务恢复设计和阶段日志。
+Stage-003 已增加按书任务记录及恢复审阅：新任务绑定准确书章与选区，实际桌面强杀后中断状态和已落盘提案可找回，不自动重发模型。接受意图与书内事务回执支持崩溃对账，并保留作者后续编辑；旧任务迁移与用量预算仍待补齐，详见任务恢复设计和阶段日志。
 
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。

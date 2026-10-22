@@ -42,6 +42,7 @@ jobs:
       - run: pnpm test:shelf
       - run: pnpm test:writing-views
       - run: pnpm test:tasks
+      - run: pnpm test:acceptance
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

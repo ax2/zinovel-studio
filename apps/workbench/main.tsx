@@ -375,7 +375,11 @@ function App() {
     });
   }
 
-  async function applyCandidate(base: WritingSnapshot, candidate: string) {
+  async function applyCandidate(
+    base: WritingSnapshot,
+    candidate: string,
+    taskId?: string,
+  ) {
     if (
       latest.current.book?.id !== base.bookId ||
       latest.current.chapter?.id !== base.chapterId ||
@@ -395,6 +399,45 @@ function App() {
     }
     const accepted =
       base.body.slice(0, base.start) + candidate + base.body.slice(base.end);
+    if (taskId) {
+      const result = await api("ai.accept", { id: taskId, candidate });
+      if (result.status === "conflict") {
+        setConflictBase(base.body);
+        setConflict(result.current);
+        setStatus("存在冲突");
+        return false;
+      }
+      if (
+        latest.current.book?.id !== base.bookId ||
+        latest.current.chapter?.id !== base.chapterId ||
+        latest.current.body !== base.body
+      ) {
+        setError(
+          "候选已保存到目标章节，但当前编辑已变化，请重新读取章节核对。",
+        );
+        return false;
+      }
+      latest.current = {
+        ...latest.current,
+        body: result.chapter.body,
+        chapter: result.chapter,
+        book: result.book,
+      };
+      setBody(result.chapter.body);
+      setChapter(result.chapter);
+      setBook(result.book);
+      setBooks((all) =>
+        all.map((book) => (book.id === result.book.id ? result.book : book)),
+      );
+      localStorage.removeItem(draftKey(base.bookId, base.chapterId));
+      setStatus("已保存");
+      setNotice(
+        result.receiptPending
+          ? "正文已保存，任务接受状态待核对；重启后自动核验，也可打开任务记录核对。"
+          : "已接受候选，原稿保留在历史版本中",
+      );
+      return true;
+    }
     latest.current = { ...latest.current, body: accepted };
     setBody(accepted);
     if (!(await save())) return false;

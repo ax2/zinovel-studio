@@ -55,11 +55,16 @@ export class NovelHarness {
   #active;
   #journal;
   #ready;
-  constructor({ root, resources, environment = process.env }) {
+  constructor({
+    root,
+    resources,
+    environment = process.env,
+    journal = new TaskJournal(join(root, "tasks")),
+  }) {
     this.root = root;
     this.resources = resources;
     this.environment = environment;
-    this.#journal = new TaskJournal(join(root, "tasks"));
+    this.#journal = journal;
   }
   initialize() {
     // The desktop calls this only after acquiring its single-instance lock.

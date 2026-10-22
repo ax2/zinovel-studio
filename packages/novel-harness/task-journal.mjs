@@ -8,6 +8,8 @@ const states = new Set([
   "preparing",
   "running",
   "awaiting-review",
+  "accepting",
+  "acceptance-uncertain",
   "applied",
   "discarded",
   "cancelled",
@@ -17,7 +19,14 @@ const states = new Set([
 const transitions = {
   preparing: ["running", "cancelled", "failed", "interrupted"],
   running: ["awaiting-review", "cancelled", "failed", "interrupted"],
-  "awaiting-review": ["applied", "discarded"],
+  "awaiting-review": ["accepting", "applied", "discarded"],
+  accepting: ["applied", "awaiting-review", "acceptance-uncertain"],
+  "acceptance-uncertain": [
+    "applied",
+    "awaiting-review",
+    "acceptance-uncertain",
+    "discarded",
+  ],
   interrupted: ["discarded"],
   cancelled: ["discarded"],
   failed: ["discarded"],
@@ -105,6 +114,8 @@ export class TaskJournal {
         "reviewedAt",
         "sessionId",
         "acceptedText",
+        "acceptance",
+        "acceptanceRecovery",
       ];
       if (Object.keys(changes).some((key) => !allowed.includes(key)))
         throw new Error("不支持修改任务身份或范围");
@@ -134,7 +145,7 @@ export class TaskJournal {
         try {
           const record = await this.#record(entry.name);
           if (bookId && record.bookId !== bookId) continue;
-          const { candidate, acceptedText, ...metadata } = record;
+          const { candidate, acceptedText, acceptance, ...metadata } = record;
           result.push({
             ...metadata,
             hasCandidate: typeof candidate === "string" && candidate.length > 0,
@@ -196,6 +207,29 @@ export class TaskJournal {
         }
       }
       return recovered;
+    });
+  }
+  pendingAcceptanceIds() {
+    return this.#exclusive(async () => {
+      let entries;
+      try {
+        entries = await readdir(this.root, { withFileTypes: true });
+      } catch (error) {
+        if (error.code === "ENOENT") return [];
+        throw error;
+      }
+      const ids = [];
+      for (const entry of entries) {
+        if (!entry.isDirectory() || !identifier.test(entry.name)) continue;
+        try {
+          const record = await this.#record(entry.name);
+          if (["accepting", "acceptance-uncertain"].includes(record.status))
+            ids.push(record.id);
+        } catch {
+          /* Preserve malformed records for manual recovery. */
+        }
+      }
+      return ids;
     });
   }
 }
