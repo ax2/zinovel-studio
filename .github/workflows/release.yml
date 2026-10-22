@@ -1,0 +1,64 @@
+name: Windows release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.3.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "26"
+          cache: pnpm
+      - name: Check version and release notes
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          if ($env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag and package version differ' }
+          if (!(Test-Path "iterations/releases/v$version.md")) { throw 'Missing version release notes' }
+          # A future stable release needs a separate, reviewed acceptance gate.
+          if ($version -notmatch '-(alpha|beta|rc)\.') { throw 'Stable-release qualification is not yet configured' }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: node scripts/check-upstream.mjs
+      - run: pnpm build
+      - run: pnpm test:agent
+      - run: pnpm test:library
+      - run: pnpm test:editor-tools
+      - run: pnpm test:recovery
+      - run: pnpm test:merge
+      - run: pnpm test:shelf
+      - run: pnpm test:writing-views
+      - run: pnpm package:win
+      - name: Install, run packaged Harness, reinstall and uninstall
+        run: pnpm test:installer
+      - run: pnpm release:manifest
+      - name: Publish verified preview assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $installer = "release/ZiNovel-Studio-$version-windows-x64-setup.exe"
+          gh release create "v$version" $installer release/SHA256SUMS.txt release/release-manifest.json release/runtime-inventory.json --verify-tag --prerelease --title "ZiNovel Studio $version" --notes-file "iterations/releases/v$version.md"
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: release-failure-evidence
+          path: |
+            screenshots/release/
+            release/builder-debug.yml
+          retention-days: 14

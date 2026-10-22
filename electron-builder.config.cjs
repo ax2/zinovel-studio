@@ -1,0 +1,43 @@
+const path = require("node:path");
+
+module.exports = {
+  appId: "com.zicode.zinovelstudio",
+  productName: "ZiNovel Studio",
+  copyright: "Copyright © 2026 ZiNovel Studio contributors",
+  directories: { output: "release", buildResources: "assets/app" },
+  // The official CLI runs in an Electron Node-mode child. It and its ESM
+  // plugins need ordinary filesystem paths, including on machines without Node.
+  asar: false,
+  npmRebuild: false,
+  allowMissingDependencies: false,
+  electronDist: path.dirname(require("electron")),
+  files: [
+    "dist/desktop/**/*",
+    "dist/workbench/**/*",
+    "dist/resources/**/*",
+    "package.json",
+    "LICENSE",
+    "NOTICE",
+    "apps/desktop/upstream/LICENSE",
+  ],
+  extraMetadata: { author: "ZiNovel Studio contributors" },
+  win: {
+    target: [{ target: "nsis", arch: ["x64"] }],
+    executableName: "ZiNovel Studio",
+    icon: "assets/app/icon.ico",
+  },
+  nsis: {
+    guid: "81b55339-fc21-4fe7-949e-a90dc443ef5a",
+    oneClick: false,
+    perMachine: false,
+    allowElevation: false,
+    allowToChangeInstallationDirectory: true,
+    createDesktopShortcut: false,
+    createStartMenuShortcut: true,
+    runAfterFinish: false,
+    deleteAppDataOnUninstall: false,
+    installerLanguages: ["en_US", "zh_CN"],
+    artifactName: "ZiNovel-Studio-${version}-windows-${arch}-setup.exe",
+  },
+  publish: null,
+};

@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-dev.1",
+  "version": "0.1.0-alpha.1",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",
@@ -20,7 +20,10 @@
     "test:merge": "node scripts/smoke-merge.mjs",
     "test:shelf": "node scripts/smoke-shelf.mjs",
     "test:writing-views": "node scripts/smoke-writing-views.mjs",
-    "test:benchmark": "node scripts/benchmark-writing.mjs"
+    "test:benchmark": "node scripts/benchmark-writing.mjs",
+    "package:win": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --publish never && node scripts/verify-package.mjs",
+    "test:installer": "node scripts/smoke-installer.mjs",
+    "release:manifest": "node scripts/release-manifest.mjs"
   },
   "engines": {
     "node": ">=26"
@@ -46,6 +49,7 @@
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
     "electron": "44.7.0",
+    "electron-builder": "26.17.0",
     "esbuild": "0.25.12",
     "playwright": "1.56.1",
     "prettier": "3.6.2",
@@ -57,6 +61,9 @@
       "esbuild",
       "koffi",
       "node-pty"
-    ]
+    ],
+    "patchedDependencies": {
+      "app-builder-lib@26.17.0": "patches/app-builder-lib@26.17.0.patch"
+    }
   }
 }

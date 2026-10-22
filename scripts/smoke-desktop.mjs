@@ -21,9 +21,9 @@ const model = await modelFixture({ delayMs: 250 });
 const errors = [];
 async function launch() {
   application = await electron.launch({
-    executablePath: electronPath,
-    args: [root],
-    cwd: root,
+    executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
+    args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
+    cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
     env,
     timeout: 45000,
   });

@@ -25,6 +25,7 @@
 | [编辑与交互](design/interaction.md) | 书架、工作台、局部 AI 修改与可访问性 |
 | [技能与工具](design/skills-tools.md) | 技能路由、工具能力、上下文和任务执行 |
 | [发布与导出](design/publishing.md) | 导出、站点、投稿、回执与回滚 |
+| [Windows 发行工程](design/release-engineering.md) | 自动 Release、安装 EXE、安装验收与签名边界 |
 | [验证与风险](assessments/acceptance.md) | 可复现验收、性能目标、文学审读边界 |
 | [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
 | [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
@@ -46,11 +47,16 @@ pnpm test:editor-tools
 pnpm test:recovery
 pnpm test:merge
 pnpm test:benchmark
+pnpm package:win
+pnpm test:installer
+pnpm release:manifest
 ```
 
 当前使用 Node 26、pnpm 10.3.0、Electron 44.7.0。前两个 Agent 探针运行官方 Harness 与本机模型 fixture，不消耗真实模型额度。桌面冒烟使用独立临时书库和合成小说，截图保存在 screenshots/stage-001。普通运行在用户应用数据目录保存作品。模型设置通过系统安全存储加密凭据；手工写作无需模型 Key。
 
-已实现的开发切片：卷章/导入/检索、Markdown 编辑与恢复日志、备份恢复、三方冲突合并、历史、批注书签、逐项替换、阅读主题、官方 Harness 的技能候选与两个受约束工具。真实 Electron 验证涵盖渲染进程崩溃恢复和卡死关闭；1,000 章/约 305 万字符合成基准已运行。功能矩阵中的 `verified` 仅表示条目的验收范围通过，`in-progress` 仍有原验收条件待满足。尚无正式安装包，不是上架版本。
+已实现的开发切片：卷章/导入/检索、Markdown 编辑与恢复日志、备份恢复、三方冲突合并、历史、批注书签、逐项替换、阅读主题、官方 Harness 的技能候选与两个受约束工具。真实 Electron 验证涵盖渲染进程崩溃恢复和卡死关闭；1,000 章/约 305 万字符合成基准已运行。功能矩阵中的 `verified` 仅表示条目的验收范围通过，`in-progress` 仍有原验收条件待满足。Windows 安装 EXE 与自动 Release 验证进行中，当前不是上架版本。
+
+开发切片定期提交到 GitHub，每次 push 触发检查。`v*` 版本标签触发 Windows 发行工作流：版本/来源检查、回归、打包、真实安装和运行通过后才创建预览 Release，附件为安装 EXE、SHA-256 和运行时清单。当前尚未代码签名；GitHub 自动发布与应用自动升级是不同能力，后者仍待实现。
 
 ## 时间线
 
