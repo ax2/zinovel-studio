@@ -8,6 +8,7 @@ const allowed = new Set([
   "chapter.history",
   "chapter.export",
   "app.close-ready",
+  "app.close-cancelled",
   "skills.list",
   "settings.get",
   "settings.save",

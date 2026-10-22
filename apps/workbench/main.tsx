@@ -128,7 +128,10 @@ function App() {
           setStatus("存在冲突");
           return false;
         }
-        if (latest.current.chapter?.id === current.chapter.id) {
+        if (
+          latest.current.book?.id === current.book.id &&
+          latest.current.chapter?.id === current.chapter.id
+        ) {
           latest.current = {
             ...latest.current,
             chapter: result.chapter,
@@ -170,7 +173,10 @@ function App() {
       window.novel.onClosing(() => {
         saveRef.current().then((ok) => {
           if (ok) api("app.close-ready");
-          else setError("关闭前尚有未保存内容，请先处理保存问题。");
+          else {
+            api("app.close-cancelled");
+            setError("关闭前尚有未保存内容，请先处理保存问题。");
+          }
         });
       }),
     [],

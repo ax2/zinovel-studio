@@ -1,8 +1,10 @@
 import { safeStorage } from "electron";
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { validateSettings } from "../../packages/novel-harness/runtime.mjs";
+import { atomicWriteText } from "../../packages/novel-storage/atomic.mjs";
 export class ModelSettings {
+  private queue: Promise<unknown> = Promise.resolve();
   constructor(private root: string) {}
   private async read() {
     try {
@@ -14,9 +16,10 @@ export class ModelSettings {
     }
   }
   async public() {
-    const { encryptedKey, ...value } = await this.read();
+    const data = await this.read(),
+      { encryptedKey } = data;
     return {
-      ...value,
+      ...validateSettings(data),
       hasKey: !!encryptedKey,
       encryptionAvailable: safeStorage.isEncryptionAvailable(),
     };
@@ -30,12 +33,27 @@ export class ModelSettings {
         : "",
     };
   }
-  async save(input: {
+  save(input: {
     baseURL: string;
     model: string;
     apiKey?: string;
     clearKey?: boolean;
   }) {
+    const operation = this.queue.then(() => this.saveExclusive(input));
+    this.queue = operation.catch(() => {});
+    return operation;
+  }
+  private async saveExclusive(input: {
+    baseURL: string;
+    model: string;
+    apiKey?: string;
+    clearKey?: boolean;
+  }) {
+    if (
+      input.apiKey !== undefined &&
+      (typeof input.apiKey !== "string" || input.apiKey.length > 16384)
+    )
+      throw new Error("API Key 格式无效或过长");
     const config = validateSettings(input),
       existing = await this.read();
     let encryptedKey = existing.encryptedKey || "";
@@ -51,11 +69,9 @@ export class ModelSettings {
         .encryptString(input.apiKey.trim())
         .toString("base64");
     }
-    await mkdir(this.root, { recursive: true });
-    await writeFile(
+    await atomicWriteText(
       join(this.root, "model.json"),
       JSON.stringify({ ...config, encryptedKey }, null, 2),
-      { encoding: "utf8", mode: 0o600 },
     );
     return this.public();
   }

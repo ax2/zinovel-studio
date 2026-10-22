@@ -5,12 +5,12 @@ import {
   rename,
   readdir,
   lstat,
-  open,
 } from "node:fs/promises";
 import { join, resolve, dirname, relative, sep, isAbsolute } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
 import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
+import { atomicWriteText as atomic } from "./atomic.mjs";
 
 export const digest = (text) =>
   createHash("sha256").update(text, "utf8").digest("hex");
@@ -33,19 +33,6 @@ async function readOptional(path) {
     throw error;
   }
 }
-async function atomic(path, text) {
-  await mkdir(dirname(path), { recursive: true });
-  const temp = `${path}.${randomUUID()}.tmp`;
-  const handle = await open(temp, "wx");
-  try {
-    await handle.writeFile(text, "utf8");
-    await handle.sync();
-  } finally {
-    await handle.close();
-  }
-  await rename(temp, path);
-}
-
 export class NovelStore {
   #queue = Promise.resolve();
   constructor(root) {
@@ -53,6 +40,9 @@ export class NovelStore {
   }
   async initialize() {
     await mkdir(this.root, { recursive: true });
+  }
+  async whenIdle() {
+    await this.#queue;
   }
   /** @template T @param {() => Promise<T>} operation @returns {Promise<T>} */
   #exclusive(operation) {

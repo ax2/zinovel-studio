@@ -25,6 +25,52 @@ const harness = new NovelHarness({
 const entry = resolve(__dirname, "../workbench/index.html");
 let window: BrowserWindow | undefined;
 let closing = false;
+let closeTimer: NodeJS.Timeout | undefined;
+let recoveryDialog = false;
+function cancelCloseAttempt() {
+  if (closeTimer) clearTimeout(closeTimer);
+  closeTimer = undefined;
+}
+async function closeAfterRecovery() {
+  cancelCloseAttempt();
+  await harness.cancel();
+  await store.whenIdle();
+  if (!window || window.isDestroyed()) return;
+  window.webContents.session.flushStorageData();
+  closing = true;
+  window.destroy();
+}
+async function offerCloseRecovery() {
+  cancelCloseAttempt();
+  if (closing || recoveryDialog || !window || window.isDestroyed()) return;
+  recoveryDialog = true;
+  try {
+    const result = await dialog.showMessageBox(window, {
+      type: "warning",
+      title: "关闭前保存尚未完成",
+      message: "写作窗口未能确认保存完成。",
+      detail:
+        "可以返回编辑、重试保存，或强制退出。强制退出会保留已有恢复缓存，但尚未进入缓存的输入可能丢失。",
+      buttons: ["返回编辑", "重试保存", "强制退出"],
+      defaultId: 0,
+      cancelId: 0,
+    });
+    if (closing || !window || window.isDestroyed()) return;
+    if (result.response === 2) await closeAfterRecovery();
+    else if (result.response === 1) requestWindowClose();
+  } finally {
+    recoveryDialog = false;
+  }
+}
+function requestWindowClose() {
+  if (!window || window.isDestroyed() || closeTimer) return;
+  window.webContents.send("novel:closing");
+  closeTimer = setTimeout(() => {
+    void offerCloseRecovery().catch((error) =>
+      dialog.showErrorBox("关闭未完成", String(error)),
+    );
+  }, 8000);
+}
 const imports = new Map<
   string,
   { paths: string[]; preview: Awaited<ReturnType<typeof previewImport>> }
@@ -269,10 +315,16 @@ if (
                 break;
               }
               case "app.close-ready":
+                cancelCloseAttempt();
                 await harness.cancel();
+                await store.whenIdle();
                 closing = true;
                 window.close();
                 return { ok: true };
+              case "app.close-cancelled":
+                cancelCloseAttempt();
+                value = { cancelled: true };
+                break;
               default:
                 throw new Error("不支持的操作");
             }
@@ -312,7 +364,33 @@ if (
       window.on("close", (event) => {
         if (closing) return;
         event.preventDefault();
-        window?.webContents.send("novel:closing");
+        requestWindowClose();
+      });
+      window.webContents.on("render-process-gone", async (_event, details) => {
+        cancelCloseAttempt();
+        if (closing || recoveryDialog || !window || window.isDestroyed())
+          return;
+        recoveryDialog = true;
+        try {
+          await harness.cancel();
+          await store.whenIdle();
+          const result = await dialog.showMessageBox(window, {
+            type: "warning",
+            title: "写作窗口需要恢复",
+            message: "写作窗口已停止运行，作品文件已保留。",
+            detail: `原因：${details.reason}。重新打开后可恢复已有编辑缓存；未写入缓存的最后输入可能丢失。`,
+            buttons: ["重新打开", "退出"],
+            defaultId: 0,
+            cancelId: 0,
+          });
+          if (!window || window.isDestroyed()) return;
+          if (result.response === 0) await window.loadFile(entry);
+          else await closeAfterRecovery();
+        } catch (error) {
+          dialog.showErrorBox("写作窗口恢复失败", String(error));
+        } finally {
+          recoveryDialog = false;
+        }
       });
       await window.loadFile(entry);
     })
