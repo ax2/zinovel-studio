@@ -1,0 +1,941 @@
+{
+  "schemaVersion": 1,
+  "features": [
+    {
+      "id": "LIB-01",
+      "area": "书库与导入",
+      "name": "多书书架",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "按最近编辑/类型/系列筛选，重启后列表一致"
+    },
+    {
+      "id": "LIB-02",
+      "area": "书库与导入",
+      "name": "卷章场景树",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "创建、排序和移动保留稳定 ID"
+    },
+    {
+      "id": "LIB-03",
+      "area": "书库与导入",
+      "name": "现有目录导入",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "只读试扫，确认后新建书而不改源"
+    },
+    {
+      "id": "LIB-04",
+      "area": "书库与导入",
+      "name": "TXT/Markdown 编码预览",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "乱码与章节拆分可修正后导入"
+    },
+    {
+      "id": "LIB-05",
+      "area": "书库与导入",
+      "name": "草稿正式状态",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "未审草稿与正式章分开显示"
+    },
+    {
+      "id": "LIB-06",
+      "area": "书库与导入",
+      "name": "归档与回收站",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "删除可恢复，引用冲突可见"
+    },
+    {
+      "id": "LIB-07",
+      "area": "书库与导入",
+      "name": "书内搜索",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "按正文/标题/设定过滤并跳到出处"
+    },
+    {
+      "id": "LIB-08",
+      "area": "书库与导入",
+      "name": "跨书隔离",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "一书上下文不能自动混入另一书"
+    },
+    {
+      "id": "IDEA-01",
+      "area": "创意与试写",
+      "name": "灵感收件箱",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "文本/图片/引用可转为立项候选"
+    },
+    {
+      "id": "IDEA-02",
+      "area": "创意与试写",
+      "name": "题材与读者承诺",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "立项卡可编辑并与试写对照"
+    },
+    {
+      "id": "IDEA-03",
+      "area": "创意与试写",
+      "name": "创意候选比较",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "按人物行动与冲突比较而非只换题材"
+    },
+    {
+      "id": "IDEA-04",
+      "area": "创意与试写",
+      "name": "开篇试写分支",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "多个版本不覆盖正式首章"
+    },
+    {
+      "id": "IDEA-05",
+      "area": "创意与试写",
+      "name": "文风与视角试验",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "同场景多种声音，作者选定"
+    },
+    {
+      "id": "IDEA-06",
+      "area": "创意与试写",
+      "name": "故事引擎诊断",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "指出同质的行动模式与具体替代"
+    },
+    {
+      "id": "IDEA-07",
+      "area": "创意与试写",
+      "name": "书名简介标签",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "生成候选并保留作者选择记录"
+    },
+    {
+      "id": "IDEA-08",
+      "area": "创意与试写",
+      "name": "试读反馈归档",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "记录原文版本和反馈来源"
+    },
+    {
+      "id": "PLAN-01",
+      "area": "大纲与场景",
+      "name": "全书总纲",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "目标/因果/终局/规模可追踪"
+    },
+    {
+      "id": "PLAN-02",
+      "area": "大纲与场景",
+      "name": "分卷弧线",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "每卷目标和不可逆变化清楚"
+    },
+    {
+      "id": "PLAN-03",
+      "area": "大纲与场景",
+      "name": "章节大纲",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "与卷章树同 ID 联动"
+    },
+    {
+      "id": "PLAN-04",
+      "area": "大纲与场景",
+      "name": "近期细纲",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "场景目标/阻碍/选择/结果可编辑"
+    },
+    {
+      "id": "PLAN-05",
+      "area": "大纲与场景",
+      "name": "场景看板",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "拖拽后与章纲同步"
+    },
+    {
+      "id": "PLAN-06",
+      "area": "大纲与场景",
+      "name": "主线管理",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "主角追求、节点及进展有正文链接"
+    },
+    {
+      "id": "PLAN-07",
+      "area": "大纲与场景",
+      "name": "支线与交汇",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "支线人物/回归窗口/收束可视"
+    },
+    {
+      "id": "PLAN-08",
+      "area": "大纲与场景",
+      "name": "计划变更影响",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "改纲列出受影响的正文与设定"
+    },
+    {
+      "id": "WORLD-01",
+      "area": "世界与人物",
+      "name": "世界百科",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "规则/历史/文化/制度分层并可链接"
+    },
+    {
+      "id": "WORLD-02",
+      "area": "世界与人物",
+      "name": "人物卡",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "欲望/缺陷/声音/外貌均可手改"
+    },
+    {
+      "id": "WORLD-03",
+      "area": "世界与人物",
+      "name": "角色状态时间切片",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "过去与现在位置/身份不混淆"
+    },
+    {
+      "id": "WORLD-04",
+      "area": "世界与人物",
+      "name": "人物关系图",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "关系变更关联事件证据，有表格替代"
+    },
+    {
+      "id": "WORLD-05",
+      "area": "世界与人物",
+      "name": "认知与秘密矩阵",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "区分真相、读者已知、角色已知"
+    },
+    {
+      "id": "WORLD-06",
+      "area": "世界与人物",
+      "name": "组织物品能力",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "重要规则与代价可跨章引用"
+    },
+    {
+      "id": "WORLD-07",
+      "area": "世界与人物",
+      "name": "命名与别名库",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "检索别名，跨书同名仅提示"
+    },
+    {
+      "id": "WORLD-08",
+      "area": "世界与人物",
+      "name": "现实资料边界",
+      "priority": "P1",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "事实/传闻/虚构标签可追溯"
+    },
+    {
+      "id": "EDIT-01",
+      "area": "正文编辑",
+      "name": "中文友好编辑器",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "输入法/emoji/长段落/粘贴不丢字"
+    },
+    {
+      "id": "EDIT-02",
+      "area": "正文编辑",
+      "name": "自动保存与恢复",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "崩溃后稿件与待保存内容可恢复"
+    },
+    {
+      "id": "EDIT-03",
+      "area": "正文编辑",
+      "name": "撤销重做与快照",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "手工及 AI 修改均可撤回"
+    },
+    {
+      "id": "EDIT-04",
+      "area": "正文编辑",
+      "name": "专注与打字机模式",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "可关闭侧栏，不丢焦点"
+    },
+    {
+      "id": "EDIT-05",
+      "area": "正文编辑",
+      "name": "双栏参考与分屏",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "正文与设定/旧稿可同时查看"
+    },
+    {
+      "id": "EDIT-06",
+      "area": "正文编辑",
+      "name": "批注书签与定位",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "修改后锚点可追踪或明确失效"
+    },
+    {
+      "id": "EDIT-07",
+      "area": "正文编辑",
+      "name": "查找替换预览",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "逐项接受，支持撤销"
+    },
+    {
+      "id": "EDIT-08",
+      "area": "正文编辑",
+      "name": "外部修改冲突",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "保留两版并提示三方合并"
+    },
+    {
+      "id": "AI-01",
+      "area": "局部 AI 编辑",
+      "name": "选区润色",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "事实与选区外文本不变"
+    },
+    {
+      "id": "AI-02",
+      "area": "局部 AI 编辑",
+      "name": "有效扩写",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "新增场面/信息可见，非简单注水"
+    },
+    {
+      "id": "AI-03",
+      "area": "局部 AI 编辑",
+      "name": "压缩与缩写",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "保留关键因果并列信息损失"
+    },
+    {
+      "id": "AI-04",
+      "area": "局部 AI 编辑",
+      "name": "场景续写",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "承接实际末段与角色状态"
+    },
+    {
+      "id": "AI-05",
+      "area": "局部 AI 编辑",
+      "name": "对白与潜台词",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "保留不同人物声音和关系"
+    },
+    {
+      "id": "AI-06",
+      "area": "局部 AI 编辑",
+      "name": "视角与节奏重写",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "锁定事件结果且显示影响"
+    },
+    {
+      "id": "AI-07",
+      "area": "局部 AI 编辑",
+      "name": "多候选与差异接受",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "逐块接受/拒绝/另存版本"
+    },
+    {
+      "id": "AI-08",
+      "area": "局部 AI 编辑",
+      "name": "编辑中冲突检测",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "旧提案不得覆盖新正文"
+    },
+    {
+      "id": "MEM-01",
+      "area": "长篇上下文",
+      "name": "可查看上下文包",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "展示来源/版本/预算/截断"
+    },
+    {
+      "id": "MEM-02",
+      "area": "长篇上下文",
+      "name": "分层摘要",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "场景/章/卷摘要关联原文"
+    },
+    {
+      "id": "MEM-03",
+      "area": "长篇上下文",
+      "name": "正典与计划分离",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "未写设定不能当正文事实"
+    },
+    {
+      "id": "MEM-04",
+      "area": "长篇上下文",
+      "name": "事实引用与回溯",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "事实能跳转到具体章节段落"
+    },
+    {
+      "id": "MEM-05",
+      "area": "长篇上下文",
+      "name": "时间与地点连续性",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "检测矛盾并显示双方证据"
+    },
+    {
+      "id": "MEM-06",
+      "area": "长篇上下文",
+      "name": "修改后失效传播",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "摘要/审读/线索及时标旧"
+    },
+    {
+      "id": "MEM-07",
+      "area": "长篇上下文",
+      "name": "相关资料检索",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "先结构筛选再词法/可选语义检索"
+    },
+    {
+      "id": "MEM-08",
+      "area": "长篇上下文",
+      "name": "系列共享世界",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "共享设定版本明确，书级覆盖可见"
+    },
+    {
+      "id": "PLOT-01",
+      "area": "伏笔与时间线",
+      "name": "伏笔台账",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "计划/已埋/强化/回收独立状态"
+    },
+    {
+      "id": "PLOT-02",
+      "area": "伏笔与时间线",
+      "name": "回收窗口提示",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "可延期/弃用，不机械强制"
+    },
+    {
+      "id": "PLOT-03",
+      "area": "伏笔与时间线",
+      "name": "主支线交织视图",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "显示最近出场、交汇及断线"
+    },
+    {
+      "id": "PLOT-04",
+      "area": "伏笔与时间线",
+      "name": "故事与叙述双时间",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "倒叙/插叙不误判时间矛盾"
+    },
+    {
+      "id": "PLOT-05",
+      "area": "伏笔与时间线",
+      "name": "关键资源与代价",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "只跟踪影响情节的约束"
+    },
+    {
+      "id": "PLOT-06",
+      "area": "伏笔与时间线",
+      "name": "成长与能力边界",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "突破前后证据和例外可查"
+    },
+    {
+      "id": "PLOT-07",
+      "area": "伏笔与时间线",
+      "name": "因果链审查",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "跳跃与重复事件给出原文位置"
+    },
+    {
+      "id": "PLOT-08",
+      "area": "伏笔与时间线",
+      "name": "跨卷重写影响",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "年龄/死亡/身份修改有依赖列表"
+    },
+    {
+      "id": "ART-01",
+      "area": "地图与视觉资产",
+      "name": "角色定妆图",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "参考图/年龄/衣装版本可追踪"
+    },
+    {
+      "id": "ART-02",
+      "area": "地图与视觉资产",
+      "name": "表情与服装变体",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "候选关联角色，不覆盖已选图"
+    },
+    {
+      "id": "ART-03",
+      "area": "地图与视觉资产",
+      "name": "可编辑世界地图",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "地点/区域/路线有结构化 ID"
+    },
+    {
+      "id": "ART-04",
+      "area": "地图与视觉资产",
+      "name": "年代与层级地图",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "历史图层及城市/室内子图切换"
+    },
+    {
+      "id": "ART-05",
+      "area": "地图与视觉资产",
+      "name": "行程与距离检查",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "只依据显式参数推算，未知标未知"
+    },
+    {
+      "id": "ART-06",
+      "area": "地图与视觉资产",
+      "name": "封面与卷首图",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "比例/标题/缩略图可预览"
+    },
+    {
+      "id": "ART-07",
+      "area": "地图与视觉资产",
+      "name": "章节插图",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "绑定最终章版本与插图位置"
+    },
+    {
+      "id": "ART-08",
+      "area": "地图与视觉资产",
+      "name": "素材版本与来源",
+      "priority": "P1",
+      "stage": "Stage-006",
+      "status": "planned",
+      "acceptance": "原图/裁切/选定/权利信息有清单"
+    },
+    {
+      "id": "READ-01",
+      "area": "阅读与审读",
+      "name": "整卷连续阅读",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "目录导航和阅读进度可恢复"
+    },
+    {
+      "id": "READ-02",
+      "area": "阅读与审读",
+      "name": "无剧透试读",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "隐藏作者资料与未来设定"
+    },
+    {
+      "id": "READ-03",
+      "area": "阅读与审读",
+      "name": "桌面手机阅读预览",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "布局/字体/夜间/插图可检查"
+    },
+    {
+      "id": "READ-04",
+      "area": "阅读与审读",
+      "name": "读感盲审",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "先正文后设定，报告真实阅读范围"
+    },
+    {
+      "id": "READ-05",
+      "area": "阅读与审读",
+      "name": "结构与节奏诊断",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "以具体章节判断停滞/重复"
+    },
+    {
+      "id": "READ-06",
+      "area": "阅读与审读",
+      "name": "连续性审查",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "矛盾有锚点、严重度与建议"
+    },
+    {
+      "id": "READ-07",
+      "area": "阅读与审读",
+      "name": "机械校对",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "错字/重复/标点规则可配置"
+    },
+    {
+      "id": "READ-08",
+      "area": "阅读与审读",
+      "name": "改后复读跟踪",
+      "priority": "P1",
+      "stage": "Stage-005",
+      "status": "planned",
+      "acceptance": "源 hash 改变使原审读过期"
+    },
+    {
+      "id": "PUB-01",
+      "area": "导出与发布",
+      "name": "文本合订导出",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "章节顺序/编码/首尾核验；基础版 S002"
+    },
+    {
+      "id": "PUB-02",
+      "area": "导出与发布",
+      "name": "EPUB 导出",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "目录/封面/插图/阅读器验证"
+    },
+    {
+      "id": "PUB-03",
+      "area": "导出与发布",
+      "name": "DOCX/PDF 导出",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "分页/字体/中文真实渲染验证"
+    },
+    {
+      "id": "PUB-04",
+      "area": "导出与发布",
+      "name": "独立 HTML 阅读站",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "目录/导航/移动阅读均可用"
+    },
+    {
+      "id": "PUB-05",
+      "area": "导出与发布",
+      "name": "发布快照与预览",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "目标/范围/hash 固定"
+    },
+    {
+      "id": "PUB-06",
+      "area": "导出与发布",
+      "name": "站点适配器",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "静态目录/SFTP/ZiCode 逐项验收"
+    },
+    {
+      "id": "PUB-07",
+      "area": "导出与发布",
+      "name": "平台投稿包",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "无 API 时可靠导出人工提交"
+    },
+    {
+      "id": "PUB-08",
+      "area": "导出与发布",
+      "name": "回执与回滚",
+      "priority": "P1",
+      "stage": "Stage-007",
+      "status": "planned",
+      "acceptance": "unknown 状态可恢复，不误删他书"
+    },
+    {
+      "id": "OPS-01",
+      "area": "任务与保障",
+      "name": "模型与能力选择",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "文本/图像能力不同，失败可见"
+    },
+    {
+      "id": "OPS-02",
+      "area": "任务与保障",
+      "name": "成本和上下文预算",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "预估/实际/未知分开，超额暂停"
+    },
+    {
+      "id": "OPS-03",
+      "area": "任务与保障",
+      "name": "取消与重试",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "保留部分结果，避免重复写章"
+    },
+    {
+      "id": "OPS-04",
+      "area": "任务与保障",
+      "name": "任务检查点",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "重启恢复范围与状态准确"
+    },
+    {
+      "id": "OPS-05",
+      "area": "任务与保障",
+      "name": "本地版本与异盘备份",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "快照/备份明确区分；恢复到新目录"
+    },
+    {
+      "id": "OPS-06",
+      "area": "任务与保障",
+      "name": "权限与书库隔离",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "越权工具不能改正式稿"
+    },
+    {
+      "id": "OPS-07",
+      "area": "任务与保障",
+      "name": "离线写作降级",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "planned",
+      "acceptance": "无网络仍能手写、保存和阅读"
+    },
+    {
+      "id": "OPS-08",
+      "area": "任务与保障",
+      "name": "脱敏诊断",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "默认日志不带正文或凭据"
+    },
+    {
+      "id": "EXT-01",
+      "area": "后续小说专用能力",
+      "name": "连载日历与排期",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "只发布明确授权的冻结快照"
+    },
+    {
+      "id": "EXT-02",
+      "area": "后续小说专用能力",
+      "name": "编辑协作",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "批注/修订建议冲突可见"
+    },
+    {
+      "id": "EXT-03",
+      "area": "后续小说专用能力",
+      "name": "朗读找错",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "按段定位朗读，不要求上传全文"
+    },
+    {
+      "id": "EXT-04",
+      "area": "后续小说专用能力",
+      "name": "语音灵感输入",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "转录结果先入灵感或候选"
+    },
+    {
+      "id": "EXT-05",
+      "area": "后续小说专用能力",
+      "name": "翻译与术语对齐",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "保留术语、人物名及原文对应"
+    },
+    {
+      "id": "EXT-06",
+      "area": "后续小说专用能力",
+      "name": "作者审读角色协作",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "独立冻结输入和明确覆盖范围"
+    },
+    {
+      "id": "EXT-07",
+      "area": "后续小说专用能力",
+      "name": "创作目标统计",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "正文净字数排除提纲和重复版本"
+    },
+    {
+      "id": "EXT-08",
+      "area": "后续小说专用能力",
+      "name": "反馈与改编资料",
+      "priority": "P2",
+      "stage": "Stage-008",
+      "status": "planned",
+      "acceptance": "关联原版本，不自动重写已发布稿"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+ZiNovel Studio — Stage-000 planning baseline, 2026-10-22.
+
+Intended desktop and Agent foundation:
+https://github.com/deepseek-ai/deepseek-harness
+Research revision: 687f282e8625c6b8d11ff58211a90524be2e4317
+Desktop path: apps/desktop; upstream root LICENSE: MIT, Copyright (c) 2026 DeepSeek.
+
+No upstream executable or implementation source is bundled in Stage-000.
+Source incorporation in Stage-001 must preserve all applicable upstream and
+transitive dependency notices. This project's MIT license does not relicense
+third-party binaries, artwork, trademarks, plugins, models, or users' novels.
+Use independent ZiNovel branding, application identity and update endpoints.
+
+Local writing workflows were studied to author new, portable skill instructions.
+Private manuscripts, local deployment scripts, credentials and historical
+project-specific presets are not redistributed. See design/sources.md.
+ZiNovel Studio is an independent project, not an official DeepSeek product.

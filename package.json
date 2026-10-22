@@ -1,0 +1,18 @@
+{
+  "name": "zinovel-studio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Planning baseline for a novel-writing desktop built on official DeepSeek Harness",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check-project.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ax2/zinovel-studio.git"
+  }
+}

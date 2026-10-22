@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "skills": [
+    {
+      "id": "novel-ideation",
+      "name": "创意与故事引擎",
+      "path": "skills/novel-ideation/SKILL.md",
+      "featureId": "IDEA-03",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-pilot",
+      "name": "开篇试写",
+      "path": "skills/novel-pilot/SKILL.md",
+      "featureId": "IDEA-04",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-master-outline",
+      "name": "总纲与分卷",
+      "path": "skills/novel-master-outline/SKILL.md",
+      "featureId": "PLAN-01",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-scene-outline",
+      "name": "章纲与细纲",
+      "path": "skills/novel-scene-outline/SKILL.md",
+      "featureId": "PLAN-04",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-worldbuilding",
+      "name": "世界设定",
+      "path": "skills/novel-worldbuilding/SKILL.md",
+      "featureId": "WORLD-01",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-character",
+      "name": "人物与关系",
+      "path": "skills/novel-character/SKILL.md",
+      "featureId": "WORLD-02",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-plot-threads",
+      "name": "主支线编排",
+      "path": "skills/novel-plot-threads/SKILL.md",
+      "featureId": "PLAN-07",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-foreshadow",
+      "name": "伏笔台账",
+      "path": "skills/novel-foreshadow/SKILL.md",
+      "featureId": "PLOT-01",
+      "stage": "Stage-005",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-draft-scene",
+      "name": "场景写作与续写",
+      "path": "skills/novel-draft-scene/SKILL.md",
+      "featureId": "AI-04",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-polish",
+      "name": "选区润色",
+      "path": "skills/novel-polish/SKILL.md",
+      "featureId": "AI-01",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-expand",
+      "name": "选区扩写",
+      "path": "skills/novel-expand/SKILL.md",
+      "featureId": "AI-02",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-condense",
+      "name": "选区缩写",
+      "path": "skills/novel-condense/SKILL.md",
+      "featureId": "AI-03",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-dialogue",
+      "name": "对白与人物声音",
+      "path": "skills/novel-dialogue/SKILL.md",
+      "featureId": "AI-05",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-continuity",
+      "name": "连续性核查",
+      "path": "skills/novel-continuity/SKILL.md",
+      "featureId": "MEM-05",
+      "stage": "Stage-005",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-reader-review",
+      "name": "读感与结构审读",
+      "path": "skills/novel-reader-review/SKILL.md",
+      "featureId": "READ-04",
+      "stage": "Stage-005",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-rewrite",
+      "name": "保留约束的重写",
+      "path": "skills/novel-rewrite/SKILL.md",
+      "featureId": "PLOT-08",
+      "stage": "Stage-005",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-research",
+      "name": "小说资料研究",
+      "path": "skills/novel-research/SKILL.md",
+      "featureId": "WORLD-08",
+      "stage": "Stage-004",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-visual-design",
+      "name": "人物定妆与插图设计",
+      "path": "skills/novel-visual-design/SKILL.md",
+      "featureId": "ART-01",
+      "stage": "Stage-006",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-map-design",
+      "name": "小说地图与行程",
+      "path": "skills/novel-map-design/SKILL.md",
+      "featureId": "ART-03",
+      "stage": "Stage-006",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-publication-preflight",
+      "name": "小说发布预检",
+      "path": "skills/novel-publication-preflight/SKILL.md",
+      "featureId": "PUB-05",
+      "stage": "Stage-007",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    },
+    {
+      "id": "novel-checkpoint",
+      "name": "连续创作交接",
+      "path": "skills/novel-checkpoint/SKILL.md",
+      "featureId": "OPS-04",
+      "stage": "Stage-003",
+      "version": "0.1.0",
+      "status": "authored-not-integrated",
+      "runtimeVerified": false
+    }
+  ]
+}

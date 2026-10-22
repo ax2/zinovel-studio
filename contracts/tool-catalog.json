@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "design-only",
+  "tools": [
+    {
+      "name": "novel.book.inspect",
+      "inputs": "bookId",
+      "output": "书、目录、状态和版本",
+      "capability": "read",
+      "stage": "Stage-002",
+      "implemented": false
+    },
+    {
+      "name": "novel.chapter.read",
+      "inputs": "bookId, chapterId, revision?, range?",
+      "output": "带版本和完整/截断标记的正文片段",
+      "capability": "read",
+      "stage": "Stage-003",
+      "implemented": false
+    },
+    {
+      "name": "novel.search",
+      "inputs": "bookId, query, scopes[], storyTime?, limit",
+      "output": "带实体 ID 和原文定位的有界结果",
+      "capability": "read",
+      "stage": "Stage-003",
+      "implemented": false
+    },
+    {
+      "name": "novel.context.build",
+      "inputs": "bookId, task, chapterIds[], tokenBudget",
+      "output": "来源、hash、预算与被排除项",
+      "capability": "read",
+      "stage": "Stage-003",
+      "implemented": false
+    },
+    {
+      "name": "novel.change.propose",
+      "inputs": "bookId, chapterId, baseRevision, baseHash, anchors[], intent, replacement",
+      "output": "只读候选 ID 与差异",
+      "capability": "proposal",
+      "stage": "Stage-003",
+      "implemented": false
+    },
+    {
+      "name": "novel.entity.propose",
+      "inputs": "bookId, type, baseRevision, payload, evidence[]",
+      "output": "人物/设定/计划的候选变更",
+      "capability": "proposal",
+      "stage": "Stage-004",
+      "implemented": false
+    },
+    {
+      "name": "novel.canon.query",
+      "inputs": "bookId, subjectIds[], storyTime, knowledgeScope",
+      "output": "符合叙事时间与认知边界的事实",
+      "capability": "read",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.canon.propose",
+      "inputs": "bookId, fact, sourceAnchors[], sourceHashes[]",
+      "output": "待接受事实及冲突",
+      "capability": "proposal",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.thread.inspect",
+      "inputs": "bookId, threadIds[], chapterRange",
+      "output": "主支线进展和最近正文证据",
+      "capability": "read",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.foreshadow.inspect",
+      "inputs": "bookId, chapterRange, state?",
+      "output": "计划和实际伏笔分别输出",
+      "capability": "read",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.continuity.check",
+      "inputs": "bookId, snapshotId, scopes[]",
+      "output": "带证据的问题与未知项",
+      "capability": "read",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.review.record",
+      "inputs": "bookId, snapshotId, readCoverage, findings[]",
+      "output": "审读记录候选及覆盖缺口",
+      "capability": "proposal",
+      "stage": "Stage-005",
+      "implemented": false
+    },
+    {
+      "name": "novel.map.propose",
+      "inputs": "bookId, mapId, baseRevision, places[], routes[]",
+      "output": "结构地图候选，单位与未知距离",
+      "capability": "proposal",
+      "stage": "Stage-006",
+      "implemented": false
+    },
+    {
+      "name": "novel.asset.generate",
+      "inputs": "bookId, purpose, entityIds[], provider, prompt, referenceIds[], budget",
+      "output": "暂存候选图及供应商回执",
+      "capability": "external-generation",
+      "stage": "Stage-006",
+      "implemented": false
+    },
+    {
+      "name": "novel.asset.register",
+      "inputs": "bookId, stagedAssetId, purpose, source, rights",
+      "output": "资源登记候选，不覆盖正式选图",
+      "capability": "proposal",
+      "stage": "Stage-006",
+      "implemented": false
+    },
+    {
+      "name": "novel.export.prepare",
+      "inputs": "bookId, chapterIds[], format, options",
+      "output": "固定快照与预检结果",
+      "capability": "local-output",
+      "stage": "Stage-007",
+      "implemented": false
+    },
+    {
+      "name": "novel.publish.preview",
+      "inputs": "snapshotId, targetId",
+      "output": "目标差异和风险、可验证范围",
+      "capability": "read",
+      "stage": "Stage-007",
+      "implemented": false
+    },
+    {
+      "name": "novel.publish.execute",
+      "inputs": "snapshotId, targetId, authorizationRef, idempotencyKey",
+      "output": "上传回执；失败或 unknown 明确",
+      "capability": "authorized-publish",
+      "stage": "Stage-007",
+      "implemented": false
+    },
+    {
+      "name": "novel.publish.verify",
+      "inputs": "publicationId",
+      "output": "远端范围、资源和阅读结果",
+      "capability": "read",
+      "stage": "Stage-007",
+      "implemented": false
+    },
+    {
+      "name": "novel.task.checkpoint",
+      "inputs": "taskId, completedIds[], pendingIds[], nextScene",
+      "output": "持久检查点和状态",
+      "capability": "task-state",
+      "stage": "Stage-003",
+      "implemented": false
+    }
+  ]
+}

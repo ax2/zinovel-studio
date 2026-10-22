@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-22",
+  "repository": "https://github.com/deepseek-ai/deepseek-harness",
+  "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
+  "desktopPath": "apps/desktop",
+  "desktopPackage": "@deepseek-ai/dsh-desktop",
+  "observedVersion": "0.2.1-rc.2",
+  "license": "MIT",
+  "sourceImported": false,
+  "runtimeQualified": false,
+  "notes": "Research baseline only; do not resolve floating master during release builds."
+}
