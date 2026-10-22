@@ -1,0 +1,31 @@
+{
+  "product": "ZiNovel Studio",
+  "version": "0.1.0-alpha.1",
+  "commit": "f6d31036f6822ae2848c81be5807552fc13fcd04",
+  "platform": "win32",
+  "arch": "x64",
+  "installer": "ZiNovel-Studio-0.1.0-alpha.1-windows-x64-setup.exe",
+  "bytes": 222795938,
+  "sha256": "fb5c7d46165b65b1bb44ffce90a6fa44b2b1c70f1b84beca1c31d3fa93eab1c1",
+  "signature": "unsigned-preview",
+  "electron": "44.7.0",
+  "embeddedNode": "24.21.0",
+  "harness": "0.2.1-rc.2",
+  "qualification": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer",
+    "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
+    "real NSIS uninstall removes app and retains synthetic user manuscript"
+  ],
+  "generatedAt": "2026-10-22T15:13:49.445Z"
+}

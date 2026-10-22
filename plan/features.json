@@ -886,8 +886,13 @@
       "name": "任务检查点",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "重启恢复范围与状态准确"
+      "status": "in-progress",
+      "acceptance": "重启恢复范围与状态准确",
+      "evidence": [
+        "packages/novel-harness/task-journal.mjs",
+        "tests/task-journal.test.mjs",
+        "iterations/stage-003/WORKLOG.md"
+      ]
     },
     {
       "id": "OPS-05",
@@ -931,12 +936,13 @@
       "name": "持续提交与自动 Release",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "GitHub 提交可追踪，版本标签自动验证后发布安装 EXE 与校验清单",
       "evidence": [
         ".github/workflows/release.yml",
         "design/release-engineering.md"
-      ]
+      ],
+      "validation": "assessments/windows-preview-acceptance.md"
     },
     {
       "id": "OPS-10",

@@ -1,0 +1,77 @@
+{
+  "status": "passed",
+  "workflow": 39801795594,
+  "publicHttpStatus": 200,
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666221677",
+        "contentType": "application/json",
+        "createdAt": "2026-10-22T15:14:04Z",
+        "digest": "sha256:929631fef8ef13bfeafe823ba607f6fab7470129ed41c227784b7e379423fbb6",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84ntbxt",
+        "label": "",
+        "name": "release-manifest.json",
+        "size": 1775,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T15:14:04Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.1/release-manifest.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666221668",
+        "contentType": "application/json",
+        "createdAt": "2026-10-22T15:14:04Z",
+        "digest": "sha256:0e62a9d647561bf89a2c765bdd59261dd4c879480ef7dbc720e730cc53c0e80a",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84ntbxk",
+        "label": "",
+        "name": "runtime-inventory.json",
+        "size": 115148,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T15:14:04Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.1/runtime-inventory.json"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666221676",
+        "contentType": "text/plain; charset=utf-8",
+        "createdAt": "2026-10-22T15:14:04Z",
+        "digest": "sha256:cc7b3bc110faca10d410af850c8896c855a658b988d34435584818341371bd63",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84ntbxs",
+        "label": "",
+        "name": "SHA256SUMS.txt",
+        "size": 117,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T15:14:04Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.1/SHA256SUMS.txt"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/ax2/zinovel-studio/releases/assets/666221679",
+        "contentType": "application/x-msdownload",
+        "createdAt": "2026-10-22T15:14:04Z",
+        "digest": "sha256:fb5c7d46165b65b1bb44ffce90a6fa44b2b1c70f1b84beca1c31d3fa93eab1c1",
+        "downloadCount": 0,
+        "id": "RA_kwDOVTaRU84ntbxv",
+        "label": "",
+        "name": "ZiNovel-Studio-0.1.0-alpha.1-windows-x64-setup.exe",
+        "size": 222795938,
+        "state": "uploaded",
+        "updatedAt": "2026-10-22T15:14:12Z",
+        "url": "https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.1/ZiNovel-Studio-0.1.0-alpha.1-windows-x64-setup.exe"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-10-22T15:14:13Z",
+    "url": "https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.1"
+  },
+  "checks": [
+    "workflow completed successfully",
+    "public non-draft prerelease",
+    "four assets uploaded",
+    "installer digest and size match CI manifest and checksum file",
+    "manifest commit matches annotated version tag"
+  ],
+  "verifiedAt": "2026-10-22T15:17:59.620Z"
+}

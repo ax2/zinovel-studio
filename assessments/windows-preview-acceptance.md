@@ -21,6 +21,8 @@
 
 本地最终安装包 SHA-256：7f3e562601130d6693586f277c6558d27691f900dcf4b5db9bca3883ecf63906。OPS-10 按其明确行为通过，证据为 screenshots/release/installer-smoke.json、installed/desktop-smoke.json 和 reinstalled.png；不外推为跨版本更新/降级通过。
 
-远端自动 Release 验证仍在进行，OPS-09 保留 in-progress。发布后以 release-manifest.json 中的构建提交和安装包 SHA-256 为准；本地包和 CI 包不能假定字节相同。
+远端自动 Release 已通过：Windows release 39801795594 全步骤成功；v0.1.0-alpha.1 为公开非草稿 prerelease，未登录 HTTP 200，四个附件上传完成。安装 EXE 为 222,795,938 字节，SHA-256 fb5c7d46165b65b1bb44ffce90a6fa44b2b1c70f1b84beca1c31d3fa93eab1c1，与 GitHub 资产 digest、远端清单和校验文件一致；清单提交 f6d31036f6822ae2848c81be5807552fc13fcd04 与版本标签一致。详见 assessments/release/v0.1.0-alpha.1 下的原始远端清单和核验记录。OPS-09 按其自动发布行为通过。
+
+本地包和 CI 包确实具有不同哈希，不能互相替代；公开下载以 CI 附件为准。此次没有在本机再次下载安装 CI 附件，CI 已对其实际安装和运行，GitHub 资产 digest 核对的是上传后的文件。
 
 仍未完成：代码签名、应用内更新/跨版本降级、其他 Windows/低配置机器、系统 IME、读屏器、断电/磁盘满矩阵，以及小说功能矩阵中尚未验收的创作与发布能力。

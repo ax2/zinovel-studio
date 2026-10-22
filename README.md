@@ -2,7 +2,9 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-001/002 持续开发。官方 Harness 与小说桌面已实际贯通，正在补全长篇组织与编辑可靠性。完整功能与上架资格尚未验证。**
+**当前状态：Stage-001/002 继续补全，Stage-003 任务恢复已开始。官方 Harness 与小说桌面已实际贯通，Windows 技术预览已发布。完整功能与上架资格尚未验证。**
+
+Windows 技术预览版：[v0.1.0-alpha.1 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.1)。提供 x64 安装 EXE，自动构建、实际安装/运行/重装/卸载验证通过后发布。当前未代码签名，仍有大量创作功能待完成。
 
 ## 产品方向
 
@@ -29,6 +31,7 @@
 | [验证与风险](assessments/acceptance.md) | 可复现验收、性能目标、文学审读边界 |
 | [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
 | [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
+| [AI 协作工作日志](iterations/stage-003/WORKLOG.md) | 任务记录、重启恢复与候选范围 |
 | [来源记录](design/sources.md) | 本地技能的方法提炼、官方源码链接 |
 | [内置技能源目录](skills/README.md) | 21 项技能源可选，逐项文学质量尚未验收 |
 
@@ -54,7 +57,7 @@ pnpm release:manifest
 
 当前使用 Node 26、pnpm 10.3.0、Electron 44.7.0。前两个 Agent 探针运行官方 Harness 与本机模型 fixture，不消耗真实模型额度。桌面冒烟使用独立临时书库和合成小说，截图保存在 screenshots/stage-001。普通运行在用户应用数据目录保存作品。模型设置通过系统安全存储加密凭据；手工写作无需模型 Key。
 
-已实现的开发切片：卷章/导入/检索、Markdown 编辑与恢复日志、备份恢复、三方冲突合并、历史、批注书签、逐项替换、阅读主题、官方 Harness 的技能候选与两个受约束工具。真实 Electron 验证涵盖渲染进程崩溃恢复和卡死关闭；1,000 章/约 305 万字符合成基准已运行。功能矩阵中的 `verified` 仅表示条目的验收范围通过，`in-progress` 仍有原验收条件待满足。Windows 安装、安装后 Agent、重装保稿及卸载保稿已通过，自动 Release 正在远端验证，当前不是上架版本。详见 [安装验收](assessments/windows-preview-acceptance.md)。
+已实现的开发切片：卷章/导入/检索、Markdown 编辑与恢复日志、备份恢复、三方冲突合并、历史、批注书签、逐项替换、阅读主题、官方 Harness 的技能候选与两个受约束工具。真实 Electron 验证涵盖渲染进程崩溃恢复和卡死关闭；1,000 章/约 305 万字符合成基准已运行。功能矩阵中的 `verified` 仅表示条目的验收范围通过，`in-progress` 仍有原验收条件待满足。Windows 安装、安装后 Agent、重装保稿及卸载保稿已通过，自动 Release 也已远端验证，当前不是上架版本。详见 [安装验收](assessments/windows-preview-acceptance.md)。
 
 开发切片定期提交到 GitHub，每次 push 触发检查。`v*` 版本标签触发 Windows 发行工作流：版本/来源检查、回归、打包、真实安装和运行通过后才创建预览 Release，附件为安装 EXE、SHA-256 和运行时清单。当前尚未代码签名；GitHub 自动发布与应用自动升级是不同能力，后者仍待实现。
 
