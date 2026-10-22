@@ -15,6 +15,9 @@
 
 ## GitHub 状态
 
-待首次创建并推送后补充远端核对结果。CI 结果与本地检查分别记录。
+- 已创建 [ax2/zinovel-studio](https://github.com/ax2/zinovel-studio)，通过 GitHub 元数据确认 visibility=public，默认分支 main，当前账户有管理权限。
+- 首次提交 `db0aa4bea5160cb35a8b7406096c1496d3ee5fcc` 已推送；本地 HEAD 与 `git ls-remote origin refs/heads/main` 一致。
+- 首次 [GitHub Actions 39769489223](https://github.com/ax2/zinovel-studio/actions/runs/39769489223) 结果 success，运行 Node 22 规划检查。此结论只针对该提交；后续文档更新有各自的 CI。
+- 公开内容为 50 个跟踪文件，包括 104 项规划功能、21 个新编写技能源、20 项工具设计契约和检查脚本；没有上游运行时、应用二进制、真实稿件或密钥。
 
 范围：资料结构、JSON、引用、技能基础结构、公开仓库内容检查。应用运行、真实模型、图像和发布适配器均未验证。无 EXE，无应用 Release。

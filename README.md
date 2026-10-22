@@ -43,6 +43,7 @@ node scripts/check-project.mjs
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。
 - 2026-10-22：完成 Stage-000 规划及首批技能源，应用开发尚未开始。
+- 2026-10-22：公开仓库 [ax2/zinovel-studio](https://github.com/ax2/zinovel-studio) 已创建并推送，首轮 GitHub Actions 规划检查通过。
 
 ## 开源边界
 
