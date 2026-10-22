@@ -5,6 +5,27 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { TaskJournal } from "../packages/novel-harness/task-journal.mjs";
+import { NovelHarness } from "../packages/novel-harness/runtime.mjs";
+
+test("constructing a secondary runtime cannot mutate active work before the desktop singleton gate", async () => {
+  const root = await mkdtemp(join(tmpdir(), "zinovel-task-singleton-"));
+  const journal = new TaskJournal(join(root, "tasks")),
+    id = randomUUID();
+  await journal.create({ id, status: "preparing" }, { context: "未完成任务" });
+  await journal.transition(id, "running");
+  const runtime = new NovelHarness({ root, resources: root });
+  assert.equal((await journal.read(id)).record.status, "running");
+  await runtime.initialize();
+  assert.equal((await journal.read(id)).record.status, "interrupted");
+  const active = randomUUID();
+  await journal.create(
+    { id: active, status: "preparing" },
+    { context: "本次新任务" },
+  );
+  await runtime.initialize();
+  await runtime.tasks();
+  assert.equal((await journal.read(active)).record.status, "preparing");
+});
 
 test("startup recovery reaches tasks beyond the bounded UI list", async () => {
   const root = await mkdtemp(join(tmpdir(), "zinovel-task-pages-"));

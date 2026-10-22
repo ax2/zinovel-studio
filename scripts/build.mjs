@@ -36,8 +36,12 @@ await copyFile(
   "packages/novel-harness/novel.patch.yml",
   "dist/resources/novel.patch.yml",
 );
-await copyFile(
-  "packages/novel-harness/tools-plugin.mjs",
-  "dist/resources/tools-plugin.mjs",
-);
+await build({
+  entryPoints: ["packages/novel-harness/tools-plugin.mjs"],
+  bundle: true,
+  platform: "node",
+  target: "node22",
+  format: "esm",
+  outfile: "dist/resources/tools-plugin.mjs",
+});
 console.log("Built desktop and writing workbench.");

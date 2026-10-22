@@ -86,6 +86,7 @@ if (
     .whenReady()
     .then(async () => {
       await store.initialize();
+      await harness.initialize();
       Menu.setApplicationMenu(
         Menu.buildFromTemplate([
           {

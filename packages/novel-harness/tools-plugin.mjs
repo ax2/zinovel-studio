@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { atomicWriteText } from "../novel-storage/atomic.mjs";
 export const name = "zinovel-task-tools";
 export const inject = ["tools"];
 
@@ -25,7 +26,10 @@ export function apply(ctx, config) {
       if (exec.signal.aborted) throw new Error("任务已取消");
       if (!args || typeof args !== "object" || Object.keys(args).length)
         throw new Error("读取工具不接受路径或其他参数");
-      return JSON.parse(await readFile(config.snapshotPath, "utf8"));
+      const { context, selectedText } = JSON.parse(
+        await readFile(config.snapshotPath, "utf8"),
+      );
+      return { context, selectedText };
     },
   });
   ctx.tools.register({
@@ -57,10 +61,9 @@ export function apply(ctx, config) {
         Object.keys(args).some((key) => key !== "replacement")
       )
         throw new Error("候选格式无效或超过长度限制");
-      await writeFile(
+      await atomicWriteText(
         config.proposalPath,
         JSON.stringify({ replacement: args.replacement }),
-        { encoding: "utf8", flag: "w" },
       );
       return { status: "awaiting-author-review" };
     },

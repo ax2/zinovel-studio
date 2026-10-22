@@ -1,6 +1,6 @@
 # Stage-003 任务与候选恢复设计
 
-状态：待实现；2026-10-22 在安装测试期间审查现有 runtime 后制定。不是运行时完成记录。
+状态：日志与官方 runtime 已接入并验证，宿主目标绑定和任务界面待实现；2026-10-22 开始。
 
 ## 问题
 
@@ -11,6 +11,8 @@
 继续使用应用私有 tasks/<UUID>/ 目录；task.json 是有 schemaVersion 的轻量索引，snapshot.json 保存冻结的书/章 ID、完整编辑缓冲、存盘基线 hash、UTF-16 范围、技能版本和上下文来源，proposal.json 保存候选。用同目录原子写入，路径拒绝链接和越界；列表不加载全部正文。
 
 准备阶段立即占用单任务槽位。状态为 preparing → running → awaiting-review → applied；旁支 cancelled/failed/interrupted/discarded。启动时把遗留 preparing/running 标 interrupted，保留快照及已有候选，不自动重发模型请求。关闭候选窗不等于丢弃。
+
+恢复只在桌面取得官方单实例锁之后初始化一次；构造运行时本身不读写任务，避免第二次启动改动第一实例的运行状态。正常退出取消时等待任务落盘完成。技能、输入、候选与状态原子保存；工具读取只返回 context/selectedText，不暴露任务内部元数据。
 
 ## 接受与恢复
 
