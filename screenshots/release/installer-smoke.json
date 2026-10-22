@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.2",
-  "installerSha256": "12fab47a225ed6612b4854e0f5258e25784b9508b84d6c0e112508cd06e54e20",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-sTbtlw\\中文 安装目录",
+  "version": "0.1.0-alpha.3",
+  "installerSha256": "01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-SVVjtR\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -24,11 +24,19 @@
     "installed: library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
     "installed: all-book task list opens the exact linked book and chapter",
     "installed: cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically",
+    "installed: official Harness text is atomically captured while the SSE response is still open and no proposal exists",
+    "installed: UI cancellation flushes visible text, survives restart and provides reference-only recovery without replay or manuscript writes",
+    "installed: forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay",
+    "installed: UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs",
+    "installed: changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact",
+    "installed: settings and exact reported usage survive restart without model replay or manuscript modification",
+    "installed: expanded budget settings stay inside the viewport and can be saved in a narrow window",
+    "installed: local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 13646,
-  "reinstallMs": 19154,
-  "uninstallMs": 4750
+  "installMs": 15383,
+  "reinstallMs": 21362,
+  "uninstallMs": 7205
 }

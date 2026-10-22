@@ -38,3 +38,11 @@ alpha.2 已由 Windows release 39814293616 于 2026-10-22T16:33:28Z 公开发布
 打包、安装套件、发布及 Complete job 步骤均报告 success，但核验时总任务状态仍显示 in_progress，暂不把总工作流状态写成成功；原始回执已保存至 assessments/release/v0.1.0-alpha.2/publication-verification.json，后续补核。没有本机重新下载/安装该公开 EXE；CI 安装验收及上传摘要是公开包证据，本地包哈希另列。
 
 2026-10-23 补核：总工作流已 completed/success，发布回执同步为 passed。此前状态延迟已解除；公开资产及本地/CI 哈希边界不变。
+
+## alpha.3 本机安装资格（2026-10-23）
+
+运行目录清单通过：874 个物理文件、904,051,739 字节；新 NSIS EXE 本机 SHA-256 为 01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7。首次封装失败后同一完整目录重试成功，失败细节未完整保留，尚无确定根因；本机重试不替代独立 CI 构建。
+
+真实安装/安装后完整套件/重装/卸载最终 passed。首次安装 15,383ms、重装 21,362ms、卸载 7,205ms；同版本重装后实际打开原稿，卸载后稿件字节保留。安装后增加流式取消/强杀恢复和完整预算/自定义价格 UI 验证。代表截图在 screenshots/release/installed/stream 与 budget，已查看费用明细和窄窗设置，文字可读，操作可达。安装用 Harness 的模型仍为本机 fixture，不是云端账单或文学质量证明。
+
+alpha.2 完整目录归档在 release/v0.1.0-alpha.2/win-unpacked，报告归档在 assessments/release/v0.1.0-alpha.2/local-installer-smoke.json。alpha.3 标签工作流和公开附件待单独核验，本机哈希不能代替 CI 产物哈希。
