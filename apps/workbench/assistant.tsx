@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
 
@@ -239,59 +240,61 @@ export function WritingAssistant({
           {error}
         </p>
       )}
-      {proposal && (
-        <div className="modal-backdrop">
-          <div
-            className="modal proposal-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label="审阅 AI 候选"
-          >
-            <div className="modal-heading">
-              <h2>审阅 AI 候选</h2>
-              <button aria-label="关闭候选" onClick={() => setProposal(null)}>
-                <X />
-              </button>
+      {proposal &&
+        createPortal(
+          <div className="modal-backdrop">
+            <div
+              className="modal proposal-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-label="审阅 AI 候选"
+            >
+              <div className="modal-heading">
+                <h2>审阅 AI 候选</h2>
+                <button aria-label="关闭候选" onClick={() => setProposal(null)}>
+                  <X />
+                </button>
+              </div>
+              <p className="muted">
+                接受后成为编辑中的正文，并保留历史版本。生成期间正文如有变化，将拒绝替换。
+              </p>
+              <div className="conflict-columns">
+                <section>
+                  <h3>原文选区</h3>
+                  <pre>
+                    {proposal.base.body.slice(
+                      proposal.base.start,
+                      proposal.base.end,
+                    ) || "（插入新内容）"}
+                  </pre>
+                </section>
+                <section>
+                  <h3>候选文本</h3>
+                  <textarea
+                    aria-label="候选文本"
+                    value={proposal.text}
+                    onChange={(e) =>
+                      setProposal({ ...proposal, text: e.target.value })
+                    }
+                  />
+                </section>
+              </div>
+              <div className="modal-actions">
+                <button onClick={() => setProposal(null)}>暂不采用</button>
+                <button
+                  className="primary"
+                  onClick={async () => {
+                    if (await apply(proposal.base, proposal.text))
+                      setProposal(null);
+                  }}
+                >
+                  接受候选
+                </button>
+              </div>
             </div>
-            <p className="muted">
-              接受后成为编辑中的正文，并保留历史版本。生成期间正文如有变化，将拒绝替换。
-            </p>
-            <div className="conflict-columns">
-              <section>
-                <h3>原文选区</h3>
-                <pre>
-                  {proposal.base.body.slice(
-                    proposal.base.start,
-                    proposal.base.end,
-                  ) || "（插入新内容）"}
-                </pre>
-              </section>
-              <section>
-                <h3>候选文本</h3>
-                <textarea
-                  aria-label="候选文本"
-                  value={proposal.text}
-                  onChange={(e) =>
-                    setProposal({ ...proposal, text: e.target.value })
-                  }
-                />
-              </section>
-            </div>
-            <div className="modal-actions">
-              <button onClick={() => setProposal(null)}>暂不采用</button>
-              <button
-                className="primary"
-                onClick={async () => {
-                  if (await apply(proposal.base, proposal.text))
-                    setProposal(null);
-                }}
-              >
-                接受候选
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </section>
   );
 }

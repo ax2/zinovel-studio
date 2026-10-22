@@ -31,6 +31,7 @@ import {
 import "./style.css";
 import { ChapterTree } from "./chapter-tree";
 import { BookShelf } from "./book-shelf";
+import { ReferencePanel } from "./reference-panel";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
 import { ConflictDialog } from "./conflict-dialog";
@@ -45,6 +46,8 @@ import {
 function App() {
   useModalAccessibility();
   const editorRef = useRef<ManuscriptHandle>(null);
+  const [referenceOpen, setReferenceOpen] = useState(false),
+    [typewriter, setTypewriter] = useState(false);
   const [reveal, setReveal] = useState<{
     documentKey: string;
     start: number;
@@ -88,6 +91,9 @@ function App() {
     composing = useRef(false),
     [composition, setComposition] = useState(false);
   latest.current = { book, chapter, body, title };
+  useEffect(() => {
+    if (chapter && !reading) editorRef.current?.focus();
+  }, [focus, typewriter]);
   const dirty = !!chapter && (body !== chapter.body || title !== chapter.title);
   const draftKey = (bookId: string, chapterId: string) =>
     `zinovel.draft.${bookId}.${chapterId}`;
@@ -395,7 +401,7 @@ function App() {
   }
   return (
     <div
-      className={`app ${focus ? "focus" : ""} ${panelOpen ? "show-inspector" : ""}`}
+      className={`app ${focus ? "focus" : ""} ${panelOpen ? "show-inspector" : ""} ${referenceOpen ? "reference-mode" : ""}`}
     >
       <nav className="rail" aria-label="主导航">
         <div className="brand-mark">
@@ -569,6 +575,15 @@ function App() {
               <span className="toolbar-label">
                 {reading ? "阅读模式" : "正文"}
               </span>
+              <button
+                title="打字机模式"
+                aria-pressed={typewriter}
+                className={typewriter ? "pressed" : ""}
+                disabled={!chapter || reading}
+                onClick={() => setTypewriter(!typewriter)}
+              >
+                居中
+              </button>
               <span className="top-spacer" />
               <button
                 className={reading ? "pressed" : ""}
@@ -580,7 +595,10 @@ function App() {
               </button>
               <button
                 className={focus ? "pressed" : ""}
-                onClick={() => setFocus(!focus)}
+                onClick={() => {
+                  setFocus(!focus);
+                  setPanelOpen(false);
+                }}
               >
                 <Maximize2 size={16} />
                 {focus ? "退出专注" : "专注"}
@@ -618,6 +636,7 @@ function App() {
                     ref={editorRef}
                     documentKey={`${book.id}.${chapter.id}`}
                     value={body}
+                    typewriter={typewriter}
                     reveal={reveal}
                     onChange={setBody}
                     onSelection={setSelection}
@@ -650,119 +669,147 @@ function App() {
                 <X size={17} />
               </button>
             </div>
-            <WritingAssistant
-              key={book.id}
-              snapshot={
-                chapter
-                  ? {
-                      bookId: book.id,
-                      chapterId: chapter.id,
-                      body,
-                      start: Math.min(selection.start, body.length),
-                      end: Math.min(selection.end, body.length),
-                    }
-                  : null
-              }
-              apply={applyCandidate}
-              openSettings={() => setSettingsOpen(true)}
-            />
-            <section>
-              <h3>当前章节</h3>
+            <div
+              className="reference-tabs"
+              role="group"
+              aria-label="创作参考内容"
+            >
               <button
-                disabled={!chapter}
-                onClick={async () => {
-                  if (await save()) {
-                    const current = latest.current;
-                    if (current.book && current.chapter)
-                      setAnnotationSnapshot({
-                        bookId: current.book.id,
-                        chapterId: current.chapter.id,
-                        body: current.body,
-                        hash: current.chapter.diskHash || current.chapter.hash,
-                        start: Math.min(selection.start, current.body.length),
-                        end: Math.min(selection.end, current.body.length),
-                      });
-                  }
-                }}
+                aria-pressed={!referenceOpen}
+                onClick={() => setReferenceOpen(false)}
               >
-                批注与书签
+                写作工具
               </button>
-              <p className="muted">{chapter?.title || "尚未创建章节"}</p>
-              <div className="metadata">
-                <span>正文</span>
-                <strong>{count.toLocaleString()} 字</strong>
-                <span>版本</span>
-                <strong>{chapter ? `第 ${chapter.revision} 版` : "—"}</strong>
-                <span>状态</span>
-                <strong>{statusLabel}</strong>
-              </div>
-            </section>
-            <section>
-              <h3>版本与导出</h3>
               <button
-                onClick={async () => {
-                  if (await save()) {
-                    try {
-                      const result = await api("book.backup", {
+                aria-pressed={referenceOpen}
+                onClick={() => setReferenceOpen(true)}
+              >
+                旧稿参考
+              </button>
+            </div>
+            {referenceOpen && (
+              <ReferencePanel
+                key={book.id}
+                book={book}
+                chapterId={chapter?.id}
+              />
+            )}
+            <div hidden={referenceOpen}>
+              <WritingAssistant
+                key={book.id}
+                snapshot={
+                  chapter
+                    ? {
                         bookId: book.id,
-                      });
-                      if (!result.cancelled)
-                        setNotice(`备份完成：${result.files} 个文件`);
-                    } catch (e) {
-                      setError((e as Error).message);
+                        chapterId: chapter.id,
+                        body,
+                        start: Math.min(selection.start, body.length),
+                        end: Math.min(selection.end, body.length),
+                      }
+                    : null
+                }
+                apply={applyCandidate}
+                openSettings={() => setSettingsOpen(true)}
+              />
+              <section>
+                <h3>当前章节</h3>
+                <button
+                  disabled={!chapter}
+                  onClick={async () => {
+                    if (await save()) {
+                      const current = latest.current;
+                      if (current.book && current.chapter)
+                        setAnnotationSnapshot({
+                          bookId: current.book.id,
+                          chapterId: current.chapter.id,
+                          body: current.body,
+                          hash:
+                            current.chapter.diskHash || current.chapter.hash,
+                          start: Math.min(selection.start, current.body.length),
+                          end: Math.min(selection.end, current.body.length),
+                        });
                     }
-                  }
-                }}
-              >
-                备份整部作品
-              </button>
-              <button
-                onClick={async () => {
-                  if (await save()) {
-                    try {
-                      const result = await api("book.export", {
-                        bookId: book.id,
-                      });
-                      if (!result.cancelled) setNotice("全书已导出");
-                    } catch (e) {
-                      setError((e as Error).message);
+                  }}
+                >
+                  批注与书签
+                </button>
+                <p className="muted">{chapter?.title || "尚未创建章节"}</p>
+                <div className="metadata">
+                  <span>正文</span>
+                  <strong>{count.toLocaleString()} 字</strong>
+                  <span>版本</span>
+                  <strong>{chapter ? `第 ${chapter.revision} 版` : "—"}</strong>
+                  <span>状态</span>
+                  <strong>{statusLabel}</strong>
+                </div>
+              </section>
+              <section>
+                <h3>版本与导出</h3>
+                <button
+                  onClick={async () => {
+                    if (await save()) {
+                      try {
+                        const result = await api("book.backup", {
+                          bookId: book.id,
+                        });
+                        if (!result.cancelled)
+                          setNotice(`备份完成：${result.files} 个文件`);
+                      } catch (e) {
+                        setError((e as Error).message);
+                      }
                     }
-                  }
-                }}
-              >
-                导出全书 Markdown
-              </button>
-              <button
-                disabled={!chapter}
-                onClick={async () => {
-                  if (await save())
-                    setHistory(
-                      await api("chapter.history", {
+                  }}
+                >
+                  备份整部作品
+                </button>
+                <button
+                  onClick={async () => {
+                    if (await save()) {
+                      try {
+                        const result = await api("book.export", {
+                          bookId: book.id,
+                        });
+                        if (!result.cancelled) setNotice("全书已导出");
+                      } catch (e) {
+                        setError((e as Error).message);
+                      }
+                    }
+                  }}
+                >
+                  导出全书 Markdown
+                </button>
+                <button
+                  disabled={!chapter}
+                  onClick={async () => {
+                    if (await save())
+                      setHistory(
+                        await api("chapter.history", {
+                          bookId: book.id,
+                          chapterId: chapter!.id,
+                        }),
+                      );
+                  }}
+                >
+                  <History size={17} />
+                  查看历史版本
+                </button>
+                <button
+                  disabled={!chapter}
+                  onClick={async () => {
+                    if (await save()) {
+                      const result = await api("chapter.export", {
                         bookId: book.id,
                         chapterId: chapter!.id,
-                      }),
-                    );
-                }}
-              >
-                <History size={17} />
-                查看历史版本
-              </button>
-              <button
-                disabled={!chapter}
-                onClick={async () => {
-                  if (await save()) {
-                    const result = await api("chapter.export", {
-                      bookId: book.id,
-                      chapterId: chapter!.id,
-                    });
-                    if (!result.cancelled) setNotice("章节已导出");
-                  }
-                }}
-              >
-                <Download size={17} />
-                导出 Markdown
-              </button>
-            </section>
+                      });
+                      if (!result.cancelled) setNotice("章节已导出");
+                    }
+                  }}
+                >
+                  <Download size={17} />
+                  导出 Markdown
+                </button>
+              </section>
+            </div>
           </aside>
         </>
       )}

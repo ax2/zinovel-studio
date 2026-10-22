@@ -30,6 +30,7 @@ export type ManuscriptHandle = {
 type Props = {
   documentKey: string;
   value: string;
+  typewriter?: boolean;
   reveal?: {
     documentKey: string;
     start: number;
@@ -46,6 +47,7 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
     const host = useRef<HTMLDivElement>(null),
       editor = useRef<EditorView | null>(null),
       revealed = useRef<Props["reveal"]>(null),
+      centeringFrame = useRef(0),
       latest = useRef(props);
     latest.current = props;
     useImperativeHandle(
@@ -158,6 +160,18 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
                     JSON.stringify({ anchor: range.anchor, head: range.head }),
                   );
                 } catch {}
+                if (latest.current.typewriter) {
+                  cancelAnimationFrame(centeringFrame.current);
+                  centeringFrame.current = requestAnimationFrame(() => {
+                    if (editor.current === update.view)
+                      update.view.dispatch({
+                        effects: EditorView.scrollIntoView(
+                          update.view.state.selection.main.head,
+                          { y: "center" },
+                        ),
+                      });
+                  });
+                }
               }
             }),
           ],
@@ -169,6 +183,7 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
         end: Math.max(saved.anchor, saved.head),
       });
       return () => {
+        cancelAnimationFrame(centeringFrame.current);
         view.destroy();
         editor.current = null;
       };
@@ -225,6 +240,20 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
       });
       return () => cancelAnimationFrame(frame);
     }, [props.reveal, props.documentKey]);
-    return <div className="manuscript-editor" ref={host} />;
+    useEffect(() => {
+      const view = editor.current;
+      if (props.typewriter && view)
+        view.dispatch({
+          effects: EditorView.scrollIntoView(view.state.selection.main.head, {
+            y: "center",
+          }),
+        });
+    }, [props.typewriter]);
+    return (
+      <div
+        className={`manuscript-editor ${props.typewriter ? "typewriter" : ""}`}
+        ref={host}
+      />
+    );
   },
 );

@@ -34,6 +34,7 @@ jobs:
       - run: pnpm test:recovery
       - run: pnpm test:merge
       - run: pnpm test:shelf
+      - run: pnpm test:writing-views
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

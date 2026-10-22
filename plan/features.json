@@ -342,9 +342,14 @@
       "name": "专注与打字机模式",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "可关闭侧栏，不丢焦点",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "scripts/smoke-writing-views.mjs",
+        "screenshots/stage-002/reference/writing-views-smoke.json",
+        "scripts/smoke-desktop.mjs"
+      ],
+      "validation": "assessments/writing-views-acceptance.md"
     },
     {
       "id": "EDIT-05",
@@ -352,8 +357,14 @@
       "name": "双栏参考与分屏",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "正文与设定/旧稿可同时查看"
+      "status": "verified",
+      "acceptance": "正文与设定/旧稿可同时查看",
+      "evidence": [
+        "scripts/smoke-writing-views.mjs",
+        "screenshots/stage-002/reference/writing-views-smoke.json",
+        "scripts/smoke-desktop.mjs"
+      ],
+      "validation": "assessments/writing-views-acceptance.md"
     },
     {
       "id": "EDIT-06",

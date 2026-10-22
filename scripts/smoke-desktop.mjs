@@ -154,6 +154,7 @@ try {
   }));
   assert.ok(range.end > range.start);
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
+  await page.getByRole("button", { name: "旧稿参考", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
     .waitFor({ timeout: 45000 });
@@ -164,6 +165,7 @@ try {
   assert.equal(await readFile(file, "utf8"), external);
   await page.screenshot({ path: join(screenshots, "ai-review.png") });
   await page.getByRole("button", { name: "接受候选", exact: true }).click();
+  await page.getByRole("button", { name: "写作工具", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
     .waitFor({ state: "hidden" });

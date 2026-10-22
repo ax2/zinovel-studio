@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "another chapter's historical snapshot stays read-only during manuscript editing and external changes; explicit reload updates reference only",
+    "focus hides sidebars and restores input focus; typewriter mode centers actual caret; toggles retain exact manuscript bytes"
+  ],
+  "errors": [],
+  "status": "passed",
+  "caret": {
+    "editorHeight": 644.7999877929688,
+    "centerDistancePx": 0
+  }
+}
