@@ -3,7 +3,7 @@
   "checks": [
     "four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
     "acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
-    "before-write interruption retains author-adjusted candidate; explicit UI retry saves exactly once"
+    "before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once"
   ],
   "errors": [],
   "cases": [

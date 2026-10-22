@@ -1,17 +1,17 @@
 {
   "status": "passed",
-  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-NFyC7y\\中文 升级目录",
-  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-NFyC7y\\synthetic-data",
+  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-KiaJqI\\中文 升级目录",
+  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-KiaJqI\\synthetic-data",
   "fromVersion": "0.1.0-alpha.3",
-  "toVersion": "0.1.0-alpha.4",
+  "toVersion": "0.1.0-alpha.5",
   "previousInstallerSha256": "01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7",
-  "currentInstallerSha256": "4489647f45a90800ebd10977ab8ff8962d514e388438ce4310bba9d4991ab765",
+  "currentInstallerSha256": "4008122de46c041ce268d94a29e508d456e93ee9d9d49335e4250dff2f85fe38",
   "checks": [
     "manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings",
     "new version silently installed over old app in the same directory; all prior library/task/settings bytes retained and opened in the exact new packaged EXE with system-only PATH",
     "old candidate recovered in new review UI, saved review draft separately without changing formal manuscript; upgraded app uninstalled while retaining user data"
   ],
   "errors": [],
-  "previousInstallMs": 16718,
-  "upgradeMs": 21178
+  "previousInstallMs": 14775,
+  "upgradeMs": 20940
 }

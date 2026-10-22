@@ -5,7 +5,8 @@
     "close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
     "stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
     "partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
-    "light desktop and dark narrow review remain readable, scrollable and without horizontal overflow"
+    "light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
+    "same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance"
   ],
   "errors": [],
   "viewport": {

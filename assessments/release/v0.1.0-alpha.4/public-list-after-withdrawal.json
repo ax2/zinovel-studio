@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-22T17:52:34.5585068Z",
+  "publicTags": [
+    "v0.1.0-alpha.3",
+    "v0.1.0-alpha.2",
+    "v0.1.0-alpha.1"
+  ],
+  "alpha4Visible": false,
+  "note": "Unauthenticated REST releases listing; HTML tag page may still return 200 because the Git tag remains"
+}
