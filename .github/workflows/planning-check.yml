@@ -30,3 +30,8 @@ jobs:
       - run: node scripts/smoke-novel-agent.mjs
       - run: pnpm test:desktop
       - run: node scripts/smoke-library.mjs
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: synthetic-desktop-failure
+          path: screenshots/

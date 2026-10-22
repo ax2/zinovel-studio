@@ -16,7 +16,7 @@ const env = { ...process.env, ZINOVEL_DATA_ROOT: join(work, "data") };
 delete env.ELECTRON_RUN_AS_NODE;
 const screenshots = join(root, "screenshots", "stage-002");
 await mkdir(screenshots, { recursive: true });
-let application;
+let application, page;
 const report = {
   checks: [],
   errors: [],
@@ -31,7 +31,10 @@ try {
     cwd: root,
     env,
   });
-  const page = await application.firstWindow();
+  page = await application.firstWindow();
+  await application.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].setSize(1008, 681),
+  );
   page.on("pageerror", (error) => report.errors.push(error.message));
   await application.evaluate(({ dialog }, path) => {
     dialog.showOpenDialog = async () => ({
@@ -142,6 +145,20 @@ try {
 } catch (error) {
   report.status = "failed";
   report.failure = String(error);
+  if (page) {
+    await page
+      .screenshot({ path: join(screenshots, "failure.png") })
+      .catch(() => {});
+    report.selectionAtFailure = await page
+      .evaluate(() => ({
+        text: window.getSelection()?.toString(),
+        active: document.activeElement?.outerHTML.slice(0, 500),
+        cursors: Object.entries(localStorage).filter(([key]) =>
+          key.startsWith("zinovel.cursor."),
+        ),
+      }))
+      .catch(() => null);
+  }
   throw error;
 } finally {
   if (application) await application.close();

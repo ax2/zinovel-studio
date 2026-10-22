@@ -17,6 +17,24 @@ export function ReplaceDialog({
       typeof previewReplacement
     > | null>(null),
     [error, setError] = useState("");
+  const [selection, setSelection] = useState<{
+    all: boolean;
+    starts: number[];
+  }>({ all: true, starts: [] });
+  function updatePreview(next = selection, offset = 0) {
+    try {
+      setError("");
+      const result = previewReplacement(snapshot.body, query, replacement, {
+        ...next,
+        offset,
+      });
+      setSelection(next);
+      setPreview(result);
+    } catch (e) {
+      setPreview(null);
+      setError((e as Error).message);
+    }
+  }
   return (
     <div className="modal-backdrop">
       <div
@@ -61,27 +79,71 @@ export function ReplaceDialog({
         </div>
         <button
           disabled={!query}
-          onClick={() => {
-            try {
-              setError("");
-              setPreview(previewReplacement(snapshot.body, query, replacement));
-            } catch (e) {
-              setError((e as Error).message);
-            }
-          }}
+          onClick={() => updatePreview({ all: true, starts: [] })}
         >
           预览替换位置
         </button>
         {preview && (
           <>
             <p>
-              本章共有 {preview.count} 处匹配
-              {preview.truncated ? "，下方展示前 50 处" : ""}。
+              本章共有 {preview.count} 处匹配，已选 {preview.selectedCount} 处。
+              {preview.count > 0 &&
+                `当前展示 ${preview.offset + 1}–${preview.offset + preview.matches.length} 处。`}
             </p>
+            <div className="modal-actions">
+              <button
+                onClick={() =>
+                  updatePreview({ all: true, starts: [] }, preview.offset)
+                }
+              >
+                选中全部匹配
+              </button>
+              <button
+                onClick={() =>
+                  updatePreview({ all: false, starts: [] }, preview.offset)
+                }
+              >
+                取消全部选择
+              </button>
+              <button
+                disabled={preview.offset === 0}
+                onClick={() =>
+                  updatePreview(selection, Math.max(0, preview.offset - 50))
+                }
+              >
+                上一页匹配
+              </button>
+              <button
+                disabled={preview.offset + 50 >= preview.count}
+                onClick={() => updatePreview(selection, preview.offset + 50)}
+              >
+                下一页匹配
+              </button>
+            </div>
             <div className="replacement-matches">
               {preview.matches.map((match) => (
                 <div key={match.start}>
-                  <span>位置 {match.start + 1}</span>
+                  <label className="replacement-choice">
+                    <input
+                      type="checkbox"
+                      aria-label={`替换位置 ${match.start + 1}`}
+                      checked={match.selected}
+                      onChange={() =>
+                        updatePreview(
+                          {
+                            ...selection,
+                            starts: selection.starts.includes(match.start)
+                              ? selection.starts.filter(
+                                  (start) => start !== match.start,
+                                )
+                              : [...selection.starts, match.start],
+                          },
+                          preview.offset,
+                        )
+                      }
+                    />
+                    位置 {match.start + 1}
+                  </label>
                   <p>{match.excerpt}</p>
                 </div>
               ))}
@@ -97,7 +159,7 @@ export function ReplaceDialog({
           <button onClick={onClose}>取消</button>
           <button
             className="primary"
-            disabled={!preview?.count}
+            disabled={!preview?.selectedCount}
             onClick={async () => {
               if (
                 preview &&

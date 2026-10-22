@@ -30,6 +30,12 @@ export type ManuscriptHandle = {
 type Props = {
   documentKey: string;
   value: string;
+  reveal?: {
+    documentKey: string;
+    start: number;
+    end: number;
+    request: number;
+  } | null;
   onChange: (value: string) => void;
   onSelection: (range: { start: number; end: number }) => void;
   onComposition: (active: boolean) => void;
@@ -196,6 +202,21 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
         userEvent: "input.replace",
       });
     }, [props.value]);
+    // Run after the target document and its content have committed. A requestAnimationFrame
+    // in the caller can run before React commits the asynchronous chapter switch.
+    useEffect(() => {
+      const view = editor.current,
+        target = props.reveal;
+      if (!view || !target || target.documentKey !== props.documentKey) return;
+      view.dispatch({
+        selection: {
+          anchor: Math.max(0, Math.min(target.start, view.state.doc.length)),
+          head: Math.max(0, Math.min(target.end, view.state.doc.length)),
+        },
+        scrollIntoView: true,
+      });
+      view.focus();
+    }, [props.reveal, props.documentKey]);
     return <div className="manuscript-editor" ref={host} />;
   },
 );

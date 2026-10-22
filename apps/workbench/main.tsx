@@ -40,6 +40,12 @@ import {
 
 function App() {
   const editorRef = useRef<ManuscriptHandle>(null);
+  const [reveal, setReveal] = useState<{
+    documentKey: string;
+    start: number;
+    end: number;
+    request: number;
+  } | null>(null);
   const [replaceSnapshot, setReplaceSnapshot] =
     useState<WritingSnapshot | null>(null);
   const [books, setBooks] = useState<Book[]>([]),
@@ -330,8 +336,12 @@ function App() {
       setNotice("正文在检索后发生变化，请重新搜索以准确定位。");
       return;
     }
-    requestAnimationFrame(() => {
-      editorRef.current?.select(hit.start, hit.end);
+    setReading(false);
+    setReveal({
+      documentKey: `${book.id}.${hit.chapterId}`,
+      start: hit.start,
+      end: hit.end,
+      request: Date.now(),
     });
   }
 
@@ -621,6 +631,7 @@ function App() {
                     ref={editorRef}
                     documentKey={`${book.id}.${chapter.id}`}
                     value={body}
+                    reveal={reveal}
                     onChange={setBody}
                     onSelection={setSelection}
                     onComposition={(active) => {
