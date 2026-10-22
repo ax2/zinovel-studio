@@ -481,7 +481,14 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "逐块接受/拒绝/另存版本",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md",
+        "iterations/stage-003/WORKLOG.md",
+        "design/candidate-review.md",
+        "screenshots/stage-003/candidate-review/candidate-review-smoke.json",
+        "tests/candidate-diff.test.mjs",
+        "tests/review-draft.test.mjs"
+      ]
     },
     {
       "id": "AI-08",

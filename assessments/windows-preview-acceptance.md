@@ -48,3 +48,11 @@ alpha.2 已由 Windows release 39814293616 于 2026-10-22T16:33:28Z 公开发布
 alpha.2 完整目录归档在 release/v0.1.0-alpha.2/win-unpacked，报告归档在 assessments/release/v0.1.0-alpha.2/local-installer-smoke.json。alpha.3 标签工作流和公开附件待单独核验，本机哈希不能代替 CI 产物哈希。
 
 alpha.3 公开补核：Windows release 39820858936 completed/success，四附件 uploaded，非草稿 prerelease，未登录 HTTP 200。公开 EXE 222,812,075 字节，SHA-256 e88243c6ed68ba4430bdcb100743db42ff808363abd5a6500ac5a6f21b83abd6，与公开 manifest/checksum、GitHub digest 和标签 edbd695 一致。完整回执在 assessments/release/v0.1.0-alpha.3/publication-verification.json。未本机重装公开 EXE；它的安装资格来自同一 CI 构建/安装/上传链路。
+
+## alpha.4 本机安装与覆盖升级（2026-10-23）
+
+EXE 222,813,868 字节，SHA-256 4489647f45a90800ebd10977ab8ff8962d514e388438ce4310bba9d4991ab765。完整打包、安装后的全部回归（含差异审阅和草稿恢复）、同版本重装和卸载 passed；安装 17,254ms、重装 23,048ms、卸载 5,403ms。
+
+指定 alpha.3 → alpha.4 覆盖升级 passed：旧版实际写入稿件和合成加密设置，新版覆盖安装 21,178ms，library/tasks/model.json 字节一致，实际打开新版本 EXE（系统目录 PATH）并恢复旧候选、保存独立草稿。卸载保留正文。报告与截图在 screenshots/release/upgrade；本机旧包 SHA-256 01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7，与公开旧包不同。此结果不代表所有历史版本、降级或跨架构迁移。
+
+已查看升级后浅色和安装版深色冲突截图。alpha.4 公开包仍待独立工作流核验，不能以本机产物代替；alpha.3 本机完整目录/manifest 及本机安装报告已归档。

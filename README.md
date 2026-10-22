@@ -19,6 +19,7 @@ Windows 技术预览版：[v0.1.0-alpha.3 下载与说明](https://github.com/ax
 | 文档 | 内容 |
 | --- | --- |
 | [产品完整规划](plan/product-spec.md) | 用户场景、创作全流程、产品边界 |
+| [预览版使用说明](docs/USER_GUIDE.zh-CN.md) | 安装、手工写作、模型预算、审阅草稿和备份范围 |
 | [功能矩阵](plan/feature-matrix.md) | 功能 ID、优先级、阶段、验收条件 |
 | [阶段路线图](plan/roadmap.md) | Stage-001 至 Stage-008 的依赖及交付门槛 |
 | [上游研究](design/upstream-research.md) | 官方桌面证据、提交号、复用边界 |

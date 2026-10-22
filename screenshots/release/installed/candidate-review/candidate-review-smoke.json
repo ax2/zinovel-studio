@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": [
+    "real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
+    "close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
+    "stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
+    "partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
+    "light desktop and dark narrow review remain readable, scrollable and without horizontal overflow"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  }
+}

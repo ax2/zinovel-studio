@@ -50,6 +50,16 @@ jobs:
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer
+      - name: Fetch previous qualified installer and verify real version upgrade
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.3 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Previous release download failed' }
+          pnpm test:upgrade .cache/upgrade-source/ZiNovel-Studio-0.1.0-alpha.3-windows-x64-setup.exe .cache/upgrade-source/release-manifest.json
+          if ($LASTEXITCODE -ne 0) { throw 'Cross-version upgrade failed' }
       - run: pnpm release:manifest
       - name: Publish verified preview assets
         shell: pwsh

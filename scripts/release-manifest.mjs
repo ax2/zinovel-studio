@@ -49,6 +49,28 @@ const manifest = {
   qualification: smoke.checks,
   generatedAt: new Date().toISOString(),
 };
+const upgrade = JSON.parse(
+  await readFile(
+    new URL("screenshots/release/upgrade/upgrade-smoke.json", root),
+    "utf8",
+  ),
+);
+if (
+  upgrade.status !== "passed" ||
+  upgrade.toVersion !== pkg.version ||
+  upgrade.currentInstallerSha256 !== sha256
+)
+  throw new Error(
+    "Installer has not passed the exact-bytes cross-version upgrade test",
+  );
+manifest.upgrade = {
+  fromVersion: upgrade.fromVersion,
+  previousInstallerSha256: upgrade.previousInstallerSha256,
+  upgradeMs: upgrade.upgradeMs,
+};
+manifest.qualification.push(
+  ...upgrade.checks.map((check) => `upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),

@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.3",
-  "installerSha256": "01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-SVVjtR\\中文 安装目录",
+  "version": "0.1.0-alpha.4",
+  "installerSha256": "4489647f45a90800ebd10977ab8ff8962d514e388438ce4310bba9d4991ab765",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-94fHES\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -32,11 +32,16 @@
     "installed: settings and exact reported usage survive restart without model replay or manuscript modification",
     "installed: expanded budget settings stay inside the viewport and can be saved in a narrow window",
     "installed: local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes",
+    "installed: real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
+    "installed: close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
+    "installed: stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
+    "installed: partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
+    "installed: light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 15383,
-  "reinstallMs": 21362,
-  "uninstallMs": 7205
+  "installMs": 17254,
+  "reinstallMs": 23048,
+  "uninstallMs": 5403
 }
