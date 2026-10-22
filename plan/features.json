@@ -31,8 +31,11 @@
       "name": "现有目录导入",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "只读试扫，确认后新建书而不改源"
+      "status": "in-progress",
+      "acceptance": "只读试扫，确认后新建书而不改源",
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-04",
@@ -40,8 +43,11 @@
       "name": "TXT/Markdown 编码预览",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "乱码与章节拆分可修正后导入"
+      "status": "in-progress",
+      "acceptance": "乱码与章节拆分可修正后导入",
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-05",
@@ -49,8 +55,11 @@
       "name": "草稿正式状态",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "未审草稿与正式章分开显示"
+      "status": "in-progress",
+      "acceptance": "未审草稿与正式章分开显示",
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-06",
@@ -58,8 +67,11 @@
       "name": "归档与回收站",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "删除可恢复，引用冲突可见"
+      "status": "in-progress",
+      "acceptance": "删除可恢复，引用冲突可见",
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-07",

@@ -29,3 +29,4 @@ jobs:
       - run: node scripts/smoke-harness.mjs
       - run: node scripts/smoke-novel-agent.mjs
       - run: pnpm test:desktop
+      - run: node scripts/smoke-library.mjs

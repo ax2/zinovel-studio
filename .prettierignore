@@ -1,0 +1,6 @@
+apps/desktop/upstream/
+node_modules/
+vendor/
+.cache/
+dist/
+pnpm-lock.yaml

@@ -2,7 +2,7 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-001 开发进行中。Stage-000 规划已完成；正在集成官方桌面与 Harness，建立小说专用应用基础。完整功能与上架资格尚未验证。**
+**当前状态：Stage-001/002 持续开发。官方 Harness 与小说桌面已实际贯通，正在补全长篇组织与编辑可靠性。完整功能与上架资格尚未验证。**
 
 ## 产品方向
 
@@ -26,7 +26,8 @@
 | [技能与工具](design/skills-tools.md) | 技能路由、工具能力、上下文和任务执行 |
 | [发布与导出](design/publishing.md) | 导出、站点、投稿、回执与回滚 |
 | [验证与风险](assessments/acceptance.md) | 可复现验收、性能目标、文学审读边界 |
-| [阶段工作日志](iterations/stage-001/WORKLOG.md) | 当前实现、测试、发现和规划修正 |
+| [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
+| [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
 | [来源记录](design/sources.md) | 本地技能的方法提炼、官方源码链接 |
 | [内置技能源目录](skills/README.md) | 可阅读技能源；尚未接入运行时 |
 
@@ -40,6 +41,7 @@ pnpm dev
 node scripts/smoke-harness.mjs
 node scripts/smoke-novel-agent.mjs
 pnpm test:desktop
+pnpm test:library
 ```
 
 当前使用 Node 26、pnpm 10.3.0、Electron 44.7.0。前两个 Agent 探针运行官方 Harness 与本机模型 fixture，不消耗真实模型额度。桌面冒烟使用独立临时书库和合成小说，截图保存在 screenshots/stage-001。普通运行在用户应用数据目录保存作品。模型设置通过系统安全存储加密凭据；手工写作无需模型 Key。
