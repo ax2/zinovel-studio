@@ -2,11 +2,11 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.11 已完成本机及远端安装/升级验证并公开发布，新增有正文依据的认知矩阵和查询取消，保留全书证据、关系图、独立试写、AI 审阅及十三类创作资料。后续阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.12 已完成本机及远端安装/升级验证并公开发布，新增作者当前认知选择、旧记录整理与新建故障恢复，保留认知矩阵、关系图、独立试写和 AI 审阅。阶段成果继续发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.11 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.11) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.11/ZiNovel-Studio-0.1.0-alpha.11-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.12 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.12) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.12/ZiNovel-Studio-0.1.0-alpha.12-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支 alpha.12 已实现作者当前认知选择和旧记录整理，108 项单元/类型/规划及真实桌面通过，已修复草稿清理异常重复创建，准备重新构建同版本安装资格，尚未包含在 alpha.11 安装包。独立认知尚未接入 Agent 冻结上下文，故事时间推演、大书性能及完整需求继续推进，详见 [认知矩阵设计](design/knowledge-matrix.md)、[作者选择验收](assessments/stage-004/knowledge-choices.md) 和 [旧认知整理验收](assessments/stage-004/knowledge-legacy.md)。
+后续 alpha.13 正在开发认知与作者选择的 Agent 冻结上下文，尚未完成本版实际运行或安装验收，不包含在 alpha.12 安装包。自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 

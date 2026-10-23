@@ -19,3 +19,9 @@ Windows x64未签名安装EXE 222875697字节，SHA-256 **1e6995835d92a3a2cf8d9e
 108项单元、类型和规划通过；源码CI39996100653 completed/success。106项需求仍24 verified /31 in-progress /51 planned，WORLD-05保持in-progress。认知及当前选择尚未进入Agent冻结上下文，故事时间、大书性能、图像地图、多格式出版、完整迁移及原生IME/辅助技术/低端设备/签名和真实云模型文学质量未完成。旧alpha.11真实EXE仅验证认知数据回退，不冒充NSIS降级或全部应用迁移。
 
 标签发行与公开附件结果在成功后单独追加，此刻本机资格不等于公开发布。
+
+## 公开结果
+
+[发行CI39998622206](https://github.com/ax2/zinovel-studio/actions/runs/39998622206) completed/success，2026/10/24 02:06:00北京时间公开[alpha.12](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.12)，draft=false / prerelease=true，四附件无ZIP。完整同标签检查、安装后故障保护/旧认知/作者选择、重装/卸载保稿与公开alpha.3升级通过，CI升级18529ms。
+
+公开EXE222875696字节，SHA256 **9328d601581bf63f0ae8a9cf493cfadbd176afd14df315d3c3649d52cd53a993**。EXE GitHub digest、大小、manifest和SHA256SUMS一致；三个元数据已实际下载并核对各自GitHub digest，见ci-public/verification.json。公开EXE执行证据来自发行CI，本机未再次下载运行CI字节。本机1e6995...与公开9328d6...各自留档，不混用。
