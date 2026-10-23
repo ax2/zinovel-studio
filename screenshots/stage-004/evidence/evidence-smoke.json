@@ -2,6 +2,7 @@
   "status": "passed",
   "checks": [
     "real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history",
+    "linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
     "relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes"
   ],
   "errors": [],
@@ -14,6 +15,12 @@
     },
     {
       "name": "source-changed.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "dependency-changed.png",
       "width": 1426,
       "height": 923,
       "theme": "light"

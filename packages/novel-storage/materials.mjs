@@ -10,6 +10,9 @@ import {
 import { materialContextText } from "../novel-domain/material-context.mjs";
 const hash = (text) => createHash("sha256").update(text, "utf8").digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
+// Evidence-only updates must not recursively invalidate cycles of related characters.
+const definitionHash = (data) =>
+  hash(JSON.stringify(validateMaterialInput(data)));
 const id = (value) => {
   if (typeof value !== "string" || !/^[0-9a-f-]{36}$/.test(value))
     throw new Error("无效的资料标识");
@@ -80,18 +83,32 @@ export class MaterialStore {
       }
       const related = [];
       for (const targetId of item.relatedIds) {
+        const baseline = item.dependencies?.find(
+          (entry) => entry.id === targetId,
+        );
         try {
           const target = await this.record(root, targetId);
           related.push({
             id: targetId,
             title: target.data.title,
             state: target.data.deletedAt ? "deleted" : "active",
+            revision: target.data.revision,
+            baselineRevision: baseline?.revision ?? null,
+            freshness: target.data.deletedAt
+              ? "missing"
+              : !baseline
+                ? "unknown"
+                : baseline.definitionHash === definitionHash(target.data)
+                  ? "current"
+                  : "stale",
           });
         } catch {
           related.push({
             id: targetId,
             title: "资料不可读取",
             state: "missing",
+            baselineRevision: baseline?.revision ?? null,
+            freshness: "missing",
           });
         }
       }
@@ -99,7 +116,12 @@ export class MaterialStore {
         ...item,
         chapterTitle: chapter?.title || "章节不存在",
         resolution,
-        freshness,
+        sourceFreshness: freshness,
+        freshness:
+          freshness === "current" &&
+          related.some((entry) => entry.freshness !== "current")
+            ? "stale"
+            : freshness,
         related,
       });
     }
@@ -339,12 +361,18 @@ export class MaterialStore {
           mutation.action === "reconfirm" ? existing : mutation,
           previous.data.kind,
         );
+        const dependencies = [];
         for (const targetId of data.relatedIds) {
           if (targetId === previous.data.id)
             throw new Error("关联对象应为另一份资料");
           const target = await this.record(root, targetId);
           if (target.data.deletedAt)
             throw new Error("关联资料已删除，请先恢复");
+          dependencies.push({
+            id: targetId,
+            revision: target.data.revision,
+            definitionHash: definitionHash(target.data),
+          });
         }
         const source = mutation.source;
         const chapter = book.chapters.find(
@@ -370,6 +398,7 @@ export class MaterialStore {
           id: existing?.id || randomUUID(),
           chapterId: chapter.id,
           anchor,
+          dependencies,
           status: "active",
           createdAt: existing?.createdAt || new Date().toISOString(),
           updatedAt: new Date().toISOString(),

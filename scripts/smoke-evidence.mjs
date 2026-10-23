@@ -25,7 +25,10 @@ const clue = await store.materials.save(
     base("foreshadow", "信上的蓝印"),
   ),
   character = await store.materials.save(book.id, base("character", "林舟"));
-await store.materials.save(book.id, base("character", "船主顾远"));
+let captain = await store.materials.save(
+  book.id,
+  base("character", "船主顾远"),
+);
 const screenshots = join(
   root,
   "screenshots",
@@ -186,6 +189,32 @@ try {
   assert.equal(read.evidence.length, 2);
   assert.equal(read.evidence[0].scope, "character");
   assert.equal(read.evidence[1].scope, "reader");
+  captain = await store.materials.save(
+    book.id,
+    { ...captain, fields: { desire: "隐瞒旧信的来源" } },
+    captain,
+  );
+  await evidence()
+    .getByRole("button", { name: "重新检查证据", exact: true })
+    .click();
+  await evidence()
+    .getByRole("heading", { name: "关系变化 · 关联资料已变或未核对 · 待复核" })
+    .waitFor();
+  await snapshot("dependency-changed.png");
+  await selectLine();
+  await evidence()
+    .getByRole("button", { name: "用当前选区重新确认", exact: true })
+    .first()
+    .click();
+  await evidence()
+    .getByRole("heading", { name: "关系变化 · 正文版本一致" })
+    .waitFor();
+  report.checks.push(
+    "linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
+  );
+  await evidence()
+    .getByRole("heading", { name: "认知变化 · 正文版本一致" })
+    .waitFor();
   await evidence()
     .getByRole("button", { name: "停用证据", exact: true })
     .first()

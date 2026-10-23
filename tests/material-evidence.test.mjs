@@ -177,3 +177,72 @@ test("empty and split-Unicode anchors, foreign chapters and stale material bases
   assert.equal(card.evidence[0].freshness, "stale");
   assert.equal(card.evidence[0].resolution.status, "missing");
 });
+test("linked definitions invalidate evidence without rewriting it; explicit reconfirm records current dependencies and legacy references stay unverified", async () => {
+  const { root, store, book, source } = await setup();
+  let owner = await store.materials.save(book.id, input("character"));
+  let target = await store.materials.save(book.id, {
+    ...input("character"),
+    title: "顾远",
+  });
+  owner = await store.materials.mutateEvidence(book.id, owner, {
+    ...event(source),
+    kind: "relation",
+    relatedIds: [target.id],
+  });
+  const path = join(root, book.id, "materials", `${owner.id}.json`);
+  const before = await readFile(path, "utf8");
+  const context = await store.materials.contextPack(book.id, [owner.id]);
+  target = await store.materials.mutateEvidence(book.id, target, {
+    ...event(source),
+    kind: "fact",
+    relatedIds: [],
+  });
+  owner = await store.materials.read(book.id, owner.id);
+  assert.equal(
+    owner.evidence[0].freshness,
+    "current",
+    "evidence-only changes do not invalidate a definition dependency",
+  );
+  target = await store.materials.save(
+    book.id,
+    { ...target, fields: { desire: "隐瞒来历" } },
+    target,
+  );
+  owner = await store.materials.read(book.id, owner.id);
+  assert.equal(owner.evidence[0].freshness, "stale");
+  assert.equal(owner.evidence[0].sourceFreshness, "current");
+  assert.equal(owner.evidence[0].related[0].baselineRevision, 1);
+  assert.equal(owner.evidence[0].related[0].revision, 3);
+  assert.equal(
+    await readFile(path, "utf8"),
+    before,
+    "checking does not rewrite the source evidence",
+  );
+  assert.notEqual(
+    (await store.materials.contextPack(book.id, [owner.id])).hash,
+    context.hash,
+  );
+  owner = await store.materials.mutateEvidence(book.id, owner, {
+    action: "reconfirm",
+    eventId: owner.evidence[0].id,
+    source,
+  });
+  assert.equal(owner.evidence[0].freshness, "current");
+  assert.equal(owner.evidence[0].related[0].baselineRevision, 3);
+  assert.equal(
+    (await store.materials.history(book.id, owner.id))[0].evidence[0]
+      .dependencies[0].revision,
+    1,
+  );
+  const legacy = JSON.parse(await readFile(path, "utf8"));
+  delete legacy.evidence[0].dependencies;
+  await writeFile(path, JSON.stringify(legacy));
+  owner = await store.materials.read(book.id, owner.id);
+  assert.equal(owner.evidence[0].freshness, "stale");
+  assert.equal(owner.evidence[0].related[0].freshness, "unknown");
+  legacy.evidence[0].dependencies = [
+    { id: target.id, revision: 0, definitionHash: "invalid" },
+  ];
+  await writeFile(path, JSON.stringify(legacy));
+  await assert.rejects(store.materials.read(book.id, owner.id), /关联版本无效/);
+});

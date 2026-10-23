@@ -52,6 +52,24 @@ export function validateEvidence(records, ownerKind) {
   const ids = new Set();
   for (const record of records) {
     evidenceInput(record, ownerKind);
+    if (record.dependencies !== undefined) {
+      if (
+        !Array.isArray(record.dependencies) ||
+        record.dependencies.length !== record.relatedIds.length ||
+        new Set(record.dependencies.map((entry) => entry?.id)).size !==
+          record.dependencies.length ||
+        record.dependencies.some(
+          (entry) =>
+            !entry ||
+            !record.relatedIds.includes(entry.id) ||
+            !Number.isSafeInteger(entry.revision) ||
+            entry.revision < 1 ||
+            typeof entry.definitionHash !== "string" ||
+            !/^[0-9a-f]{64}$/.test(entry.definitionHash),
+        )
+      )
+        throw new Error("证据关联版本无效");
+    }
     if (
       typeof record.id !== "string" ||
       !/^[0-9a-f-]{36}$/.test(record.id) ||

@@ -176,7 +176,7 @@ export function materialMarkdown(data) {
               .map((line) => "> " + line)
               .join(
                 "\n",
-              )}\n\n关联：${(event.related || []).map((item) => `${item.title}${item.state !== "active" ? "（引用待检查）" : ""}`).join("、")}`,
+              )}\n\n关联：${(event.related || []).map((item) => `${item.title}（绑定版本 ${item.baselineRevision ?? "未记录"}；当前 ${item.revision ?? "不可读"}；${item.state !== "active" || item.freshness !== "current" ? "引用待检查" : "设定一致"}）`).join("、")}`,
         )
         .join("\n\n")}`,
       `## 关联章节\n\n${(data.chapters || []).map((chapter) => `- ${chapter.title} (${chapter.id})${chapter.state !== "active" ? " · 引用待检查" : ""}`).join("\n")}`,

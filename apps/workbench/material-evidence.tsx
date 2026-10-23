@@ -21,8 +21,16 @@ export type Evidence = {
   chapterTitle: string;
   anchor: { quote: string };
   freshness: string;
+  sourceFreshness: string;
   resolution: { status: string; start: number | null; end: number | null };
-  related: { id: string; title: string; state: string }[];
+  related: {
+    id: string;
+    title: string;
+    state: string;
+    freshness: string;
+    revision?: number;
+    baselineRevision: number | null;
+  }[];
 };
 export function MaterialEvidence({
   bookId,
@@ -262,7 +270,9 @@ export function MaterialEvidence({
                 ? "已停用"
                 : event.freshness === "current"
                   ? "正文版本一致"
-                  : "正文已变或缺失 · 待复核"}
+                  : event.sourceFreshness === "current"
+                    ? "关联资料已变或未核对 · 待复核"
+                    : "正文已变或缺失 · 待复核"}
             </h5>
             <p>{event.statement}</p>
             <p className="muted">
@@ -279,7 +289,7 @@ export function MaterialEvidence({
                 {event.related
                   .map(
                     (r) =>
-                      `${r.title}${r.state !== "active" ? "（已删除或不可读）" : ""}`,
+                      `${r.title}（绑定版本 ${r.baselineRevision ?? "未记录"} → 当前 ${r.revision ?? "不可读"}；${r.state !== "active" ? "已删除或不可读" : r.freshness === "current" ? "设定一致" : r.freshness === "unknown" ? "旧记录未核对" : "设定已变，待复核"}）`,
                   )
                   .join("、")}
               </p>
