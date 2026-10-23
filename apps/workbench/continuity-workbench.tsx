@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
 import type { Evidence } from "./material-evidence";
 import type { TextAnchor } from "./manuscript-editor";
@@ -50,6 +50,8 @@ export function ContinuityWorkbench({
   onEdit: (id: string) => void;
   onChapter: (id: string, anchor: TextAnchor) => Promise<void>;
 }) {
+  const [querySession] = useState(() => crypto.randomUUID());
+  const nextQuery = useRef(0);
   const [kind, setKind] = useState(""),
     [scope, setScope] = useState(""),
     [state, setState] = useState(""),
@@ -72,10 +74,13 @@ export function ContinuityWorkbench({
     [error, setError] = useState("");
   useEffect(() => {
     let active = true;
+    const requestId = ++nextQuery.current;
     setBusy(true);
     setError("");
     const timer = setTimeout(() => {
       api<Result>("continuity.query", {
+        sessionId: querySession,
+        requestId,
         bookId: book.id,
         options: {
           kind,
@@ -108,9 +113,14 @@ export function ContinuityWorkbench({
     return () => {
       active = false;
       clearTimeout(timer);
+      void api("continuity.cancel", {
+        sessionId: querySession,
+        requestId,
+      }).catch(() => {});
     };
   }, [
     book.id,
+    querySession,
     kind,
     scope,
     state,

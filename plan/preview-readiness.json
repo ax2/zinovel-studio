@@ -1,22 +1,16 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.10",
-  "ready": true,
+  "version": "0.1.0-alpha.11",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
-    "assessments/stage-004/continuity-query-acceptance.md",
-    "assessments/stage-004/relationships-acceptance.md",
-    "assessments/stage-004/toolbar-responsive-fix.md"
+    "design/continuity-workbench.md"
   ],
-  "reports": [
-    "screenshots/stage-004/continuity/continuity-smoke.json",
-    "screenshots/stage-004/relationships/relationships-smoke.json",
-    "screenshots/stage-004/toolbar/desktop-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
     "未签名 Windows x64 技术预览，不代表稳定版或商店验收",
     "模型回合使用官方 Harness 和本机合成 fixture，未验收真实云模型文学质量",
-    "全量关系查询仍高于 500ms 初始目标；秘密矩阵、故事时间、图像地图、完整发布和迁移未完成；本标签仍须通过实际安装及升级流水线"
+    "查询取消正在开发；本版尚无桌面和安装验证，性能、秘密矩阵、故事时间和其他完整功能仍未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

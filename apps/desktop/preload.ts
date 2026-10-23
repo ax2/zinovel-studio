@@ -36,6 +36,7 @@ const allowed = new Set([
   "annotations.read",
   "materials.list",
   "continuity.query",
+  "continuity.cancel",
   "planning.read",
   "planning.move",
   "pilots.groups",

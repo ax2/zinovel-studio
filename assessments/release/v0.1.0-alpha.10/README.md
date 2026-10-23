@@ -23,3 +23,11 @@ package、完整目录启动、真实 NSIS 中文/空格路径安装、安装后
 第一次安装流程在试写 AI 套件打开书卡时等待稳定状态超时，pageerror 为空，截图书架内容正常；原因尚未证实，不能据此宣称已修复某个启动问题。相同安装字节、无代码修改的独立重跑通过；按已核对的合成安装路径卸载后，完整安装/全部套件/重装/卸载和公开旧版升级重跑全部通过。first-attempt 保留原失败报告、截图及独立重跑报告，最终 manifest 绑定同一 SHA-256 的完整通过结果。稳定版仍需启动长时与低端验证。
 
 开发 CI 39972895733 已重新核对为 completed/success；本标签继续接受独立 Windows 发行流水线验收，公开状态和公共哈希待后续核对。
+
+## 公开结果
+
+[标签发行 CI 39975497797](https://github.com/ax2/zinovel-studio/actions/runs/39975497797) completed/success；同标签全套功能、实际安装、重装/卸载及公开 alpha.3 升级全部通过，CI 升级 18861 ms。
+
+[公开 Release](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.10) 于 2026-10-23 23:19:45 北京时间发布，draft=false / prerelease=true。四个附件均已上传，未提供 ZIP。
+
+公开 EXE 222860615 字节，SHA-256 **13fa616bce5bec7dcb39fd5ac0c9a9eae5951e9dd2ea24c914806505f460a081**；GitHub asset digest、大小、manifest 与 SHA256SUMS 一致。三个元数据文件已实际下载并核验各自 GitHub digest，保存在 ci-public/。公开 EXE 的执行证据来自发行 CI，本机没有再次下载执行这份 CI 构建；本机独立构建哈希另列，不能混用。

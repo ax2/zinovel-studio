@@ -14,6 +14,7 @@ import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
 import { TaskAcceptance } from "../../packages/novel-harness/acceptance.mjs";
 import { MaterialTaskAcceptance } from "../../packages/novel-harness/material-acceptance.mjs";
 import { PilotTaskAcceptance } from "../../packages/novel-harness/pilot-acceptance.mjs";
+import { ContinuityQueries } from "../../packages/novel-storage/continuity-queries.mjs";
 import { bindPilotInput } from "../../packages/novel-harness/pilot-target.mjs";
 import {
   validateMaterialInput,
@@ -31,6 +32,7 @@ const journal = new TaskJournal(join(dataRoot, "tasks"));
 const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
 const pilotAcceptance = new PilotTaskAcceptance(journal, store.pilots);
+const continuityQueries = new ContinuityQueries(store.continuity);
 const harness = new NovelHarness({
   journal,
   root: dataRoot,
@@ -47,6 +49,7 @@ function cancelCloseAttempt() {
   closeTimer = undefined;
 }
 async function closeAfterRecovery() {
+  continuityQueries.cancelAll();
   cancelCloseAttempt();
   await harness.cancel();
   await acceptance.whenIdle();
@@ -217,10 +220,17 @@ if (
                 );
                 break;
               case "continuity.query":
-                value = await store.continuity.query(
+                value = await continuityQueries.query(
                   payload.bookId,
                   payload.options,
+                  {
+                    sessionId: payload.sessionId,
+                    requestId: payload.requestId,
+                  },
                 );
+                break;
+              case "continuity.cancel":
+                value = { cancelled: continuityQueries.cancel(payload) };
                 break;
               case "materials.list":
                 value = await store.materials.list(
@@ -675,6 +685,7 @@ if (
                 break;
               }
               case "app.close-ready":
+                continuityQueries.cancelAll();
                 cancelCloseAttempt();
                 await harness.cancel();
                 await acceptance.whenIdle();

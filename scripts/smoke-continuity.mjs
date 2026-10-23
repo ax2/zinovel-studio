@@ -231,6 +231,48 @@ try {
   report.checks.push(
     "retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
   );
+  await dialog()
+    .getByRole("button", { name: "关闭全书证据", exact: true })
+    .click();
+  const cancellation = await page.evaluate(async (bookId) => {
+    const sessionId = crypto.randomUUID();
+    const first = window.novel
+      .request("continuity.query", {
+        bookId,
+        options: {},
+        sessionId,
+        requestId: 1,
+      })
+      .then(
+        (value) => ({ status: "completed", total: value.total }),
+        (error) => ({ status: "cancelled", error: error.message }),
+      );
+    const cancelled = await window.novel.request("continuity.cancel", {
+      sessionId,
+      requestId: 1,
+    });
+    const firstResult = await first;
+    const latest = window.novel.request("continuity.query", {
+      bookId,
+      options: { kind: "knowledge" },
+      sessionId,
+      requestId: 2,
+    });
+    const staleCleanup = await window.novel.request("continuity.cancel", {
+      sessionId,
+      requestId: 1,
+    });
+    return { cancelled, firstResult, staleCleanup, latest: await latest };
+  }, book.id);
+  assert.equal(cancellation.cancelled.cancelled, true);
+  assert.equal(cancellation.firstResult.status, "cancelled");
+  assert.match(cancellation.firstResult.error, /取消/);
+  assert.equal(cancellation.staleCleanup.cancelled, false);
+  assert.equal(cancellation.latest.total, 3);
+  assert.equal(await readFile(manuscript, "utf8"), "后来：" + chapter.body);
+  report.checks.push(
+    "actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged",
+  );
   assert.deepEqual(report.errors, []);
   report.status = "passed";
 } catch (e) {

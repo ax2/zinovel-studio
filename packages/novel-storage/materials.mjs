@@ -201,7 +201,8 @@ export class MaterialStore {
     };
   }
   // Internal visitor is synchronous and receives validated data, never IPC input.
-  async scan(bookId, visit) {
+  async scan(bookId, visit, { signal } = {}) {
+    signal?.throwIfAborted();
     const { root, entries } = await this.storage.exclusive(async () => {
       const { root } = await this.context(bookId);
       try {
@@ -224,7 +225,9 @@ export class MaterialStore {
     // Bound each read transaction so queued manuscript saves run between batches.
     // Listings may span revisions; opening and AI snapshots still reread under one lock.
     for (let offset = 0; offset < entries.length; offset += 32) {
+      signal?.throwIfAborted();
       await this.storage.exclusive(async () => {
+        signal?.throwIfAborted();
         await this.storage.bookRoot(bookId);
         await this.storage.recover(root);
         await Promise.all(
@@ -238,6 +241,7 @@ export class MaterialStore {
         );
       });
     }
+    signal?.throwIfAborted();
     return errors;
   }
   save(bookId, input, expected = null, acceptance = null) {

@@ -11,7 +11,8 @@ export class ContinuityStore {
     this.storage = storage;
     this.materials = materials;
   }
-  async query(bookId, options = {}) {
+  async query(bookId, options = {}, signal) {
+    signal?.throwIfAborted();
     const {
       kind = "",
       scope = "",
@@ -44,10 +45,14 @@ export class ContinuityStore {
       throw new Error("全书证据筛选条件无效");
     const startedAt = new Date().toISOString();
     const owners = [];
-    const errors = await this.materials.scan(bookId, (data) => {
-      if ((!ownerId || data.id === ownerId) && data.evidence?.length)
-        owners.push(data.id);
-    });
+    const errors = await this.materials.scan(
+      bookId,
+      (data) => {
+        if ((!ownerId || data.id === ownerId) && data.evidence?.length)
+          owners.push(data.id);
+      },
+      { signal },
+    );
     owners.sort();
     const items = [],
       needle = query.toLocaleLowerCase();
@@ -57,8 +62,10 @@ export class ContinuityStore {
     // One source card per lock: manuscript saves can run between cards.
     // A scan can span revisions; actions must reread and validate their own target.
     for (const owner of owners) {
+      signal?.throwIfAborted();
       try {
         await this.storage.exclusive(async () => {
+          signal?.throwIfAborted();
           const { root, book } = await this.materials.context(bookId);
           const card = await this.materials.view(
             await this.materials.record(root, owner),
@@ -133,6 +140,7 @@ export class ContinuityStore {
         errors.push(`资料 ${owner} 的证据无法读取，原始文件已保留`);
       }
     }
+    signal?.throwIfAborted();
     // Do not return a plausible empty result for a book removed during scanning.
     await this.storage.exclusive(() => this.materials.context(bookId));
     return {
