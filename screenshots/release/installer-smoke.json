@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.8",
-  "installerSha256": "085fadd581ce86bda3591ddccede39eb39f95e647e21affdfe41952ccb8fa954",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-QwdHWl\\中文 安装目录",
+  "version": "0.1.0-alpha.9",
+  "installerSha256": "64125bc6909d868d9b3690bef11663b725706ddca92a6e616afd2128204960c5",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-AihfYE\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -57,11 +57,18 @@
     "installed: open original scene form and edit choice; refreshed outline shows same field; dark narrow viewport supports chapter filtering and exact chapter navigation; backup restores placement under new book identity; manuscript bytes unchanged",
     "installed: real Electron and official Harness complete organization/item/ability/research proposals with explicit review and acceptance; four estimates dispatch zero requests; twelve local fixture requests expose only material-read/propose",
     "installed: research classification and verification remain disabled/read-only during review and unchanged after acceptance; model is told it has no network verification tool; manuscript bytes, author status and chapter references remain unchanged",
+    "installed: actual UI creates source-bound scene experiment, independent branches and saved comparison; selection and feedback freeze the prior version; Chinese keyboard edits/undo/redo; real close/relaunch restores unsaved body and temporarily blank title",
+    "installed: synthetic localStorage quota exhaustion blocks sample navigation and native window close; explicit Ctrl+S persists current changes and clears close guard",
+    "installed: external same-revision body changes block save and preserve both; explicit disk comparison/rebase preserves external version in history; soft delete/restore keeps identity and body; source freshness changes without changing original scene snapshot",
+    "installed: dark narrow comparison has no page/dialog overflow; explicit promotion opens a new chapter with exact trial text and original first-chapter bytes unchanged; whole-book backup restores branch/group/selection/feedback under new book identity",
+    "installed: real worker exit(91) before/after pilot write; actual desktop startup reconciles correct task type, preserves later author edits and never replays model output",
+    "installed: official Harness makes exactly three scoped tool requests; preview/estimate zero requests; changed source blocks dispatch; no unrelated sample/material/manuscript sent; review is proposal-only, saves draft, reopens in same session and after real relaunch, explicit acceptance changes only pilot body",
+    "installed: stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 18802,
-  "reinstallMs": 23781,
-  "uninstallMs": 4704
+  "installMs": 28691,
+  "reinstallMs": 22943,
+  "uninstallMs": 4928
 }
