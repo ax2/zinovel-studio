@@ -1,0 +1,8 @@
+{
+  "status": "reproduced",
+  "checks": [
+    "host commits first event, localStorage.removeItem error leaves a new-record UI baseline; explicit retry creates a second event"
+  ],
+  "afterFirstSave": 1,
+  "afterRetry": 2
+}

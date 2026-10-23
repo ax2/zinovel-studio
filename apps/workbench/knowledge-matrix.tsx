@@ -133,6 +133,9 @@ export function KnowledgeMatrix({
         typeof value.input.statement !== "string" ||
         typeof value.input.propositionId !== "string" ||
         typeof value.input.storyTime !== "string" ||
+        (value.creationId !== undefined &&
+          (typeof value.creationId !== "string" ||
+            !/^[0-9a-f-]{36}$/.test(value.creationId))) ||
         !["world", "reader", "character"].includes(value.input.scope) ||
         !knowledgeStates.some((item) => item.id === value.input.state) ||
         (value.input.characterId !== null &&
@@ -154,6 +157,7 @@ export function KnowledgeMatrix({
         input: Input;
         expected: Event | null;
         legacyExpected?: LegacyPreview | null;
+        creationId?: string;
       };
     } catch {
       return { invalid: true } as const;
@@ -169,6 +173,17 @@ export function KnowledgeMatrix({
     restored && "input" in restored ? restored.legacyExpected || null : null,
   );
   const [legacyOpen, setLegacyOpen] = useState(false);
+  const [creationId, setCreationId] = useState(() =>
+    restored && "input" in restored && restored.creationId
+      ? restored.creationId
+      : crypto.randomUUID(),
+  );
+  const [creationDurable, setCreationDurable] = useState(
+    !!restored && "input" in restored && !!restored.creationId,
+  );
+  const [creationChecked, setCreationChecked] = useState(false),
+    [savedCreation, setSavedCreation] = useState<Event | null>(null),
+    [cleanupNeeded, setCleanupNeeded] = useState(false);
   const [draftFailed, setDraftFailed] = useState(
     !!restored && "invalid" in restored,
   );
@@ -357,15 +372,22 @@ export function KnowledgeMatrix({
     setExpected(base);
     setLegacyExpected(legacy);
     setDraftPending(true);
+    setCleanupNeeded(false);
     try {
       localStorage.setItem(
         key,
-        JSON.stringify({ input: next, expected: base, legacyExpected: legacy }),
+        JSON.stringify({
+          input: next,
+          expected: base,
+          legacyExpected: legacy,
+          creationId,
+        }),
       );
+      setCreationDurable(true);
       setDraftFailed(false);
     } catch {
       setDraftFailed(true);
-      setError("本机草稿空间不足，调整仍在窗口中；请保存记录后再关闭。");
+      setError("本机草稿暂时无法保存，窗口会保留当前输入。请恢复存储后重试。");
     }
   }
   function clearDraft() {
@@ -376,7 +398,37 @@ export function KnowledgeMatrix({
     setInput(blank());
     setExpected(null);
     setLegacyExpected(null);
+    setCreationId(crypto.randomUUID());
+    setCreationDurable(false);
+    setSavedCreation(null);
+    setCleanupNeeded(false);
   }
+  useEffect(() => {
+    if (draftPending && !expected && !creationDurable && !draftInvalid)
+      stash(input, expected, legacyExpected);
+  }, [draftPending, expected, creationDurable, draftInvalid]);
+  useEffect(() => {
+    let active = true;
+    setSavedCreation(null);
+    setCreationChecked(false);
+    if (draftPending && !expected)
+      void api<Event | null>("knowledge.creation", {
+        bookId: book.id,
+        creationId,
+      })
+        .then((value) => {
+          if (active) {
+            setSavedCreation(value);
+            setCreationChecked(true);
+          }
+        })
+        .catch((e) => {
+          if (active) setError(e.message);
+        });
+    return () => {
+      active = false;
+    };
+  }, [book.id, creationId, draftPending, expected]);
   async function perform(operation: () => Promise<void>) {
     if (locked.current) return;
     locked.current = true;
@@ -815,12 +867,63 @@ export function KnowledgeMatrix({
                   </button>
                 </section>
               )}
+              {cleanupNeeded && (
+                <div role="alert">
+                  <p>
+                    认知已保存；仅本机草稿清理失败。请恢复存储后重试清理，正式记录会保留。
+                  </p>
+                  <button
+                    disabled={busy}
+                    onClick={() =>
+                      perform(async () => {
+                        clearDraft();
+                        setMessage("本机草稿已清理，已保存认知保持不变。");
+                      })
+                    }
+                  >
+                    重试清理已保存草稿
+                  </button>
+                </div>
+              )}
+              {!expected && savedCreation && (
+                <section aria-label="已保存认知恢复">
+                  <h4>这份草稿已有保存记录</h4>
+                  <p>{savedCreation.statement}</p>
+                  <blockquote>{savedCreation.anchor.quote}</blockquote>
+                  <p>可找回已保存版本并保留当前调整，再明确修订。</p>
+                  <button
+                    disabled={busy}
+                    onClick={() => {
+                      stash(input, savedCreation, null);
+                      setSelected(savedCreation);
+                    }}
+                  >
+                    找回已保存记录，保留当前调整
+                  </button>
+                </section>
+              )}
               <h3>
                 {expected
                   ? `修订认知 · 版本 ${expected.revision}`
                   : "添加有正文依据的认知"}
               </h3>
-              <p>命题 ID：{input.propositionId || "请先从矩阵选择命题"}</p>
+              <p>
+                命题：
+                {result?.rows.find((row) => row.id === input.propositionId)
+                  ?.title ||
+                  selected?.references.find(
+                    (item) => item.id === input.propositionId,
+                  )?.title ||
+                  (input.propositionId
+                    ? "已选择，可打开资料核对"
+                    : "请先从矩阵选择命题")}
+              </p>
+              <button
+                disabled={busy || !input.propositionId}
+                onClick={() => navigate(() => onEdit(input.propositionId))}
+              >
+                查看命题资料
+              </button>
               <label>
                 认知范围
                 <select
@@ -909,10 +1012,37 @@ export function KnowledgeMatrix({
                   ? `将绑定当前已保存正文选区（${source!.end - source!.start} 字符）`
                   : "先回正文保存稿件并选择依据，再打开认知矩阵。草稿会保留。"}
               </p>
+              {!expected && draftPending && (
+                <button
+                  disabled={busy || !creationDurable}
+                  onClick={() =>
+                    perform(async () => {
+                      const saved = await api<Event | null>(
+                        "knowledge.creation",
+                        { bookId: book.id, creationId },
+                      );
+                      setSavedCreation(saved);
+                      setCreationChecked(true);
+                      setMessage(
+                        saved
+                          ? "已找到这份草稿先前保存的记录，请核对后找回。"
+                          : "尚未找到这份草稿的已保存记录，可继续明确保存。",
+                      );
+                    })
+                  }
+                >
+                  检查是否已保存
+                </button>
+              )}
               <button
                 data-dialog-save
                 disabled={
                   busy ||
+                  cleanupNeeded ||
+                  (!expected &&
+                    (!creationDurable ||
+                      !creationChecked ||
+                      !!savedCreation)) ||
                   !validSource ||
                   !input.propositionId ||
                   !input.statement.trim() ||
@@ -930,10 +1060,32 @@ export function KnowledgeMatrix({
                         expected,
                         source,
                         legacyExpected,
+                        creationId: expected ? undefined : creationId,
                       },
                     );
-                    clearDraft();
                     setSelected(saved);
+                    setExpected(saved);
+                    setLegacyExpected(null);
+                    try {
+                      clearDraft();
+                    } catch {
+                      setCleanupNeeded(true);
+                      setDraftFailed(true);
+                      try {
+                        localStorage.setItem(
+                          key,
+                          JSON.stringify({
+                            input,
+                            expected: saved,
+                            legacyExpected: null,
+                            creationId,
+                          }),
+                        );
+                      } catch {}
+                      setError(
+                        "记录已保存到书库，本机草稿未清理；不会再次新建，请恢复存储后重试清理。",
+                      );
+                    }
                     setHistory(null);
                     setRefresh((n) => n + 1);
                     setMessage("认知已保存，正文未改写。");

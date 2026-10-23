@@ -420,7 +420,10 @@
         "tests/knowledge-legacy.test.mjs",
         "scripts/smoke-knowledge-legacy.mjs",
         "scripts/smoke-knowledge-old-desktop.mjs",
-        "assessments/stage-004/knowledge-legacy.md"
+        "assessments/stage-004/knowledge-legacy.md",
+        "tests/knowledge-creation.test.mjs",
+        "scripts/smoke-knowledge-creation.mjs",
+        "assessments/stage-004/knowledge-creation.md"
       ]
     },
     {

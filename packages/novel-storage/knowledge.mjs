@@ -177,6 +177,16 @@ export class KnowledgeStore {
     return previous;
   }
   async write(root, data, previous, origin) {
+    if (!previous) {
+      try {
+        await readFile(
+          await this.storage.path(root, `knowledge/origins/${data.id}.json`),
+        );
+        throw new Error("该记录仍有历史来源文件，请恢复已有记录后再操作");
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+      }
+    }
     const changes = { [`knowledge/events/${data.id}.json`]: json(data) };
     if (previous)
       changes[
@@ -188,11 +198,51 @@ export class KnowledgeStore {
       );
     await this.storage.transaction(root, changes);
   }
-  save(bookId, input, expected, source, legacyExpected) {
+  save(bookId, input, expected, source, legacyExpected, creationId) {
     const clean = knowledgeInput(input);
+    if (creationId !== undefined && creationId !== null) id(creationId);
     return this.storage.exclusive(async () => {
       const { root, book } = await this.materials.context(bookId),
         previous = expected ? await this.expected(root, expected) : null;
+      if (!expected && creationId) {
+        let saved;
+        try {
+          saved = await this.record(root, creationId);
+        } catch (error) {
+          if (error.code !== "ENOENT") throw error;
+        }
+        if (saved) {
+          const origin = await this.legacy.view(saved, root);
+          const sameOrigin = legacyExpected
+            ? origin?.source?.ownerId === legacyExpected.owner?.id &&
+              origin.source.ownerDiskHash === legacyExpected.owner?.diskHash &&
+              origin.source.eventId === legacyExpected.eventId &&
+              origin.source.eventHash === legacyExpected.eventHash
+            : !origin;
+          const sameSource =
+            source &&
+            !source.dirty &&
+            typeof source.body === "string" &&
+            hash(source.body) === saved.data.anchor.hash &&
+            source.hash === saved.data.anchor.hash &&
+            source.chapterId === saved.data.chapterId &&
+            source.start === saved.data.anchor.start &&
+            source.end === saved.data.anchor.end;
+          if (
+            saved.data.revision === 1 &&
+            saved.data.status === "active" &&
+            JSON.stringify(knowledgeInput(saved.data)) ===
+              JSON.stringify(clean) &&
+            sameSource &&
+            sameOrigin
+          )
+            return {
+              ...(await this.view(saved, root, book)),
+              recoveredCreation: true,
+            };
+          throw new Error("这份草稿已有保存记录，请找回已保存记录后再修订");
+        }
+      }
       if (legacyExpected && expected)
         throw new Error("旧认知整理只能创建独立新记录");
       const origin = legacyExpected
@@ -228,7 +278,7 @@ export class KnowledgeStore {
         schemaVersion: 1,
         ...clean,
         ...anchor,
-        id: previous?.data.id || randomUUID(),
+        id: previous?.data.id || creationId || randomUUID(),
         revision: (previous?.data.revision || 0) + 1,
         status: "active",
         proposition: freeze(proposition),
@@ -240,9 +290,23 @@ export class KnowledgeStore {
       return this.view(await this.record(root, data.id), root, book);
     });
   }
-  linkLegacy(bookId, input, legacyExpected, source) {
+  linkLegacy(bookId, input, legacyExpected, source, creationId) {
     if (!legacyExpected) throw new Error("请明确选择旧认知来源");
-    return this.save(bookId, input, null, source, legacyExpected);
+    return this.save(bookId, input, null, source, legacyExpected, creationId);
+  }
+  creation(bookId, creationId) {
+    id(creationId);
+    return this.storage.exclusive(async () => {
+      const { root, book } = await this.materials.context(bookId);
+      let record;
+      try {
+        record = await this.record(root, creationId);
+      } catch (error) {
+        if (error.code === "ENOENT") return null;
+        throw error;
+      }
+      return this.view(record, root, book);
+    });
   }
   read(bookId, eventId) {
     return this.storage.exclusive(async () => {

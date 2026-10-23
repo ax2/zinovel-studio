@@ -232,3 +232,11 @@ dccb693 的开发 CI39980345586 completed/success。新增稳定命题、独立�
 alpha.12源阶段资格：完整105项单元/类型/规划passed，原认知、作者选择、旧认知整理、真实旧alpha.11桌面回退均passed。准备同版本预览流水线入口（ready=true只准进入构建），稳定版门禁不变；尚未完成alpha.12实际安装、重装/卸载及公开旧版升级，不推标签。WORLD-05保持in-progress，Agent上下文等完整边界不减少。
 
 提交a6e462b后重新运行固定alpha.10/11源码写入器探针，两者passed；报告保存knowledge-alpha10-writer.json与knowledge-alpha11-writer.json，currentSource明确指向a6e462b。真实旧EXE结果另在knowledge-old-desktop报告，不把源码执行当成安装器回退。下一步冻结完整文档提交构建alpha.12安装候选，再等待其全套源码CI、真实安装和旧包升级；不改已公开alpha.11标签。
+
+## alpha.12 候选前故障复评：新建回执
+
+2ee8434打包进程95250最终exit0，基础打包及完整目录实际运行通过。随后真实removeItem故障注入复现重复新建（1→2），所以不执行该候选的发行安装资格，不推标签；完整目录/EXE/日志另存release/candidates/v0.1.0-alpha.12-2ee8434，SHA256 206faf106e2073d72b54248872333223bcafe01c35a8a5e18e212a1a12c67b72，无ZIP。原始report/screenshot保存knowledge-cleanup-first-failure。源码CI39993454424已success，但未覆盖此故障，不把绿色CI当成该问题不存在。
+
+修复加入本机草稿创建身份、宿主同ID只读找回/冲突拒绝、保存后基线推进、清理失败关闭保护与手工找回入口；旧无身份草稿补写，孤立来源不覆盖。三个单元、新真实UI保护/双存储失败强退/持久检查点回执缺失+后续作者版本/旧草稿迁移通过，详见assessments/stage-004/knowledge-creation.md。模拟检查点不冒充真实丢包/物理断电；旧版本草稿迁移仍有边界。必须重新冻结构建，旧EXE不代表修复已交付。
+
+修复最终回归：完整108项单元、类型、规划通过，新创建回执套件、原认知/作者选择/旧整理四套GUI全部passed，旧alpha.11真实桌面回退再次通过。截图已查看，产品表单显示命题题名并可打开核对，不暴露内部UUID。预览入口加入新回执报告，稳定版门禁未放宽；重新冻结构建并完整安装，不能使用旧206faf...候选。

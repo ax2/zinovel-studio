@@ -40,6 +40,7 @@ const allowed = new Set([
   "knowledge.list",
   "knowledge.read",
   "knowledge.save",
+  "knowledge.creation",
   "knowledge.retire",
   "knowledge.history",
   "knowledge.choice",

@@ -5,13 +5,15 @@
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
-    "assessments/stage-004/knowledge-legacy.md"
+    "assessments/stage-004/knowledge-legacy.md",
+    "assessments/stage-004/knowledge-creation.md"
   ],
   "reports": [
     "screenshots/stage-004/knowledge/knowledge-smoke.json",
     "screenshots/stage-004/knowledge-choices/knowledge-choices-smoke.json",
     "screenshots/stage-004/knowledge-legacy/knowledge-legacy-smoke.json",
-    "screenshots/stage-004/knowledge-old-desktop/knowledge-old-desktop.json"
+    "screenshots/stage-004/knowledge-old-desktop/knowledge-old-desktop.json",
+    "screenshots/stage-004/knowledge-creation/knowledge-creation-smoke.json"
   ],
   "limitations": [
     "未签名Windows x64预览，完整产品及商店资格未完成",

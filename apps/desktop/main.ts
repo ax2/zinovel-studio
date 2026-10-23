@@ -273,6 +273,14 @@ if (
                   payload.input,
                   payload.expected,
                   payload.source,
+                  undefined,
+                  payload.creationId,
+                );
+                break;
+              case "knowledge.creation":
+                value = await store.knowledge.creation(
+                  payload.bookId,
+                  payload.creationId,
                 );
                 break;
               case "knowledge.retire":
@@ -318,6 +326,7 @@ if (
                   payload.input,
                   payload.legacyExpected,
                   payload.source,
+                  payload.creationId,
                 );
                 break;
               case "knowledge.choose":
