@@ -1,0 +1,7 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.book-card').filter({ hasText: '试写 AI 合成验证' })\u001b[22m\n\u001b[2m    - waiting for\" file:///D:/Work/zinovel-studio/.cache/installer-qa-MwM7cE/%E4%B8%AD%E6%96%87%20%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/resources/app.asar/dist/workbench/index.html\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"file:///D:/Work/zinovel-studio/.cache/installer-qa-MwM7cE/%E4%B8%AD%E6%96%87%20%E5%AE%89%E8%A3%85%E7%9B%AE%E5%BD%95/resources/app.asar/dist/workbench/index.html\"\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"book-card\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at launch (D:\\Work\\zinovel-studio\\scripts\\smoke-pilot-agent.mjs:169:68)\n    at async file:///D:/Work/zinovel-studio/scripts/smoke-pilot-agent.mjs:201:3"
+}

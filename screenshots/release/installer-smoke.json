@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.9",
-  "installerSha256": "64125bc6909d868d9b3690bef11663b725706ddca92a6e616afd2128204960c5",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-AihfYE\\中文 安装目录",
+  "version": "0.1.0-alpha.10",
+  "installerSha256": "540cb7f230fa9386c11e7cf27c3bb77f5e2a1c633542341e8b83e6acf12f409f",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-hKJH5f\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -64,11 +64,16 @@
     "installed: real worker exit(91) before/after pilot write; actual desktop startup reconciles correct task type, preserves later author edits and never replays model output",
     "installed: official Harness makes exactly three scoped tool requests; preview/estimate zero requests; changed source blocks dispatch; no unrelated sample/material/manuscript sent; review is proposal-only, saves draft, reopens in same session and after real relaunch, explicit acceptance changes only pilot body",
     "installed: stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate",
+    "installed: actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript",
+    "installed: retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
+    "installed: distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range",
+    "installed: 61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click",
+    "installed: deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 28691,
-  "reinstallMs": 22943,
-  "uninstallMs": 4928
+  "installMs": 17029,
+  "reinstallMs": 36226,
+  "uninstallMs": 5826
 }
