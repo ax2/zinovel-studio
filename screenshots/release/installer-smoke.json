@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.10",
-  "installerSha256": "540cb7f230fa9386c11e7cf27c3bb77f5e2a1c633542341e8b83e6acf12f409f",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-hKJH5f\\中文 安装目录",
+  "version": "0.1.0-alpha.11",
+  "installerSha256": "8b73fd279a04a0722fce67a2e3c319f7cd8ec013bb8e909b6e0606e3c74fdd60",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-LLVccG\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -38,7 +38,7 @@
     "installed: partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
     "installed: light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
     "installed: same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance",
-    "installed: real Electron creates all 12 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged",
+    "installed: real Electron creates all 13 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged",
     "installed: author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification",
     "installed: saved cards survive actual desktop restart, unsaved local adjustment is recovered explicitly, aliases search finds the character and author-confirmed status remains distinct from canon",
     "installed: external same-revision edit blocks stale save and preserves both copies; trash restore retains identity and historical version is loaded only as an explicit new revision",
@@ -66,14 +66,20 @@
     "installed: stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate",
     "installed: actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript",
     "installed: retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
+    "installed: actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged",
     "installed: distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range",
     "installed: 61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click",
     "installed: deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes",
+    "installed: synthetic localStorage quota failure blocks dialog close without losing input; after storage recovers the same draft reopens intact and can be explicitly discarded",
+    "installed: actual UI distinguishes belief, suspicion and empty cells; saved Unicode source binding never changes manuscript",
+    "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
+    "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
+    "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 17029,
-  "reinstallMs": 36226,
-  "uninstallMs": 5826
+  "installMs": 23983,
+  "reinstallMs": 35454,
+  "uninstallMs": 5847
 }

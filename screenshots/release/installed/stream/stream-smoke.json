@@ -6,5 +6,6 @@
     "forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay"
   ],
   "errors": [],
-  "ownedProcessesConfirmedExited": 6
+  "ownedProcessesConfirmedExited": 6,
+  "terminationVerification": "Win32_Process ProcessId + CreationDate"
 }

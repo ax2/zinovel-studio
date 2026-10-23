@@ -13,6 +13,7 @@
   },
   "termination": {
     "taskkillExitCode": 0,
-    "ownedProcessesConfirmedExited": 6
+    "ownedProcessesConfirmedExited": 6,
+    "verification": "Win32_Process ProcessId + CreationDate"
   }
 }
