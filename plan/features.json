@@ -122,8 +122,10 @@
       "status": "in-progress",
       "acceptance": "立项卡可编辑并与试写对照",
       "evidence": [
-        "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
+        "design/pilot-branches.md",
+        "tests/pilots.test.mjs",
+        "scripts/smoke-pilots.mjs",
+        "assessments/stage-004/pilot-manual-acceptance.md"
       ]
     },
     {
@@ -132,8 +134,14 @@
       "name": "创意候选比较",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "按人物行动与冲突比较而非只换题材"
+      "status": "in-progress",
+      "acceptance": "按人物行动与冲突比较而非只换题材",
+      "evidence": [
+        "design/pilot-branches.md",
+        "tests/pilots.test.mjs",
+        "scripts/smoke-pilots.mjs",
+        "assessments/stage-004/pilot-manual-acceptance.md"
+      ]
     },
     {
       "id": "IDEA-04",
@@ -141,8 +149,14 @@
       "name": "开篇试写分支",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "多个版本不覆盖正式首章"
+      "status": "in-progress",
+      "acceptance": "多个版本不覆盖正式首章",
+      "evidence": [
+        "design/pilot-branches.md",
+        "tests/pilots.test.mjs",
+        "scripts/smoke-pilots.mjs",
+        "assessments/stage-004/pilot-manual-acceptance.md"
+      ]
     },
     {
       "id": "IDEA-05",
@@ -150,8 +164,14 @@
       "name": "文风与视角试验",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "同场景多种声音，作者选定"
+      "status": "in-progress",
+      "acceptance": "同场景多种声音，作者选定",
+      "evidence": [
+        "design/pilot-branches.md",
+        "tests/pilots.test.mjs",
+        "scripts/smoke-pilots.mjs",
+        "assessments/stage-004/pilot-manual-acceptance.md"
+      ]
     },
     {
       "id": "IDEA-06",
@@ -177,8 +197,14 @@
       "name": "试读反馈归档",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "记录原文版本和反馈来源"
+      "status": "in-progress",
+      "acceptance": "记录原文版本和反馈来源",
+      "evidence": [
+        "design/pilot-branches.md",
+        "tests/pilots.test.mjs",
+        "scripts/smoke-pilots.mjs",
+        "assessments/stage-004/pilot-manual-acceptance.md"
+      ]
     },
     {
       "id": "PLAN-01",

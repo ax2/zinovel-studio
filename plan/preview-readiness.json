@@ -1,22 +1,18 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.8",
-  "ready": true,
+  "version": "0.1.0-alpha.9",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
-    "iterations/releases/v0.1.0-alpha.8.md",
-    "assessments/stage-004/scene-planning-acceptance.md",
-    "assessments/stage-004/world-materials-acceptance.md"
+    "assessments/stage-004/pilot-manual-acceptance.md"
   ],
   "reports": [
-    "screenshots/stage-004/planning/planning-smoke.json",
-    "screenshots/stage-004/materials/materials-smoke.json",
-    "screenshots/stage-004/world-proposals/world-proposals-smoke.json"
+    "screenshots/stage-004/pilots/pilots-smoke.json"
   ],
   "limitations": [
     "未签名 Windows x64 技术预览，不代表稳定版或商店验收",
     "模型回合使用官方 Harness 和本机合成 fixture，未验收真实云模型文学质量",
-    "尚有试写分支、图像地图、全书记忆、完整发布格式和迁移等需求未完成"
+    "试写专属 AI 和本版安装升级尚待验证；图像地图、全书记忆、完整发布格式和迁移等需求未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

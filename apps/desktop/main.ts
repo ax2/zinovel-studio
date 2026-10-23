@@ -220,8 +220,81 @@ if (
               case "planning.read":
                 value = await store.planning.read(payload.bookId);
                 break;
+              case "pilots.groups":
+                value = await store.pilots.listGroups(payload.bookId);
+                break;
+              case "pilots.createGroup":
+                value = await store.pilots.createGroup(
+                  payload.bookId,
+                  payload.input,
+                );
+                break;
+              case "pilots.group":
+                value = await store.pilots.readGroup(
+                  payload.bookId,
+                  payload.groupId,
+                );
+                break;
+              case "pilots.list":
+                value = await store.pilots.list(
+                  payload.bookId,
+                  payload.groupId,
+                );
+                break;
+              case "pilots.read":
+                value = await store.pilots.read(payload.bookId, payload.id);
+                break;
+              case "pilots.save":
+                value = await store.pilots.save(
+                  payload.bookId,
+                  payload.groupId,
+                  payload.input,
+                  payload.expected,
+                  payload.parent,
+                );
+                break;
+              case "pilots.delete":
+                value = await store.pilots.setDeleted(
+                  payload.bookId,
+                  payload.expected,
+                  payload.deleted,
+                );
+                break;
+              case "pilots.choose":
+                value = await store.pilots.choose(
+                  payload.bookId,
+                  payload.expectedGroup,
+                  payload.expected,
+                  payload.reason,
+                );
+                break;
+              case "pilots.feedback":
+                value = await store.pilots.addFeedback(
+                  payload.bookId,
+                  payload.expected,
+                  payload.input,
+                );
+                break;
+              case "pilots.versions":
+                value = await store.pilots.versions(
+                  payload.bookId,
+                  payload.id,
+                  payload.feedback === true,
+                );
+                break;
+              case "pilots.promote":
+                value = await store.pilots.promote(
+                  payload.bookId,
+                  payload.expected,
+                  payload.title,
+                );
+                break;
               case "planning.move":
-                value = await store.planning.move(payload.bookId, payload.mutation, payload.expected);
+                value = await store.planning.move(
+                  payload.bookId,
+                  payload.mutation,
+                  payload.expected,
+                );
                 break;
               case "materials.context":
                 value = await store.materials.contextPack(

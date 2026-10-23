@@ -5,7 +5,7 @@ import React, {
   useLayoutEffect,
   useRef,
 } from "react";
-import { EditorState } from "@codemirror/state";
+import { Compartment, EditorState } from "@codemirror/state";
 import { resolveAnchor } from "../../packages/novel-domain/anchors.mjs";
 import {
   EditorView,
@@ -44,6 +44,8 @@ export type RevealTarget = {
   anchor?: TextAnchor;
 };
 type Props = {
+  label?: string;
+  readOnly?: boolean;
   documentKey: string;
   value: string;
   typewriter?: boolean;
@@ -58,6 +60,7 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
   function ManuscriptEditor(props, ref) {
     const host = useRef<HTMLDivElement>(null),
       editor = useRef<EditorView | null>(null),
+      editability = useRef(new Compartment()),
       revealed = useRef<Props["reveal"]>(null),
       centeringFrame = useRef(0),
       latest = useRef(props);
@@ -113,12 +116,18 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
           doc: value,
           selection: saved,
           extensions: [
+            // Keep CR bytes in the document instead of normalizing CRLF on load.
+            // Selection offsets and evidence anchors refer to the original UTF-16 text.
+            EditorState.lineSeparator.of("\n"),
+            editability.current.of(
+              EditorState.readOnly.of(!!latest.current.readOnly),
+            ),
             history(),
             keymap.of([...historyKeymap, ...defaultKeymap]),
             drawSelection(),
             EditorView.lineWrapping,
             EditorView.contentAttributes.of({
-              "aria-label": "正文编辑器",
+              "aria-label": latest.current.label || "正文编辑器",
               "aria-multiline": "true",
               spellcheck: "false",
             }),
@@ -200,6 +209,13 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
         editor.current = null;
       };
     }, [props.documentKey]);
+    useEffect(() => {
+      editor.current?.dispatch({
+        effects: editability.current.reconfigure(
+          EditorState.readOnly.of(!!props.readOnly),
+        ),
+      });
+    }, [props.readOnly, props.documentKey]);
     useEffect(() => {
       const view = editor.current;
       if (!view) return;

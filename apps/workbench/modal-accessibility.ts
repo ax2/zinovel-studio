@@ -59,6 +59,11 @@ export function useModalAccessibility() {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
         event.preventDefault();
         event.stopImmediatePropagation();
+        active
+          .querySelector<HTMLButtonElement>(
+            "button[data-dialog-save]:not(:disabled)",
+          )
+          ?.click();
         return;
       }
       if (event.key === "Escape") {

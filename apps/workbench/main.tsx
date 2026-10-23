@@ -34,6 +34,8 @@ import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
 import { MaterialsPanel } from "./materials-panel";
 import { ScenePlanner } from "./scene-planner";
+import { PilotStudio } from "./pilot-studio";
+import { canCloseEditors } from "./editor-close-guards";
 import { TaskHistory } from "./task-history";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
@@ -57,6 +59,7 @@ function App() {
     [typewriter, setTypewriter] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
   const [planningOpen, setPlanningOpen] = useState(false);
+  const [pilotsOpen, setPilotsOpen] = useState(false);
   const [requestedMaterial, setRequestedMaterial] = useState<{
     bookId: string;
     id: string;
@@ -193,6 +196,10 @@ function App() {
   useEffect(
     () =>
       window.novel.onClosing(() => {
+        if (!canCloseEditors()) {
+          void api("app.close-cancelled");
+          return;
+        }
         saveRef.current().then((ok) => {
           if (ok) api("app.close-ready");
           else {
@@ -547,6 +554,14 @@ function App() {
           }}
         />
       )}
+      {pilotsOpen && book && (
+        <PilotStudio
+          key={book.id}
+          bookId={book.id}
+          onClose={() => setPilotsOpen(false)}
+          onChapter={(id) => openTaskChapter(id, book.id)}
+        />
+      )}
       {error && (
         <div className="alert error" role="alert">
           <AlertTriangle size={18} />
@@ -601,6 +616,7 @@ function App() {
           <main className="workspace">
             <div className="toolbar">
               <button onClick={() => setPlanningOpen(true)}>场景编排</button>
+              <button onClick={() => setPilotsOpen(true)}>试写实验室</button>
               <button
                 onClick={async () => {
                   if (await save()) {
