@@ -216,6 +216,12 @@ if (
                   payload.chapterId,
                 );
                 break;
+              case "continuity.query":
+                value = await store.continuity.query(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
               case "materials.list":
                 value = await store.materials.list(
                   payload.bookId,
