@@ -232,7 +232,7 @@ try {
   report.termination = {
     method: "identity-verified termination of captured original processes",
     ownedProcessesConfirmedExited: owned.size,
-    verification: "Win32_Process ProcessId + CreationDate",
+    verification: "Windows Toolhelp + GetProcessTimes PID and creation time",
   };
   releaseFinal();
   await application.close().catch(() => {});

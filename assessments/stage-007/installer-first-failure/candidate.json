@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0-alpha.16",
+  "sha256": "b47e3a44838b56f407948a563c8863e0480a68fccc5d243615841cd20b0d4cb5",
+  "bytes": 222884469,
+  "archive": "release/candidates/v0.1.0-alpha.16-b47e3a4",
+  "runtimeSource": "5437a3aa52cc4ef8fa3a55944f345207557a743d",
+  "qaSourceAtFirstAttempt": "22a5a725b2cbcfdfc6f1a53dbc5e73d0dcbac458",
+  "status": "failed-qualification-attempt",
+  "reason": "Reader exit inventory falsely included an older unrelated process; subsequent QA-only native inventory correction passed focused installed regressions; full new-source installer qualification still required",
+  "scope": "Full runnable directory and EXE retained without ZIP; no old release-manifest copied"
+}

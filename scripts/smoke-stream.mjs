@@ -165,7 +165,8 @@ try {
     "forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay",
   );
   report.ownedProcessesConfirmedExited = owned.size;
-  report.terminationVerification = "Win32_Process ProcessId + CreationDate";
+  report.terminationVerification =
+    "Windows Toolhelp + GetProcessTimes PID and creation time";
   assert.deepEqual(report.errors, []);
   report.status = "passed";
 } catch (error) {

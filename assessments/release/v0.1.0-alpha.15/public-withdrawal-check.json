@@ -1,0 +1,7 @@
+{
+  "checkedAt": "2026-10-23T22:58:29.0760179Z",
+  "endpoint": "https://api.github.com/repos/ax2/zinovel-studio/releases/tags/v0.1.0-alpha.15",
+  "authenticated": false,
+  "statusCode": 404,
+  "status": "passed"
+}

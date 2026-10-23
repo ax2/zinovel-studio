@@ -1,0 +1,14 @@
+[
+  {
+    "program": "powershell.exe",
+    "elapsedMs": 13707,
+    "status": "passed",
+    "expectedOutput": true
+  },
+  {
+    "program": "C:/Program Files/PowerShell/7/pwsh.exe",
+    "elapsedMs": 13451,
+    "status": "passed",
+    "expectedOutput": true
+  }
+]

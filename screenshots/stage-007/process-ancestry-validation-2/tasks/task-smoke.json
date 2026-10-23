@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "checks": [
+    "bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "error": "Error: Command failed: powershell.exe -NoProfile -NonInteractive -Command Get-CimInstance -Query 'SELECT ProcessId,ParentProcessId,CreationDate FROM Win32_Process' -ErrorAction Stop | Select-Object ProcessId,ParentProcessId,CreationDate | ConvertTo-Json -Compress\n",
+  "taskStates": [
+    {
+      "id": "539604d1-72c3-4899-abae-367924a81b0b",
+      "status": "running",
+      "kind": "writing",
+      "startedAt": "2026-10-23T23:07:35.161Z"
+    },
+    {
+      "id": "805598f1-516c-481e-8a38-a767e77a20bb",
+      "status": "applied",
+      "kind": "writing",
+      "startedAt": "2026-10-23T23:07:28.608Z",
+      "completedAt": "2026-10-23T23:07:32.868Z"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "checks": [
+    "Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged",
+    "Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
+    "Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",
+    "Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode"
+  ],
+  "errors": [],
+  "syntheticDataRoot": "D:\\Work\\zinovel-studio\\.cache\\utf8-ui-oFyH2C",
+  "preservedMalformedSha256": "0bc24594674911e8145f3fbef0e7285775a6c4a9777703cc075a2ef24985472c",
+  "ownedProcessesConfirmedExited": 5
+}

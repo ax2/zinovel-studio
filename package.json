@@ -82,6 +82,7 @@
     "electron": "44.7.0",
     "electron-builder": "26.17.0",
     "esbuild": "0.25.12",
+    "koffi": "3.1.1",
     "playwright": "1.56.1",
     "prettier": "3.6.2",
     "typescript": "5.9.3"

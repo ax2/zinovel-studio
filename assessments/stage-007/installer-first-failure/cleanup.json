@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "scope": "Cleanup only of exact first synthetic alpha.16 installation; not installer qualification",
+  "installerSha256": "b47e3a44838b56f407948a563c8863e0480a68fccc5d243615841cd20b0d4cb5",
+  "manuscriptSha256": "86893eb1f06cff67bf1792bf0120a62126c16a39a0383d66970552c8f59b6434",
+  "checks": [
+    "Own registration, canonical path and exact installer bytes checked before invoking its own uninstaller",
+    "Synthetic app EXE and registration absent; manuscript bytes retained; unrelated Python process was never targeted"
+  ]
+}

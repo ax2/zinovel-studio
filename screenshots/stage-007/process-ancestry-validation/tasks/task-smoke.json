@@ -1,0 +1,35 @@
+{
+  "status": "failed",
+  "checks": [
+    "bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "termination": {
+    "method": "identity-verified termination of captured original processes",
+    "ownedProcessesConfirmedExited": 6,
+    "verification": "Win32_Process ProcessId + CreationDate"
+  },
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.task-row').filter({ hasText: '中断待处理' })\u001b[22m\n",
+  "taskStates": [
+    {
+      "id": "3874f703-1f9b-47f8-80fe-edd11baf66ae",
+      "status": "failed",
+      "kind": "writing",
+      "errorCode": "runtime-failed",
+      "startedAt": "2026-10-23T23:06:15.086Z",
+      "completedAt": "2026-10-23T23:06:21.411Z"
+    },
+    {
+      "id": "43b6f730-e87d-48da-8c73-318c4523b8d4",
+      "status": "applied",
+      "kind": "writing",
+      "startedAt": "2026-10-23T23:06:10.062Z",
+      "completedAt": "2026-10-23T23:06:13.224Z"
+    }
+  ]
+}

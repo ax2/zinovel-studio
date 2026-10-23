@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "elapsedMs": 25.717,
+  "records": 747,
+  "own": {
+    "ProcessId": 4220,
+    "ParentProcessId": 79900,
+    "CreationDate": "2026-10-23T23:16:13.482Z"
+  },
+  "old": {
+    "ProcessId": 42564,
+    "ParentProcessId": 42492,
+    "CreationDate": "2026-10-16T06:30:23.697Z"
+  },
+  "scope": "Read-only native inventory; no process termination"
+}

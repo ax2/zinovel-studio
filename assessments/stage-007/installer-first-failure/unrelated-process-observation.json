@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-23T23:06:08.4620531Z",
+  "process": {
+    "ProcessId": 42564,
+    "ParentProcessId": 42492,
+    "Name": "pythonw.exe",
+    "CreationDate": "2026-10-16T14:30:23.697064+08:00"
+  },
+  "action": "Read-only observation; no termination",
+  "reason": "Process was created on October 16, before the synthetic October 24 desktop launch; stale parent PID cannot establish ownership"
+}
