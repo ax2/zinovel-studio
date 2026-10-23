@@ -25,6 +25,59 @@ async function setup() {
   ]);
   return { root, store, book };
 }
+test("long material scans yield to queued manuscript writes at a bounded transaction boundary", async () => {
+  const { root, store, book } = await setup();
+  const template = await store.materials.save(book.id, input());
+  await Promise.all(
+    Array.from({ length: 95 }, async () => {
+      const id = randomUUID();
+      await writeFile(
+        join(root, "library", book.id, "materials", `${id}.json`),
+        JSON.stringify({ ...template, id }),
+      );
+    }),
+  );
+  const chapter = await store.readChapter(book.id, book.chapters[0].id);
+  const originalRecord = store.materials.record.bind(store.materials);
+  let count = 0,
+    releaseBatch,
+    signalRead;
+  const gate = new Promise((resolve) => {
+    releaseBatch = resolve;
+  });
+  const reading = new Promise((resolve) => {
+    signalRead = resolve;
+  });
+  store.materials.record = async (...args) => {
+    count++;
+    if (count === 1) {
+      signalRead();
+      await gate;
+    }
+    return originalRecord(...args);
+  };
+  const scan = store.materials.list(book.id);
+  await reading;
+  const save = store.saveChapter({
+    bookId: book.id,
+    chapterId: chapter.id,
+    title: chapter.title,
+    body: "扫描尚未完成时也要保存。",
+    expectedRevision: chapter.revision,
+    expectedHash: chapter.diskHash,
+  });
+  releaseBatch();
+  await save;
+  assert.ok(
+    count < 96,
+    `save was delayed until all ${count} records were read`,
+  );
+  assert.equal((await scan).total, 96);
+  assert.equal(
+    (await store.readChapter(book.id, chapter.id)).body,
+    "扫描尚未完成时也要保存。",
+  );
+});
 test("all typed records persist and backup restores internal chapter IDs under new book identity", async () => {
   const { root, store, book } = await setup();
   const records = [];

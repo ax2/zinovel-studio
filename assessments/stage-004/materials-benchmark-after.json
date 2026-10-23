@@ -1,0 +1,27 @@
+{
+  "status": "measured",
+  "environment": {
+    "os": "10.0.26300",
+    "cpu": "Intel(R) Core(TM) i9-14900HX",
+    "memoryGiB": 64,
+    "node": "26.10.0"
+  },
+  "records": 5000,
+  "notesCharactersPerRecord": 1600,
+  "fixtureBuildMs": 783,
+  "metrics": {
+    "searchMs": [
+      487,
+      466,
+      547
+    ],
+    "saveWhileScanningMs": 16
+  },
+  "checks": [
+    "5,000 synthetic typed records scanned without omissions; unique tail query exact; concurrent requested manuscript save eventually persists exact bytes"
+  ],
+  "meetsInitialTargets": {
+    "searchUnder500ms": false,
+    "saveUnder1000ms": true
+  }
+}

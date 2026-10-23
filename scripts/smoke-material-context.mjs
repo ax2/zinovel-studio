@@ -114,11 +114,15 @@ try {
     .waitFor();
   assert.equal(model.requests.length, 0);
   await page.getByRole("button", { name: "刷新资料快照", exact: true }).click();
-  const refreshedSummary = context.locator("summary").filter({ hasText: "版本 2" });
+  const refreshedSummary = context
+    .locator("summary")
+    .filter({ hasText: "版本 2" });
   await refreshedSummary.waitFor();
   // React can preserve an open details element when the refresh resolves in one render.
   // Operate on its actual state instead of assuming every refresh remounts it closed.
-  if (!(await refreshedSummary.evaluate((element) => element.parentElement.open)))
+  if (
+    !(await refreshedSummary.evaluate((element) => element.parentElement.open))
+  )
     await refreshedSummary.click();
   await context.getByText(/新版限定口头禅/).waitFor();
   const editor = page.getByLabel("正文编辑器");

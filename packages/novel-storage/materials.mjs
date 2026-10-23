@@ -129,69 +129,84 @@ export class MaterialStore {
       return this.view(await this.record(root, materialId), book, root);
     });
   }
-  list(bookId, options = {}) {
-    return this.storage.exclusive(async () => {
+  async list(bookId, options = {}) {
+    const { kind = "", query = "", deleted = false, offset = 0 } = options;
+    if (kind) materialKind(kind);
+    if (
+      typeof query !== "string" ||
+      query.length > 200 ||
+      typeof deleted !== "boolean" ||
+      !Number.isSafeInteger(offset) ||
+      offset < 0
+    )
+      throw new Error("资料检索条件无效");
+    const { root, entries } = await this.storage.exclusive(async () => {
       const { root } = await this.context(bookId);
-      const { kind = "", query = "", deleted = false, offset = 0 } = options;
-      if (kind) materialKind(kind);
-      if (
-        typeof query !== "string" ||
-        query.length > 200 ||
-        typeof deleted !== "boolean" ||
-        !Number.isSafeInteger(offset) ||
-        offset < 0
-      )
-        throw new Error("资料检索条件无效");
-      let entries;
       try {
-        entries = await readdir(await this.storage.path(root, "materials"), {
-          withFileTypes: true,
-        });
+        const entries = await readdir(
+          await this.storage.path(root, "materials"),
+          {
+            withFileTypes: true,
+          },
+        );
+        return {
+          root,
+          entries: entries.filter((entry) => entry.name.endsWith(".json")),
+        };
       } catch (error) {
-        if (error.code === "ENOENT") return { items: [], total: 0, errors: [] };
+        if (error.code === "ENOENT") return { root, entries: [] };
         throw error;
       }
-      const items = [],
-        errors = [],
-        needle = query.toLocaleLowerCase();
-      for (const entry of entries) {
-        if (!entry.name.endsWith(".json")) continue;
-        try {
-          const record = await this.record(root, entry.name.slice(0, -5)),
-            data = record.data;
-          if (!!data.deletedAt !== deleted || (kind && data.kind !== kind))
-            continue;
-          if (
-            needle &&
-            ![data.title, data.notes, ...Object.values(data.fields)]
-              .join("\n")
-              .toLocaleLowerCase()
-              .includes(needle)
-          )
-            continue;
-          items.push({
-            id: data.id,
-            kind: data.kind,
-            title: data.title,
-            status: data.status,
-            revision: data.revision,
-            updatedAt: data.updatedAt,
-            deletedAt: data.deletedAt,
-          });
-        } catch {
-          errors.push("一份资料无法读取，原始文件已保留");
-        }
-      }
-      items.sort(
-        (a, b) =>
-          b.updatedAt.localeCompare(a.updatedAt) || a.id.localeCompare(b.id),
-      );
-      return {
-        items: items.slice(offset, offset + 40),
-        total: items.length,
-        errors,
-      };
     });
+    const items = [],
+      errors = [],
+      needle = query.toLocaleLowerCase();
+    // Bound each read transaction so queued manuscript saves run between batches.
+    // Listings may span revisions; opening and AI snapshots still reread under one lock.
+    for (let offset = 0; offset < entries.length; offset += 32) {
+      await this.storage.exclusive(async () => {
+        await this.storage.bookRoot(bookId);
+        await this.storage.recover(root);
+        await Promise.all(
+          entries.slice(offset, offset + 32).map(async (entry) => {
+            try {
+              const record = await this.record(root, entry.name.slice(0, -5)),
+                data = record.data;
+              if (!!data.deletedAt !== deleted || (kind && data.kind !== kind))
+                return;
+              if (
+                needle &&
+                ![data.title, data.notes, ...Object.values(data.fields)]
+                  .join("\n")
+                  .toLocaleLowerCase()
+                  .includes(needle)
+              )
+                return;
+              items.push({
+                id: data.id,
+                kind: data.kind,
+                title: data.title,
+                status: data.status,
+                revision: data.revision,
+                updatedAt: data.updatedAt,
+                deletedAt: data.deletedAt,
+              });
+            } catch {
+              errors.push("一份资料无法读取，原始文件已保留");
+            }
+          }),
+        );
+      });
+    }
+    items.sort(
+      (a, b) =>
+        b.updatedAt.localeCompare(a.updatedAt) || a.id.localeCompare(b.id),
+    );
+    return {
+      items: items.slice(offset, offset + 40),
+      total: items.length,
+      errors,
+    };
   }
   save(bookId, input, expected = null) {
     return this.storage.exclusive(async () => {

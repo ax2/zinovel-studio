@@ -79,8 +79,9 @@ export function MaterialsPanel({
     }
   }
   useEffect(() => {
-    void refresh();
+    const timer = setTimeout(() => void refresh(), 200);
     return () => {
+      clearTimeout(timer);
       listRequest.current++;
     };
   }, [book.id, kind, query, deleted, offset]);
