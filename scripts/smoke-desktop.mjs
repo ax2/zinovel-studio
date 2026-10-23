@@ -35,6 +35,8 @@ async function launch() {
     timeout: 45000,
   });
   const page = await application.firstWindow();
+  if (process.env.ZINOVEL_QA_VIEWPORT === "ci")
+    await page.setViewportSize({ width: 1008, height: 681 });
   page.on("pageerror", (error) => errors.push(error.message));
   await page.getByRole("heading", { name: "把故事写下来" }).waitFor();
   return page;
@@ -122,6 +124,7 @@ try {
   assert.equal(await readFile(file, "utf8"), manuscript + "\n新增段落。");
   page = await launch();
   await page.locator(".book-card").filter({ hasText: "雾港来信" }).click();
+  await page.getByLabel("正文编辑器").waitFor();
   assert.equal(
     (
       await page.getByLabel("正文编辑器").locator(".cm-line").allTextContents()
@@ -224,6 +227,12 @@ try {
   evidence.checks.push(
     "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
   );
+  await page.screenshot({ path: join(screenshots, "toolbar-with-reference.png") });
+  assert.equal(await page.locator(".toolbar button").evaluateAll(buttons => buttons.every(button => {
+    const rect = button.getBoundingClientRect();
+    if (!rect.width || !rect.height) return true;
+    return button.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
+  })), true, "visible toolbar controls must not be covered by the reference panel");
   await page.getByTitle("查找替换预览", { exact: true }).click();
   await page.getByLabel("查找内容", { exact: true }).fill("林舟");
   await page.getByLabel("替换为", { exact: true }).fill("林远");
