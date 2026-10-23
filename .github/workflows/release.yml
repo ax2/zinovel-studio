@@ -66,6 +66,8 @@ jobs:
       - run: pnpm test:knowledge-context
       - run: pnpm test:creative-journey
       - run: pnpm test:reader
+      - run: pnpm test:utf8-integrity
+      - run: pnpm test:publication-foundation
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

@@ -1,4 +1,5 @@
-import { mkdir, lstat, readFile } from "node:fs/promises";
+import { readUtf8File } from "./encoding.mjs";
+import { mkdir, lstat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 import { atomicWriteText as atomic } from "./atomic.mjs";
@@ -15,7 +16,7 @@ const titleOf = (value) => {
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 async function readOptional(path) {
   try {
-    return await readFile(path, "utf8");
+    return await readUtf8File(path);
   } catch (error) {
     if (error.code === "ENOENT") return null;
     throw error;
@@ -72,25 +73,56 @@ export class BookStorageKernel {
     const raw = await readOptional(path);
     if (!raw) return;
     const pending = JSON.parse(raw);
-    if (!Array.isArray(pending.entries))
+    if (
+      !pending ||
+      typeof pending.id !== "string" ||
+      !pending.id ||
+      !Array.isArray(pending.entries) ||
+      pending.entries.some(
+        (entry) =>
+          !entry ||
+          typeof entry.path !== "string" ||
+          !entry.path.isWellFormed() ||
+          typeof entry.after !== "string" ||
+          !entry.after.isWellFormed() ||
+          (entry.before !== null &&
+            (typeof entry.before !== "string" || !entry.before.isWellFormed())),
+      )
+    )
       throw new Error("恢复日志损坏，请保留作品目录");
+    const archivePath = await this.path(
+        root,
+        `.zinovel/transactions/${pending.id}.json`,
+      ),
+      seen = new Set();
     for (const entry of pending.entries) {
+      const key =
+        process.platform === "win32" ? entry.path.toLowerCase() : entry.path;
+      if (seen.has(key)) throw new Error("恢复日志路径重复，请保留作品目录");
+      seen.add(key);
       const current = await readOptional(await this.path(root, entry.path));
       if (current !== entry.before && current !== entry.after)
         throw new Error("检测到中断事务与外部修改冲突，请保留当前副本");
     }
     for (const entry of pending.entries)
       await atomic(await this.path(root, entry.path), entry.after);
-    await atomic(
-      await this.path(root, `.zinovel/transactions/${pending.id}.json`),
-      raw,
-    );
+    await atomic(archivePath, raw);
     await atomic(path, "");
   }
   async transaction(root, changes) {
+    const requested = Object.entries(changes);
+    for (const [path, after] of requested) {
+      if (
+        !path.isWellFormed() ||
+        typeof after !== "string" ||
+        !after.isWellFormed()
+      )
+        throw new Error("事务文本格式无效或包含不完整Unicode，原文件已保留");
+      await this.path(root, path);
+    }
     await this.recover(root);
     const entries = [];
-    for (const [path, after] of Object.entries(changes))
+    for (const [path, after] of requested)
       entries.push({
         path,
         before: await readOptional(await this.path(root, path)),
@@ -110,7 +142,7 @@ export class BookStorageKernel {
   async manifest(root) {
     await this.recover(root);
     const book = JSON.parse(
-      await readFile(await this.path(root, "book.json"), "utf8"),
+      await readUtf8File(await this.path(root, "book.json")),
     );
     if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
       throw new Error("不支持的作品格式，请勿覆盖原稿");

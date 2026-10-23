@@ -1,3 +1,4 @@
+import { readUtf8File } from "./encoding.mjs";
 import { readFile, readdir } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { resolveAnchor } from "../novel-domain/anchors.mjs";
@@ -69,12 +70,11 @@ export class MaterialStore {
           try {
             bodies.set(
               chapter.id,
-              await readFile(
+              await readUtf8File(
                 await this.storage.path(
                   root,
                   `manuscript/${id(chapter.id)}.md`,
                 ),
-                "utf8",
               ),
             );
           } catch {
@@ -325,12 +325,11 @@ export class MaterialStore {
       const { root } = await this.context(bookId);
       try {
         return JSON.parse(
-          await readFile(
+          await readUtf8File(
             await this.storage.path(
               root,
               `.zinovel/material-acceptance/${id(acceptanceId)}.json`,
             ),
-            "utf8",
           ),
         );
       } catch (error) {
@@ -491,9 +490,8 @@ export class MaterialStore {
         .filter((name) => /^\d+-[a-f0-9]{64}\.json$/.test(name))
         .sort((a, b) => parseInt(b) - parseInt(a))
         .slice(0, 40)) {
-        const raw = await readFile(
+        const raw = await readUtf8File(
           await this.storage.path(root, `${path}/${name}`),
-          "utf8",
         );
         if (hash(raw) !== name.slice(name.indexOf("-") + 1, -5))
           throw new Error("历史资料校验失败，请保留原文件");

@@ -1,3 +1,4 @@
+import { readUtf8File } from "./encoding.mjs";
 import { BookStorageKernel } from "./kernel.mjs";
 import { MaterialStore } from "./materials.mjs";
 import { PlanningStore } from "./planning.mjs";
@@ -35,7 +36,7 @@ const titleOf = (value) => {
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 async function readOptional(path) {
   try {
-    return await readFile(path, "utf8");
+    return await readUtf8File(path);
   } catch (error) {
     if (error.code === "ENOENT") return null;
     throw error;
@@ -264,6 +265,7 @@ export class NovelStore {
         titleOf(chapter.title);
         if (
           typeof chapter.body !== "string" ||
+          !chapter.body.isWellFormed() ||
           Buffer.byteLength(chapter.body) > 8 * 1024 * 1024
         )
           throw new Error("导入正文格式无效或单章过大");
@@ -323,9 +325,8 @@ export class NovelStore {
         book = await this.#storage.manifest(root),
         hits = [];
       for (const chapter of orderedChapters(book)) {
-        const body = await readFile(
+        const body = await readUtf8File(
           await this.#storage.path(root, `manuscript/${chapter.id}.md`),
-          "utf8",
         );
         let start = body.indexOf(query);
         if (chapter.title.includes(query))
@@ -370,9 +371,8 @@ export class NovelStore {
       (item) => item.id === checkedId(chapterId) && !item.deletedAt,
     );
     if (!chapter) throw new Error("章节不存在或已移入回收站");
-    const body = await readFile(
+    const body = await readUtf8File(
       await this.#storage.path(root, `manuscript/${chapterId}.md`),
-      "utf8",
     );
     const path = `annotations/${chapterId}.json`,
       raw = await readOptional(await this.#storage.path(root, path));
@@ -486,9 +486,8 @@ export class NovelStore {
         book = await this.#storage.manifest(root),
         chapters = [];
       for (const chapter of orderedChapters(book)) {
-        const body = await readFile(
+        const body = await readUtf8File(
           await this.#storage.path(root, `manuscript/${chapter.id}.md`),
-          "utf8",
         );
         chapters.push({ ...chapter, body, diskHash: digest(body) });
       }
@@ -561,9 +560,8 @@ export class NovelStore {
       if ((await lstat(root)).isSymbolicLink())
         throw new Error("备份根目录不能是链接");
       const manifest = JSON.parse(
-        await readFile(
+        await readUtf8File(
           await this.#storage.path(root, "backup-manifest.json"),
-          "utf8",
         ),
       );
       if (
@@ -626,9 +624,8 @@ export class NovelStore {
         book = await this.#storage.manifest(root);
       const chapter = book.chapters.find((c) => c.id === checkedId(chapterId));
       if (!chapter) throw new Error("章节不存在");
-      const body = await readFile(
+      const body = await readUtf8File(
         await this.#storage.path(root, `manuscript/${chapterId}.md`),
-        "utf8",
       );
       return {
         ...chapter,
@@ -650,7 +647,7 @@ export class NovelStore {
         const info = await lstat(path);
         if (!info.isFile() || info.size > 16384)
           throw new Error("接受回执格式无效");
-        return JSON.parse(await readFile(path, "utf8"));
+        return JSON.parse(await readUtf8File(path));
       } catch (error) {
         if (error.code === "ENOENT") return null;
         throw error;
@@ -661,6 +658,7 @@ export class NovelStore {
     return this.#storage.exclusive(async () => {
       if (
         typeof input.body !== "string" ||
+        !input.body.isWellFormed() ||
         Buffer.byteLength(input.body) > 8 * 1024 * 1024
       )
         throw new Error("单章正文超过 8 MiB 或格式无效");
@@ -671,7 +669,7 @@ export class NovelStore {
       );
       if (!chapter) throw new Error("章节不存在");
       const path = `manuscript/${chapter.id}.md`;
-      const disk = await readFile(await this.#storage.path(root, path), "utf8");
+      const disk = await readUtf8File(await this.#storage.path(root, path));
       if (
         input.expectedRevision !== chapter.revision ||
         input.expectedHash !== digest(disk)
@@ -733,6 +731,7 @@ export class NovelStore {
       for (const value of [input.localBody, input.baseBody ?? ""])
         if (
           typeof value !== "string" ||
+          !value.isWellFormed() ||
           Buffer.byteLength(value) > 8 * 1024 * 1024
         )
           throw new Error("冲突副本格式无效或过大");
@@ -742,9 +741,8 @@ export class NovelStore {
         (item) => item.id === checkedId(input.chapterId) && !item.deletedAt,
       );
       if (!chapter) throw new Error("章节不存在或已回收");
-      const remoteBody = await readFile(
+      const remoteBody = await readUtf8File(
         await this.#storage.path(root, `manuscript/${chapter.id}.md`),
-        "utf8",
       );
       if (
         digest(remoteBody) !== input.expectedRemoteHash ||
@@ -783,9 +781,8 @@ export class NovelStore {
       for (const file of await readdir(directory)) {
         if (!file.endsWith(".json")) continue;
         const transaction = JSON.parse(
-          await readFile(
+          await readUtf8File(
             await this.#storage.path(root, `.zinovel/transactions/${file}`),
-            "utf8",
           ),
         );
         const change = transaction.entries.find((entry) => entry.path === path);

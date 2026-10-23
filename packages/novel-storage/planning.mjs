@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readUtf8File } from "./encoding.mjs";
 import { createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
 const hash = (text) => createHash("sha256").update(text).digest("hex");
@@ -16,10 +16,7 @@ export class PlanningStore {
   async record(root) {
     let raw;
     try {
-      raw = await readFile(
-        await this.storage.path(root, "planning.json"),
-        "utf8",
-      );
+      raw = await readUtf8File(await this.storage.path(root, "planning.json"));
     } catch (e) {
       if (e.code !== "ENOENT") throw e;
     }

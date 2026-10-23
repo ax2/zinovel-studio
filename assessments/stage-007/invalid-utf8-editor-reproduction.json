@@ -1,0 +1,12 @@
+{
+  "status": "reproduced",
+  "scope": "Synthetic bytes only: editor normal read followed by saving its unchanged displayed body rewrites invalid UTF-8 bytes",
+  "source": "aea6054",
+  "beforeSha256": "03214462a54eef72654d231b65af0271b257919efeca0dccab8e6572ad1710d4",
+  "advertisedDiskHash": "43edf62057f8037b1d6a117974db204fd0897d7ede09591e44cf1992528c1b5e",
+  "afterSha256": "43edf62057f8037b1d6a117974db204fd0897d7ede09591e44cf1992528c1b5e",
+  "saveStatus": "saved",
+  "rawBytesPreserved": false,
+  "readIntroducesReplacement": true,
+  "manuscriptRoot": "D:\\Work\\zinovel-studio\\.cache\\invalid-utf8-editor-hGo6Nn"
+}

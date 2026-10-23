@@ -52,7 +52,8 @@
     "test:upgrade": "node scripts/smoke-upgrade.mjs",
     "release:manifest": "node scripts/release-manifest.mjs",
     "release:verify-public": "node scripts/verify-public-release.mjs",
-    "test:publication-foundation": "node scripts/smoke-publication-foundation.mjs"
+    "test:publication-foundation": "node scripts/smoke-publication-foundation.mjs",
+    "test:utf8-integrity": "node scripts/smoke-utf8-integrity.mjs"
   },
   "engines": {
     "node": ">=26"

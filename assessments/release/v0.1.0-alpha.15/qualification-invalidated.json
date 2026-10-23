@@ -1,0 +1,15 @@
+{
+  "status": "invalidated",
+  "source": "3836aa9e3f4b43d9ca34b46eebc351403bae3b96",
+  "localInstallerSha256": "061e2ea0c45d5fd10c49463a7facea9a1c2ff964c1e38e5ba3b698d6054743e7",
+  "historicalInstallerSuiteStatus": "passed",
+  "disposition": "Withdrawn to draft: release upload completed before cancellation; newly reproduced malformed UTF-8 unchanged-save case invalidates qualification",
+  "regression": "assessments/stage-007/invalid-utf8-editor-reproduction.json",
+  "releaseWorkflow": 40032654740,
+  "workflowConclusion": "cancelled",
+  "publicReleaseExists": false,
+  "nextVersion": "0.1.0-alpha.16",
+  "wasPublic": true,
+  "publicInstallerSha256": "488563c3464279b5e7235b603c64623ad182e9cbbb6b6e9ee489bf5e6effcd6c",
+  "withdrawalReceipt": "assessments/release/v0.1.0-alpha.15/withdrawal.json"
+}

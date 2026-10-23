@@ -1,3 +1,4 @@
+import { readUtf8File } from "./encoding.mjs";
 import { readFile, readdir } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { knowledgeInput } from "../novel-domain/knowledge.mjs";
@@ -576,12 +577,11 @@ export class KnowledgeStore {
       for (const name of names.slice(offset, offset + 40))
         try {
           const data = JSON.parse(
-            await readFile(
+            await readUtf8File(
               await this.storage.path(
                 root,
                 `.zinovel/knowledge-history/${eventId}/${name}`,
               ),
-              "utf8",
             ),
           );
           knowledgeInput(data);
