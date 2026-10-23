@@ -2,11 +2,11 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.10 已完成本机及远端安装/升级验证并公开发布，新增全书证据与人物/设定关系图，保留独立试写实验室、AI 审阅、场景看板和十二类创作资料。后续经过验证的阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.11 已完成本机及远端安装/升级验证并公开发布，新增有正文依据的认知矩阵和查询取消，保留全书证据、关系图、独立试写、AI 审阅及十三类创作资料。后续阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.10 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.10) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.10/ZiNovel-Studio-0.1.0-alpha.10-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.11 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.11) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.11/ZiNovel-Studio-0.1.0-alpha.11-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-alpha.11 已完成认知矩阵手工闭环的本机安装资格，标签正在远端发行验证。主分支 alpha.12 继续开发作者当前认知选择，尚未打包；两者尚未包含在 alpha.10 安装包。最新发行包含全书证据、人物/设定关系图和窄窗工具栏修复；大书查询性能、秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md) 和 [认知矩阵设计](design/knowledge-matrix.md)。
+主分支 alpha.12 已实现作者当前认知选择的手工切片，100 项单元/类型/规划及真实桌面通过，尚未打包，不包含在 alpha.11 安装包。旧认知整理、故事时间推演、大书性能及其他完整需求仍在推进，详见 [认知矩阵设计](design/knowledge-matrix.md) 和 [作者选择验收](assessments/stage-004/knowledge-choices.md)。
 
 ## 产品方向
 
@@ -107,3 +107,5 @@ alpha.8 标签发行 CI 39955362954 已成功，四个公开附件与安装清�
 alpha.9 已于 2026-10-23 22:14:42 北京时间公开，发行 CI 39966140390 成功，安装附件及元数据核对通过。独立试写五项原验收条目已通过，完整产品仍在开发；见[发行证据](assessments/release/v0.1.0-alpha.9/README.md)。
 
 alpha.10 已于 2026-10-23 23:19:45 北京时间公开，标签发行 CI 39975497797 成功，四个附件与哈希核对通过；本机首次安装超时、同包重跑及最终完整资格分别留档，见[发行证据](assessments/release/v0.1.0-alpha.10/README.md)。
+
+alpha.11 已于 2026/10/24 00:52:22 北京时间公开，发行 CI39988528009 全部成功，安装 EXE 与三个元数据附件已核对；完整证据见[alpha.11 发行记录](assessments/release/v0.1.0-alpha.11/README.md)。后续 alpha.12 作者选择未混入该标签。
