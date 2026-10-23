@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "scope": "Late observed cleanup only; original 180-second observation expired, no second uninstall invocation",
+  "source": "c7f293a4cb877e49ae43fdecd75d8b36759f4863",
+  "version": "0.1.0-alpha.15",
+  "installerSha256": "57cff618992a82f5b4dbbcc7ce0235966b7c16fe6c852937c69cf485436fdbcf",
+  "manuscriptSha256": "86893eb1f06cff67bf1792bf0120a62126c16a39a0383d66970552c8f59b6434",
+  "checks": [
+    "Exact failed synthetic application EXE and its uninstall registration are now absent",
+    "Saved pre-cleanup manuscript hash matches retained actual bytes"
+  ],
+  "limitations": [
+    "Does not qualify uninstall performance or full installer suite; c7 candidate remains failed and untagged"
+  ]
+}

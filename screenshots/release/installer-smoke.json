@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.14",
-  "installerSha256": "9b9ff8044d9563b576cf5b3afa617bd7301e72954f6cf8285f13297301d48ad3",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-nmsnkh\\中文 安装目录",
+  "version": "0.1.0-alpha.15",
+  "installerSha256": "061e2ea0c45d5fd10c49463a7facea9a1c2ff964c1e38e5ba3b698d6054743e7",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-2hOWNL\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -76,6 +76,10 @@
     "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
     "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
     "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution",
+    "installed: actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation",
+    "installed: external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry",
+    "installed: Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes",
     "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
     "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
     "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
@@ -99,10 +103,10 @@
     "installed: refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact",
     "installed: manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
-    "real NSIS uninstall removes app and retains synthetic user manuscript"
+    "real NSIS uninstall removes app and registration and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 27324,
-  "reinstallMs": 34915,
-  "uninstallMs": 5564
+  "installMs": 24821,
+  "reinstallMs": 33654,
+  "uninstallMs": 5870
 }
