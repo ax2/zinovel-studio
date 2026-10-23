@@ -17,6 +17,75 @@ const proposal = {
   fields: { desire: "找出旧信的主人", voice: "先问事实，再下判断" },
   notes: "候选设定，不自动成为正文事实",
 };
+test("research verification belongs to the author; AI proposal cannot promote provenance or rewrite verification history", async () => {
+  const root = await mkdtemp(join(tmpdir(), "novel-research-")),
+    store = new NovelStore(join(root, "library"));
+  const book = await store.createBook("现实资料合成验证");
+  const card = await store.materials.save(book.id, {
+    kind: "research",
+    title: "合成港口年表",
+    status: "planned",
+    chapterIds: [],
+    notes: "测试材料，非现实史实",
+    fields: {
+      boundary: "待核实",
+      claim: "测试年表称此时建港",
+      citation: "合成测试年表，第 2 页",
+      checkedAt: "尚未核对",
+      scope: "虚构旧港",
+      uncertainty: "没有现实证据",
+      adaptation: "仅供虚构场景",
+    },
+  });
+  const candidate = {
+    title: card.title,
+    fields: { ...card.fields, claim: "待核实的建港时间" },
+    notes: card.notes,
+  };
+  assert.equal(materialProposal(candidate, card).fields.boundary, "待核实");
+  assert.throws(
+    () =>
+      materialProposal(
+        {
+          ...candidate,
+          fields: { ...candidate.fields, boundary: "事实（作者已核对）" },
+        },
+        card,
+      ),
+    /作者性质标记/,
+  );
+  assert.throws(
+    () =>
+      materialProposal(
+        {
+          ...candidate,
+          fields: { ...candidate.fields, checkedAt: "模型声称今天已核实" },
+        },
+        card,
+      ),
+    /核对记录/,
+  );
+  const marked = await store.materials.save(
+    book.id,
+    {
+      ...card,
+      fields: {
+        ...card.fields,
+        boundary: "明确虚构",
+        checkedAt: "作者检查合成测试夹具",
+      },
+    },
+    card,
+  );
+  assert.equal(marked.fields.boundary, "明确虚构");
+  assert.equal(
+    (await store.materials.history(book.id, card.id))[0].fields.boundary,
+    "待核实",
+  );
+  const context = await store.materials.contextPack(book.id, [marked.id]);
+  assert.match(context.materials[0].content, /未自动访问或核实/);
+  assert.match(context.materials[0].content, /明确虚构/);
+});
 async function setup() {
   const root = await mkdtemp(join(tmpdir(), "novel-material-proposal-"));
   const store = new NovelStore(join(root, "library")),

@@ -9,6 +9,8 @@
 - 含 `alpha`/`beta`/`rc` 的版本发布为 prerelease。正式稳定版需要另外完成发行验收，不能自动去掉预览标签。
 - 交付 Windows x64 NSIS 安装 EXE、SHA-256 清单和发行说明。本地保留完整 win-unpacked 目录；不提供 ZIP。
 
+2026-10-23 最新发行政策：用户要求经过验证的阶段成果也发布 Release。check-release-ready.mjs 按 package 版本分渠道；alpha/beta/rc 必须匹配 plan/preview-readiness.json 的版本、验收文件、passed 运行报告和未完成范围，稳定版仍检查 plan/release-readiness.json 全部资格及所有功能 verified。预览资格只准许进入流水线，不能跳过本标签构建、安装、运行、升级和 manifest 哈希检查；CI 的公开预览字节与本机独立构建字节分别记录，不假定哈希相同。
+
 ## 最小独立运行时
 
 Electron 44.7.0 自带 Node 24.21.0；官方 SDK 通过该 EXE 的 Node 模式启动固定版本 DSH CLI。安装机无需 Node、pnpm、Python 或其他桌面应用。ASAR 保存 JavaScript/配置等普通资源；原生模块和外部可执行组件由打包器解包。已实测 Node 模式能够解析归档内 ESM、官方 CLI 和小说插件，不能仅凭开发环境可用推断。

@@ -28,6 +28,10 @@ const methods: Record<string, string> = {
   character: "novel-character",
   location: "novel-worldbuilding",
   rule: "novel-worldbuilding",
+  organization: "novel-worldbuilding",
+  item: "novel-worldbuilding",
+  ability: "novel-worldbuilding",
+  research: "novel-research",
   outline: "novel-master-outline",
   scene: "novel-scene-outline",
   thread: "novel-plot-threads",
@@ -344,6 +348,11 @@ export function MaterialAssistant({
                 绑定资料版本 {task.snapshot.materialTarget.revision} ·
                 只修改标题、类型字段和笔记。关闭不会保存本次调整；可先保存审阅草稿。任务原候选保留。
               </p>
+              {material.kind === "research" && (
+                <p className="muted">
+                  性质标记与核对记录保留原卡内容。如需改变，请关闭候选后在原资料中手工修改；本任务没有访问外部来源。
+                </p>
+              )}
               {task.record.status !== "awaiting-review" && (
                 <p className="inline-error">
                   当前状态：{task.record.status}。此记录只读，不自动重试或应用。
@@ -389,6 +398,10 @@ export function MaterialAssistant({
                         {field.options ? (
                           <select
                             aria-label={`候选${field.label}`}
+                            disabled={
+                              material.kind === "research" &&
+                              field.key === "boundary"
+                            }
                             value={proposal.fields[field.key] || ""}
                             onChange={(e) =>
                               setProposal({
@@ -408,6 +421,10 @@ export function MaterialAssistant({
                         ) : (
                           <textarea
                             aria-label={`候选${field.label}`}
+                            readOnly={
+                              material.kind === "research" &&
+                              field.key === "checkedAt"
+                            }
                             maxLength={10000}
                             rows={3}
                             value={proposal.fields[field.key] || ""}

@@ -68,6 +68,68 @@ export const materialKinds = [
     ],
   },
   {
+    id: "organization",
+    label: "组织",
+    fields: [
+      field("aliases", "组织别名"),
+      field("purpose", "宗旨与利益"),
+      field("hierarchy", "结构与决策权"),
+      field("members", "成员与加入条件"),
+      field("resources", "资源与影响范围"),
+      field("rules", "制度与行动规则"),
+      field("cost", "约束与代价"),
+      field("conflicts", "内外矛盾"),
+    ],
+  },
+  {
+    id: "item",
+    label: "物品",
+    fields: [
+      field("aliases", "物品别名"),
+      field("appearance", "形态与辨识特征"),
+      field("origin", "来源与制造"),
+      field("owner", "持有与流转计划"),
+      field("function", "用途与触发条件"),
+      field("limits", "使用限制"),
+      field("cost", "使用代价"),
+      field("failure", "失效与损毁条件"),
+    ],
+  },
+  {
+    id: "ability",
+    label: "能力",
+    fields: [
+      field("aliases", "能力别名"),
+      field("effect", "能力效果"),
+      field("requirements", "获得与触发条件"),
+      field("range", "范围与持续时间"),
+      field("cost", "消耗与后果"),
+      field("limits", "硬性限制"),
+      field("counter", "反制与例外"),
+      field("growth", "成长与上限"),
+    ],
+  },
+  {
+    id: "research",
+    label: "现实资料",
+    fields: [
+      field("boundary", "材料性质（作者标记）", [
+        "待核实",
+        "事实（作者已核对）",
+        "传闻或争议",
+        "明确虚构",
+      ]),
+      field("claim", "记录的说法"),
+      field("citation", "来源署名与文献定位"),
+      field("url", "来源网址或馆藏编号"),
+      field("excerpt", "来源摘录"),
+      field("checkedAt", "核对日期与方法"),
+      field("scope", "适用时间与地域"),
+      field("uncertainty", "不确定性与相反证据"),
+      field("adaptation", "小说中的改编边界"),
+    ],
+  },
+  {
     id: "scene",
     label: "场景",
     fields: [
@@ -163,6 +225,11 @@ export function materialMarkdown(data) {
       `# ${data.title}`,
       `类型：${kind.label} · 版本 ${data.revision}`,
       `状态：${data.status === "accepted" ? "作者已确认设定" : "作者计划"}（不代表正文已证实）`,
+      ...(data.kind === "research"
+        ? [
+            "现实资料性质由作者标记；程序未自动访问或核实来源，AI 提案也不构成查证。正文证据仅说明小说如何使用该材料。",
+          ]
+        : []),
       ...kind.fields.map(
         (field) =>
           `## ${field.label}\n\n${data.fields[field.key] || "（未填写）"}`,

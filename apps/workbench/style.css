@@ -293,7 +293,9 @@ p {
   background: var(--paper);
 }
 .toolbar {
-  height: 60px;
+  min-height: 60px;
+  height: auto;
+  flex-wrap: wrap;
   flex-shrink: 0;
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -305,9 +307,12 @@ p {
 .toolbar button {
   font-size: 13px;
   padding: 7px 9px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .toolbar-label {
   color: var(--muted);
+  white-space: nowrap;
 }
 .toolbar .save-state {
   white-space: nowrap;
@@ -1565,6 +1570,8 @@ footer {
 .modal.material-review { width: min(1060px, 94vw); max-height: calc(100vh - 48px); overflow-y: auto; }
 .material-review .modal-heading { position: sticky; top: -24px; z-index: 2; background: var(--paper); padding: 16px 0; }
 .material-review textarea { width: 100%; box-sizing: border-box; padding: 12px; color: var(--text); background: var(--paper); border: 1px solid var(--border); border-radius: 8px; resize: vertical; font: inherit; }
+.material-review select { padding: 8px; font: inherit; color: var(--text); background: var(--paper); border: 1px solid var(--border); border-radius: 6px; }
+.material-review select:disabled { color: var(--muted); opacity: 1; }
 .material-review label { display: flex; margin: 12px 0; }
 .material-review .modal-actions { flex-wrap: wrap; }
 .material-review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }

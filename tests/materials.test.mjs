@@ -89,7 +89,10 @@ test("all typed records persist and backup restores internal chapter IDs under n
       ),
     );
   const reopened = new NovelStore(join(root, "library"));
-  assert.equal((await reopened.materials.list(book.id)).total, 8);
+  assert.equal(
+    (await reopened.materials.list(book.id)).total,
+    materialKinds.length,
+  );
   for (const record of records)
     assert.deepEqual(await reopened.materials.read(book.id, record.id), record);
   const backup = await store.createBackup(book.id, join(root, "backup"));

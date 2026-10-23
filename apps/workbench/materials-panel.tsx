@@ -373,6 +373,12 @@ export function MaterialsPanel({
           {current?.deletedAt && (
             <p role="status">此资料在回收站中，恢复后可编辑。</p>
           )}
+          {input.kind === "research" && (
+            <p className="muted">
+              材料性质由作者标记，程序不会自动访问或核实来源；正文证据只记录小说如何使用材料。AI
+              不能修改性质标记和核对记录。
+            </p>
+          )}
           <fieldset
             disabled={busy || !!current?.deletedAt}
             className="material-form"

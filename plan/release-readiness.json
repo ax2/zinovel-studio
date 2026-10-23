@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "ready": false,
-  "policy": "2026-10-23: 用户要求达到上架质量后再公开发布；开发提交继续。",
+  "policy": "2026-10-23 最新指示：阶段成果可发布含安装 EXE 的预览 Release；完整产品与稳定版仍需通过全部上架资格。预览走独立门禁。",
   "checks": [
     { "id": "complete-product", "verified": false, "evidence": [] },
     { "id": "real-model-literary-workflow", "verified": false, "evidence": [] },

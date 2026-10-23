@@ -15,7 +15,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Require product release qualification
+      - name: Require qualification for the selected release channel
         run: node scripts/check-release-ready.mjs
       - uses: pnpm/action-setup@v4
         with:
@@ -54,6 +54,7 @@ jobs:
       - run: pnpm test:material-context
       - run: pnpm test:material-proposal
       - run: pnpm test:planning-ui
+      - run: pnpm test:world-proposals
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

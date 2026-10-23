@@ -14,6 +14,7 @@ const book = await store.importBook("创作资料合成验证", [
     title: "抵达旧港",
     body: "林舟走下栈桥，把信收进衣袋。\n🌧️ 旧港的钟响了。",
   },
+  { title: "重返码头", body: "另一章只作引用目标，保持原稿。" },
 ]);
 const manuscript = join(
     data,
@@ -101,6 +102,53 @@ try {
     if (!(await panel().getByLabel("抵达旧港", { exact: true }).isVisible()))
       await panel().locator("summary").filter({ hasText: "关联章节" }).click();
     await panel().getByLabel("抵达旧港", { exact: true }).check();
+    if (["organization", "item", "ability", "research"].includes(kind.id))
+      await panel().getByLabel("重返码头", { exact: true }).check();
+    await panel()
+      .getByRole("button", { name: "保存资料", exact: true })
+      .click();
+    await panel()
+      .getByRole("status")
+      .filter({ hasText: "已保存资料" })
+      .waitFor();
+    if (["organization", "item", "ability", "research"].includes(kind.id)) {
+      const record = (await store.materials.list(book.id, { kind: kind.id }))
+        .items[0];
+      const saved = await store.materials.read(book.id, record.id);
+      assert.equal(saved.chapterIds.length, 2);
+      assert.equal(
+        saved.fields.cost || saved.fields.boundary,
+        kind.id === "research"
+          ? "待核实"
+          : `${kind.fields.find((field) => field.key === "cost").label}：林舟、旧港与一封未拆的信 🌧️`,
+      );
+      await panel()
+        .getByLabel("资料标题", { exact: true })
+        .scrollIntoViewIfNeeded();
+      await screenshot(`${kind.id}-light.png`);
+    }
+  }
+  assert.equal(
+    (await store.materials.list(book.id)).total,
+    materialKinds.length,
+  );
+  assert.equal(await readFile(manuscript, "utf8"), original);
+  report.checks.push(
+    `real Electron creates all ${materialKinds.length} typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged`,
+  );
+  await panel()
+    .getByRole("combobox", { name: "资料类型", exact: true })
+    .selectOption("research");
+  await panel()
+    .getByRole("button", { name: /现实资料·旧港/ })
+    .click();
+  await panel()
+    .getByText(/材料性质由作者标记/)
+    .waitFor();
+  for (const value of ["事实（作者已核对）", "传闻或争议", "明确虚构"]) {
+    await panel()
+      .getByRole("combobox", { name: "材料性质（作者标记）", exact: true })
+      .selectOption(value);
     await panel()
       .getByRole("button", { name: "保存资料", exact: true })
       .click();
@@ -109,10 +157,20 @@ try {
       .filter({ hasText: "已保存资料" })
       .waitFor();
   }
-  assert.equal((await store.materials.list(book.id)).total, 8);
-  assert.equal(await readFile(manuscript, "utf8"), original);
+  const research = (await store.materials.list(book.id, { kind: "research" }))
+    .items[0];
+  assert.deepEqual(
+    (await store.materials.history(book.id, research.id)).map(
+      (item) => item.fields.boundary,
+    ),
+    ["传闻或争议", "事实（作者已核对）", "待核实"],
+  );
+  await panel()
+    .getByLabel("资料标题", { exact: true })
+    .scrollIntoViewIfNeeded();
+  await screenshot("research-boundary-history.png");
   report.checks.push(
-    "real Electron creates all eight typed cards through labeled forms with Unicode and stable chapter links; manuscript bytes unchanged",
+    "author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification",
   );
   await panel()
     .getByRole("combobox", { name: "资料类型", exact: true })

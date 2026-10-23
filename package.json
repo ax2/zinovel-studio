@@ -31,6 +31,7 @@
     "test:material-context": "node scripts/smoke-material-context.mjs",
     "test:material-proposal": "node scripts/smoke-material-proposal.mjs",
     "test:planning-ui": "node scripts/smoke-planning.mjs",
+    "test:world-proposals": "node scripts/smoke-world-proposals.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",
     "package:dir": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs",
     "package:win": "pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never",
