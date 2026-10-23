@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.12",
-  "installerSha256": "1e6995835d92a3a2cf8d9e511721eef23f1461dc3ce416655cb42d528638de33",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-pgtMCu\\中文 安装目录",
+  "version": "0.1.0-alpha.13",
+  "installerSha256": "05a0ccbcc2de6e12a28dd1b17ac7ad1c4508dc2a3c168ada04c81517f7697a39",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-rmvUwz\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -75,6 +75,12 @@
     "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
     "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
     "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call",
+    "installed: official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel",
+    "installed: task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable",
+    "installed: material proposal UI rejects stale knowledge with zero requests then uses only material-read, frozen-reference-read and proposal after refresh; original card unchanged",
+    "installed: pilot UI rejects stale knowledge before estimation and generation; refreshed estimate sends zero requests and official Harness uses only pilot-read, frozen-reference-read and pilot proposal",
+    "installed: both target prompts/tool results contain selected knowledge without unselected truth, other knowledge or whole formal manuscript; no candidate is applied automatically",
     "installed: actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record",
     "installed: simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity",
     "installed: synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another",
@@ -91,7 +97,7 @@
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 27328,
-  "reinstallMs": 34975,
-  "uninstallMs": 5456
+  "installMs": 23226,
+  "reinstallMs": 33668,
+  "uninstallMs": 5801
 }

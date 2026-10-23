@@ -260,3 +260,7 @@ MixedContext以带类型身份区分原资料、认知与作者选择。宿主�
 新两套探针接入开发/发行/安装后全套，详见assessments/stage-004/knowledge-context.md。alpha.13进入同版本预览构建资格，不代表安装通过，暂不推标签。WORLD-05仍in-progress，真实文学、自动故事时间及大书性能未验收。前一公开alpha.12 CI39998622206与当前文档CI40001370269均success。
 
 最终源检查114项单元/类型/规划passed（新增第六项为长说明检索与坏来源保字节），pnpm build及七个相关运行探针全部passed。预览资格仅允许开始构建，安装后两套新探针同样必须执行。
+
+## alpha.13 本机发行资格
+
+冻结d4ca386，114项单元/类型/规划及源码CI40003566959 success。打包69986终态exit0，全套安装45734终态exit0，公开alpha.3升级6336终态exit0。EXE222878584字节，SHA256 05a0ccbcc2de6e12a28dd1b17ac7ad1c4508dc2a3c168ada04c81517f7697a39；安装23226ms/重装33668ms/卸载5801ms/升级30463ms，原稿保留，三个上下文入口均在实际安装EXE通过。安装后浅深窄窗和升级截图已查看。完整运行目录+EXE本机归档release/v0.1.0-alpha.13，无ZIP。详见assessments/release/v0.1.0-alpha.13。推同一源码标签后公开结果另核对，不混用本机与CI哈希。
