@@ -127,6 +127,10 @@ try {
     .getByRole("heading", { name: "伏笔埋设 · 正文版本一致" })
     .scrollIntoViewIfNeeded();
   await snapshot("planted-light.png");
+  if (!(await page.locator(".chapter-list").isVisible()))
+    await page
+      .getByRole("button", { name: "关闭创作参考", exact: true })
+      .click();
   await page
     .locator(".chapter-list")
     .getByRole("button", { name: /夜航/ })
@@ -135,6 +139,8 @@ try {
     .getByLabel("正文编辑器")
     .getByText("夜里，船驶离港口。", { exact: true })
     .waitFor();
+  if (!(await evidence().isVisible()))
+    await page.getByTitle("打开创作参考", { exact: true }).click();
   await evidence()
     .getByRole("button", { name: "定位正文证据", exact: true })
     .click();

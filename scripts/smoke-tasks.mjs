@@ -59,6 +59,8 @@ async function launch() {
     env,
   });
   page = await application.firstWindow();
+  if (process.env.ZINOVEL_QA_VIEWPORT === "ci")
+    await page.setViewportSize({ width: 1008, height: 681 });
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
@@ -70,6 +72,12 @@ async function launch() {
     await page.getByTitle("打开创作参考").click();
 }
 async function history() {
+  if (
+    !(await page
+      .getByRole("button", { name: "写作任务记录", exact: true })
+      .isVisible())
+  )
+    await page.getByTitle("打开创作参考", { exact: true }).click();
   await page.getByRole("button", { name: "写作任务记录", exact: true }).click();
   await page.locator(".task-row").first().waitFor();
 }
@@ -123,6 +131,10 @@ try {
   application = undefined;
   await launch();
   assert.equal(model.requests.length, 3);
+  if (!(await page.locator(".chapter-list").isVisible()))
+    await page
+      .getByRole("button", { name: "关闭创作参考", exact: true })
+      .click();
   await page
     .locator(".chapter-list button")
     .filter({ hasText: "另一章" })

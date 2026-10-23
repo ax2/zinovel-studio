@@ -7,9 +7,9 @@
   ],
   "errors": [],
   "viewport": {
-    "width": 1426,
-    "height": 923,
-    "dpr": 1.25
+    "width": 1008,
+    "height": 682,
+    "dpr": 1.0000000149011612
   },
   "termination": {
     "taskkillExitCode": 0,

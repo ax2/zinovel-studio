@@ -11,20 +11,20 @@
   "viewports": [
     {
       "name": "planted-light.png",
-      "width": 1426,
-      "height": 923,
+      "width": 1010,
+      "height": 683,
       "theme": "light"
     },
     {
       "name": "source-changed.png",
-      "width": 1426,
-      "height": 923,
+      "width": 1010,
+      "height": 683,
       "theme": "light"
     },
     {
       "name": "dependency-changed.png",
-      "width": 1426,
-      "height": 923,
+      "width": 1010,
+      "height": 683,
       "theme": "light"
     },
     {
