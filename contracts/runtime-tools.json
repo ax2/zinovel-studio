@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "scope": "Implemented scoped task tools; broader tool-catalog.json contracts remain design targets",
+  "tools": [
+    { "name": "novel_selection_read", "profile": "writing", "capability": "frozen-read", "evidence": ["scripts/smoke-novel-agent.mjs"] },
+    { "name": "novel_change_propose", "profile": "writing", "capability": "proposal-only", "evidence": ["scripts/smoke-novel-agent.mjs"] },
+    { "name": "novel_materials_read", "profile": "explicit-selected-context", "capability": "frozen-read", "evidence": ["tests/material-context.test.mjs", "scripts/smoke-material-context.mjs"] },
+    { "name": "novel_material_read", "profile": "material", "capability": "frozen-read", "evidence": ["tests/material-proposal.test.mjs", "scripts/smoke-material-proposal.mjs"] },
+    { "name": "novel_material_propose", "profile": "material", "capability": "proposal-only", "evidence": ["tests/material-proposal.test.mjs", "scripts/smoke-material-proposal.mjs"] }
+  ]
+}

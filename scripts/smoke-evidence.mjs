@@ -57,7 +57,9 @@ async function launch() {
   });
   page = await application.firstWindow();
   if (process.env.ZINOVEL_QA_COMPACT === "1")
-    await application.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].setSize(1024, 720));
+    await application.evaluate(({ BrowserWindow }) =>
+      BrowserWindow.getAllWindows()[0].setSize(1024, 720),
+    );
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
@@ -144,7 +146,8 @@ try {
   await editor.press("Control+Home");
   await page.keyboard.insertText("后来，");
   await editor.press("Control+s");
-  if (!(await panel().isVisible())) await page.getByTitle("打开创作参考").click();
+  if (!(await panel().isVisible()))
+    await page.getByTitle("打开创作参考").click();
   await evidence()
     .getByRole("heading", { name: "伏笔埋设 · 正文已变或缺失 · 待复核" })
     .waitFor();
@@ -167,7 +170,8 @@ try {
     "evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence",
   );
   await selectLine();
-  if (!(await panel().isVisible())) await page.getByTitle("打开创作参考").click();
+  if (!(await panel().isVisible()))
+    await page.getByTitle("打开创作参考").click();
   await evidence()
     .getByRole("button", { name: "用当前选区重新确认", exact: true })
     .click();
@@ -300,6 +304,9 @@ try {
     await panel()
       .getByRole("button", { name: /^信上的蓝印/ })
       .click();
+    await evidence()
+      .getByRole("heading", { name: /^伏笔埋设/ })
+      .waitFor();
     await evidence()
       .getByRole("button", { name: "定位正文证据", exact: true })
       .click();

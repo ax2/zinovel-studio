@@ -52,6 +52,7 @@ jobs:
       - run: pnpm test:materials
       - run: pnpm test:evidence
       - run: pnpm test:material-context
+      - run: pnpm test:material-proposal
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

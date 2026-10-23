@@ -230,7 +230,7 @@ export class MaterialStore {
       errors,
     };
   }
-  save(bookId, input, expected = null) {
+  save(bookId, input, expected = null, acceptance = null) {
     return this.storage.exclusive(async () => {
       const { root, book } = await this.context(bookId),
         data = validateMaterialInput(input);
@@ -267,17 +267,56 @@ export class MaterialStore {
         createdAt: previous?.data.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      await this.commit(root, next, previous);
+      let receipt = null;
+      if (acceptance) {
+        if (
+          !previous ||
+          acceptance.beforeHash !== previous.diskHash ||
+          acceptance.materialId !== previous.data.id ||
+          acceptance.acceptedHash !== hash(JSON.stringify(data))
+        )
+          throw new Error("资料接受回执与当前版本不一致");
+        id(acceptance.id);
+        id(acceptance.taskId);
+        receipt = {
+          schemaVersion: 1,
+          ...acceptance,
+          afterHash: hash(json(next)),
+        };
+      }
+      await this.commit(root, next, previous, receipt);
       return this.view({ data: next, diskHash: hash(json(next)) }, book, root);
     });
   }
-  async commit(root, next, previous) {
+  async commit(root, next, previous, receipt = null) {
     const changes = { [`materials/${next.id}.json`]: json(next) };
     if (previous)
       changes[
         `.zinovel/material-history/${next.id}/${previous.data.revision}-${previous.diskHash}.json`
       ] = previous.raw;
+    if (receipt)
+      changes[`.zinovel/material-acceptance/${receipt.id}.json`] =
+        json(receipt);
     await this.storage.transaction(root, changes);
+  }
+  acceptanceReceipt(bookId, acceptanceId) {
+    return this.storage.exclusive(async () => {
+      const { root } = await this.context(bookId);
+      try {
+        return JSON.parse(
+          await readFile(
+            await this.storage.path(
+              root,
+              `.zinovel/material-acceptance/${id(acceptanceId)}.json`,
+            ),
+            "utf8",
+          ),
+        );
+      } catch (error) {
+        if (error.code === "ENOENT") return null;
+        throw error;
+      }
+    });
   }
   setDeleted(bookId, expected, deleted) {
     return this.storage.exclusive(async () => {

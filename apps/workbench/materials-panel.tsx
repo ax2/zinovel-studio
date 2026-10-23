@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
 import type { TextAnchor } from "./manuscript-editor";
+import { MaterialAssistant } from "./material-assistant";
 import {
   MaterialEvidence,
   type EvidenceSource,
@@ -590,6 +591,25 @@ export function MaterialsPanel({
                 </button>
               ))}
             </div>
+          )}
+          {current && !current.deletedAt && (
+            <MaterialAssistant
+              key={`ai-${current.id}`}
+              bookId={book.id}
+              material={current}
+              disabled={busy || dirty}
+              updated={(value) => {
+                setCurrent(value);
+                setInput(value);
+                setExpected(value);
+                setDirty(false);
+                localStorage.removeItem(draftKey(value.id));
+                setHistory(null);
+                setHistorical(null);
+                setMessage(`已接受资料修改 · 版本 ${value.revision}`);
+                void refresh();
+              }}
+            />
           )}
           {current && !current.deletedAt && (
             <MaterialEvidence

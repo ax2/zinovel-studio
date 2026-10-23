@@ -225,12 +225,15 @@
       "name": "近期细纲",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "场景目标/阻碍/选择/结果可编辑",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
-      ]
+        "iterations/stage-004/WORKLOG.md",
+        "scripts/smoke-materials.mjs",
+        "scripts/smoke-evidence.mjs"
+      ],
+      "validation": "assessments/stage-004/materials-and-evidence-acceptance.md"
     },
     {
       "id": "PLAN-05",
@@ -295,12 +298,15 @@
       "name": "人物卡",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "欲望/缺陷/声音/外貌均可手改",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
-      ]
+        "iterations/stage-004/WORKLOG.md",
+        "scripts/smoke-materials.mjs",
+        "scripts/smoke-evidence.mjs"
+      ],
+      "validation": "assessments/stage-004/materials-and-evidence-acceptance.md"
     },
     {
       "id": "WORLD-03",
@@ -641,14 +647,16 @@
       "name": "事实引用与回溯",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "事实能跳转到具体章节段落",
       "evidence": [
         "design/creative-materials.md",
         "tests/material-evidence.test.mjs",
         "scripts/smoke-evidence.mjs",
-        "screenshots/stage-004/evidence/evidence-smoke.json"
-      ]
+        "screenshots/stage-004/evidence/evidence-smoke.json",
+        "scripts/smoke-materials.mjs"
+      ],
+      "validation": "assessments/stage-004/materials-and-evidence-acceptance.md"
     },
     {
       "id": "MEM-05",

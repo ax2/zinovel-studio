@@ -2,7 +2,7 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-001/002 继续补全，Stage-003 任务恢复已开始。官方 Harness 与小说桌面已实际贯通，Windows 技术预览已发布。完整功能与上架资格尚未验证。**
+**当前状态：Stage-004 创作资料与 AI 资料提案正在开发，前序阶段继续补全。官方 Harness 与小说桌面已实际贯通，本机开发版本为 alpha.7。完整功能与上架资格尚未完成，暂不发布新版本。**
 
 Windows 技术预览版：[v0.1.0-alpha.3 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.3)。提供 x64 安装 EXE，自动构建、实际安装/运行/重装/卸载验证通过后发布。当前未代码签名，仍有大量创作功能待完成。
 
@@ -33,6 +33,8 @@ Windows 技术预览版：[v0.1.0-alpha.3 下载与说明](https://github.com/ax
 | [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
 | [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
 | [AI 协作工作日志](iterations/stage-003/WORKLOG.md) | 任务记录、重启恢复与候选范围 |
+| [创作资料工作日志](iterations/stage-004/WORKLOG.md) | 类型资料、证据、上下文、结构化提案与实测 |
+| [资料提案设计](design/material-proposals.md) | 版本冻结、语义审阅、接受事务与恢复 |
 | [来源记录](design/sources.md) | 本地技能的方法提炼、官方源码链接 |
 | [内置技能源目录](skills/README.md) | 21 项技能源可选，逐项文学质量尚未验收 |
 
@@ -95,3 +97,5 @@ Stage-004 正在实现[创作资料](design/creative-materials.md)：八种类�
 Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状态/关系/认知事件保留引文和版本，正文修改后提示复核；写作助理按作者选择冻结同书资料。无资料任务保留两个受约束工具，有资料任务增加只读 novel_materials_read。当前开发版本为 alpha.6，完整要求和上架资格仍未完成。
 
 本机 alpha.6 已通过安装、安装后功能、重装/卸载保稿及 alpha.3 升级验证，完整运行目录与 EXE 保留，没有公开发布。后续主分支增加关联设定版本复核、证据精确导航和资料扫描分批调度；5,000 份资料扫描时的保存等待从 911 ms 降至 16 ms，查询仍有一次超过 500 ms 初始目标。安装包与后续源码的证据分别记录，详见 Stage-004 日志。
+
+alpha.7 开发切片已接入 AI 完善已有资料：模型提交独立结构化候选，作者可对照原卡、编辑、保存审阅草稿并明确接受；过期版本拒绝覆盖。人物字段、场景细纲编辑与证据段落导航已按原条目验收，参见[逐项报告](assessments/stage-004/materials-and-evidence-acceptance.md)。全流程文学质量、场景看板、关系/认知矩阵、地图和出版等仍待完成。

@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { StreamCapture } from "./stream-capture.mjs";
 import { TaskBudget } from "./budget.mjs";
+import { materialProposal } from "../novel-domain/material-proposal.mjs";
 export const name = "zinovel-task-tools";
 export const inject = ["tools"];
 
@@ -26,9 +27,12 @@ export function apply(ctx, config) {
     ctx.on("agent/turn-stopping", () => stream.flush());
   }
   ctx.tools.register({
-    name: "novel_selection_read",
-    description:
-      "读取当前作者授权的冻结正文选区和上下文。不能读取其他作品或任意文件。",
+    name: config.materialTargetEnabled
+      ? "novel_material_read"
+      : "novel_selection_read",
+    description: config.materialTargetEnabled
+      ? "读取当前作者授权的冻结资料基线。不能读取其他作品或任意文件。"
+      : "读取当前作者授权的冻结正文选区和上下文。不能读取其他作品或任意文件。",
     parameters: { type: "object", properties: {}, additionalProperties: false },
     output: {
       schema: {
@@ -53,15 +57,32 @@ export function apply(ctx, config) {
     },
   });
   ctx.tools.register({
-    name: "novel_change_propose",
-    description:
-      "提交当前选区的候选文本供作者审阅。不会修改正式稿，不执行保存或发布。",
-    parameters: {
-      type: "object",
-      properties: { replacement: { type: "string" } },
-      required: ["replacement"],
-      additionalProperties: false,
-    },
+    name: config.materialTargetEnabled
+      ? "novel_material_propose"
+      : "novel_change_propose",
+    description: config.materialTargetEnabled
+      ? "提交当前资料的标题、类型字段与笔记候选供作者审阅。不能修改身份、章节引用、作者确认状态或证据，不会保存正式资料。"
+      : "提交当前选区的候选文本供作者审阅。不会修改正式稿，不执行保存或发布。",
+    parameters: config.materialTargetEnabled
+      ? {
+          type: "object",
+          properties: {
+            title: { type: "string" },
+            fields: {
+              type: "object",
+              additionalProperties: { type: "string" },
+            },
+            notes: { type: "string" },
+          },
+          required: ["title", "fields", "notes"],
+          additionalProperties: false,
+        }
+      : {
+          type: "object",
+          properties: { replacement: { type: "string" } },
+          required: ["replacement"],
+          additionalProperties: false,
+        },
     output: {
       schema: {
         type: "object",
@@ -73,6 +94,17 @@ export function apply(ctx, config) {
     },
     async execute(args, exec) {
       if (exec.signal.aborted) throw new Error("任务已取消");
+      if (config.materialTargetEnabled) {
+        const { materialTarget } = JSON.parse(
+          await readFile(config.snapshotPath, "utf8"),
+        );
+        materialProposal(args, materialTarget.input);
+        await atomicWriteText(
+          config.proposalPath,
+          JSON.stringify({ replacement: JSON.stringify(args) }),
+        );
+        return { status: "awaiting-author-review" };
+      }
       if (
         !args ||
         typeof args.replacement !== "string" ||
@@ -121,8 +153,9 @@ export function apply(ctx, config) {
   // rejects any unexpected future tool even if an upstream default changes.
   ctx.tools.guard((exec) =>
     [
-      "novel_selection_read",
-      "novel_change_propose",
+      ...(config.materialTargetEnabled
+        ? ["novel_material_read", "novel_material_propose"]
+        : ["novel_selection_read", "novel_change_propose"]),
       ...(config.materialContextEnabled ? ["novel_materials_read"] : []),
     ].includes(exec.name)
       ? undefined

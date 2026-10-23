@@ -1,6 +1,8 @@
 # 内置小说技能源
 
-这些是为 ZiNovel 新编写的便携技能。文件已编写，不代表桌面已注册或工具已可用。当前不安装到用户全局 Codex/DSH 配置。
+这些是为 ZiNovel 新编写的便携创作方法。桌面可选择 21 项方法并注入官方 Harness 的当前任务；这不表示技能描述中的所有工具或文学能力已经完成。runtimeVerified 仍为 false，真实云模型逐项文学验收尚未进行。当前不安装到用户全局 Codex/DSH 配置。
+
+正文任务、资料任务及显式参考资料的已实现工具见 [运行时清单](../contracts/runtime-tools.json)。原 [工具契约](../contracts/tool-catalog.json) 是更广的目标接口，不能拿方法文件或 UI 选择器当作这些接口都已实现的证据。
 
 - [创意与故事引擎](novel-ideation/SKILL.md)：IDEA-03，Stage-004 接入。
 - [开篇试写](novel-pilot/SKILL.md)：IDEA-04，Stage-004 接入。

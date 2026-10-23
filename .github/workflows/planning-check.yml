@@ -44,6 +44,7 @@ jobs:
       - run: pnpm test:materials
       - run: pnpm test:evidence
       - run: pnpm test:material-context
+      - run: pnpm test:material-proposal
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

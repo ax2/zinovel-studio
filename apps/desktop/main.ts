@@ -12,6 +12,11 @@ import { randomUUID } from "node:crypto";
 import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
 import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
 import { TaskAcceptance } from "../../packages/novel-harness/acceptance.mjs";
+import { MaterialTaskAcceptance } from "../../packages/novel-harness/material-acceptance.mjs";
+import {
+  validateMaterialInput,
+  materialMarkdown,
+} from "../../packages/novel-domain/materials.mjs";
 
 app.setName("ZiNovel Studio");
 const dataRoot =
@@ -22,6 +27,7 @@ const store = new NovelStore(join(dataRoot, "library"));
 const settings = new ModelSettings(dataRoot);
 const journal = new TaskJournal(join(dataRoot, "tasks"));
 const acceptance = new TaskAcceptance(journal, store);
+const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
 const harness = new NovelHarness({
   journal,
   root: dataRoot,
@@ -41,6 +47,7 @@ async function closeAfterRecovery() {
   cancelCloseAttempt();
   await harness.cancel();
   await acceptance.whenIdle();
+  await materialAcceptance.whenIdle();
   await store.whenIdle();
   if (!window || window.isDestroyed()) return;
   window.webContents.session.flushStorageData();
@@ -83,6 +90,37 @@ const imports = new Map<
   { paths: string[]; preview: Awaited<ReturnType<typeof previewImport>> }
 >();
 
+async function materialTaskInput(payload: any) {
+  const card = await store.materials.read(payload.bookId, payload.expected?.id);
+  if (
+    card.deletedAt ||
+    card.diskHash !== payload.expected?.diskHash ||
+    card.revision !== payload.expected?.revision
+  )
+    throw new Error("资料已改变或尚未保存，请重新读取后生成");
+  const materialContext = payload.materialIds?.length
+    ? await store.materials.contextPack(payload.bookId, payload.materialIds)
+    : undefined;
+  if (materialContext && materialContext.hash !== payload.materialContextHash)
+    throw new Error("所选资料或证据已改变，请刷新资料快照再生成");
+  return {
+    skillId: payload.skillId,
+    instruction: payload.instruction,
+    context: materialMarkdown(card),
+    selectedText: "",
+    target: undefined,
+    retryOf: undefined,
+    materialContext,
+    materialTarget: {
+      bookId: payload.bookId,
+      id: card.id,
+      revision: card.revision,
+      diskHash: card.diskHash,
+      input: validateMaterialInput(card),
+    },
+  };
+}
+
 if (
   claimDesktopSingleInstance(app, () => {
     window?.show();
@@ -95,6 +133,7 @@ if (
       await store.initialize();
       await harness.initialize();
       await acceptance.recoverAll();
+      await materialAcceptance.recoverAll();
       Menu.setApplicationMenu(
         Menu.buildFromTemplate([
           {
@@ -394,6 +433,39 @@ if (
                 );
                 break;
               }
+              case "ai.materialGenerate": {
+                const input = await materialTaskInput(payload);
+                const config = await settings.secret();
+                value = await harness.generate(
+                  input,
+                  config.settings,
+                  config.apiKey,
+                );
+                break;
+              }
+              case "ai.materialEstimate":
+                value = await harness.preview(
+                  await materialTaskInput(payload),
+                  await settings.public(),
+                );
+                break;
+              case "ai.materialAccept":
+                value = await materialAcceptance.accept(
+                  payload.id,
+                  payload.proposal,
+                );
+                break;
+              case "ai.materialTasks":
+                if (
+                  typeof payload.materialId !== "string" ||
+                  !/^[0-9a-f-]{36}$/.test(payload.materialId)
+                )
+                  throw new Error("资料任务范围无效");
+                value = await journal.list(payload.bookId, 40, {
+                  materialId: payload.materialId,
+                  offset: payload.offset ?? 0,
+                });
+                break;
               case "ai.estimate": {
                 const materialContext = payload.materialIds?.length
                   ? await store.materials.contextPack(
@@ -441,7 +513,9 @@ if (
                 break;
               }
               case "ai.reconcile": {
-                await acceptance.reconcile(payload.id);
+                if ((await journal.read(payload.id)).record.kind === "material")
+                  await materialAcceptance.reconcile(payload.id);
+                else await acceptance.reconcile(payload.id);
                 value = await harness.task(payload.id);
                 break;
               }
@@ -472,6 +546,7 @@ if (
                 cancelCloseAttempt();
                 await harness.cancel();
                 await acceptance.whenIdle();
+                await materialAcceptance.whenIdle();
                 await store.whenIdle();
                 closing = true;
                 window.close();

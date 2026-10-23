@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-alpha.6",
+  "version": "0.1.0-alpha.7",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",
@@ -29,6 +29,7 @@
     "test:materials": "node scripts/smoke-materials.mjs",
     "test:evidence": "node scripts/smoke-evidence.mjs",
     "test:material-context": "node scripts/smoke-material-context.mjs",
+    "test:material-proposal": "node scripts/smoke-material-proposal.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",
     "package:dir": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs",
     "package:win": "pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never",

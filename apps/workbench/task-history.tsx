@@ -25,6 +25,8 @@ type TaskSummary = {
   bookTitle?: string;
   chapterId?: string;
   chapterTitle?: string;
+  kind?: string;
+  materialTitle?: string;
   skillId: string;
   status: string;
   startedAt: string;
@@ -155,8 +157,12 @@ export function TaskHistory({
         {selected ? (
           <>
             <p>
-              <strong>{selected.record.chapterTitle || "未绑定章节"}</strong> ·{" "}
-              {statusLabels[selected.record.status] || selected.record.status}
+              <strong>
+                {selected.record.materialTitle ||
+                  selected.record.chapterTitle ||
+                  "未绑定章节"}
+              </strong>{" "}
+              · {statusLabels[selected.record.status] || selected.record.status}
             </p>
             <p className="muted">
               {selected.record.model} ·{" "}
@@ -240,11 +246,18 @@ export function TaskHistory({
             ) : (
               <p className="muted">本次尚无用量回报；费用未知。</p>
             )}
-            {!selected.snapshot.target && (
-              <p className="inline-error">
-                这是没有章节绑定的旧版任务，仅供查看和复制。不会猜测原章节，也不能直接应用到当前作品。
+            {selected.record.kind === "material" && (
+              <p className="muted">
+                这是资料任务。请从对应资料卡的“这份资料的 AI
+                任务”继续结构化审阅；这里不应用到正文。
               </p>
             )}
+            {!selected.snapshot.target &&
+              selected.record.kind !== "material" && (
+                <p className="inline-error">
+                  这是没有章节绑定的旧版任务，仅供查看和复制。不会猜测原章节，也不能直接应用到当前作品。
+                </p>
+              )}
             {selected.record.retryOf && (
               <p className="muted">
                 本次为作者主动重试的新任务，使用重新选择的当前正文；原任务仍保留。
@@ -529,7 +542,9 @@ export function TaskHistory({
                           {scope === "all" && task.bookTitle
                             ? `${task.bookTitle} · `
                             : ""}
-                          {task.chapterTitle || "未绑定章节"}
+                          {task.materialTitle ||
+                            task.chapterTitle ||
+                            "未绑定章节"}
                         </strong>
                         <small>
                           {new Date(task.startedAt).toLocaleString("zh-CN")} ·{" "}

@@ -23,6 +23,7 @@ export class TaskAcceptance {
   }
   async #reconcile(id) {
     const { record, snapshot } = await this.journal.read(id);
+    if (record.kind === "material") return record;
     if (!["accepting", "acceptance-uncertain"].includes(record.status))
       return record;
     const intent = record.acceptance,
