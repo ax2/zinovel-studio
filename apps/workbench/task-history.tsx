@@ -5,6 +5,7 @@ import { api } from "./api";
 import type { WritingSnapshot } from "./assistant";
 import { formatCost, type BudgetSettings } from "./budget-settings";
 import { CandidateComparison } from "./candidate-comparison";
+import type { MaterialContext } from "./context-selector";
 
 const statusLabels: Record<string, string> = {
   preparing: "准备中",
@@ -72,6 +73,7 @@ export type StoredTask = {
     selectedText: string;
     instruction?: string;
     target?: WritingSnapshot;
+    materialContext?: MaterialContext;
   };
 };
 
@@ -264,6 +266,22 @@ export function TaskHistory({
                 value={selected.snapshot.selectedText || "（插入新内容）"}
               />
             </label>
+            {selected.snapshot.materialContext && (
+              <details>
+                <summary>
+                  当时的参考资料（
+                  {selected.snapshot.materialContext.materials.length}）
+                </summary>
+                {selected.snapshot.materialContext.materials.map((material) => (
+                  <article key={material.id}>
+                    <h4>
+                      {material.title} · 版本 {material.revision}
+                    </h4>
+                    <div className="context-prose">{material.content}</div>
+                  </article>
+                ))}
+              </details>
+            )}
             {selected.record.partialCandidate && (
               <p className="inline-error">
                 这是任务停止前已保存的部分结果，仅供查看和复制；任务没有正常完成。

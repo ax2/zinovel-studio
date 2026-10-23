@@ -88,10 +88,43 @@ export function apply(ctx, config) {
       return { status: "awaiting-author-review" };
     },
   });
+  if (config.materialContextEnabled)
+    ctx.tools.register({
+      name: "novel_materials_read",
+      description:
+        "读取作者为本任务明确选择的冻结资料快照及版本。计划和正文证据分开标记；不能查询其他资料、其他作品或路径。",
+      parameters: {
+        type: "object",
+        properties: {},
+        additionalProperties: false,
+      },
+      output: {
+        schema: {
+          type: "object",
+          properties: { context: { type: "string" } },
+          required: ["context"],
+          additionalProperties: false,
+        },
+        render: (_args, value) => [{ type: "text", text: value.context }],
+      },
+      async execute(args, exec) {
+        if (exec.signal.aborted) throw new Error("任务已取消");
+        if (!args || typeof args !== "object" || Object.keys(args).length)
+          throw new Error("资料读取不接受路径、作品或查询参数");
+        const { materialContext } = JSON.parse(
+          await readFile(config.snapshotPath, "utf8"),
+        );
+        return { context: JSON.stringify(materialContext) };
+      },
+    });
   // The profile disables every generic tool producer. This global guard also
   // rejects any unexpected future tool even if an upstream default changes.
   ctx.tools.guard((exec) =>
-    ["novel_selection_read", "novel_change_propose"].includes(exec.name)
+    [
+      "novel_selection_read",
+      "novel_change_propose",
+      ...(config.materialContextEnabled ? ["novel_materials_read"] : []),
+    ].includes(exec.name)
       ? undefined
       : "此写作任务只授权读取冻结选区和提交候选",
   );

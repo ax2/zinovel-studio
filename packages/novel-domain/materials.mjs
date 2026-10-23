@@ -176,7 +176,7 @@ export function materialMarkdown(data) {
               .map((line) => "> " + line)
               .join(
                 "\n",
-              )}\n\n关联：${(event.related || []).map((item) => item.title).join("、")}`,
+              )}\n\n关联：${(event.related || []).map((item) => `${item.title}${item.state !== "active" ? "（引用待检查）" : ""}`).join("、")}`,
         )
         .join("\n\n")}`,
       `## 关联章节\n\n${(data.chapters || []).map((chapter) => `- ${chapter.title} (${chapter.id})${chapter.state !== "active" ? " · 引用待检查" : ""}`).join("\n")}`,

@@ -5,6 +5,7 @@ export async function modelFixture({
   streamText,
   afterText,
   omitUsage = false,
+  readMaterials = false,
 } = {}) {
   const requests = [];
   const replacement = "灯塔熄灭时，林舟终于拆开了旧信。";
@@ -32,6 +33,24 @@ export async function modelFixture({
         };
         stop = "tool_use";
       } else if (previousTool.tool_use_id === "read-selection") {
+        if (readMaterials) {
+          block = {
+            type: "tool_use",
+            id: "read-materials",
+            name: "novel_materials_read",
+            input: {},
+          };
+          stop = "tool_use";
+        } else {
+          block = {
+            type: "tool_use",
+            id: "propose-selection",
+            name: "novel_change_propose",
+            input: { replacement },
+          };
+          stop = "tool_use";
+        }
+      } else if (previousTool.tool_use_id === "read-materials") {
         block = {
           type: "tool_use",
           id: "propose-selection",

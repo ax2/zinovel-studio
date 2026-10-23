@@ -178,6 +178,12 @@ if (
                   payload.options,
                 );
                 break;
+              case "materials.context":
+                value = await store.materials.contextPack(
+                  payload.bookId,
+                  payload.materialIds,
+                );
+                break;
               case "materials.read":
                 value = await store.materials.read(payload.bookId, payload.id);
                 break;
@@ -362,6 +368,17 @@ if (
                   chapter,
                 );
                 const config = await settings.secret();
+                const materialContext = payload.materialIds?.length
+                  ? await store.materials.contextPack(
+                      target.bookId,
+                      payload.materialIds,
+                    )
+                  : undefined;
+                if (
+                  materialContext &&
+                  materialContext.hash !== payload.materialContextHash
+                )
+                  throw new Error("所选资料或证据已改变，请刷新资料快照再生成");
                 value = await harness.generate(
                   {
                     skillId: payload.skillId,
@@ -370,15 +387,26 @@ if (
                     selectedText: payload.selectedText,
                     target,
                     retryOf: payload.retryOf,
+                    materialContext,
                   },
                   config.settings,
                   config.apiKey,
                 );
                 break;
               }
-              case "ai.estimate":
-                value = await harness.preview(payload, await settings.public());
+              case "ai.estimate": {
+                const materialContext = payload.materialIds?.length
+                  ? await store.materials.contextPack(
+                      payload.bookId,
+                      payload.materialIds,
+                    )
+                  : undefined;
+                value = await harness.preview(
+                  { ...payload, materialContext },
+                  await settings.public(),
+                );
                 break;
+              }
               case "ai.tasks": {
                 const tasks = await harness.tasks(payload.bookId, {
                   unbound: payload.unbound === true,

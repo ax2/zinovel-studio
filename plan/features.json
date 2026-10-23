@@ -602,8 +602,14 @@
       "name": "可查看上下文包",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "展示来源/版本/预算/截断"
+      "status": "in-progress",
+      "acceptance": "展示来源/版本/预算/截断",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-context.test.mjs",
+        "scripts/smoke-material-context.mjs",
+        "screenshots/stage-004/context/context-smoke.json"
+      ]
     },
     {
       "id": "MEM-02",
@@ -674,8 +680,14 @@
       "name": "相关资料检索",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "先结构筛选再词法/可选语义检索"
+      "status": "in-progress",
+      "acceptance": "先结构筛选再词法/可选语义检索",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-context.test.mjs",
+        "scripts/smoke-material-context.mjs",
+        "screenshots/stage-004/context/context-smoke.json"
+      ]
     },
     {
       "id": "MEM-08",

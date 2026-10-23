@@ -4,6 +4,7 @@ import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
 import { TaskHistory, type StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
+import { ContextSelector, type ContextSelection } from "./context-selector";
 import { reviewContent } from "../../packages/novel-domain/review-content.mjs";
 import {
   BudgetSettingsEditor,
@@ -58,7 +59,7 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
         </div>
         <p className="muted">
           AI 任务通过官方 DeepSeek Harness
-          运行。开始生成时，选区和当前章节会发送到你配置的模型服务。
+          运行。开始生成时，选区、当前章节和你明确选择的资料快照会发送到你配置的模型服务。
         </p>
         {config && (
           <>
@@ -184,6 +185,11 @@ export function WritingAssistant({
       reviewDraftError?: string;
       hasSavedDraft?: boolean;
     } | null>(null);
+  const [materialSelection, setMaterialSelection] = useState<ContextSelection>({
+    ready: true,
+    ids: [],
+    pack: null,
+  });
   useEffect(() => {
     api<typeof skills>("skills.list")
       .then(setSkills)
@@ -222,6 +228,8 @@ export function WritingAssistant({
         instruction,
         context: snapshot.body,
         selectedText: selected,
+        bookId,
+        materialIds: materialSelection.ids,
       })
         .then((value) => {
           if (active) setPreview(value);
@@ -234,9 +242,17 @@ export function WritingAssistant({
       active = false;
       clearTimeout(timer);
     };
-  }, [snapshot?.body, selected, instruction, skillId, previewRevision]);
+  }, [
+    snapshot?.body,
+    selected,
+    instruction,
+    skillId,
+    previewRevision,
+    materialSelection.pack?.hash,
+    materialSelection.ready,
+  ]);
   async function generate(retry?: StoredTask) {
-    if (!snapshot) return;
+    if (!snapshot || !materialSelection.ready) return;
     const base = { ...snapshot };
     setError("");
     setRunning(true);
@@ -248,6 +264,8 @@ export function WritingAssistant({
         context: base.body,
         selectedText: base.body.slice(base.start, base.end),
         target: base,
+        materialIds: materialSelection.ids,
+        materialContextHash: materialSelection.pack?.hash,
       });
       setProposalError("");
       setProposal({ id: result.id, text: result.text, base });
@@ -296,6 +314,11 @@ export function WritingAssistant({
           ? `已选中 ${Array.from(selected).length} 字`
           : "未选择正文，候选可插入光标位置"}
       </p>
+      <ContextSelector
+        bookId={bookId}
+        disabled={running}
+        onChange={setMaterialSelection}
+      />
       {preview && (
         <p className="generation-estimate" aria-label="生成前预算预览">
           作者材料约 {preview.inputTokens} Token；每步输出上限{" "}
@@ -324,7 +347,9 @@ export function WritingAssistant({
       ) : (
         <button
           className="primary"
-          disabled={!snapshot || !instruction.trim()}
+          disabled={
+            !snapshot || !instruction.trim() || !materialSelection.ready
+          }
           onClick={() => void generate()}
         >
           <Sparkles size={16} />

@@ -1553,3 +1553,9 @@ footer {
 .evidence-card h5 { font-size: 14px; margin: 0 0 8px; }
 .evidence-card p { white-space: pre-wrap; }
 .evidence-quote { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto; border-left: 3px solid var(--accent); padding-left: 10px; margin: 12px 0; line-height: 1.7; }
+.context-selector { border-top: 1px solid var(--border); padding-top: 12px; margin: 12px 0; }
+.context-selector > button { font-size: 12px; margin: 4px 4px 4px 0; }
+.context-choices { max-height: 200px; overflow: auto; }
+.context-choices .inline-check { display: flex; flex-direction: row; gap: 7px; align-items: flex-start; }
+.context-choices input[type=checkbox] { width: auto; margin-top: 3px; flex-shrink: 0; }
+.context-prose { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 350px; overflow: auto; font: 13px/1.8 system-ui; padding: 8px; border: 1px solid var(--border); }

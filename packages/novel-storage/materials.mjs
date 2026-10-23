@@ -5,7 +5,9 @@ import { evidenceInput, validateEvidence } from "../novel-domain/evidence.mjs";
 import {
   validateMaterialInput,
   materialKind,
+  materialMarkdown,
 } from "../novel-domain/materials.mjs";
+import { materialContextText } from "../novel-domain/material-context.mjs";
 const hash = (text) => createHash("sha256").update(text, "utf8").digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 const id = (value) => {
@@ -259,6 +261,40 @@ export class MaterialStore {
       else delete next.deletedAt;
       await this.commit(root, next, previous);
       return this.view({ data: next, diskHash: hash(json(next)) }, book, root);
+    });
+  }
+  contextPack(bookId, materialIds) {
+    return this.storage.exclusive(async () => {
+      if (
+        !Array.isArray(materialIds) ||
+        materialIds.length > 8 ||
+        new Set(materialIds).size !== materialIds.length
+      )
+        throw new Error("请选择最多 8 份不同资料");
+      const { root, book } = await this.context(bookId),
+        materials = [];
+      for (const materialId of materialIds) {
+        const record = await this.record(root, id(materialId));
+        if (record.data.deletedAt)
+          throw new Error("所选资料已移入回收站，请调整选择");
+        const view = await this.view(record, book, root);
+        materials.push({
+          id: view.id,
+          title: view.title,
+          kind: view.kind,
+          revision: view.revision,
+          diskHash: view.diskHash,
+          content: materialMarkdown(view),
+        });
+      }
+      const pack = { schemaVersion: 1, bookId, materials };
+      const text = materialContextText(pack);
+      return {
+        ...pack,
+        characters: text.length,
+        hash: hash(json(pack)),
+        truncated: false,
+      };
     });
   }
   mutateEvidence(bookId, expected, mutation) {
