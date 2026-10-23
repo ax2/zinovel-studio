@@ -15,6 +15,8 @@ export function CandidateReview({
   onClose,
   onAccept,
   onSave,
+  targetLabel = "正文",
+  originalLabel = "原文选区",
 }: {
   original: string;
   candidate: string;
@@ -25,6 +27,8 @@ export function CandidateReview({
   onClose: () => void;
   onAccept: (text: string) => Promise<void>;
   onSave?: (text: string) => Promise<void>;
+  targetLabel?: string;
+  originalLabel?: string;
 }) {
   const [comparison, setComparison] = useState(initialText ?? candidate);
   const [savedText, setSavedText] = useState(initialText ?? candidate);
@@ -60,11 +64,13 @@ export function CandidateReview({
           </button>
         </div>
         <p className="muted">
-          接受后保存正文，并保留历史版本。正文如有变化，将拒绝替换。可先保存审阅草稿，关闭或重启后从任务记录继续；未保存的调整会丢失，草稿不会改动正文。
+          接受后保存{targetLabel}，并保留历史版本。{targetLabel}
+          如有变化，将拒绝替换。可先保存审阅草稿，关闭或重启后从任务记录继续；未保存的调整会丢失，草稿不会改动
+          {targetLabel}。
         </p>
         <div className="conflict-columns">
           <section>
-            <h3>原文选区</h3>
+            <h3>{originalLabel}</h3>
             <pre>{original || "（插入新内容）"}</pre>
           </section>
           <section>

@@ -3,11 +3,14 @@ import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { StreamCapture } from "./stream-capture.mjs";
 import { TaskBudget } from "./budget.mjs";
 import { materialProposal } from "../novel-domain/material-proposal.mjs";
+import { pilotReplacement } from "../novel-domain/pilots.mjs";
 export const name = "zinovel-task-tools";
 export const inject = ["tools"];
 
 // Paths come only from the desktop-generated task profile, never model arguments.
 export function apply(ctx, config) {
+  if (config.materialTargetEnabled && config.pilotTargetEnabled)
+    throw new Error("任务工具不能绑定多种对象");
   const budget = config.usagePath
     ? new TaskBudget(config.usagePath, config.budget)
     : undefined;
@@ -27,12 +30,16 @@ export function apply(ctx, config) {
     ctx.on("agent/turn-stopping", () => stream.flush());
   }
   ctx.tools.register({
-    name: config.materialTargetEnabled
-      ? "novel_material_read"
-      : "novel_selection_read",
-    description: config.materialTargetEnabled
-      ? "读取当前作者授权的冻结资料基线。不能读取其他作品或任意文件。"
-      : "读取当前作者授权的冻结正文选区和上下文。不能读取其他作品或任意文件。",
+    name: config.pilotTargetEnabled
+      ? "novel_pilot_read"
+      : config.materialTargetEnabled
+        ? "novel_material_read"
+        : "novel_selection_read",
+    description: config.pilotTargetEnabled
+      ? "读取当前试写分支的冻结样稿、场景任务与作者明确选择的来源；不能读取正式章节、其他分支或任意路径。"
+      : config.materialTargetEnabled
+        ? "读取当前作者授权的冻结资料基线。不能读取其他作品或任意文件。"
+        : "读取当前作者授权的冻结正文选区和上下文。不能读取其他作品或任意文件。",
     parameters: { type: "object", properties: {}, additionalProperties: false },
     output: {
       schema: {
@@ -57,12 +64,16 @@ export function apply(ctx, config) {
     },
   });
   ctx.tools.register({
-    name: config.materialTargetEnabled
-      ? "novel_material_propose"
-      : "novel_change_propose",
-    description: config.materialTargetEnabled
-      ? "提交当前资料的标题、类型字段与笔记候选供作者审阅。不能修改身份、章节引用、作者确认状态或证据，不会保存正式资料。"
-      : "提交当前选区的候选文本供作者审阅。不会修改正式稿，不执行保存或发布。",
+    name: config.pilotTargetEnabled
+      ? "novel_pilot_propose"
+      : config.materialTargetEnabled
+        ? "novel_material_propose"
+        : "novel_change_propose",
+    description: config.pilotTargetEnabled
+      ? "提交当前试写分支的完整正文候选供作者审阅；不改正式章节、样稿身份、字段、作者选择或反馈，不执行保存或发布。"
+      : config.materialTargetEnabled
+        ? "提交当前资料的标题、类型字段与笔记候选供作者审阅。不能修改身份、章节引用、作者确认状态或证据，不会保存正式资料。"
+        : "提交当前选区的候选文本供作者审阅。不会修改正式稿，不执行保存或发布。",
     parameters: config.materialTargetEnabled
       ? {
           type: "object",
@@ -113,6 +124,7 @@ export function apply(ctx, config) {
         Object.keys(args).some((key) => key !== "replacement")
       )
         throw new Error("候选格式无效或超过长度限制");
+      if (config.pilotTargetEnabled) pilotReplacement(args.replacement);
       await atomicWriteText(
         config.proposalPath,
         JSON.stringify({ replacement: args.replacement }),
@@ -153,9 +165,11 @@ export function apply(ctx, config) {
   // rejects any unexpected future tool even if an upstream default changes.
   ctx.tools.guard((exec) =>
     [
-      ...(config.materialTargetEnabled
-        ? ["novel_material_read", "novel_material_propose"]
-        : ["novel_selection_read", "novel_change_propose"]),
+      ...(config.pilotTargetEnabled
+        ? ["novel_pilot_read", "novel_pilot_propose"]
+        : config.materialTargetEnabled
+          ? ["novel_material_read", "novel_material_propose"]
+          : ["novel_selection_read", "novel_change_propose"]),
       ...(config.materialContextEnabled ? ["novel_materials_read"] : []),
     ].includes(exec.name)
       ? undefined

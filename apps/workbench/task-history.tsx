@@ -27,6 +27,7 @@ type TaskSummary = {
   chapterTitle?: string;
   kind?: string;
   materialTitle?: string;
+  pilotTitle?: string;
   skillId: string;
   status: string;
   startedAt: string;
@@ -158,7 +159,8 @@ export function TaskHistory({
           <>
             <p>
               <strong>
-                {selected.record.materialTitle ||
+                {selected.record.pilotTitle ||
+                  selected.record.materialTitle ||
                   selected.record.chapterTitle ||
                   "未绑定章节"}
               </strong>{" "}
@@ -252,7 +254,14 @@ export function TaskHistory({
                 任务”继续结构化审阅；这里不应用到正文。
               </p>
             )}
+            {selected.record.kind === "pilot" && (
+              <p className="muted">
+                这是独立试写任务。请从对应作品的“试写实验室 → 这份试写的 AI
+                任务”继续审阅；这里不会应用到正式章节。
+              </p>
+            )}
             {!selected.snapshot.target &&
+              selected.record.kind !== "pilot" &&
               selected.record.kind !== "material" && (
                 <p className="inline-error">
                   这是没有章节绑定的旧版任务，仅供查看和复制。不会猜测原章节，也不能直接应用到当前作品。
@@ -464,6 +473,7 @@ export function TaskHistory({
                   </button>
                 )}
               {onRetry &&
+                selected.snapshot.target &&
                 retryTarget?.bookId === selected.record.bookId &&
                 retryTarget?.chapterId === selected.record.chapterId &&
                 selected.snapshot.instruction &&
@@ -476,6 +486,7 @@ export function TaskHistory({
                 )}
             </div>
             {onRetry &&
+              selected.snapshot.target &&
               ["cancelled", "failed", "interrupted"].includes(
                 selected.record.status,
               ) && (
@@ -542,7 +553,8 @@ export function TaskHistory({
                           {scope === "all" && task.bookTitle
                             ? `${task.bookTitle} · `
                             : ""}
-                          {task.materialTitle ||
+                          {task.pilotTitle ||
+                            task.materialTitle ||
                             task.chapterTitle ||
                             "未绑定章节"}
                         </strong>

@@ -219,7 +219,7 @@ export class TaskJournal {
       if (
         record.status !== "awaiting-review" ||
         !record.bookId ||
-        (!record.chapterId && !record.materialId) ||
+        (!record.chapterId && !record.materialId && !record.pilotId) ||
         typeof record.candidate !== "string"
       )
         throw new Error("此任务当前不能保存审阅草稿");
@@ -258,7 +258,7 @@ export class TaskJournal {
   list(
     bookId,
     limit = 100,
-    { unbound = false, offset = 0, materialId = "" } = {},
+    { unbound = false, offset = 0, materialId = "", pilotId = "" } = {},
   ) {
     return this.#exclusive(async () => {
       if (!Number.isInteger(offset) || offset < 0 || offset > 1000000)
@@ -277,13 +277,19 @@ export class TaskJournal {
           const record = await this.#record(entry.name);
           if (
             unbound
-              ? record.bookId && (record.chapterId || record.materialId)
+              ? record.bookId &&
+                (record.chapterId || record.materialId || record.pilotId)
               : bookId && record.bookId !== bookId
           )
             continue;
           if (
             materialId &&
             (record.kind !== "material" || record.materialId !== materialId)
+          )
+            continue;
+          if (
+            pilotId &&
+            (record.kind !== "pilot" || record.pilotId !== pilotId)
           )
             continue;
           const { candidate, acceptedText, acceptance, ...metadata } = record;

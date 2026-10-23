@@ -7,6 +7,7 @@ import {
 } from "../../packages/novel-domain/pilots.mjs";
 import { materialKinds } from "../../packages/novel-domain/materials.mjs";
 import { registerEditorCloseGuard } from "./editor-close-guards";
+import { PilotAssistant } from "./pilot-assistant";
 type Input = {
   title: string;
   body: string;
@@ -16,7 +17,7 @@ type Input = {
   obstacle: string;
   promise: string;
 };
-type Pilot = Input & {
+export type Pilot = Input & {
   id: string;
   groupId: string;
   revision: number;
@@ -756,6 +757,17 @@ export function PilotStudio({
                     <p>仅显示最近 40 份；全部版本仍保存在作品目录。</p>
                   )}
                 </details>
+                <PilotAssistant
+                  key={current.id}
+                  bookId={bookId}
+                  pilot={current}
+                  disabled={savedActionsDisabled}
+                  updated={async () => {
+                    localStorage.removeItem(key(current.id));
+                    await refreshGroup(group.id);
+                    await loadPilot(current.id);
+                  }}
+                />
                 <fieldset
                   disabled={savedActionsDisabled}
                   className="pilot-decision"

@@ -48,6 +48,7 @@ jobs:
       - run: pnpm test:planning-ui
       - run: pnpm test:world-proposals
       - run: pnpm test:pilots
+      - run: pnpm test:pilot-agent
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

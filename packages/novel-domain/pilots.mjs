@@ -28,3 +28,7 @@ export function pilotInput(input) {
     result[key] = pilotText(input[key] ?? "", label, 10_000);
   return result;
 }
+
+export function pilotReplacement(value) {
+  return pilotText(value, "试写候选", 120_000, true);
+}

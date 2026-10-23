@@ -56,6 +56,7 @@ jobs:
       - run: pnpm test:planning-ui
       - run: pnpm test:world-proposals
       - run: pnpm test:pilots
+      - run: pnpm test:pilot-agent
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

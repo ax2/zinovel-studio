@@ -13,6 +13,8 @@ import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
 import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
 import { TaskAcceptance } from "../../packages/novel-harness/acceptance.mjs";
 import { MaterialTaskAcceptance } from "../../packages/novel-harness/material-acceptance.mjs";
+import { PilotTaskAcceptance } from "../../packages/novel-harness/pilot-acceptance.mjs";
+import { bindPilotInput } from "../../packages/novel-harness/pilot-target.mjs";
 import {
   validateMaterialInput,
   materialMarkdown,
@@ -28,6 +30,7 @@ const settings = new ModelSettings(dataRoot);
 const journal = new TaskJournal(join(dataRoot, "tasks"));
 const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
+const pilotAcceptance = new PilotTaskAcceptance(journal, store.pilots);
 const harness = new NovelHarness({
   journal,
   root: dataRoot,
@@ -48,6 +51,7 @@ async function closeAfterRecovery() {
   await harness.cancel();
   await acceptance.whenIdle();
   await materialAcceptance.whenIdle();
+  await pilotAcceptance.whenIdle();
   await store.whenIdle();
   if (!window || window.isDestroyed()) return;
   window.webContents.session.flushStorageData();
@@ -134,6 +138,7 @@ if (
       await harness.initialize();
       await acceptance.recoverAll();
       await materialAcceptance.recoverAll();
+      await pilotAcceptance.recoverAll();
       Menu.setApplicationMenu(
         Menu.buildFromTemplate([
           {
@@ -522,6 +527,45 @@ if (
                 );
                 break;
               }
+              case "ai.pilotSnapshot":
+                value = await store.pilots.taskSnapshot(
+                  payload.bookId,
+                  payload.expected,
+                );
+                break;
+              case "ai.pilotGenerate": {
+                const input = await bindPilotInput(store.pilots, payload),
+                  config = await settings.secret();
+                value = await harness.generate(
+                  input,
+                  config.settings,
+                  config.apiKey,
+                );
+                break;
+              }
+              case "ai.pilotEstimate":
+                value = await harness.preview(
+                  await bindPilotInput(store.pilots, payload),
+                  await settings.public(),
+                );
+                break;
+              case "ai.pilotAccept":
+                value = await pilotAcceptance.accept(
+                  payload.id,
+                  payload.candidate,
+                );
+                break;
+              case "ai.pilotTasks":
+                if (
+                  typeof payload.pilotId !== "string" ||
+                  !/^[0-9a-f-]{36}$/.test(payload.pilotId)
+                )
+                  throw new Error("试写任务范围无效");
+                value = await journal.list(payload.bookId, 40, {
+                  pilotId: payload.pilotId,
+                  offset: payload.offset ?? 0,
+                });
+                break;
               case "ai.materialEstimate":
                 value = await harness.preview(
                   await materialTaskInput(payload),
@@ -592,7 +636,10 @@ if (
                 break;
               }
               case "ai.reconcile": {
-                if ((await journal.read(payload.id)).record.kind === "material")
+                const kind = (await journal.read(payload.id)).record.kind;
+                if (kind === "pilot")
+                  await pilotAcceptance.reconcile(payload.id);
+                else if (kind === "material")
                   await materialAcceptance.reconcile(payload.id);
                 else await acceptance.reconcile(payload.id);
                 value = await harness.task(payload.id);
@@ -626,6 +673,7 @@ if (
                 await harness.cancel();
                 await acceptance.whenIdle();
                 await materialAcceptance.whenIdle();
+                await pilotAcceptance.whenIdle();
                 await store.whenIdle();
                 closing = true;
                 window.close();

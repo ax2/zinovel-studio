@@ -23,7 +23,7 @@ export class TaskAcceptance {
   }
   async #reconcile(id) {
     const { record, snapshot } = await this.journal.read(id);
-    if (record.kind === "material") return record;
+    if (record.kind && record.kind !== "writing") return record;
     if (!["accepting", "acceptance-uncertain"].includes(record.status))
       return record;
     const intent = record.acceptance,
@@ -110,6 +110,8 @@ export class TaskAcceptance {
   accept(id, candidate) {
     return this.#exclusive(async () => {
       let task = await this.journal.read(id);
+      if (task.record.kind && task.record.kind !== "writing")
+        throw new Error("任务不是正文候选");
       if (["accepting", "acceptance-uncertain"].includes(task.record.status)) {
         await this.#reconcile(id);
         task = await this.journal.read(id);

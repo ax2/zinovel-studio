@@ -1,6 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import { createHash, randomUUID } from "node:crypto";
-import { pilotInput, pilotText } from "../novel-domain/pilots.mjs";
+import { pilotInput, pilotText, pilotFields } from "../novel-domain/pilots.mjs";
+import { materialMarkdown } from "../novel-domain/materials.mjs";
 const hash = (text) => createHash("sha256").update(text).digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 const validId = (value) =>
@@ -27,6 +28,14 @@ const metaPath = (pilotId) => `pilots/${id(pilotId)}.json`;
 const bodyPath = (pilotId) => `pilots/${id(pilotId)}.md`;
 const snapshotKey = (record) =>
   `${record.data.revision}-${hash(record.diskHash + record.bodyHash)}`;
+const briefHash = (group) =>
+  hash(
+    JSON.stringify({
+      title: group.title,
+      scene: group.scene,
+      sources: group.sources,
+    }),
+  );
 
 /** Trial documents use the same book transaction queue as manuscript, materials and planning. */
 export class PilotStore {
@@ -296,11 +305,18 @@ export class PilotStore {
         json(snapshot(record)),
     };
   }
-  save(bookId, groupId, input, expected = null, parent = null) {
+  save(
+    bookId,
+    groupId,
+    input,
+    expected = null,
+    parent = null,
+    acceptance = null,
+  ) {
     const clean = pilotInput(input);
     return this.storage.exclusive(async () => {
       const { root } = await this.context(bookId);
-      await this.groupRecord(root, groupId);
+      const group = await this.groupRecord(root, groupId);
       const previous = expected
         ? await this.record(root, id(expected.id))
         : null;
@@ -330,11 +346,42 @@ export class PilotStore {
           createdAt: previous?.data.createdAt || now,
           updatedAt: now,
         };
+      let receiptChanges = {};
+      if (acceptance) {
+        if (
+          !previous ||
+          acceptance.pilotId !== previous.data.id ||
+          acceptance.beforeHash !== previous.diskHash ||
+          acceptance.beforeBodyHash !== previous.bodyHash ||
+          acceptance.acceptedHash !== hash(body) ||
+          acceptance.briefHash !== briefHash(group.data) ||
+          JSON.stringify(clean) !==
+            JSON.stringify(pilotInput({ ...previous.data, body }))
+        )
+          throw new Error("试写接受回执与当前版本或场景任务不一致");
+        const receipt = {
+          schemaVersion: 1,
+          id: id(acceptance.id),
+          taskId: id(acceptance.taskId),
+          pilotId: data.id,
+          groupId,
+          beforeHash: previous.diskHash,
+          beforeBodyHash: previous.bodyHash,
+          acceptedHash: hash(body),
+          briefHash: acceptance.briefHash,
+          afterHash: hash(json(data)),
+          at: now,
+        };
+        receiptChanges = {
+          [`.zinovel/pilot-acceptance/${receipt.id}.json`]: json(receipt),
+        };
+      }
       await this.storage.transaction(root, {
         ...(previous ? this.historyChange(previous) : {}),
         ...(origin ? this.historyChange(origin) : {}),
         [metaPath(data.id)]: json(data),
         [bodyPath(data.id)]: body,
+        ...receiptChanges,
       });
       return {
         ...data,
@@ -343,6 +390,59 @@ export class PilotStore {
         body,
         externalChange: false,
       };
+    });
+  }
+  taskSnapshot(bookId, expected) {
+    return this.storage.exclusive(async () => {
+      const { root } = await this.context(bookId),
+        pilot = await this.record(root, id(expected?.id));
+      this.checkVersion(pilot, expected);
+      if (pilot.data.deletedAt) throw new Error("请先恢复试写再生成");
+      const group = await this.groupRecord(root, pilot.data.groupId),
+        view = await this.groupView(root, group);
+      const input = pilotInput({ ...pilot.data, body: pilot.body });
+      const target = {
+        ...version(pilot),
+        bookId,
+        groupId: group.data.id,
+        briefHash: briefHash(group.data),
+        input,
+      };
+      const context = [
+        `实验组：${group.data.title}\n共同场景任务：\n${group.data.scene}`,
+        `样稿：${input.title}\n${pilotFields.map(([key, label]) => `${label}：${input[key] || "未填写"}`).join("\n")}`,
+        `样稿正文（版本 ${pilot.data.revision}）：\n${input.body}`,
+        "作者为本实验明确选择的来源快照（作者计划不等于正文事实；版本变化不代表已重新核实）：",
+        ...view.sources.map(
+          (source) =>
+            `来源版本 ${source.revision}；当前状态 ${source.freshness}；当前版本 ${source.currentRevision ?? "不可读取"}\n${materialMarkdown(source.data)}`,
+        ),
+      ].join("\n\n");
+      if (context.length > 120_000)
+        throw new Error(
+          "试写与场景来源超过 12 万字符，请建立范围更小的试写实验；未截断或发送",
+        );
+      return {
+        target,
+        context,
+        hash: hash(JSON.stringify({ target, context })),
+      };
+    });
+  }
+  acceptanceReceipt(bookId, acceptanceId) {
+    return this.storage.exclusive(async () => {
+      const { root } = await this.context(bookId);
+      try {
+        return JSON.parse(
+          await this.text(
+            root,
+            `.zinovel/pilot-acceptance/${id(acceptanceId)}.json`,
+          ),
+        );
+      } catch (e) {
+        if (e.code === "ENOENT") return null;
+        throw e;
+      }
     });
   }
   setDeleted(bookId, expected, deleted) {

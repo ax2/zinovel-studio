@@ -1651,3 +1651,6 @@ footer {
   .pilot-panes.comparing, .pilot-fields { grid-template-columns: minmax(0, 1fr); }
   .pilot-studio dl { grid-template-columns: 80px minmax(0, 1fr); }
 }
+.pilot-assistant { margin: 20px 0; padding: 16px; border: 1px solid var(--border); border-radius: 8px; }
+.pilot-assistant > details > summary { font-weight: 600; }
+.pilot-task { padding-top: 12px; border-top: 1px solid var(--border); }

@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.8 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.8) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.8/ZiNovel-Studio-0.1.0-alpha.8-windows-x64-setup.exe)。x64 安装包已通过自动构建、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，仍有大量创作功能待完成。
 
-主分支 alpha.9 正在开发独立试写实验室：同场景分支、手工编辑与比较、版本化作者选择、试读反馈及新建章节已通过源码桌面验证。该增量尚未包含在公开 alpha.8 安装包中；试写专属 Agent 与安装验收继续推进，详见 [试写设计](design/pilot-branches.md)。
+主分支 alpha.9 正在开发独立试写实验室：同场景分支、手工编辑与比较、版本化作者选择、试读反馈及新建章节已通过源码桌面验证。该增量尚未包含在公开 alpha.8 安装包中；试写专属 Agent、审阅草稿及退出恢复也已通过源码验证，正准备本版安装验收，详见 [试写设计](design/pilot-branches.md)。
 
 ## 产品方向
 
@@ -102,4 +102,4 @@ Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状�
 
 alpha.7 开发切片已接入 AI 完善已有资料：模型提交独立结构化候选，作者可对照原卡、编辑、保存审阅草稿并明确接受；过期版本拒绝覆盖。人物字段、场景细纲编辑与证据段落导航已按原条目验收，参见[逐项报告](assessments/stage-004/materials-and-evidence-acceptance.md)。alpha.8 进一步接入共享场景看板/章纲、组织/物品/能力/现实资料。全流程文学质量、关系/认知矩阵、地图和出版等仍待完成。
 
-alpha.8 标签发行 CI 39955362954 已成功，四个公开附件与安装清单哈希核对一致；本机和 CI 构建分别留存证据，详见[发行证据](assessments/release/v0.1.0-alpha.8/README.md)。下一切片[试写分支设计](design/pilot-branches.md)已建立，尚未实现，不计入本版功能。
+alpha.8 标签发行 CI 39955362954 已成功，四个公开附件与安装清单哈希核对一致；本机和 CI 构建分别留存证据，详见[发行证据](assessments/release/v0.1.0-alpha.8/README.md)。后续[试写分支](design/pilot-branches.md)在 alpha.9 源码中实现，独立验证与发布，不计入 alpha.8 功能。
