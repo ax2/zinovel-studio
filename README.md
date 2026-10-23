@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.10 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.10) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.10/ZiNovel-Studio-0.1.0-alpha.10-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支 alpha.11 已实现全书查询取消和认知矩阵的手工闭环，正在进行阶段回归与安装资格核对，尚未包含在 alpha.10 安装包。最新发行包含全书证据、人物/设定关系图和窄窗工具栏修复；大书查询性能、秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md) 和 [认知矩阵设计](design/knowledge-matrix.md)。
+alpha.11 已完成认知矩阵手工闭环的本机安装资格，标签正在远端发行验证。主分支 alpha.12 继续开发作者当前认知选择，尚未打包；两者尚未包含在 alpha.10 安装包。最新发行包含全书证据、人物/设定关系图和窄窗工具栏修复；大书查询性能、秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md) 和 [认知矩阵设计](design/knowledge-matrix.md)。
 
 ## 产品方向
 

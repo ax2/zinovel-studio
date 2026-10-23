@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "oldSource": "89fdc6a95f2a503720ab771408ea13e350111f66",
+  "currentSource": "0a51771e63b73a6a36adedcb909a092f4b45e242",
+  "method": "actual pinned alpha.10 domain/storage modules executed in Node; no old desktop installation or full downgrade qualification",
+  "checks": [
+    "old material reader and writer reject new proposition kind without overwriting its source",
+    "old supported-card edit leaves independent knowledge event, new proposition and manuscript byte-for-byte unchanged",
+    "new reader detects old supported-card definition change as stale"
+  ]
+}

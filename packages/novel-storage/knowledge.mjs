@@ -6,6 +6,7 @@ import { validateEvidence } from "../novel-domain/evidence.mjs";
 import { orderedChapters } from "../novel-domain/structure.mjs";
 import { checkedEvidenceSource } from "./evidence-source.mjs";
 import { materialDefinitionHash } from "./materials.mjs";
+import { KnowledgeChoices } from "./knowledge-choices.mjs";
 const hash = (text) => createHash("sha256").update(text).digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 const id = (value) => {
@@ -18,13 +19,21 @@ export class KnowledgeStore {
   constructor(storage, materials) {
     this.storage = storage;
     this.materials = materials;
+    this.choices = new KnowledgeChoices(storage, materials, this);
   }
   async record(root, eventId) {
-    const raw = await readFile(
+    const raw = new TextDecoder("utf-8", {
+      fatal: true,
+      ignoreBOM: true,
+    }).decode(
+      await readFile(
         await this.storage.path(root, `knowledge/events/${id(eventId)}.json`),
-        "utf8",
       ),
-      data = JSON.parse(raw);
+    );
+    return this.parse(raw, eventId);
+  }
+  parse(raw, eventId) {
+    const data = JSON.parse(raw);
     knowledgeInput(data);
     validateEvidence(
       [{ ...data, kind: "fact", scope: "world", relatedIds: [] }],
@@ -396,6 +405,23 @@ export class KnowledgeStore {
         signal,
       )),
     );
+    if (!upToChapterId) {
+      const choices = await this.choices.project(
+        bookId,
+        new Set(rows.map((row) => row.id)),
+        characterIds,
+        signal,
+      );
+      errors.push(...choices.errors);
+      for (const choice of choices.items) {
+        const cell = selected.get(choice.identity.propositionId)?.cells[
+          choice.identity.scope === "character"
+            ? choice.identity.characterId
+            : choice.identity.scope
+        ];
+        if (cell) cell.choice = choice;
+      }
+    }
     return {
       rows,
       total: propositions.length,

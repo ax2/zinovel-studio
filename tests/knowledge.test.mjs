@@ -293,3 +293,21 @@ test("matrix scan cancellation yields to writes and preserves original knowledge
   assert.equal(history.total, 1);
   assert.equal(history.items[0].status, "active");
 });
+test("invalid UTF-8 in an event is refused before CAS writes rather than decoded into replacement characters", async () => {
+  const { root, store, book, input, source } = await setup();
+  const event = await store.knowledge.save(book.id, input, null, source),
+    file = join(root, book.id, "knowledge/events", `${event.id}.json`),
+    bytes = await readFile(file);
+  const index = bytes.findIndex((value) => value >= 128);
+  assert.ok(index >= 0);
+  bytes[index] = 255;
+  await writeFile(file, bytes);
+  await assert.rejects(store.knowledge.read(book.id, event.id), {
+    code: "ERR_ENCODING_INVALID_ENCODED_DATA",
+  });
+  await assert.rejects(store.knowledge.save(book.id, input, event, source), {
+    code: "ERR_ENCODING_INVALID_ENCODED_DATA",
+  });
+  assert.deepEqual(await readFile(file), bytes);
+  assert.equal((await store.knowledge.list(book.id)).errors.length, 1);
+});

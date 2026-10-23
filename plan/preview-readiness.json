@@ -1,23 +1,18 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.11",
-  "ready": true,
+  "version": "0.1.0-alpha.12",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-matrix.md",
     "assessments/stage-004/continuity-cancellation.md",
     "assessments/stage-004/windows-process-exit-verification.md"
   ],
-  "reports": [
-    "screenshots/stage-004/knowledge/knowledge-smoke.json",
-    "screenshots/stage-004/continuity/continuity-smoke.json",
-    "screenshots/stage-004/relationships/relationships-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
     "未签名 Windows x64 技术预览，不代表稳定版或商店验收",
-    "模型回合使用官方 Harness 和本机合成 fixture，未验收真实云模型文学质量",
-    "认知矩阵手工闭环通过；旧认知整理、最终状态决定、故事时间推演、降级与大书性能未完成，尚须本版全套安装与升级验证",
-    "本机未保存草稿和应用级任务不纳入整书备份；独立认知事件未加入正文导出"
+    "alpha.12 作者认知选择正在开发，本版尚未进行运行和安装验证",
+    "真实云模型文学质量、旧认知整理、故事时间推演、大书性能及完整产品需求仍未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

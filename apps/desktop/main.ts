@@ -284,6 +284,34 @@ if (
                   payload.offset || 0,
                 );
                 break;
+              case "knowledge.choice":
+                value = await store.knowledge.choices.read(
+                  payload.bookId,
+                  payload.target,
+                );
+                break;
+              case "knowledge.choose":
+                value = await store.knowledge.choices.select(
+                  payload.bookId,
+                  payload.eventExpected,
+                  payload.choiceExpected,
+                  payload.reason || "",
+                );
+                break;
+              case "knowledge.clear-choice":
+                value = await store.knowledge.choices.clear(
+                  payload.bookId,
+                  payload.target,
+                  payload.expected,
+                );
+                break;
+              case "knowledge.choice-history":
+                value = await store.knowledge.choices.history(
+                  payload.bookId,
+                  payload.target,
+                  payload.offset || 0,
+                );
+                break;
               case "planning.read":
                 value = await store.planning.read(payload.bookId);
                 break;

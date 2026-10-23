@@ -411,7 +411,11 @@
         "packages/novel-storage/knowledge.mjs",
         "tests/knowledge.test.mjs",
         "scripts/smoke-knowledge.mjs",
-        "assessments/stage-004/knowledge-matrix.md"
+        "assessments/stage-004/knowledge-matrix.md",
+        "packages/novel-storage/knowledge-choices.mjs",
+        "tests/knowledge-choices.test.mjs",
+        "scripts/smoke-knowledge-choices.mjs",
+        "assessments/stage-004/knowledge-choices.md"
       ]
     },
     {

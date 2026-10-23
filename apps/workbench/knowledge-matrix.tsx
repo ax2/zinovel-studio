@@ -36,6 +36,16 @@ type Preview = Pick<
   | "storyTime"
   | "chapterTitle"
 >;
+type Choice = {
+  id: string;
+  revision: number;
+  diskHash: string;
+  status: string;
+  freshness: string;
+  snapshot: Event;
+  selected: { id: string; revision: number };
+  reason: string;
+};
 type Result = {
   columnIds: string[];
   rows: {
@@ -44,7 +54,10 @@ type Result = {
     claim: string;
     truthIntent: string;
     deleted: boolean;
-    cells: Record<string, { total: number; events: Preview[] }>;
+    cells: Record<
+      string,
+      { total: number; events: Preview[]; choice?: Choice }
+    >;
   }[];
   total: number;
   offset: number;
@@ -74,7 +87,12 @@ const blank = (): Input => ({
 const stateLabel = (id: string) =>
   knowledgeStates.find((item) => item.id === id)?.label || id;
 const fresh = (id: string) =>
-  ({ current: "有效", stale: "待复核", missing: "来源缺失" })[id] || id;
+  ({
+    current: "有效",
+    stale: "待复核",
+    missing: "来源缺失",
+    cleared: "已清除",
+  })[id] || id;
 
 export function KnowledgeMatrix({
   book,
@@ -160,6 +178,37 @@ export function KnowledgeMatrix({
       offset: number;
       errors: string[];
     } | null>(null);
+  const [choice, setChoice] = useState<Choice | null>(null),
+    [choiceFor, setChoiceFor] = useState("");
+  const [choiceHistory, setChoiceHistory] = useState<{
+    items: Choice[];
+    total: number;
+    offset: number;
+    errors: string[];
+  } | null>(null);
+  useEffect(() => {
+    let active = true;
+    setChoiceFor("");
+    setChoice(null);
+    setChoiceHistory(null);
+    if (selected)
+      void api<Choice | null>("knowledge.choice", {
+        bookId: book.id,
+        target: selected,
+      })
+        .then((value) => {
+          if (active) {
+            setChoice(value);
+            setChoiceFor(selected.id);
+          }
+        })
+        .catch((e) => {
+          if (active) setError(e.message);
+        });
+    return () => {
+      active = false;
+    };
+  }, [selected, book.id]);
   const propositionKey = `${key}.proposition`;
   const [propositionDraft] = useState(() => {
     try {
@@ -451,7 +500,7 @@ export function KnowledgeMatrix({
             {loading ? "正在读取认知矩阵…" : `共 ${result?.total || 0} 个命题`}
           </p>
           <p className="muted">
-            叙述进度仅过滤已出现的记录；倒叙与相反认知不会自动合并。此视图为分批实时读取。
+            叙述进度仅过滤已出现的记录；倒叙与相反认知不会自动合并。作者当前选择只在全书记录视图展示。表格可横向滚动查看人物列，此视图为分批实时读取。
           </p>
           {!!result?.excludedMissingSources && (
             <p>
@@ -504,6 +553,13 @@ export function KnowledgeMatrix({
                       const cell = row.cells[col.id];
                       return (
                         <td key={col.id}>
+                          {cell?.choice && (
+                            <p className="knowledge-choice">
+                              {cell.choice.status === "cleared"
+                                ? "作者当前选择：已清除"
+                                : `作者选用：${stateLabel(cell.choice.snapshot.state)} · ${fresh(cell.choice.freshness)}`}
+                            </p>
+                          )}
                           {cell?.total ? (
                             <>
                               <p>{cell.total} 条记录</p>
@@ -871,6 +927,158 @@ export function KnowledgeMatrix({
                   .map((item) => `${item.title}（${fresh(item.freshness)}）`)
                   .join("、")}
               </p>
+              <section
+                aria-label="作者当前认知选择"
+                className="knowledge-choice-detail"
+              >
+                <h4>
+                  {choiceFor !== selected.id
+                    ? "正在读取作者选择…"
+                    : choice?.status === "active"
+                      ? `作者当前选择 · ${stateLabel(choice.snapshot.state)} · ${fresh(choice.freshness)}`
+                      : choice
+                        ? "作者当前选择已清除"
+                        : "作者尚未选择当前认知"}
+                </h4>
+                <p>
+                  此选择由作者指定，不推断故事时刻；过期后保留当时记录，不会自动改选。
+                </p>
+                {choice && (
+                  <details>
+                    <summary>选择时冻结的记录与引文</summary>
+                    <p>
+                      {stateLabel(choice.snapshot.state)} · 事件版本{" "}
+                      {choice.snapshot.revision}
+                    </p>
+                    <p>{choice.snapshot.statement}</p>
+                    <blockquote>{choice.snapshot.anchor.quote}</blockquote>
+                  </details>
+                )}
+                <button
+                  disabled={
+                    busy ||
+                    choiceFor !== selected.id ||
+                    selected.status !== "active" ||
+                    selected.freshness !== "current" ||
+                    (choice?.status === "active" &&
+                      choice.freshness === "current" &&
+                      choice.selected.id === selected.id &&
+                      choice.selected.revision === selected.revision)
+                  }
+                  onClick={() =>
+                    perform(async () => {
+                      setChoice(
+                        await api<Choice>("knowledge.choose", {
+                          bookId: book.id,
+                          eventExpected: selected,
+                          choiceExpected: choice,
+                        }),
+                      );
+                      setChoiceHistory(null);
+                      setRefresh((n) => n + 1);
+                      setMessage(
+                        "已按此事件及其依据版本明确选择当前认知；其他记录保留。",
+                      );
+                    })
+                  }
+                >
+                  明确采用为当前认知
+                </button>
+                <button
+                  disabled={
+                    busy ||
+                    choiceFor !== selected.id ||
+                    !choice ||
+                    choice.status !== "active"
+                  }
+                  onClick={() =>
+                    perform(async () => {
+                      setChoice(
+                        await api<Choice>("knowledge.clear-choice", {
+                          bookId: book.id,
+                          target: selected,
+                          expected: choice,
+                        }),
+                      );
+                      setChoiceHistory(null);
+                      setRefresh((n) => n + 1);
+                    })
+                  }
+                >
+                  清除当前认知选择
+                </button>
+                <button
+                  disabled={busy || choiceFor !== selected.id || !choice}
+                  onClick={() =>
+                    perform(async () =>
+                      setChoiceHistory(
+                        await api("knowledge.choice-history", {
+                          bookId: book.id,
+                          target: selected,
+                        }),
+                      ),
+                    )
+                  }
+                >
+                  查看选择历史
+                </button>
+                {choiceHistory && (
+                  <div aria-label="作者选择历史">
+                    <p>共 {choiceHistory.total} 个历史选择版本，只读。</p>
+                    {choiceHistory.errors.map((text, i) => (
+                      <p role="alert" key={i}>
+                        {text}
+                      </p>
+                    ))}
+                    {choiceHistory.items.map((item) => (
+                      <article key={item.revision}>
+                        <b>
+                          选择版本 {item.revision} ·{" "}
+                          {item.status === "cleared"
+                            ? "已清除"
+                            : stateLabel(item.snapshot.state)}
+                        </b>
+                        <p>{item.snapshot.statement}</p>
+                        <blockquote>{item.snapshot.anchor.quote}</blockquote>
+                      </article>
+                    ))}
+                    <button
+                      disabled={busy || !choiceHistory.offset}
+                      onClick={() =>
+                        perform(async () =>
+                          setChoiceHistory(
+                            await api("knowledge.choice-history", {
+                              bookId: book.id,
+                              target: selected,
+                              offset: Math.max(0, choiceHistory.offset - 40),
+                            }),
+                          ),
+                        )
+                      }
+                    >
+                      上一页选择历史
+                    </button>
+                    <button
+                      disabled={
+                        busy || choiceHistory.offset + 40 >= choiceHistory.total
+                      }
+                      onClick={() =>
+                        perform(async () =>
+                          setChoiceHistory(
+                            await api("knowledge.choice-history", {
+                              bookId: book.id,
+                              target: selected,
+                              offset: choiceHistory.offset + 40,
+                            }),
+                          ),
+                        )
+                      }
+                    >
+                      下一页选择历史
+                    </button>
+                  </div>
+                )}
+              </section>
               <button
                 disabled={busy}
                 onClick={() =>

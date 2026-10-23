@@ -1751,3 +1751,5 @@ footer {
 .knowledge-body > section, .knowledge-body > details { margin: 20px 0; padding: 14px; border: 1px solid var(--border); border-radius: 8px; }
 .knowledge-matrix select, .knowledge-matrix textarea { background: var(--paper); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px; font: inherit; }
 .knowledge-matrix select:disabled, .knowledge-matrix textarea:disabled { opacity: .6; }
+.knowledge-choice { padding: 9px; background: var(--selected); border-left: 3px solid var(--accent); font-weight: 600; }
+.knowledge-choice-detail { margin: 16px 0; padding: 14px; border: 1px solid var(--border); border-radius: 8px; }
