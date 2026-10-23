@@ -1,5 +1,7 @@
 # ZiNovel Studio
 
+本开发分支 alpha.16 正在实现出版冻结与导出生成层，尚未接入正式导出入口；不属于 alpha.15 安装候选。详见 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：Stage-004 创作资料与场景规划继续补全，独立阅读预览开始开发。alpha.14已完成本机及远端安装/升级并公开发布，打通核心创作往返，新增空书创作入口并补强参考更新与版本保护。阶段成果继续发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**

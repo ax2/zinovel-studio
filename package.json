@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-alpha.15",
+  "version": "0.1.0-alpha.16",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",
@@ -51,7 +51,8 @@
     "test:installer": "node scripts/smoke-installer.mjs",
     "test:upgrade": "node scripts/smoke-upgrade.mjs",
     "release:manifest": "node scripts/release-manifest.mjs",
-    "release:verify-public": "node scripts/verify-public-release.mjs"
+    "release:verify-public": "node scripts/verify-public-release.mjs",
+    "test:publication-foundation": "node scripts/smoke-publication-foundation.mjs"
   },
   "engines": {
     "node": ">=26"

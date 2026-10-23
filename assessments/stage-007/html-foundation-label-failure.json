@@ -1,0 +1,26 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "environment": {
+    "browser": "Electron 44 bundled Chromium, standalone file pages; not workbench or actual mobile device",
+    "browserPlugin": "Browser plugin not available; repository Playwright/Electron fallback",
+    "artifactRoot": "D:\\Work\\zinovel-studio\\.cache\\publication-render-olDvR6\\export"
+  },
+  "viewports": [
+    {
+      "name": "directory-desktop.png",
+      "width": 1287,
+      "height": 864
+    }
+  ],
+  "launchArguments": [
+    "D:\\Work\\zinovel-studio\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe",
+    "--inspect=0",
+    "--remote-debugging-port=0",
+    "D:\\Work\\zinovel-studio\\.cache\\publication-render-olDvR6\\browser.cjs"
+  ],
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('背景', { exact: true })\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\.cache\\smoke-publication-foundation.mjs:23:43",
+  "url": "file:///D:/Work/zinovel-studio/.cache/publication-render-olDvR6/export/chapters/ec08d9b3-f3a7-44d2-8a16-21d81c9a6a83.html",
+  "title": "第一章 \"蓝印\" · 独立阅读 <合成书> 很长书名很长书名很长书名很长书名很长书名很长书名很长书名很长书名很长书名很长书名很长书名很长书名"
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.15",
-  "ready": true,
+  "version": "0.1.0-alpha.16",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -13,15 +13,10 @@
     "assessments/stage-005/reader-preview.md",
     "iterations/stage-005/WORKLOG.md"
   ],
-  "reports": [
-    "screenshots/stage-005/reader/reader-smoke.json",
-    "screenshots/stage-005/reader-ci-viewport-recheck/reader/reader-smoke.json",
-    "screenshots/stage-005/desktop-regression-final/desktop-smoke.json",
-    "screenshots/stage-004/creative-journey/creative-journey-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.15纯文本独立阅读已源码运行，安装后全套及升级仍须在本标签通过；插图、真实移动设备和完整阅读性能尚未验收",
-    "未签名预览，完整106项需求、真实模型文学质量和完整上架验收未完成"
+    "alpha.16出版生成层尚未接入桌面持久快照、导出授权和正式保存入口，未取得本版安装资格",
+    "图像资源、多格式出版、完整106项功能与上架资格仍未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual standalone file index/previous/next/last/reload render selected Unicode manuscript with no author tools or script execution",
+    "External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow",
+    "Written artifact inventory matches every actual file byte; no HTTP requests, no workbench IPC/Node globals; no installed-app or host publication UI qualification"
+  ],
+  "errors": [],
+  "environment": {
+    "browser": "Electron 44 bundled Chromium, standalone file pages; not workbench or actual mobile device",
+    "browserPlugin": "Browser plugin not available; repository Playwright/Electron fallback",
+    "artifactRoot": "D:\\Work\\zinovel-studio\\.cache\\publication-render-GwIWYr\\export"
+  },
+  "viewports": [
+    {
+      "name": "directory-desktop.png",
+      "width": 1287,
+      "height": 838
+    },
+    {
+      "name": "chapter-phone-dark.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "directory-phone-dark.png",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "launchArguments": [
+    "D:\\Work\\zinovel-studio\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe",
+    "--inspect=0",
+    "--remote-debugging-port=0",
+    "D:\\Work\\zinovel-studio\\.cache\\publication-render-GwIWYr\\browser.cjs"
+  ]
+}
