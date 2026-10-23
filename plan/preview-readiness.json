@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "version": "0.1.0-alpha.15",
-  "ready": false,
+  "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -9,11 +9,17 @@
     "assessments/stage-004/knowledge-creation.md",
     "assessments/stage-004/knowledge-context.md",
     "assessments/stage-004/material-context-proof.md",
-    "assessments/stage-004/creative-journey.md"
+    "assessments/stage-004/creative-journey.md",
+    "assessments/stage-005/reader-preview.md",
+    "iterations/stage-005/WORKLOG.md"
   ],
-  "reports": [],
+  "reports": [
+    "screenshots/stage-005/reader/reader-smoke.json",
+    "screenshots/stage-005/desktop-regression-final/desktop-smoke.json",
+    "screenshots/stage-004/creative-journey/creative-journey-smoke.json"
+  ],
   "limitations": [
-    "alpha.15独立阅读预览仅有设计，尚无本版运行或安装资格",
+    "alpha.15纯文本独立阅读已源码运行，安装后全套及升级仍须在本标签通过；插图、真实移动设备和完整阅读性能尚未验收",
     "未签名预览，完整106项需求、真实模型文学质量和完整上架验收未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"

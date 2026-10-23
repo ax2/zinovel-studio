@@ -261,11 +261,15 @@ test("legacy listing paginates without changing bytes, keeps retired records vis
     new Set([...first.items, ...last.items].map((item) => item.event.id)).size,
     41,
   );
+  const unfilteredFirst = await store.knowledge.legacy.list(book.id),
+    unfilteredLast = await store.knowledge.legacy.list(book.id, { offset: 40 });
+  assert.equal(unfilteredFirst.total, 42);
+  assert.equal(unfilteredLast.items.length, 2);
   assert.equal(
-    (await store.knowledge.legacy.list(book.id)).items.some(
-      (item) => item.event.status === "retired",
-    ),
-    true,
+    [...unfilteredFirst.items, ...unfilteredLast.items].find(
+      (item) => item.event.id === owner.evidence[0].id,
+    )?.event.status,
+    "retired",
   );
   await assert.rejects(
     store.knowledge.legacy.preview(book.id, person.id, owner.evidence[0].id),

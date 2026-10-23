@@ -67,6 +67,8 @@ const allowed = new Set([
   "pilots.versions",
   "pilots.promote",
   "materials.read",
+  "reader.catalog",
+  "reader.chapter",
   "materials.save",
   "materials.delete",
   "materials.history",

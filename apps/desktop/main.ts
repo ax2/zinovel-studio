@@ -238,6 +238,20 @@ if (
               case "book.search":
                 value = await store.search(payload.bookId, payload.query);
                 break;
+              case "reader.catalog":
+                value = await store.reader.catalog(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
+              case "reader.chapter":
+                value = await store.reader.chapter(
+                  payload.bookId,
+                  payload.chapterId,
+                  payload.catalogHash,
+                  payload.options,
+                );
+                break;
               case "annotations.read":
                 value = await store.readAnnotations(
                   payload.bookId,

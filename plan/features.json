@@ -962,8 +962,14 @@
       "name": "整卷连续阅读",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "目录导航和阅读进度可恢复"
+      "status": "in-progress",
+      "acceptance": "目录导航和阅读进度可恢复",
+      "evidence": [
+        "design/reader-preview.md",
+        "assessments/stage-005/reader-preview.md",
+        "tests/reader.test.mjs",
+        "screenshots/stage-005/reader/reader-smoke.json"
+      ]
     },
     {
       "id": "READ-02",
@@ -971,8 +977,14 @@
       "name": "无剧透试读",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "隐藏作者资料与未来设定"
+      "status": "in-progress",
+      "acceptance": "隐藏作者资料与未来设定",
+      "evidence": [
+        "design/reader-preview.md",
+        "assessments/stage-005/reader-preview.md",
+        "tests/reader.test.mjs",
+        "screenshots/stage-005/reader/reader-smoke.json"
+      ]
     },
     {
       "id": "READ-03",
@@ -980,8 +992,14 @@
       "name": "桌面手机阅读预览",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "布局/字体/夜间/插图可检查"
+      "status": "in-progress",
+      "acceptance": "布局/字体/夜间/插图可检查",
+      "evidence": [
+        "design/reader-preview.md",
+        "assessments/stage-005/reader-preview.md",
+        "tests/reader.test.mjs",
+        "screenshots/stage-005/reader/reader-smoke.json"
+      ]
     },
     {
       "id": "READ-04",

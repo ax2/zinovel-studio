@@ -5,6 +5,7 @@ import { PilotStore } from "./pilots.mjs";
 import { ContinuityStore } from "./continuity.mjs";
 import { KnowledgeStore } from "./knowledge.mjs";
 import { MixedContext } from "./context.mjs";
+import { ReaderStore } from "./reader.mjs";
 import {
   mkdir,
   readFile,
@@ -46,6 +47,7 @@ export class NovelStore {
     this.root = resolve(root);
     this.#storage = new BookStorageKernel(this.root);
     this.materials = new MaterialStore(this.#storage);
+    this.reader = new ReaderStore(this.#storage);
     this.planning = new PlanningStore(this.#storage, this.materials);
     this.pilots = new PilotStore(this.#storage, this.materials);
     this.continuity = new ContinuityStore(this.#storage, this.materials);

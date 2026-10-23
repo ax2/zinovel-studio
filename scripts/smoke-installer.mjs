@@ -139,6 +139,7 @@ try {
     ["smoke-continuity.mjs", "continuity/continuity-smoke.json"],
     ["smoke-relationships.mjs", "relationships/relationships-smoke.json"],
     ["smoke-knowledge.mjs", "knowledge/knowledge-smoke.json"],
+    ["smoke-reader.mjs", "reader/reader-smoke.json"],
     [
       "smoke-creative-journey.mjs",
       "creative-journey/creative-journey-smoke.json",

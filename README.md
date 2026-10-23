@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.14 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.14) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.14/ZiNovel-Studio-0.1.0-alpha.14-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支alpha.15正在开发独立阅读预览，尚无本版运行或安装资格，也不在alpha.14中。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
+主分支alpha.15已通过独立阅读源码运行与121项检查，安装资格正在验证，不在alpha.14中。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 
@@ -35,6 +35,7 @@ Windows 技术预览版：[v0.1.0-alpha.14 下载与说明](https://github.com/a
 | [基础接入工作日志](iterations/stage-001/WORKLOG.md) | 官方 Agent 与桌面贯通、测试和修正 |
 | [本地写作工作日志](iterations/stage-002/WORKLOG.md) | 卷章、导入、检索、备份和编辑器 |
 | [AI 协作工作日志](iterations/stage-003/WORKLOG.md) | 任务记录、重启恢复与候选范围 |
+| [阅读与审读工作日志](iterations/stage-005/WORKLOG.md) | 独立阅读预览、进度与运行证据 |
 | [创作资料工作日志](iterations/stage-004/WORKLOG.md) | 类型资料、证据、上下文、结构化提案与实测 |
 | [资料提案设计](design/material-proposals.md) | 版本冻结、语义审阅、接受事务与恢复 |
 | [来源记录](design/sources.md) | 本地技能的方法提炼、官方源码链接 |

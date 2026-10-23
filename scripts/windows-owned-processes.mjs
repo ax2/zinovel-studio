@@ -68,3 +68,21 @@ export async function confirmOwnedProcessesExited(owned, timeoutMs = 30000) {
     "Original owned process identities remain alive after termination",
   );
 }
+
+/** Failed synthetic UI probes must not hang behind a native save-confirmation dialog. */
+export async function terminateOwnedProcesses(owned) {
+  for (const [pid, created] of owned) {
+    const current = (await snapshot()).find((item) => item.ProcessId === pid);
+    if (!current || JSON.stringify(current.CreationDate) !== created) continue;
+    try {
+      await run("taskkill.exe", ["/PID", String(pid), "/T", "/F"], {
+        windowsHide: true,
+        timeout: 15000,
+      });
+    } catch (error) {
+      const after = (await snapshot()).find((item) => item.ProcessId === pid);
+      if (after && JSON.stringify(after.CreationDate) === created) throw error;
+    }
+  }
+  await confirmOwnedProcessesExited(owned);
+}

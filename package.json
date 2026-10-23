@@ -42,6 +42,7 @@
     "test:knowledge-creation": "node scripts/smoke-knowledge-creation.mjs",
     "test:knowledge-context": "node scripts/smoke-knowledge-context.mjs && node scripts/smoke-knowledge-context-targets.mjs",
     "test:creative-journey": "node scripts/smoke-creative-journey.mjs",
+    "test:reader": "node scripts/smoke-reader.mjs && node scripts/smoke-reader-cleanup.mjs",
     "benchmark:continuity": "node scripts/benchmark-continuity.mjs",
     "benchmark:knowledge": "node scripts/benchmark-knowledge.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",

@@ -24,6 +24,7 @@ if (process.env.ZINOVEL_TEST_EXECUTABLE) {
   env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
 }
 let application;
+let lastPage;
 const model = await modelFixture({ delayMs: 250 });
 const errors = [];
 async function launch() {
@@ -35,6 +36,7 @@ async function launch() {
     timeout: 45000,
   });
   const page = await application.firstWindow();
+  lastPage = page;
   if (process.env.ZINOVEL_QA_VIEWPORT === "ci")
     await page.setViewportSize({ width: 1008, height: 681 });
   page.on("pageerror", (error) => errors.push(error.message));
@@ -227,12 +229,25 @@ try {
   evidence.checks.push(
     "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
   );
-  await page.screenshot({ path: join(screenshots, "toolbar-with-reference.png") });
-  assert.equal(await page.locator(".toolbar button").evaluateAll(buttons => buttons.every(button => {
-    const rect = button.getBoundingClientRect();
-    if (!rect.width || !rect.height) return true;
-    return button.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
-  })), true, "visible toolbar controls must not be covered by the reference panel");
+  await page.screenshot({
+    path: join(screenshots, "toolbar-with-reference.png"),
+  });
+  assert.equal(
+    await page.locator(".toolbar button").evaluateAll((buttons) =>
+      buttons.every((button) => {
+        const rect = button.getBoundingClientRect();
+        if (!rect.width || !rect.height) return true;
+        return button.contains(
+          document.elementFromPoint(
+            rect.x + rect.width / 2,
+            rect.y + rect.height / 2,
+          ),
+        );
+      }),
+    ),
+    true,
+    "visible toolbar controls must not be covered by the reference panel",
+  );
   await page.getByTitle("查找替换预览", { exact: true }).click();
   await page.getByLabel("查找内容", { exact: true }).fill("林舟");
   await page.getByLabel("替换为", { exact: true }).fill("林远");
@@ -327,6 +342,21 @@ try {
 } catch (error) {
   evidence.status = "failed";
   evidence.failure = error.stack;
+  evidence.visibleAlerts = await lastPage
+    ?.getByRole("alert")
+    .allTextContents()
+    .catch(() => []);
+  evidence.allAlerts = await lastPage
+    ?.locator('[role="alert"]')
+    .allTextContents()
+    .catch(() => []);
+  await writeFile(
+    join(screenshots, "desktop-smoke.json"),
+    JSON.stringify(evidence, null, 2) + "\n",
+  );
+  await lastPage
+    ?.screenshot({ path: join(screenshots, "failure.png") })
+    .catch(() => {});
   throw error;
 } finally {
   if (application?.process()?.exitCode === null) await application.close();

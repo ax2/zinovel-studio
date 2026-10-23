@@ -1,0 +1,18 @@
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-BsVOuh",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration"
+  ],
+  "errors": [],
+  "status": "failed",
+  "failure": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '审阅 AI 候选' }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-desktop.mjs:189:6"
+}

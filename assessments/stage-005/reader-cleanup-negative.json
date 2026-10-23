@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "ownedProcessesConfirmedExited": 5,
+  "checks": [
+    "intentional reader failure is persisted as failed before cleanup; captured original Windows process identities all exit and the driver returns exit 1 without a native close-confirmation hang"
+  ],
+  "expectedFailureReceipt": "screenshots/stage-005/reader-cleanup-negative/reader/reader-smoke.json",
+  "scope": "QA cleanup only; expected failed reader checkpoint is not product qualification"
+}
