@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.12 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.12) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.12/ZiNovel-Studio-0.1.0-alpha.12-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-后续 alpha.13 已实现认知与作者选择的 Agent 冻结上下文，正文、资料和试写三个入口实际运行验证通过，正在进行安装发行资格，不包含在 alpha.12 安装包。自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
+alpha.13 已完成本机安装/升级验证并推送同源码标签，远端发行工作流正在验证，公开附件尚待核对；后续 alpha.14 正在补强原资料参考的依赖证明，不包含在已冻结标签。自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 

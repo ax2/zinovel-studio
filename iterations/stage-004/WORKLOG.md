@@ -264,3 +264,11 @@ MixedContext以带类型身份区分原资料、认知与作者选择。宿主�
 ## alpha.13 本机发行资格
 
 冻结d4ca386，114项单元/类型/规划及源码CI40003566959 success。打包69986终态exit0，全套安装45734终态exit0，公开alpha.3升级6336终态exit0。EXE222878584字节，SHA256 05a0ccbcc2de6e12a28dd1b17ac7ad1c4508dc2a3c168ada04c81517f7697a39；安装23226ms/重装33668ms/卸载5801ms/升级30463ms，原稿保留，三个上下文入口均在实际安装EXE通过。安装后浅深窄窗和升级截图已查看。完整运行目录+EXE本机归档release/v0.1.0-alpha.13，无ZIP。详见assessments/release/v0.1.0-alpha.13。推同一源码标签后公开结果另核对，不混用本机与CI哈希。
+
+## alpha.13 标签 / alpha.14 依赖证明切片
+
+本机资格后从d4ca386推v0.1.0-alpha.13，发行CI40005066108仍运行，公开结果待核对。主分支升alpha.14并重置门禁false。
+
+复现旧纯资料包来源已stale再改一次时hash相同，新单元先失败；提取共享context-proof并为原资料加入聚合依赖证明，严格解码资料UTF-8，坏字节在CAS写入前拒绝。116项完整检查passed，真实Electron/官方Harness零请求拒绝重复stale，刷新后受限往返，旧任务重启冻结，认知/资料/试写/预算/兼容运行回归passed。探针刷新后漏展开预览首次超时，修正正常控件操作后通过；失败留.cache，错误提示截图已查看。
+
+1000认知事件存储基准：列表2514ms/矩阵4982ms，保存23ms/取消3ms，查询500ms目标未达。1命题1人物1章的暖缓存服务测量不冒充全量小说/低端/UI验收，report为measured。详见assessments/stage-004/material-context-proof.md。尚未构建安装alpha.14，不推标签。

@@ -1,0 +1,44 @@
+{
+  "status": "measured",
+  "label": "alpha14-baseline",
+  "version": "0.1.0-alpha.14",
+  "environment": {
+    "os": "10.0.26300",
+    "cpu": "Intel(R) Core(TM) i9-14900HX",
+    "memoryGiB": 64,
+    "node": "26.10.0"
+  },
+  "fixture": {
+    "events": 1000,
+    "propositions": 1,
+    "characters": 1,
+    "authorChoices": 1,
+    "chapters": 1,
+    "manuscriptCharacters": 9000,
+    "setupMs": 212
+  },
+  "metrics": {
+    "saveWhileScanningMs": 23,
+    "contextQueryMs": 2514,
+    "contextEventViews": 1000,
+    "matrixMs": 4982,
+    "cancelMs": 3,
+    "cancelEventViews": 1
+  },
+  "checks": [
+    "all records counted; options bounded to 40 and matrix cell preview to 5; source edit queued during a real event view saved with CAS; cancellation aborted remaining scan and preserved author bytes"
+  ],
+  "limitations": [
+    "Storage service measurements only; no rendered DOM, cold disk, low-end hardware or real model literary evaluation",
+    "One proposition and character; not a full 1000-chapter or many-definition acceptance dataset",
+    "Source fixture is synthetic; warm-cache effects and host background load are not controlled"
+  ],
+  "initialTargets": {
+    "queryMs": 500,
+    "saveMs": 1000,
+    "cancelMs": 500,
+    "metQuery": false,
+    "metSave": true,
+    "metCancel": true
+  }
+}

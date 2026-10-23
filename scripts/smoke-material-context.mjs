@@ -12,6 +12,10 @@ const data = await mkdtemp(join(root, ".cache", "material-context-ui-")),
 const original = "林舟在港口拆信。";
 const book = await store.importBook("上下文隔离合成验证", [
     { title: "旧信", body: original },
+    {
+      title: "另一章依据",
+      body: "旧信有一道蓝印。\nUNSELECTED_SOURCE_BODY_SENTINEL",
+    },
   ]),
   other = await store.createBook("不能混入的另一作品");
 const input = (title, voice) => ({
@@ -26,7 +30,7 @@ let card = await store.materials.save(
   book.id,
   input("林舟人物设定", "旧版限定口头禅：船不等人"),
 );
-await store.materials.save(
+const related = await store.materials.save(
   book.id,
   input("未选择人物", "SAME_BOOK_UNSELECTED_SENTINEL"),
 );
@@ -34,6 +38,22 @@ await store.materials.save(
   other.id,
   input("他书人物", "OTHER_BOOK_PRIVATE_SENTINEL"),
 );
+const evidenceChapter = await store.readChapter(book.id, book.chapters[1].id);
+card = await store.materials.mutateEvidence(book.id, card, {
+  action: "add",
+  kind: "relation",
+  scope: "world",
+  statement: "曾在港口交谈",
+  storyTime: "抵港日",
+  relatedIds: [related.id],
+  source: {
+    chapterId: evidenceChapter.id,
+    body: evidenceChapter.body,
+    hash: evidenceChapter.diskHash,
+    start: 0,
+    end: 8,
+  },
+});
 const model = await modelFixture({ readMaterials: true }),
   screenshots = join(
     root,
@@ -80,6 +100,12 @@ async function snapshot(name) {
     }))),
   });
 }
+async function expandContext(context) {
+  const summary = context.locator("summary").filter({ hasText: "版本 3" });
+  await summary.waitFor();
+  if (!(await summary.evaluate((element) => element.parentElement.open)))
+    await summary.click();
+}
 try {
   await launch();
   await page.getByLabel("主导航").getByTitle("模型设置").click();
@@ -116,7 +142,7 @@ try {
   await page.getByRole("button", { name: "刷新资料快照", exact: true }).click();
   const refreshedSummary = context
     .locator("summary")
-    .filter({ hasText: "版本 2" });
+    .filter({ hasText: "版本 3" });
   await refreshedSummary.waitFor();
   // React can preserve an open details element when the refresh resolves in one render.
   // Operate on its actual state instead of assuming every refresh remounts it closed.
@@ -125,6 +151,39 @@ try {
   )
     await refreshedSummary.click();
   await context.getByText(/新版限定口头禅/).waitFor();
+  const evidencePath = join(
+    data,
+    "library",
+    book.id,
+    "manuscript",
+    `${evidenceChapter.id}.md`,
+  );
+  await writeFile(evidencePath, "一" + evidenceChapter.body);
+  await page.getByRole("button", { name: "刷新资料快照", exact: true }).click();
+  await expandContext(context);
+  await context.getByText(/状态：stale/).waitFor();
+  const stale = await store.context.pack(book.id, [card.id]);
+  await writeFile(evidencePath, "二" + evidenceChapter.body);
+  const changed = await store.context.pack(book.id, [card.id]);
+  assert.equal(stale.materials[0].content, changed.materials[0].content);
+  assert.notEqual(stale.hash, changed.hash);
+  await page.getByRole("button", { name: "生成候选", exact: true }).click();
+  await page
+    .getByRole("alert")
+    .filter({ hasText: "资料或证据已改变" })
+    .waitFor();
+  assert.equal(model.requests.length, 0);
+  await page
+    .getByText("正在读取参考资料...", { exact: true })
+    .waitFor({ state: "hidden" });
+  await page
+    .getByRole("alert")
+    .filter({ hasText: "资料或证据已改变" })
+    .scrollIntoViewIfNeeded();
+  await snapshot("repeated-stale-source-blocked.png");
+  await page.getByRole("button", { name: "刷新资料快照", exact: true }).click();
+  await expandContext(context);
+  await context.getByText(/状态：stale/).waitFor();
   const editor = page.getByLabel("正文编辑器");
   await editor.press("Control+a");
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
@@ -142,7 +201,7 @@ try {
   assert.match(messages, /新版限定口头禅/);
   assert.doesNotMatch(
     messages,
-    /旧版限定口头禅|SAME_BOOK_UNSELECTED_SENTINEL|OTHER_BOOK_PRIVATE_SENTINEL/,
+    /旧版限定口头禅|SAME_BOOK_UNSELECTED_SENTINEL|OTHER_BOOK_PRIVATE_SENTINEL|UNSELECTED_SOURCE_BODY_SENTINEL/,
   );
   assert.ok(
     model.requests[2].messages.some((message) =>
@@ -167,6 +226,7 @@ try {
     .waitFor();
   await snapshot("frozen-task-context.png");
   report.checks.push(
+    "material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details",
     "local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content",
   );
   await application.close();

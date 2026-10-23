@@ -27,3 +27,7 @@ MixedContext在同一exclusive里读取各服务的内部record/view，不嵌套
 仅hash文本和freshness不够：当来源已stale再改一次，其标签仍stale，不能误以为快照没变化。每条额外proofHash应聚合当前事件原文件hash、choice原文件hash、引用定义当前hash、当前章节正文hash/删除状态、origin文件hash及其旧owner当前hash。只发聚合hash，不把未选的定义笔记/旧资料全文泄露给模型。pack.hash含proofHash与可见content，发起前任何相关改动都0模型请求拒绝。读取坏UTF-8或未来格式不当作已无记录；保留原文件。
 
 所有任务继续走materialContextText的统一8条2万字符限额和runtime总上下文预算，不为每种类型开独立上限。输出JSON有少量元数据额外字符，模型调用的真实工具输出仍由既有预算检查，不能宣称文本字符数等于账单token。任务恢复读取冻结snapshot，不根据新库状态重生成历史；后续作者选择变化不能改旧请求。
+
+## alpha.14 原资料依赖证明修正
+
+alpha.13保留旧material-only包合同；后续alpha.14复现其重复stale漏检，改为两个入口统一context-proof。纯资料新增派生proofHash，因此新预览hash会变化；不是书内格式迁移，也不重生成旧任务快照。详情、坏字节保护及1000事件测量见assessments/stage-004/material-context-proof.md。alpha.14无安装资格，alpha.13冻结标签不变。

@@ -1,6 +1,7 @@
 {
   "status": "passed",
   "checks": [
+    "material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details",
     "local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content",
     "task's exact source versions survive later card edits and real desktop restart without replay or manuscript writes; scope and context are visible in task history"
   ],
@@ -8,6 +9,12 @@
   "viewports": [
     {
       "name": "context-preview-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "repeated-stale-source-blocked.png",
       "width": 1426,
       "height": 923,
       "theme": "light"

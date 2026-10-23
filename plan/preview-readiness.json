@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.13",
-  "ready": true,
+  "version": "0.1.0-alpha.14",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -9,12 +9,9 @@
     "assessments/stage-004/knowledge-creation.md",
     "assessments/stage-004/knowledge-context.md"
   ],
-  "reports": [
-    "screenshots/stage-004/knowledge-context/knowledge-context-smoke.json",
-    "screenshots/stage-004/knowledge-context-targets/knowledge-context-targets-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.13三个上下文入口源阶段通过，实际安装、升级与公开附件资格必须另验",
+    "alpha.14资料依赖证明正在开发，无本版运行或安装资格",
     "未签名预览，完整106项需求、真实模型文学质量和完整上架验收未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"

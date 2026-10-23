@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { contextProof } from "./context-proof.mjs";
 import { createHash } from "node:crypto";
 import { materialMarkdown } from "../novel-domain/materials.mjs";
 import { materialContextText } from "../novel-domain/material-context.mjs";
@@ -42,57 +42,6 @@ export class MixedContext {
     this.materials = materials;
     this.knowledge = knowledge;
   }
-  async proof(root, book, data, selectedHash, origin, cache) {
-    const files = new Set();
-    const addMaterial = (id) => {
-      if (id) files.add(`materials/${id}.json`);
-    };
-    addMaterial(data.propositionId);
-    addMaterial(data.characterId);
-    const chapterIds = new Set([
-      ...(data.chapterIds || []),
-      ...(data.evidence || []).map((item) => item.chapterId),
-      ...(data.chapterId ? [data.chapterId] : []),
-    ]);
-    for (const event of data.evidence || [])
-      for (const related of event.relatedIds || []) addMaterial(related);
-    for (const chapterId of chapterIds) files.add(`manuscript/${chapterId}.md`);
-    if (data.propositionId) {
-      files.add(`knowledge/events/${data.id}.json`);
-      files.add(`knowledge/origins/${data.id}.json`);
-      addMaterial(origin?.source?.ownerId);
-    }
-    const entries = [];
-    for (const file of [...files].sort()) {
-      if (!cache.has(file))
-        cache.set(
-          file,
-          (async () => {
-            try {
-              const bytes = await readFile(await this.storage.path(root, file));
-              new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(
-                bytes,
-              );
-              return hash(bytes);
-            } catch (error) {
-              if (error.code === "ENOENT") return null;
-              throw error;
-            }
-          })(),
-        );
-      entries.push([file, await cache.get(file)]);
-    }
-    return hash(
-      json([
-        selectedHash,
-        entries,
-        [...chapterIds].sort().map((id) => {
-          const chapter = book.chapters.find((item) => item.id === id);
-          return [id, chapter?.title || null, chapter?.deletedAt || null];
-        }),
-      ]),
-    );
-  }
   pack(bookId, references) {
     if (
       !Array.isArray(references) ||
@@ -122,7 +71,8 @@ export class MixedContext {
             revision: view.revision,
             diskHash: view.diskHash,
             content: materialMarkdown(view),
-            proofHash: await this.proof(
+            proofHash: await contextProof(
+              this.storage,
               root,
               book,
               record.data,
@@ -190,7 +140,8 @@ export class MixedContext {
           revision: choice?.data.revision || event.revision,
           diskHash: choice?.diskHash || record.diskHash,
           content,
-          proofHash: await this.proof(
+          proofHash: await contextProof(
+            this.storage,
             root,
             book,
             event,

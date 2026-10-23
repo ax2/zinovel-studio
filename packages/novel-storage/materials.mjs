@@ -9,6 +9,7 @@ import {
   materialMarkdown,
 } from "../novel-domain/materials.mjs";
 import { materialContextText } from "../novel-domain/material-context.mjs";
+import { contextProof } from "./context-proof.mjs";
 const hash = (text) => createHash("sha256").update(text, "utf8").digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 // Evidence-only updates must not recursively invalidate cycles of related characters.
@@ -29,9 +30,13 @@ export class MaterialStore {
     return { root, book: await this.storage.manifest(root) };
   }
   async record(root, materialId) {
-    const raw = await readFile(
-      await this.storage.path(root, `materials/${id(materialId)}.json`),
-      "utf8",
+    const raw = new TextDecoder("utf-8", {
+      fatal: true,
+      ignoreBOM: true,
+    }).decode(
+      await readFile(
+        await this.storage.path(root, `materials/${id(materialId)}.json`),
+      ),
     );
     const data = JSON.parse(raw);
     if (
@@ -364,7 +369,8 @@ export class MaterialStore {
       )
         throw new Error("请选择最多 8 份不同资料");
       const { root, book } = await this.context(bookId),
-        materials = [];
+        materials = [],
+        cache = new Map();
       for (const materialId of materialIds) {
         const record = await this.record(root, id(materialId));
         if (record.data.deletedAt)
@@ -377,6 +383,15 @@ export class MaterialStore {
           revision: view.revision,
           diskHash: view.diskHash,
           content: materialMarkdown(view),
+          proofHash: await contextProof(
+            this.storage,
+            root,
+            book,
+            record.data,
+            record.diskHash,
+            null,
+            cache,
+          ),
         });
       }
       const pack = { schemaVersion: 1, bookId, materials };
