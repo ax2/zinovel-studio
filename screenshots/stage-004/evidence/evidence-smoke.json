@@ -1,9 +1,11 @@
 {
   "status": "passed",
   "checks": [
+    "evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence",
     "real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history",
     "linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
-    "relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes"
+    "relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes",
+    "cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence"
   ],
   "errors": [],
   "viewports": [
@@ -27,6 +29,12 @@
     },
     {
       "name": "knowledge-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "missing-evidence-narrow.png",
       "width": 806,
       "height": 803,
       "theme": "dark"

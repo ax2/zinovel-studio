@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { api } from "./api";
 import { evidenceKinds } from "../../packages/novel-domain/evidence.mjs";
 import type { Material } from "./materials-panel";
+import type { TextAnchor } from "./manuscript-editor";
 export type EvidenceSource = {
   chapterId: string;
   body: string;
@@ -19,7 +20,7 @@ export type Evidence = {
   status: string;
   chapterId: string;
   chapterTitle: string;
-  anchor: { quote: string };
+  anchor: TextAnchor;
   freshness: string;
   sourceFreshness: string;
   resolution: { status: string; start: number | null; end: number | null };
@@ -47,7 +48,7 @@ export function MaterialEvidence({
   disabled: boolean;
   setPending: (pending: boolean) => void;
   updated: (value: Material) => void;
-  openChapter: (id: string) => Promise<void>;
+  openChapter: (id: string, anchor?: TextAnchor) => Promise<void>;
 }) {
   const [kind, setKind] = useState("fact"),
     [statement, setStatement] = useState(""),
@@ -314,10 +315,12 @@ export function MaterialEvidence({
               <button
                 disabled={disabled || event.freshness === "missing"}
                 onClick={() =>
-                  openChapter(event.chapterId).catch((e) => setError(e.message))
+                  openChapter(event.chapterId, event.anchor).catch((e) =>
+                    setError(e.message),
+                  )
                 }
               >
-                打开证据章节
+                定位正文证据
               </button>
               <button
                 disabled={disabled || !usable}

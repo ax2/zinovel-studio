@@ -11,6 +11,7 @@ const data = await mkdtemp(join(root, ".cache", "evidence-ui-")),
 const body = "旧信上有一道蓝印。\n林舟把信收进衣袋，船主没有开口。🌊";
 const book = await store.importBook("伏笔与人物证据验证", [
   { title: "抵港", body },
+  { title: "夜航", body: "夜里，船驶离港口。" },
 ]);
 const base = (kind, title) => ({
   kind,
@@ -122,6 +123,21 @@ try {
     .getByRole("heading", { name: "伏笔埋设 · 正文版本一致" })
     .scrollIntoViewIfNeeded();
   await snapshot("planted-light.png");
+  await page
+    .locator(".chapter-list")
+    .getByRole("button", { name: /夜航/ })
+    .click();
+  await page
+    .getByLabel("正文编辑器")
+    .getByText("夜里，船驶离港口。", { exact: true })
+    .waitFor();
+  await evidence()
+    .getByRole("button", { name: "定位正文证据", exact: true })
+    .click();
+  await page.waitForFunction(
+    (quote) => window.getSelection()?.toString() === quote,
+    body.split("\n")[0],
+  );
   const editor = page.getByLabel("正文编辑器");
   await editor.press("Control+Home");
   await page.keyboard.insertText("后来，");
@@ -133,6 +149,20 @@ try {
   assert.equal(read.evidence[0].anchor.quote, body.split("\n")[0]);
   assert.equal(read.evidence[0].resolution.status, "relocated");
   await snapshot("source-changed.png");
+  await evidence()
+    .getByRole("button", { name: "定位正文证据", exact: true })
+    .click();
+  await page.waitForFunction(
+    (quote) => window.getSelection()?.toString() === quote,
+    body.split("\n")[0],
+  );
+  assert.equal(
+    (await store.materials.read(book.id, clue.id)).evidence[0].freshness,
+    "stale",
+  );
+  report.checks.push(
+    "evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence",
+  );
   await selectLine();
   await evidence()
     .getByRole("button", { name: "用当前选区重新确认", exact: true })
@@ -246,6 +276,40 @@ try {
     .scrollIntoViewIfNeeded();
   await snapshot("knowledge-dark-narrow.png");
   assert.equal(await readFile(manuscript, "utf8"), "后来，" + body);
+  // Repeated and missing quotes must not select an arbitrary range, including in the drawer layout.
+  for (const [replacement, warning] of [
+    [("后来，" + body + "\n").repeat(2), "证据引文在当前稿件中有多个匹配"],
+    ["原始线索已经从正文删除。", "证据引文在当前稿件中已找不到"],
+  ]) {
+    if (await page.getByLabel("关闭创作参考", { exact: true }).isVisible())
+      await page.getByLabel("关闭创作参考", { exact: true }).click();
+    const currentEditor = page.getByLabel("正文编辑器");
+    await currentEditor.press("Control+a");
+    await page.keyboard.insertText(replacement);
+    await currentEditor.press("Control+s");
+    await page
+      .getByRole("status", { name: "正文保存状态" })
+      .filter({ hasText: "已保存" })
+      .waitFor();
+    if (!(await panel().isVisible()))
+      await page.getByTitle("打开创作参考").click();
+    await panel()
+      .getByRole("button", { name: /^信上的蓝印/ })
+      .click();
+    await evidence()
+      .getByRole("button", { name: "定位正文证据", exact: true })
+      .click();
+    await page.getByText(new RegExp(warning)).waitFor();
+    assert.equal(await readFile(manuscript, "utf8"), replacement);
+    assert.equal(
+      (await store.materials.read(book.id, clue.id)).evidence[0].anchor.quote,
+      "后来，" + body.split("\n")[0],
+    );
+  }
+  await snapshot("missing-evidence-narrow.png");
+  report.checks.push(
+    "cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence",
+  );
   assert.deepEqual(report.errors, []);
   report.status = "passed";
 } catch (error) {

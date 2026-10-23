@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { EditorState } from "@codemirror/state";
+import { resolveAnchor } from "../../packages/novel-domain/anchors.mjs";
 import {
   EditorView,
   drawSelection,
@@ -27,16 +28,27 @@ export type ManuscriptHandle = {
   undo(): void;
   redo(): void;
 };
+export type TextAnchor = {
+  start: number;
+  end: number;
+  quote: string;
+  prefix: string;
+  suffix: string;
+  hash: string;
+};
+export type RevealTarget = {
+  documentKey: string;
+  start: number;
+  end: number;
+  request: number;
+  anchor?: TextAnchor;
+};
 type Props = {
   documentKey: string;
   value: string;
   typewriter?: boolean;
-  reveal?: {
-    documentKey: string;
-    start: number;
-    end: number;
-    request: number;
-  } | null;
+  reveal?: RevealTarget | null;
+  onRevealIssue?: (message: string) => void;
   onChange: (value: string) => void;
   onSelection: (range: { start: number; end: number }) => void;
   onComposition: (active: boolean) => void;
@@ -226,10 +238,21 @@ export const ManuscriptEditor = forwardRef<ManuscriptHandle, Props>(
       if (!view || !target || target.documentKey !== props.documentKey) return;
       if (revealed.current === target) return;
       revealed.current = target;
+      const range = target.anchor
+        ? resolveAnchor(view.state.doc.toString(), target.anchor, undefined)
+        : { ...target, status: "exact" };
+      if (range.start === null || range.end === null) {
+        latest.current.onRevealIssue?.(
+          range.status === "ambiguous"
+            ? "证据引文在当前稿件中有多个匹配，未自动选择位置。请对照原始引文查找。"
+            : "证据引文在当前稿件中已找不到，未自动选择位置。原始引文仍保留在资料中。",
+        );
+        return;
+      }
       view.dispatch({
         selection: {
-          anchor: Math.max(0, Math.min(target.start, view.state.doc.length)),
-          head: Math.max(0, Math.min(target.end, view.state.doc.length)),
+          anchor: Math.max(0, Math.min(range.start, view.state.doc.length)),
+          head: Math.max(0, Math.min(range.end, view.state.doc.length)),
         },
         scrollIntoView: true,
       });

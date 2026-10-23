@@ -38,7 +38,11 @@ import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
 import { ConflictDialog } from "./conflict-dialog";
 import { useModalAccessibility } from "./modal-accessibility";
-import { ManuscriptEditor, type ManuscriptHandle } from "./manuscript-editor";
+import {
+  ManuscriptEditor,
+  type ManuscriptHandle,
+  type RevealTarget,
+} from "./manuscript-editor";
 import {
   WritingAssistant,
   ModelSettingsDialog,
@@ -51,12 +55,7 @@ function App() {
   const [referenceOpen, setReferenceOpen] = useState(false),
     [typewriter, setTypewriter] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
-  const [reveal, setReveal] = useState<{
-    documentKey: string;
-    start: number;
-    end: number;
-    request: number;
-  } | null>(null);
+  const [reveal, setReveal] = useState<RevealTarget | null>(null);
   const [replaceSnapshot, setReplaceSnapshot] =
     useState<WritingSnapshot | null>(null);
   const [annotationSnapshot, setAnnotationSnapshot] = useState<
@@ -702,6 +701,7 @@ function App() {
                     value={body}
                     typewriter={typewriter}
                     reveal={reveal}
+                    onRevealIssue={setNotice}
                     onChange={setBody}
                     onSelection={setSelection}
                     onComposition={(active) => {
@@ -770,7 +770,20 @@ function App() {
               <MaterialsPanel
                 key={book.id}
                 book={book}
-                openChapter={(id) => openTaskChapter(id, book.id)}
+                openChapter={async (id, anchor) => {
+                  await openTaskChapter(id, book.id);
+                  if (anchor) {
+                    setNotice("");
+                    setReveal({
+                      documentKey: `${book.id}.${id}`,
+                      start: anchor.start,
+                      end: anchor.end,
+                      request: Date.now(),
+                      anchor,
+                    });
+                    setPanelOpen(false);
+                  }
+                }}
                 source={
                   chapter
                     ? {
@@ -919,9 +932,9 @@ function App() {
         <span className="divider" />
         <span>{book ? statusLabel : "作品属于你"}</span>
         <span className="top-spacer" />
-        <span>
+        <span role="status" aria-label="正文保存状态">
           {chapter?.updatedAt
-            ? `最近保存：${new Date(chapter.updatedAt).toLocaleTimeString("zh-CN")}`
+            ? `${status} · 最近保存：${new Date(chapter.updatedAt).toLocaleTimeString("zh-CN")}`
             : "离线写作可用"}
         </span>
       </footer>

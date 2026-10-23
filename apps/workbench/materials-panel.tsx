@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
+import type { TextAnchor } from "./manuscript-editor";
 import {
   MaterialEvidence,
   type EvidenceSource,
@@ -40,7 +41,7 @@ export function MaterialsPanel({
   source,
 }: {
   book: Book;
-  openChapter: (id: string) => Promise<void>;
+  openChapter: (id: string, anchor?: TextAnchor) => Promise<void>;
   source: EvidenceSource | null;
 }) {
   const [kind, setKind] = useState(""),
