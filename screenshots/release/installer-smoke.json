@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.13",
-  "installerSha256": "05a0ccbcc2de6e12a28dd1b17ac7ad1c4508dc2a3c168ada04c81517f7697a39",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-rmvUwz\\中文 安装目录",
+  "version": "0.1.0-alpha.14",
+  "installerSha256": "9b9ff8044d9563b576cf5b3afa617bd7301e72954f6cf8285f13297301d48ad3",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-nmsnkh\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -47,6 +47,7 @@
     "installed: linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
     "installed: relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes",
     "installed: cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence",
+    "installed: material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details",
     "installed: local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content",
     "installed: task's exact source versions survive later card edits and real desktop restart without replay or manuscript writes; scope and context are visible in task history",
     "installed: two worker processes actually exit after material intent / durable book receipt; actual desktop startup restores pending review or applied state without overwriting later author edits or calling the model",
@@ -75,6 +76,10 @@
     "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
     "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
     "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
+    "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
+    "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
+    "installed: real desktop restart preserves manuscript, selected pilot, planning placement and all five materials with zero replay; all model content is synthetic fixture data, not literary-quality evidence",
     "installed: actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call",
     "installed: official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel",
     "installed: task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable",
@@ -97,7 +102,7 @@
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 23226,
-  "reinstallMs": 33668,
-  "uninstallMs": 5801
+  "installMs": 27324,
+  "reinstallMs": 34915,
+  "uninstallMs": 5564
 }
