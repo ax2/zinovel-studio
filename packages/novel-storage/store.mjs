@@ -1,3 +1,5 @@
+import { BookStorageKernel } from "./kernel.mjs";
+import { MaterialStore } from "./materials.mjs";
 import {
   mkdir,
   readFile,
@@ -34,107 +36,31 @@ async function readOptional(path) {
   }
 }
 export class NovelStore {
-  #queue = Promise.resolve();
+  #storage;
   constructor(root) {
     this.root = resolve(root);
+    this.#storage = new BookStorageKernel(this.root);
+    this.materials = new MaterialStore(this.#storage);
   }
-  async initialize() {
-    await mkdir(this.root, { recursive: true });
+  initialize() {
+    return this.#storage.initialize();
   }
-  async whenIdle() {
-    await this.#queue;
-  }
-  /** @template T @param {() => Promise<T>} operation @returns {Promise<T>} */
-  #exclusive(operation) {
-    const result = this.#queue.then(operation);
-    this.#queue = result.catch(() => {}); // Keep later writes available after a reported failure.
-    return result;
-  }
-  async #bookRoot(bookId) {
-    const root = join(this.root, checkedId(bookId));
-    const stat = await lstat(root);
-    if (!stat.isDirectory() || stat.isSymbolicLink())
-      throw new Error("作品目录不能是链接");
-    return root;
-  }
-  async #path(root, relative) {
-    const parts = relative.split("/");
-    if (
-      parts.some(
-        (part) => !part || part === ".." || part === "." || /[\\:]/.test(part),
-      )
-    )
-      throw new Error("无效的作品内路径");
-    let current = root;
-    for (const part of parts) {
-      current = join(current, part);
-      try {
-        if ((await lstat(current)).isSymbolicLink())
-          throw new Error("作品文件不能是链接");
-      } catch (error) {
-        if (error.code !== "ENOENT") throw error;
-      }
-    }
-    return current;
-  }
-  async #recover(root) {
-    const path = await this.#path(root, ".zinovel/pending.json");
-    const raw = await readOptional(path);
-    if (!raw) return;
-    const pending = JSON.parse(raw);
-    if (!Array.isArray(pending.entries))
-      throw new Error("恢复日志损坏，请保留作品目录");
-    for (const entry of pending.entries) {
-      const current = await readOptional(await this.#path(root, entry.path));
-      if (current !== entry.before && current !== entry.after)
-        throw new Error("检测到中断事务与外部修改冲突，请保留当前副本");
-    }
-    for (const entry of pending.entries)
-      await atomic(await this.#path(root, entry.path), entry.after);
-    await atomic(
-      await this.#path(root, `.zinovel/transactions/${pending.id}.json`),
-      raw,
-    );
-    await atomic(path, "");
-  }
-  async #transaction(root, changes) {
-    await this.#recover(root);
-    const entries = [];
-    for (const [path, after] of Object.entries(changes))
-      entries.push({
-        path,
-        before: await readOptional(await this.#path(root, path)),
-        after,
-      });
-    const transaction = {
-      id: randomUUID(),
-      at: new Date().toISOString(),
-      entries,
-    };
-    await atomic(
-      await this.#path(root, ".zinovel/pending.json"),
-      json(transaction),
-    );
-    await this.#recover(root);
-  }
-  async #manifest(root) {
-    await this.#recover(root);
-    const book = JSON.parse(
-      await readFile(await this.#path(root, "book.json"), "utf8"),
-    );
-    if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
-      throw new Error("不支持的作品格式，请勿覆盖原稿");
-    return book;
+  whenIdle() {
+    return this.#storage.whenIdle();
   }
   listBooks() {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       await this.initialize();
       const books = [],
         errors = [];
       for (const entry of await readdir(this.root, { withFileTypes: true })) {
         if (!entry.isDirectory() || !idPattern.test(entry.name)) continue;
         try {
-          books.push(await this.#manifest(await this.#bookRoot(entry.name)));
+          books.push(
+            await this.#storage.manifest(
+              await this.#storage.bookRoot(entry.name),
+            ),
+          );
         } catch {
           errors.push({
             id: entry.name,
@@ -147,7 +73,7 @@ export class NovelStore {
     });
   }
   createBook(title) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       const name = titleOf(title),
         id = randomUUID();
       const root = join(this.root, id);
@@ -161,14 +87,14 @@ export class NovelStore {
         updatedAt: new Date().toISOString(),
         chapters: [],
       };
-      await this.#transaction(root, { "book.json": json(book) });
+      await this.#storage.transaction(root, { "book.json": json(book) });
       return book;
     });
   }
   createChapter(bookId, title, volumeId = null) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId),
-        book = await this.#manifest(root);
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId),
+        book = await this.#storage.manifest(root);
       if (
         volumeId &&
         !(book.volumes || []).some((volume) => volume.id === volumeId)
@@ -186,7 +112,7 @@ export class NovelStore {
       book.chapters.push(chapter);
       book.revision++;
       book.updatedAt = chapter.updatedAt;
-      await this.#transaction(root, {
+      await this.#storage.transaction(root, {
         [`manuscript/${chapter.id}.md`]: "",
         "book.json": json(book),
       });
@@ -194,9 +120,9 @@ export class NovelStore {
     });
   }
   updateStructure(bookId, expectedRevision, mutation) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId),
-        book = await this.#manifest(root);
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId),
+        book = await this.#storage.manifest(root);
       if (book.revision !== expectedRevision)
         throw new Error("作品目录已经改变，请刷新后重试");
       book.volumes ||= [];
@@ -304,12 +230,12 @@ export class NovelStore {
       book.chapters = orderedChapters(book, { includeDeleted: true });
       book.revision++;
       book.updatedAt = new Date().toISOString();
-      await this.#transaction(root, { "book.json": json(book) });
+      await this.#storage.transaction(root, { "book.json": json(book) });
       return book;
     });
   }
   importBook(title, chapters) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       const name = titleOf(title);
       if (
         !Array.isArray(chapters) ||
@@ -369,20 +295,20 @@ export class NovelStore {
       }
       changes["book.json"] = json(book);
       await mkdir(root, { recursive: true });
-      await this.#transaction(root, changes);
+      await this.#storage.transaction(root, changes);
       return book;
     });
   }
   search(bookId, query) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       if (typeof query !== "string" || !query.trim() || query.length > 200)
         throw new Error("请输入 1–200 字的检索词");
-      const root = await this.#bookRoot(bookId),
-        book = await this.#manifest(root),
+      const root = await this.#storage.bookRoot(bookId),
+        book = await this.#storage.manifest(root),
         hits = [];
       for (const chapter of orderedChapters(book)) {
         const body = await readFile(
-          await this.#path(root, `manuscript/${chapter.id}.md`),
+          await this.#storage.path(root, `manuscript/${chapter.id}.md`),
           "utf8",
         );
         let start = body.indexOf(query);
@@ -422,18 +348,18 @@ export class NovelStore {
     });
   }
   async #annotationContext(bookId, chapterId) {
-    const root = await this.#bookRoot(bookId),
-      book = await this.#manifest(root);
+    const root = await this.#storage.bookRoot(bookId),
+      book = await this.#storage.manifest(root);
     const chapter = book.chapters.find(
       (item) => item.id === checkedId(chapterId) && !item.deletedAt,
     );
     if (!chapter) throw new Error("章节不存在或已移入回收站");
     const body = await readFile(
-      await this.#path(root, `manuscript/${chapterId}.md`),
+      await this.#storage.path(root, `manuscript/${chapterId}.md`),
       "utf8",
     );
     const path = `annotations/${chapterId}.json`,
-      raw = await readOptional(await this.#path(root, path));
+      raw = await readOptional(await this.#storage.path(root, path));
     const data = raw
       ? JSON.parse(raw)
       : { schemaVersion: 1, revision: 0, items: [] };
@@ -453,7 +379,7 @@ export class NovelStore {
     };
   }
   readAnnotations(bookId, chapterId) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       const { data, body, hash, metadataHash } = await this.#annotationContext(
         bookId,
         chapterId,
@@ -477,7 +403,7 @@ export class NovelStore {
     expectedBodyHash,
     mutation,
   ) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       const { root, path, data, body, hash, metadataHash } =
         await this.#annotationContext(bookId, chapterId);
       if (
@@ -529,7 +455,7 @@ export class NovelStore {
         item.updatedAt = now;
       }
       data.revision++;
-      await this.#transaction(root, { [path]: json(data) });
+      await this.#storage.transaction(root, { [path]: json(data) });
       return { revision: data.revision };
     });
   }
@@ -539,13 +465,13 @@ export class NovelStore {
     return text;
   }
   exportSnapshot(bookId) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId),
-        book = await this.#manifest(root),
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId),
+        book = await this.#storage.manifest(root),
         chapters = [];
       for (const chapter of orderedChapters(book)) {
         const body = await readFile(
-          await this.#path(root, `manuscript/${chapter.id}.md`),
+          await this.#storage.path(root, `manuscript/${chapter.id}.md`),
           "utf8",
         );
         chapters.push({ ...chapter, body, diskHash: digest(body) });
@@ -554,9 +480,9 @@ export class NovelStore {
     });
   }
   createBackup(bookId, destination) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId);
-      await this.#manifest(root);
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId);
+      await this.#storage.manifest(root);
       const parent = resolve(destination),
         inside = relative(root, parent);
       if (
@@ -577,7 +503,7 @@ export class NovelStore {
             throw new Error("备份不跟随链接，请移除外部链接后重试");
           if (entry.name.endsWith(".tmp")) continue;
           const name = prefix + entry.name,
-            source = await this.#path(root, name);
+            source = await this.#storage.path(root, name);
           if (entry.isDirectory()) {
             await mkdir(join(staging, name), { recursive: true });
             await copy(source, name + "/");
@@ -594,7 +520,7 @@ export class NovelStore {
       };
       await copy(root);
       for (const file of files) {
-        const bytes = await readFile(await this.#path(root, file.path));
+        const bytes = await readFile(await this.#storage.path(root, file.path));
         if (createHash("sha256").update(bytes).digest("hex") !== file.sha256)
           throw new Error("备份期间文件被外部修改，请重新备份");
       }
@@ -614,12 +540,15 @@ export class NovelStore {
     });
   }
   restoreBackup(source) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       const root = resolve(source);
       if ((await lstat(root)).isSymbolicLink())
         throw new Error("备份根目录不能是链接");
       const manifest = JSON.parse(
-        await readFile(await this.#path(root, "backup-manifest.json"), "utf8"),
+        await readFile(
+          await this.#storage.path(root, "backup-manifest.json"),
+          "utf8",
+        ),
       );
       if (
         manifest.format !== "zinovel-backup" ||
@@ -634,7 +563,7 @@ export class NovelStore {
       for (const file of manifest.files) {
         if (seen.has(file.path)) throw new Error("备份清单存在重复路径");
         seen.add(file.path);
-        const path = await this.#path(root, file.path),
+        const path = await this.#storage.path(root, file.path),
           stat = await lstat(path);
         total += stat.size;
         if (total > 512 * 1024 * 1024)
@@ -662,7 +591,7 @@ export class NovelStore {
         final = join(this.root, id);
       await mkdir(staging, { recursive: true });
       for (const [path, bytes] of contents) {
-        const target = await this.#path(staging, path);
+        const target = await this.#storage.path(staging, path);
         await mkdir(dirname(target), { recursive: true });
         await writeFile(target, bytes);
       }
@@ -676,13 +605,13 @@ export class NovelStore {
     });
   }
   readChapter(bookId, chapterId) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId),
-        book = await this.#manifest(root);
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId),
+        book = await this.#storage.manifest(root);
       const chapter = book.chapters.find((c) => c.id === checkedId(chapterId));
       if (!chapter) throw new Error("章节不存在");
       const body = await readFile(
-        await this.#path(root, `manuscript/${chapterId}.md`),
+        await this.#storage.path(root, `manuscript/${chapterId}.md`),
         "utf8",
       );
       return {
@@ -694,10 +623,10 @@ export class NovelStore {
     });
   }
   readAcceptanceReceipt(bookId, receiptId) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId);
-      await this.#manifest(root);
-      const path = await this.#path(
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId);
+      await this.#storage.manifest(root);
+      const path = await this.#storage.path(
         root,
         `.zinovel/task-receipts/${checkedId(receiptId)}.json`,
       );
@@ -713,20 +642,20 @@ export class NovelStore {
     });
   }
   saveChapter(input, acceptanceReceipt = undefined) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       if (
         typeof input.body !== "string" ||
         Buffer.byteLength(input.body) > 8 * 1024 * 1024
       )
         throw new Error("单章正文超过 8 MiB 或格式无效");
-      const root = await this.#bookRoot(input.bookId),
-        book = await this.#manifest(root);
+      const root = await this.#storage.bookRoot(input.bookId),
+        book = await this.#storage.manifest(root);
       const chapter = book.chapters.find(
         (c) => c.id === checkedId(input.chapterId),
       );
       if (!chapter) throw new Error("章节不存在");
       const path = `manuscript/${chapter.id}.md`;
-      const disk = await readFile(await this.#path(root, path), "utf8");
+      const disk = await readFile(await this.#storage.path(root, path), "utf8");
       if (
         input.expectedRevision !== chapter.revision ||
         input.expectedHash !== digest(disk)
@@ -746,7 +675,7 @@ export class NovelStore {
         )
           throw new Error("接受回执与正文版本不匹配");
         const receiptPath = `.zinovel/task-receipts/${receipt.id}.json`;
-        if (await readOptional(await this.#path(root, receiptPath)))
+        if (await readOptional(await this.#storage.path(root, receiptPath)))
           throw new Error("接受回执已存在，不能重复改稿");
         receiptChanges = {
           [receiptPath]: json({
@@ -766,7 +695,7 @@ export class NovelStore {
       chapter.updatedAt = new Date().toISOString();
       book.updatedAt = chapter.updatedAt;
       book.revision++;
-      await this.#transaction(root, {
+      await this.#storage.transaction(root, {
         [path]: input.body,
         "book.json": json(book),
         ...receiptChanges,
@@ -784,21 +713,21 @@ export class NovelStore {
     });
   }
   archiveConflict(input) {
-    return this.#exclusive(async () => {
+    return this.#storage.exclusive(async () => {
       for (const value of [input.localBody, input.baseBody ?? ""])
         if (
           typeof value !== "string" ||
           Buffer.byteLength(value) > 8 * 1024 * 1024
         )
           throw new Error("冲突副本格式无效或过大");
-      const root = await this.#bookRoot(input.bookId),
-        book = await this.#manifest(root);
+      const root = await this.#storage.bookRoot(input.bookId),
+        book = await this.#storage.manifest(root);
       const chapter = book.chapters.find(
         (item) => item.id === checkedId(input.chapterId) && !item.deletedAt,
       );
       if (!chapter) throw new Error("章节不存在或已回收");
       const remoteBody = await readFile(
-        await this.#path(root, `manuscript/${chapter.id}.md`),
+        await this.#storage.path(root, `manuscript/${chapter.id}.md`),
         "utf8",
       );
       if (
@@ -820,7 +749,7 @@ export class NovelStore {
         remoteTitle: chapter.title,
         remoteHash: digest(remoteBody),
       };
-      await this.#transaction(root, {
+      await this.#storage.transaction(root, {
         [`.zinovel/conflicts/${record.id}.json`]: json(record),
       });
       return {
@@ -830,16 +759,16 @@ export class NovelStore {
     });
   }
   history(bookId, chapterId) {
-    return this.#exclusive(async () => {
-      const root = await this.#bookRoot(bookId),
+    return this.#storage.exclusive(async () => {
+      const root = await this.#storage.bookRoot(bookId),
         path = `manuscript/${checkedId(chapterId)}.md`;
-      const directory = await this.#path(root, ".zinovel/transactions");
+      const directory = await this.#storage.path(root, ".zinovel/transactions");
       const versions = [];
       for (const file of await readdir(directory)) {
         if (!file.endsWith(".json")) continue;
         const transaction = JSON.parse(
           await readFile(
-            await this.#path(root, `.zinovel/transactions/${file}`),
+            await this.#storage.path(root, `.zinovel/transactions/${file}`),
             "utf8",
           ),
         );

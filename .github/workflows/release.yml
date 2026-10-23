@@ -15,6 +15,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Require product release qualification
+        run: node scripts/check-release-ready.mjs
       - uses: pnpm/action-setup@v4
         with:
           version: 10.3.0
@@ -47,6 +49,7 @@ jobs:
       - run: pnpm test:stream
       - run: pnpm test:budget
       - run: pnpm test:candidate-review
+      - run: pnpm test:materials
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

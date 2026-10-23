@@ -386,6 +386,10 @@ p {
   overflow: auto;
 }
 .inspector-title {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface);
   padding: 22px;
   color: var(--accent);
   border-bottom: 1px solid var(--border);
@@ -1404,6 +1408,9 @@ footer {
 }
 .reference-tabs button {
   flex: 1;
+  white-space: nowrap;
+  font-size: 13px;
+  padding: 8px;
 }
 .reference-tabs button[aria-pressed="true"] {
   background: var(--selected);
@@ -1452,4 +1459,92 @@ footer {
   .annotation-list {
     max-height: 35vh;
   }
+}
+
+.materials-panel {
+  min-width: 0;
+}
+.materials-panel label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  margin: 10px 0;
+}
+.materials-panel input:not([type="checkbox"]),
+.materials-panel select,
+.materials-panel textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  background: var(--paper);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 8px;
+  font: inherit;
+}
+.materials-panel textarea {
+  resize: vertical;
+  line-height: 1.65;
+}
+.material-form {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.materials-panel .inline-check {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 7px;
+}
+.materials-panel input[type="checkbox"] {
+  width: auto;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.material-list {
+  display: grid;
+  gap: 5px;
+  max-height: 220px;
+  overflow: auto;
+}
+.material-list button {
+  display: grid;
+  text-align: left;
+  gap: 5px;
+  overflow-wrap: anywhere;
+}
+.material-list span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.material-list button[aria-pressed="true"] {
+  background: var(--selected);
+  border-color: var(--accent);
+}
+.material-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.material-actions button {
+  font-size: 12px;
+}
+.material-actions small {
+  color: var(--muted);
+}
+.material-chapters {
+  max-height: 210px;
+  overflow: auto;
+}
+.material-history {
+  border: 1px solid var(--border);
+  padding: 12px;
+  margin-top: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

@@ -96,8 +96,12 @@
       "name": "灵感收件箱",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "文本/图片/引用可转为立项候选"
+      "status": "in-progress",
+      "acceptance": "文本/图片/引用可转为立项候选",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "IDEA-02",
@@ -105,8 +109,12 @@
       "name": "题材与读者承诺",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "立项卡可编辑并与试写对照"
+      "status": "in-progress",
+      "acceptance": "立项卡可编辑并与试写对照",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "IDEA-03",
@@ -168,8 +176,12 @@
       "name": "全书总纲",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "目标/因果/终局/规模可追踪"
+      "status": "in-progress",
+      "acceptance": "目标/因果/终局/规模可追踪",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-02",
@@ -177,8 +189,12 @@
       "name": "分卷弧线",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "每卷目标和不可逆变化清楚"
+      "status": "in-progress",
+      "acceptance": "每卷目标和不可逆变化清楚",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-03",
@@ -186,8 +202,12 @@
       "name": "章节大纲",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "与卷章树同 ID 联动"
+      "status": "in-progress",
+      "acceptance": "与卷章树同 ID 联动",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-04",
@@ -195,8 +215,12 @@
       "name": "近期细纲",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "场景目标/阻碍/选择/结果可编辑"
+      "status": "in-progress",
+      "acceptance": "场景目标/阻碍/选择/结果可编辑",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-05",
@@ -213,8 +237,12 @@
       "name": "主线管理",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "主角追求、节点及进展有正文链接"
+      "status": "in-progress",
+      "acceptance": "主角追求、节点及进展有正文链接",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-07",
@@ -222,8 +250,12 @@
       "name": "支线与交汇",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "支线人物/回归窗口/收束可视"
+      "status": "in-progress",
+      "acceptance": "支线人物/回归窗口/收束可视",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLAN-08",
@@ -240,8 +272,12 @@
       "name": "世界百科",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "规则/历史/文化/制度分层并可链接"
+      "status": "in-progress",
+      "acceptance": "规则/历史/文化/制度分层并可链接",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "WORLD-02",
@@ -249,8 +285,12 @@
       "name": "人物卡",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "欲望/缺陷/声音/外貌均可手改"
+      "status": "in-progress",
+      "acceptance": "欲望/缺陷/声音/外貌均可手改",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "WORLD-03",
@@ -294,8 +334,12 @@
       "name": "命名与别名库",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "检索别名，跨书同名仅提示"
+      "status": "in-progress",
+      "acceptance": "检索别名，跨书同名仅提示",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "WORLD-08",
@@ -584,8 +628,12 @@
       "name": "伏笔台账",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "计划/已埋/强化/回收独立状态"
+      "status": "in-progress",
+      "acceptance": "计划/已埋/强化/回收独立状态",
+      "evidence": [
+        "design/creative-materials.md",
+        "iterations/stage-004/WORKLOG.md"
+      ]
     },
     {
       "id": "PLOT-02",

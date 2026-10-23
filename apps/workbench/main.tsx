@@ -32,6 +32,7 @@ import "./style.css";
 import { ChapterTree } from "./chapter-tree";
 import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
+import { MaterialsPanel } from "./materials-panel";
 import { TaskHistory } from "./task-history";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
@@ -49,6 +50,7 @@ function App() {
   const editorRef = useRef<ManuscriptHandle>(null);
   const [referenceOpen, setReferenceOpen] = useState(false),
     [typewriter, setTypewriter] = useState(false);
+  const [materialsOpen, setMaterialsOpen] = useState(false);
   const [reveal, setReveal] = useState<{
     documentKey: string;
     start: number;
@@ -454,7 +456,7 @@ function App() {
   }
   return (
     <div
-      className={`app ${focus ? "focus" : ""} ${panelOpen ? "show-inspector" : ""} ${referenceOpen ? "reference-mode" : ""}`}
+      className={`app ${focus ? "focus" : ""} ${panelOpen ? "show-inspector" : ""} ${referenceOpen || materialsOpen ? "reference-mode" : ""}`}
     >
       <nav className="rail" aria-label="主导航">
         <div className="brand-mark">
@@ -737,26 +739,48 @@ function App() {
               aria-label="创作参考内容"
             >
               <button
-                aria-pressed={!referenceOpen}
-                onClick={() => setReferenceOpen(false)}
+                aria-pressed={!referenceOpen && !materialsOpen}
+                onClick={() => {
+                  setReferenceOpen(false);
+                  setMaterialsOpen(false);
+                }}
               >
                 写作工具
               </button>
               <button
-                aria-pressed={referenceOpen}
-                onClick={() => setReferenceOpen(true)}
+                aria-pressed={referenceOpen && !materialsOpen}
+                onClick={() => {
+                  setReferenceOpen(true);
+                  setMaterialsOpen(false);
+                }}
               >
                 旧稿参考
               </button>
+              <button
+                aria-pressed={materialsOpen}
+                onClick={() => {
+                  setMaterialsOpen(true);
+                  setReferenceOpen(false);
+                }}
+              >
+                资料卡
+              </button>
             </div>
-            {referenceOpen && (
+            <div hidden={!materialsOpen}>
+              <MaterialsPanel
+                key={book.id}
+                book={book}
+                openChapter={(id) => openTaskChapter(id, book.id)}
+              />
+            </div>
+            {referenceOpen && !materialsOpen && (
               <ReferencePanel
                 key={book.id}
                 book={book}
                 chapterId={chapter?.id}
               />
             )}
-            <div hidden={referenceOpen}>
+            <div hidden={referenceOpen || materialsOpen}>
               <WritingAssistant
                 key={book.id}
                 bookId={book.id}

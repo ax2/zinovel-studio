@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "ready": false,
+  "policy": "2026-10-23: 用户要求达到上架质量后再公开发布；开发提交继续。",
+  "checks": [
+    { "id": "complete-product", "verified": false, "evidence": [] },
+    { "id": "real-model-literary-workflow", "verified": false, "evidence": [] },
+    { "id": "runtime-recovery-and-migration", "verified": false, "evidence": [] },
+    { "id": "accessibility-and-performance", "verified": false, "evidence": [] },
+    { "id": "publishing-formats-and-targets", "verified": false, "evidence": [] },
+    { "id": "distribution-and-licenses", "verified": false, "evidence": [] }
+  ]
+}

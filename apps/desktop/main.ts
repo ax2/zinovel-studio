@@ -172,6 +172,60 @@ if (
                   payload.chapterId,
                 );
                 break;
+              case "materials.list":
+                value = await store.materials.list(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
+              case "materials.read":
+                value = await store.materials.read(payload.bookId, payload.id);
+                break;
+              case "materials.save":
+                value = await store.materials.save(
+                  payload.bookId,
+                  payload.input,
+                  payload.expected,
+                );
+                break;
+              case "materials.delete":
+                value = await store.materials.setDeleted(
+                  payload.bookId,
+                  payload.expected,
+                  payload.deleted,
+                );
+                break;
+              case "materials.history":
+                value = await store.materials.history(
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "materials.export": {
+                const material = await store.materials.read(
+                  payload.bookId,
+                  payload.id,
+                );
+                const selected = await dialog.showSaveDialog(window, {
+                  title: "导出已保存创作资料",
+                  defaultPath: "创作资料.md",
+                  filters: [{ name: "Markdown", extensions: ["md"] }],
+                });
+                if (selected.canceled || !selected.filePath)
+                  value = { cancelled: true };
+                else {
+                  const { materialMarkdown } = await import(
+                    "../../packages/novel-domain/materials.mjs"
+                  );
+                  await writeFile(
+                    selected.filePath,
+                    materialMarkdown(material),
+                    "utf8",
+                  );
+                  value = { cancelled: false };
+                }
+                break;
+              }
               case "annotations.mutate":
                 value = await store.mutateAnnotations(
                   payload.bookId,
