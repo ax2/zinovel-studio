@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "release": "https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.9",
+  "publishedAt": "2026-10-23T14:14:42Z",
+  "ci": "https://github.com/ax2/zinovel-studio/actions/runs/39966140390",
+  "commit": "05d2405b2212af431e8be7ef07d8798105653e08",
+  "bytes": 222853871,
+  "sha256": "d3324c34048c8be00ead4081e6aba273a293bb8f2db5aece3d67e347493c0dfb",
+  "metadataDigestsVerified": true,
+  "publicInstallerExecutionEvidence": "release CI installed exact manifest bytes; not downloaded again on local host"
+}

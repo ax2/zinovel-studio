@@ -2,11 +2,11 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.8 已完成本机及远端安装/升级验证并公开发布，包含场景看板、章纲和十二类创作资料。后续经过验证的阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.9 已完成本机及远端安装/升级验证并公开发布，新增独立试写实验室与 AI 候选审阅，保留场景看板、章纲和十二类创作资料。后续经过验证的阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.8 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.8) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.8/ZiNovel-Studio-0.1.0-alpha.8-windows-x64-setup.exe)。x64 安装包已通过自动构建、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，仍有大量创作功能待完成。
+Windows 技术预览版：[v0.1.0-alpha.9 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.9) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.9/ZiNovel-Studio-0.1.0-alpha.9-windows-x64-setup.exe)。x64 安装包已通过自动构建、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支 alpha.9 正在开发独立试写实验室：同场景分支、手工编辑与比较、版本化作者选择、试读反馈及新建章节已通过源码桌面验证。该增量尚未包含在公开 alpha.8 安装包中；试写专属 Agent、审阅草稿及退出恢复也已通过源码验证，正准备本版安装验收，详见 [试写设计](design/pilot-branches.md)。
+主分支 alpha.10 正在开发全书连续性工作台：只读证据筛选、知情范围区分、原资料与精确正文入口已通过源码桌面验证，尚未包含在 alpha.9 安装包。关系图、秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md)。
 
 ## 产品方向
 
@@ -103,3 +103,5 @@ Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状�
 alpha.7 开发切片已接入 AI 完善已有资料：模型提交独立结构化候选，作者可对照原卡、编辑、保存审阅草稿并明确接受；过期版本拒绝覆盖。人物字段、场景细纲编辑与证据段落导航已按原条目验收，参见[逐项报告](assessments/stage-004/materials-and-evidence-acceptance.md)。alpha.8 进一步接入共享场景看板/章纲、组织/物品/能力/现实资料。全流程文学质量、关系/认知矩阵、地图和出版等仍待完成。
 
 alpha.8 标签发行 CI 39955362954 已成功，四个公开附件与安装清单哈希核对一致；本机和 CI 构建分别留存证据，详见[发行证据](assessments/release/v0.1.0-alpha.8/README.md)。后续[试写分支](design/pilot-branches.md)在 alpha.9 源码中实现，独立验证与发布，不计入 alpha.8 功能。
+
+alpha.9 已于 2026-10-23 22:14:42 北京时间公开，发行 CI 39966140390 成功，安装附件及元数据核对通过。独立试写五项原验收条目已通过，完整产品仍在开发；见[发行证据](assessments/release/v0.1.0-alpha.9/README.md)。
