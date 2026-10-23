@@ -29,6 +29,47 @@ const badBytes = () =>
     Buffer.from([0xff]),
     Buffer.from("结尾"),
   ]);
+
+test("restore rejects hash-valid backup metadata with malformed UTF-8 before creating a restored book", async () => {
+  const f = await fixture();
+  const destination = await mkdtemp(join(tmpdir(), "novel-utf8-backup-"));
+  const backup = await f.store.createBackup(f.book.id, destination);
+  const path = join(backup.path, "book.json");
+  const bytes = await readFile(path);
+  bytes[bytes.indexOf(Buffer.from("MetadataBook"))] = 255;
+  await writeFile(path, bytes);
+  const manifestPath = join(backup.path, "backup-manifest.json");
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+  manifest.files.find((file) => file.path === "book.json").sha256 =
+    digest(bytes);
+  await writeFile(manifestPath, JSON.stringify(manifest));
+  const before = await readdir(f.root);
+  await assert.rejects(f.store.restoreBackup(backup.path), /UTF-8/);
+  assert.deepEqual(await readdir(f.root), before);
+  assert.deepEqual(await readFile(path), bytes);
+  assert.equal(
+    (await f.store.readChapter(f.book.id, f.chapter.id)).body,
+    f.chapter.body,
+  );
+});
+
+test("binary backup and restore preserve malformed manuscript bytes without converting them to text", async () => {
+  const f = await fixture(),
+    bad = badBytes();
+  await writeFile(f.file, bad);
+  const destination = await mkdtemp(join(tmpdir(), "novel-utf8-backup-"));
+  const backup = await f.store.createBackup(f.book.id, destination);
+  const restored = await f.store.restoreBackup(backup.path);
+  const restoredFile = join(
+    f.root,
+    restored.id,
+    "manuscript",
+    f.chapter.id + ".md",
+  );
+  assert.deepEqual(await readFile(restoredFile), bad);
+  assert.deepEqual(await readFile(f.file), bad);
+  await assert.rejects(f.store.readChapter(restored.id, f.chapter.id), /UTF-8/);
+});
 test("editor read, search and export reject malformed UTF-8 without manufacturing replacement text", async () => {
   const f = await fixture(),
     bad = badBytes();

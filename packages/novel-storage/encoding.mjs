@@ -5,6 +5,9 @@ const decoder = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
 /** Canonical text is UTF-8. Preserve a real BOM and reject undecodable bytes. */
 export async function readUtf8File(path) {
   const bytes = await readFile(path);
+  return decodeUtf8(bytes);
+}
+export function decodeUtf8(bytes) {
   try {
     return decoder.decode(bytes);
   } catch (error) {

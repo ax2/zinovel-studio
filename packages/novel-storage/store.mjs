@@ -1,4 +1,4 @@
-import { readUtf8File } from "./encoding.mjs";
+import { readUtf8File, decodeUtf8 } from "./encoding.mjs";
 import { BookStorageKernel } from "./kernel.mjs";
 import { MaterialStore } from "./materials.mjs";
 import { PlanningStore } from "./planning.mjs";
@@ -591,14 +591,18 @@ export class NovelStore {
         contents.set(file.path, bytes);
       }
       const book = JSON.parse(
-        contents.get("book.json")?.toString("utf8") || "{}",
+        decodeUtf8(contents.get("book.json") || Buffer.from("{}")),
       );
       if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
         throw new Error("备份作品格式不支持");
       for (const chapter of book.chapters)
         if (!contents.has(`manuscript/${checkedId(chapter.id)}.md`))
           throw new Error("备份缺少章节正文");
-      if (contents.get(".zinovel/pending.json")?.toString("utf8").trim())
+      if (
+        decodeUtf8(
+          contents.get(".zinovel/pending.json") || Buffer.alloc(0),
+        ).trim()
+      )
         throw new Error("备份含有未完成事务，请先在原位置恢复");
       const id = randomUUID(),
         staging = join(this.root, `.restore-${id}`),

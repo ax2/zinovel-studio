@@ -1,8 +1,8 @@
 # 下一出版切片评估：冻结快照与可独立阅读的产物
 
-状态：设计待实施，不归入 alpha.15 安装包，不提升任何 PUB 功能为 verified。
+状态：生成层已合入 alpha.16，主机持久捕获与保存入口待实施，不提升任何 PUB 功能为 verified。alpha.15 已撤回为草稿。
 
-依据现有代码：book.export 先 exportSnapshot 全书，再选择 Markdown 文件并直接 writeFile；exportSnapshot 持有共享队列一次读全书，以非 fatal UTF-8 解码，没有持久发布快照。现有阅读预览逐章读取当前磁盘，明确不提供出版冻结语义。不能把它直接当作已授权发布源，也不能因菜单存在就把 PUB-01 全部验收。
+依据现有代码：book.export 先 exportSnapshot 全书，再选择 Markdown 文件并直接 writeFile；exportSnapshot 持有共享队列一次读全书，没有持久发布快照。alpha.16 编码保护修复后读取已使用 fatal UTF-8 解码，非法字节不会被宽松解码后导出。现有阅读预览逐章读取当前磁盘，明确不提供出版冻结语义。不能把它直接当作已授权发布源，也不能因菜单存在就把 PUB-01 全部验收。
 
 ## 保持的完整需求
 
