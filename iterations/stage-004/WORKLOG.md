@@ -272,3 +272,5 @@ MixedContext以带类型身份区分原资料、认知与作者选择。宿主�
 复现旧纯资料包来源已stale再改一次时hash相同，新单元先失败；提取共享context-proof并为原资料加入聚合依赖证明，严格解码资料UTF-8，坏字节在CAS写入前拒绝。116项完整检查passed，真实Electron/官方Harness零请求拒绝重复stale，刷新后受限往返，旧任务重启冻结，认知/资料/试写/预算/兼容运行回归passed。探针刷新后漏展开预览首次超时，修正正常控件操作后通过；失败留.cache，错误提示截图已查看。
 
 1000认知事件存储基准：列表2514ms/矩阵4982ms，保存23ms/取消3ms，查询500ms目标未达。1命题1人物1章的暖缓存服务测量不冒充全量小说/低端/UI验收，report为measured。详见assessments/stage-004/material-context-proof.md。尚未构建安装alpha.14，不推标签。
+
+公开附件复查工具进入主分支：release:verify-public使用真实gh读取标签/发行CI及四附件元数据，对公开alpha.12执行通过；将普通开发CI40001370269当发行CI的负向调用被拒绝，并把预置passed回执更新为failed。公开EXE不再次下载，本机执行与CI执行边界在设计中明确。alpha.13发行CI40005066108尚在安装后套件，不能提前报告公开成功。

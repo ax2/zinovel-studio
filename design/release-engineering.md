@@ -28,3 +28,9 @@ Electron 44.7.0 自带 Node 24.21.0；官方 SDK 通过该 EXE 的 Node 模式�
 当前未配置代码签名，预览版明确标注 unsigned。安装签名、更新/降级、多 Windows 版本、低配置、真实 IME 和文学质量仍需后续验收。未提供应用内自动升级，不把 GitHub 自动发布描述为应用自动更新。
 
 从 alpha.2 起，安装后的 EXE 还必须通过任务强杀恢复、接受事务对账、旧版任务分页和当前选区重试。故障 worker 采用同一提交的生产存储服务在持久检查点退出，安装应用完成恢复；这不是物理断电测试。版本间完整运行目录归档到 release/v<version>/win-unpacked，保留安装 EXE 与各版安装回执。
+
+## 公开附件复查
+
+后续主分支增加可重复命令 `pnpm release:verify-public v0.1.0-alpha.N RELEASE_RUN_ID`：核对本机标签指向、Windows发行工作流成功/标签/提交一致、公开非草稿prerelease与四附件、实际下载三个元数据的GitHub digest、EXE大小/digest/manifest/SHA256SUMS一致、重装卸载与升级回执。报告保存对应版本ci-public/verification.json，失败明确写failed，不残留本次passed。
+
+该命令不下载或再次运行公开EXE；公开字节的执行证据来自同一成功发行CI，不能称为本机再次安装。它可在后续版本工作区复查旧标签，不要求当前package版本等于被复查版本。已对公开alpha.12执行通过；alpha.13须等待自己的发行CI完成再运行。它属于发行后的独立复查，不能替代工作流中的实际安装和升级门禁。

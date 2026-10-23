@@ -48,7 +48,8 @@
     "package:win": "pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never",
     "test:installer": "node scripts/smoke-installer.mjs",
     "test:upgrade": "node scripts/smoke-upgrade.mjs",
-    "release:manifest": "node scripts/release-manifest.mjs"
+    "release:manifest": "node scripts/release-manifest.mjs",
+    "release:verify-public": "node scripts/verify-public-release.mjs"
   },
   "engines": {
     "node": ">=26"
