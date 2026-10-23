@@ -72,6 +72,8 @@ async function launch(title = book.title) {
   });
   owned = await captureOwnedProcesses(application.process().pid);
   page = await application.firstWindow({ timeout: 45000 });
+  if (process.env.ZINOVEL_QA_VIEWPORT === "ci")
+    await page.setViewportSize({ width: 1008, height: 681 });
   page.on("pageerror", (error) => report.errors.push(error.message));
   page.on("request", (request) => {
     if (/^https?:/.test(request.url()))
@@ -150,7 +152,7 @@ try {
   );
   assert.equal(
     await page
-      .getByRole("button", { name: "生成候选", exact: true })
+      .locator('.toolbar button[title="查找替换预览"]')
       .evaluate((element) => {
         const before = document.activeElement;
         element.focus();

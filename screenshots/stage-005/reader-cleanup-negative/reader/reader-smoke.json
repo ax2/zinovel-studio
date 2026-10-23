@@ -3,7 +3,7 @@
   "checks": [],
   "errors": [],
   "viewports": [],
-  "failure": "Error: synthetic-reader-cleanup-checkpoint\n    at file:///D:/Work/zinovel-studio/scripts/smoke-reader.mjs:130:11",
+  "failure": "Error: synthetic-reader-cleanup-checkpoint\n    at file:///D:/Work/zinovel-studio/scripts/smoke-reader.mjs:132:11",
   "failedCleanupConfirmed": true,
   "ownedProcessesConfirmedExited": 5
 }

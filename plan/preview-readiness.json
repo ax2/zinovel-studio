@@ -15,6 +15,7 @@
   ],
   "reports": [
     "screenshots/stage-005/reader/reader-smoke.json",
+    "screenshots/stage-005/reader-ci-viewport-recheck/reader/reader-smoke.json",
     "screenshots/stage-005/desktop-regression-final/desktop-smoke.json",
     "screenshots/stage-004/creative-journey/creative-journey-smoke.json"
   ],

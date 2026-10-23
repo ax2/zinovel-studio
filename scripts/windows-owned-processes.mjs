@@ -10,7 +10,7 @@ async function snapshot() {
       "-NoProfile",
       "-NonInteractive",
       "-Command",
-      "Get-CimInstance Win32_Process -ErrorAction Stop | Select-Object ProcessId,ParentProcessId,CreationDate | ConvertTo-Json -Compress",
+      "Get-CimInstance -Query 'SELECT ProcessId,ParentProcessId,CreationDate FROM Win32_Process' -ErrorAction Stop | Select-Object ProcessId,ParentProcessId,CreationDate | ConvertTo-Json -Compress",
     ],
     { windowsHide: true, timeout: 15000, maxBuffer: 4 * 1024 * 1024 },
   );

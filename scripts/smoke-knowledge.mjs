@@ -280,9 +280,14 @@ try {
     .getByRole("button", { name: "全部认知记录", exact: true })
     .click();
   await list.getByRole("heading", { name: "全部认知记录 · 2 条" }).waitFor();
+  await page.waitForFunction(() => {
+    const form = document.querySelector(".knowledge-matrix .knowledge-body");
+    return form instanceof HTMLFieldSetElement && !form.disabled;
+  });
   await dialog()
     .getByRole("button", { name: "关闭认知矩阵", exact: true })
     .click();
+  await dialog().waitFor({ state: "hidden" });
   await page.evaluate(() => {
     window.__knowledgeSetItem = Storage.prototype.setItem;
     Storage.prototype.setItem = function (key, value) {
