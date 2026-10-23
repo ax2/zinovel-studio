@@ -294,3 +294,5 @@ MixedContext以带类型身份区分原资料、认知与作者选择。宿主�
 冻结ef44ceaeef496efa012dfb7c2f0a2fde64eb2411，116项完整检查及源码CI40009540849 success。打包32718终态exit0，完整资格流水线15680终态exit0。EXE222878938字节，SHA256 9b9ff8044d9563b576cf5b3afa617bd7301e72954f6cf8285f13297301d48ad3；安装27324ms/重装34915ms/卸载5564ms/公开alpha.3升级34323ms。完整创作链和旧快照保护在真实安装EXE通过，原稿与资料/试写/任务边界保持。安装后浅色空书/章纲、深色窄窗正文、重复失效提示与升级截图已查看，全部合成内容。完整运行目录和EXE归档release/v0.1.0-alpha.14，无ZIP。详见assessments/release/v0.1.0-alpha.14；公开字节/标签CI后核对，不混用本机哈希。
 
 下一切片design/reader-preview.md依据现有单章reading和导出服务记录目录/进度/无作者剧透/手机宽度方案，尚未实现，不归入alpha.14安装资格。保持其余Stage-004与完整106需求范围。
+
+alpha.14同源码标签发行CI40011265240已in_progress，公开附件未核对，README继续保留已公开alpha.13下载。主分支推进alpha.15并将预览门禁重置false，独立阅读预览仍仅设计，不归入alpha.14。下一次先核对40011265240原运行，成功后用release:verify-public v0.1.0-alpha.14 40011265240核对公开字节并更新发行文档，再继续reader-preview设计实施。

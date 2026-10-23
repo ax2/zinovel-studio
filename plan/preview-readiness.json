@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.14",
-  "ready": true,
+  "version": "0.1.0-alpha.15",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -11,12 +11,9 @@
     "assessments/stage-004/material-context-proof.md",
     "assessments/stage-004/creative-journey.md"
   ],
-  "reports": [
-    "screenshots/stage-004/context/context-smoke.json",
-    "screenshots/stage-004/creative-journey/creative-journey-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.14源阶段与完整合成创作往返通过；实际安装升级及公开附件必须另验",
+    "alpha.15独立阅读预览仅有设计，尚无本版运行或安装资格",
     "未签名预览，完整106项需求、真实模型文学质量和完整上架验收未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
