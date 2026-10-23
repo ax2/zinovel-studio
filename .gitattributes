@@ -10,5 +10,6 @@
 *.tsx text eol=lf
 *.css text eol=lf
 *.html text eol=lf
+assessments/release/**/ci-public/SHA256SUMS.txt text eol=lf
 apps/desktop/upstream/*.ts -text
 apps/desktop/upstream/LICENSE -text
