@@ -230,3 +230,5 @@ dccb693 的开发 CI39980345586 completed/success。新增稳定命题、独立�
 9b7bc21的CI39990755353 completed/success。新增套件接开发、未来发行与安装后流程，alpha.12安装和公开发行尚未开始。
 
 alpha.12源阶段资格：完整105项单元/类型/规划passed，原认知、作者选择、旧认知整理、真实旧alpha.11桌面回退均passed。准备同版本预览流水线入口（ready=true只准进入构建），稳定版门禁不变；尚未完成alpha.12实际安装、重装/卸载及公开旧版升级，不推标签。WORLD-05保持in-progress，Agent上下文等完整边界不减少。
+
+提交a6e462b后重新运行固定alpha.10/11源码写入器探针，两者passed；报告保存knowledge-alpha10-writer.json与knowledge-alpha11-writer.json，currentSource明确指向a6e462b。真实旧EXE结果另在knowledge-old-desktop报告，不把源码执行当成安装器回退。下一步冻结完整文档提交构建alpha.12安装候选，再等待其全套源码CI、真实安装和旧包升级；不改已公开alpha.11标签。

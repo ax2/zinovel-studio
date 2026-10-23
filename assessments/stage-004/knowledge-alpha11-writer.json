@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "oldSource": "0a51771e63b73a6a36adedcb909a092f4b45e242",
+  "currentSource": "a6e462b74b681a2935378cf828a71ebeda5f23cf",
+  "method": "actual pinned historical domain/storage modules executed in Node; no old desktop installation or full downgrade qualification",
+  "checks": [
+    "old reader supports proposition; no unrelated read mutates source",
+    "old supported-card edit leaves independent knowledge event, new proposition and manuscript byte-for-byte unchanged",
+    "new reader detects old supported-card definition change as stale",
+    "old knowledge writer can explicitly rebind its supported event without erasing frozen provenance; new reader discloses changed target version"
+  ]
+}
