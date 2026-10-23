@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record",
+    "simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity",
+    "synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another",
+    "old-format draft without creation identity migrates before explicit save; four deliberate author creation intents remain exactly four records and manuscript bytes never change"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "cleanup-error-protected.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "creation-recovered-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

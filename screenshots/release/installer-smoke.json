@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.11",
-  "installerSha256": "8b73fd279a04a0722fce67a2e3c319f7cd8ec013bb8e909b6e0606e3c74fdd60",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-LLVccG\\中文 安装目录",
+  "version": "0.1.0-alpha.12",
+  "installerSha256": "1e6995835d92a3a2cf8d9e511721eef23f1461dc3ce416655cb42d528638de33",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-pgtMCu\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -75,11 +75,23 @@
     "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
     "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
     "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record",
+    "installed: simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity",
+    "installed: synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another",
+    "installed: old-format draft without creation identity migrates before explicit save; four deliberate author creation intents remain exactly four records and manuscript bytes never change",
+    "installed: actual author selection freezes one explicit event without removing contradictory records; matrix shows the choice separately",
+    "installed: external same-cell decision cannot be cleared with a stale UI baseline; re-reading permits explicit author change",
+    "installed: manuscript edit expires the old choice; original quote remains visible and current-source rebinding alone does not silently reconfirm the choice",
+    "installed: explicit new selection survives full restart; clearing preserves four prior choice versions and unchosen event bytes; dark narrow history remains reachable",
+    "installed: 41 actual legacy records paginate 40/1; explicit source selection starts with unspecified knowledge state and permits author scope/state review",
+    "installed: legacy source and author edits survive full desktop restart; a changed old-card baseline rejects creation without a new record",
+    "installed: refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact",
+    "installed: manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged",
     "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
     "real NSIS uninstall removes app and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 23983,
-  "reinstallMs": 35454,
-  "uninstallMs": 5847
+  "installMs": 27328,
+  "reinstallMs": 34975,
+  "uninstallMs": 5456
 }
