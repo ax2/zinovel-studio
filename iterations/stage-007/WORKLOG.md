@@ -33,3 +33,6 @@
 
 ## alpha.17 持久出版存储
 alpha.16标签53d2d93已冻结，发行CI40040294178继续精确重建。主分支17门禁false、reports为空，不继承16资格。新增共享内核PublicationStore，分批捕获/重验/取消与提交边界、公开白名单、持久hash快照和逐项损坏诊断。事务可选create-only前像，Windows重复路径在日志前拒绝；恢复记录来源链而不重写原快照。9项新增存储回归、完整146项检查与实际Node24兼容测试通过，编译后书库/恢复/阅读/编码界面回归通过。详见assessments/stage-007/publication-storage.md；尚无出版菜单或本版安装资格，PUB状态不提升。
+
+## alpha.16首次标签CI失败与观察器评估
+40040294178 attempt1完成源码及安装后全部功能、重装，在卸载检查access(EXE)返回EPERM后失败，未证明EXE/注册项消失，无公开附件。失败回执单独归档ci-attempt-1，CI字节384aa60...不冒充本机9b23...。原样重跑一次冻结标签，断言不变。主分支17新增权限不确定状态的30秒轮询与元数据诊断，永久拒绝/仍存在依旧失败，EIO立即失败；4项新测与完整150检查通过。详见assessments/stage-007/uninstall-observation.md；未把首次失败改写为成功。

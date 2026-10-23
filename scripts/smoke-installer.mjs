@@ -12,6 +12,7 @@ import {
 import { resolve, join } from "node:path";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
+import { waitForCondition as eventually } from "./windows-installer-observation.mjs";
 
 if (process.platform !== "win32")
   throw new Error("Windows installer validation requires Windows");
@@ -59,14 +60,6 @@ const childOptions = {
   timeout: 600000,
   maxBuffer: 4 * 1024 * 1024,
 };
-async function eventually(fn, message, timeout = 30000) {
-  const until = Date.now() + timeout;
-  do {
-    if (await fn()) return;
-    await new Promise((r) => setTimeout(r, 200));
-  } while (Date.now() < until);
-  throw new Error(message);
-}
 async function exists(file) {
   try {
     await access(file);
@@ -241,11 +234,11 @@ try {
     ["/S", "/currentuser"],
     childOptions,
   );
-  await eventually(
+  evidence.uninstallObservation = await eventually(
     async () => !(await exists(executable)),
     "Uninstaller did not remove the installed executable",
   );
-  await eventually(async () => {
+  evidence.uninstallRegistryObservation = await eventually(async () => {
     try {
       await execute("reg.exe", ["query", registry], { windowsHide: true });
       return false;

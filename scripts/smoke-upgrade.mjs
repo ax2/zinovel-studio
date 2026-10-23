@@ -12,6 +12,7 @@ import {
 import { resolve, join, basename } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import assert from "node:assert/strict";
+import { waitForCondition } from "./windows-installer-observation.mjs";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { TaskJournal } from "../packages/novel-harness/task-journal.mjs";
 
@@ -259,34 +260,24 @@ try {
   );
   assert.ok(uninstaller);
   await run(join(install, uninstaller), ["/S", "/currentuser"], options);
-  let removed = false;
-  for (let i = 0; i < 150; i++) {
+  report.uninstallObservation = await waitForCondition(async () => {
     try {
       await access(executable);
+      return false;
     } catch (error) {
       if (error.code !== "ENOENT") throw error;
-      removed = true;
-      break;
+      return true;
     }
-    await new Promise((done) => setTimeout(done, 200));
-  }
-  assert.equal(removed, true, "upgraded app must uninstall");
-  let registrationGone = false;
-  for (let i = 0; i < 150; i++) {
+  }, "upgraded app must uninstall");
+  report.uninstallRegistryObservation = await waitForCondition(async () => {
     try {
       await run("reg.exe", ["query", registry], { windowsHide: true });
     } catch (error) {
       if (error.code !== 1) throw error;
-      registrationGone = true;
-      break;
+      return true;
     }
-    await new Promise((done) => setTimeout(done, 200));
-  }
-  assert.equal(
-    registrationGone,
-    true,
-    "upgraded app must remove its uninstall registration",
-  );
+    return false;
+  }, "upgraded app must remove its uninstall registration");
   assert.equal(await readFile(manuscript, "utf8"), body);
   report.checks.push(
     "manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings",
