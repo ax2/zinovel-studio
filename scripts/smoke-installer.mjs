@@ -71,8 +71,9 @@ async function exists(file) {
   try {
     await access(file);
     return true;
-  } catch {
-    return false;
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
   }
 }
 let application;
@@ -234,15 +235,28 @@ try {
   );
   assert.ok(uninstaller, "uninstaller is included");
   const uninstallStartedAt = Date.now();
-  await execute(join(install, uninstaller), ["/S"], childOptions);
+  await execute(
+    join(install, uninstaller),
+    ["/S", "/currentuser"],
+    childOptions,
+  );
   await eventually(
     async () => !(await exists(executable)),
     "Uninstaller did not remove the installed executable",
   );
+  await eventually(async () => {
+    try {
+      await execute("reg.exe", ["query", registry], { windowsHide: true });
+      return false;
+    } catch (error) {
+      if (error.code === 1) return true;
+      throw error;
+    }
+  }, "Uninstaller did not remove its registration");
   assert.deepEqual(await readFile(file), before);
   evidence.uninstallMs = Date.now() - uninstallStartedAt;
   evidence.checks.push(
-    "real NSIS uninstall removes app and retains synthetic user manuscript",
+    "real NSIS uninstall removes app and registration and retains synthetic user manuscript",
   );
   evidence.status = "passed";
 } catch (error) {

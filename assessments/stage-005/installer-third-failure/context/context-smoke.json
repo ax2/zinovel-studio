@@ -1,0 +1,20 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "context-preview-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "repeated-stale-source-blocked.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    }
+  ],
+  "failure": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '审阅 AI 候选' }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-material-context.mjs:192:6"
+}

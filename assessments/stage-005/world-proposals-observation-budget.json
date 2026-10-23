@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "scope": "Same alpha.15 installed binary, original four-world-proposal invariants, observation deadline 210000ms only; no product changes",
+  "installerSha256": "57cff618992a82f5b4dbbcc7ce0235966b7c16fe6c852937c69cf485436fdbcf",
+  "source": "c7f293a4cb877e49ae43fdecd75d8b36759f4863",
+  "report": "screenshots/stage-005/installed-world-budget-observation/world-proposals/world-proposals-smoke.json",
+  "tasks": [
+    {
+      "id": "2b1425dd-d938-4623-9759-98cc0e802161",
+      "status": "applied",
+      "startedAt": "2026-10-23T21:26:14.107Z",
+      "completedAt": "2026-10-23T21:26:15.916Z",
+      "durationMs": 1809
+    },
+    {
+      "id": "3f2a4dba-a090-4e90-b628-ffa615a62f4f",
+      "status": "applied",
+      "startedAt": "2026-10-23T21:26:21.904Z",
+      "completedAt": "2026-10-23T21:26:23.714Z",
+      "durationMs": 1810
+    },
+    {
+      "id": "6fcf8391-c156-4107-aa83-64a909508b09",
+      "status": "applied",
+      "startedAt": "2026-10-23T21:26:19.449Z",
+      "completedAt": "2026-10-23T21:26:21.182Z",
+      "durationMs": 1733
+    },
+    {
+      "id": "f068b9d0-a865-47db-b7c5-a35033ca1727",
+      "status": "applied",
+      "startedAt": "2026-10-23T21:26:17.019Z",
+      "completedAt": "2026-10-23T21:26:18.733Z",
+      "durationMs": 1714
+    }
+  ]
+}

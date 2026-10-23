@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "scope": "Exact failed synthetic install cleanup only; EXE removal preceded delayed registration removal",
+  "installerSha256": "57cff618992a82f5b4dbbcc7ce0235966b7c16fe6c852937c69cf485436fdbcf",
+  "manuscriptSha256": "86893eb1f06cff67bf1792bf0120a62126c16a39a0383d66970552c8f59b6434",
+  "checks": [
+    "Original own EXE and uninstall registration now absent; no new uninstall invocation after EXE removal",
+    "Synthetic final desktop manuscript still exactly matches deliberately saved text"
+  ]
+}

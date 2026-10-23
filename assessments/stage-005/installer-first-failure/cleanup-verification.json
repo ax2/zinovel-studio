@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "scope": "cleanup of first failed synthetic installation only",
+  "installerSha256": "8db150750385307a8df877000a4898053c8e9a34ca1f6d67542ba5da2687d9d7",
+  "manuscriptSha256": "86893eb1f06cff67bf1792bf0120a62126c16a39a0383d66970552c8f59b6434",
+  "checks": [
+    "After earlier observation deadline, the original synthetic EXE and exact production uninstall registration are now absent. No additional uninstall was launched after that observation.",
+    "Synthetic final manuscript remains exactly the text deliberately saved by smoke-desktop; no user install or manuscript was used."
+  ],
+  "limitations": [
+    "First uninstaller invocation timed out; second exited before file removal was observed. This cleanup observation does not qualify install/reinstall/uninstall performance."
+  ]
+}

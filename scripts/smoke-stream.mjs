@@ -2,15 +2,14 @@ import { _electron as electron } from "playwright";
 import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile, access } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { modelFixture } from "../tests/fixtures/model-server.mjs";
 import {
   captureOwnedProcesses,
-  confirmOwnedProcessesExited,
+  terminateOwnedProcesses,
 } from "./windows-owned-processes.mjs";
+import { captureTaskDiagnostics } from "./qa-task-diagnostics.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
@@ -155,10 +154,7 @@ try {
   const pid = application.process().pid;
   const owned = await captureOwnedProcesses(pid);
   assert.ok(owned.size > 2);
-  await promisify(execFile)("taskkill.exe", ["/PID", String(pid), "/T", "/F"], {
-    windowsHide: true,
-  }).catch(() => {});
-  await confirmOwnedProcessesExited(owned);
+  await terminateOwnedProcesses(owned);
   application = undefined;
   await launch();
   await verify(interrupted, "interrupted");
@@ -175,6 +171,11 @@ try {
 } catch (error) {
   report.status = "failed";
   report.error = String(error);
+  report.taskStates = await captureTaskDiagnostics(data);
+  await writeFile(
+    join(screenshots, "stream-smoke.json"),
+    JSON.stringify(report, null, 2),
+  );
   await page
     ?.screenshot({ path: join(screenshots, "failure.png") })
     .catch(() => {});

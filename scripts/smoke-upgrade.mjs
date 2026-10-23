@@ -258,18 +258,35 @@ try {
     /^Uninstall .*\.exe$/i.test(name),
   );
   assert.ok(uninstaller);
-  await run(join(install, uninstaller), ["/S"], options);
+  await run(join(install, uninstaller), ["/S", "/currentuser"], options);
   let removed = false;
   for (let i = 0; i < 150; i++) {
     try {
       await access(executable);
-    } catch {
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
       removed = true;
       break;
     }
     await new Promise((done) => setTimeout(done, 200));
   }
   assert.equal(removed, true, "upgraded app must uninstall");
+  let registrationGone = false;
+  for (let i = 0; i < 150; i++) {
+    try {
+      await run("reg.exe", ["query", registry], { windowsHide: true });
+    } catch (error) {
+      if (error.code !== 1) throw error;
+      registrationGone = true;
+      break;
+    }
+    await new Promise((done) => setTimeout(done, 200));
+  }
+  assert.equal(
+    registrationGone,
+    true,
+    "upgraded app must remove its uninstall registration",
+  );
   assert.equal(await readFile(manuscript, "utf8"), body);
   report.checks.push(
     "manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings",

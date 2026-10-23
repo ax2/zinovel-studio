@@ -1,0 +1,8 @@
+{
+  "source": "c7f293a4cb877e49ae43fdecd75d8b36759f4863",
+  "version": "0.1.0-alpha.15",
+  "sha256": "57cff618992a82f5b4dbbcc7ce0235966b7c16fe6c852937c69cf485436fdbcf",
+  "status": "failed-qualification-attempt",
+  "reason": "45-second world proposal review observation expired; original task running state is not a terminal model failure; later clean four-task run passed in 1.7-1.8 seconds each, so the cause of earlier delay remains unproven",
+  "binaryRetainedAt": "release/ZiNovel-Studio-0.1.0-alpha.15-windows-x64-setup.exe"
+}

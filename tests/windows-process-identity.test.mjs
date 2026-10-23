@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { originalProcessesAbsent } from "../scripts/windows-owned-processes.mjs";
+import {
+  originalProcessesAbsent,
+  originalProcessSurvivors,
+} from "../scripts/windows-owned-processes.mjs";
 
 test("exit verification distinguishes living original processes, reused PIDs and unreadable identities", () => {
   const owned = new Map([
@@ -34,5 +37,16 @@ test("exit verification distinguishes living original processes, reused PIDs and
   assert.equal(
     originalProcessesAbsent(owned, [{ ProcessId: 999, CreationDate: null }]),
     true,
+  );
+  assert.deepEqual(
+    originalProcessSurvivors(owned, [
+      { ProcessId: 123, CreationDate: "new unrelated process" },
+      {
+        ProcessId: 456,
+        CreationDate: "worker creation",
+        CommandLine: "SYNTHETIC_SECRET",
+      },
+    ]),
+    [{ pid: 456, createdAt: "worker creation" }],
   );
 });
