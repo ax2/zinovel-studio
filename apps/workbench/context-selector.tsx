@@ -44,10 +44,22 @@ export function ContextSelector({
     [listError, setListError] = useState(""),
     [query, setQuery] = useState(""),
     [refresh, setRefresh] = useState(0),
+    [listRevision, setListRevision] = useState(0),
     [pack, setPack] = useState<MaterialContext | null>(null),
     [error, setError] = useState("");
   const [sessionId] = useState(() => crypto.randomUUID());
   const nextQuery = useRef(0);
+  useEffect(() => {
+    const changed = (event: Event) => {
+      const changedBook = (event as CustomEvent<{ bookId?: string }>).detail
+        ?.bookId;
+      if (!changedBook || changedBook === bookId)
+        setListRevision((value) => value + 1);
+    };
+    window.addEventListener("novel-reference-options-changed", changed);
+    return () =>
+      window.removeEventListener("novel-reference-options-changed", changed);
+  }, [bookId]);
   useEffect(() => {
     let active = true;
     const requestId = ++nextQuery.current;
@@ -87,7 +99,7 @@ export function ContextSelector({
       clearTimeout(timer);
       void api("context.cancel", { sessionId, requestId }).catch(() => {});
     };
-  }, [bookId, query, refresh, kind, offset, sessionId]);
+  }, [bookId, query, refresh, kind, offset, sessionId, listRevision]);
   useEffect(() => {
     let active = true;
     const ids = selected.map((item) => item.id);

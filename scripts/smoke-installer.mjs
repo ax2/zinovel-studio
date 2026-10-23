@@ -140,6 +140,10 @@ try {
     ["smoke-relationships.mjs", "relationships/relationships-smoke.json"],
     ["smoke-knowledge.mjs", "knowledge/knowledge-smoke.json"],
     [
+      "smoke-creative-journey.mjs",
+      "creative-journey/creative-journey-smoke.json",
+    ],
+    [
       "smoke-knowledge-context.mjs",
       "knowledge-context/knowledge-context-smoke.json",
     ],

@@ -41,6 +41,7 @@
     "test:knowledge-legacy": "node scripts/smoke-knowledge-legacy.mjs",
     "test:knowledge-creation": "node scripts/smoke-knowledge-creation.mjs",
     "test:knowledge-context": "node scripts/smoke-knowledge-context.mjs && node scripts/smoke-knowledge-context-targets.mjs",
+    "test:creative-journey": "node scripts/smoke-creative-journey.mjs",
     "benchmark:continuity": "node scripts/benchmark-continuity.mjs",
     "benchmark:knowledge": "node scripts/benchmark-knowledge.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",

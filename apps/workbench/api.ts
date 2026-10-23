@@ -31,5 +31,33 @@ declare global {
     };
   }
 }
-export const api = <T = any>(action: string, payload?: object): Promise<T> =>
-  window.novel.request<T>(action, payload);
+const referenceMutations = new Set([
+  "materials.save",
+  "materials.delete",
+  "materials.evidence",
+  "knowledge.save",
+  "knowledge.retire",
+  "knowledge.link-legacy",
+  "knowledge.choose",
+  "knowledge.clear-choice",
+  "ai.materialAccept",
+  "book.structure",
+]);
+export const api = async <T = any>(
+  action: string,
+  payload?: object,
+): Promise<T> => {
+  const result = await window.novel.request<T>(action, payload);
+  if (referenceMutations.has(action)) {
+    const bookId =
+      payload && "bookId" in payload && typeof payload.bookId === "string"
+        ? payload.bookId
+        : undefined;
+    window.dispatchEvent(
+      new CustomEvent("novel-reference-options-changed", {
+        detail: { bookId },
+      }),
+    );
+  }
+  return result;
+};

@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.13 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.13) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.13/ZiNovel-Studio-0.1.0-alpha.13-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-后续 alpha.14 已补强原资料参考的依赖证明并通过116项源检查及相关桌面回归，尚无本版安装发行资格，不包含在已公开alpha.13。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
+后续 alpha.14 已补强原资料依赖证明、空书创作入口及参考选项更新，116项源检查与“创意→试写→大纲/人物/细纲→场景排章→AI审阅→重启”实际往返通过，正在准备安装资格，不包含在已公开alpha.13。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 

@@ -110,7 +110,9 @@
       "acceptance": "文本/图片/引用可转为立项候选",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
+        "iterations/stage-004/WORKLOG.md",
+        "scripts/smoke-creative-journey.mjs",
+        "assessments/stage-004/creative-journey.md"
       ]
     },
     {
@@ -236,7 +238,9 @@
       "acceptance": "目标/因果/终局/规模可追踪",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
+        "iterations/stage-004/WORKLOG.md",
+        "scripts/smoke-creative-journey.mjs",
+        "assessments/stage-004/creative-journey.md"
       ]
     },
     {
@@ -262,7 +266,9 @@
       "acceptance": "与卷章树同 ID 联动",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
+        "iterations/stage-004/WORKLOG.md",
+        "scripts/smoke-creative-journey.mjs",
+        "assessments/stage-004/creative-journey.md"
       ]
     },
     {
@@ -705,7 +711,9 @@
         "design/creative-materials.md",
         "tests/material-context.test.mjs",
         "scripts/smoke-material-context.mjs",
-        "screenshots/stage-004/context/context-smoke.json"
+        "screenshots/stage-004/context/context-smoke.json",
+        "scripts/smoke-creative-journey.mjs",
+        "assessments/stage-004/creative-journey.md"
       ]
     },
     {

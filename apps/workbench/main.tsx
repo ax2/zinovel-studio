@@ -825,7 +825,22 @@ function App() {
             ) : (
               <div className="empty-chapter">
                 <FileText size={44} />
-                <h2>故事，从这一章开始</h2>
+                <h2>故事，从一个想法开始</h2>
+                <p>可以先整理创意、人物和大纲；独立试写不占正式章节。</p>
+                <div className="empty-story-actions">
+                  <button
+                    onClick={() => {
+                      setMaterialsOpen(true);
+                      setReferenceOpen(false);
+                      setPanelOpen(true);
+                    }}
+                  >
+                    整理创作资料
+                  </button>
+                  <button onClick={() => setPilotsOpen(true)}>
+                    先做一场试写
+                  </button>
+                </div>
                 <button className="primary" onClick={() => begin("chapter")}>
                   <Plus size={18} />
                   新建章节
