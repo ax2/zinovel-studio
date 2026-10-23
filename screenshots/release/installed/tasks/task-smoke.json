@@ -14,6 +14,6 @@
   "termination": {
     "method": "identity-verified termination of captured original processes",
     "ownedProcessesConfirmedExited": 6,
-    "verification": "Win32_Process ProcessId + CreationDate"
+    "verification": "Windows Toolhelp + GetProcessTimes PID and creation time"
   }
 }

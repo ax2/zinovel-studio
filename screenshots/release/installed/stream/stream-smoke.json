@@ -7,5 +7,5 @@
   ],
   "errors": [],
   "ownedProcessesConfirmedExited": 6,
-  "terminationVerification": "Win32_Process ProcessId + CreationDate"
+  "terminationVerification": "Windows Toolhelp + GetProcessTimes PID and creation time"
 }

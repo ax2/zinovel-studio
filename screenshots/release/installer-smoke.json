@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.15",
-  "installerSha256": "061e2ea0c45d5fd10c49463a7facea9a1c2ff964c1e38e5ba3b698d6054743e7",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-2hOWNL\\中文 安装目录",
+  "version": "0.1.0-alpha.16",
+  "installerSha256": "9b23a8919d014cfc23e72b17aebffcf52b443bdb12647d85836fea6a1d5576e9",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-3Ziceh\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -80,6 +80,10 @@
     "installed: actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation",
     "installed: external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry",
     "installed: Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes",
+    "installed: Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged",
+    "installed: Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
+    "installed: Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",
+    "installed: Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode",
     "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
     "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
     "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
@@ -106,7 +110,7 @@
     "real NSIS uninstall removes app and registration and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 24821,
-  "reinstallMs": 33654,
-  "uninstallMs": 5870
+  "installMs": 27239,
+  "reinstallMs": 37652,
+  "uninstallMs": 6935
 }

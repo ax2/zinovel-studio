@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "version": "0.1.0-alpha.16",
-  "ready": false,
+  "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -13,13 +13,21 @@
     "assessments/stage-005/reader-preview.md",
     "iterations/stage-005/WORKLOG.md",
     "assessments/stage-005/qa-lifecycle-hardening.md",
-    "assessments/release/v0.1.0-alpha.15/README.md",
+    "assessments/release/v0.1.0-alpha.16/README.md",
+    "assessments/stage-007/utf8-integrity.md",
+    "assessments/stage-007/process-ancestry.md",
     "design/publication-snapshots.md",
     "iterations/stage-007/WORKLOG.md"
   ],
-  "reports": [],
+  "reports": [
+    "assessments/release/v0.1.0-alpha.16/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.16/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.16/installed-reader.json",
+    "assessments/release/v0.1.0-alpha.16/installed-utf8-integrity.json",
+    "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+  ],
   "limitations": [
-    "alpha.16出版生成层尚未接入桌面持久快照、导出授权和正式保存入口，未取得本版安装资格",
+    "出版生成层尚未接入桌面持久快照、导出授权和正式保存入口，未作为完整出版功能交付",
     "图像资源、多格式出版、完整106项功能与上架资格仍未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
