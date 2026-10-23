@@ -82,14 +82,23 @@ jobs:
           pnpm test:upgrade .cache/upgrade-source/ZiNovel-Studio-0.1.0-alpha.3-windows-x64-setup.exe .cache/upgrade-source/release-manifest.json
           if ($LASTEXITCODE -ne 0) { throw 'Cross-version upgrade failed' }
       - run: pnpm release:manifest
-      - name: Publish verified preview assets
+      - name: Upload verified preview assets as a draft
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           $version = (Get-Content package.json | ConvertFrom-Json).version
           $installer = "release/ZiNovel-Studio-$version-windows-x64-setup.exe"
-          gh release create "v$version" $installer release/SHA256SUMS.txt release/release-manifest.json release/runtime-inventory.json --verify-tag --prerelease --title "ZiNovel Studio $version" --notes-file "iterations/releases/v$version.md"
+          gh release create "v$version" $installer release/SHA256SUMS.txt release/release-manifest.json release/runtime-inventory.json --verify-tag --draft --prerelease --title "ZiNovel Studio $version" --notes-file "iterations/releases/v$version.md"
+          if ($LASTEXITCODE -ne 0) { throw 'Draft release upload failed' }
+      - name: Publish the completed draft only after a successful upload
+        if: ${{ success() && !cancelled() }}
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          gh release edit "v$version" --draft=false --prerelease --latest=false
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
       - uses: actions/upload-artifact@v4
         if: failure()
