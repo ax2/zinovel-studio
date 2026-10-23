@@ -143,6 +143,10 @@ try {
       "smoke-knowledge-choices.mjs",
       "knowledge-choices/knowledge-choices-smoke.json",
     ],
+    [
+      "smoke-knowledge-legacy.mjs",
+      "knowledge-legacy/knowledge-legacy-smoke.json",
+    ],
   ]) {
     const result = await execute(
       process.execPath,

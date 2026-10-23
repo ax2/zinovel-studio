@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual archived alpha.11 packaged runtime reads the new synthetic library and explicitly edits only its supported event using saved source selection",
+    "old app preserves new frozen origin, author choice, original legacy card and manuscript bytes exactly",
+    "current app shows the old writer changed the target version and keeps the original provenance; the frozen author choice is stale instead of silently following the old edit"
+  ],
+  "errors": [],
+  "oldVersion": "0.1.0-alpha.11",
+  "newVersion": "0.1.0-alpha.12",
+  "boundary": "packaged alpha.11 runtime on synthetic alpha.12-format knowledge; not NSIS downgrade or complete application migration qualification"
+}

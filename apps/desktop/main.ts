@@ -33,6 +33,10 @@ const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
 const pilotAcceptance = new PilotTaskAcceptance(journal, store.pilots);
 const continuityQueries = new ContinuityQueries(store.continuity);
+const legacyQueries = new ContinuityQueries({
+  query: (bookId: string, options: object, signal: AbortSignal) =>
+    store.knowledge.legacy.list(bookId, options, signal),
+});
 const knowledgeQueries = new ContinuityQueries({
   query: (bookId: string, options: object, signal: AbortSignal) =>
     store.knowledge.matrix(bookId, options, signal),
@@ -55,6 +59,7 @@ function cancelCloseAttempt() {
 async function closeAfterRecovery() {
   continuityQueries.cancelAll();
   knowledgeQueries.cancelAll();
+  legacyQueries.cancelAll();
   cancelCloseAttempt();
   await harness.cancel();
   await acceptance.whenIdle();
@@ -288,6 +293,31 @@ if (
                 value = await store.knowledge.choices.read(
                   payload.bookId,
                   payload.target,
+                );
+                break;
+              case "knowledge.legacy-list":
+                value = await legacyQueries.query(
+                  payload.bookId,
+                  payload.options,
+                  payload,
+                );
+                break;
+              case "knowledge.legacy-cancel":
+                value = { cancelled: legacyQueries.cancel(payload) };
+                break;
+              case "knowledge.legacy-preview":
+                value = await store.knowledge.legacy.preview(
+                  payload.bookId,
+                  payload.ownerId,
+                  payload.eventId,
+                );
+                break;
+              case "knowledge.link-legacy":
+                value = await store.knowledge.linkLegacy(
+                  payload.bookId,
+                  payload.input,
+                  payload.legacyExpected,
+                  payload.source,
                 );
                 break;
               case "knowledge.choose":
@@ -761,6 +791,7 @@ if (
               case "app.close-ready":
                 continuityQueries.cancelAll();
                 knowledgeQueries.cancelAll();
+                legacyQueries.cancelAll();
                 cancelCloseAttempt();
                 await harness.cancel();
                 await acceptance.whenIdle();

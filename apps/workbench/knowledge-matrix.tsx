@@ -5,6 +5,7 @@ import type { TextAnchor } from "./manuscript-editor";
 import { registerEditorCloseGuard } from "./editor-close-guards";
 import { knowledgeStates } from "../../packages/novel-domain/knowledge.mjs";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
+import { LegacyKnowledgePanel, type LegacyPreview } from "./knowledge-legacy";
 
 type Input = {
   propositionId: string;
@@ -15,6 +16,18 @@ type Input = {
   storyTime: string;
 };
 type Event = Input & {
+  origin?: {
+    status: string;
+    error?: string;
+    ownerChanged?: boolean;
+    targetChanged?: boolean;
+    target?: { revision: number };
+    source?: {
+      ownerId: string;
+      ownerTitle: string;
+      event: LegacyPreview["event"];
+    };
+  } | null;
   id: string;
   revision: number;
   diskHash: string;
@@ -26,7 +39,7 @@ type Event = Input & {
   anchor: TextAnchor;
   references: { id: string; title: string; freshness: string }[];
 };
-type Preview = Pick<
+type Preview = { originStatus?: string } & Pick<
   Event,
   | "id"
   | "state"
@@ -124,6 +137,12 @@ export function KnowledgeMatrix({
         !knowledgeStates.some((item) => item.id === value.input.state) ||
         (value.input.characterId !== null &&
           typeof value.input.characterId !== "string") ||
+        (value.legacyExpected &&
+          (!value.legacyExpected.owner ||
+            typeof value.legacyExpected.owner.id !== "string" ||
+            typeof value.legacyExpected.eventId !== "string" ||
+            typeof value.legacyExpected.eventHash !== "string" ||
+            !value.legacyExpected.event)) ||
         (value.expected !== null &&
           (!value.expected ||
             typeof value.expected.id !== "string" ||
@@ -131,7 +150,11 @@ export function KnowledgeMatrix({
             !Number.isSafeInteger(value.expected.revision)))
       )
         throw new Error();
-      return value as { input: Input; expected: Event | null };
+      return value as {
+        input: Input;
+        expected: Event | null;
+        legacyExpected?: LegacyPreview | null;
+      };
     } catch {
       return { invalid: true } as const;
     }
@@ -142,6 +165,10 @@ export function KnowledgeMatrix({
   const [expected, setExpected] = useState<Event | null>(
     restored && "expected" in restored ? restored.expected : null,
   );
+  const [legacyExpected, setLegacyExpected] = useState<LegacyPreview | null>(
+    restored && "input" in restored ? restored.legacyExpected || null : null,
+  );
+  const [legacyOpen, setLegacyOpen] = useState(false);
   const [draftFailed, setDraftFailed] = useState(
     !!restored && "invalid" in restored,
   );
@@ -321,18 +348,19 @@ export function KnowledgeMatrix({
     offset,
     refresh,
   ]);
-  function stash(next: Input, base = expected) {
+  function stash(next: Input, base = expected, legacy = legacyExpected) {
     if (draftInvalid) {
       setError("原认知草稿无法读取；请先明确放弃后再编辑。");
       return;
     }
     setInput(next);
     setExpected(base);
+    setLegacyExpected(legacy);
     setDraftPending(true);
     try {
       localStorage.setItem(
         key,
-        JSON.stringify({ input: next, expected: base }),
+        JSON.stringify({ input: next, expected: base, legacyExpected: legacy }),
       );
       setDraftFailed(false);
     } catch {
@@ -347,6 +375,7 @@ export function KnowledgeMatrix({
     setDraftPending(false);
     setInput(blank());
     setExpected(null);
+    setLegacyExpected(null);
   }
   async function perform(operation: () => Promise<void>) {
     if (locked.current) return;
@@ -570,6 +599,10 @@ export function KnowledgeMatrix({
                                   {event.status === "retired"
                                     ? " · 已停用"
                                     : ""}
+                                  {event.originStatus &&
+                                    event.originStatus !== "unchanged" && (
+                                      <small> · 旧来源需核对</small>
+                                    )}
                                   <p>{event.statement}</p>
                                   <small>
                                     {event.chapterTitle} ·{" "}
@@ -725,138 +758,206 @@ export function KnowledgeMatrix({
               放弃命题草稿
             </button>
           </details>
-          <section className="knowledge-form" aria-label="认知记录编辑">
-            <h3>
-              {expected
-                ? `修订认知 · 版本 ${expected.revision}`
-                : "添加有正文依据的认知"}
-            </h3>
-            <p>命题 ID：{input.propositionId || "请先从矩阵选择命题"}</p>
-            <label>
-              认知范围
-              <select
-                aria-label="认知范围"
-                value={input.scope}
-                onChange={(e) =>
-                  stash({
-                    ...input,
-                    scope: e.target.value,
-                    characterId: null,
-                    state: e.target.value === "world" ? "recorded" : "suspects",
+          <details onToggle={(e) => setLegacyOpen(e.currentTarget.open)}>
+            <summary>整理旧认知证据</summary>
+            {legacyOpen && (
+              <LegacyKnowledgePanel
+                bookId={book.id}
+                disabled={
+                  busy || !!expected || !input.propositionId || draftInvalid
+                }
+                onSelect={(ownerId, eventId) =>
+                  void perform(async () => {
+                    const preview = await api<LegacyPreview>(
+                      "knowledge.legacy-preview",
+                      { bookId: book.id, ownerId, eventId },
+                    );
+                    stash(
+                      {
+                        ...input,
+                        scope: preview.event.scope,
+                        characterId:
+                          preview.event.scope === "character"
+                            ? preview.owner.id
+                            : null,
+                        state: "unspecified",
+                        statement: input.statement || preview.event.statement,
+                        storyTime: input.storyTime || preview.event.storyTime,
+                      },
+                      null,
+                      preview,
+                    );
+                    setMessage(
+                      "已带入旧范围和原说明（已有说明保留），状态设为未明确。请核对认知状态，再绑定当前选区；原记录不会修改。",
+                    );
                   })
                 }
-              >
-                <option value="world">世界记录</option>
-                <option value="reader">读者</option>
-                <option value="character">人物</option>
-              </select>
-            </label>
-            {input.scope === "character" && (
+              />
+            )}
+          </details>
+          <details open={draftPending || !selected}>
+            <summary>添加/编辑认知记录</summary>
+            <section className="knowledge-form" aria-label="认知记录编辑">
+              {legacyExpected && (
+                <section aria-label="待关联旧认知">
+                  <h4>
+                    待关联旧认知 · {legacyExpected.owner.title} · 版本{" "}
+                    {legacyExpected.owner.revision}
+                  </h4>
+                  <p>{legacyExpected.event.statement}</p>
+                  <blockquote>{legacyExpected.event.anchor.quote}</blockquote>
+                  <p>旧记录不代表当前认知状态，请核对命题、范围和状态。</p>
+                  <button
+                    disabled={busy}
+                    onClick={() => stash(input, expected, null)}
+                  >
+                    取消旧来源关联，保留调整
+                  </button>
+                </section>
+              )}
+              <h3>
+                {expected
+                  ? `修订认知 · 版本 ${expected.revision}`
+                  : "添加有正文依据的认知"}
+              </h3>
+              <p>命题 ID：{input.propositionId || "请先从矩阵选择命题"}</p>
               <label>
-                认知人物
+                认知范围
                 <select
-                  aria-label="认知人物"
-                  value={input.characterId || ""}
+                  aria-label="认知范围"
+                  value={input.scope}
                   onChange={(e) =>
-                    stash({ ...input, characterId: e.target.value })
+                    stash({
+                      ...input,
+                      scope: e.target.value,
+                      characterId: null,
+                      state:
+                        e.target.value === "world" ? "recorded" : "suspects",
+                    })
                   }
                 >
-                  <option value="">请选择人物</option>
-                  {result?.characters
-                    .filter((person) => !person.deleted && !person.missing)
-                    .map((person) => (
-                      <option key={person.id} value={person.id}>
-                        {person.title}
+                  <option value="world">世界记录</option>
+                  <option value="reader">读者</option>
+                  <option value="character">人物</option>
+                </select>
+              </label>
+              {input.scope === "character" && (
+                <label>
+                  认知人物
+                  <select
+                    aria-label="认知人物"
+                    value={input.characterId || ""}
+                    onChange={(e) =>
+                      stash({ ...input, characterId: e.target.value })
+                    }
+                  >
+                    <option value="">请选择人物</option>
+                    {result?.characters
+                      .filter((person) => !person.deleted && !person.missing)
+                      .map((person) => (
+                        <option key={person.id} value={person.id}>
+                          {person.title}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+              )}
+              <label>
+                明确认知状态
+                <select
+                  aria-label="明确认知状态"
+                  value={input.state}
+                  onChange={(e) => stash({ ...input, state: e.target.value })}
+                >
+                  {knowledgeStates
+                    .filter((item) =>
+                      input.scope === "world"
+                        ? ["recorded", "unspecified"].includes(item.id)
+                        : item.id !== "recorded",
+                    )
+                    .map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.label}
                       </option>
                     ))}
                 </select>
               </label>
-            )}
-            <label>
-              明确认知状态
-              <select
-                aria-label="明确认知状态"
-                value={input.state}
-                onChange={(e) => stash({ ...input, state: e.target.value })}
+              <label>
+                认知说明
+                <textarea
+                  aria-label="认知说明"
+                  maxLength={10000}
+                  value={input.statement}
+                  onChange={(e) =>
+                    stash({ ...input, statement: e.target.value })
+                  }
+                />
+              </label>
+              <label>
+                故事时间
+                <input
+                  aria-label="认知故事时间"
+                  maxLength={200}
+                  value={input.storyTime}
+                  onChange={(e) =>
+                    stash({ ...input, storyTime: e.target.value })
+                  }
+                />
+              </label>
+              <p>
+                {validSource
+                  ? `将绑定当前已保存正文选区（${source!.end - source!.start} 字符）`
+                  : "先回正文保存稿件并选择依据，再打开认知矩阵。草稿会保留。"}
+              </p>
+              <button
+                data-dialog-save
+                disabled={
+                  busy ||
+                  !validSource ||
+                  !input.propositionId ||
+                  !input.statement.trim() ||
+                  (input.scope === "character" && !input.characterId)
+                }
+                onClick={() =>
+                  perform(async () => {
+                    const saved = await api<Event>(
+                      legacyExpected
+                        ? "knowledge.link-legacy"
+                        : "knowledge.save",
+                      {
+                        bookId: book.id,
+                        input,
+                        expected,
+                        source,
+                        legacyExpected,
+                      },
+                    );
+                    clearDraft();
+                    setSelected(saved);
+                    setHistory(null);
+                    setRefresh((n) => n + 1);
+                    setMessage("认知已保存，正文未改写。");
+                  })
+                }
               >
-                {knowledgeStates
-                  .filter((item) =>
-                    input.scope === "world"
-                      ? ["recorded", "unspecified"].includes(item.id)
-                      : item.id !== "recorded",
-                  )
-                  .map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.label}
-                    </option>
-                  ))}
-              </select>
-            </label>
-            <label>
-              认知说明
-              <textarea
-                aria-label="认知说明"
-                maxLength={10000}
-                value={input.statement}
-                onChange={(e) => stash({ ...input, statement: e.target.value })}
-              />
-            </label>
-            <label>
-              故事时间
-              <input
-                aria-label="认知故事时间"
-                maxLength={200}
-                value={input.storyTime}
-                onChange={(e) => stash({ ...input, storyTime: e.target.value })}
-              />
-            </label>
-            <p>
-              {validSource
-                ? `将绑定当前已保存正文选区（${source!.end - source!.start} 字符）`
-                : "先回正文保存稿件并选择依据，再打开认知矩阵。草稿会保留。"}
-            </p>
-            <button
-              data-dialog-save
-              disabled={
-                busy ||
-                !validSource ||
-                !input.propositionId ||
-                !input.statement.trim() ||
-                (input.scope === "character" && !input.characterId)
-              }
-              onClick={() =>
-                perform(async () => {
-                  const saved = await api<Event>("knowledge.save", {
-                    bookId: book.id,
-                    input,
-                    expected,
-                    source,
-                  });
-                  clearDraft();
-                  setSelected(saved);
-                  setHistory(null);
-                  setRefresh((n) => n + 1);
-                  setMessage("认知已保存，正文未改写。");
-                })
-              }
-            >
-              保存并绑定当前选区
-            </button>
-            <button disabled={busy} onClick={() => navigate(onClose)}>
-              回正文选择证据
-            </button>
-            <button
-              disabled={busy}
-              onClick={() =>
-                perform(async () => {
-                  clearDraft();
-                  setMessage("本机认知草稿已明确放弃。");
-                })
-              }
-            >
-              放弃认知草稿
-            </button>
-          </section>
+                保存并绑定当前选区
+              </button>
+              <button disabled={busy} onClick={() => navigate(onClose)}>
+                回正文选择证据
+              </button>
+              <button
+                disabled={busy}
+                onClick={() =>
+                  perform(async () => {
+                    clearDraft();
+                    setMessage("本机认知草稿已明确放弃。");
+                  })
+                }
+              >
+                放弃认知草稿
+              </button>
+            </section>
+          </details>
           {listing && (
             <section aria-label="认知记录列表">
               <h3>全部认知记录 · {listing.total} 条</h3>
@@ -910,6 +1011,62 @@ export function KnowledgeMatrix({
           )}
           {selected && (
             <section aria-label="认知记录详情">
+              {selected.origin && (
+                <section aria-label="旧认知来源">
+                  <h4>旧认知来源</h4>
+                  {selected.origin.status === "unreadable" ? (
+                    <p role="alert">{selected.origin.error}</p>
+                  ) : (
+                    <>
+                      <p>
+                        {selected.origin.source?.ownerTitle} ·{" "}
+                        {selected.origin.status === "unchanged"
+                          ? "原事件内容未改"
+                          : selected.origin.status === "changed"
+                            ? "原事件已改或停用"
+                            : "原事件失联或资料已删除"}
+                      </p>
+                      {selected.origin.ownerChanged &&
+                        selected.origin.status === "unchanged" && (
+                          <p>旧资料有其他修改，原事件内容未变。</p>
+                        )}
+                      {selected.origin.targetChanged && (
+                        <p>
+                          新认知已修订；这里保留最初关联的版本{" "}
+                          {selected.origin.target?.revision}。
+                        </p>
+                      )}
+                      <p>{selected.origin.source?.event.statement}</p>
+                      <blockquote>
+                        {selected.origin.source?.event.anchor.quote}
+                      </blockquote>
+                      <button
+                        disabled={busy || !selected.origin.source}
+                        onClick={() =>
+                          navigate(() =>
+                            onEdit(selected.origin!.source!.ownerId),
+                          )
+                        }
+                      >
+                        打开旧资料
+                      </button>
+                      <button
+                        disabled={busy || !selected.origin.source}
+                        onClick={() =>
+                          navigate(() => {
+                            const old = selected.origin!.source!.event;
+                            void onChapter(old.chapterId, old.anchor).catch(
+                              (e) => setError(e.message),
+                            );
+                          })
+                        }
+                      >
+                        查看旧引文位置
+                      </button>
+                    </>
+                  )}
+                </section>
+              )}
               <h3>
                 {stateLabel(selected.state)} · {fresh(selected.freshness)} ·
                 版本 {selected.revision}

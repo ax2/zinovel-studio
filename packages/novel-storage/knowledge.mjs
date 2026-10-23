@@ -7,6 +7,7 @@ import { orderedChapters } from "../novel-domain/structure.mjs";
 import { checkedEvidenceSource } from "./evidence-source.mjs";
 import { materialDefinitionHash } from "./materials.mjs";
 import { KnowledgeChoices } from "./knowledge-choices.mjs";
+import { LegacyKnowledge } from "./knowledge-legacy.mjs";
 const hash = (text) => createHash("sha256").update(text).digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 const id = (value) => {
@@ -20,6 +21,7 @@ export class KnowledgeStore {
     this.storage = storage;
     this.materials = materials;
     this.choices = new KnowledgeChoices(storage, materials, this);
+    this.legacy = new LegacyKnowledge(storage, materials);
   }
   async record(root, eventId) {
     const raw = new TextDecoder("utf-8", {
@@ -154,6 +156,7 @@ export class KnowledgeStore {
       chapterTitle: chapter?.title || "章节失联或已删除",
       resolution,
       sourceFreshness,
+      origin: await this.legacy.view(record, root),
       freshness:
         sourceFreshness === "current" &&
         references.every((item) => item.freshness === "current")
@@ -173,19 +176,28 @@ export class KnowledgeStore {
       throw new Error("认知记录已被其他操作修改，请保留调整并重新读取");
     return previous;
   }
-  async write(root, data, previous) {
+  async write(root, data, previous, origin) {
     const changes = { [`knowledge/events/${data.id}.json`]: json(data) };
     if (previous)
       changes[
         `.zinovel/knowledge-history/${data.id}/${previous.data.revision}-${previous.diskHash}.json`
       ] = previous.raw;
+    if (origin)
+      changes[`knowledge/origins/${data.id}.json`] = json(
+        this.legacy.create(data, origin),
+      );
     await this.storage.transaction(root, changes);
   }
-  save(bookId, input, expected, source) {
+  save(bookId, input, expected, source, legacyExpected) {
     const clean = knowledgeInput(input);
     return this.storage.exclusive(async () => {
       const { root, book } = await this.materials.context(bookId),
         previous = expected ? await this.expected(root, expected) : null;
+      if (legacyExpected && expected)
+        throw new Error("旧认知整理只能创建独立新记录");
+      const origin = legacyExpected
+        ? await this.legacy.freeze(root, legacyExpected)
+        : null;
       if (previous?.data.status === "retired")
         throw new Error("请先恢复停用记录");
       const proposition = await this.materials.record(
@@ -224,9 +236,13 @@ export class KnowledgeStore {
         createdAt: previous?.data.createdAt || now,
         updatedAt: now,
       };
-      await this.write(root, data, previous);
+      await this.write(root, data, previous, origin);
       return this.view(await this.record(root, data.id), root, book);
     });
+  }
+  linkLegacy(bookId, input, legacyExpected, source) {
+    if (!legacyExpected) throw new Error("请明确选择旧认知来源");
+    return this.save(bookId, input, null, source, legacyExpected);
   }
   read(bookId, eventId) {
     return this.storage.exclusive(async () => {
@@ -272,8 +288,12 @@ export class KnowledgeStore {
         const { root, book } = await this.materials.context(bookId);
         try {
           const record = await this.record(root, name.slice(0, -5));
-          if (select(record.data, book))
-            visit(await this.view(record, root, book), book);
+          if (select(record.data, book)) {
+            const view = await this.view(record, root, book);
+            if (view.origin?.status === "unreadable")
+              errors.push("一份旧认知来源无法读取，独立认知记录仍已保留");
+            visit(view, book);
+          }
         } catch {
           errors.push("一条认知记录无法读取，原文件已保留");
         }
@@ -378,6 +398,7 @@ export class KnowledgeStore {
               status: event.status,
               storyTime: event.storyTime,
               chapterTitle: event.chapterTitle,
+              originStatus: event.origin?.status,
             });
         },
         (event, book) => {

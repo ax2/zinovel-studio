@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.11 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.11) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.11/ZiNovel-Studio-0.1.0-alpha.11-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支 alpha.12 已实现作者当前认知选择的手工切片，100 项单元/类型/规划及真实桌面通过，尚未打包，不包含在 alpha.11 安装包。旧认知整理、故事时间推演、大书性能及其他完整需求仍在推进，详见 [认知矩阵设计](design/knowledge-matrix.md) 和 [作者选择验收](assessments/stage-004/knowledge-choices.md)。
+主分支 alpha.12 已实现作者当前认知选择和旧记录整理，105 项单元/类型/规划及真实桌面通过，开始准备同版本安装资格，尚未包含在 alpha.11 安装包。独立认知尚未接入 Agent 冻结上下文，故事时间推演、大书性能及完整需求继续推进，详见 [认知矩阵设计](design/knowledge-matrix.md)、[作者选择验收](assessments/stage-004/knowledge-choices.md) 和 [旧认知整理验收](assessments/stage-004/knowledge-legacy.md)。
 
 ## 产品方向
 

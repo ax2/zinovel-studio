@@ -61,6 +61,7 @@ jobs:
       - run: pnpm test:relationships
       - run: pnpm test:knowledge
       - run: pnpm test:knowledge-choices
+      - run: pnpm test:knowledge-legacy
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

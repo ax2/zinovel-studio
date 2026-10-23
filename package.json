@@ -38,6 +38,7 @@
     "test:relationships": "node scripts/smoke-relationships.mjs",
     "test:knowledge": "node scripts/smoke-knowledge.mjs",
     "test:knowledge-choices": "node scripts/smoke-knowledge-choices.mjs",
+    "test:knowledge-legacy": "node scripts/smoke-knowledge-legacy.mjs",
     "benchmark:continuity": "node scripts/benchmark-continuity.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",
     "package:dir": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs",

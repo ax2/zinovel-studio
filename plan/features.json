@@ -415,7 +415,12 @@
         "packages/novel-storage/knowledge-choices.mjs",
         "tests/knowledge-choices.test.mjs",
         "scripts/smoke-knowledge-choices.mjs",
-        "assessments/stage-004/knowledge-choices.md"
+        "assessments/stage-004/knowledge-choices.md",
+        "packages/novel-storage/knowledge-legacy.mjs",
+        "tests/knowledge-legacy.test.mjs",
+        "scripts/smoke-knowledge-legacy.mjs",
+        "scripts/smoke-knowledge-old-desktop.mjs",
+        "assessments/stage-004/knowledge-legacy.md"
       ]
     },
     {
