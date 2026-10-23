@@ -44,11 +44,23 @@ export class ContinuityStore {
     )
       throw new Error("全书证据筛选条件无效");
     const startedAt = new Date().toISOString();
+    const matches = (event, sourceId) =>
+      (!kind || event.kind === kind) &&
+      (!eventId || event.id === eventId) &&
+      (!scope || event.scope === scope) &&
+      (!chapterId || event.chapterId === chapterId) &&
+      (!participantId ||
+        sourceId === participantId ||
+        event.relatedIds.includes(participantId)) &&
+      (!relatedId || event.relatedIds.includes(relatedId));
     const owners = [];
     const errors = await this.materials.scan(
       bookId,
       (data) => {
-        if ((!ownerId || data.id === ownerId) && data.evidence?.length)
+        if (
+          (!ownerId || data.id === ownerId) &&
+          data.evidence?.some((event) => matches(event, data.id))
+        )
           owners.push(data.id);
       },
       { signal },
@@ -79,17 +91,7 @@ export class ContinuityStore {
             ]),
           );
           for (const event of card.evidence) {
-            if (
-              (kind && event.kind !== kind) ||
-              (eventId && event.id !== eventId) ||
-              (scope && event.scope !== scope) ||
-              (chapterId && event.chapterId !== chapterId) ||
-              (participantId &&
-                card.id !== participantId &&
-                !event.relatedIds.includes(participantId)) ||
-              (relatedId && !event.relatedIds.includes(relatedId))
-            )
-              continue;
+            if (!matches(event, card.id)) continue;
             if (
               needle &&
               ![

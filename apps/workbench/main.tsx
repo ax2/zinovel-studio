@@ -36,6 +36,7 @@ import { MaterialsPanel } from "./materials-panel";
 import { ScenePlanner } from "./scene-planner";
 import { PilotStudio } from "./pilot-studio";
 import { ContinuityWorkbench } from "./continuity-workbench";
+import { KnowledgeMatrix } from "./knowledge-matrix";
 import { canCloseEditors } from "./editor-close-guards";
 import { TaskHistory } from "./task-history";
 import { ReplaceDialog } from "./replace-dialog";
@@ -62,6 +63,7 @@ function App() {
   const [planningOpen, setPlanningOpen] = useState(false);
   const [pilotsOpen, setPilotsOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
+  const [knowledgeOpen, setKnowledgeOpen] = useState(false);
   const [requestedMaterial, setRequestedMaterial] = useState<{
     bookId: string;
     id: string;
@@ -556,6 +558,45 @@ function App() {
           }}
         />
       )}
+      {knowledgeOpen && book && (
+        <KnowledgeMatrix
+          key={book.id}
+          book={book}
+          source={
+            chapter
+              ? {
+                  chapterId: chapter.id,
+                  body,
+                  hash: chapter.diskHash,
+                  dirty,
+                  start: selection.start,
+                  end: selection.end,
+                }
+              : null
+          }
+          onClose={() => setKnowledgeOpen(false)}
+          onEdit={(id) => {
+            setKnowledgeOpen(false);
+            setMaterialsOpen(true);
+            setReferenceOpen(false);
+            setPanelOpen(true);
+            setRequestedMaterial({ bookId: book.id, id, request: Date.now() });
+          }}
+          onChapter={async (id, anchor) => {
+            await openTaskChapter(id, book.id);
+            setNotice("");
+            setReveal({
+              documentKey: `${book.id}.${id}`,
+              start: anchor.start,
+              end: anchor.end,
+              request: Date.now(),
+              anchor,
+            });
+            setKnowledgeOpen(false);
+            setPanelOpen(false);
+          }}
+        />
+      )}
       {continuityOpen && book && (
         <ContinuityWorkbench
           key={book.id}
@@ -647,6 +688,7 @@ function App() {
               <button onClick={() => setPlanningOpen(true)}>场景编排</button>
               <button onClick={() => setPilotsOpen(true)}>试写实验室</button>
               <button onClick={() => setContinuityOpen(true)}>全书证据</button>
+              <button onClick={() => setKnowledgeOpen(true)}>认知矩阵</button>
               <button
                 onClick={async () => {
                   if (await save()) {

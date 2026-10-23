@@ -3,6 +3,21 @@
 const field = (key, label, options = undefined) => ({ key, label, options });
 export const materialKinds = [
   {
+    id: "proposition",
+    label: "命题与秘密",
+    fields: [
+      field("claim", "命题内容"),
+      field("truthIntent", "真相性质（作者设定）", [
+        "作者设定为真",
+        "作者设定为假",
+        "尚未确定",
+      ]),
+      field("boundary", "已写依据与未知边界"),
+      field("revealPlan", "揭示计划"),
+      field("cost", "隐藏与揭示代价"),
+    ],
+  },
+  {
     id: "idea",
     label: "创意",
     fields: [

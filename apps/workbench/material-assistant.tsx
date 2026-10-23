@@ -24,6 +24,7 @@ type MaterialTask = StoredTask & {
   };
 };
 const methods: Record<string, string> = {
+  proposition: "novel-continuity",
   idea: "novel-ideation",
   character: "novel-character",
   location: "novel-worldbuilding",
@@ -399,8 +400,10 @@ export function MaterialAssistant({
                           <select
                             aria-label={`候选${field.label}`}
                             disabled={
-                              material.kind === "research" &&
-                              field.key === "boundary"
+                              (material.kind === "research" &&
+                                field.key === "boundary") ||
+                              (material.kind === "proposition" &&
+                                field.key === "truthIntent")
                             }
                             value={proposal.fields[field.key] || ""}
                             onChange={(e) =>

@@ -121,17 +121,24 @@ try {
     ["smoke-task-compatibility.mjs", "compatibility/compatibility-smoke.json"],
     ["smoke-stream.mjs", "stream/stream-smoke.json"],
     ["smoke-budget-ui.mjs", "budget/budget-smoke.json"],
-    ["smoke-candidate-review.mjs", "candidate-review/candidate-review-smoke.json"],
+    [
+      "smoke-candidate-review.mjs",
+      "candidate-review/candidate-review-smoke.json",
+    ],
     ["smoke-materials.mjs", "materials/materials-smoke.json"],
     ["smoke-evidence.mjs", "evidence/evidence-smoke.json"],
     ["smoke-material-context.mjs", "context/context-smoke.json"],
-    ["smoke-material-proposal.mjs", "material-proposal/material-proposal-smoke.json"],
+    [
+      "smoke-material-proposal.mjs",
+      "material-proposal/material-proposal-smoke.json",
+    ],
     ["smoke-planning.mjs", "planning/planning-smoke.json"],
     ["smoke-world-proposals.mjs", "world-proposals/world-proposals-smoke.json"],
     ["smoke-pilots.mjs", "pilots/pilots-smoke.json"],
     ["smoke-pilot-agent.mjs", "pilot-agent/pilot-agent-smoke.json"],
     ["smoke-continuity.mjs", "continuity/continuity-smoke.json"],
     ["smoke-relationships.mjs", "relationships/relationships-smoke.json"],
+    ["smoke-knowledge.mjs", "knowledge/knowledge-smoke.json"],
   ]) {
     const result = await execute(
       process.execPath,

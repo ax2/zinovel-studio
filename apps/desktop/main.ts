@@ -33,6 +33,10 @@ const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
 const pilotAcceptance = new PilotTaskAcceptance(journal, store.pilots);
 const continuityQueries = new ContinuityQueries(store.continuity);
+const knowledgeQueries = new ContinuityQueries({
+  query: (bookId: string, options: object, signal: AbortSignal) =>
+    store.knowledge.matrix(bookId, options, signal),
+});
 const harness = new NovelHarness({
   journal,
   root: dataRoot,
@@ -50,6 +54,7 @@ function cancelCloseAttempt() {
 }
 async function closeAfterRecovery() {
   continuityQueries.cancelAll();
+  knowledgeQueries.cancelAll();
   cancelCloseAttempt();
   await harness.cancel();
   await acceptance.whenIdle();
@@ -236,6 +241,47 @@ if (
                 value = await store.materials.list(
                   payload.bookId,
                   payload.options,
+                );
+                break;
+              case "knowledge.matrix":
+                value = await knowledgeQueries.query(
+                  payload.bookId,
+                  payload.options,
+                  payload,
+                );
+                break;
+              case "knowledge.cancel":
+                value = { cancelled: knowledgeQueries.cancel(payload) };
+                break;
+              case "knowledge.list":
+                value = await store.knowledge.list(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
+              case "knowledge.read":
+                value = await store.knowledge.read(payload.bookId, payload.id);
+                break;
+              case "knowledge.save":
+                value = await store.knowledge.save(
+                  payload.bookId,
+                  payload.input,
+                  payload.expected,
+                  payload.source,
+                );
+                break;
+              case "knowledge.retire":
+                value = await store.knowledge.setRetired(
+                  payload.bookId,
+                  payload.expected,
+                  payload.retired,
+                );
+                break;
+              case "knowledge.history":
+                value = await store.knowledge.history(
+                  payload.bookId,
+                  payload.id,
+                  payload.offset || 0,
                 );
                 break;
               case "planning.read":
@@ -686,6 +732,7 @@ if (
               }
               case "app.close-ready":
                 continuityQueries.cancelAll();
+                knowledgeQueries.cancelAll();
                 cancelCloseAttempt();
                 await harness.cancel();
                 await acceptance.whenIdle();

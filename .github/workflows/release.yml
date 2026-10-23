@@ -59,6 +59,7 @@ jobs:
       - run: pnpm test:pilot-agent
       - run: pnpm test:continuity
       - run: pnpm test:relationships
+      - run: pnpm test:knowledge
       - run: pnpm package:win
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer

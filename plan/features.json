@@ -406,7 +406,12 @@
         "design/creative-materials.md",
         "tests/material-evidence.test.mjs",
         "scripts/smoke-evidence.mjs",
-        "screenshots/stage-004/evidence/evidence-smoke.json"
+        "screenshots/stage-004/evidence/evidence-smoke.json",
+        "design/knowledge-matrix.md",
+        "packages/novel-storage/knowledge.mjs",
+        "tests/knowledge.test.mjs",
+        "scripts/smoke-knowledge.mjs",
+        "assessments/stage-004/knowledge-matrix.md"
       ]
     },
     {

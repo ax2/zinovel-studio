@@ -167,6 +167,21 @@ try {
       cardViewP95Ms: Math.round(durations[Math.floor(durations.length * 0.95)]),
       cardViewMaxMs: Math.round(durations.at(-1)),
     };
+    const focusedStart = performance.now(),
+      focusedReads = records;
+    const focused = await store.continuity.query(book.id, {
+      kind: "relation",
+      includeRelations: true,
+      participantId: ids[0],
+    });
+    metric.focusedQueryMs = Math.round(performance.now() - focusedStart);
+    metric.focusedMaterialReads = records - focusedReads;
+    assert.equal(
+      focused.total,
+      30,
+      "focus includes ten owned and twenty incoming events",
+    );
+    assert.equal(focused.relationships.totalEvents, 30);
     report.metrics.push(metric);
     console.log({ iteration: iteration + 1, ...metric });
   }

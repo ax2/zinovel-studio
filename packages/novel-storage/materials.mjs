@@ -1,6 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
-import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
+import { resolveAnchor } from "../novel-domain/anchors.mjs";
+import { checkedEvidenceSource } from "./evidence-source.mjs";
 import { evidenceInput, validateEvidence } from "../novel-domain/evidence.mjs";
 import {
   validateMaterialInput,
@@ -13,6 +14,7 @@ const json = (value) => JSON.stringify(value, null, 2) + "\n";
 // Evidence-only updates must not recursively invalidate cycles of related characters.
 const definitionHash = (data) =>
   hash(JSON.stringify(validateMaterialInput(data)));
+export { definitionHash as materialDefinitionHash };
 const id = (value) => {
   if (typeof value !== "string" || !/^[0-9a-f-]{36}$/.test(value))
     throw new Error("无效的资料标识");
@@ -427,29 +429,16 @@ export class MaterialStore {
             definitionHash: definitionHash(target.data),
           });
         }
-        const source = mutation.source;
-        const chapter = book.chapters.find(
-          (chapter) =>
-            chapter.id === id(source.chapterId) && !chapter.deletedAt,
+        const { chapterId, anchor } = await checkedEvidenceSource(
+          this.storage,
+          root,
+          book,
+          mutation.source,
         );
-        if (!chapter) throw new Error("证据章节不存在于当前作品");
-        const body = await readFile(
-          await this.storage.path(root, `manuscript/${chapter.id}.md`),
-          "utf8",
-        );
-        if (
-          typeof source.body !== "string" ||
-          source.body !== body ||
-          source.hash !== hash(body)
-        )
-          throw new Error("正文已改变或尚未保存。请保存正文并重新选择证据。");
-        if (source.end <= source.start || source.end - source.start > 12000)
-          throw new Error("请选择非空正文证据（最多 1.2 万字符）");
-        const anchor = createAnchor(body, source.start, source.end, hash(body));
         const record = {
           ...data,
           id: existing?.id || randomUUID(),
-          chapterId: chapter.id,
+          chapterId,
           anchor,
           dependencies,
           status: "active",
