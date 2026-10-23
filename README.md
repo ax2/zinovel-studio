@@ -2,9 +2,9 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.8 增加场景看板、章纲和十二类创作资料，正在完成阶段预览发行验证。按最新要求，经过安装及升级验证的阶段成果发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：Stage-004 创作资料与场景规划正在开发，前序阶段继续补全。alpha.8 已完成本机及远端安装/升级验证并公开发布，包含场景看板、章纲和十二类创作资料。后续经过验证的阶段成果继续发布含安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.3 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.3)。提供 x64 安装 EXE，自动构建、实际安装/运行/重装/卸载验证通过后发布。当前未代码签名，仍有大量创作功能待完成。
+Windows 技术预览版：[v0.1.0-alpha.8 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.8) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.8/ZiNovel-Studio-0.1.0-alpha.8-windows-x64-setup.exe)。x64 安装包已通过自动构建、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，仍有大量创作功能待完成。
 
 ## 产品方向
 
@@ -99,3 +99,5 @@ Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状�
 本机 alpha.6 已通过安装、安装后功能、重装/卸载保稿及 alpha.3 升级验证，完整运行目录与 EXE 保留，没有公开发布。后续主分支增加关联设定版本复核、证据精确导航和资料扫描分批调度；5,000 份资料扫描时的保存等待从 911 ms 降至 16 ms，查询仍有一次超过 500 ms 初始目标。安装包与后续源码的证据分别记录，详见 Stage-004 日志。
 
 alpha.7 开发切片已接入 AI 完善已有资料：模型提交独立结构化候选，作者可对照原卡、编辑、保存审阅草稿并明确接受；过期版本拒绝覆盖。人物字段、场景细纲编辑与证据段落导航已按原条目验收，参见[逐项报告](assessments/stage-004/materials-and-evidence-acceptance.md)。alpha.8 进一步接入共享场景看板/章纲、组织/物品/能力/现实资料。全流程文学质量、关系/认知矩阵、地图和出版等仍待完成。
+
+alpha.8 标签发行 CI 39955362954 已成功，四个公开附件与安装清单哈希核对一致；本机和 CI 构建分别留存证据，详见[发行证据](assessments/release/v0.1.0-alpha.8/README.md)。下一切片[试写分支设计](design/pilot-branches.md)已建立，尚未实现，不计入本版功能。
