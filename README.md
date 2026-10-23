@@ -1,12 +1,14 @@
 # ZiNovel Studio
 
+当前开发版本 alpha.16 正在实现出版冻结与导出生成层，尚未接入正式导出入口；不属于 alpha.15 安装候选。详见 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：Stage-004 创作资料与场景规划继续补全，独立阅读首版已通过本机安装验收。alpha.14已完成本机及远端安装/升级并公开发布，打通核心创作往返，新增空书创作入口并补强参考更新与版本保护。阶段成果继续发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.14 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.14) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.14/ZiNovel-Studio-0.1.0-alpha.14-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支alpha.15已通过122项检查、完整安装/重装/卸载保稿与公开alpha.3升级；标签CI及公开附件仍待验证，不在alpha.14中。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
+alpha.15冻结版已通过122项检查、完整安装/重装/卸载保稿与公开alpha.3升级；标签CI及公开附件仍待验证，不在alpha.14中。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 

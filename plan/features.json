@@ -1052,8 +1052,14 @@
       "name": "文本合订导出",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "章节顺序/编码/首尾核验；基础版 S002"
+      "status": "in-progress",
+      "acceptance": "章节顺序/编码/首尾核验；基础版 S002",
+      "evidence": [
+        "design/publication-snapshots.md",
+        "iterations/stage-007/WORKLOG.md",
+        "tests/publication.test.mjs",
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+      ]
     },
     {
       "id": "PUB-02",
@@ -1079,8 +1085,14 @@
       "name": "独立 HTML 阅读站",
       "priority": "P1",
       "stage": "Stage-007",
-      "status": "planned",
-      "acceptance": "目录/导航/移动阅读均可用"
+      "status": "in-progress",
+      "acceptance": "目录/导航/移动阅读均可用",
+      "evidence": [
+        "design/publication-snapshots.md",
+        "iterations/stage-007/WORKLOG.md",
+        "tests/publication.test.mjs",
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+      ]
     },
     {
       "id": "PUB-05",
@@ -1088,8 +1100,14 @@
       "name": "发布快照与预览",
       "priority": "P1",
       "stage": "Stage-007",
-      "status": "planned",
-      "acceptance": "目标/范围/hash 固定"
+      "status": "in-progress",
+      "acceptance": "目标/范围/hash 固定",
+      "evidence": [
+        "design/publication-snapshots.md",
+        "iterations/stage-007/WORKLOG.md",
+        "tests/publication.test.mjs",
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+      ]
     },
     {
       "id": "PUB-06",

@@ -60,6 +60,7 @@ jobs:
       - run: pnpm test:knowledge-context
       - run: pnpm test:creative-journey
       - run: pnpm test:reader
+      - run: pnpm test:publication-foundation
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
