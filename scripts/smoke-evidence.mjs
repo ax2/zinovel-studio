@@ -35,6 +35,11 @@ const screenshots = join(
 await mkdir(screenshots, { recursive: true });
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
+if (process.env.ZINOVEL_TEST_EXECUTABLE) {
+  for (const key of Object.keys(env))
+    if (key.toLowerCase() === "path") delete env[key];
+  env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
+}
 let application, page;
 const report = { status: "running", checks: [], errors: [], viewports: [] };
 const panel = () => page.getByRole("region", { name: "创作资料", exact: true });
@@ -43,7 +48,7 @@ async function launch() {
   application = await electron.launch({
     executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
     args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
-    cwd: root,
+    cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
     env,
   });
   page = await application.firstWindow();
