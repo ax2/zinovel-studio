@@ -1,0 +1,14 @@
+{
+  "tag": "v0.1.0-alpha.14",
+  "runId": "40011265240",
+  "checkedAt": "2026-10-23T19:36:21.337Z",
+  "status": "passed",
+  "release": "https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.14",
+  "publishedAt": "2026-10-23T19:36:00Z",
+  "ci": "https://github.com/ax2/zinovel-studio/actions/runs/40011265240",
+  "commit": "ef44ceaeef496efa012dfb7c2f0a2fde64eb2411",
+  "bytes": 222878966,
+  "sha256": "4a0e246b0ac4aba556743ca7f794793c622bd00cfd8497f2fb6e159abfdf5ffb",
+  "metadataDigestsVerified": true,
+  "publicInstallerExecutionEvidence": "Release CI installed exact manifest bytes; public EXE not downloaded again on local host"
+}

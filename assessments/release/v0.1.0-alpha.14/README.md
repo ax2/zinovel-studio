@@ -11,3 +11,9 @@
 106项需求仍24 verified /31 in-progress /51 planned，不因为首次核心创作往返就把整个Stage-004标完。1000认知事件本机服务扫描仍不达500ms目标，未验收真实云模型文学、独立阅读、完整出版/图像地图、完整迁移/IME/辅助技术/低端设备、签名或自动更新。后续阅读切片仅有设计，尚未实现，也不在本安装包。
 
 此刻是本机发行资格，不等于公开发行；标签CI与公开附件核对将在成功后单独追加。
+
+## 公开结果
+
+[发行CI40011265240](https://github.com/ax2/zinovel-studio/actions/runs/40011265240) completed/success，2026/10/24 03:36:00北京时间公开[alpha.14](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.14)，非草稿prerelease、四附件无ZIP。全套源码检查、安装后完整创作链/参考更新/重复失效及其他套件、重装/卸载保稿和公开alpha.3升级passed，CI升级13033ms。
+
+公开EXE222878966字节，SHA256 **4a0e246b0ac4aba556743ca7f794793c622bd00cfd8497f2fb6e159abfdf5ffb**。三个公开元数据实际下载并核对GitHub digest，EXE digest/大小、manifest、SHA256SUMS一致，同标签/源码/发行CI均由release:verify-public确认，见ci-public/verification.json。公开EXE执行来自CI，本机未再次下载执行该字节；本机9b9ff8...与公开4a0e24...分别记录。alpha.15阅读预览不在此标签。
