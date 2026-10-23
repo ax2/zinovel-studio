@@ -168,6 +168,17 @@ export function materialMarkdown(data) {
           `## ${field.label}\n\n${data.fields[field.key] || "（未填写）"}`,
       ),
       `## 笔记\n\n${data.notes}`,
+      `## 正文证据\n\n${(data.evidence || [])
+        .map(
+          (event) =>
+            `### ${event.kind} · ${event.status}\n\n${event.statement}\n\n故事时间：${event.storyTime || "未指定"}；认知范围：${event.scope}；来源章节：${event.chapterTitle || event.chapterId} (${event.chapterId})；状态：${event.freshness || "历史快照"}\n\n${event.anchor.quote
+              .split("\n")
+              .map((line) => "> " + line)
+              .join(
+                "\n",
+              )}\n\n关联：${(event.related || []).map((item) => item.title).join("、")}`,
+        )
+        .join("\n\n")}`,
       `## 关联章节\n\n${(data.chapters || []).map((chapter) => `- ${chapter.title} (${chapter.id})${chapter.state !== "active" ? " · 引用待检查" : ""}`).join("\n")}`,
     ].join("\n\n") + "\n"
   );

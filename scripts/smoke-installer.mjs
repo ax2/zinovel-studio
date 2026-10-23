@@ -123,6 +123,7 @@ try {
     ["smoke-budget-ui.mjs", "budget/budget-smoke.json"],
     ["smoke-candidate-review.mjs", "candidate-review/candidate-review-smoke.json"],
     ["smoke-materials.mjs", "materials/materials-smoke.json"],
+    ["smoke-evidence.mjs", "evidence/evidence-smoke.json"],
   ]) {
     const result = await execute(
       process.execPath,

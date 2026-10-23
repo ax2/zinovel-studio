@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checks": [
+    "real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history",
+    "relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "planted-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "source-changed.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "knowledge-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
 import {
+  MaterialEvidence,
+  type EvidenceSource,
+  type Evidence,
+} from "./material-evidence";
+import {
   materialKinds,
   materialKind,
   validateMaterialInput,
@@ -14,11 +19,12 @@ type Input = {
   chapterIds: string[];
 };
 type Expected = { id: string; revision: number; diskHash: string };
-type Material = Input &
+export type Material = Input &
   Expected & {
     updatedAt: string;
     deletedAt?: string;
     chapters: { id: string; title: string; state: string }[];
+    evidence: Evidence[];
   };
 const fresh = (kind: string): Input => ({
   kind,
@@ -31,9 +37,11 @@ const fresh = (kind: string): Input => ({
 export function MaterialsPanel({
   book,
   openChapter,
+  source,
 }: {
   book: Book;
   openChapter: (id: string) => Promise<void>;
+  source: EvidenceSource | null;
 }) {
   const [kind, setKind] = useState(""),
     [query, setQuery] = useState(""),
@@ -581,6 +589,27 @@ export function MaterialsPanel({
               ))}
             </div>
           )}
+          {current && !current.deletedAt && (
+            <MaterialEvidence
+              key={current.id}
+              bookId={book.id}
+              material={current}
+              source={source}
+              disabled={busy || dirty}
+              setPending={setBusy}
+              openChapter={openChapter}
+              updated={(value) => {
+                setCurrent(value);
+                setInput(value);
+                setExpected(value);
+                setDirty(false);
+                setHistory(null);
+                setHistorical(null);
+                setMessage(`已保存资料 · 版本 ${value.revision}`);
+                void refresh();
+              }}
+            />
+          )}
           {historical && (
             <article className="material-history" aria-label="资料历史内容">
               <h4>
@@ -593,6 +622,26 @@ export function MaterialsPanel({
                 </p>
               ))}
               <p>{historical.notes}</p>
+              {!!historical.evidence?.length && (
+                <details>
+                  <summary>
+                    此版本的原始证据（{historical.evidence.length}）
+                  </summary>
+                  {historical.evidence.map((event) => (
+                    <div key={event.id}>
+                      <p>
+                        {event.statement} · {event.storyTime || "时间未指定"}
+                      </p>
+                      <blockquote className="evidence-quote">
+                        {event.anchor.quote}
+                      </blockquote>
+                    </div>
+                  ))}
+                </details>
+              )}
+              <p className="muted">
+                载入只恢复资料字段与笔记；正文证据保持当前记录，请单独复核或停用。
+              </p>
               <button
                 disabled={busy || !!current?.deletedAt}
                 onClick={() => edit({ ...historical })}

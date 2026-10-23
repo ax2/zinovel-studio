@@ -30,6 +30,7 @@ const allowed = new Set([
   "materials.save",
   "materials.delete",
   "materials.history",
+  "materials.evidence",
   "materials.export",
   "annotations.mutate",
   "book.backup",

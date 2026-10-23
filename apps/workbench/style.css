@@ -1548,3 +1548,8 @@ footer {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+.material-evidence { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 12px; }
+.evidence-card { border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin: 12px 0; overflow-wrap: anywhere; }
+.evidence-card h5 { font-size: 14px; margin: 0 0 8px; }
+.evidence-card p { white-space: pre-wrap; }
+.evidence-quote { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto; border-left: 3px solid var(--accent); padding-left: 10px; margin: 12px 0; line-height: 1.7; }

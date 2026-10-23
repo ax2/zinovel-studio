@@ -771,6 +771,18 @@ function App() {
                 key={book.id}
                 book={book}
                 openChapter={(id) => openTaskChapter(id, book.id)}
+                source={
+                  chapter
+                    ? {
+                        chapterId: chapter.id,
+                        body,
+                        hash: chapter.diskHash,
+                        dirty,
+                        start: selection.start,
+                        end: selection.end,
+                      }
+                    : null
+                }
               />
             </div>
             {referenceOpen && !materialsOpen && (

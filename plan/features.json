@@ -24,7 +24,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "创建、排序和移动保留稳定 ID",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-03",
@@ -34,7 +36,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "只读试扫，确认后新建书而不改源",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-04",
@@ -44,7 +48,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "乱码与章节拆分可修正后导入",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-05",
@@ -69,7 +75,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "删除可恢复，引用冲突可见",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-07",
@@ -79,7 +87,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "按正文/标题/设定过滤并跳到出处",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-08",
@@ -298,8 +308,14 @@
       "name": "角色状态时间切片",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "过去与现在位置/身份不混淆"
+      "status": "in-progress",
+      "acceptance": "过去与现在位置/身份不混淆",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "WORLD-04",
@@ -307,8 +323,14 @@
       "name": "人物关系图",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "关系变更关联事件证据，有表格替代"
+      "status": "in-progress",
+      "acceptance": "关系变更关联事件证据，有表格替代",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "WORLD-05",
@@ -316,8 +338,14 @@
       "name": "认知与秘密矩阵",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "区分真相、读者已知、角色已知"
+      "status": "in-progress",
+      "acceptance": "区分真相、读者已知、角色已知",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "WORLD-06",
@@ -358,7 +386,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "输入法/emoji/长段落/粘贴不丢字",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-02",
@@ -368,7 +398,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "崩溃后稿件与待保存内容可恢复",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-03",
@@ -378,7 +410,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "手工及 AI 修改均可撤回",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-04",
@@ -465,7 +499,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "事实与选区外文本不变",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-02",
@@ -475,7 +511,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "新增场面/信息可见，非简单注水",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-03",
@@ -485,7 +523,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留关键因果并列信息损失",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-04",
@@ -495,7 +535,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "承接实际末段与角色状态",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-05",
@@ -505,7 +547,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留不同人物声音和关系",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-06",
@@ -515,7 +559,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "锁定事件结果且显示影响",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-07",
@@ -574,8 +620,14 @@
       "name": "正典与计划分离",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "未写设定不能当正文事实"
+      "status": "in-progress",
+      "acceptance": "未写设定不能当正文事实",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "MEM-04",
@@ -583,8 +635,14 @@
       "name": "事实引用与回溯",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "事实能跳转到具体章节段落"
+      "status": "in-progress",
+      "acceptance": "事实能跳转到具体章节段落",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "MEM-05",
@@ -601,8 +659,14 @@
       "name": "修改后失效传播",
       "priority": "P1",
       "stage": "Stage-005",
-      "status": "planned",
-      "acceptance": "摘要/审读/线索及时标旧"
+      "status": "in-progress",
+      "acceptance": "摘要/审读/线索及时标旧",
+      "evidence": [
+        "design/creative-materials.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
+      ]
     },
     {
       "id": "MEM-07",
@@ -632,7 +696,10 @@
       "acceptance": "计划/已埋/强化/回收独立状态",
       "evidence": [
         "design/creative-materials.md",
-        "iterations/stage-004/WORKLOG.md"
+        "iterations/stage-004/WORKLOG.md",
+        "tests/material-evidence.test.mjs",
+        "scripts/smoke-evidence.mjs",
+        "screenshots/stage-004/evidence/evidence-smoke.json"
       ]
     },
     {

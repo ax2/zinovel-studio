@@ -201,6 +201,13 @@ if (
                   payload.id,
                 );
                 break;
+              case "materials.evidence":
+                value = await store.materials.mutateEvidence(
+                  payload.bookId,
+                  payload.expected,
+                  payload.mutation,
+                );
+                break;
               case "materials.export": {
                 const material = await store.materials.read(
                   payload.bookId,

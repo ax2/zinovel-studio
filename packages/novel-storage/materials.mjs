@@ -1,5 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
+import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
+import { evidenceInput, validateEvidence } from "../novel-domain/evidence.mjs";
 import {
   validateMaterialInput,
   materialKind,
@@ -35,11 +37,73 @@ export class MaterialStore {
     )
       throw new Error("资料格式损坏或版本不支持，请保留原文件");
     validateMaterialInput(data);
+    validateEvidence(data.evidence, data.kind);
     return { data, raw, diskHash: hash(raw) };
   }
-  view(record, book) {
+  async view(record, book, root) {
+    const bodies = new Map();
+    const evidence = [];
+    for (const item of record.data.evidence || []) {
+      const chapter = book.chapters.find(
+        (chapter) => chapter.id === item.chapterId,
+      );
+      let resolution = { status: "missing", start: null, end: null },
+        freshness = "missing";
+      if (chapter && !chapter.deletedAt) {
+        if (!bodies.has(chapter.id)) {
+          try {
+            bodies.set(
+              chapter.id,
+              await readFile(
+                await this.storage.path(
+                  root,
+                  `manuscript/${id(chapter.id)}.md`,
+                ),
+                "utf8",
+              ),
+            );
+          } catch {
+            bodies.set(chapter.id, null);
+          }
+        }
+        const body = bodies.get(chapter.id);
+        if (body !== null) {
+          const currentHash = hash(body);
+          resolution = resolveAnchor(body, item.anchor, currentHash);
+          freshness =
+            currentHash === item.anchor.hash && resolution.status === "exact"
+              ? "current"
+              : "stale";
+        }
+      }
+      const related = [];
+      for (const targetId of item.relatedIds) {
+        try {
+          const target = await this.record(root, targetId);
+          related.push({
+            id: targetId,
+            title: target.data.title,
+            state: target.data.deletedAt ? "deleted" : "active",
+          });
+        } catch {
+          related.push({
+            id: targetId,
+            title: "资料不可读取",
+            state: "missing",
+          });
+        }
+      }
+      evidence.push({
+        ...item,
+        chapterTitle: chapter?.title || "章节不存在",
+        resolution,
+        freshness,
+        related,
+      });
+    }
     return {
       ...record.data,
+      evidence,
       diskHash: record.diskHash,
       chapters: record.data.chapterIds.map((chapterId) => {
         const chapter = book.chapters.find(
@@ -60,7 +124,7 @@ export class MaterialStore {
   read(bookId, materialId) {
     return this.storage.exclusive(async () => {
       const { root, book } = await this.context(bookId);
-      return this.view(await this.record(root, materialId), book);
+      return this.view(await this.record(root, materialId), book, root);
     });
   }
   list(bookId, options = {}) {
@@ -160,11 +224,12 @@ export class MaterialStore {
         id: previous?.data.id || randomUUID(),
         revision: (previous?.data.revision || 0) + 1,
         ...data,
+        evidence: previous?.data.evidence || [],
         createdAt: previous?.data.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
       await this.commit(root, next, previous);
-      return this.view({ data: next, diskHash: hash(json(next)) }, book);
+      return this.view({ data: next, diskHash: hash(json(next)) }, book, root);
     });
   }
   async commit(root, next, previous) {
@@ -193,7 +258,83 @@ export class MaterialStore {
       if (deleted) next.deletedAt = new Date().toISOString();
       else delete next.deletedAt;
       await this.commit(root, next, previous);
-      return this.view({ data: next, diskHash: hash(json(next)) }, book);
+      return this.view({ data: next, diskHash: hash(json(next)) }, book, root);
+    });
+  }
+  mutateEvidence(bookId, expected, mutation) {
+    return this.storage.exclusive(async () => {
+      const { root, book } = await this.context(bookId),
+        previous = await this.record(root, id(expected.id));
+      if (
+        previous.data.revision !== expected.revision ||
+        previous.diskHash !== expected.diskHash
+      )
+        throw new Error("资料已改变，请先重新读取再绑定证据");
+      if (previous.data.deletedAt) throw new Error("请先恢复资料");
+      const records = structuredClone(previous.data.evidence || []);
+      const existing = mutation.eventId
+        ? records.find((item) => item.id === id(mutation.eventId))
+        : null;
+      if (!["add", "reconfirm", "retire"].includes(mutation.action))
+        throw new Error("证据操作无效");
+      if (mutation.action !== "add" && !existing) throw new Error("证据不存在");
+      if (mutation.action === "retire") {
+        existing.status = "retired";
+        existing.updatedAt = new Date().toISOString();
+      } else {
+        if (mutation.action === "add" && records.length >= 250)
+          throw new Error("单份资料最多 250 条证据，请拆分资料");
+        const data = evidenceInput(
+          mutation.action === "reconfirm" ? existing : mutation,
+          previous.data.kind,
+        );
+        for (const targetId of data.relatedIds) {
+          if (targetId === previous.data.id)
+            throw new Error("关联对象应为另一份资料");
+          const target = await this.record(root, targetId);
+          if (target.data.deletedAt)
+            throw new Error("关联资料已删除，请先恢复");
+        }
+        const source = mutation.source;
+        const chapter = book.chapters.find(
+          (chapter) =>
+            chapter.id === id(source.chapterId) && !chapter.deletedAt,
+        );
+        if (!chapter) throw new Error("证据章节不存在于当前作品");
+        const body = await readFile(
+          await this.storage.path(root, `manuscript/${chapter.id}.md`),
+          "utf8",
+        );
+        if (
+          typeof source.body !== "string" ||
+          source.body !== body ||
+          source.hash !== hash(body)
+        )
+          throw new Error("正文已改变或尚未保存。请保存正文并重新选择证据。");
+        if (source.end <= source.start || source.end - source.start > 12000)
+          throw new Error("请选择非空正文证据（最多 1.2 万字符）");
+        const anchor = createAnchor(body, source.start, source.end, hash(body));
+        const record = {
+          ...data,
+          id: existing?.id || randomUUID(),
+          chapterId: chapter.id,
+          anchor,
+          status: "active",
+          createdAt: existing?.createdAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        if (existing) records[records.indexOf(existing)] = record;
+        else records.push(record);
+      }
+      const next = {
+        ...previous.data,
+        evidence: records,
+        revision: previous.data.revision + 1,
+        updatedAt: new Date().toISOString(),
+      };
+      validateEvidence(records, next.kind);
+      await this.commit(root, next, previous);
+      return this.view({ data: next, diskHash: hash(json(next)) }, book, root);
     });
   }
   history(bookId, materialId) {
@@ -223,6 +364,7 @@ export class MaterialStore {
         if (data.id !== materialId || data.schemaVersion !== 1)
           throw new Error("历史资料身份无效");
         validateMaterialInput(data);
+        validateEvidence(data.evidence, data.kind);
         history.push(data);
       }
       return history;

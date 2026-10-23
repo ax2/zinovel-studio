@@ -70,7 +70,7 @@ try {
   assert.match(await page.title(), /ZiNovel/);
   await screenshot("initial-materials.png");
   await writeFile(
-    join(screenshots, "initial-dom.txt"),
+    join(data, "initial-dom.txt"),
     await page.locator("body").ariaSnapshot(),
   );
   for (const kind of materialKinds) {
