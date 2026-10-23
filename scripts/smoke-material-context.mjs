@@ -1,3 +1,7 @@
+import {
+  taskReviewTimeoutMs,
+  captureTaskDiagnostics,
+} from "./qa-task-diagnostics.mjs";
 import { _electron as electron } from "playwright";
 import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
@@ -189,7 +193,7 @@ try {
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
-    .waitFor({ timeout: 45000 });
+    .waitFor({ timeout: taskReviewTimeoutMs });
   assert.equal(model.requests.length, 4);
   for (const request of model.requests)
     assert.deepEqual(request.tools.map((tool) => tool.name).sort(), [
@@ -281,6 +285,11 @@ try {
 } catch (error) {
   report.status = "failed";
   report.failure = String(error.stack || error);
+  report.taskStates = await captureTaskDiagnostics(data);
+  await writeFile(
+    join(screenshots, "context-smoke.json"),
+    JSON.stringify(report, null, 2),
+  );
   if (page)
     await page
       .screenshot({ path: join(screenshots, "failure.png") })

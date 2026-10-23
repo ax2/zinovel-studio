@@ -1,15 +1,17 @@
+import {
+  taskReviewTimeoutMs,
+  captureTaskDiagnostics,
+} from "./qa-task-diagnostics.mjs";
 import { _electron as electron } from "playwright";
 import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { modelFixture } from "../tests/fixtures/model-server.mjs";
 import {
   captureOwnedProcesses,
-  confirmOwnedProcessesExited,
+  terminateOwnedProcesses,
 } from "./windows-owned-processes.mjs";
 
 const root = resolve(import.meta.dirname, "..");
@@ -110,7 +112,7 @@ try {
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
-    .waitFor({ timeout: 45000 });
+    .waitFor({ timeout: taskReviewTimeoutMs });
   assert.equal(
     await page.getByLabel("候选文本").inputValue(),
     model.replacement,
@@ -226,19 +228,9 @@ try {
     owned.size > 2,
     "expected the owned desktop and Harness child tree",
   );
-  let killCode = 0;
-  try {
-    await promisify(execFile)(
-      "taskkill.exe",
-      ["/PID", String(pid), "/T", "/F"],
-      { windowsHide: true },
-    );
-  } catch (error) {
-    killCode = error.code;
-  }
-  await confirmOwnedProcessesExited(owned);
+  await terminateOwnedProcesses(owned);
   report.termination = {
-    taskkillExitCode: killCode,
+    method: "identity-verified termination of captured original processes",
     ownedProcessesConfirmedExited: owned.size,
     verification: "Win32_Process ProcessId + CreationDate",
   };
@@ -327,6 +319,11 @@ try {
 } catch (error) {
   report.status = "failed";
   report.error = String(error);
+  report.taskStates = await captureTaskDiagnostics(data);
+  await writeFile(
+    join(screenshots, "task-smoke.json"),
+    JSON.stringify(report, null, 2),
+  );
   await page
     ?.screenshot({ path: join(screenshots, "failure.png") })
     .catch(() => {});

@@ -1,3 +1,7 @@
+import {
+  taskReviewTimeoutMs,
+  captureTaskDiagnostics,
+} from "./qa-task-diagnostics.mjs";
 import { _electron as electron } from "playwright";
 import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
@@ -188,7 +192,7 @@ try {
   await page.getByRole("button", { name: "旧稿参考", exact: true }).click();
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
-    .waitFor({ timeout: 45000 });
+    .waitFor({ timeout: taskReviewTimeoutMs });
   assert.equal(
     await page.getByLabel("候选文本").inputValue(),
     model.replacement,
@@ -280,7 +284,7 @@ try {
   await editor.fill(changed);
   await page
     .getByRole("dialog", { name: "审阅 AI 候选" })
-    .waitFor({ timeout: 45000 });
+    .waitFor({ timeout: taskReviewTimeoutMs });
   await page.getByRole("button", { name: "接受候选", exact: true }).click();
   await page
     .getByRole("alert")
@@ -342,6 +346,7 @@ try {
 } catch (error) {
   evidence.status = "failed";
   evidence.failure = error.stack;
+  evidence.taskStates = await captureTaskDiagnostics(data);
   evidence.visibleAlerts = await lastPage
     ?.getByRole("alert")
     .allTextContents()

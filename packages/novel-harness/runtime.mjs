@@ -11,6 +11,11 @@ import { TaskJournal } from "./task-journal.mjs";
 import { atomicWriteText } from "../novel-storage/atomic.mjs";
 import { validateBudget } from "./budget.mjs";
 import { estimateRequest, estimateCost } from "./pricing.mjs";
+import {
+  HARNESS_INITIALIZE_TIMEOUT_MS,
+  HARNESS_REQUEST_TIMEOUT_MS,
+  HARNESS_TASK_TIMEOUT_MS,
+} from "./timeouts.mjs";
 
 function validateWritingInput({
   instruction,
@@ -389,8 +394,8 @@ export class NovelHarness {
         model: config.model,
         reasoningEffort: "off",
         maxTokens: config.budget.maxOutputTokens,
-        initializeTimeoutMs: 30000,
-        requestTimeoutMs: 120000,
+        initializeTimeoutMs: HARNESS_INITIALIZE_TIMEOUT_MS,
+        requestTimeoutMs: HARNESS_REQUEST_TIMEOUT_MS,
       }));
       // Persisted locally by the upstream session journal; never emitted to application logs.
       const prompt = writingPrompt(
@@ -405,7 +410,7 @@ export class NovelHarness {
       timeout = setTimeout(() => {
         task.cancelled = true;
         void harness.close().catch(() => {});
-      }, 180000);
+      }, HARNESS_TASK_TIMEOUT_MS);
       await this.#journal.transition(id, "running");
       checkCancelled();
       const result = await harness.run(prompt);

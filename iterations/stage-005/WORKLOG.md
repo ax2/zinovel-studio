@@ -23,3 +23,21 @@
 冻结819e32e后本机打包成功，未签名EXE222884115字节，SHA256 8db150750385307a8df877000a4898053c8e9a34ca1f6d67542ba5da2687d9d7。源码CI40019550946最终failure：阅读探针通过角色查找背景“生成候选”，该按钮在CI窄窗抽屉内不可达；改为常驻工具栏替换按钮，仍严格检查inert和真实focus不进入，并添加显式1008×681初始视口开关。先前一次本机重测在真实退出后的15秒Win32_Process查询超时，报告保留failed；再测实际1008×682视口完整阅读与预期失败清理均passed，见reader-ci-viewport-recheck。Windows进程查询改为仅WQL投影身份三列，安全身份核对逻辑和超时不放宽；不承诺已解决全部主机延迟。
 
 本机安装后大部分套件通过，到认知矩阵旧探针失败：列表内容已存在但异步操作仍locked，关闭被保护，随后注入配额故障并点击背景按钮超时。探针改等fieldset操作结束且窗口真实隐藏，再注入故障；原安装EXE完整认知重测passed，见installed-knowledge-recheck。产品代码未改，首候选仍未取得完整资格，不推标签；完整运行目录/EXE/截图归档release/candidates/v0.1.0-alpha.15-819e32e，失败关键证据installer-first-failure，后续重新冻结构建与全套安装验收。
+
+## 冻结 c7f293a 与第二次安装尝试
+
+源码CI40021897550已completed/success。第二次打包原进程63251最终exit0；长时间依赖遍历期间核对了活跃PID70224与增长CPU，没有因观察超时重启。EXE SHA256 57cff618992a82f5b4dbbcc7ce0235966b7c16fe6c852937c69cf485436fdbcf，与首候选8db150...分开。安装全套到世界资料提案时45秒审阅观察超时，任务记录为running；独立原45秒重测仍超时，不能当作任务已有失败终态。
+
+在同一安装EXE上仅将诊断观察窗口改为210秒（程序原180秒任务预算加30秒界面余量），四类提案/12次请求及原全部约束通过。实际四任务各1714–1810ms，见world-proposals-observation-budget.json；这不能证明先前超时只因45秒阈值，也没有据此放行整套安装资格。初始延迟原因未确定。
+
+首个测试安装卸载初次超时，再次按注册记录的D盘路径和/currentuser调用后文件与注册项最终消失，合成稿件仍为原明确保存文本，清理证明见installer-first-failure/cleanup-verification.json。第二个失败安装仅使用其自身卸载程序：EXE先移除，注册项稍后消失；没有在注册项仍存在时覆盖安装。installer-second-failure保留失败/清理证据；清理回执不代替完整重装卸载资格或性能验收。第三次完整安装/重装/卸载/公开alpha.3升级流水线42881正在运行，同一57cff...字节，不重新打包或修改产品行为。
+
+出版生成层另建next/publication-snapshots分支，提交d86ef1d5f6f486b71737c0dced83712f8c346025，开发版本alpha.16门禁false。该分支独立临时Git索引构造，主分支HEAD/索引和alpha.15冻结产物未改变。4项新单元及独立HTML真实打开已验证，详见Stage-007工作日志；新功能不混入alpha.15，不以分支源码或生成层代表正式导出入口已完成。
+
+## 第三次资格终态与下一修正
+
+42881最终exit1：本次完整安装在smoke-material-context第192行等待AI审阅45秒超时，尚未到重装/卸载或升级，不能生成本版manifest或推标签。仍为同一57cff...字节，当前第三个合成安装目录为.cache/installer-qa-tjqLXU/中文 安装目录；下一轮先保留其失败报告并核对自己注册位置，再使用其自身卸载程序清理，不能覆盖现存注册或手工删运行目录。release根目录现存release-manifest/SHA清单可能仍是alpha.14，不能复制冒充alpha.15；需待完整资格后重新生成。
+
+未来出版分支CI40027139995最终failure，发生在旧smoke-tasks强制终止测试：单次taskkill /T后，confirmOwnedProcessesExited在30秒期限仍发现原属身份，源码检查阶段已通过但未进入新HTML探针。后续应复用已有terminateOwnedProcesses的逐身份清理及完整退出核对，保留存活PID/创建时间诊断，不能略过退出断言。
+
+本机只读进程盘点未发现仍运行且命令行属于本项目的node/electron/ZiNovel/cmd进程，尚无证据证明永久SDK泄漏或将主机内存占用归因于本程序。没有据此引入Windows JobObject或修改产品取消逻辑。SDK现配置初始化30秒、请求120秒和任务180秒；正向UI探针45秒观察短于产品允许任务预算，应统一正确观察上限并在失败清理前保存任务终态/安全错误代码，避免把仍运行的任务当作模型失败。此前延迟的根因仍未确定，后续复测必须保留这个边界。

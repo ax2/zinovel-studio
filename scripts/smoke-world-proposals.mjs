@@ -1,3 +1,7 @@
+import {
+  taskReviewTimeoutMs,
+  captureTaskDiagnostics,
+} from "./qa-task-diagnostics.mjs";
 import { _electron as electron } from "playwright";
 import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
@@ -124,7 +128,7 @@ try {
     await assistant()
       .getByRole("button", { name: "生成资料候选", exact: true })
       .click();
-    await review().waitFor({ timeout: 45000 });
+    await review().waitFor({ timeout: taskReviewTimeoutMs });
     assert.equal(model.requests.length, requestCount + 3);
     assert.equal(
       (await store.materials.read(book.id, original.id)).diskHash,
@@ -201,6 +205,11 @@ try {
 } catch (error) {
   report.status = "failed";
   report.failure = String(error.stack || error);
+  report.taskStates = await captureTaskDiagnostics(data);
+  await writeFile(
+    join(screenshots, "world-proposals-smoke.json"),
+    JSON.stringify(report, null, 2),
+  );
   if (page)
     await page
       .screenshot({ path: join(screenshots, "failure.png") })

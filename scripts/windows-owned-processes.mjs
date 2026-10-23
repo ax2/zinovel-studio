@@ -43,8 +43,9 @@ export async function captureOwnedProcesses(rootPid) {
   return identities;
 }
 
-export function originalProcessesAbsent(owned, processes) {
+export function originalProcessSurvivors(owned, processes) {
   const active = new Map(processes.map((item) => [item.ProcessId, item]));
+  const survivors = [];
   for (const [pid, created] of owned) {
     const current = active.get(pid);
     if (!current) continue;
@@ -52,20 +53,26 @@ export function originalProcessesAbsent(owned, processes) {
       current.CreationDate,
       "Cannot confirm process exit: creation time unreadable",
     );
-    if (JSON.stringify(current.CreationDate) === created) return false;
+    if (JSON.stringify(current.CreationDate) === created)
+      survivors.push({ pid, createdAt: current.CreationDate });
   }
-  return true;
+  return survivors;
+}
+export function originalProcessesAbsent(owned, processes) {
+  return originalProcessSurvivors(owned, processes).length === 0;
 }
 
 export async function confirmOwnedProcessesExited(owned, timeoutMs = 30000) {
   const deadline = Date.now() + timeoutMs;
+  let survivors = [];
   do {
     const processes = await snapshot();
-    if (originalProcessesAbsent(owned, processes)) return;
+    survivors = originalProcessSurvivors(owned, processes);
+    if (!survivors.length) return;
     await new Promise((resolve) => setTimeout(resolve, 150));
   } while (Date.now() < deadline);
   throw new Error(
-    "Original owned process identities remain alive after termination",
+    `Original owned process identities remain alive after termination: ${JSON.stringify(survivors)}`,
   );
 }
 
