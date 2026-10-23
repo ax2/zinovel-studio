@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.17",
+  "checkedAt": "2026-10-23T23:47:46.721Z",
+  "scope": "Source module and existing desktop regression only; publication UI and alpha.17 installer not qualified",
+  "sourceFiles": {
+    "packages/novel-storage/publication.mjs": "87738f5a473cdda0f519bc14fd75bb418fe519b82e5a7e0280a70f576f5fe6f3",
+    "packages/novel-storage/kernel.mjs": "3db188bdb1e9861bc4c4d2a8cf6b4885807aa531a282ff4e1a539f5e38e048b9",
+    "packages/novel-storage/store.mjs": "11f8a7a83ea518f9242077eb05056e9c26fae097595edb641b6d034ca5da073a",
+    "packages/novel-domain/publication.mjs": "0fa34c485bdc2df696611de6206702c702260383ffb231eb2339d7ed2dfe1221",
+    "tests/publication-storage.test.mjs": "70f530065b86c58c0c83fc26b602d159dd4f34b807782d60f23ea48bb071112f"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "tests": 146,
+      "status": "passed"
+    },
+    {
+      "command": "Electron44.7 Node24.21 --test tests/publication-storage.test.mjs",
+      "tests": 9,
+      "status": "passed"
+    },
+    {
+      "command": "compiled desktop library/recovery/reader/UTF-8 probes",
+      "status": "passed",
+      "scope": "Existing authoring and backup flows; no publication UI"
+    }
+  ],
+  "limitations": [
+    "32MiB provisional text snapshot limit; thousand-chapter performance not verified",
+    "Snapshot transaction history increases storage; total backup remains limited to 512MiB",
+    "No publication IPC, preview, save dialog or exported snapshot artifact yet"
+  ]
+}

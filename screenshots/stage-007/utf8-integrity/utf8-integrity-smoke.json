@@ -7,7 +7,7 @@
     "Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode"
   ],
   "errors": [],
-  "syntheticDataRoot": "D:\\Work\\zinovel-studio\\.cache\\utf8-ui-hQqQsj",
+  "syntheticDataRoot": "D:\\Work\\zinovel-studio\\.cache\\utf8-ui-XXyqul",
   "preservedMalformedSha256": "0bc24594674911e8145f3fbef0e7285775a6c4a9777703cc075a2ef24985472c",
   "ownedProcessesConfirmedExited": 5
 }

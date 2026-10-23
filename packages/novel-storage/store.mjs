@@ -7,6 +7,7 @@ import { ContinuityStore } from "./continuity.mjs";
 import { KnowledgeStore } from "./knowledge.mjs";
 import { MixedContext } from "./context.mjs";
 import { ReaderStore } from "./reader.mjs";
+import { PublicationStore, publicationOriginIds } from "./publication.mjs";
 import {
   mkdir,
   readFile,
@@ -49,6 +50,7 @@ export class NovelStore {
     this.#storage = new BookStorageKernel(this.root);
     this.materials = new MaterialStore(this.#storage);
     this.reader = new ReaderStore(this.#storage);
+    this.publication = new PublicationStore(this.#storage, this.reader);
     this.planning = new PlanningStore(this.#storage, this.materials);
     this.pilots = new PilotStore(this.#storage, this.materials);
     this.continuity = new ContinuityStore(this.#storage, this.materials);
@@ -595,6 +597,9 @@ export class NovelStore {
       );
       if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
         throw new Error("备份作品格式不支持");
+      const sourceBookIds = publicationOriginIds(book);
+      if (sourceBookIds.length > 128)
+        throw new Error("恢复来源链达到当前上限，原备份已保留");
       for (const chapter of book.chapters)
         if (!contents.has(`manuscript/${checkedId(chapter.id)}.md`))
           throw new Error("备份缺少章节正文");
@@ -614,6 +619,7 @@ export class NovelStore {
         await writeFile(target, bytes);
       }
       book.id = id;
+      book.restoredFromBookIds = sourceBookIds;
       book.title = `${book.title}（恢复）`;
       book.revision++;
       book.updatedAt = new Date().toISOString();

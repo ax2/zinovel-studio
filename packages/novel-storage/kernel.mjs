@@ -109,9 +109,34 @@ export class BookStorageKernel {
     await atomic(archivePath, raw);
     await atomic(path, "");
   }
-  async transaction(root, changes) {
+  async transaction(root, changes, options = {}) {
     const requested = Object.entries(changes);
+    if (
+      !options ||
+      typeof options !== "object" ||
+      Array.isArray(options) ||
+      Object.keys(options).some((key) => key !== "expectedBefore")
+    )
+      throw new Error("事务前像条件无效，原文件已保留");
+    const expected =
+      options.expectedBefore === undefined ? {} : options.expectedBefore;
+    if (
+      !expected ||
+      typeof expected !== "object" ||
+      Array.isArray(expected) ||
+      Object.entries(expected).some(
+        ([path, before]) =>
+          !Object.hasOwn(changes, path) ||
+          (before !== null &&
+            (typeof before !== "string" || !before.isWellFormed())),
+      )
+    )
+      throw new Error("事务前像条件无效，原文件已保留");
+    const seen = new Set();
     for (const [path, after] of requested) {
+      const key = process.platform === "win32" ? path.toLowerCase() : path;
+      if (seen.has(key)) throw new Error("事务路径重复，未创建恢复日志");
+      seen.add(key);
       if (
         !path.isWellFormed() ||
         typeof after !== "string" ||
@@ -122,12 +147,16 @@ export class BookStorageKernel {
     }
     await this.recover(root);
     const entries = [];
-    for (const [path, after] of requested)
+    for (const [path, after] of requested) {
+      const before = await readOptional(await this.path(root, path));
+      if (Object.hasOwn(expected, path) && before !== expected[path])
+        throw new Error("事务前像已改变，未覆盖现有文件");
       entries.push({
         path,
-        before: await readOptional(await this.path(root, path)),
+        before,
         after,
       });
+    }
     const transaction = {
       id: randomUUID(),
       at: new Date().toISOString(),

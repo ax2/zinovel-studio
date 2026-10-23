@@ -34,7 +34,7 @@ function freeze(value) {
   return value;
 }
 const metadataKeys = ["title", "author", "synopsis", "rights", "aiDisclosure"];
-function metadata(input) {
+export function publicationMetadata(input) {
   exact(input, metadataKeys, "公开书目");
   const result = Object.fromEntries(
     metadataKeys.map((key) => [key, text(input[key], key)]),
@@ -81,7 +81,7 @@ function content(input) {
   return {
     bookId: input.bookId,
     bookRevision: revision(input.bookRevision),
-    metadata: metadata(input.metadata),
+    metadata: publicationMetadata(input.metadata),
     chapters,
   };
 }

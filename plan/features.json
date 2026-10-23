@@ -1106,7 +1106,10 @@
         "design/publication-snapshots.md",
         "iterations/stage-007/WORKLOG.md",
         "tests/publication.test.mjs",
-        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json",
+        "packages/novel-storage/publication.mjs",
+        "tests/publication-storage.test.mjs",
+        "assessments/stage-007/publication-storage.md"
       ]
     },
     {
