@@ -7,6 +7,10 @@ import { promisify } from "node:util";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { modelFixture } from "../tests/fixtures/model-server.mjs";
+import {
+  captureOwnedProcesses,
+  confirmOwnedProcessesExited,
+} from "./windows-owned-processes.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
@@ -149,39 +153,12 @@ try {
   assert.equal(model.requests.length, 1);
   const interrupted = await start();
   const pid = application.process().pid;
-  const { stdout } = await promisify(execFile)(
-    "powershell.exe",
-    [
-      "-NoProfile",
-      "-NonInteractive",
-      "-Command",
-      "Get-CimInstance Win32_Process | Select-Object ProcessId,ParentProcessId | ConvertTo-Json -Compress",
-    ],
-    { windowsHide: true },
-  );
-  const processes = JSON.parse(stdout),
-    owned = new Set([pid]);
-  for (let size = -1; size !== owned.size; ) {
-    size = owned.size;
-    for (const item of processes)
-      if (owned.has(item.ParentProcessId)) owned.add(item.ProcessId);
-  }
+  const owned = await captureOwnedProcesses(pid);
   assert.ok(owned.size > 2);
   await promisify(execFile)("taskkill.exe", ["/PID", String(pid), "/T", "/F"], {
     windowsHide: true,
   }).catch(() => {});
-  await until(
-    () =>
-      [...owned].every((id) => {
-        try {
-          process.kill(id, 0);
-          return false;
-        } catch {
-          return true;
-        }
-      }),
-    "Owned process tree remained alive",
-  );
+  await confirmOwnedProcessesExited(owned);
   application = undefined;
   await launch();
   await verify(interrupted, "interrupted");
@@ -192,6 +169,7 @@ try {
     "forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay",
   );
   report.ownedProcessesConfirmedExited = owned.size;
+  report.terminationVerification = "Win32_Process ProcessId + CreationDate";
   assert.deepEqual(report.errors, []);
   report.status = "passed";
 } catch (error) {

@@ -7,6 +7,10 @@ import { promisify } from "node:util";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { modelFixture } from "../tests/fixtures/model-server.mjs";
+import {
+  captureOwnedProcesses,
+  confirmOwnedProcessesExited,
+} from "./windows-owned-processes.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
@@ -217,23 +221,7 @@ try {
   );
   const pid = application.process().pid;
   assert.ok(Number.isInteger(pid) && pid > 0);
-  const { stdout } = await promisify(execFile)(
-    "powershell.exe",
-    [
-      "-NoProfile",
-      "-NonInteractive",
-      "-Command",
-      "Get-CimInstance Win32_Process | Select-Object ProcessId,ParentProcessId | ConvertTo-Json -Compress",
-    ],
-    { windowsHide: true },
-  );
-  const processes = JSON.parse(stdout),
-    owned = new Set([pid]);
-  for (let oldSize = -1; oldSize !== owned.size; ) {
-    oldSize = owned.size;
-    for (const process of processes)
-      if (owned.has(process.ParentProcessId)) owned.add(process.ProcessId);
-  }
+  const owned = await captureOwnedProcesses(pid);
   assert.ok(
     owned.size > 2,
     "expected the owned desktop and Harness child tree",
@@ -248,22 +236,11 @@ try {
   } catch (error) {
     killCode = error.code;
   }
-  await waitUntil(
-    () =>
-      [...owned].every((pid) => {
-        try {
-          process.kill(pid, 0);
-          return false;
-        } catch (error) {
-          if (error.code === "ESRCH") return true;
-          throw error;
-        }
-      }),
-    "owned process tree remained alive after forced termination",
-  );
+  await confirmOwnedProcessesExited(owned);
   report.termination = {
     taskkillExitCode: killCode,
     ownedProcessesConfirmedExited: owned.size,
+    verification: "Win32_Process ProcessId + CreationDate",
   };
   releaseFinal();
   await application.close().catch(() => {});
