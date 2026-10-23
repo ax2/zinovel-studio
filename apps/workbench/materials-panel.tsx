@@ -40,10 +40,12 @@ export function MaterialsPanel({
   book,
   openChapter,
   source,
+  requested,
 }: {
   book: Book;
   openChapter: (id: string, anchor?: TextAnchor) => Promise<void>;
   source: EvidenceSource | null;
+  requested?: { id: string; request: number } | null;
 }) {
   const [kind, setKind] = useState(""),
     [query, setQuery] = useState(""),
@@ -159,6 +161,15 @@ export function MaterialsPanel({
       if (token === detailRequest.current) setBusy(false);
     }
   }
+  useEffect(() => {
+    if (requested) {
+      setKind("scene");
+      setDeleted(false);
+      setQuery("");
+      setOffset(0);
+      void select(requested.id);
+    }
+  }, [requested?.request]);
   function edit(next: Input) {
     setInput(next);
     setDirty(true);

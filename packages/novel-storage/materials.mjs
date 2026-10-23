@@ -162,6 +162,40 @@ export class MaterialStore {
       offset < 0
     )
       throw new Error("资料检索条件无效");
+    const items = [],
+      needle = query.toLocaleLowerCase();
+    const errors = await this.scan(bookId, (data) => {
+      if (!!data.deletedAt !== deleted || (kind && data.kind !== kind)) return;
+      if (
+        needle &&
+        ![data.title, data.notes, ...Object.values(data.fields)]
+          .join("\n")
+          .toLocaleLowerCase()
+          .includes(needle)
+      )
+        return;
+      items.push({
+        id: data.id,
+        kind: data.kind,
+        title: data.title,
+        status: data.status,
+        revision: data.revision,
+        updatedAt: data.updatedAt,
+        deletedAt: data.deletedAt,
+      });
+    });
+    items.sort(
+      (a, b) =>
+        b.updatedAt.localeCompare(a.updatedAt) || a.id.localeCompare(b.id),
+    );
+    return {
+      items: items.slice(offset, offset + 40),
+      total: items.length,
+      errors,
+    };
+  }
+  // Internal visitor is synchronous and receives validated data, never IPC input.
+  async scan(bookId, visit) {
     const { root, entries } = await this.storage.exclusive(async () => {
       const { root } = await this.context(bookId);
       try {
@@ -180,9 +214,7 @@ export class MaterialStore {
         throw error;
       }
     });
-    const items = [],
-      errors = [],
-      needle = query.toLocaleLowerCase();
+    const errors = [];
     // Bound each read transaction so queued manuscript saves run between batches.
     // Listings may span revisions; opening and AI snapshots still reread under one lock.
     for (let offset = 0; offset < entries.length; offset += 32) {
@@ -192,27 +224,7 @@ export class MaterialStore {
         await Promise.all(
           entries.slice(offset, offset + 32).map(async (entry) => {
             try {
-              const record = await this.record(root, entry.name.slice(0, -5)),
-                data = record.data;
-              if (!!data.deletedAt !== deleted || (kind && data.kind !== kind))
-                return;
-              if (
-                needle &&
-                ![data.title, data.notes, ...Object.values(data.fields)]
-                  .join("\n")
-                  .toLocaleLowerCase()
-                  .includes(needle)
-              )
-                return;
-              items.push({
-                id: data.id,
-                kind: data.kind,
-                title: data.title,
-                status: data.status,
-                revision: data.revision,
-                updatedAt: data.updatedAt,
-                deletedAt: data.deletedAt,
-              });
+              visit((await this.record(root, entry.name.slice(0, -5))).data);
             } catch {
               errors.push("一份资料无法读取，原始文件已保留");
             }
@@ -220,15 +232,7 @@ export class MaterialStore {
         );
       });
     }
-    items.sort(
-      (a, b) =>
-        b.updatedAt.localeCompare(a.updatedAt) || a.id.localeCompare(b.id),
-    );
-    return {
-      items: items.slice(offset, offset + 40),
-      total: items.length,
-      errors,
-    };
+    return errors;
   }
   save(bookId, input, expected = null, acceptance = null) {
     return this.storage.exclusive(async () => {

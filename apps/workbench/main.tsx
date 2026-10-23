@@ -33,6 +33,7 @@ import { ChapterTree } from "./chapter-tree";
 import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
 import { MaterialsPanel } from "./materials-panel";
+import { ScenePlanner } from "./scene-planner";
 import { TaskHistory } from "./task-history";
 import { ReplaceDialog } from "./replace-dialog";
 import { AnnotationsDialog } from "./annotations";
@@ -55,6 +56,12 @@ function App() {
   const [referenceOpen, setReferenceOpen] = useState(false),
     [typewriter, setTypewriter] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
+  const [planningOpen, setPlanningOpen] = useState(false);
+  const [requestedMaterial, setRequestedMaterial] = useState<{
+    bookId: string;
+    id: string;
+    request: number;
+  } | null>(null);
   const [reveal, setReveal] = useState<RevealTarget | null>(null);
   const [replaceSnapshot, setReplaceSnapshot] =
     useState<WritingSnapshot | null>(null);
@@ -525,6 +532,21 @@ function App() {
           openChapter={openTaskChapter}
         />
       )}
+      {planningOpen && book && (
+        <ScenePlanner
+          key={book.id}
+          bookId={book.id}
+          onClose={() => setPlanningOpen(false)}
+          onChapter={(id) => openTaskChapter(id, book.id)}
+          onEdit={(id) => {
+            setPlanningOpen(false);
+            setMaterialsOpen(true);
+            setReferenceOpen(false);
+            setPanelOpen(true);
+            setRequestedMaterial({ bookId: book.id, id, request: Date.now() });
+          }}
+        />
+      )}
       {error && (
         <div className="alert error" role="alert">
           <AlertTriangle size={18} />
@@ -578,6 +600,7 @@ function App() {
           />
           <main className="workspace">
             <div className="toolbar">
+              <button onClick={() => setPlanningOpen(true)}>场景编排</button>
               <button
                 onClick={async () => {
                   if (await save()) {
@@ -770,6 +793,11 @@ function App() {
               <MaterialsPanel
                 key={book.id}
                 book={book}
+                requested={
+                  requestedMaterial?.bookId === book.id
+                    ? requestedMaterial
+                    : null
+                }
                 openChapter={async (id, anchor) => {
                   await openTaskChapter(id, book.id);
                   if (anchor) {

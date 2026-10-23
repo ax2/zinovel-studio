@@ -126,6 +126,7 @@ try {
     ["smoke-evidence.mjs", "evidence/evidence-smoke.json"],
     ["smoke-material-context.mjs", "context/context-smoke.json"],
     ["smoke-material-proposal.mjs", "material-proposal/material-proposal-smoke.json"],
+    ["smoke-planning.mjs", "planning/planning-smoke.json"],
   ]) {
     const result = await execute(
       process.execPath,

@@ -30,6 +30,8 @@ const allowed = new Set([
   "book.search",
   "annotations.read",
   "materials.list",
+  "planning.read",
+  "planning.move",
   "materials.read",
   "materials.save",
   "materials.delete",

@@ -217,6 +217,12 @@ if (
                   payload.options,
                 );
                 break;
+              case "planning.read":
+                value = await store.planning.read(payload.bookId);
+                break;
+              case "planning.move":
+                value = await store.planning.move(payload.bookId, payload.mutation, payload.expected);
+                break;
               case "materials.context":
                 value = await store.materials.contextPack(
                   payload.bookId,
