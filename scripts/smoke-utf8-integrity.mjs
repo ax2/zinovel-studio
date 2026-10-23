@@ -1,6 +1,6 @@
 import { _electron as electron } from "playwright";
 import electronPath from "electron";
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile, readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -33,6 +33,20 @@ const malformed = Buffer.concat([
   Buffer.from("原始结尾"),
 ]);
 await writeFile(manuscript, malformed);
+const backupParent = join(data, "backups");
+await mkdir(backupParent);
+const backup = await store.createBackup(book.id, backupParent);
+const backupMetadataPath = join(backup.path, "book.json");
+const backupMetadata = await readFile(backupMetadataPath);
+const backupTitleOffset = backupMetadata.indexOf(Buffer.from(book.title));
+assert.ok(backupTitleOffset > 0);
+backupMetadata[backupTitleOffset] = 255;
+await writeFile(backupMetadataPath, backupMetadata);
+const backupManifestPath = join(backup.path, "backup-manifest.json");
+const backupManifest = JSON.parse(await readFile(backupManifestPath, "utf8"));
+backupManifest.files.find((file) => file.path === "book.json").sha256 =
+  createHash("sha256").update(backupMetadata).digest("hex");
+await writeFile(backupManifestPath, JSON.stringify(backupManifest));
 const metadataPath = join(data, "library", damaged.id, "book.json");
 const metadata = await readFile(metadataPath);
 const offset = metadata.indexOf(Buffer.from("损坏元数据合成稿"));
@@ -119,6 +133,29 @@ try {
   assert.match(exportError, /UTF-8/);
   assert.equal(await app.evaluate(() => globalThis.encodingDialogCalls), 0);
   assert.deepEqual(await readFile(manuscript), malformed);
+  // Instrument only folder selection; restoration itself runs the actual desktop host code.
+  const libraryBeforeRestore = await readdir(join(data, "library"));
+  await app.evaluate(({ dialog }, folder) => {
+    dialog.showOpenDialog = async () => ({
+      canceled: false,
+      filePaths: [folder],
+    });
+  }, backup.path);
+  const restoreError = await page.evaluate(async () => {
+    try {
+      await window.novel.request("library.restore");
+      return null;
+    } catch (error) {
+      return error.message;
+    }
+  });
+  assert.match(restoreError, /UTF-8/);
+  assert.deepEqual(await readdir(join(data, "library")), libraryBeforeRestore);
+  assert.deepEqual(await readFile(backupMetadataPath), backupMetadata);
+  assert.deepEqual(await readFile(manuscript), malformed);
+  report.checks.push(
+    "Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged",
+  );
   report.checks.push(
     "Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
     "Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",

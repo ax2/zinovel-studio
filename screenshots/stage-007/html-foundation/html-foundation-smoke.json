@@ -9,13 +9,13 @@
   "environment": {
     "browser": "Electron 44 bundled Chromium, standalone file pages; not workbench or actual mobile device",
     "browserPlugin": "Browser plugin not available; repository Playwright/Electron fallback",
-    "artifactRoot": "D:\\Work\\zinovel-studio\\.cache\\publication-render-GwIWYr\\export"
+    "artifactRoot": "D:\\Work\\zinovel-studio\\.cache\\publication-render-qblEmw\\export"
   },
   "viewports": [
     {
       "name": "directory-desktop.png",
       "width": 1287,
-      "height": 838
+      "height": 864
     },
     {
       "name": "chapter-phone-dark.png",
@@ -32,6 +32,6 @@
     "D:\\Work\\zinovel-studio\\node_modules\\.pnpm\\electron@44.7.0\\node_modules\\electron\\dist\\electron.exe",
     "--inspect=0",
     "--remote-debugging-port=0",
-    "D:\\Work\\zinovel-studio\\.cache\\publication-render-GwIWYr\\browser.cjs"
+    "D:\\Work\\zinovel-studio\\.cache\\publication-render-qblEmw\\browser.cjs"
   ]
 }
