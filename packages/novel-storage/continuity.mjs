@@ -1,5 +1,6 @@
 import { evidenceKinds } from "../novel-domain/evidence.mjs";
 import { orderedChapters } from "../novel-domain/structure.mjs";
+import { RelationshipProjection } from "../novel-domain/relationship-graph.mjs";
 
 const identifier = (value) =>
   typeof value === "string" && (!value || /^[0-9a-f-]{36}$/.test(value));
@@ -16,10 +17,13 @@ export class ContinuityStore {
       scope = "",
       ownerId = "",
       relatedId = "",
+      participantId = "",
+      eventId = "",
       chapterId = "",
       state = "",
       query = "",
       offset = 0,
+      includeRelations = false,
     } = options;
     if (
       !["", ...evidenceKinds.map((item) => item.id)].includes(kind) ||
@@ -27,7 +31,10 @@ export class ContinuityStore {
       !["", "current", "stale", "missing", "retired", "deleted"].includes(
         state,
       ) ||
-      ![ownerId, relatedId, chapterId].every(identifier) ||
+      ![ownerId, relatedId, chapterId, participantId, eventId].every(
+        identifier,
+      ) ||
+      typeof includeRelations !== "boolean" ||
       typeof query !== "string" ||
       query.length > 200 ||
       !Number.isSafeInteger(offset) ||
@@ -46,6 +53,7 @@ export class ContinuityStore {
       needle = query.toLocaleLowerCase();
     const counts = { current: 0, stale: 0, missing: 0, retired: 0, deleted: 0 };
     let total = 0;
+    const graph = includeRelations ? new RelationshipProjection() : null;
     // One source card per lock: manuscript saves can run between cards.
     // A scan can span revisions; actions must reread and validate their own target.
     for (const owner of owners) {
@@ -66,8 +74,12 @@ export class ContinuityStore {
           for (const event of card.evidence) {
             if (
               (kind && event.kind !== kind) ||
+              (eventId && event.id !== eventId) ||
               (scope && event.scope !== scope) ||
               (chapterId && event.chapterId !== chapterId) ||
+              (participantId &&
+                card.id !== participantId &&
+                !event.relatedIds.includes(participantId)) ||
               (relatedId && !event.relatedIds.includes(relatedId))
             )
               continue;
@@ -95,8 +107,11 @@ export class ContinuityStore {
               throw new Error("证据有效性状态无效");
             counts[condition]++;
             if (state && condition !== state) continue;
-            if (total >= offset && items.length < 40)
-              items.push({
+            if (
+              (total >= offset && items.length < 40) ||
+              (graph && event.kind === "relation")
+            ) {
+              const row = {
                 ...event,
                 key: `${card.id}/${event.id}`,
                 ownerId: card.id,
@@ -107,7 +122,10 @@ export class ContinuityStore {
                 ownerDeleted: !!card.deletedAt,
                 condition,
                 chapterOrder: chapterOrder.get(event.chapterId) ?? null,
-              });
+              };
+              if (total >= offset && items.length < 40) items.push(row);
+              graph?.add(row);
+            }
             total++;
           }
         });
@@ -129,6 +147,7 @@ export class ContinuityStore {
       completedAt: new Date().toISOString(),
       consistency: "live-scan",
       order: "source-id-then-record-order",
+      ...(graph ? { relationships: graph.result() } : {}),
     };
   }
 }

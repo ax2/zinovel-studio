@@ -4,8 +4,9 @@ import type { Evidence } from "./material-evidence";
 import type { TextAnchor } from "./manuscript-editor";
 import { evidenceKinds } from "../../packages/novel-domain/evidence.mjs";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
+import { RelationshipGraph, type RelationshipData } from "./relationship-graph";
 
-type Row = Evidence & {
+export type Row = Evidence & {
   key: string;
   ownerId: string;
   ownerTitle: string;
@@ -22,6 +23,8 @@ type Result = {
   errors: string[];
   scannedSources: number;
   completedAt: string;
+  offset: number;
+  relationships?: RelationshipData;
 };
 const scopes: Record<string, string> = {
   world: "世界记录",
@@ -53,6 +56,15 @@ export function ContinuityWorkbench({
     [chapterId, setChapterId] = useState(""),
     [query, setQuery] = useState(""),
     [owner, setOwner] = useState<{ id: string; title: string } | null>(null),
+    [participant, setParticipant] = useState<{
+      id: string;
+      title: string;
+    } | null>(null),
+    [exactEvent, setExactEvent] = useState<{
+      ownerId: string;
+      eventId: string;
+    } | null>(null),
+    [mode, setMode] = useState<"table" | "graph">("table"),
     [offset, setOffset] = useState(0),
     [refresh, setRefresh] = useState(0),
     [result, setResult] = useState<Result | null>(null),
@@ -71,12 +83,20 @@ export function ContinuityWorkbench({
           state,
           chapterId,
           query,
-          ownerId: owner?.id || "",
+          ownerId: exactEvent?.ownerId || owner?.id || "",
+          participantId: participant?.id || "",
+          eventId: exactEvent?.eventId || "",
+          includeRelations: mode === "graph",
           offset,
         },
       })
         .then((value) => {
-          if (active) setResult(value);
+          if (!active) return;
+          if (value.total > 0 && value.offset >= value.total) {
+            setOffset(Math.floor((value.total - 1) / 40) * 40);
+            return;
+          }
+          setResult(value);
         })
         .catch((e) => {
           if (active) setError(e.message);
@@ -97,6 +117,10 @@ export function ContinuityWorkbench({
     chapterId,
     query,
     owner?.id,
+    participant?.id,
+    exactEvent?.ownerId,
+    exactEvent?.eventId,
+    mode,
     offset,
     refresh,
   ]);
@@ -104,7 +128,17 @@ export function ContinuityWorkbench({
     change();
     setOffset(0);
   };
-  const locked = busy || !!error;
+  const locked = busy || !!error || result?.offset !== offset;
+  async function openEvidence(row: Row) {
+    setBusy(true);
+    try {
+      await onChapter(row.chapterId, row.anchor);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
     <div className="modal-backdrop">
       <section
@@ -124,6 +158,29 @@ export function ContinuityWorkbench({
             关闭
           </button>
         </header>
+        <div
+          className="continuity-views"
+          role="group"
+          aria-label="证据显示方式"
+        >
+          <button
+            aria-pressed={mode === "table"}
+            onClick={() => setMode("table")}
+          >
+            证据表格
+          </button>
+          <button
+            aria-pressed={mode === "graph"}
+            onClick={() => {
+              setMode("graph");
+              setKind("relation");
+              setExactEvent(null);
+              setOffset(0);
+            }}
+          >
+            关系图
+          </button>
+        </div>
         <div className="continuity-filters">
           <label>
             查找证据
@@ -139,6 +196,7 @@ export function ContinuityWorkbench({
             事件类型
             <select
               aria-label="事件类型"
+              disabled={mode === "graph"}
               value={kind}
               onChange={(e) => filter(() => setKind(e.target.value))}
             >
@@ -207,6 +265,22 @@ export function ContinuityWorkbench({
             </button>
           </p>
         )}
+        {participant && (
+          <p>
+            关系对象：{participant.title}（包含所属及关联记录）{" "}
+            <button onClick={() => filter(() => setParticipant(null))}>
+              取消对象聚焦
+            </button>
+          </p>
+        )}
+        {exactEvent && (
+          <p>
+            正在核对一条关系事件{" "}
+            <button onClick={() => filter(() => setExactEvent(null))}>
+              退出单事件核对
+            </button>
+          </p>
+        )}
         {error && (
           <p className="alert error" role="alert">
             {error}。请刷新；此前结果不能用于操作。
@@ -240,137 +314,161 @@ export function ContinuityWorkbench({
             <p className="muted">
               按资料及记录顺序分页，不推断故事先后。故事时间保留作者原文；叙述章序单独标示。刷新会重新核对，跨页扫描期间的编辑可能改变结果。
             </p>
-            <div className="continuity-table-wrap">
-              <table aria-label="正文证据记录">
-                <thead>
-                  <tr>
-                    <th>所属资料</th>
-                    <th>事件与依据</th>
-                    <th>时间与来源</th>
-                    <th>范围与状态</th>
-                    <th>操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {result.items.map((row) => (
-                    <tr key={row.key}>
-                      <td data-label="所属资料">
-                        <strong>{row.ownerTitle}</strong>
-                        <p>资料版本 {row.ownerRevision}</p>
-                        {row.ownerDeleted && <p>已删除，证据仍保留</p>}
-                      </td>
-                      <td data-label="事件与依据">
-                        <strong>
-                          {evidenceKinds.find((item) => item.id === row.kind)
-                            ?.label || row.kind}
-                        </strong>
-                        <p className="continuity-statement">{row.statement}</p>
-                        <details>
-                          <summary>原始正文引文</summary>
-                          <blockquote>{row.anchor.quote}</blockquote>
-                        </details>
-                        {!!row.related.length && (
-                          <details>
-                            <summary>关联资料（{row.related.length}）</summary>
-                            {row.related.map((item) => (
-                              <p key={item.id}>
-                                {item.title} ·{" "}
-                                {item.state === "active"
-                                  ? states[item.freshness] || "版本未知"
-                                  : item.state === "deleted"
-                                    ? "已删除"
-                                    : "失联"}
-                              </p>
-                            ))}
-                          </details>
-                        )}
-                      </td>
-                      <td data-label="时间与来源">
-                        <p>故事时间：{row.storyTime || "未填写"}</p>
-                        <p>叙述章序：{row.chapterOrder ?? "不在当前目录"}</p>
-                        <p>{row.chapterTitle}</p>
-                      </td>
-                      <td data-label="范围与状态">
-                        <strong>{scopes[row.scope]}</strong>
-                        <p
-                          className={
-                            row.condition === "current"
-                              ? ""
-                              : "continuity-warning"
-                          }
-                        >
-                          {states[row.condition]}
-                        </p>
-                        {row.scope === "character" && (
-                          <p>人物：{row.ownerTitle}</p>
-                        )}
-                        <p>正文：{states[row.sourceFreshness] || "未知"}</p>
-                      </td>
-                      <td data-label="操作">
-                        <div className="continuity-actions">
-                          <button
-                            disabled={locked}
-                            onClick={() => onEdit(row.ownerId)}
-                          >
-                            打开资料
-                          </button>
-                          <button
-                            disabled={locked}
-                            onClick={() =>
-                              filter(() =>
-                                setOwner({
-                                  id: row.ownerId,
-                                  title: row.ownerTitle,
-                                }),
-                              )
-                            }
-                          >
-                            只看此资料
-                          </button>
-                          <button
-                            disabled={locked || row.chapterOrder === null}
-                            onClick={async () => {
-                              setBusy(true);
-                              try {
-                                await onChapter(row.chapterId, row.anchor);
-                              } catch (e) {
-                                setError((e as Error).message);
-                              } finally {
-                                setBusy(false);
+            {mode === "graph" && result.relationships ? (
+              <RelationshipGraph
+                data={result.relationships}
+                disabled={locked}
+                focusId={participant?.id}
+                onFocus={(node) =>
+                  filter(() => {
+                    setParticipant(node);
+                    setOwner(null);
+                    setExactEvent(null);
+                  })
+                }
+                onEdit={onEdit}
+                onChapter={openEvidence}
+                onTable={(row) => {
+                  setMode("table");
+                  setOffset(0);
+                  setExactEvent({ ownerId: row.ownerId, eventId: row.id });
+                }}
+              />
+            ) : (
+              <>
+                <div className="continuity-table-wrap">
+                  <table aria-label="正文证据记录">
+                    <thead>
+                      <tr>
+                        <th>所属资料</th>
+                        <th>事件与依据</th>
+                        <th>时间与来源</th>
+                        <th>范围与状态</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.items.map((row) => (
+                        <tr key={row.key}>
+                          <td data-label="所属资料">
+                            <strong>{row.ownerTitle}</strong>
+                            <p>资料版本 {row.ownerRevision}</p>
+                            {row.ownerDeleted && <p>已删除，证据仍保留</p>}
+                          </td>
+                          <td data-label="事件与依据">
+                            <strong>
+                              {evidenceKinds.find(
+                                (item) => item.id === row.kind,
+                              )?.label || row.kind}
+                            </strong>
+                            <p className="continuity-statement">
+                              {row.statement}
+                            </p>
+                            <details>
+                              <summary>原始正文引文</summary>
+                              <blockquote>{row.anchor.quote}</blockquote>
+                            </details>
+                            {!!row.related.length && (
+                              <details>
+                                <summary>
+                                  关联资料（{row.related.length}）
+                                </summary>
+                                {row.related.map((item) => (
+                                  <p key={item.id}>
+                                    {item.title} ·{" "}
+                                    {item.state === "active"
+                                      ? states[item.freshness] || "版本未知"
+                                      : item.state === "deleted"
+                                        ? "已删除"
+                                        : "失联"}
+                                  </p>
+                                ))}
+                              </details>
+                            )}
+                          </td>
+                          <td data-label="时间与来源">
+                            <p>故事时间：{row.storyTime || "未填写"}</p>
+                            <p>
+                              叙述章序：{row.chapterOrder ?? "不在当前目录"}
+                            </p>
+                            <p>{row.chapterTitle}</p>
+                          </td>
+                          <td data-label="范围与状态">
+                            <strong>{scopes[row.scope]}</strong>
+                            <p
+                              className={
+                                row.condition === "current"
+                                  ? ""
+                                  : "continuity-warning"
                               }
-                            }}
-                          >
-                            查看正文依据
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {!result.items.length && (
-              <p>没有符合筛选的已记录证据；这不表示故事中不存在相关事实。</p>
+                            >
+                              {states[row.condition]}
+                            </p>
+                            {row.scope === "character" && (
+                              <p>人物：{row.ownerTitle}</p>
+                            )}
+                            <p>正文：{states[row.sourceFreshness] || "未知"}</p>
+                          </td>
+                          <td data-label="操作">
+                            <div className="continuity-actions">
+                              <button
+                                disabled={locked}
+                                onClick={() => onEdit(row.ownerId)}
+                              >
+                                打开资料
+                              </button>
+                              <button
+                                disabled={locked}
+                                onClick={() =>
+                                  filter(() =>
+                                    setOwner({
+                                      id: row.ownerId,
+                                      title: row.ownerTitle,
+                                    }),
+                                  )
+                                }
+                              >
+                                只看此资料
+                              </button>
+                              <button
+                                disabled={locked || row.chapterOrder === null}
+                                onClick={() => void openEvidence(row)}
+                              >
+                                查看正文依据
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {!result.items.length && (
+                  <p>
+                    没有符合筛选的已记录证据；这不表示故事中不存在相关事实。
+                  </p>
+                )}
+                <nav aria-label="证据分页" className="continuity-pagination">
+                  <button
+                    disabled={locked || offset === 0}
+                    onClick={() => setOffset(Math.max(0, offset - 40))}
+                  >
+                    上一页证据
+                  </button>
+                  <span>
+                    {result.total
+                      ? `${result.offset + 1}–${Math.min(result.offset + 40, result.total)} / ${result.total}`
+                      : "0 条"}
+                  </span>
+                  <button
+                    disabled={locked || offset + 40 >= result.total}
+                    onClick={() => setOffset(offset + 40)}
+                  >
+                    下一页证据
+                  </button>
+                </nav>
+              </>
             )}
-            <nav aria-label="证据分页" className="continuity-pagination">
-              <button
-                disabled={locked || offset === 0}
-                onClick={() => setOffset(Math.max(0, offset - 40))}
-              >
-                上一页证据
-              </button>
-              <span>
-                {result.total
-                  ? `${offset + 1}–${Math.min(offset + 40, result.total)} / ${result.total}`
-                  : "0 条"}
-              </span>
-              <button
-                disabled={locked || offset + 40 >= result.total}
-                onClick={() => setOffset(offset + 40)}
-              >
-                下一页证据
-              </button>
-            </nav>
           </>
         )}
       </section>

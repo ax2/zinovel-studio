@@ -35,6 +35,8 @@
     "test:pilots": "node scripts/smoke-pilots.mjs",
     "test:pilot-agent": "node scripts/smoke-pilot-agent.mjs",
     "test:continuity": "node scripts/smoke-continuity.mjs",
+    "test:relationships": "node scripts/smoke-relationships.mjs",
+    "benchmark:continuity": "node scripts/benchmark-continuity.mjs",
     "test:benchmark": "node scripts/benchmark-writing.mjs",
     "package:dir": "pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs",
     "package:win": "pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never",

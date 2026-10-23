@@ -1,0 +1,47 @@
+{
+  "status": "measured",
+  "label": "after-card-cache",
+  "environment": {
+    "os": "10.0.26300",
+    "cpu": "Intel(R) Core(TM) i9-14900HX",
+    "memoryGiB": 64,
+    "node": "26.10.0"
+  },
+  "sourceCards": 500,
+  "evidenceEvents": 5000,
+  "relatedTargetsPerEvent": 2,
+  "manuscriptCharacters": 70000,
+  "fixtureMs": 215,
+  "metrics": [
+    {
+      "queryMs": 3322,
+      "saveWhileReadingCardMs": 45,
+      "materialRecordReads": 2000,
+      "cardViewP95Ms": 6,
+      "cardViewMaxMs": 8
+    },
+    {
+      "queryMs": 4739,
+      "saveWhileReadingCardMs": 45,
+      "materialRecordReads": 2000,
+      "cardViewP95Ms": 7,
+      "cardViewMaxMs": 11
+    },
+    {
+      "queryMs": 4542,
+      "saveWhileReadingCardMs": 45,
+      "materialRecordReads": 2000,
+      "cardViewP95Ms": 8,
+      "cardViewMaxMs": 16
+    }
+  ],
+  "checks": [
+    "all 5000 relationship events counted with no errors; graph caps do not hide table total; per-card concurrent manuscript save completed with CAS and exact source identity"
+  ],
+  "initialTargets": {
+    "searchMs": 500,
+    "saveMs": 1000,
+    "metSearch": false,
+    "metSave": true
+  }
+}

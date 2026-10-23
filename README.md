@@ -6,7 +6,7 @@
 
 Windows 技术预览版：[v0.1.0-alpha.9 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.9) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.9/ZiNovel-Studio-0.1.0-alpha.9-windows-x64-setup.exe)。x64 安装包已通过自动构建、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-主分支 alpha.10 正在开发全书连续性工作台：只读证据筛选、知情范围区分、原资料与精确正文入口已通过源码桌面验证，尚未包含在 alpha.9 安装包。关系图、秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md)。
+主分支 alpha.10 正在开发全书连续性工作台：只读证据筛选、知情范围区分、原资料与精确正文入口已通过源码桌面验证，尚未包含在 alpha.9 安装包。人物/设定关系图与事件核对也已通过源码桌面验证，正准备本版安装；秘密矩阵及故事时间切片继续推进，详见 [连续性方案](design/continuity-workbench.md)。
 
 ## 产品方向
 

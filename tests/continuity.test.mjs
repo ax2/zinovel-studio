@@ -78,6 +78,27 @@ test("whole-book projection keeps distinct knowledge scopes, relationship identi
   });
   assert.equal(known.total, 1);
   assert.equal(known.items[0].ownerId, a.id);
+  const graph = await store.continuity.query(book.id, {
+    kind: "relation",
+    includeRelations: true,
+    participantId: secret.id,
+  });
+  assert.equal(graph.relationships.totalEvents, 1);
+  assert.equal(graph.relationships.events[0].ownerId, a.id);
+  assert.equal(
+    graph.relationships.nodes.find((node) => node.id === secret.id).kind,
+    "rule",
+  );
+  const outgoing = await store.continuity.query(book.id, {
+    kind: "relation",
+    includeRelations: true,
+    participantId: a.id,
+  });
+  assert.equal(
+    outgoing.relationships.totalEvents,
+    1,
+    "participant filter includes source and target roles",
+  );
   assert.equal(
     (await store.continuity.query(book.id, { query: "蓝印秘密" })).total,
     4,

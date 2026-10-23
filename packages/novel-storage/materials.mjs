@@ -47,6 +47,9 @@ export class MaterialStore {
   }
   async view(record, book, root) {
     const bodies = new Map();
+    // One view holds the shared read queue. Reuse each related definition only
+    // within that view; a later read must check the filesystem again.
+    const definitions = new Map();
     const evidence = [];
     for (const item of record.data.evidence || []) {
       const chapter = book.chapters.find(
@@ -87,10 +90,13 @@ export class MaterialStore {
           (entry) => entry.id === targetId,
         );
         try {
-          const target = await this.record(root, targetId);
+          if (!definitions.has(targetId))
+            definitions.set(targetId, this.record(root, targetId));
+          const target = await definitions.get(targetId);
           related.push({
             id: targetId,
             title: target.data.title,
+            kind: target.data.kind,
             state: target.data.deletedAt ? "deleted" : "active",
             revision: target.data.revision,
             baselineRevision: baseline?.revision ?? null,

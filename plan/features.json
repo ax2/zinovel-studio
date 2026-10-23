@@ -381,14 +381,18 @@
       "name": "人物关系图",
       "priority": "P1",
       "stage": "Stage-004",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "关系变更关联事件证据，有表格替代",
       "evidence": [
         "design/creative-materials.md",
         "tests/material-evidence.test.mjs",
         "scripts/smoke-evidence.mjs",
-        "screenshots/stage-004/evidence/evidence-smoke.json"
-      ]
+        "screenshots/stage-004/evidence/evidence-smoke.json",
+        "packages/novel-domain/relationship-graph.mjs",
+        "scripts/smoke-relationships.mjs",
+        "screenshots/stage-004/relationships/relationships-smoke.json"
+      ],
+      "validation": "assessments/stage-004/relationships-acceptance.md"
     },
     {
       "id": "WORLD-05",

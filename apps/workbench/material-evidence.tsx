@@ -27,6 +27,7 @@ export type Evidence = {
   related: {
     id: string;
     title: string;
+    kind?: string;
     state: string;
     freshness: string;
     revision?: number;
