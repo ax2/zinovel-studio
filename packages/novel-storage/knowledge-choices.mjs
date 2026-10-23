@@ -260,7 +260,7 @@ export class KnowledgeChoices {
       return { items, total: names.length, errors, offset };
     });
   }
-  async project(bookId, propositions, characterIds, signal) {
+  async project(bookId, propositions, characterIds, signal, visit) {
     signal?.throwIfAborted();
     const names = await this.storage.exclusive(async () => {
       const { root } = await this.materials.context(bookId);
@@ -282,8 +282,12 @@ export class KnowledgeChoices {
       const [propositionId, scope, characterId, ...extra] = name
         .slice(0, -5)
         .split(".");
-      if (!propositions.has(propositionId)) continue;
-      if (scope === "character" && !characterIds.includes(characterId))
+      if (propositions && !propositions.has(propositionId)) continue;
+      if (
+        scope === "character" &&
+        characterIds &&
+        !characterIds.includes(characterId)
+      )
         continue;
       await this.storage.exclusive(async () => {
         signal?.throwIfAborted();
@@ -301,7 +305,10 @@ export class KnowledgeChoices {
             root,
             book,
           );
-          if (item) items.push(item);
+          if (item) {
+            if (visit) visit(item);
+            else items.push(item);
+          }
         } catch {
           errors.push("一份作者认知选择无法读取，原文件已保留");
         }

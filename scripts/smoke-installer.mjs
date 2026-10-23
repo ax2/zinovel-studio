@@ -140,6 +140,14 @@ try {
     ["smoke-relationships.mjs", "relationships/relationships-smoke.json"],
     ["smoke-knowledge.mjs", "knowledge/knowledge-smoke.json"],
     [
+      "smoke-knowledge-context.mjs",
+      "knowledge-context/knowledge-context-smoke.json",
+    ],
+    [
+      "smoke-knowledge-context-targets.mjs",
+      "knowledge-context-targets/knowledge-context-targets-smoke.json",
+    ],
+    [
       "smoke-knowledge-creation.mjs",
       "knowledge-creation/knowledge-creation-smoke.json",
     ],

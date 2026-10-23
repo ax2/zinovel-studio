@@ -423,7 +423,13 @@
         "assessments/stage-004/knowledge-legacy.md",
         "tests/knowledge-creation.test.mjs",
         "scripts/smoke-knowledge-creation.mjs",
-        "assessments/stage-004/knowledge-creation.md"
+        "assessments/stage-004/knowledge-creation.md",
+        "design/knowledge-context.md",
+        "packages/novel-storage/context.mjs",
+        "tests/knowledge-context.test.mjs",
+        "scripts/smoke-knowledge-context.mjs",
+        "scripts/smoke-knowledge-context-targets.mjs",
+        "assessments/stage-004/knowledge-context.md"
       ]
     },
     {

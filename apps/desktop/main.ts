@@ -15,6 +15,7 @@ import { TaskAcceptance } from "../../packages/novel-harness/acceptance.mjs";
 import { MaterialTaskAcceptance } from "../../packages/novel-harness/material-acceptance.mjs";
 import { PilotTaskAcceptance } from "../../packages/novel-harness/pilot-acceptance.mjs";
 import { ContinuityQueries } from "../../packages/novel-storage/continuity-queries.mjs";
+import { SessionQueries } from "../../packages/novel-storage/session-queries.mjs";
 import { bindPilotInput } from "../../packages/novel-harness/pilot-target.mjs";
 import {
   validateMaterialInput,
@@ -33,6 +34,10 @@ const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
 const pilotAcceptance = new PilotTaskAcceptance(journal, store.pilots);
 const continuityQueries = new ContinuityQueries(store.continuity);
+const contextQueries = new SessionQueries({
+  query: (bookId: string, options: object, signal: AbortSignal) =>
+    store.context.choices(bookId, options, signal),
+});
 const legacyQueries = new ContinuityQueries({
   query: (bookId: string, options: object, signal: AbortSignal) =>
     store.knowledge.legacy.list(bookId, options, signal),
@@ -60,6 +65,7 @@ async function closeAfterRecovery() {
   continuityQueries.cancelAll();
   knowledgeQueries.cancelAll();
   legacyQueries.cancelAll();
+  contextQueries.cancelAll();
   cancelCloseAttempt();
   await harness.cancel();
   await acceptance.whenIdle();
@@ -116,7 +122,7 @@ async function materialTaskInput(payload: any) {
   )
     throw new Error("资料已改变或尚未保存，请重新读取后生成");
   const materialContext = payload.materialIds?.length
-    ? await store.materials.contextPack(payload.bookId, payload.materialIds)
+    ? await store.context.pack(payload.bookId, payload.materialIds)
     : undefined;
   if (materialContext && materialContext.hash !== payload.materialContextHash)
     throw new Error("所选资料或证据已改变，请刷新资料快照再生成");
@@ -136,6 +142,15 @@ async function materialTaskInput(payload: any) {
       input: validateMaterialInput(card),
     },
   };
+}
+async function pilotTaskInput(payload: any) {
+  const input = await bindPilotInput(store.pilots, payload);
+  const materialContext = payload.materialIds?.length
+    ? await store.context.pack(payload.bookId, payload.materialIds)
+    : undefined;
+  if (materialContext && materialContext.hash !== payload.materialContextHash)
+    throw new Error("所选资料或认知已改变，请刷新资料快照再生成");
+  return { ...input, materialContext };
 }
 
 if (
@@ -431,10 +446,20 @@ if (
                 );
                 break;
               case "materials.context":
-                value = await store.materials.contextPack(
+                value = await store.context.pack(
                   payload.bookId,
                   payload.materialIds,
                 );
+                break;
+              case "context.choices":
+                value = await contextQueries.query(
+                  payload.bookId,
+                  payload.options,
+                  payload,
+                );
+                break;
+              case "context.cancel":
+                value = { cancelled: contextQueries.cancel(payload) };
                 break;
               case "materials.read":
                 value = await store.materials.read(payload.bookId, payload.id);
@@ -621,10 +646,7 @@ if (
                 );
                 const config = await settings.secret();
                 const materialContext = payload.materialIds?.length
-                  ? await store.materials.contextPack(
-                      target.bookId,
-                      payload.materialIds,
-                    )
+                  ? await store.context.pack(target.bookId, payload.materialIds)
                   : undefined;
                 if (
                   materialContext &&
@@ -663,7 +685,7 @@ if (
                 );
                 break;
               case "ai.pilotGenerate": {
-                const input = await bindPilotInput(store.pilots, payload),
+                const input = await pilotTaskInput(payload),
                   config = await settings.secret();
                 value = await harness.generate(
                   input,
@@ -674,7 +696,7 @@ if (
               }
               case "ai.pilotEstimate":
                 value = await harness.preview(
-                  await bindPilotInput(store.pilots, payload),
+                  await pilotTaskInput(payload),
                   await settings.public(),
                 );
                 break;
@@ -720,7 +742,7 @@ if (
                 break;
               case "ai.estimate": {
                 const materialContext = payload.materialIds?.length
-                  ? await store.materials.contextPack(
+                  ? await store.context.pack(
                       payload.bookId,
                       payload.materialIds,
                     )
@@ -801,6 +823,7 @@ if (
                 continuityQueries.cancelAll();
                 knowledgeQueries.cancelAll();
                 legacyQueries.cancelAll();
+                contextQueries.cancelAll();
                 cancelCloseAttempt();
                 await harness.cancel();
                 await acceptance.whenIdle();

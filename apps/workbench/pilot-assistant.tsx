@@ -5,6 +5,7 @@ import type { Pilot } from "./pilot-studio";
 import type { StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
 import { reviewContent } from "../../packages/novel-domain/review-content.mjs";
+import { ContextSelector, type ContextSelection } from "./context-selector";
 type Target = Pick<
   Pilot,
   "id" | "groupId" | "revision" | "diskHash" | "bodyHash"
@@ -60,6 +61,12 @@ export function PilotAssistant({
   const active = useRef(true),
     snapshotRequest = useRef(0),
     locked = useRef(false);
+  const [references, setReferences] = useState<ContextSelection>({
+    ready: true,
+    ids: [],
+    pack: null,
+  });
+  useEffect(() => setEstimate(""), [references.ready, references.pack?.hash]);
   async function snapshot() {
     const request = ++snapshotRequest.current;
     setPack(null);
@@ -126,6 +133,8 @@ export function PilotAssistant({
     snapshotHash: pack?.hash,
     skillId: "novel-pilot",
     instruction,
+    materialIds: references.ids,
+    materialContextHash: references.pack?.hash,
   });
   async function openTask(id: string, showReview = true) {
     const value = await api<PilotTask>("ai.task", { id });
@@ -144,7 +153,8 @@ export function PilotAssistant({
         typeof value.record.candidate === "string",
     );
   }
-  const unavailable = busy || generating || disabled || !pack;
+  const unavailable =
+    busy || generating || disabled || !pack || !references.ready;
   const displayed = task
     ? task.record.status === "applied" && task.record.acceptedText !== undefined
       ? task.record.acceptedText
@@ -184,6 +194,11 @@ export function PilotAssistant({
             <pre className="context-prose">{pack.context}</pre>
           </details>
         )}
+        <ContextSelector
+          bookId={bookId}
+          disabled={busy || generating || disabled}
+          onChange={setReferences}
+        />
         <div className="pilot-toolbar">
           <button
             disabled={unavailable}

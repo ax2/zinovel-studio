@@ -72,6 +72,8 @@ const allowed = new Set([
   "materials.history",
   "materials.evidence",
   "materials.context",
+  "context.choices",
+  "context.cancel",
   "materials.export",
   "annotations.mutate",
   "book.backup",

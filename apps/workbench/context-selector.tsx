@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { api } from "./api";
 export type MaterialContext = {
   schemaVersion: number;
@@ -30,30 +30,64 @@ export function ContextSelector({
   onChange: (selection: ContextSelection) => void;
 }) {
   const [selected, setSelected] = useState<{ id: string; title: string }[]>([]),
-    [choices, setChoices] = useState<{ id: string; title: string }[]>([]),
+    [choices, setChoices] = useState<
+      { id: string; title: string; unavailable?: boolean }[]
+    >([]),
+    [kind, setKind] = useState("material"),
+    [offset, setOffset] = useState(0),
+    [listing, setListing] = useState<{
+      total: number;
+      offset: number;
+      errors: string[];
+    } | null>(null),
+    [listBusy, setListBusy] = useState(false),
+    [listError, setListError] = useState(""),
     [query, setQuery] = useState(""),
     [refresh, setRefresh] = useState(0),
     [pack, setPack] = useState<MaterialContext | null>(null),
     [error, setError] = useState("");
+  const [sessionId] = useState(() => crypto.randomUUID());
+  const nextQuery = useRef(0);
   useEffect(() => {
     let active = true;
+    const requestId = ++nextQuery.current;
+    setListBusy(true);
+    setListError("");
     const timer = setTimeout(() => {
-      api<{ items: typeof choices }>("materials.list", {
+      api<{
+        items: typeof choices;
+        total: number;
+        offset: number;
+        errors: string[];
+      }>("context.choices", {
         bookId,
-        options: { query },
+        sessionId,
+        requestId,
+        options: { query, kind, offset },
       })
         .then((value) => {
-          if (active) setChoices(value.items);
+          if (active) {
+            if (value.total && value.offset >= value.total) {
+              setOffset(Math.floor((value.total - 1) / 40) * 40);
+              return;
+            }
+            setChoices(value.items);
+            setListing(value);
+          }
         })
         .catch((e) => {
-          if (active) setError(e.message);
+          if (active) setListError(e.message);
+        })
+        .finally(() => {
+          if (active) setListBusy(false);
         });
     }, 200);
     return () => {
       active = false;
       clearTimeout(timer);
+      void api("context.cancel", { sessionId, requestId }).catch(() => {});
     };
-  }, [bookId, query, refresh]);
+  }, [bookId, query, refresh, kind, offset, sessionId]);
   useEffect(() => {
     let active = true;
     const ids = selected.map((item) => item.id);
@@ -82,15 +116,34 @@ export function ContextSelector({
     <details className="context-selector">
       <summary>本次参考资料 · 已选 {selected.length}/8</summary>
       <p className="muted">
-        仅发送明确选择的资料快照。计划、已确认设定与待复核证据会保留各自标签；不会自动混入其他作品。重新生成使用本次选择。
+        仅发送明确选择的资料、认知或作者选择，总共最多8份。认知包含范围、状态、命题含义与本条正文引文，不附带未选作者真相设置、其他认知或旧资料全文；计划、相信和怀疑不等于事实。重新生成使用本次选择。
       </p>
+      <label>
+        参考资料类型
+        <select
+          aria-label="参考资料类型"
+          disabled={disabled}
+          value={kind}
+          onChange={(e) => {
+            setKind(e.target.value);
+            setOffset(0);
+          }}
+        >
+          <option value="material">资料卡</option>
+          <option value="knowledge">认知事件</option>
+          <option value="choice">作者当前选择</option>
+        </select>
+      </label>
       <label>
         搜索参考资料
         <input
           aria-label="搜索参考资料"
           value={query}
           maxLength={200}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOffset(0);
+          }}
           disabled={disabled}
         />
       </label>
@@ -101,6 +154,8 @@ export function ContextSelector({
               type="checkbox"
               disabled={
                 disabled ||
+                listBusy ||
+                item.unavailable ||
                 (selected.length >= 8 &&
                   !selected.some((value) => value.id === item.id))
               }
@@ -114,8 +169,44 @@ export function ContextSelector({
               }
             />
             {item.title}
+            {item.unavailable && "（来源失联或不可读取）"}
           </label>
         ))}
+      </div>
+      <p role="status">
+        {listBusy
+          ? "正在读取参考资料…"
+          : `共 ${listing?.total || 0} 份可选参考`}
+      </p>
+      {listError && (
+        <p role="alert" className="inline-error">
+          {listError}
+        </p>
+      )}
+      {listing?.errors.map((text, i) => (
+        <p role="alert" className="inline-error" key={i}>
+          {text}
+        </p>
+      ))}
+      <div>
+        <button
+          disabled={disabled || listBusy || !listing?.offset}
+          onClick={() => setOffset(Math.max(0, offset - 40))}
+        >
+          上一页参考
+        </button>
+        <span>第 {Math.floor((listing?.offset || 0) / 40) + 1} 页</span>
+        <button
+          disabled={
+            disabled ||
+            listBusy ||
+            !listing ||
+            listing.offset + 40 >= listing.total
+          }
+          onClick={() => setOffset(offset + 40)}
+        >
+          下一页参考
+        </button>
       </div>
       {!choices.length && (
         <p className="muted">没有匹配资料，可先在资料卡中创建并保存。</p>
@@ -128,7 +219,9 @@ export function ContextSelector({
             setSelected(selected.filter((value) => value.id !== item.id))
           }
         >
-          移除参考：{item.title}
+          移除参考：
+          {pack?.materials.find((entry) => entry.id === item.id)?.title ??
+            item.title}
         </button>
       ))}
       <button

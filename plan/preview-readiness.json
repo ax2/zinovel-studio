@@ -1,26 +1,21 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.12",
+  "version": "0.1.0-alpha.13",
   "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
     "assessments/stage-004/knowledge-legacy.md",
-    "assessments/stage-004/knowledge-creation.md"
+    "assessments/stage-004/knowledge-creation.md",
+    "assessments/stage-004/knowledge-context.md"
   ],
   "reports": [
-    "screenshots/stage-004/knowledge/knowledge-smoke.json",
-    "screenshots/stage-004/knowledge-choices/knowledge-choices-smoke.json",
-    "screenshots/stage-004/knowledge-legacy/knowledge-legacy-smoke.json",
-    "screenshots/stage-004/knowledge-old-desktop/knowledge-old-desktop.json",
-    "screenshots/stage-004/knowledge-creation/knowledge-creation-smoke.json"
+    "screenshots/stage-004/knowledge-context/knowledge-context-smoke.json",
+    "screenshots/stage-004/knowledge-context-targets/knowledge-context-targets-smoke.json"
   ],
   "limitations": [
-    "未签名Windows x64预览，完整产品及商店资格未完成",
-    "手工认知/选择/旧来源已验证，尚未接入Agent冻结上下文；自动故事时间、大书性能、多格式出版和图像地图仍待完成",
-    "旧alpha.11真实打包EXE验证仅覆盖认知回退，不代表NSIS降级或全应用迁移",
-    "alpha.12尚须本版全套CI、安装运行、重装卸载保稿与公开旧版升级，才可推标签公开EXE",
-    "真实云模型文学质量、原生IME、辅助技术、低端设备、签名和应用更新尚未验收"
+    "alpha.13三个上下文入口源阶段通过，实际安装、升级与公开附件资格必须另验",
+    "未签名预览，完整106项需求、真实模型文学质量和完整上架验收未完成"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

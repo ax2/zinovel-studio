@@ -97,7 +97,7 @@
           "cacheReadPerMillion": 1,
           "cacheWritePerMillion": 1
         },
-        "maxCost": 0.008542000999999999
+        "maxCost": 0.008545001
       },
       "requests": 1,
       "reason": "estimated-cost-limit",
