@@ -11,3 +11,9 @@
 106项需求仍24 verified /31 in-progress /51 planned，WORLD-05保持in-progress。本版本验证工具和数据边界，没有真实云模型文学遵循率、自动故事时间、大书性能、完整IME/可访问性/低端设备、多格式出版、图像地图及签名/自动更新资格。稳定上架门禁不放宽。
 
 本机资格不等于公开发行，标签CI与公开附件核对在成功后追加。
+
+## 公开结果
+
+[发行CI40005066108](https://github.com/ax2/zinovel-studio/actions/runs/40005066108) completed/success，2026/10/24 02:51:21北京时间公开[alpha.13](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.13)，非草稿prerelease、四附件无ZIP。CI全套检查、EXE安装后三个参考入口/回执/认知、重装/卸载保稿与公开alpha.3升级通过，CI升级14876ms。
+
+公开EXE222878496字节，SHA256 **c009cd1ad2fe745d588a33d2f88bc006966c6eb8d045c5a8a8c40f352cc4b754**。公开元数据已实际下载，GitHub digest、大小、manifest与SHA256SUMS一致；release:verify-public检查同标签/同源码/发行工作流并通过，见ci-public/verification.json。公开EXE执行证据来自CI，本机未再次下载执行公开字节。本机05a0cc...与公开c009cd...独立留档；alpha.14纯资料依赖证明不在此标签。

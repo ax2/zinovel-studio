@@ -274,3 +274,7 @@ MixedContext以带类型身份区分原资料、认知与作者选择。宿主�
 1000认知事件存储基准：列表2514ms/矩阵4982ms，保存23ms/取消3ms，查询500ms目标未达。1命题1人物1章的暖缓存服务测量不冒充全量小说/低端/UI验收，report为measured。详见assessments/stage-004/material-context-proof.md。尚未构建安装alpha.14，不推标签。
 
 公开附件复查工具进入主分支：release:verify-public使用真实gh读取标签/发行CI及四附件元数据，对公开alpha.12执行通过；将普通开发CI40001370269当发行CI的负向调用被拒绝，并把预置passed回执更新为failed。公开EXE不再次下载，本机执行与CI执行边界在设计中明确。alpha.13发行CI40005066108尚在安装后套件，不能提前报告公开成功。
+
+## alpha.13 公开发行核对
+
+发行CI40005066108 completed/success，2026/10/24 02:51:21北京时间公开四附件，非草稿prerelease。公开EXE222878496字节，SHA256 c009cd1ad2fe745d588a33d2f88bc006966c6eb8d045c5a8a8c40f352cc4b754；CI升级14876ms，完整同标签安装后套件/重装/卸载保稿均通过。公开元数据实际下载、GitHub digest/大小/manifest/SHA256SUMS由新release:verify-public核对passed。公开执行证据来自CI，本机05a0cc...与公开c009cd...独立记录。README与使用说明更新alpha.13下载入口，后续alpha.14依赖证明不混入该包。
