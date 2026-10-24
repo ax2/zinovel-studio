@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0-alpha.21",
+  "status": "locally-qualified",
+  "runtimeSourceCommit": "0cebc93881aa1213d22f4ce82a759ec00681ea64",
+  "qaReadinessFixCommit": "c46c110e71a0adba17025c9fa85e7c8d407bc1cd",
+  "installerSha256": "e1e7933e7b3dea634c72d796740602fe357d9e2645eb3cedfdf8f10401405ac9",
+  "bytes": 222954354,
+  "appAsarSha256": "1eb46fa782759ee9c9a9a7ddf0585954a2e5a1df81ac79b3e26ab32127400258",
+  "archive": "D:\\zinovel-releases\\v0.1.0-alpha.21",
+  "copy": {
+    "files": 875,
+    "failures": 0,
+    "exitCode": 1
+  },
+  "qualification": "135 local installed checks/reinstall/uninstall and public alpha3 upgrade passed. First source CI failed in a missing readiness wait; product/exe unchanged. Corrected source CI40066984360 passed. Tag CI must independently install its newly built exact bytes."
+}

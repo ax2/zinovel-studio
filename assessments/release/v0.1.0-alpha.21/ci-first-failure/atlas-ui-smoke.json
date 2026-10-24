@@ -1,0 +1,30 @@
+{
+  "status": "failed",
+  "checks": [
+    "actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes",
+    "synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry",
+    "formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "atlas-desktop.png",
+      "theme": "light",
+      "width": 1008,
+      "height": 681,
+      "dpr": 1,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    },
+    {
+      "name": "atlas-quota-protected.png",
+      "theme": "light",
+      "width": 1008,
+      "height": 681,
+      "dpr": 1,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Real author atlas controls, navigation, modal/host close guards, actual file persistence and restart; backup/restore folder selection is instrumented; no native IME or physical phone claim",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'' !== '另一份本机目录草稿'\n\n    at file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-map-atlas-ui.mjs:567:10"
+}

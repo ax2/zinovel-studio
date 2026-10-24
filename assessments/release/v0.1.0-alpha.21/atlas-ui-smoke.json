@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes",
+    "synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry",
+    "formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard",
+    "synthetic competing local cache is retained while the current author explicitly saves formal data; reopen restores the competing draft without silently rebasing, stale baseline blocks save until readable comparison and explicit adoption; both author versions remain in saved history",
+    "desktop and 806px light/dark atlas render without horizontal dialog overflow; actual whole-book backup/restore retains saved epochs and three-level references under source lineage, excludes unsaved local notes; original three map files and formal manuscript remain exact, zero renderer errors/HTTP; native folder results are instrumented"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "atlas-desktop.png",
+      "theme": "light",
+      "width": 1426,
+      "height": 923,
+      "dpr": 1.25,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    },
+    {
+      "name": "atlas-quota-protected.png",
+      "theme": "light",
+      "width": 1426,
+      "height": 923,
+      "dpr": 1.25,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    },
+    {
+      "name": "atlas-narrow.png",
+      "theme": "light",
+      "width": 806,
+      "height": 803,
+      "dpr": 1.0000000149011612,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    },
+    {
+      "name": "atlas-dark-narrow.png",
+      "theme": "dark",
+      "width": 806,
+      "height": 803,
+      "dpr": 1.0000000149011612,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    },
+    {
+      "name": "atlas-dark-narrow-directory.png",
+      "theme": "dark",
+      "width": 806,
+      "height": 803,
+      "dpr": 1.0000000149011612,
+      "mapView": "independent saved frames; atlas does not scale map coordinates"
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Real author atlas controls, navigation, modal/host close guards, actual file persistence and restart; backup/restore folder selection is instrumented; no native IME or physical phone claim"
+}

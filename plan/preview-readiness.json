@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "version": "0.1.0-alpha.21",
-  "ready": false,
+  "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -29,11 +29,23 @@
     "assessments/stage-006/maps-author-ui.md",
     "assessments/stage-006/maps-ui-source.json",
     "assessments/stage-006/maps-boundary.json",
-    "assessments/release/v0.1.0-alpha.20/README.md"
+    "assessments/release/v0.1.0-alpha.20/README.md",
+    "assessments/stage-006/atlas-author-ui.json",
+    "design/world-map-layers.md",
+    "assessments/release/v0.1.0-alpha.21/README.md",
+    "assessments/release/v0.1.0-alpha.21/ci-first-failure/README.md"
   ],
-  "reports": [],
+  "reports": [
+    "assessments/release/v0.1.0-alpha.21/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.21/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.21/image-runtime-verification.json",
+    "assessments/release/v0.1.0-alpha.21/atlas-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.21/maps-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.21/maps-ipc-smoke.json",
+    "assessments/release/v0.1.0-alpha.21/source-ci-verification.json"
+  ],
   "limitations": [
-    "alpha.21年代层级地图仍在开发，尚无本版运行、安装或升级资格，不继承alpha.20本机报告",
+    "alpha.21本机135项安装、重装卸载与alpha.3升级通过；首次源码CI因探针缺少异步加载等待失败保留，修正后独立CI成功；标签仍须独立验收自身EXE",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项需求尚未完成：地图年代/层级、行程、图像生成、定妆选定与裁切、带图出版及其他格式/远端发布",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

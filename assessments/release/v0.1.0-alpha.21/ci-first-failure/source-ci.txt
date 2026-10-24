@@ -1,0 +1,66 @@
+windows	Run pnpm test:atlas-ui	﻿2026-10-24T05:29:29.7235014Z ##[group]Run pnpm test:atlas-ui
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:29.7235221Z ^[[36;1mpnpm test:atlas-ui^[[0m
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:29.7280989Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:29.7281193Z env:
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:29.7281345Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:29.7281535Z ##[endgroup]
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.0654508Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.0655198Z > zinovel-studio@0.1.0-alpha.21 test:atlas-ui D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.0655518Z > node scripts/smoke-map-atlas-ui.mjs
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.0655636Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.3481069Z (node:9852) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:30.3482305Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7437458Z {
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7437702Z   status: 'failed',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7437927Z   checks: [
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7438740Z     'actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7442734Z     'synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7444795Z     'formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7445637Z   ],
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7445780Z   errors: [],
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7445902Z   viewports: [
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446011Z     {
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446142Z       name: 'atlas-desktop.png',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446298Z       theme: 'light',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446420Z       width: 1008,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446532Z       height: 681,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446645Z       dpr: 1,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7446847Z       mapView: 'independent saved frames; atlas does not scale map coordinates'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447062Z     },
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447158Z     {
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447292Z       name: 'atlas-quota-protected.png',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447452Z       theme: 'light',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447567Z       width: 1008,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447679Z       height: 681,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447786Z       dpr: 1,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7447977Z       mapView: 'independent saved frames; atlas does not scale map coordinates'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7448185Z     }
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7448277Z   ],
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7448480Z   browser: 'Browser plugin not available; repository Playwright/Electron',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7449127Z   scope: 'Real author atlas controls, navigation, modal/host close guards, actual file persistence and restart; backup/restore folder selection is instrumented; no native IME or physical phone claim',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7449663Z   failure: 'AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n' +
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7449989Z node:internal/modules/run_main:111
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7450154Z     triggerUncaughtException(
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7450310Z     ^
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7450371Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7450516Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7450675Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7451050Z '' !== '另一份本机目录草稿'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7451119Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7451286Z     at file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-map-atlas-ui.mjs:567:10 {
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7453343Z   generatedMessage: true,
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7453477Z   code: 'ERR_ASSERTION',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7453606Z   actual: '',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7453753Z   expected: '另一份本机目录草稿',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7453896Z   operator: 'strictEqual',
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454021Z   diff: 'simple'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454126Z }
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454186Z 
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454238Z Node.js v26.12.1
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454342Z     '\n' +
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454489Z     "'' !== '另一份本机目录草稿'\n" +
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454614Z     '\n' +
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7454830Z     '    at file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-map-atlas-ui.mjs:567:10'
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7455223Z }
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.7578381Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:atlas-ui	2026-10-24T05:29:35.8425254Z ##[error]Process completed with exit code 1.
