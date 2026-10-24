@@ -1284,7 +1284,11 @@
         "design/incremental-backup.md",
         "packages/novel-storage/backup-vault.mjs",
         "tests/backup-vault.test.mjs",
-        "assessments/stage-008/vault-backend-source.md"
+        "assessments/stage-008/vault-backend-source.md",
+        "packages/novel-storage/backup-sessions.mjs",
+        "apps/workbench/backup-panel.tsx",
+        "scripts/smoke-backup-vault.mjs",
+        "assessments/stage-008/vault-desktop-source.md"
       ]
     },
     {

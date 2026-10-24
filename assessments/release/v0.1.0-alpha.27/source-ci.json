@@ -1,0 +1,595 @@
+{
+  "status": "passed",
+  "runId": "40104571130",
+  "checkedAt": "2026-10-24T15:03:15.7883880Z",
+  "ci": {
+    "conclusion": "success",
+    "headSha": "5f311fd5902760926f3aca02058f39440efd2061",
+    "jobs": [
+      {
+        "completedAt": "2026-10-24T15:02:37Z",
+        "conclusion": "success",
+        "databaseId": 120903499332,
+        "name": "windows",
+        "startedAt": "2026-10-24T14:54:32Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T14:54:35Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T14:54:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:44Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T14:54:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:55:00Z",
+            "conclusion": "success",
+            "name": "Run pnpm/action-setup@v4",
+            "number": 3,
+            "startedAt": "2026-10-24T14:54:44Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:55:23Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 4,
+            "startedAt": "2026-10-24T14:55:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:55:31Z",
+            "conclusion": "success",
+            "name": "Run pnpm install --frozen-lockfile",
+            "number": 5,
+            "startedAt": "2026-10-24T14:55:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:55:31Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-python@v5",
+            "number": 6,
+            "startedAt": "2026-10-24T14:55:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:55:45Z",
+            "conclusion": "success",
+            "name": "Run python -m pip install -r scripts/requirements-pdf-qa.txt",
+            "number": 7,
+            "startedAt": "2026-10-24T14:55:31Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:56:45Z",
+            "conclusion": "success",
+            "name": "Run pnpm check",
+            "number": 8,
+            "startedAt": "2026-10-24T14:55:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:56:46Z",
+            "conclusion": "success",
+            "name": "Run node scripts/check-upstream.mjs",
+            "number": 9,
+            "startedAt": "2026-10-24T14:56:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:56:47Z",
+            "conclusion": "success",
+            "name": "Run pnpm build",
+            "number": 10,
+            "startedAt": "2026-10-24T14:56:46Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:56:48Z",
+            "conclusion": "success",
+            "name": "Run node scripts/smoke-harness.mjs",
+            "number": 11,
+            "startedAt": "2026-10-24T14:56:47Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:56:55Z",
+            "conclusion": "success",
+            "name": "Run node scripts/smoke-novel-agent.mjs",
+            "number": 12,
+            "startedAt": "2026-10-24T14:56:48Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:04Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:tool-isolation",
+            "number": 13,
+            "startedAt": "2026-10-24T14:56:55Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:24Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:desktop",
+            "number": 14,
+            "startedAt": "2026-10-24T14:57:04Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:27Z",
+            "conclusion": "success",
+            "name": "Run node scripts/smoke-library.mjs",
+            "number": 15,
+            "startedAt": "2026-10-24T14:57:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:32Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:editor-tools",
+            "number": 16,
+            "startedAt": "2026-10-24T14:57:27Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:43Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:recovery",
+            "number": 17,
+            "startedAt": "2026-10-24T14:57:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:47Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:merge",
+            "number": 18,
+            "startedAt": "2026-10-24T14:57:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:51Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:shelf",
+            "number": 19,
+            "startedAt": "2026-10-24T14:57:47Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:57:53Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:writing-views",
+            "number": 20,
+            "startedAt": "2026-10-24T14:57:51Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:05Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:tasks",
+            "number": 21,
+            "startedAt": "2026-10-24T14:57:53Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:10Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:acceptance",
+            "number": 22,
+            "startedAt": "2026-10-24T14:58:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:16Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:task-compatibility",
+            "number": 23,
+            "startedAt": "2026-10-24T14:58:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:23Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:stream",
+            "number": 24,
+            "startedAt": "2026-10-24T14:58:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:47Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:budget",
+            "number": 25,
+            "startedAt": "2026-10-24T14:58:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:58:52Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:candidate-review",
+            "number": 26,
+            "startedAt": "2026-10-24T14:58:47Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:00Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:materials",
+            "number": 27,
+            "startedAt": "2026-10-24T14:58:52Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:06Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:evidence",
+            "number": 28,
+            "startedAt": "2026-10-24T14:59:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:11Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:material-context",
+            "number": 29,
+            "startedAt": "2026-10-24T14:59:06Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:19Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:material-proposal",
+            "number": 30,
+            "startedAt": "2026-10-24T14:59:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:23Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:planning-ui",
+            "number": 31,
+            "startedAt": "2026-10-24T14:59:19Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:35Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:world-proposals",
+            "number": 32,
+            "startedAt": "2026-10-24T14:59:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:41Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:pilots",
+            "number": 33,
+            "startedAt": "2026-10-24T14:59:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:59:53Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:pilot-agent",
+            "number": 34,
+            "startedAt": "2026-10-24T14:59:41Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:01Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:continuity",
+            "number": 35,
+            "startedAt": "2026-10-24T14:59:53Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:09Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:relationships",
+            "number": 36,
+            "startedAt": "2026-10-24T15:00:01Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:15Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:knowledge",
+            "number": 37,
+            "startedAt": "2026-10-24T15:00:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:21Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:knowledge-choices",
+            "number": 38,
+            "startedAt": "2026-10-24T15:00:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:27Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:knowledge-legacy",
+            "number": 39,
+            "startedAt": "2026-10-24T15:00:21Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:36Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:knowledge-creation",
+            "number": 40,
+            "startedAt": "2026-10-24T15:00:27Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:49Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:knowledge-context",
+            "number": 41,
+            "startedAt": "2026-10-24T15:00:36Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:00:57Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:creative-journey",
+            "number": 42,
+            "startedAt": "2026-10-24T15:00:49Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:03Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:reader",
+            "number": 43,
+            "startedAt": "2026-10-24T15:00:57Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:05Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:utf8-integrity",
+            "number": 44,
+            "startedAt": "2026-10-24T15:01:03Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:12Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:offline-writing",
+            "number": 45,
+            "startedAt": "2026-10-24T15:01:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:20Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:backup-boundary",
+            "number": 46,
+            "startedAt": "2026-10-24T15:01:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:28Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:backup-vault",
+            "number": 47,
+            "startedAt": "2026-10-24T15:01:20Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:30Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:publication-foundation",
+            "number": 48,
+            "startedAt": "2026-10-24T15:01:28Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:32Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:publication-capture",
+            "number": 49,
+            "startedAt": "2026-10-24T15:01:30Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:49Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:publication-ui",
+            "number": 50,
+            "startedAt": "2026-10-24T15:01:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:01:54Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:publication-resources",
+            "number": 51,
+            "startedAt": "2026-10-24T15:01:49Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:00Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:pdf-layout",
+            "number": 52,
+            "startedAt": "2026-10-24T15:01:54Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:08Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:docx-layout",
+            "number": 53,
+            "startedAt": "2026-10-24T15:02:00Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:15Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:assets",
+            "number": 54,
+            "startedAt": "2026-10-24T15:02:08Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:17Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:maps-ipc",
+            "number": 55,
+            "startedAt": "2026-10-24T15:02:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:24Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:maps-ui",
+            "number": 56,
+            "startedAt": "2026-10-24T15:02:17Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:32Z",
+            "conclusion": "success",
+            "name": "Run pnpm test:atlas-ui",
+            "number": 57,
+            "startedAt": "2026-10-24T15:02:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:32Z",
+            "conclusion": "skipped",
+            "name": "Run actions/upload-artifact@v4",
+            "number": 58,
+            "startedAt": "2026-10-24T15:02:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:32Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-python@v5",
+            "number": 113,
+            "startedAt": "2026-10-24T15:02:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:32Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 114,
+            "startedAt": "2026-10-24T15:02:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:33Z",
+            "conclusion": "success",
+            "name": "Post Run pnpm/action-setup@v4",
+            "number": 115,
+            "startedAt": "2026-10-24T15:02:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:34Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 116,
+            "startedAt": "2026-10-24T15:02:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T15:02:35Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 117,
+            "startedAt": "2026-10-24T15:02:34Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/ax2/zinovel-studio/actions/runs/40104571130/job/120903499332"
+      },
+      {
+        "completedAt": "2026-10-24T14:54:48Z",
+        "conclusion": "success",
+        "databaseId": 120903499658,
+        "name": "planning",
+        "startedAt": "2026-10-24T14:54:32Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-10-24T14:54:34Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-10-24T14:54:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:38Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v4",
+            "number": 2,
+            "startedAt": "2026-10-24T14:54:34Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:45Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v4",
+            "number": 3,
+            "startedAt": "2026-10-24T14:54:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:45Z",
+            "conclusion": "success",
+            "name": "Run node scripts/check-project.mjs",
+            "number": 4,
+            "startedAt": "2026-10-24T14:54:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:46Z",
+            "conclusion": "success",
+            "name": "Post Run actions/setup-node@v4",
+            "number": 7,
+            "startedAt": "2026-10-24T14:54:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:46Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v4",
+            "number": 8,
+            "startedAt": "2026-10-24T14:54:46Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-10-24T14:54:46Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 9,
+            "startedAt": "2026-10-24T14:54:46Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/ax2/zinovel-studio/actions/runs/40104571130/job/120903499658"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/ax2/zinovel-studio/actions/runs/40104571130"
+  }
+}

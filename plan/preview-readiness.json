@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "version": "0.1.0-alpha.27",
-  "ready": false,
+  "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -53,11 +53,18 @@
     "assessments/stage-008/offline-writing-source.md",
     "design/incremental-backup.md",
     "assessments/release/v0.1.0-alpha.26/README.md",
-    "assessments/release/v0.1.0-alpha.26/reader-layout-failure/README.md"
+    "assessments/release/v0.1.0-alpha.26/reader-layout-failure/README.md",
+    "assessments/stage-008/vault-desktop-source.md",
+    "assessments/release/v0.1.0-alpha.27/README.md"
   ],
-  "reports": [],
+  "reports": [
+    "assessments/release/v0.1.0-alpha.27/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.27/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.27/installed/incremental-backup/incremental-backup-smoke.json",
+    "assessments/release/v0.1.0-alpha.27/source-ci.json"
+  ],
   "limitations": [
-    "alpha.27完整权限与增量备份开发中，没有本版安装/升级资格；alpha.26不可变标签独立发行中，不继承其资格",
+    "alpha.27本机155项安装及alpha.3升级、源码CI40104571130通过，允许进入同标签独立完整构建/安装/升级；不继承本机SHA或alpha.26资格",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项仍26 verified/44 in-progress/36 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
