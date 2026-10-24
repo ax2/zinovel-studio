@@ -58,3 +58,6 @@ alpha.26标签40099800838首次发行success，22:06:28BJT公开。公开EXE1554
 临时目录能力/任务权限、进度取消、明确版本恢复新书与关闭保护接入。20项专项及完整251项/类型/规划/构建通过；D Disk1到C Disk0真实宿主四组通过，取消不增加清单、重复0新增、重启token失效、旧稿/原图/来源恢复及原书不改。实际查看桌面/深色窄窗/恢复书，修正列表继承纵排后重测。首次测试require全局缺失失败保留，改Node内置模块访问。详情assessments/stage-008/vault-desktop-source.md；安装/升级/原生模块资格待做，不提高统计。
 
 alpha.27本机首轮155项完整安装通过，安装10114/重装15834/卸载4870ms，实际EXE/注册移除及稿件保留。公开alpha.3升级17116ms通过。包原生Koffi/许可/图像/DOCX严格检查和manifest通过，asar f55fe862...，EXE155483211字节/SHA8ad1985e...；完整运行目录/EXE/原始QA输出实际D盘归档，无ZIP。查看安装版深色窄窗/恢复书截图。5f311fd源码CI40104571130完整success。版本资格归档assessments/release/v0.1.0-alpha.27，预览门禁允许独立标签重验，稳定false，106项统计不提升。先前原生路径Junction探针与损坏错误语义探针失败保留；均不改产品字节后重验通过。
+
+## alpha.28 会话脱敏诊断
+复评仍有22项P0未verified，先补OPS-08可追踪故障且不泄露稿件的原始规划。固定白名单/200条内存环、宿主事件、作者预览/确认清空/明确导出新JSON接入；原始异常/getter/payload不展开，whole-data-root canonical边界、wx不覆盖，退出不留诊断目录。5项专项/完整256项/类型/规划/构建通过，真实宿主三组与实际延迟写入关闭保护通过；查看桌面/深色窄窗。仅源码阶段；首次TS可选error推断失败补JSDoc后通过。上游SDK会保留stderrTail，既有Harness固定错误包装/任务code保留，新模块不收集私有会话，完整日志审计/安装待做。OPS-08转in-progress，现26/45/35，不升verified。详情assessments/stage-008/diagnostics-source.md。alpha.27不可变标签CI40105233629独立安装回归中；期间GitHub账号API额度耗尽，按23:12重置后恢复查询，未更换凭据或将运行中标success。

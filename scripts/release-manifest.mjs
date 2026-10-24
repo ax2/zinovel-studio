@@ -278,6 +278,32 @@ manifest.incrementalBackup = {
   checks: incrementalBackup.checks,
   scope: incrementalBackup.scope,
 };
+const diagnostics = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/diagnostics/diagnostics-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  diagnostics.status !== "passed" ||
+  diagnostics.version !== pkg.version ||
+  diagnostics.packaged !== true ||
+  diagnostics.appAsarSha256 !== appAsarSha256 ||
+  diagnostics.errors?.length !== 0 ||
+  diagnostics.checks?.length !== 3 ||
+  !Number.isSafeInteger(diagnostics.exportBytes) ||
+  diagnostics.exportBytes < 1
+)
+  throw new Error("Installed diagnostic privacy proof is missing or stale");
+manifest.diagnostics = {
+  version: diagnostics.version,
+  appAsarSha256: diagnostics.appAsarSha256,
+  checks: diagnostics.checks,
+  scope: diagnostics.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

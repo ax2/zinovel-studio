@@ -155,6 +155,7 @@ try {
     ["smoke-reader.mjs", "reader/reader-smoke.json"],
     ["smoke-utf8-integrity.mjs", "utf8-integrity/utf8-integrity-smoke.json"],
     ["smoke-offline-writing.mjs", "offline-writing/offline-writing-smoke.json"],
+    ["smoke-diagnostics.mjs", "diagnostics/diagnostics-smoke.json"],
     [
       "smoke-backup-vault.mjs",
       "incremental-backup/incremental-backup-smoke.json",

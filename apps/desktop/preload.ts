@@ -1,5 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 const allowed = new Set([
+  "diagnostics.get",
+  "diagnostics.clear",
+  "diagnostics.export",
   "library.list",
   "book.create",
   "backup.choose",

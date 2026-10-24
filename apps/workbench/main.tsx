@@ -19,9 +19,11 @@ import {
   AlertTriangle,
   Library,
   Sparkles,
+  Activity,
 } from "lucide-react";
 import { api, type Book, type Chapter } from "./api";
 import { BackupPanel } from "./backup-panel";
+import { DiagnosticsPanel } from "./diagnostics-panel";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
 import {
   ImportDialog,
@@ -70,6 +72,7 @@ function App() {
   const [readerOpen, setReaderOpen] = useState(false);
   const [publicationOpen, setPublicationOpen] = useState(false);
   const [backupOpen, setBackupOpen] = useState(false);
+  const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
   const [assetsOpen, setAssetsOpen] = useState(false);
   const [mapsOpen, setMapsOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
@@ -516,6 +519,9 @@ function App() {
           <span>写作</span>
         </button>
         <div className="rail-bottom">
+          <button title="故障诊断" onClick={() => setDiagnosticsOpen(true)}>
+            <Activity size={20} />
+          </button>
           <button title="写作任务" onClick={() => setTasksOpen(true)}>
             <History size={20} />
           </button>
@@ -1215,6 +1221,9 @@ function App() {
       )}
       {settingsOpen && (
         <ModelSettingsDialog onClose={() => setSettingsOpen(false)} />
+      )}
+      {diagnosticsOpen && (
+        <DiagnosticsPanel onClose={() => setDiagnosticsOpen(false)} />
       )}
       {dialog && (
         <div className="modal-backdrop">

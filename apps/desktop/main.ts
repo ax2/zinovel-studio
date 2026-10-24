@@ -8,6 +8,7 @@ import { assetId } from "../../packages/novel-domain/assets.mjs";
 import { mapId } from "../../packages/novel-domain/maps.mjs";
 import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
 import { BackupSessions } from "../../packages/novel-storage/backup-sessions.mjs";
+import { Diagnostics } from "../../packages/novel-storage/diagnostics.mjs";
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
 import { publicationPdfOptions } from "../../packages/novel-domain/publication-pdf-options.mjs";
@@ -40,6 +41,13 @@ app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
 const publicationCaptures = new PublicationCaptures(store.publication);
 const backupSessions = new BackupSessions(store.backups);
+const diagnostics = new Diagnostics({
+  appVersion: app.getVersion(),
+  electronVersion: process.versions.electron,
+  nodeVersion: process.versions.node,
+  platform: process.platform,
+  arch: process.arch,
+});
 const publicationExports = new Set<Promise<unknown>>();
 // Map background/history writes may also decode outside the book queue.
 const assetOperations = new Set<Promise<unknown>>();
@@ -193,6 +201,7 @@ if (
       await acceptance.recoverAll();
       await materialAcceptance.recoverAll();
       await pilotAcceptance.recoverAll();
+      diagnostics.record("app.ready");
       Menu.setApplicationMenu(
         Menu.buildFromTemplate([
           {
@@ -223,9 +232,36 @@ if (
             event.senderFrame.url !== pathToFileURL(entry).href
           )
             throw new Error("拒绝未授权窗口");
+          const operationStarted = performance.now();
           try {
             let value: unknown;
             switch (action) {
+              case "diagnostics.get":
+              case "diagnostics.clear":
+              case "diagnostics.export": {
+                if (Object.keys(payload).length)
+                  throw new Error("诊断操作不接受路径或自定义内容");
+                if (action === "diagnostics.clear") diagnostics.clear();
+                if (action === "diagnostics.export") {
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，未导出诊断");
+                  const selected = await dialog.showSaveDialog(window, {
+                    title: "导出诊断为新文件",
+                    defaultPath: `ZiNovel-diagnostics-${Date.now()}.json`,
+                    filters: [{ name: "JSON", extensions: ["json"] }],
+                  });
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，未写入诊断文件");
+                  value =
+                    selected.canceled || !selected.filePath
+                      ? { cancelled: true }
+                      : await diagnostics.exportNewFile(
+                          dataRoot,
+                          selected.filePath,
+                        );
+                } else value = diagnostics.snapshot();
+                break;
+              }
               case "backup.choose":
               case "backup.open": {
                 if (publicationClosing)
@@ -1415,8 +1451,16 @@ if (
               default:
                 throw new Error("不支持的操作");
             }
+            diagnostics.record(action, {
+              durationMs: performance.now() - operationStarted,
+            });
             return { ok: true, value };
           } catch (error) {
+            diagnostics.record(action, {
+              success: false,
+              durationMs: performance.now() - operationStarted,
+              error,
+            });
             if (action === "app.close-ready" && !closing)
               publicationClosing = false;
             return {
@@ -1456,6 +1500,7 @@ if (
         requestWindowClose();
       });
       window.webContents.on("render-process-gone", async (_event, details) => {
+        diagnostics.record("renderer.gone", { success: false });
         cancelCloseAttempt();
         if (closing || recoveryDialog || !window || window.isDestroyed())
           return;

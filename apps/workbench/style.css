@@ -1999,4 +1999,9 @@ p {
 .backup-pagination span { flex: 1; min-width: 150px; text-align: center; font-size: 13px; }
 .backup-confirm button { margin-right: 10px; }
 .backup-empty { padding: 30px 12px; color: var(--muted); text-align: center; border: 1px dashed var(--border); border-radius: 8px; }
+.diagnostics-panel { width: min(880px, calc(100vw - 40px)); max-height: calc(100dvh - 40px); overflow-y: auto; box-sizing: border-box; }
+.diagnostics-panel .muted { font-size: 13px; line-height: 1.65; }
+.diagnostics-panel pre { max-height: 300px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--surface); border: 1px solid var(--border); padding: 14px; font: 12px/1.6 Consolas, monospace; }
+.diagnostics-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.diagnostics-panel [role="status"] { overflow-wrap: anywhere; }
 @media(max-width: 850px) { .modal.backup-panel { width: calc(100vw - 20px); max-width: none; max-height: calc(100dvh - 20px); padding: 18px; } }

@@ -1328,8 +1328,15 @@
       "name": "脱敏诊断",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "默认日志不带正文或凭据"
+      "status": "in-progress",
+      "acceptance": "默认日志不带正文或凭据",
+      "evidence": [
+        "packages/novel-storage/diagnostics.mjs",
+        "apps/workbench/diagnostics-panel.tsx",
+        "tests/diagnostics.test.mjs",
+        "scripts/smoke-diagnostics.mjs",
+        "design/diagnostics.md"
+      ]
     },
     {
       "id": "OPS-09",
