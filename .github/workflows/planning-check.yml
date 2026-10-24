@@ -38,6 +38,7 @@ jobs:
       - run: pnpm build
       - run: node scripts/smoke-harness.mjs
       - run: node scripts/smoke-novel-agent.mjs
+      - run: pnpm test:tool-isolation
       - run: pnpm test:desktop
         env:
           ZINOVEL_QA_VIEWPORT: ci

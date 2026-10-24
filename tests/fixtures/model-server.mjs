@@ -8,6 +8,7 @@ export async function modelFixture({
   readMaterials = false,
   materialProposal = null,
   pilot = false,
+  toolSequence,
 } = {}) {
   const requests = [];
   const replacement = "灯塔熄灭时，林舟终于拆开了旧信。";
@@ -23,7 +24,13 @@ export async function modelFixture({
         (block) => block.type === "tool_result",
       );
       let block, stop;
-      if (typeof streamText === "string") {
+      if (Array.isArray(toolSequence)) {
+        const step = toolSequence[requests.length - 1];
+        block = step
+          ? { type: "tool_use", id: `fixture-tool-${requests.length}`, ...step }
+          : { type: "text", text: "候选已提交，请作者审阅。" };
+        stop = step ? "tool_use" : "end_turn";
+      } else if (typeof streamText === "string") {
         block = { type: "text", text: streamText };
         stop = "end_turn";
       } else if (!previousTool) {

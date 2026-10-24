@@ -41,6 +41,7 @@ jobs:
       - run: node scripts/check-upstream.mjs
       - run: pnpm build
       - run: pnpm test:agent
+      - run: pnpm test:tool-isolation
       - run: pnpm test:library
       - run: pnpm test:editor-tools
       - run: pnpm test:recovery
@@ -132,6 +133,7 @@ jobs:
             screenshots/stage-007/publication-resources/
             screenshots/stage-008/offline-writing/
             screenshots/stage-008/independent-backup/
+            screenshots/stage-008/tool-isolation/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml
             release/image-runtime-verification.json

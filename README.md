@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.25](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.25)已公开：新增封面/插图版本冻结、预览与带图HTML，保留五种纯文字导出。标签发行完整成功，155474664字节安装EXE已实际下载复核SHA256。主线alpha.26修正备份目的地别名检查，整个受管书库均禁止作为备份目的地，并修复窄屏参考面板打开后的阅读布局；最终151项安装/重装/卸载、alpha.3升级、231项源码与CI40098778628通过，标签待独立发行，尚未公开。详见[alpha.26资格](assessments/release/v0.1.0-alpha.26/README.md)、[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[备份源码验证](assessments/stage-008/backup-destination-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
+最新阶段版本[alpha.25](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.25)已公开：新增封面/插图版本冻结、预览与带图HTML，保留五种纯文字导出。标签发行完整成功，155474664字节安装EXE已实际下载复核SHA256。alpha.26修正备份目的地别名检查，整个受管书库均禁止作为备份目的地，并修复窄屏参考面板打开后的阅读布局；最终151项安装/重装/卸载、alpha.3升级、231项源码与CI40098778628通过，标签发行CI40099800838进行中，尚未核验公开安装包；主线alpha.27开始正式权限探针和增量备份开发，资格false。详见[alpha.26资格](assessments/release/v0.1.0-alpha.26/README.md)、[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[备份源码验证](assessments/stage-008/backup-destination-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 

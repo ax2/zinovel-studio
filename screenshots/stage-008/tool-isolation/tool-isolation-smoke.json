@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.27",
+  "checks": [
+    "six actual official Harness profiles expose only the authorized two or three tools",
+    "thirty attempted tool violations return real error results without reading foreign/unselected contents or changing any library file",
+    "authorized read/reference/proposal round trips still succeed after the rejected attempts, bound to the original target and awaiting author review"
+  ],
+  "cases": [
+    {
+      "mode": "writing",
+      "references": false,
+      "rejected": 5,
+      "authorized": 2,
+      "modelRequests": 8,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    },
+    {
+      "mode": "writing",
+      "references": true,
+      "rejected": 5,
+      "authorized": 3,
+      "modelRequests": 9,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    },
+    {
+      "mode": "material",
+      "references": false,
+      "rejected": 5,
+      "authorized": 2,
+      "modelRequests": 8,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    },
+    {
+      "mode": "material",
+      "references": true,
+      "rejected": 5,
+      "authorized": 3,
+      "modelRequests": 9,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    },
+    {
+      "mode": "pilot",
+      "references": false,
+      "rejected": 5,
+      "authorized": 2,
+      "modelRequests": 8,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    },
+    {
+      "mode": "pilot",
+      "references": true,
+      "rejected": 5,
+      "authorized": 3,
+      "modelRequests": 9,
+      "originalTargetRetained": true,
+      "libraryUnchanged": true,
+      "foreignOrUnselectedTextSent": false
+    }
+  ],
+  "scope": "Source official Harness tool round trips across writing/material/pilot with and without selected references; synthetic library only, not installed EXE or real-model literary-quality qualification"
+}

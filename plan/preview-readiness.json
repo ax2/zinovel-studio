@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.26",
-  "ready": true,
+  "version": "0.1.0-alpha.27",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -55,23 +55,9 @@
     "assessments/release/v0.1.0-alpha.26/README.md",
     "assessments/release/v0.1.0-alpha.26/reader-layout-failure/README.md"
   ],
-  "reports": [
-    "assessments/release/v0.1.0-alpha.26/local-candidate.json",
-    "assessments/release/v0.1.0-alpha.26/source-ci-verification.json",
-    "assessments/release/v0.1.0-alpha.26/installer.json",
-    "assessments/release/v0.1.0-alpha.26/upgrade.json",
-    "assessments/release/v0.1.0-alpha.26/offline-writing.json",
-    "assessments/release/v0.1.0-alpha.26/backup-boundary.json",
-    "assessments/release/v0.1.0-alpha.26/publication-resources.json",
-    "assessments/release/v0.1.0-alpha.26/pdf-output.json",
-    "assessments/release/v0.1.0-alpha.26/docx-output.json",
-    "assessments/release/v0.1.0-alpha.26/assets.json",
-    "assessments/release/v0.1.0-alpha.26/maps-ui.json",
-    "assessments/release/v0.1.0-alpha.26/maps-ipc.json",
-    "assessments/release/v0.1.0-alpha.26/atlas-ui.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.26最终本机151项安装/重装/卸载、公开alpha.3升级与231项源码及完整源码CI通过；此前候选失败或资格撤销记录保留，标签必须独立重建重验，不继承本机SHA",
+    "alpha.27完整权限与增量备份开发中，没有本版安装/升级资格；alpha.26不可变标签独立发行中，不继承其资格",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项仍26 verified/44 in-progress/36 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
