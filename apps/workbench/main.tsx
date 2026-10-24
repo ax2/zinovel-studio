@@ -36,6 +36,7 @@ import { MaterialsPanel } from "./materials-panel";
 import { ScenePlanner } from "./scene-planner";
 import { PilotStudio } from "./pilot-studio";
 import { NovelReader } from "./novel-reader";
+import { PublicationPanel } from "./publication-panel";
 import { ContinuityWorkbench } from "./continuity-workbench";
 import { KnowledgeMatrix } from "./knowledge-matrix";
 import { canCloseEditors } from "./editor-close-guards";
@@ -64,6 +65,7 @@ function App() {
   const [planningOpen, setPlanningOpen] = useState(false);
   const [pilotsOpen, setPilotsOpen] = useState(false);
   const [readerOpen, setReaderOpen] = useState(false);
+  const [publicationOpen, setPublicationOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
   const [knowledgeOpen, setKnowledgeOpen] = useState(false);
   const [requestedMaterial, setRequestedMaterial] = useState<{
@@ -568,6 +570,13 @@ function App() {
           onClose={() => setReaderOpen(false)}
         />
       )}
+      {publicationOpen && book && (
+        <PublicationPanel
+          key={book.id}
+          book={book}
+          onClose={() => setPublicationOpen(false)}
+        />
+      )}
       {knowledgeOpen && book && (
         <KnowledgeMatrix
           key={book.id}
@@ -704,6 +713,14 @@ function App() {
                 }}
               >
                 阅读预览
+              </button>
+              <button
+                disabled={composition}
+                onClick={async () => {
+                  if (await save()) setPublicationOpen(true);
+                }}
+              >
+                导出与发布
               </button>
               <button onClick={() => setContinuityOpen(true)}>全书证据</button>
               <button onClick={() => setKnowledgeOpen(true)}>认知矩阵</button>

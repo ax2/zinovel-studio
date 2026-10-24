@@ -3,6 +3,9 @@ import { resolve, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { writeFile } from "node:fs/promises";
 import { NovelStore } from "../../packages/novel-storage/store.mjs";
+import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
+import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
+import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
 import { claimDesktopSingleInstance } from "./upstream/single-instance";
 import { desktopNodeEnvironment } from "./upstream/node-environment";
 import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
@@ -28,6 +31,14 @@ const dataRoot =
   join(app.getPath("appData"), "ZiNovel Studio");
 app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
+const publicationCaptures = new PublicationCaptures(store.publication);
+const publicationExports = new Set<Promise<unknown>>();
+let publicationClosing = false;
+function publicationHash(hash: unknown): string {
+  if (typeof hash !== "string" || !/^[a-f0-9]{64}$/.test(hash))
+    throw new Error("请重新打开发布副本预览后导出");
+  return hash;
+}
 const settings = new ModelSettings(dataRoot);
 const journal = new TaskJournal(join(dataRoot, "tasks"));
 const acceptance = new TaskAcceptance(journal, store);
@@ -62,6 +73,7 @@ function cancelCloseAttempt() {
   closeTimer = undefined;
 }
 async function closeAfterRecovery() {
+  publicationClosing = true;
   continuityQueries.cancelAll();
   knowledgeQueries.cancelAll();
   legacyQueries.cancelAll();
@@ -71,6 +83,8 @@ async function closeAfterRecovery() {
   await acceptance.whenIdle();
   await materialAcceptance.whenIdle();
   await pilotAcceptance.whenIdle();
+  await publicationCaptures.stop();
+  await Promise.allSettled([...publicationExports]);
   await store.whenIdle();
   if (!window || window.isDestroyed()) return;
   window.webContents.session.flushStorageData();
@@ -636,6 +650,109 @@ if (
                 value = { cancelled: selected.canceled };
                 break;
               }
+              case "publication.catalog":
+                value = await store.publication.catalog(payload.bookId);
+                break;
+              case "publication.list":
+                value = await store.publication.list(payload.bookId);
+                break;
+              case "publication.capture":
+                value = publicationCaptures.start(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.input,
+                );
+                break;
+              case "publication.capture-status":
+                value = publicationCaptures.status(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "publication.cancel":
+                value = publicationCaptures.cancel(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "publication.preview": {
+                const snapshot: PublicationSnapshot =
+                  await store.publication.read(
+                    payload.bookId,
+                    payload.id,
+                    publicationHash(payload.hash),
+                  );
+                value = {
+                  ...snapshot,
+                  content: {
+                    ...snapshot.content,
+                    chapters: snapshot.content.chapters.map(
+                      ({ body, ...chapter }) => chapter,
+                    ),
+                  },
+                };
+                break;
+              }
+              case "publication.chapter": {
+                const snapshot: PublicationSnapshot =
+                  await store.publication.read(
+                    payload.bookId,
+                    payload.id,
+                    publicationHash(payload.hash),
+                  );
+                const chapter = snapshot.content.chapters.find(
+                  (item) => item.id === payload.chapterId,
+                );
+                if (!chapter) throw new Error("章节不属于本次发布副本");
+                value = chapter;
+                break;
+              }
+              case "publication.export": {
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未开始导出");
+                const parentWindow = window;
+                const exporting = (async () => {
+                  const hash = publicationHash(payload.hash);
+                  await store.publication.read(
+                    payload.bookId,
+                    payload.id,
+                    hash,
+                  );
+                  if (!["txt", "md", "html"].includes(payload.format))
+                    throw new Error("请选择支持的本地导出格式");
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，未开始导出");
+                  const selected = await dialog.showOpenDialog(parentWindow, {
+                    title: "选择发布副本的导出位置（创建新目录）",
+                    properties: ["openDirectory", "createDirectory"],
+                  });
+                  if (selected.canceled) return { cancelled: true };
+                  const snapshot = await store.publication.read(
+                    payload.bookId,
+                    payload.id,
+                    hash,
+                  );
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，未开始导出");
+                  return {
+                    cancelled: false,
+                    ...(await exportPublication(
+                      snapshot,
+                      selected.filePaths[0],
+                      payload.format,
+                    )),
+                  };
+                })();
+                publicationExports.add(exporting);
+                try {
+                  value = await exporting;
+                } finally {
+                  publicationExports.delete(exporting);
+                }
+                break;
+              }
               case "skills.list":
                 value = await harness.skills();
                 break;
@@ -834,6 +951,7 @@ if (
                 break;
               }
               case "app.close-ready":
+                publicationClosing = true;
                 continuityQueries.cancelAll();
                 knowledgeQueries.cancelAll();
                 legacyQueries.cancelAll();
@@ -843,11 +961,14 @@ if (
                 await acceptance.whenIdle();
                 await materialAcceptance.whenIdle();
                 await pilotAcceptance.whenIdle();
+                await publicationCaptures.stop();
+                await Promise.allSettled([...publicationExports]);
                 await store.whenIdle();
                 closing = true;
                 window.close();
                 return { ok: true };
               case "app.close-cancelled":
+                publicationClosing = false;
                 cancelCloseAttempt();
                 value = { cancelled: true };
                 break;
@@ -856,6 +977,8 @@ if (
             }
             return { ok: true, value };
           } catch (error) {
+            if (action === "app.close-ready" && !closing)
+              publicationClosing = false;
             return {
               ok: false,
               error:
@@ -897,8 +1020,11 @@ if (
         if (closing || recoveryDialog || !window || window.isDestroyed())
           return;
         recoveryDialog = true;
+        publicationClosing = true;
         try {
           await harness.cancel();
+          await publicationCaptures.cancelAll();
+          await Promise.allSettled([...publicationExports]);
           await store.whenIdle();
           const result = await dialog.showMessageBox(window, {
             type: "warning",
@@ -910,8 +1036,10 @@ if (
             cancelId: 0,
           });
           if (!window || window.isDestroyed()) return;
-          if (result.response === 0) await window.loadFile(entry);
-          else await closeAfterRecovery();
+          if (result.response === 0) {
+            publicationClosing = false;
+            await window.loadFile(entry);
+          } else await closeAfterRecovery();
         } catch (error) {
           dialog.showErrorBox("写作窗口恢复失败", String(error));
         } finally {

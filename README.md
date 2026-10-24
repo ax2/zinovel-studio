@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-当前开发版本 alpha.17 正在接入持久出版快照；存储层已通过回归，尚未接入作者选择、预览与正式保存入口。alpha.16 已完成本机编码保护、安装及升级资格，冻结标签的[自动发行流水线](https://github.com/ax2/zinovel-studio/actions/runs/40040294178)仍待公开附件核验，不继承为 alpha.17 安装资格。详见 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+当前开发版本 alpha.17 已接入发布副本的选章、排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，源码回归通过；本版实际安装与发行资格尚待验证。alpha.16 的[冻结标签流水线](https://github.com/ax2/zinovel-studio/actions/runs/40040294178)两轮均未完成资格，未公开发布。修复纳入 alpha.17，不移动旧标签，不继承旧安装资格。详见 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 

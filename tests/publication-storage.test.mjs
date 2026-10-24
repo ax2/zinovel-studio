@@ -56,6 +56,7 @@ test("publication captures only selected ordered text and public metadata, persi
     snapshot.content.chapters.map((ch) => ch.id),
     ids,
   );
+  assert.equal(snapshot.content.chapters[0].volumeTitle, "");
   assert.equal(
     snapshot.content.chapters[1].body,
     "\ufeff第一封信。𠮷🌊\r\n合法替换字符：\ufffd",
@@ -122,6 +123,9 @@ test("publication refuses duplicate, foreign, deleted and stale-directory select
     /不属于/,
   );
   assert.deepEqual((await f.store.publication.list(f.book.id)).snapshots, []);
+  book.chapters[0].volumeId = other.id;
+  await writeFile(manifestPath, JSON.stringify(book));
+  await assert.rejects(f.store.publication.catalog(f.book.id), /分卷失联/);
 });
 
 test("capture releases the shared queue between batches and cancellation leaves source and recovery journal unchanged", async () => {

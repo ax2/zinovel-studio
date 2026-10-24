@@ -48,6 +48,7 @@ export function ContextSelector({
     [pack, setPack] = useState<MaterialContext | null>(null),
     [error, setError] = useState("");
   const [sessionId] = useState(() => crypto.randomUUID());
+  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
   const nextQuery = useRef(0);
   useEffect(() => {
     const changed = (event: Event) => {
@@ -254,8 +255,18 @@ export function ContextSelector({
             无截断；正文与资料合计执行上下文预算。
           </p>
           {pack.materials.map((material) => (
-            <details key={material.id}>
-              <summary>
+            <details key={material.id} open={expanded.has(material.id)}>
+              <summary
+                onClick={(event) => {
+                  event.preventDefault();
+                  setExpanded((before) => {
+                    const next = new Set(before);
+                    if (next.has(material.id)) next.delete(material.id);
+                    else next.add(material.id);
+                    return next;
+                  });
+                }}
+              >
                 {material.title} · 版本 {material.revision}
               </summary>
               <article className="context-prose">{material.content}</article>

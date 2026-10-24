@@ -60,6 +60,7 @@ export class PublicationStore {
   }
   projection(book) {
     const projected = this.reader.projection(book);
+    const volumeIds = new Set(projected.volumes.map((volume) => volume.id));
     const savedHashes = new Map(
       book.chapters.map((chapter) => [chapter.id, chapter.hash]),
     );
@@ -70,6 +71,10 @@ export class PublicationStore {
       title: book.title,
       author: book.author || "",
       chapters: projected.chapters.map((chapter) => {
+        if (!uuid(chapter.id))
+          throw new Error("发布章节身份无效，原目录已保留");
+        if (chapter.volumeId && !volumeIds.has(chapter.volumeId))
+          throw new Error("发布章节分卷失联，请先修复目录");
         const savedHash = savedHashes.get(chapter.id);
         if (!validHash(savedHash))
           throw new Error("发布章节保存hash无效，原目录已保留");
@@ -143,7 +148,7 @@ export class PublicationStore {
           result.push({
             id: item.id,
             title: item.title,
-            volumeTitle: item.volumeTitle,
+            volumeTitle: item.volumeId ? item.volumeTitle : "",
             revision: item.revision,
             savedHash: item.savedHash,
             bodyHash: digest(body),

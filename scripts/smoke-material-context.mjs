@@ -164,7 +164,7 @@ try {
   );
   await writeFile(evidencePath, "一" + evidenceChapter.body);
   await page.getByRole("button", { name: "刷新资料快照", exact: true }).click();
-  await expandContext(context);
+  // An author-opened reference remains expanded even when async refresh remounts its article.
   await context.getByText(/状态：stale/).waitFor();
   const stale = await store.context.pack(book.id, [card.id]);
   await writeFile(evidencePath, "二" + evidenceChapter.body);

@@ -136,6 +136,11 @@ try {
     ["smoke-reader.mjs", "reader/reader-smoke.json"],
     ["smoke-utf8-integrity.mjs", "utf8-integrity/utf8-integrity-smoke.json"],
     [
+      "smoke-publication-capture.mjs",
+      "publication-capture/publication-capture-smoke.json",
+    ],
+    ["smoke-publication-ui.mjs", "publication-ui/publication-ui-smoke.json"],
+    [
       "smoke-creative-journey.mjs",
       "creative-journey/creative-journey-smoke.json",
     ],

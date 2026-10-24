@@ -1058,7 +1058,11 @@
         "design/publication-snapshots.md",
         "iterations/stage-007/WORKLOG.md",
         "tests/publication.test.mjs",
-        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json",
+        "scripts/smoke-publication-ui.mjs",
+        "scripts/smoke-publication-capture.mjs",
+        "tests/publication-export.test.mjs",
+        "assessments/stage-007/publication-ui.md"
       ]
     },
     {
@@ -1091,7 +1095,11 @@
         "design/publication-snapshots.md",
         "iterations/stage-007/WORKLOG.md",
         "tests/publication.test.mjs",
-        "screenshots/stage-007/html-foundation/html-foundation-smoke.json"
+        "screenshots/stage-007/html-foundation/html-foundation-smoke.json",
+        "scripts/smoke-publication-ui.mjs",
+        "scripts/smoke-publication-capture.mjs",
+        "tests/publication-export.test.mjs",
+        "assessments/stage-007/publication-ui.md"
       ]
     },
     {
@@ -1109,7 +1117,11 @@
         "screenshots/stage-007/html-foundation/html-foundation-smoke.json",
         "packages/novel-storage/publication.mjs",
         "tests/publication-storage.test.mjs",
-        "assessments/stage-007/publication-storage.md"
+        "assessments/stage-007/publication-storage.md",
+        "scripts/smoke-publication-ui.mjs",
+        "scripts/smoke-publication-capture.mjs",
+        "tests/publication-export.test.mjs",
+        "assessments/stage-007/publication-ui.md"
       ]
     },
     {
