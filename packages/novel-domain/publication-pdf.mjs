@@ -22,6 +22,8 @@ function escape(value) {
 export function publicationPdfDocument(input, layout) {
   const snapshot = verifyPublicationSnapshot(input),
     options = publicationPdfOptions(layout);
+  if (snapshot.content.resources?.length)
+    throw new Error("带图PDF排版尚未接入，未丢弃图像");
   const { metadata, chapters } = snapshot.content;
   const contentBytes = Buffer.byteLength(JSON.stringify(snapshot.content));
   if (contentBytes > publicationPdfInputLimit)

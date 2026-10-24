@@ -82,3 +82,5 @@ alpha.22独立Windows release40070942726首次完整success，BJT2026-10-24 14:5
 ## alpha.24标签与alpha.25资源基础
 alpha.24不可变标签2ce27fed01cd97ec36be00f706a39260374c0b63已推送，Windows release40078509892独立重新验收，尚未称公开。主线alpha.25重置preview=false/reports=[]，不继承24资格。下一切片先冻结作者选定发行图，再做EPUB，避免图像替换后改变旧出版物；核对W3C EPUB3.3的OCF与core media types，PNG是兼容选择，未误称WebP不受标准支持。
 新增资源选择/引用纯模型与同一BookStorageKernel下的独立发行图服务，PNG保留全尺寸/透明、JPEG方向、剥离图像元数据、原图不变、不可覆盖blob、CAS/取消/容量/两项并发和备份恢复单独验证。初步221项/类型全部通过。尚未schema2捕获/作者界面/带图HTML/EPUB，不提升功能状态；详见design/publication-resources.md和assessments/stage-007/publication-resources-core.md。下一步接入后再做真实宿主/安装与阶段发行。
+
+alpha.25后续接入schema2严格白名单和包含资源的内容hash；无图捕获维持schema1。捕获在提交前核对资源CAS和发行blob，不在队列中重新排队；列表新增resourceCount。源存储真实捕获/重启/备份恢复及正文验证中修改图卡阻止提交通过，旧副本不需当前卡状态。未实现图像排版的所有格式先明确拒绝带图副本，不静默漏图。223项/类型/构建及原schema1五格式宿主回归全部通过。旧未来版本测试原用2，更新为未知3并新增schema2结构/hash负向用例；原失败保留日志。作者图像选择/预览与HTML图片仍未接入，preview=false、无25安装资格。

@@ -1,6 +1,7 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import { randomUUID, createHash } from "node:crypto";
 import { decodeUtf8, readUtf8File } from "./encoding.mjs";
+import { publicationResourceSelections } from "../novel-domain/publication-resources.mjs";
 import {
   makePublicationSnapshot,
   verifyPublicationSnapshot,
@@ -37,7 +38,7 @@ export class PublicationStore {
   constructor(
     storage,
     reader,
-    { batchSize = 16, maxBytes = 32 * 1024 * 1024 } = {},
+    { batchSize = 16, maxBytes = 32 * 1024 * 1024, resources = null } = {},
   ) {
     if (
       !Number.isSafeInteger(batchSize) ||
@@ -51,6 +52,7 @@ export class PublicationStore {
     this.reader = reader;
     this.batchSize = batchSize;
     this.maxBytes = maxBytes;
+    this.resources = resources;
   }
   async book(root, bookId) {
     const book = await this.storage.manifest(root);
@@ -94,9 +96,10 @@ export class PublicationStore {
       !input ||
       typeof input !== "object" ||
       Array.isArray(input) ||
-      Object.keys(input).length !== 3 ||
+      ![3, 4].includes(Object.keys(input).length) ||
       Object.keys(input).some(
-        (key) => !["catalogHash", "chapterIds", "metadata"].includes(key),
+        (key) =>
+          !["catalogHash", "chapterIds", "metadata", "resources"].includes(key),
       ) ||
       !validHash(input.catalogHash) ||
       !Array.isArray(input.chapterIds) ||
@@ -109,6 +112,12 @@ export class PublicationStore {
     const metadata = publicationMetadata(input.metadata);
     const expectedCatalogHash = input.catalogHash,
       chapterIds = [...input.chapterIds];
+    const resourceSelections = publicationResourceSelections(
+      Object.hasOwn(input, "resources") ? input.resources : [],
+      chapterIds,
+    );
+    if (resourceSelections.length && !this.resources)
+      throw new Error("出版图像捕获服务不可用");
     let bytes = Buffer.byteLength(json(metadata));
     const ensureBudget = () => {
       if (bytes > this.maxBytes)
@@ -127,6 +136,11 @@ export class PublicationStore {
       if (!item) throw new Error("发布章节不属于当前作品有效范围");
       return item;
     });
+    const resources = resourceSelections.length
+      ? await this.resources.prepare(bookId, resourceSelections, chapterIds, {
+          signal,
+        })
+      : [];
     const readBatch = (items) =>
       this.storage.exclusive(async () => {
         signal?.throwIfAborted();
@@ -199,6 +213,7 @@ export class PublicationStore {
       bookRevision: catalog.bookRevision,
       metadata,
       chapters,
+      ...(resources.length ? { resources } : {}),
     });
     const serialized = json(snapshot);
     if (Buffer.byteLength(serialized) > this.maxBytes)
@@ -207,6 +222,10 @@ export class PublicationStore {
       const root = await this.storage.bookRoot(bookId);
       if (this.projection(await this.book(root, bookId)).hash !== catalog.hash)
         throw new Error("提交前出版目录已改变，请重新冻结");
+      if (resources.length) {
+        const ctx = await this.resources.assets.context(bookId);
+        await this.resources.verifyLocked(ctx, resources);
+      }
       signal?.throwIfAborted();
       // The caller synchronously closes cancellation here. No awaited callbacks inside the queue.
       const committing = onCommitting?.();
@@ -291,6 +310,7 @@ export class PublicationStore {
           sourceBookId: snapshot.content.bookId,
           bookRevision: snapshot.content.bookRevision,
           chapterCount: snapshot.content.chapters.length,
+          resourceCount: snapshot.content.resources?.length || 0,
           bodyBytes: snapshot.content.chapters.reduce(
             (sum, chapter) => sum + Buffer.byteLength(chapter.body),
             0,

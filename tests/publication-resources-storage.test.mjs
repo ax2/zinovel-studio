@@ -6,6 +6,13 @@ import { join } from "node:path";
 import sharp from "sharp";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { binaryHash } from "../packages/novel-storage/image-decoder.mjs";
+import {
+  publicationText,
+  publicationHtml,
+  verifyPublicationSnapshot,
+} from "../packages/novel-domain/publication.mjs";
+import { publicationPdfDocument } from "../packages/novel-domain/publication-pdf.mjs";
+import { publicationDocx } from "../packages/novel-domain/publication-docx.mjs";
 
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), "publication-resource-"));
@@ -223,5 +230,112 @@ test("publication rendition preparation bounds concurrent work and releases capa
       )
     ).length,
     1,
+  );
+});
+
+const metadata = {
+  title: "公开发行图验收",
+  author: "合成作者",
+  synopsis: "公开简介",
+  rights: "合成",
+  aiDisclosure: "测试",
+};
+test("schema2 capture freezes selected image hashes with text, survives restart and restored-book provenance, and never silently drops images on export", async () => {
+  const f = await fixture(),
+    ids = [f.book.chapters[0].id];
+  const catalog = await f.store.publication.catalog(f.book.id);
+  const snapshot = await f.store.publication.capture(f.book.id, {
+    catalogHash: catalog.hash,
+    chapterIds: ids,
+    metadata,
+    resources: [f.selection()],
+  });
+  assert.equal(snapshot.schemaVersion, 2);
+  assert.equal(snapshot.content.resources.length, 1);
+  assert.equal(
+    (await f.store.publication.list(f.book.id)).snapshots[0].resourceCount,
+    1,
+  );
+  assert.doesNotMatch(JSON.stringify(snapshot), /PRIVATE_/);
+  const altered = structuredClone(snapshot);
+  altered.content.resources[0].alt += "changed";
+  assert.throws(() => verifyPublicationSnapshot(altered), /hash/);
+  const wrongVersion = structuredClone(snapshot);
+  wrongVersion.schemaVersion = 1;
+  assert.throws(() => verifyPublicationSnapshot(wrongVersion), /格式/);
+  const missing = structuredClone(snapshot);
+  delete missing.content.resources;
+  assert.throws(() => verifyPublicationSnapshot(missing), /格式/);
+  assert.throws(() => publicationText(snapshot, "txt"), /带图/);
+  assert.throws(() => publicationHtml(snapshot), /带图/);
+  assert.throws(() => publicationPdfDocument(snapshot), /带图/);
+  await assert.rejects(publicationDocx(snapshot), /带图/);
+  await f.store.assets.setDeleted(f.book.id, f.asset, true);
+  const backup = await f.store.createBackup(f.book.id, f.root);
+  // No further writes through the original instance after this explicit restart.
+  const restarted = new NovelStore(join(f.root, "library"));
+  assert.equal(
+    (await restarted.publication.read(f.book.id, snapshot.id, snapshot.hash))
+      .hash,
+    snapshot.hash,
+  );
+  const restored = await restarted.restoreBackup(backup.path);
+  const restoredSnapshot = await restarted.publication.read(
+    restored.id,
+    snapshot.id,
+    snapshot.hash,
+  );
+  assert.deepEqual(restoredSnapshot, snapshot);
+  const image = restoredSnapshot.content.resources[0].image;
+  const bytes = await restarted.publicationResources.storage.exclusive(
+    async () => {
+      const ctx = await restarted.assets.context(restored.id);
+      return restarted.publicationResources.bytesLocked(ctx.root, image);
+    },
+  );
+  assert.equal(binaryHash(bytes), image.sha256);
+});
+
+test("image version changes during text capture reject before commit and retain the source manuscript", async () => {
+  const f = await fixture(),
+    ids = [f.book.chapters[0].id],
+    catalog = await f.store.publication.catalog(f.book.id);
+  let changed = false;
+  await assert.rejects(
+    f.store.publication.capture(
+      f.book.id,
+      {
+        catalogHash: catalog.hash,
+        chapterIds: ids,
+        metadata,
+        resources: [f.selection()],
+      },
+      {
+        onProgress: async (progress) => {
+          if (!changed && progress.phase === "verifying") {
+            changed = true;
+            await f.store.assets.save(
+              f.book.id,
+              {
+                title: f.asset.title,
+                purpose: f.asset.purpose,
+                source: f.asset.source,
+                rights: f.asset.rights,
+                notes: "作者同时改图记录",
+                linkedIds: [],
+              },
+              f.asset,
+            );
+          }
+        },
+      },
+    ),
+    /修改/,
+  );
+  assert.equal(changed, true);
+  assert.equal((await f.store.publication.list(f.book.id)).snapshots.length, 0);
+  assert.equal(
+    (await f.store.readChapter(f.book.id, ids[0])).body,
+    "合成原稿𠮷🌊。",
   );
 });

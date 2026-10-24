@@ -1,3 +1,4 @@
+import type { PublicationResourceReference } from "./publication-resources.mjs";
 export interface PublicationMetadata {
   title: string;
   author: string;
@@ -15,7 +16,7 @@ export interface PublicationChapter {
   body: string;
 }
 export interface PublicationSnapshot {
-  readonly schemaVersion: 1;
+  readonly schemaVersion: 1 | 2;
   readonly id: string;
   readonly createdAt: string;
   readonly hash: string;
@@ -24,6 +25,7 @@ export interface PublicationSnapshot {
     readonly bookRevision: number;
     readonly metadata: Readonly<PublicationMetadata>;
     readonly chapters: readonly Readonly<PublicationChapter>[];
+    readonly resources?: readonly Readonly<PublicationResourceReference>[];
   };
 }
 export interface PublicationManifest {
@@ -43,6 +45,7 @@ export function makePublicationSnapshot(input: {
   bookRevision: number;
   metadata: PublicationMetadata;
   chapters: readonly PublicationChapter[];
+  resources?: readonly PublicationResourceReference[];
 }): PublicationSnapshot;
 export function verifyPublicationSnapshot(input: unknown): PublicationSnapshot;
 export function publicationText(input: unknown, format: "txt" | "md"): string;

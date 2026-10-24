@@ -74,7 +74,7 @@ test("loaded publication snapshots reject future schema, tampered bytes, duplica
       return item;
     };
   assert.throws(
-    () => verifyPublicationSnapshot(alter((s) => (s.schemaVersion = 2))),
+    () => verifyPublicationSnapshot(alter((s) => (s.schemaVersion = 3))),
     /版本/,
   );
   assert.throws(

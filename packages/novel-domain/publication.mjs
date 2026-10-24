@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { publicationResourceReferences } from "./publication-resources.mjs";
 
 const digest = (value) => createHash("sha256").update(value).digest("hex");
 const uuid = (value) =>
@@ -63,8 +64,21 @@ function chapter(input) {
     body,
   };
 }
-function content(input) {
-  exact(input, ["bookId", "bookRevision", "metadata", "chapters"], "发布内容");
+function content(input, version) {
+  const withResources =
+    version === 2 ||
+    (version === undefined && input && Object.hasOwn(input, "resources"));
+  exact(
+    input,
+    [
+      "bookId",
+      "bookRevision",
+      "metadata",
+      "chapters",
+      ...(withResources ? ["resources"] : []),
+    ],
+    "发布内容",
+  );
   if (
     !uuid(input.bookId) ||
     !Array.isArray(input.chapters) ||
@@ -83,6 +97,14 @@ function content(input) {
     bookRevision: revision(input.bookRevision),
     metadata: publicationMetadata(input.metadata),
     chapters,
+    ...(withResources
+      ? {
+          resources: publicationResourceReferences(
+            input.resources,
+            chapters.map((item) => item.id),
+          ),
+        }
+      : {}),
   };
 }
 
@@ -97,7 +119,7 @@ export function makePublicationSnapshot({ id, createdAt, ...input }) {
     throw new Error("发布快照身份或时间无效");
   const projection = content(input);
   return freeze({
-    schemaVersion: 1,
+    schemaVersion: Object.hasOwn(projection, "resources") ? 2 : 1,
     id,
     createdAt,
     content: projection,
@@ -111,21 +133,26 @@ export function verifyPublicationSnapshot(input) {
     ["schemaVersion", "id", "createdAt", "content", "hash"],
     "发布快照",
   );
-  if (input.schemaVersion !== 1 || !hash(input.hash))
+  if (![1, 2].includes(input.schemaVersion) || !hash(input.hash))
     throw new Error("发布快照版本或hash不支持");
   const result = makePublicationSnapshot({
     id: input.id,
     createdAt: input.createdAt,
-    ...content(input.content),
+    ...content(input.content, input.schemaVersion),
   });
   if (result.hash !== input.hash)
     throw new Error("发布快照清单与hash不符，原记录已保留");
   return result;
 }
 export function publicationText(input, format) {
+  const snapshot = verifyPublicationSnapshot(input);
+  if (snapshot.content.resources?.length)
+    throw new Error(
+      "当前文本导出尚不支持带图副本，未丢弃图像；请选择纯文字副本",
+    );
   const {
     content: { metadata: book, chapters },
-  } = verifyPublicationSnapshot(input);
+  } = snapshot;
   if (!["txt", "md"].includes(format)) throw new Error("文本导出格式不支持");
   const md = format === "md",
     parts = [md ? `# ${book.title}` : book.title];
@@ -163,6 +190,8 @@ const readerScript = `(()=>{const root=document.documentElement,key='zinovel.exp
 export function publicationHtml(input) {
   const snapshot = verifyPublicationSnapshot(input),
     { metadata: book, chapters } = snapshot.content;
+  if (snapshot.content.resources?.length)
+    throw new Error("带图HTML导出尚未接入，未丢弃图像");
   const files = new Map([
     ["reader.css", stylesheet + fontRules],
     ["reader.js", readerScript],

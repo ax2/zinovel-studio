@@ -40,6 +40,8 @@ function runs(text) {
 export async function publicationDocx(input, layout) {
   const snapshot = verifyPublicationSnapshot(input),
     options = publicationDocxOptions(layout);
+  if (snapshot.content.resources?.length)
+    throw new Error("带图DOCX排版尚未接入，未丢弃图像");
   if (
     Buffer.byteLength(JSON.stringify(snapshot.content)) >
     publicationDocxLimits.bytes

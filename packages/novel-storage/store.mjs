@@ -61,7 +61,9 @@ export class NovelStore {
     this.maps = new MapStore(this.#storage, this.materials, this.assets);
     this.atlas = new MapAtlasStore(this.#storage, this.maps);
     this.reader = new ReaderStore(this.#storage);
-    this.publication = new PublicationStore(this.#storage, this.reader);
+    this.publication = new PublicationStore(this.#storage, this.reader, {
+      resources: this.publicationResources,
+    });
     this.planning = new PlanningStore(this.#storage, this.materials);
     this.pilots = new PilotStore(this.#storage, this.materials);
     this.continuity = new ContinuityStore(this.#storage, this.materials);
