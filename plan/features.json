@@ -908,7 +908,7 @@
       "name": "可编辑世界地图",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "地点/区域/路线有结构化 ID",
       "evidence": [
         "packages/novel-domain/maps.mjs",
@@ -917,8 +917,15 @@
         "iterations/stage-006/WORKLOG.md",
         "packages/novel-storage/maps.mjs",
         "tests/maps-storage.test.mjs",
-        "assessments/stage-006/maps-storage.json"
-      ]
+        "assessments/stage-006/maps-storage.json",
+        "apps/workbench/maps-panel.tsx",
+        "apps/workbench/map-canvas.tsx",
+        "scripts/smoke-maps-ui.mjs",
+        "assessments/stage-006/maps-ui-source.json",
+        "assessments/release/v0.1.0-alpha.20/maps-ui-smoke.json",
+        "assessments/release/v0.1.0-alpha.20/installer-smoke.json"
+      ],
+      "validation": "assessments/release/v0.1.0-alpha.20/README.md"
     },
     {
       "id": "ART-04",
@@ -935,8 +942,15 @@
       "name": "行程与距离检查",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "只依据显式参数推算，未知标未知"
+      "status": "in-progress",
+      "acceptance": "只依据显式参数推算，未知标未知",
+      "evidence": [
+        "packages/novel-domain/maps.mjs",
+        "tests/maps-domain.test.mjs",
+        "apps/workbench/maps-panel.tsx",
+        "assessments/stage-006/maps-author-ui.md",
+        "assessments/release/v0.1.0-alpha.20/maps-ui-smoke.json"
+      ]
     },
     {
       "id": "ART-06",

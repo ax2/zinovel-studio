@@ -1,7 +1,7 @@
 {
   "version": "0.1.0-alpha.20",
   "sourceCommit": "f048e239449c7641fbf600a2f7a29d614237e06a",
-  "status": "candidate",
+  "status": "locally-qualified",
   "installerSha256": "4a6fcabf51e98ab17ef147dd98dd4c756ff64a37a61fe33a4f6deef4572a144a",
   "bytes": 222945114,
   "appAsarSha256": "2189c5195609a4015bb32c8eff9f18c0c78cab7caf13e05552ba868053931b27",
@@ -13,5 +13,5 @@
     "failures": 0,
     "exitCode": 1
   },
-  "qualification": "No installer/upgrade qualification until their independent exact-byte reports pass; no ZIP"
+  "qualification": "Same SHA installer retry passed 129 checks/reinstall/uninstall and public alpha3 upgrade; first failure retained; no tag-CI or public asset claim"
 }
