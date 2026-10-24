@@ -120,6 +120,14 @@ async function launch() {
     );
   });
   page = await app.firstWindow();
+  await app.evaluate(({ BrowserWindow }) => {
+    BrowserWindow.getAllWindows()[0].setBounds({ width: 1000, height: 900 });
+  });
+  report.viewport = await page.evaluate(() => ({
+    width: innerWidth,
+    height: innerHeight,
+    scale: devicePixelRatio,
+  }));
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.locator(".book-card").first().waitFor();
   await page.reload({ waitUntil: "domcontentloaded" });
@@ -156,6 +164,12 @@ async function launch() {
 async function open(book) {
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
+  if (
+    !(await page
+      .getByRole("button", { name: "生成候选", exact: true })
+      .isVisible())
+  )
+    await page.getByTitle("打开创作参考").click();
 }
 async function save(book, addition) {
   const editor = page.getByLabel("正文编辑器");
