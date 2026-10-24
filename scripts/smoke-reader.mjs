@@ -128,6 +128,17 @@ try {
   await page.keyboard.insertText("\n未自动保存前打开阅读。");
   await open();
   await chapter("第一章 旧信");
+  // Capture after a real renderer is ready, rather than assuming that all
+  // optional Chromium processes already existed at the launch snapshot.
+  const rootPid = application.process().pid;
+  const rendererPid = await application.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].webContents.getOSProcessId(),
+  );
+  const readyOwned = await captureOwnedProcesses(rootPid);
+  assert.notEqual(rendererPid, rootPid);
+  assert.ok(readyOwned.has(rootPid) && readyOwned.has(rendererPid));
+  for (const [pid, created] of readyOwned) owned.set(pid, created);
+  report.cleanupOwnership = { rootPid, rendererPid, captured: owned.size };
   if (process.env.ZINOVEL_READER_CLEANUP_FAULT === "1")
     throw new Error("synthetic-reader-cleanup-checkpoint");
   const saved = await store.readChapter(book.id, book.chapters[0].id);

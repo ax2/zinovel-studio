@@ -1,0 +1,52 @@
+release	Run pnpm test:reader	﻿2026-10-24T07:04:47.2629317Z ##[group]Run pnpm test:reader
+release	Run pnpm test:reader	2026-10-24T07:04:47.2629823Z ^[[36;1mpnpm test:reader^[[0m
+release	Run pnpm test:reader	2026-10-24T07:04:47.2712068Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+release	Run pnpm test:reader	2026-10-24T07:04:47.2712597Z env:
+release	Run pnpm test:reader	2026-10-24T07:04:47.2712975Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+release	Run pnpm test:reader	2026-10-24T07:04:47.2713532Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:reader	2026-10-24T07:04:47.2714220Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+release	Run pnpm test:reader	2026-10-24T07:04:47.2714797Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:reader	2026-10-24T07:04:47.2715331Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:reader	2026-10-24T07:04:47.2715912Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:reader	2026-10-24T07:04:47.2716386Z ##[endgroup]
+release	Run pnpm test:reader	2026-10-24T07:04:47.9526922Z 
+release	Run pnpm test:reader	2026-10-24T07:04:47.9527943Z > zinovel-studio@0.1.0-alpha.23 test:reader D:\a\zinovel-studio\zinovel-studio
+release	Run pnpm test:reader	2026-10-24T07:04:47.9529487Z > node scripts/smoke-reader.mjs && node scripts/smoke-reader-cleanup.mjs
+release	Run pnpm test:reader	2026-10-24T07:04:47.9530302Z 
+release	Run pnpm test:reader	2026-10-24T07:04:48.4737335Z (node:7760) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+release	Run pnpm test:reader	2026-10-24T07:04:48.4739575Z (Use `node --trace-deprecation ...` to show where the warning was created)
+release	Run pnpm test:reader	2026-10-24T07:04:53.7612332Z {
+release	Run pnpm test:reader	2026-10-24T07:04:53.7612766Z   status: 'passed',
+release	Run pnpm test:reader	2026-10-24T07:04:53.7613109Z   checks: [
+release	Run pnpm test:reader	2026-10-24T07:04:53.7614225Z     'unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution',
+release	Run pnpm test:reader	2026-10-24T07:04:53.7616121Z     'actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation',
+release	Run pnpm test:reader	2026-10-24T07:04:53.7619039Z     'external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry',
+release	Run pnpm test:reader	2026-10-24T07:04:53.7623252Z     'Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes'
+release	Run pnpm test:reader	2026-10-24T07:04:53.7624398Z   ],
+release	Run pnpm test:reader	2026-10-24T07:04:53.7624684Z   errors: [],
+release	Run pnpm test:reader	2026-10-24T07:04:53.7624991Z   viewports: [
+release	Run pnpm test:reader	2026-10-24T07:04:53.7625450Z     { name: 'phone-dark-progress.png', width: 1008, height: 681 },
+release	Run pnpm test:reader	2026-10-24T07:04:53.7626160Z     { name: 'directory-refresh-light.png', width: 1008, height: 681 },
+release	Run pnpm test:reader	2026-10-24T07:04:53.7626846Z     { name: 'narrow-reader.png', width: 804, height: 801 }
+release	Run pnpm test:reader	2026-10-24T07:04:53.7627300Z   ]
+release	Run pnpm test:reader	2026-10-24T07:04:53.7627530Z }
+release	Run pnpm test:reader	2026-10-24T07:04:56.0214438Z node:internal/modules/run_main:111
+release	Run pnpm test:reader	2026-10-24T07:04:56.0215153Z     triggerUncaughtException(
+release	Run pnpm test:reader	2026-10-24T07:04:56.0217657Z     ^
+release	Run pnpm test:reader	2026-10-24T07:04:56.0217866Z 
+release	Run pnpm test:reader	2026-10-24T07:04:56.0218680Z AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+release	Run pnpm test:reader	2026-10-24T07:04:56.0219640Z 
+release	Run pnpm test:reader	2026-10-24T07:04:56.0219957Z   assert.ok(result.ownedProcessesConfirmedExited >= 3)
+release	Run pnpm test:reader	2026-10-24T07:04:56.0220235Z 
+release	Run pnpm test:reader	2026-10-24T07:04:56.0220547Z     at file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-reader-cleanup.mjs:35:8 {
+release	Run pnpm test:reader	2026-10-24T07:04:56.0221015Z   generatedMessage: true,
+release	Run pnpm test:reader	2026-10-24T07:04:56.0221260Z   code: 'ERR_ASSERTION',
+release	Run pnpm test:reader	2026-10-24T07:04:56.0221482Z   actual: false,
+release	Run pnpm test:reader	2026-10-24T07:04:56.0221685Z   expected: true,
+release	Run pnpm test:reader	2026-10-24T07:04:56.0221880Z   operator: '==',
+release	Run pnpm test:reader	2026-10-24T07:04:56.0222066Z   diff: 'simple'
+release	Run pnpm test:reader	2026-10-24T07:04:56.0222260Z }
+release	Run pnpm test:reader	2026-10-24T07:04:56.0222351Z 
+release	Run pnpm test:reader	2026-10-24T07:04:56.0222433Z Node.js v26.12.1
+release	Run pnpm test:reader	2026-10-24T07:04:56.0600033Z  ELIFECYCLE  Command failed with exit code 1.
+release	Run pnpm test:reader	2026-10-24T07:04:56.2013202Z ##[error]Process completed with exit code 1.

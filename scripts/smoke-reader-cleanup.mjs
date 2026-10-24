@@ -32,10 +32,21 @@ const receipt =
 assert.equal(result.status, "failed");
 assert.match(result.failure, /synthetic-reader-cleanup-checkpoint/);
 assert.equal(result.failedCleanupConfirmed, true);
-assert.ok(result.ownedProcessesConfirmedExited >= 3);
+assert.ok(Number.isInteger(result.cleanupOwnership?.rootPid));
+assert.ok(Number.isInteger(result.cleanupOwnership?.rendererPid));
+assert.notEqual(
+  result.cleanupOwnership.rootPid,
+  result.cleanupOwnership.rendererPid,
+);
+assert.ok(result.cleanupOwnership.captured >= 2);
+assert.equal(
+  result.ownedProcessesConfirmedExited,
+  result.cleanupOwnership.captured,
+);
 const report = {
   status: "passed",
   ownedProcessesConfirmedExited: result.ownedProcessesConfirmedExited,
+  cleanupOwnership: result.cleanupOwnership,
   checks: [
     "intentional reader failure is persisted as failed before cleanup; captured original Windows process identities all exit and the driver returns exit 1 without a native close-confirmation hang",
   ],

@@ -119,6 +119,8 @@ jobs:
           name: release-failure-evidence
           path: |
             screenshots/release/
+            screenshots/stage-005/reader-cleanup-negative/
+            assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml
             release/image-runtime-verification.json
           retention-days: 14

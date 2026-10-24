@@ -1,0 +1,9 @@
+# alpha.23 首次标签发行失败
+
+不可变标签241c3c07329003da4361f13cccc7842f7627b680，Windows release40072281657首次在源码test:reader失败，尚未打包/安装/发布。正向阅读器四组功能检查已全部通过；负面清理包装脚本最后断言ownedProcessesConfirmedExited>=3失败。此前状态failed、合成故障检查点、failedCleanupConfirmed=true断言均已通过，日志只证明捕获数小于3，不包含具体1或2的数值，不编造具体数值。
+
+源码在electron.launch刚返回便抓进程树，之后才等firstWindow/作者进入/阅读章节；GPU/utility/renderer出现时间和数量可变，固定总数不能代替角色身份。主分支修正仅QA：阅读章节就绪后再读取真实webContents.getOSProcessId，与主进程PID分别确认处于原Windows父子树，合并原PID+创建时间身份；结束时逐一确认这些身份已退出。断言真实角色/身份数量相符，保留真正退出验证，未简单删除清理检查。修后本机完整阅读器及负面探针通过，实际捕获5个身份。
+
+首轮发行artifact12552370015，release-failure-evidence，12871765字节，digest sha256:81bfe6b66863d22091dc9f38c2c3552927af66e674dd377a6ae48774149852a0。工作流只上传screenshots/release等，而负面回执/截图在stage-005，故首轮确切负面回执与截图没有保留。下载工件中的reader报告来自仓库已有旧installed基线，不能当本轮失败证据。保留原始CI失败日志，明确此缺口；未来工作流补充负面目录与专用评估文件，不伪造缺失文件。
+
+23标签不移动。可对同一不可变标签完整重跑，仍执行原有门禁；仅重跑完整通过才允许该标签发布，首轮失败记录不撤销。新QA修正进入主分支后续版本，不谎称已写进23标签。
