@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-6N2Iu5\\中文 安装目录",
+  "installerSha256": "5f547ef538fec0f43ff252031629fec065c67ddddc5b7f11a1a9552a4ad0ed15",
+  "manuscriptSha256": "86893eb1f06cff67bf1792bf0120a62126c16a39a0383d66970552c8f59b6434",
+  "absent": {
+    "attempts": 33,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 6558
+  },
+  "registration": {
+    "attempts": 3,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 487
+  }
+}

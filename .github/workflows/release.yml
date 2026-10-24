@@ -72,6 +72,8 @@ jobs:
       - run: pnpm test:publication-ui
       - run: pnpm test:assets
       - run: pnpm package:win
+      - name: Verify packaged image decoder, native DLLs and retained notices
+        run: node scripts/verify-image-package.mjs
       - name: Install, run packaged Harness, reinstall and uninstall
         run: pnpm test:installer
       - name: Fetch previous qualified installer and verify real version upgrade
@@ -110,4 +112,5 @@ jobs:
           path: |
             screenshots/release/
             release/builder-debug.yml
+            release/image-runtime-verification.json
           retention-days: 14

@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "asset-desktop.png",
+      "width": 1426,
+      "height": 923
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim",
+  "failure": "locator.waitFor: Error: strict mode violation: getByRole('dialog', { name: '小说图像资源', exact: true }).getByRole('alert').filter({ hasText: /图像资源已被其他操作修改/ }) resolved to 2 elements:\n    1) <p role=\"alert\">图像资源已被其他操作修改，当前调整已保留，请重新读取后对照</p> aka getByText('图像资源已被其他操作修改，当前调整已保留，请重新读取后对照').first()\n    2) <p role=\"alert\">图像资源已被其他操作修改，当前调整已保留，请重新读取后对照</p> aka getByRole('main').filter({ hasText: '当前原图预览图像资源已被其他操作修改，当前调整已保留，请重新读取后对照640 × 400 · image/png · 71 KiB' }).getByRole('alert')\n\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '小说图像资源', exact: true }).getByRole('alert').filter({ hasText: /图像资源已被其他操作修改/ }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-assets.mjs:275:6"
+}

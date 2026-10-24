@@ -49,6 +49,20 @@ const manifest = {
   qualification: smoke.checks,
   generatedAt: new Date().toISOString(),
 };
+const imageRuntime = JSON.parse(
+  await readFile(new URL("image-runtime-verification.json", release), "utf8"),
+);
+const appAsarSha256 = createHash("sha256")
+  .update(await readFile(new URL("win-unpacked/resources/app.asar", release)))
+  .digest("hex");
+if (
+  imageRuntime.status !== "passed" ||
+  imageRuntime.version !== pkg.version ||
+  imageRuntime.sharp !== pkg.dependencies.sharp ||
+  imageRuntime.appAsarSha256 !== appAsarSha256
+)
+  throw new Error("Packaged image runtime verification is missing or stale");
+manifest.imageRuntime = imageRuntime;
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

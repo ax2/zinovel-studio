@@ -27,3 +27,9 @@
 最终源码检查169/169通过，实际内置Node24.21.0资源12/12通过并保留五份关键源码SHA（assets-node24.json）。书库备份恢复、真实渲染崩溃/卡死恢复、坏UTF-8保护、发布UI及其真实独立HTML回归均exit0，机器回执归档regressions；旧阶段截图恢复原基线，不把新源码结果混进旧发行证据。
 
 来源核对补充：npm固定@img/sharp-win32-x64@0.35.5的gitHead为51a990faa26ade5586a4934ac9673c98d8893326；Windows上游发布存在v8.18.7，与随包versions.json一致，记录精确build-win64-mxe版本位置。GPLv3/LGPLv3全文从GNU官方下载并记录hash。许可文件标记-text避免checkout自动换行破坏保留字节。raw GitHub一次ECONNRESET不当成源码不存在；对应源码/配方与其他原生依赖完整审计继续。
+
+安装候选第一次实测：实际NSIS安装、此前正文/资料/世界/试写/读者/发布等回归通过后，图像元数据冲突断言同时匹配全局保存告警和过期预览告警，严格选择器报错，整轮判失败。归档installer-first-failure，不据此发版。选择器改为assets-notices区域；完整候选EXE与win-unpacked先保留D盘，随后核对注册表卸载字符串、安装真实路径和候选SHA，仅卸载本次installer-qa-6N2Iu5专用安装。EXE及注册表实际消失、合成原稿字节保留，cleanup.json记录观察次数。使用相同SHA的EXE重跑全部安装验收。
+
+新增独立打包探针：实际portable EXE内置Node24.21.0，在仅System32的PATH中从app.asar解析sharp0.35.5，实际PNG/JPEG/WebP处理通过；核对解包的2个libvips DLL与sharp.node可读写、逐文件SHA和6份保留许可证/来源文件SHA。探针首次把asar路径当普通fs文件失败，改用Electron original-fs读取原始档案；这不是原生模块缺失。结果release/image-runtime-verification.json，并加入发布工作流和manifest的精确asar/hash门禁。未做改造DLL运行或完整法律/商店认证。
+
+主分支197c039的Development checks（40052627238）已成功；不把源码CI成功视为本轮安装候选通过。

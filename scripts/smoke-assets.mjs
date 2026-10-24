@@ -270,6 +270,7 @@ try {
     .getByRole("button", { name: "保存图像说明", exact: true })
     .click();
   await panel()
+    .locator(".assets-notices")
     .getByRole("alert")
     .filter({ hasText: /图像资源已被其他操作修改/ })
     .waitFor();
