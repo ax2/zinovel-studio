@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "version": "0.1.0-alpha.17",
+  "target": "D:\\Work\\zinovel-studio\\.cache\\native-publication-2rWpwd\\data\\中文 导出 验证",
+  "marker": "D:\\Work\\zinovel-studio\\.cache\\native-publication-2rWpwd\\observation-complete.flag",
+  "checks": [],
+  "errors": [],
+  "scope": "Real Windows directory chooser; synthetic novel only; an operator must select the existing target directory",
+  "failure": "locator.waitFor: Timeout 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '导出发布副本', exact: true }).getByRole('status').filter({ hasText: '本地导出完成' }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\prepare-native-publication.mjs:105:6"
+}

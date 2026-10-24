@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.17",
+  "target": "D:\\Work\\zinovel-studio\\.cache\\native-publication-42qIzH\\data\\中文 导出 验证",
+  "marker": "D:\\Work\\zinovel-studio\\.cache\\native-publication-42qIzH\\observation-complete.flag",
+  "checks": [
+    "Real native folder dialog returned the explicitly chosen Chinese/space folder; no dialog replacement",
+    "Actual host wrote a new TXT/manifest directory, all file bytes/hash matched and synthetic source bytes remained unchanged"
+  ],
+  "errors": [],
+  "scope": "Real Windows directory chooser; synthetic novel only; an operator must select the existing target directory",
+  "directory": "E:\\zinovel-studio\\.cache\\native-publication-42qIzH\\data\\中文 导出 验证\\小说-原生导出验证-txt-1d79ee68-e4ea-4559-bef1-81d86eaec645"
+}

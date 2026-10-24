@@ -141,6 +141,10 @@ try {
     ],
     ["smoke-publication-ui.mjs", "publication-ui/publication-ui-smoke.json"],
     [
+      "smoke-publication-html-output.mjs",
+      "publication-html/publication-html-output-smoke.json",
+    ],
+    [
       "smoke-creative-journey.mjs",
       "creative-journey/creative-journey-smoke.json",
     ],

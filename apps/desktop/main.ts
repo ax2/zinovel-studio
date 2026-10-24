@@ -726,6 +726,8 @@ if (
                     throw new Error("程序正在关闭，未开始导出");
                   const selected = await dialog.showOpenDialog(parentWindow, {
                     title: "选择发布副本的导出位置（创建新目录）",
+                    defaultPath:
+                      process.env.ZINOVEL_DATA_ROOT || app.getPath("documents"),
                     properties: ["openDirectory", "createDirectory"],
                   });
                   if (selected.canceled) return { cancelled: true };
