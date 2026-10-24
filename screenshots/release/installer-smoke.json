@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.16",
-  "installerSha256": "9b23a8919d014cfc23e72b17aebffcf52b443bdb12647d85836fea6a1d5576e9",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-3Ziceh\\中文 安装目录",
+  "version": "0.1.0-alpha.18",
+  "installerSha256": "5f547ef538fec0f43ff252031629fec065c67ddddc5b7f11a1a9552a4ad0ed15",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-IMQznT\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -84,6 +84,22 @@
     "installed: Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
     "installed: Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",
     "installed: Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode",
+    "installed: real window-bound IPC cancels a 256-chapter capture before commit without creating a snapshot",
+    "installed: explicit reordered two-chapter capture persists; preview metadata excludes body/private author materials, chapter IPC returns exact BOM/CRLF/astral text and rejects out-of-scope chapters",
+    "installed: external author edit and full desktop restart preserve the original frozen snapshot; no manuscript conversion, model request or automatic replay",
+    "installed: actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
+    "installed: actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
+    "installed: native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML writes to Chinese/space directory verify every file hash and preserve source bytes",
+    "installed: desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
+    "installed: form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export",
+    "installed: actual editor flush, native-choice-instrumented import, exact originals, current PNG preview, purpose/source/rights/linked character metadata and Ctrl+S saved once; local draft including temporarily empty title survives modal close",
+    "installed: external metadata conflict preserves author input; explicit disk comparison/rebase saves new version; JPEG EXIF preview and old-image history remain independent; explicit history adoption creates a new version retaining later originals; recycle/restore preserve originals",
+    "installed: corrupt image import creates no visible record; external original corruption refuses preview and preserves damaged bytes; explicit synthetic repair re-enables preview",
+    "installed: quota error protects modal input; unknown future draft survives full restart until explicit discard; synthetic durable host commit without panel receipt recovers by creation identity after restart without duplicate records",
+    "installed: desktop/806px narrow/dark screenshots, zero horizontal overflow, zero renderer errors or external page requests; all source files and formal manuscript remain byte-identical",
+    "installed: Actual author UI exported HTML opens independently with reversed chapter order, previous/next/directory/reload, frozen Unicode body and no script execution",
+    "installed: External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow",
+    "installed: Actual author UI export inventory matches every file byte; no HTTP requests or workbench IPC/Node globals; standalone Chromium viewer only",
     "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
     "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
     "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
@@ -110,7 +126,19 @@
     "real NSIS uninstall removes app and registration and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 27239,
-  "reinstallMs": 37652,
-  "uninstallMs": 6935
+  "installMs": 14434,
+  "reinstallMs": 26738,
+  "uninstallObservation": {
+    "attempts": 26,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 5088
+  },
+  "uninstallRegistryObservation": {
+    "attempts": 1,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 24
+  },
+  "uninstallMs": 6072
 }

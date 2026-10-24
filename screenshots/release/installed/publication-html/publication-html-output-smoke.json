@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual author UI exported HTML opens independently with reversed chapter order, previous/next/directory/reload, frozen Unicode body and no script execution",
+    "External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow",
+    "Actual author UI export inventory matches every file byte; no HTTP requests or workbench IPC/Node globals; standalone Chromium viewer only"
+  ],
+  "errors": [],
+  "environment": {
+    "browser": "Electron 44 bundled Chromium, standalone file pages; not workbench or actual mobile device",
+    "browserPlugin": "Browser plugin not available; repository Playwright/Electron fallback",
+    "artifactRoot": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-EsEVdT\\中文 空格 导出目录\\小说-雾港选章-html-ffda0499-a432-47b5-9f79-aee1a49827f1"
+  },
+  "viewports": [
+    {
+      "name": "directory-desktop.png",
+      "width": 1287,
+      "height": 838
+    },
+    {
+      "name": "chapter-phone-dark.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "frozen-body-phone-dark.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "directory-phone-dark.png",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

@@ -33,3 +33,7 @@
 新增独立打包探针：实际portable EXE内置Node24.21.0，在仅System32的PATH中从app.asar解析sharp0.35.5，实际PNG/JPEG/WebP处理通过；核对解包的2个libvips DLL与sharp.node可读写、逐文件SHA和6份保留许可证/来源文件SHA。探针首次把asar路径当普通fs文件失败，改用Electron original-fs读取原始档案；这不是原生模块缺失。结果release/image-runtime-verification.json，并加入发布工作流和manifest的精确asar/hash门禁。未做改造DLL运行或完整法律/商店认证。
 
 主分支197c039的Development checks（40052627238）已成功；不把源码CI成功视为本轮安装候选通过。
+
+安装重试结果：同SHA 5f547ef538fec0f43ff252031629fec065c67ddddc5b7f11a1a9552a4ad0ed15 的EXE完成121项安装后检查，图像导入/冲突/EXIF/历史/回收/坏图/配额/未知草稿/无回执重启均通过；实际查看安装版桌面图像截图。安装14434ms、重装26738ms、卸载6072ms，精确原稿保留、EXE与注册项实际消失。完整运行目录与EXE保留D:\Work\zinovel-releases\v0.1.0-alpha.18，无ZIP。alpha.3升级独立执行中，未提前开放门禁。
+
+公开alpha.3到同字节18升级通过（25912ms），旧原稿/任务/加密合成设置保留，旧候选继续审阅、卸载保稿。原生模块/安装/升级及manifest归档assessments/release/v0.1.0-alpha.18；现允许进入本版预览流水线，不等于已经公开，标签CI必须重新构建和验证自己的EXE。稳定门禁继续false。
