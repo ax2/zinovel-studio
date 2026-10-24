@@ -1,14 +1,14 @@
 # ZiNovel Studio
 
-当前开发版本 alpha.17 已接入发布副本的选章、排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，源码回归通过；本版实际安装与发行资格尚待验证。alpha.16 的[冻结标签流水线](https://github.com/ax2/zinovel-studio/actions/runs/40040294178)两轮均未完成资格，未公开发布。修复纳入 alpha.17，不移动旧标签，不继承旧安装资格。详见 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+最新阶段版本 [alpha.17](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) 已公开，包含发布副本选章/排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，并修复损坏 UTF-8 原稿保护问题。本机和标签 CI 的实际安装、运行、重装、卸载保稿及 alpha.3 升级均通过；公开 EXE 已下载重新计算 SHA-256 并核对匿名可见性。主分支进入 alpha.18 后续开发，其预览资格尚未取得。详见 [发行证据](assessments/release/v0.1.0-alpha.17/README.md) 与 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：Stage-004 创作资料与场景规划继续补全，独立阅读首版已通过本机安装验收。alpha.14已完成本机及远端安装/升级并公开发布，打通核心创作往返，新增空书创作入口并补强参考更新与版本保护。阶段成果继续发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订导出已按实际安装证据完成单项验收；25项 verified、36项 in-progress、45项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.14 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.14) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.14/ZiNovel-Studio-0.1.0-alpha.14-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.17 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.17/ZiNovel-Studio-0.1.0-alpha.17-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
-**编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复随 alpha.17 重新完成安装与发行验证后交付。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
+**编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
 ## 产品方向
 
@@ -81,7 +81,7 @@ Stage-003 已增加跨书任务分页、旧版任务只读入口和恢复审阅�
 
 alpha.3 提供流式恢复、任务步骤/输出/章节上下文限制、官方启发式输入预估及自定义单价/费用阈值；供应商回报、预估和未知项明确区分。完整请求在发送前检查，历史任务保留自己的预算与单价，参见 [用量预算设计](design/task-budget.md)。这些不是实际服务商账单的保证。
 
-alpha.5 阶段增加了 [逐块候选审阅](design/candidate-review.md)、显式草稿保存恢复和同页同章候选比较，最后一次接受并可撤销。alpha.4 曾因恢复后新草稿选择缺陷撤回为草稿；相关修复已包含在当前公开 alpha.8 中，并通过实际安装与升级验证。批量候选生成和另存小说分支仍未完成。
+alpha.5 阶段增加了 [逐块候选审阅](design/candidate-review.md)、显式草稿保存恢复和同页同章候选比较，最后一次接受并可撤销。alpha.4 曾因恢复后新草稿选择缺陷撤回为草稿；相关修复已包含在 alpha.8 及后续版本中，并通过实际安装与升级验证。批量候选生成和另存小说分支仍未完成。
 
 - 2026-10-22：新建独立项目，确认名称 ZiNovel Studio。
 - 2026-10-22：核实官方仓库 `apps/desktop` 已提供 Electron 桌面实现，选择官方基础；不采用社区 DSH Desktop 或 ZiCode/Pi 作为运行时。
@@ -97,9 +97,9 @@ alpha.5 阶段增加了 [逐块候选审阅](design/candidate-review.md)、显�
 
 暂停时的 Development checks 39826350216 最终全部成功。恢复初期曾按用户要求暂停预览发行，加入完整产品门禁；之后用户明确要求阶段成果发布含安装程序的 Release，现改为独立预览资格与稳定版上架资格，保留全部安装/运行/升级检查。
 
-Stage-004 正在实现[创作资料](design/creative-materials.md)：八种类型表单、章节引用、检索、版本冲突、回收站、历史与已保存资料导出。实现和真实桌面证据见[阶段日志](iterations/stage-004/WORKLOG.md)，当前公开 alpha.3 与本机原 alpha.5 安装包均不包含新资料功能。
+Stage-004 正在实现[创作资料](design/creative-materials.md)：八种类型表单、章节引用、检索、版本冲突、回收站、历史与已保存资料导出。实现和真实桌面证据见[阶段日志](iterations/stage-004/WORKLOG.md)，当时公开 alpha.3 与本机原 alpha.5 安装包均不包含新资料功能。
 
-Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状态/关系/认知事件保留引文和版本，正文修改后提示复核；写作助理按作者选择冻结同书资料。无资料任务保留两个受约束工具，有资料任务增加只读 novel_materials_read。当前开发版本为 alpha.6，完整要求和上架资格仍未完成。
+Stage-004 已增加正文证据与显式 AI 资料上下文：伏笔/人物状态/关系/认知事件保留引文和版本，正文修改后提示复核；写作助理按作者选择冻结同书资料。无资料任务保留两个受约束工具，有资料任务增加只读 novel_materials_read。该切片开发版本为 alpha.6，完整要求和上架资格仍未完成。
 
 本机 alpha.6 已通过安装、安装后功能、重装/卸载保稿及 alpha.3 升级验证，完整运行目录与 EXE 保留，没有公开发布。后续主分支增加关联设定版本复核、证据精确导航和资料扫描分批调度；5,000 份资料扫描时的保存等待从 911 ms 降至 16 ms，查询仍有一次超过 500 ms 初始目标。安装包与后续源码的证据分别记录，详见 Stage-004 日志。
 
@@ -112,3 +112,5 @@ alpha.9 已于 2026-10-23 22:14:42 北京时间公开，发行 CI 39966140390 �
 alpha.10 已于 2026-10-23 23:19:45 北京时间公开，标签发行 CI 39975497797 成功，四个附件与哈希核对通过；本机首次安装超时、同包重跑及最终完整资格分别留档，见[发行证据](assessments/release/v0.1.0-alpha.10/README.md)。
 
 alpha.11 已于 2026/10/24 00:52:22 北京时间公开，发行 CI39988528009 全部成功，安装 EXE 与三个元数据附件已核对；完整证据见[alpha.11 发行记录](assessments/release/v0.1.0-alpha.11/README.md)。后续 alpha.12 作者选择未混入该标签。
+
+alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869全部成功。公开EXE222895662字节、SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已下载复算且匿名可见。原文编码保护、冻结发布副本与实际导出/独立HTML通过安装验收；本机EXE与CIEXE分开留证，完整本机运行目录保留D盘。主分支alpha.18资格false，图像资源方案与解码实测见design/assets-and-media.md。

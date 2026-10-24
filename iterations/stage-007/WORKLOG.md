@@ -60,3 +60,7 @@ alpha.17不可变标签c820402190be9314581239294f52b17cf0abb74e已推送，Windo
 alpha.17本机安装/升级及原生目录证据齐备后，按既有验收逐项核对PUB-01的明确选章排序、UTF-8首尾原文、逐文件hash、坏字节拒绝、取消/不覆盖和重启冻结。仅文本合订标verified，其他PUB保持in-progress/planned，记录于assessments/stage-007/text-export-acceptance.md；总计25 verified /36 in-progress /45 planned。公开CI与本机证据独立，18仍未取得安装资格。
 
 图像技术验证继续：Electron44原生PNG/JPEG可读，WebP为空、方向6JPEG保持未旋转64×32；现有sharp0.35.5支持WebP和方向，并实测“像素已损坏但metadata仍读出64×32”的PNG只能在真实解码时拒绝。确定资源实现需完整解码与方向处理，后续显式声明直接依赖。仅合成研究，未新增资源产品能力；初次旧入口和evaluate require错误分别说明并保留实际失败回执。
+
+## alpha.17公开交付完成
+发行CI40048673869 completed/success，BJT2026-10-24 09:23:23公开。4个附件含安装EXE，无ZIP；公开222895662字节/SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已实际下载并重新hash、三份元数据digest相符、匿名可见性通过。本机d73dba...与CI824d8f...各有完整独立证据。README和使用说明下载入口同步17，历史风险与未签名/未上架边界保留。
+开发重复run40048875042/40048732502及标签重复Development40048673881已请求取消以释放资源；未取消release40048673869，未把这些开发取消当成发行失败。主分支alpha.18继续资源库与后续能力，25/36/45条目统计；稳定版和18预览门禁未提升。
