@@ -171,6 +171,9 @@ const offlineWriting = JSON.parse(
     "utf8",
   ),
 );
+const readingLayout = offlineWriting.readingLayout;
+const readableParagraph = readingLayout?.paragraph;
+const readingViewport = readingLayout?.viewport;
 if (
   offlineWriting.status !== "passed" ||
   offlineWriting.version !== pkg.version ||
@@ -179,6 +182,23 @@ if (
   offlineWriting.foreignBookTextSent !== false ||
   offlineWriting.rendererRequestsDenied !== 1 ||
   offlineWriting.providerRequests < 2 ||
+  readingLayout?.horizontalOverflow !== false ||
+  !Number.isFinite(readingLayout?.layout?.height) ||
+  readingLayout.layout.height <= 100 ||
+  ![
+    readableParagraph?.left,
+    readableParagraph?.right,
+    readableParagraph?.top,
+    readableParagraph?.bottom,
+    readableParagraph?.width,
+    readingViewport?.width,
+    readingViewport?.height,
+  ].every(Number.isFinite) ||
+  readableParagraph.width < 200 ||
+  readableParagraph.left < 0 ||
+  readableParagraph.right > readingViewport.width ||
+  readableParagraph.top < 0 ||
+  readableParagraph.bottom > readingViewport.height ||
   !Array.isArray(offlineWriting.errors) ||
   offlineWriting.errors.length !== 0 ||
   !Array.isArray(offlineWriting.checks) ||
@@ -187,6 +207,7 @@ if (
   throw new Error("Installed offline writing proof is missing or stale");
 manifest.offlineWriting = {
   version: offlineWriting.version,
+  readingLayout,
   checks: offlineWriting.checks,
   scope: offlineWriting.scope,
 };

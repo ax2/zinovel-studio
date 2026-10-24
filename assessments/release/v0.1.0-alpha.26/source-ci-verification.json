@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "Immutable production source checks; later qualification commit only adds QA manifest validation and documentation",
+  "runId": "40098778628",
+  "version": "0.1.0-alpha.26",
+  "ci": {
+    "conclusion": "success",
+    "createdAt": "2026-10-24T13:35:14Z",
+    "headSha": "d8dee59d27321404014357ec211f81577934136d",
+    "status": "completed",
+    "updatedAt": "2026-10-24T13:43:48Z",
+    "url": "https://github.com/ax2/zinovel-studio/actions/runs/40098778628"
+  }
+}

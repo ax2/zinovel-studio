@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.26",
+  "runtimeSourceCommit": "d8dee59d27321404014357ec211f81577934136d",
+  "sourceCi": "40098778628",
+  "sourceChecks": 231,
+  "installedChecks": 151,
+  "bytes": 155474729,
+  "sha256": "87ea2a78e37646976b2ad30407be805499b37f471663e4a5577af270f614540f",
+  "appAsarSha256": "cdada39ab6b0a82ad3d2f83df645172e59cb13304ec1db384dfd6afad023bfda",
+  "installMs": 9971,
+  "reinstallMs": 15264,
+  "uninstallMs": 4579,
+  "upgradeMs": 16781,
+  "buildInventory": {
+    "files": 132,
+    "bytes": 622190734
+  },
+  "retainedRuntime": {
+    "files": 133,
+    "bytes": 622298254,
+    "path": "D:/zinovel-releases/v0.1.0-alpha.26/win-unpacked"
+  },
+  "supersededCandidates": "First stream failure, second independent Python failure, third machine pass revoked after visual layout defect; original evidence retained",
+  "publicInstallerVerified": false,
+  "generatedAt": "2026-10-24T13:46:02.303681+00:00"
+}

@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "scope": "Source official Harness adversarial tool calls, synthetic files only; not installed qualification",
+  "cases": [
+    {
+      "tool": "shell.execute",
+      "outcome": "awaiting-review",
+      "requests": 2,
+      "rejectedResults": 1,
+      "bothManuscriptsUnchanged": true,
+      "foreignContentSent": false
+    },
+    {
+      "tool": "novel_selection_read",
+      "outcome": "awaiting-review",
+      "requests": 2,
+      "rejectedResults": 1,
+      "bothManuscriptsUnchanged": true,
+      "foreignContentSent": false
+    },
+    {
+      "tool": "novel_change_propose",
+      "outcome": "awaiting-review",
+      "requests": 2,
+      "rejectedResults": 1,
+      "bothManuscriptsUnchanged": true,
+      "foreignContentSent": false
+    },
+    {
+      "tool": "novel_materials_read",
+      "outcome": "awaiting-review",
+      "requests": 2,
+      "rejectedResults": 1,
+      "bothManuscriptsUnchanged": true,
+      "foreignContentSent": false
+    }
+  ]
+}

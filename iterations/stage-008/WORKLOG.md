@@ -2,6 +2,10 @@
 
 ## alpha.26 离线写作增量
 
+最终阅读修复运行源码d8dee59d27321404014357ec211f81577934136d，231项/类型/规划及源码CI40098778628完整success。第三份候选/第四轮完整安装151项passed，安装9971/重装15264/卸载4579ms，alpha.3升级16781ms，原稿/旧任务候选/合成加密设置、卸载EXE与注册移除及数据保留通过。安装版986×863阅读图已实际查看，正文661.4×36不再为0宽；安装真实D Disk1→C Disk0恢复与同asar证明通过。本地EXE155474729字节/SHA87ea2a78e37646976b2ad30407be805499b37f471663e4a5577af270f614540f，asarcdada39ab6b0a82ad3d2f83df645172e59cb13304ec1db384dfd6afad023bfda，完整实际D档案保留。准备26标签独立CI，尚不称已公开。
+
+另做源码官方Harness受控越权探针4种：未知执行工具、带另一书路径的选区读取、带另一书ID的改稿提案、未授权资料读取，均返回真实is_error结果；两书原稿hash保持，另一书秘密标记不进入后续模型载荷，普通最终文本仍只是awaiting-review。临时可复现实验在.cache/adversarial-agent-probe.mjs，回执assessments/stage-008/adversarial-source-probe.json；尚未接入固定安装流程或覆盖所有目标模式，OPS-06仍in-progress，后续整理为正式测试。
+
 第三轮机器151项passed，安装10717/重装17894/卸载5138ms；查看实际窄屏阅读图发现正文屏外，撤销候选本机资格，不发标签。根因.show-inspector footer把阅读内footer置2/5列，作用域收紧到工作台直接子footer。最初几何探针也放过0宽正文，补可用行宽后实际红灯重现；修复源码同986×863/1.25下段落661.4×36，四段可见、无横向溢出，截图已查看。全部坏图/机器passed/复现回执保留，准备新候选重新完整安装与升级，不能继承旧151资格。见assessments/release/v0.1.0-alpha.26/reader-layout-failure/README.md。
 
 QA补强：整库保护候选第二轮安装10199ms，流式和离线四组通过，独立PDF解析因通用Python缺pdfplumber失败；保留回执/原日志，自身路径/asar/UninstallString核对后卸载，不误称应用PDF失败。增加安装前独立文档依赖预检；配置独立QA Python后第三轮全套重验，新增实际EXE备份边界四组也接入安装/源码CI/发行CI和同asar清单门禁。CI可明确允许同磁盘并记录事实，本机独立磁盘默认仍强制，不把不同盘符当物理独立。
