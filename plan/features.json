@@ -914,7 +914,10 @@
         "packages/novel-domain/maps.mjs",
         "tests/maps-domain.test.mjs",
         "design/world-map.md",
-        "iterations/stage-006/WORKLOG.md"
+        "iterations/stage-006/WORKLOG.md",
+        "packages/novel-storage/maps.mjs",
+        "tests/maps-storage.test.mjs",
+        "assessments/stage-006/maps-storage.json"
       ]
     },
     {

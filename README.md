@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新阶段版本 [alpha.18](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.18) 已公开，提供小说原图导入、方向预览、来源与权利说明、资料关联、版本历史与回收恢复。本机和标签CI的实际安装、运行、重装/卸载保稿及alpha.3升级通过，公开EXE已下载复算SHA并核对匿名可见性。标签首轮CI启动校验竞态失败、第2次完整运行通过，原始证据保留；主分支alpha.19已修正等待实际文档加载，正在独立安装资格验证。详见[发行证据](assessments/release/v0.1.0-alpha.18/README.md)和[Stage-006日志](iterations/stage-006/WORKLOG.md)。
+最新阶段版本[alpha.19](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.19)已公开，包含小说原图导入、方向预览、来源/权利说明、资料关联、历史与回收恢复，以及稳健的桌面启动验收。本机与标签CI的实际安装、运行、重装/卸载保稿和alpha.3升级通过；公开EXE已实际下载复算SHA并确认匿名可见。主分支alpha.20正在接入地图领域与存储，地图编辑界面尚未开放，也不属于alpha.19。详见[发行证据](assessments/release/v0.1.0-alpha.19/README.md)与[Stage-006日志](iterations/stage-006/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：文本合订导出已按实际安装证据完成单项验收；25项 verified、38项 in-progress、43项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.18 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.18) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.18/ZiNovel-Studio-0.1.0-alpha.18-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.19 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.19) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.19/ZiNovel-Studio-0.1.0-alpha.19-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
@@ -117,4 +117,4 @@ alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869
 
 alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版已取得本机安装/升级资格，标签Windows release [40053936921](https://github.com/ax2/zinovel-studio/actions/runs/40053936921)第2次完整运行成功，alpha.18已公开并下载复算SHA。下一切片[世界地图设计](design/world-map.md)已记录空间对象和冻结底图边界，不算已实现地图。
 
-主分支alpha.20开始地图领域实现：地点/区域/路线稳定ID、简单多边形校验、作者显式比例尺及冻结底图记录，六项领域测试通过；存储服务和可编辑界面尚未接通，ART-03仅in-progress，不继承alpha.19的发行资格。alpha.19标签CI40055840140独立运行中。
+主分支alpha.20开始地图领域实现：地点/区域/路线稳定ID、简单多边形校验、作者显式比例尺及冻结底图记录，六项领域测试通过；存储服务和可编辑界面尚未接通，ART-03仅in-progress，不继承alpha.19的发行资格。alpha.19标签CI40055840140已成功并公开，公开EXE下载复算摘要通过；主分支地图存储仍在开发，不包含于19。

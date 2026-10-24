@@ -15,6 +15,11 @@ export function mapId(value) {
     throw new Error("地图对象身份无效");
   return value;
 }
+export function mapHash(value) {
+  if (typeof value !== "string" || !/^[a-f0-9]{64}$/.test(value))
+    throw new Error("地图校验值无效");
+  return value;
+}
 function keys(value, allowed) {
   if (
     !value ||
@@ -252,7 +257,7 @@ export function validateMapRecord(record, id, origins) {
   timestamp(record.createdAt);
   timestamp(record.updatedAt);
   if (record.deletedAt !== undefined) timestamp(record.deletedAt);
-  assetHash(record.creationHash);
+  mapHash(record.creationHash);
   const data = mapInput(
     Object.fromEntries(
       ["title", "notes", "era", "canvas", "scale", "elements"].map((key) => [
@@ -293,7 +298,7 @@ function routeGeometry(data, route, places) {
           ),
         0,
       );
-  if (!data.scale)
+  if (!data.scale || !data.scale.unit.trim())
     return { points: line, distance: null, unit: null, state: "unscaled" };
   const ref = Math.hypot(
     (data.scale.to.x - data.scale.from.x) * data.canvas.width,
@@ -309,7 +314,8 @@ function routeGeometry(data, route, places) {
   };
 }
 export function mapRouteGeometries(input) {
-  const data = mapInput(input),
+  // Viewing existing routes must also work while an unrelated region or title is unfinished.
+  const data = mapDraftInput(input),
     places = new Map(
       data.elements.filter((e) => e.kind === "place").map((e) => [e.id, e]),
     );

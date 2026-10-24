@@ -9,6 +9,7 @@ import { MixedContext } from "./context.mjs";
 import { ReaderStore } from "./reader.mjs";
 import { PublicationStore, publicationOriginIds } from "./publication.mjs";
 import { AssetStore } from "./assets.mjs";
+import { MapStore } from "./maps.mjs";
 import {
   mkdir,
   readFile,
@@ -51,6 +52,7 @@ export class NovelStore {
     this.#storage = new BookStorageKernel(this.root);
     this.materials = new MaterialStore(this.#storage);
     this.assets = new AssetStore(this.#storage, this.materials);
+    this.maps = new MapStore(this.#storage, this.materials, this.assets);
     this.reader = new ReaderStore(this.#storage);
     this.publication = new PublicationStore(this.#storage, this.reader);
     this.planning = new PlanningStore(this.#storage, this.materials);

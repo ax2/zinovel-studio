@@ -1,10 +1,10 @@
 {
   "status": "passed",
   "version": "0.1.0-alpha.20",
-  "tests": 6,
-  "fullChecks": 175,
+  "tests": 7,
+  "fullChecks": 185,
   "node": "26.10.0",
-  "moduleSha256": "403e12aa0944ab38c1d17b7cda25044100a9c7756f0e04fd6bc1707ada050005",
-  "testSha256": "062a14dacd91993d451fc3e091840ae49fc17399ea8e236807433ef7e89e05be",
-  "scope": "Source domain validation/geometry tests and full pnpm check; no map persistence, renderer, packaged runtime or installer qualification"
+  "moduleSha256": "ac41b23d85082275a88eff6d83098026036bc9a759822852696242c6e8a11284",
+  "testSha256": "ce17a271abcf6f0031c2cd960457081276c473391e5a1dfcc8d9b50149be4a34",
+  "scope": "Source domain validation/geometry; no map renderer, packaged runtime or installer qualification"
 }

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.20",
+  "domainTests": 7,
+  "storageTests": 9,
+  "fullChecks": 185,
+  "build": "passed",
+  "node": "26.10.0",
+  "files": {
+    "packages/novel-domain/maps.mjs": "ac41b23d85082275a88eff6d83098026036bc9a759822852696242c6e8a11284",
+    "packages/novel-domain/maps.d.mts": "e0d7519840b977f35514e170d50a3edebfc60b7d987b1778306a1c3c65a214b4",
+    "packages/novel-storage/maps.mjs": "9ae20b5dabe50a418be62e0361c763c1720a6a9ed6ea5b1b1ac75a3b60ab736a",
+    "packages/novel-storage/store.mjs": "269dc9520500e745415533eeb0771fd149427c7a725b2514c664a313dbf2b7b9",
+    "tests/maps-domain.test.mjs": "ce17a271abcf6f0031c2cd960457081276c473391e5a1dfcc8d9b50149be4a34",
+    "tests/maps-storage.test.mjs": "a5e8f2359f4f4f61ad15d560a82a83a296ce630d8baf4e0a28eb827b5b779a13"
+  },
+  "scope": "Source NovelStore shared-kernel map persistence, geometry, native image decoding and backup recovery; no map IPC, rendered editor, packaged runtime or installer qualification"
+}

@@ -111,6 +111,20 @@ test("route endpoints retain identity through same-name, retired and missing poi
   assert.equal(mapRouteGeometry(data, path.id).state, "retired");
 });
 
+test("route preview remains available during unfinished region/title edits without making that draft a formal map", () => {
+  const data = base(),
+    a = place(0, 0),
+    b = place(1, 1),
+    path = route(a, b);
+  data.title = "";
+  data.elements = [a, b, path, region([])];
+  assert.equal(mapRouteGeometry(data, path.id).state, "unscaled");
+  assert.deepEqual(mapRouteGeometry(data, path.id).points, [a.point, b.point]);
+  assert.throws(() => mapInput(data), /地图文字|顶点/);
+  data.scale = { from: xy(0, 0), to: xy(1, 0), distance: 100, unit: "" };
+  assert.equal(mapRouteGeometry(data, path.id).distance, null);
+});
+
 test("local map draft preserves temporarily blank titles and unfinished drawing but formal records reject them; captured inputs are independent", () => {
   const data = base();
   data.title = "";
