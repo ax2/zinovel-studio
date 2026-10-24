@@ -1,0 +1,31 @@
+✔ unfinished coordinates, region, text and calibration round-trip locally without becoming valid formal data (4.6745ms)
+✔ future local schemas/fields, wrong book or map baseline and mismatched selected objects reject without modifying the raw draft (0.8204ms)
+✔ coordinate entry uses complete percent pairs, keeps empty route bend lists, and never coerces blank/invalid input to zero (0.8947ms)
+✔ applying raw object coordinates changes only that geometry and preserves caller and unrelated stable IDs (0.6511ms)
+✔ calibration requires complete positive distance, distinct points and explicit complete unit; pending local data remains unchanged (0.4746ms)
+✔ creation intents retain exact canonical payload and identity; future records or incomplete initial maps cannot be silently recreated (0.3629ms)
+✔ simple concave polygons accept either winding and straight continuations; invalid crossings, touching, repeated or zero-area borders refuse (4.5219ms)
+✔ route distances use actual canvas aspect and only explicit author calibration; no automatic travel time or default units (1.9301ms)
+✔ route endpoints retain identity through same-name, retired and missing points without guessed replacement (0.6709ms)
+✔ route preview remains available during unfinished region/title edits without making that draft a formal map (0.5967ms)
+✔ local map draft preserves temporarily blank titles and unfinished drawing but formal records reject them; captured inputs are independent (0.4925ms)
+✔ map coordinate, identity, geometry and scale resource boundaries reject invalid or future values without truncation (3.8096ms)
+✔ frozen background requires same-book origin, strict asset identity and display-oriented canvas; unknown schema remains unsupported (1.3891ms)
+✔ map backgrounds derive a bounded 2048px oriented view without changing originals or enlarging small images (735.1007ms)
+✔ map creation is idempotent without rewinding later edits; exact-version save, history, recycle and restore keep identities and manuscript (192.1918ms)
+✔ map links require same-book location cards and live new endpoints; saved objects retire rather than vanish or change type (253.6128ms)
+✔ frozen background survives later asset replacement/recycle; author calibration resets only for a changed original, history adoption retains later versions (623.8966ms)
+✔ actual map transaction preimage guard refuses an external edit between validation and journal; broken/future bytes remain untouched (102.4547ms)
+✔ real pending journal recovery finds the same map creation exactly once; caller mutation before queue entry cannot alter captured geometry (73.8064ms)
+✔ background decode stays outside the shared manuscript queue and stale map/asset versions refuse the later commit (216.7988ms)
+✔ map byte limit fails before journal/output, and paged summaries disclose unreadable records without sending geometry (1077.6066ms)
+✔ linked world/maps paths refuse writes outside the book, while corrupt immutable backgrounds refuse preview without altering map or blob (163.4951ms)
+✔ corrupt or unknown history is disclosed and cannot be adopted over current geometry (144.6292ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3878.4071

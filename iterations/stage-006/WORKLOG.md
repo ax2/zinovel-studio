@@ -87,3 +87,9 @@ alpha.20地图作者界面已接通：地点指针/表单添加、区域连续�
 完整192项检查/类型/规划通过，地图真实Electron UI最终5组检查通过：正文先保存、区域顶点拖动/撤销、坐标CtrlS、比例尺与换图清除、未完成输入关闭/整应用重启、配额关闭保护、同修订外改拒绝/明确基线、真实历史预像/采用、键盘移动与仅视图缩放、未知草稿保留到明确放弃、地图回收恢复、已提交创建的无确认合成检查点对账不重复。整书备份恢复新书核对地图和冻结原图，但目录选择结果被替换；不是原生IME、真实手机、实际IPC传输丢失或本版安装通过。maps-ui-source.json绑定12份源码SHA及完整UI回执；CI/安装脚本加入maps-ui，本版发行门禁继续false。
 
 此前a4746a5的源码CI40058525923成功；不冒充本批未提交界面已通过CI。ART-03仍in-progress，ART-04、生成、定妆、带图出版及稳定上架继续待办。
+
+alpha.20首次完整package:win成功，打包实际Node24.21.0/sharp0.35.5/PNG/JPEG/WebP、两DLL/.node及6份许可SHA通过；asar2189c5195609a4015bb32c8eff9f18c0c78cab7caf13e05552ba868053931b27。实际内置Node运行地图源模块23/23通过。完整运行目录875文件与EXE保留真实D:\zinovel-releases\v0.1.0-alpha.20，EXE222945114字节、SHA4a6fcabf51e98ab17ef147dd98dd4c756ff64a37a61fe33a4f6deef4572a144a。没有ZIP，未代码签名。
+
+第一次安装验收实际安装15666ms，89项检查通过后，在图像资源探针的独立源AssetStore写入/恢复日志时发生Windows EPERM rename pending.json，整轮判失败，未开放发行资格。installer-first-failure保留完整报告、日志、图像回执/失败截图。核对探针在运行宿主旁还用独立NovelStore执行读/写，其manifest读取也会recover，与宿主队列无互斥；这违反单写队列前提。不声称已经定位Windows瞬时文件锁的具体进程，也不为产品添加盲目重试。
+
+修正仅在smoke-assets：运行时读断言全部通过真实宿主IPC，外部编辑fixture只修改自己的元数据JSON（递增修订），不启动第二恢复写入器。源码图像回归完整通过。核对失败EXE SHA、注册表卸载字符串及realpath后，仅卸载本轮installer-qa-5mv3Xg目录；第一次准备脚本因路径大小写精确比对拒绝，未执行卸载，按注册记录D:\Work修正后核对通过，26次观察确认EXE消失、注册项消失、合成原稿摘要不变，cleanup.json留档。同字节EXE重跑全部安装验收，不能把第一轮89项当本版完成。

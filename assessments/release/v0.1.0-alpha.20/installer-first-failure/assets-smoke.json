@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "asset-desktop.png",
+      "width": 1426,
+      "height": 923
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim",
+  "failure": "Error: EPERM: operation not permitted, rename 'D:\\Work\\zinovel-studio\\.cache\\assets-ui-wskpca\\library\\0e06466e-49f3-46d0-a13c-c7f09dc1fa14\\.zinovel\\pending.json.2ca6294e-6b4f-43ce-809c-afe40831109b.tmp' -> 'D:\\Work\\zinovel-studio\\.cache\\assets-ui-wskpca\\library\\0e06466e-49f3-46d0-a13c-c7f09dc1fa14\\.zinovel\\pending.json'\n    at async rename (node:internal/fs/promises:1576:10)\n    at async atomicWriteText (file:///D:/Work/zinovel-studio/packages/novel-storage/atomic.mjs:19:5)\n    at async BookStorageKernel.recover (file:///D:/Work/zinovel-studio/packages/novel-storage/kernel.mjs:110:5)\n    at async BookStorageKernel.transaction (file:///D:/Work/zinovel-studio/packages/novel-storage/kernel.mjs:169:5)\n    at async AssetStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/assets.mjs:217:5)"
+}

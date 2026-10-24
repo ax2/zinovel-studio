@@ -77,6 +77,11 @@ if (process.env.ZINOVEL_TEST_EXECUTABLE) {
   env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
 }
 let app, page, owned;
+const assetRequest = (action, payload) =>
+  page.evaluate(
+    ({ action, payload }) => window.novel.request(action, payload),
+    { action, payload },
+  );
 const panel = () =>
   page.getByRole("dialog", { name: "小说图像资源", exact: true });
 async function launch() {
@@ -194,7 +199,7 @@ try {
     .getByRole("status")
     .filter({ hasText: "图像说明已保存" })
     .waitFor();
-  let saved = (await store.assets.list(book.id)).items[0];
+  let saved = (await assetRequest("assets.list", { bookId: book.id })).items[0];
   assert.equal(saved.blob.sha256, binaryHash(original));
   assert.deepEqual(saved.linkedIds, [material.id]);
   const firstId = saved.id;
@@ -219,7 +224,7 @@ try {
     .getByRole("status")
     .filter({ hasText: "图像说明已保存" })
     .waitFor();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   await panel().getByLabel("图像标题", { exact: true }).fill("");
   await panel()
     .getByLabel("图像笔记", { exact: true })
@@ -252,12 +257,16 @@ try {
     .getByRole("status")
     .filter({ hasText: "图像说明已保存" })
     .waitFor();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   const priorRevision = saved.revision;
-  await store.assets.save(
-    book.id,
-    { ...fields(saved), notes: "外部编辑器改写的说明。" },
-    saved,
+  // External editor changes only the metadata file; never start a second recovery/writer kernel beside the live host.
+  const { diskHash: priorHash, ...externalRecord } = saved;
+  externalRecord.notes = "外部编辑器改写的说明。";
+  externalRecord.revision++;
+  externalRecord.updatedAt = new Date().toISOString();
+  await writeFile(
+    join(data, "library", book.id, "assets/items", firstId + ".json"),
+    JSON.stringify(externalRecord, null, 2) + "\n",
   );
   await panel()
     .getByLabel("图像标题", { exact: true })
@@ -304,7 +313,7 @@ try {
     .getByRole("status")
     .filter({ hasText: "图像说明已保存" })
     .waitFor();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   assert.equal(saved.revision, priorRevision + 2);
   assert.equal(saved.title, "作者窗口仍在编辑");
   await choose(replacement);
@@ -316,7 +325,7 @@ try {
     .filter({ hasText: "已替换为新图" })
     .waitFor();
   await imageReady();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   assert.equal(saved.blob.displayWidth, 400);
   assert.equal(saved.blob.displayHeight, 640);
   assert.equal(saved.blob.sha256, binaryHash(jpg));
@@ -328,7 +337,8 @@ try {
     .waitFor();
   await imageReady();
   assert.equal(
-    (await store.assets.read(book.id, firstId)).blob.sha256,
+    (await assetRequest("assets.read", { bookId: book.id, id: firstId })).blob
+      .sha256,
     binaryHash(jpg),
   );
   await panel()
@@ -345,7 +355,7 @@ try {
     .getByRole("status")
     .filter({ hasText: "已将历史图像及当时说明保存为新版本" })
     .waitFor();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   assert.equal(saved.blob.sha256, binaryHash(original));
   assert.equal(saved.title, "中文 空格 原图");
   await choose(replacement);
@@ -357,7 +367,7 @@ try {
     .filter({ hasText: "已替换为新图" })
     .waitFor();
   await imageReady();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   await panel()
     .getByRole("button", { name: "移入图像回收站", exact: true })
     .click();
@@ -439,7 +449,10 @@ try {
     .getByRole("alert")
     .filter({ hasText: "图像无法完整解码" })
     .waitFor();
-  assert.equal((await store.assets.list(book.id)).total, 1);
+  assert.equal(
+    (await assetRequest("assets.list", { bookId: book.id })).total,
+    1,
+  );
   await panel()
     .getByRole("button", { name: "检查这次导入", exact: true })
     .click();
@@ -450,7 +463,7 @@ try {
   await panel()
     .getByRole("button", { name: "放弃这次待确认导入", exact: true })
     .click();
-  saved = await store.assets.read(book.id, firstId);
+  saved = await assetRequest("assets.read", { bookId: book.id, id: firstId });
   const blobPath = join(
       data,
       "library",
@@ -518,7 +531,10 @@ try {
     },
     { bookId: book.id },
   );
-  assert.equal((await store.assets.list(book.id)).total, 2);
+  assert.equal(
+    (await assetRequest("assets.list", { bookId: book.id })).total,
+    2,
+  );
   await close();
   await launch();
   await open();
@@ -529,7 +545,10 @@ try {
     .getByRole("status")
     .filter({ hasText: "已找到该次导入的保存记录" })
     .waitFor();
-  assert.equal((await store.assets.list(book.id)).total, 2);
+  assert.equal(
+    (await assetRequest("assets.list", { bookId: book.id })).total,
+    2,
+  );
   await imageReady();
   assert.deepEqual(await readFile(source), original);
   assert.deepEqual(await readFile(replacement), jpg);
