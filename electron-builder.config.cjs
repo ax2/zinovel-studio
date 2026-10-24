@@ -19,6 +19,7 @@ module.exports = {
     "package.json",
     "LICENSE",
     "NOTICE",
+    "licenses/**/*",
     "apps/desktop/upstream/LICENSE",
   ],
   extraMetadata: { author: "ZiNovel Studio contributors" },

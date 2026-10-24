@@ -8,6 +8,7 @@ import { KnowledgeStore } from "./knowledge.mjs";
 import { MixedContext } from "./context.mjs";
 import { ReaderStore } from "./reader.mjs";
 import { PublicationStore, publicationOriginIds } from "./publication.mjs";
+import { AssetStore } from "./assets.mjs";
 import {
   mkdir,
   readFile,
@@ -49,6 +50,7 @@ export class NovelStore {
     this.root = resolve(root);
     this.#storage = new BookStorageKernel(this.root);
     this.materials = new MaterialStore(this.#storage);
+    this.assets = new AssetStore(this.#storage, this.materials);
     this.reader = new ReaderStore(this.#storage);
     this.publication = new PublicationStore(this.#storage, this.reader);
     this.planning = new PlanningStore(this.#storage, this.materials);
@@ -496,8 +498,14 @@ export class NovelStore {
       return { book, chapters, capturedAt: new Date().toISOString() };
     });
   }
-  createBackup(bookId, destination) {
+  createBackup(bookId, destination, { maxBytes = 512 * 1024 * 1024 } = {}) {
     return this.#storage.exclusive(async () => {
+      if (
+        !Number.isSafeInteger(maxBytes) ||
+        maxBytes < 1 ||
+        maxBytes > 512 * 1024 * 1024
+      )
+        throw new Error("备份容量限制无效");
       const root = await this.#storage.bookRoot(bookId);
       await this.#storage.manifest(root);
       const parent = resolve(destination),
@@ -505,42 +513,79 @@ export class NovelStore {
       if (
         !inside ||
         (!isAbsolute(inside) &&
-          !inside.startsWith(`..${sep}`) &&
+          !inside.startsWith(".." + sep) &&
           inside !== "..")
       )
         throw new Error("备份位置不能位于作品目录内部");
-      const id = randomUUID(),
-        staging = join(parent, `.zinovel-backup-${id}.tmp`),
-        final = join(parent, `zinovel-backup-${id}`),
+      const inventory = async () => {
+        const found = [];
+        let total = 0;
+        const walk = async (directory, prefix = "") => {
+          for (const entry of await readdir(directory, {
+            withFileTypes: true,
+          })) {
+            if (entry.isSymbolicLink())
+              throw new Error("备份不跟随链接，请移除外部链接后重试");
+            if (entry.name.endsWith(".tmp")) continue;
+            const name = prefix + entry.name,
+              source = await this.#storage.path(root, name);
+            if (entry.isDirectory()) await walk(source, name + "/");
+            else {
+              const info = await lstat(source);
+              if (!entry.isFile() || !info.isFile())
+                throw new Error("备份包含不能安全读取的文件");
+              total += info.size;
+              if (total > maxBytes)
+                throw new Error(
+                  "备份超过当前容量限制（最多512MiB），未生成正式备份，请减少资源或另行保留完整目录副本",
+                );
+              if (found.length >= 100000)
+                throw new Error("备份文件数量超过当前恢复上限");
+              found.push({ path: name, bytes: info.size });
+            }
+          }
+        };
+        await walk(root);
+        return found;
+      };
+      // Check capacity before creating a staging directory; images must not produce an unrestorable backup.
+      const planned = await inventory(),
+        id = randomUUID(),
+        staging = join(parent, ".zinovel-backup-" + id + ".tmp"),
+        final = join(parent, "zinovel-backup-" + id),
         files = [];
       await mkdir(staging, { recursive: true });
-      const copy = async (directory, prefix = "") => {
-        for (const entry of await readdir(directory, { withFileTypes: true })) {
-          if (entry.isSymbolicLink())
-            throw new Error("备份不跟随链接，请移除外部链接后重试");
-          if (entry.name.endsWith(".tmp")) continue;
-          const name = prefix + entry.name,
-            source = await this.#storage.path(root, name);
-          if (entry.isDirectory()) {
-            await mkdir(join(staging, name), { recursive: true });
-            await copy(source, name + "/");
-          } else {
-            const bytes = await readFile(source);
-            await writeFile(join(staging, name), bytes);
-            files.push({
-              path: name,
-              bytes: bytes.length,
-              sha256: createHash("sha256").update(bytes).digest("hex"),
-            });
-          }
-        }
-      };
-      await copy(root);
+      let copied = 0;
+      for (const item of planned) {
+        const source = await this.#storage.path(root, item.path),
+          info = await lstat(source);
+        if (!info.isFile() || info.size !== item.bytes)
+          throw new Error("备份期间文件被外部修改，请重新备份");
+        const bytes = await readFile(source);
+        copied += bytes.length;
+        if (bytes.length !== item.bytes || copied > maxBytes)
+          throw new Error("备份期间文件大小改变，未生成正式备份");
+        const target = join(staging, item.path);
+        await mkdir(dirname(target), { recursive: true });
+        await writeFile(target, bytes);
+        files.push({
+          path: item.path,
+          bytes: bytes.length,
+          sha256: createHash("sha256").update(bytes).digest("hex"),
+        });
+      }
       for (const file of files) {
         const bytes = await readFile(await this.#storage.path(root, file.path));
         if (createHash("sha256").update(bytes).digest("hex") !== file.sha256)
           throw new Error("备份期间文件被外部修改，请重新备份");
       }
+      const current = await inventory(),
+        before = new Map(planned.map((item) => [item.path, item.bytes]));
+      if (
+        current.length !== planned.length ||
+        current.some((item) => before.get(item.path) !== item.bytes)
+      )
+        throw new Error("备份期间目录被外部修改，请重新备份");
       await atomic(
         join(staging, "backup-manifest.json"),
         json({

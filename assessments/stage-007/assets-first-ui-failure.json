@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "asset-desktop.png",
+      "width": 1426,
+      "height": 923
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim",
+  "failure": "locator.click: Error: strict mode violation: getByRole('dialog', { name: '小说图像资源', exact: true }).getByText(/磁盘说明供对照/) resolved to 2 elements:\n    1) <p>本机调整的磁盘版本已改变。可以查看磁盘说明供对照，或明确保留调整并采用当前磁盘版本为基线。</p> aka getByText('本机调整的磁盘版本已改变。可以查看磁盘说明供对照，或明确保留调整并采用当前磁盘版本为基线。')\n    2) <summary>磁盘说明供对照 · 第4版</summary> aka getByText('磁盘说明供对照 · 第4版')\n\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '小说图像资源', exact: true }).getByText(/磁盘说明供对照/)\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-assets.mjs:255:6"
+}

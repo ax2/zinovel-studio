@@ -1,8 +1,10 @@
 import { app, BrowserWindow, ipcMain, dialog, Menu } from "electron";
-import { resolve, join } from "node:path";
+import { resolve, join, basename, extname } from "node:path";
 import { pathToFileURL } from "node:url";
 import { writeFile } from "node:fs/promises";
 import { NovelStore } from "../../packages/novel-storage/store.mjs";
+import { readAssetSource } from "../../packages/novel-storage/image-decoder.mjs";
+import { assetId } from "../../packages/novel-domain/assets.mjs";
 import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
@@ -33,6 +35,7 @@ app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
 const publicationCaptures = new PublicationCaptures(store.publication);
 const publicationExports = new Set<Promise<unknown>>();
+const assetOperations = new Set<Promise<unknown>>();
 let publicationClosing = false;
 function publicationHash(hash: unknown): string {
   if (typeof hash !== "string" || !/^[a-f0-9]{64}$/.test(hash))
@@ -85,6 +88,7 @@ async function closeAfterRecovery() {
   await pilotAcceptance.whenIdle();
   await publicationCaptures.stop();
   await Promise.allSettled([...publicationExports]);
+  await Promise.allSettled([...assetOperations]);
   await store.whenIdle();
   if (!window || window.isDestroyed()) return;
   window.webContents.session.flushStorageData();
@@ -650,6 +654,166 @@ if (
                 value = { cancelled: selected.canceled };
                 break;
               }
+              case "assets.list":
+                value = await store.assets.list(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
+              case "assets.read":
+                value = await store.assets.read(payload.bookId, payload.id);
+                break;
+              case "assets.link-options":
+                value = await store.assets.linkOptions(
+                  payload.bookId,
+                  payload.ids,
+                );
+                break;
+              case "assets.creation":
+                value = await store.assets.creation(payload.bookId, payload.id);
+                break;
+              case "assets.preview":
+                value = await store.assets.preview(
+                  payload.bookId,
+                  payload.expected,
+                  payload.historical ?? false,
+                );
+                break;
+              case "assets.save":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未保存新的图像说明");
+                value = await store.assets.save(
+                  payload.bookId,
+                  payload.input,
+                  payload.expected,
+                );
+                break;
+              case "assets.delete":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未改变图像状态");
+                value = await store.assets.setDeleted(
+                  payload.bookId,
+                  payload.expected,
+                  payload.deleted,
+                );
+                break;
+              case "assets.restore-version": {
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未采用历史图像");
+                const operation = store.assets.restoreVersion(
+                  payload.bookId,
+                  payload.expected,
+                  payload.historical,
+                );
+                assetOperations.add(operation);
+                try {
+                  value = await operation;
+                } finally {
+                  assetOperations.delete(operation);
+                }
+                break;
+              }
+              case "assets.history":
+                value = await store.assets.history(payload.bookId, payload.id);
+                break;
+              case "assets.import":
+              case "assets.replace": {
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未开始图像操作");
+                if (assetOperations.size >= 2)
+                  throw new Error("请等待当前图像操作完成");
+                const parentWindow = window,
+                  actionName = action;
+                const operation = (async () => {
+                  if (actionName === "assets.import") {
+                    assetId(payload.creationId);
+                    const existing = await store.assets.creation(
+                      payload.bookId,
+                      payload.creationId,
+                    );
+                    if (existing)
+                      return {
+                        cancelled: false,
+                        record: existing,
+                        recovered: true,
+                      };
+                  } else {
+                    const expected = store.assets.expected(payload.expected),
+                      existing = await store.assets.read(
+                        payload.bookId,
+                        expected.id,
+                      );
+                    if (
+                      existing.diskHash !== expected.diskHash ||
+                      existing.revision !== expected.revision ||
+                      existing.deletedAt
+                    )
+                      throw new Error("图像版本已经改变，请重新读取后替换");
+                  }
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，未开始图像操作");
+                  const selected = await dialog.showOpenDialog(parentWindow, {
+                    title:
+                      actionName === "assets.import"
+                        ? "导入小说图像（保留原图）"
+                        : "替换图像（保留历史版本）",
+                    defaultPath:
+                      process.env.ZINOVEL_DATA_ROOT || app.getPath("pictures"),
+                    properties: ["openFile"],
+                    filters: [
+                      {
+                        name: "PNG / JPEG / WebP 静态图像",
+                        extensions: ["png", "jpg", "jpeg", "webp"],
+                      },
+                    ],
+                  });
+                  if (selected.canceled) return { cancelled: true };
+                  if (selected.filePaths.length !== 1)
+                    throw new Error("请选择一张本地图像");
+                  const bytes = await readAssetSource(selected.filePaths[0]);
+                  if (publicationClosing)
+                    throw new Error("程序正在关闭，图像未提交");
+                  if (actionName === "assets.replace")
+                    return {
+                      cancelled: false,
+                      record: await store.assets.replace(
+                        payload.bookId,
+                        bytes,
+                        payload.expected,
+                      ),
+                    };
+                  const title =
+                    basename(
+                      selected.filePaths[0],
+                      extname(selected.filePaths[0]),
+                    )
+                      .slice(0, 180)
+                      .replace(/[\uD800-\uDBFF]$/, "") || "新图像";
+                  return {
+                    cancelled: false,
+                    record: await store.assets.import(
+                      payload.bookId,
+                      bytes,
+                      {
+                        title,
+                        purpose: "reference",
+                        source: "",
+                        rights: "",
+                        notes: "",
+                        linkedIds: [],
+                      },
+                      payload.creationId,
+                    ),
+                  };
+                })();
+                assetOperations.add(operation);
+                try {
+                  value = await operation;
+                } finally {
+                  assetOperations.delete(operation);
+                }
+                break;
+              }
               case "publication.catalog":
                 value = await store.publication.catalog(payload.bookId);
                 break;
@@ -965,6 +1129,7 @@ if (
                 await pilotAcceptance.whenIdle();
                 await publicationCaptures.stop();
                 await Promise.allSettled([...publicationExports]);
+                await Promise.allSettled([...assetOperations]);
                 await store.whenIdle();
                 closing = true;
                 window.close();
@@ -1027,6 +1192,7 @@ if (
           await harness.cancel();
           await publicationCaptures.cancelAll();
           await Promise.allSettled([...publicationExports]);
+          await Promise.allSettled([...assetOperations]);
           await store.whenIdle();
           const result = await dialog.showMessageBox(window, {
             type: "warning",

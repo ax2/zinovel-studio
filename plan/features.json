@@ -953,8 +953,15 @@
       "name": "素材版本与来源",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "原图/裁切/选定/权利信息有清单"
+      "status": "in-progress",
+      "acceptance": "原图/裁切/选定/权利信息有清单",
+      "evidence": [
+        "design/assets-and-media.md",
+        "iterations/stage-006/WORKLOG.md",
+        "tests/assets.test.mjs",
+        "scripts/smoke-assets.mjs",
+        "assessments/stage-006/assets-storage-ui.md"
+      ]
     },
     {
       "id": "READ-01",

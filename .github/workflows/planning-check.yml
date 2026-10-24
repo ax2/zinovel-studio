@@ -70,6 +70,7 @@ jobs:
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
+      - run: pnpm test:assets
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

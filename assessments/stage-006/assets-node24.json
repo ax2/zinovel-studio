@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node": "24.21.0",
+  "testCount": 12,
+  "scope": "Actual Electron embedded Node runtime running resource unit tests; not installed EXE qualification",
+  "hashes": {
+    "packages/novel-domain/assets.mjs": "619e79677625b031ce9976240c6ab46fec1b9242abaffafab23331691f387dd3",
+    "packages/novel-storage/assets.mjs": "6a6472caf4643947f765011a91d9045dacf94f25bc7f0f41024246a464c7160a",
+    "packages/novel-storage/image-decoder.mjs": "caf469dd27989d385bb033666827b16a5034da94796f4733a50e40edfe796181",
+    "packages/novel-storage/store.mjs": "727da5831055e3e31bdb945da529874112966ad602a5c1f3d7cafa64a23b16fa",
+    "tests/assets.test.mjs": "45b46ecdc6e124778b9a752164eadbdc48780c15cb6385a4ef33edf561823673"
+  }
+}

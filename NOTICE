@@ -16,3 +16,8 @@ Local writing workflows were studied to author new, portable skill instructions.
 Private manuscripts, local deployment scripts, credentials and historical
 project-specific presets are not redistributed. See design/sources.md.
 ZiNovel Studio is an independent project, not an official DeepSeek product.
+
+Image resource runtime (alpha.18 development): sharp 0.35.5, Apache-2.0.
+The unmodified @img/sharp-win32-x64 package declares Apache-2.0 AND
+LGPL-3.0-or-later, with bundled component versions and licences preserved in
+licenses/image-runtime/. This project MIT licence does not relicense them.

@@ -1,0 +1,35 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "asset-desktop.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "asset-narrow.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-dark-narrow.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-quota-protected.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-corrupt-original.png",
+      "width": 806,
+      "height": 803
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim",
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '小说图像资源', exact: true }).getByRole('alert').filter({ hasText: 'synthetic import response lost' }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-assets.mjs:463:6"
+}

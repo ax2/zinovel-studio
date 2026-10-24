@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "sharp": {
+    "version": "0.35.5",
+    "license": "Apache-2.0",
+    "source": "https://github.com/lovell/sharp/tree/v0.35.5"
+  },
+  "windowsNative": {
+    "package": "@img/sharp-win32-x64",
+    "version": "0.35.5",
+    "license": "Apache-2.0 AND LGPL-3.0-or-later",
+    "recipeSource": "https://github.com/lovell/sharp-libvips",
+    "windowsBuildSource": "https://github.com/libvips/build-win64-mxe"
+  },
+  "files": {
+    "sharp-Apache-2.0.txt": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
+    "sharp-win32-x64-LICENSE.txt": "dc1f5d2d43c5531dfe0acaf4e950ea5dbe3e61e1850cf0e983bda7efc10d6693",
+    "sharp-win32-x64-upstream-README.md": "3d083ada5ebafe1e6c227daa7b061d4254b61df4a3901c359ffdeac817ce5866",
+    "sharp-win32-x64-versions.json": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4"
+  }
+}

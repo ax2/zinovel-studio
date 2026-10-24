@@ -140,6 +140,7 @@ try {
       "publication-capture/publication-capture-smoke.json",
     ],
     ["smoke-publication-ui.mjs", "publication-ui/publication-ui-smoke.json"],
+    ["smoke-assets.mjs", "assets/assets-smoke.json"],
     [
       "smoke-publication-html-output.mjs",
       "publication-html/publication-html-output-smoke.json",
