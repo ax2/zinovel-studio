@@ -97,8 +97,15 @@
       "name": "跨书隔离",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "一书上下文不能自动混入另一书"
+      "status": "in-progress",
+      "acceptance": "一书上下文不能自动混入另一书",
+      "evidence": [
+        "apps/desktop/main.ts",
+        "packages/novel-harness/tools-plugin.mjs",
+        "scripts/smoke-material-context.mjs",
+        "scripts/smoke-offline-writing.mjs",
+        "assessments/stage-008/offline-writing-source.md"
+      ]
     },
     {
       "id": "IDEA-01",
@@ -1267,8 +1274,15 @@
       "name": "本地版本与异盘备份",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "快照/备份明确区分；恢复到新目录"
+      "status": "in-progress",
+      "acceptance": "快照/备份明确区分；恢复到新目录",
+      "evidence": [
+        "packages/novel-storage/store.mjs",
+        "tests/backup-destination.test.mjs",
+        "scripts/smoke-independent-backup.mjs",
+        "assessments/stage-008/backup-destination-source.md",
+        "design/incremental-backup.md"
+      ]
     },
     {
       "id": "OPS-06",
@@ -1276,8 +1290,14 @@
       "name": "权限与书库隔离",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "越权工具不能改正式稿"
+      "status": "in-progress",
+      "acceptance": "越权工具不能改正式稿",
+      "evidence": [
+        "packages/novel-harness/tools-plugin.mjs",
+        "packages/novel-harness/novel.patch.yml",
+        "tests/harness-security.test.mjs",
+        "assessments/stage-008/offline-writing-source.md"
+      ]
     },
     {
       "id": "OPS-07",
@@ -1285,8 +1305,13 @@
       "name": "离线写作降级",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "planned",
-      "acceptance": "无网络仍能手写、保存和阅读"
+      "status": "in-progress",
+      "acceptance": "无网络仍能手写、保存和阅读",
+      "evidence": [
+        "apps/workbench/manuscript-editor.tsx",
+        "scripts/smoke-offline-writing.mjs",
+        "assessments/stage-008/offline-writing-source.md"
+      ]
     },
     {
       "id": "OPS-08",

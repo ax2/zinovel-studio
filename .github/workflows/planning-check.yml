@@ -72,6 +72,7 @@ jobs:
       - run: pnpm test:reader
       - run: pnpm test:utf8-integrity
       - run: pnpm test:offline-writing
+      - run: pnpm test:backup-boundary
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui

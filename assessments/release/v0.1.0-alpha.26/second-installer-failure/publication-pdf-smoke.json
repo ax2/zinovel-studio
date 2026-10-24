@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "version": "0.1.0-alpha.26",
+  "checks": [],
+  "snapshotHash": "7b7c0423dafa1e2d378ac5f50a55f0f4c2088f6484b424bccff3042efae60ee0",
+  "sha256": "ad6dc58f8ce69438b21c68710fafef24b738ac7cb406c42b5cc3a5ae88196ddb",
+  "bytes": 103968,
+  "inspection": "inspection.json",
+  "renderer": "independent PDFium; actual page review separate",
+  "failure": "Traceback (most recent call last):\r\n  File \"D:\\Work\\zinovel-studio\\scripts\\inspect-publication-pdf.py\", line 7, in <module>\r\n    import pdfplumber\r\nModuleNotFoundError: No module named 'pdfplumber'\r\n"
+}

@@ -2,6 +2,10 @@
 
 ## alpha.26 离线写作增量
 
+QA补强：整库保护候选第二轮安装10199ms，流式和离线四组通过，独立PDF解析因通用Python缺pdfplumber失败；保留回执/原日志，自身路径/asar/UninstallString核对后卸载，不误称应用PDF失败。增加安装前独立文档依赖预检；配置独立QA Python后第三轮全套重验，新增实际EXE备份边界四组也接入安装/源码CI/发行CI和同asar清单门禁。CI可明确允许同磁盘并记录事实，本机独立磁盘默认仍强制，不把不同盘符当物理独立。
+
+复评状态：LIB-08/OPS-05/OPS-06/OPS-07已有代码与部分运行证据，由planned转in-progress，未晋升verified；总计26 verified/44 in-progress/36 planned，106项范围不变。完整增量备份方案见design/incremental-backup.md，仍是待实现草案。生产源码5870883的CI40097159829完整success；后续仅QA/文档门禁增强另行提交重验。
+
 整库范围复评：原候选仍允许书库根/另一书/另一书Junction新子目录作为备份目的地，3个负面用例实际Missing expected rejection。词法+canonical边界扩展到整个library，6项目的地测试和完整231项通过；3份旧认知测试备份目标从受管库内迁往独立临时目录，恢复语义断言保留。新真实D→C宿主备份也核对另一书目录与正文不改，4组通过。首候选完整运行目录/EXE和安装失败日志实际D盘保留，无ZIP。
 
 原e884c4b源码CI40096418178完整success；原EXE安装8377ms后stream等待持久片段失败，任务快速cancelled，原因未定。同一安装EXE独立流式第二轮完整3组通过；首独立轮因新增诊断在初始导航执行evaluate失败，QA现先等书卡。首候选无整轮安装资格；自身安装目录/asar/注册UninstallString核对后已卸载，EXE和注册移除，合成数据保留。重新构建整库边界候选，不继承原CI或失败安装资格。

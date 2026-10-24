@@ -2,7 +2,7 @@
   "status": "passed",
   "checks": [
     "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
-    "real host copies all manifest files from one Windows disk to another, independently hashes every saved file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals",
+    "real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
     "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
     "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests"
   ],
@@ -17,10 +17,12 @@
     "DiskNumber": 0,
     "PartitionNumber": 3
   },
+  "independentDisks": true,
   "browser": "Browser plugin not available; repository Playwright/Electron",
-  "scope": "Actual host file transactions across distinct Windows disk numbers; picker results instrumented; not a hardware-loss or system-IME simulation",
+  "scope": "Actual host file transactions; Windows disk numbers are distinct; picker results instrumented; not a hardware-loss or system-IME simulation",
   "version": "0.1.0-alpha.26",
+  "packaged": false,
   "backupFiles": 10,
-  "snapshotHash": "956f071f3581aacef134904384625f5306bd26316d4aa94d7a55777467bb4762",
-  "backupManifestSha256": "1e7e70e09742ce67dc80ba5a8aa499cbab43820c3a8305203119be8b997167d6"
+  "snapshotHash": "312b66c242a56457a65da5e0d6f88db3cc7c87a7d78fa2280037c402ccb2caeb",
+  "backupManifestSha256": "9094cfb6f5fb605322e1d8ecbc72cd9f56e6ab9c52cc6c2b846dd8b2e0863d79"
 }

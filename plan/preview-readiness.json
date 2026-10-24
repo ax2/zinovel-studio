@@ -48,13 +48,16 @@
     "assessments/stage-007/publication-resources-ui.md",
     "assessments/stage-007/publication-scope-reassessment.md",
     "assessments/release/v0.1.0-alpha.25/README.md",
-    "assessments/stage-008/priority-reassessment-alpha25.md"
+    "assessments/stage-008/priority-reassessment-alpha25.md",
+    "assessments/stage-008/backup-destination-source.md",
+    "assessments/stage-008/offline-writing-source.md",
+    "design/incremental-backup.md"
   ],
   "reports": [],
   "limitations": [
     "alpha.26核心离线/隔离/独立备份保障开发中，无本版安装或升级资格，不继承alpha.25",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
-    "完整106项仍26 verified/40 in-progress/40 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/异盘增量备份及空间时态/图像生成等仍待完成",
+    "完整106项仍26 verified/44 in-progress/36 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"

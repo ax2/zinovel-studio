@@ -1,0 +1,7 @@
+# 第二轮安装回归：独立检查环境缺失
+
+整库保护候选，运行源码5870883cab6f1683618952c45306257c2978e6ed。EXE155474794字节，SHA2565c12d24fd2fc653317a1350de34e3c7ccdaf72d6e0edc82210f2a6f537b4985d；asar7dfdbcf63b0672873981e27293fcb62112b23ae161550fe4a0ef67b0bbbbe7d7。安装10199ms，流式与新增离线四组等通过，随后独立PDF解析的通用Python缺少pdfplumber，整体failed。不据生成成功声称独立验证通过。
+
+保留失败安装及PDF回执，完整原始日志在本地及D:\zinovel-releases\v0.1.0-alpha.26\second-installer-failure。此前安装目录RRgYkY经自身路径包含性、asar和实际UninstallString核对后执行自身NSIS卸载，EXE与注册消失、合成数据保留。
+
+QA增加安装之前的独立文档依赖预检，缺失解释器/模块时直接失败，不安装候选。这里的Python只用于独立QA，不是小说程序运行依赖；本机明确使用独立工具解释器，CI仍安装requirements-pdf-qa.txt。第三轮必须重新完整安装、151项检查、重装、卸载、旧版升级，不以本轮前置通过抵扣。

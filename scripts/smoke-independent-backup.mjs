@@ -110,11 +110,12 @@ const physical = (path) => {
 };
 const sourceDisk = physical(await realpath(bookRoot)),
   backupDisk = physical(await realpath(destination));
-assert.notEqual(
-  sourceDisk.DiskNumber,
-  backupDisk.DiskNumber,
-  "This probe requires two distinct Windows disks, not merely different drive letters",
-);
+const independentDisks = sourceDisk.DiskNumber !== backupDisk.DiskNumber;
+if (!process.argv.includes("--allow-same-disk"))
+  assert.ok(
+    independentDisks,
+    "This probe requires two distinct Windows disks, not merely different drive letters",
+  );
 const out = join(
   root,
   "screenshots",
@@ -128,9 +129,9 @@ const report = {
   errors: [],
   sourceDisk,
   backupDisk,
+  independentDisks,
   browser: "Browser plugin not available; repository Playwright/Electron",
-  scope:
-    "Actual host file transactions across distinct Windows disk numbers; picker results instrumented; not a hardware-loss or system-IME simulation",
+  scope: `Actual host file transactions; Windows disk numbers are ${independentDisks ? "distinct" : "the same"}; picker results instrumented; not a hardware-loss or system-IME simulation`,
 };
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
@@ -166,6 +167,7 @@ try {
     cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? work : root,
     timeout: 45000,
   });
+  owned = await captureOwnedProcesses(app.process().pid);
   page = await app.firstWindow();
   page.on("pageerror", (error) => report.errors.push(error.message));
   page.on("request", (item) => {
@@ -177,6 +179,13 @@ try {
   await editor.waitFor();
   owned = await captureOwnedProcesses(app.process().pid);
   report.version = await app.evaluate(({ app }) => app.getVersion());
+  const runtime = await app.evaluate(({ app }) => ({
+    packaged: app.isPackaged,
+    path: app.getAppPath(),
+  }));
+  report.packaged = runtime.packaged;
+  if (runtime.packaged)
+    report.appAsarSha256 = digest(await readFile(runtime.path));
   await editor.click();
   await editor.press("Control+End");
   await page.keyboard.insertText("\n备份前作者新增𠮷🌊。");
@@ -332,7 +341,7 @@ try {
   report.backupManifestSha256 = digest(savedManifest);
   report.checks.push(
     "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
-    "real host copies all manifest files from one Windows disk to another, independently hashes every saved file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals",
+    "real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
     "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
     "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests",
   );
@@ -340,12 +349,18 @@ try {
 } catch (error) {
   report.status = "failed";
   report.failure = String(error.stack || error);
+  await writeFile(
+    join(out, "independent-backup-smoke.json"),
+    JSON.stringify(report, null, 2) + "\n",
+  );
   await page?.screenshot({ path: join(out, "failure.png") }).catch(() => {});
   throw error;
 } finally {
   if (app) {
-    if (report.status === "failed") await terminateOwnedProcesses(owned);
-    else {
+    if (report.status === "failed") {
+      if (owned) await terminateOwnedProcesses(owned);
+      else await app.close();
+    } else {
       await app.close();
       await confirmOwnedProcessesExited(owned);
     }

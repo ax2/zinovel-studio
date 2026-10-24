@@ -27,6 +27,25 @@ const installer = join(
 const installerSha256 = createHash("sha256")
   .update(await readFile(installer))
   .digest("hex");
+// These packages inspect output independently; none is needed by the application.
+try {
+  await execute(
+    process.env.ZINOVEL_QA_PYTHON || "python",
+    [
+      "-I",
+      "-X",
+      "utf8",
+      "-c",
+      "import pdfplumber, pypdf, pypdfium2, docx, PIL",
+    ],
+    { windowsHide: true },
+  );
+} catch (error) {
+  throw new Error(
+    "Independent document QA dependencies are unavailable; configure ZINOVEL_QA_PYTHON before installing the candidate",
+    { cause: error },
+  );
+}
 const registry =
   "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\81b55339-fc21-4fe7-949e-a90dc443ef5a";
 // Never replace an existing user's installation while testing the production installer.
@@ -109,7 +128,7 @@ try {
   );
   assert.equal(desktop.status, "passed");
   evidence.checks.push(...desktop.checks.map((check) => `installed: ${check}`));
-  for (const [script, receipt] of [
+  for (const [script, receipt, scriptArgs = []] of [
     ["smoke-tasks.mjs", "tasks/task-smoke.json"],
     ["smoke-acceptance.mjs", "acceptance/acceptance-smoke.json"],
     ["smoke-task-compatibility.mjs", "compatibility/compatibility-smoke.json"],
@@ -136,6 +155,11 @@ try {
     ["smoke-reader.mjs", "reader/reader-smoke.json"],
     ["smoke-utf8-integrity.mjs", "utf8-integrity/utf8-integrity-smoke.json"],
     ["smoke-offline-writing.mjs", "offline-writing/offline-writing-smoke.json"],
+    [
+      "smoke-independent-backup.mjs",
+      "independent-backup/independent-backup-smoke.json",
+      ["--allow-same-disk"],
+    ],
     [
       "smoke-publication-capture.mjs",
       "publication-capture/publication-capture-smoke.json",
@@ -188,7 +212,7 @@ try {
   ]) {
     const result = await execute(
       process.execPath,
-      [join(root, "scripts", script)],
+      [join(root, "scripts", script), ...scriptArgs],
       {
         ...childOptions,
         timeout: 240000,

@@ -190,6 +190,43 @@ manifest.offlineWriting = {
   checks: offlineWriting.checks,
   scope: offlineWriting.scope,
 };
+const backupBoundary = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/independent-backup/independent-backup-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  backupBoundary.status !== "passed" ||
+  backupBoundary.version !== pkg.version ||
+  backupBoundary.packaged !== true ||
+  backupBoundary.appAsarSha256 !== appAsarSha256 ||
+  backupBoundary.backupFiles !== 10 ||
+  !/^[a-f0-9]{64}$/.test(backupBoundary.backupManifestSha256 || "") ||
+  !Array.isArray(backupBoundary.checks) ||
+  backupBoundary.checks.length !== 4 ||
+  !Array.isArray(backupBoundary.errors) ||
+  backupBoundary.errors.length !== 0 ||
+  !Number.isInteger(backupBoundary.sourceDisk?.DiskNumber) ||
+  !Number.isInteger(backupBoundary.backupDisk?.DiskNumber) ||
+  backupBoundary.independentDisks !==
+    (backupBoundary.sourceDisk.DiskNumber !==
+      backupBoundary.backupDisk.DiskNumber)
+)
+  throw new Error("Installed backup boundary proof is missing or stale");
+manifest.backupBoundary = {
+  version: backupBoundary.version,
+  appAsarSha256: backupBoundary.appAsarSha256,
+  independentDisks: backupBoundary.independentDisks,
+  sourceDisk: backupBoundary.sourceDisk,
+  backupDisk: backupBoundary.backupDisk,
+  backupFiles: backupBoundary.backupFiles,
+  checks: backupBoundary.checks,
+  scope: backupBoundary.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),
