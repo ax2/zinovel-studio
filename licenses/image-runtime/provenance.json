@@ -3,19 +3,26 @@
   "sharp": {
     "version": "0.35.5",
     "license": "Apache-2.0",
-    "source": "https://github.com/lovell/sharp/tree/v0.35.5"
+    "source": "https://github.com/lovell/sharp/tree/51a990faa26ade5586a4934ac9673c98d8893326",
+    "commit": "51a990faa26ade5586a4934ac9673c98d8893326"
   },
   "windowsNative": {
     "package": "@img/sharp-win32-x64",
     "version": "0.35.5",
     "license": "Apache-2.0 AND LGPL-3.0-or-later",
     "recipeSource": "https://github.com/lovell/sharp-libvips",
-    "windowsBuildSource": "https://github.com/libvips/build-win64-mxe"
+    "windowsBuildSource": "https://github.com/libvips/build-win64-mxe/tree/v8.18.7"
   },
   "files": {
     "sharp-Apache-2.0.txt": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
     "sharp-win32-x64-LICENSE.txt": "dc1f5d2d43c5531dfe0acaf4e950ea5dbe3e61e1850cf0e983bda7efc10d6693",
     "sharp-win32-x64-upstream-README.md": "3d083ada5ebafe1e6c227daa7b061d4254b61df4a3901c359ffdeac817ce5866",
-    "sharp-win32-x64-versions.json": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4"
+    "sharp-win32-x64-versions.json": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4",
+    "GPL-3.0.txt": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "LGPL-3.0.txt": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+  },
+  "licenseTexts": {
+    "gpl3": "https://www.gnu.org/licenses/gpl-3.0.txt",
+    "lgpl3": "https://www.gnu.org/licenses/lgpl-3.0.txt"
   }
 }

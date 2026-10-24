@@ -25,3 +25,5 @@
 许可核对：sharp自身Apache-2.0，Windows原生包实际声明Apache-2.0 AND LGPL-3.0-or-later，不能笼统当作MIT或仅Apache。已保留上游LICENSE/README/组件版本与摘要并加入NOTICE；打包需核对解包DLL可替换、完整许可文本和准确对应源/构建配方路径，尚不声称完整分发审计通过。
 
 最终源码检查169/169通过，实际内置Node24.21.0资源12/12通过并保留五份关键源码SHA（assets-node24.json）。书库备份恢复、真实渲染崩溃/卡死恢复、坏UTF-8保护、发布UI及其真实独立HTML回归均exit0，机器回执归档regressions；旧阶段截图恢复原基线，不把新源码结果混进旧发行证据。
+
+来源核对补充：npm固定@img/sharp-win32-x64@0.35.5的gitHead为51a990faa26ade5586a4934ac9673c98d8893326；Windows上游发布存在v8.18.7，与随包versions.json一致，记录精确build-win64-mxe版本位置。GPLv3/LGPLv3全文从GNU官方下载并记录hash。许可文件标记-text避免checkout自动换行破坏保留字节。raw GitHub一次ECONNRESET不当成源码不存在；对应源码/配方与其他原生依赖完整审计继续。
