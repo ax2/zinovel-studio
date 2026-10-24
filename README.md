@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.24](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24)已公开，新增可编辑DOCX，支持TXT/Markdown/HTML/PDF/DOCX五种纯文字导出。约155MB安装EXE经完整独立发行CI、实际安装/重装/卸载保稿及alpha.3升级验证，公开文件已下载复算SHA，另有原生Word编辑保存证据。主线alpha.25开发带图资源冻结，223项检查通过，尚未接入作者图片选择、没有本版安装资格。详见[alpha.24发行证据](assessments/release/v0.1.0-alpha.24/README.md)、[资源切片](assessments/stage-007/publication-resources-core.md)和[Stage-007日志](iterations/stage-007/WORKLOG.md)。
+最新阶段版本[alpha.24](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24)已公开，新增可编辑DOCX，支持TXT/Markdown/HTML/PDF/DOCX五种纯文字导出。约155MB安装EXE经完整独立发行CI、实际安装/重装/卸载保稿及alpha.3升级验证，公开文件已下载复算SHA，另有原生Word编辑保存证据。主线alpha.25已接入作者封面/插图选择、版本冻结、预览及带图HTML，225项检查和实际源宿主/独立阅读验证通过，尚无本版安装资格。详见[alpha.24发行证据](assessments/release/v0.1.0-alpha.24/README.md)、[资源切片](assessments/stage-007/publication-resources-core.md)和[Stage-007日志](iterations/stage-007/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 

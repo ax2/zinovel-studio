@@ -187,15 +187,49 @@ const fontRules = [16, 18, 20, 24, 28, 32]
 const readerScript = `(()=>{const root=document.documentElement,key='zinovel.export-reader.'+document.body.dataset.publication,theme=document.querySelector('[name=theme]'),font=document.querySelector('[name=font]');const themes=['light','dark','sepia'],fonts=['16','18','20','24','28','32'];function apply(p){if(themes.includes(p.theme)){root.dataset.theme=p.theme;theme.value=p.theme}if(fonts.includes(p.font)){root.dataset.font=p.font;font.value=p.font}}try{apply(JSON.parse(localStorage.getItem(key)||'{}'))}catch{}function save(){const p={theme:theme.value,font:font.value};apply(p);try{localStorage.setItem(key,JSON.stringify(p))}catch{document.getElementById('reading-status').textContent='本机偏好未保存，仍可继续阅读。'}}theme.addEventListener('change',save);font.addEventListener('change',save)})();`;
 
 /** Text-only first renderer; resource binding and target authorization belong to the host. */
-export function publicationHtml(input) {
+export function publicationHtml(input, images = new Map()) {
   const snapshot = verifyPublicationSnapshot(input),
     { metadata: book, chapters } = snapshot.content;
-  if (snapshot.content.resources?.length)
-    throw new Error("带图HTML导出尚未接入，未丢弃图像");
+  const resources = snapshot.content.resources || [];
+  const expectedImages = new Map(
+    resources.map((item) => [item.image.sha256, item.image]),
+  );
+  if (!(images instanceof Map) || images.size !== expectedImages.size)
+    throw new Error("HTML发行图缺失或范围不符，未创建导出");
   const files = new Map([
     ["reader.css", stylesheet + fontRules],
     ["reader.js", readerScript],
   ]);
+  for (const [hash, image] of expectedImages) {
+    const bytes = images.get(hash);
+    if (
+      !(bytes instanceof Uint8Array) ||
+      bytes.byteLength !== image.bytes ||
+      digest(bytes) !== hash ||
+      !Buffer.from(bytes)
+        .subarray(0, 8)
+        .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+    )
+      throw new Error("HTML发行图字节校验失败，未创建导出");
+    files.set(`images/${hash}.png`, Buffer.from(bytes));
+  }
+  if (resources.length)
+    files.set(
+      "reader.css",
+      files.get("reader.css") +
+        "\n.publication-figure{margin:1.5rem 0;text-align:center}.publication-figure img{max-width:100%;height:auto;max-height:85vh;object-fit:contain}.publication-figure figcaption{font-size:.9rem;overflow-wrap:anywhere}",
+    );
+  function figures(placement, chapterId, relative) {
+    return resources
+      .filter(
+        (item) => item.placement === placement && item.chapterId === chapterId,
+      )
+      .map(
+        (item) =>
+          `<figure class="publication-figure"><img src="${relative}images/${item.image.sha256}.png" width="${item.image.width}" height="${item.image.height}" alt="${escape(item.alt)}"><figcaption>${item.caption ? `<p>${escape(item.caption)}</p>` : ""}${item.credit ? `<p>${escape(item.credit)}</p>` : ""}</figcaption></figure>`,
+      )
+      .join("\n");
+  }
   const controls = `<div aria-label="阅读偏好"><label>背景<select aria-label="背景" name="theme"><option value="sepia">纸色</option><option value="light">浅色</option><option value="dark">深色</option></select></label><label>字号<select aria-label="字号" name="font">${[16, 18, 20, 24, 28, 32].map((size) => `<option value="${size}"${size === 20 ? " selected" : ""}>${size}px</option>`).join("")}</select></label><p id="reading-status" role="status"></p></div>`;
   function page(title, relative, navigation, body) {
     return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'"><title>${escape(title)} · ${escape(book.title)}</title><link rel="stylesheet" href="${relative}reader.css"><script src="${relative}reader.js" defer></script></head><body data-publication="${snapshot.hash}"><header><a href="${relative}index.html">${escape(book.title)}</a>${controls}</header><nav aria-label="阅读导航">${navigation}</nav><main id="reading-content">${body}</main><footer>${escape(book.author)}${book.rights ? `<p>${escape(book.rights)}</p>` : ""}${book.aiDisclosure ? `<p>${escape(book.aiDisclosure)}</p>` : ""}</footer></body></html>`;
@@ -206,7 +240,7 @@ export function publicationHtml(input) {
       "目录",
       "",
       `<a href="chapters/${chapters[0].id}.html">开始阅读</a>`,
-      `<h1>${escape(book.title)}</h1>${paragraphs(book.synopsis)}<ol>${chapters.map((item) => `<li><a href="chapters/${item.id}.html">${escape(item.volumeTitle ? `${item.volumeTitle} · ${item.title}` : item.title)}</a></li>`).join("")}</ol>`,
+      `<h1>${escape(book.title)}</h1>${figures("cover", null, "")}${paragraphs(book.synopsis)}<ol>${chapters.map((item) => `<li><a href="chapters/${item.id}.html">${escape(item.volumeTitle ? `${item.volumeTitle} · ${item.title}` : item.title)}</a></li>`).join("")}</ol>`,
     ),
   );
   chapters.forEach((item, index) => {
@@ -217,7 +251,7 @@ export function publicationHtml(input) {
         item.title,
         "../",
         nav,
-        `<article aria-label="${escape(item.title)}"><h1>${escape(item.title)}</h1>${paragraphs(item.body)}</article>`,
+        `<article aria-label="${escape(item.title)}"><h1>${escape(item.title)}</h1>${figures("chapter-start", item.id, "../")}${paragraphs(item.body)}${figures("chapter-end", item.id, "../")}</article>`,
       ),
     );
   });

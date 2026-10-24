@@ -74,6 +74,7 @@ jobs:
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
+      - run: pnpm test:publication-resources
       - run: pnpm test:pdf-layout
       - run: pnpm test:docx-layout
       - run: pnpm test:assets
@@ -126,6 +127,7 @@ jobs:
             screenshots/stage-007/publication-pdf/
             screenshots/stage-007/publication-docx/
             screenshots/stage-007/publication-docx-layout/
+            screenshots/stage-007/publication-resources/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml
             release/image-runtime-verification.json

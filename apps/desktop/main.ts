@@ -976,6 +976,19 @@ if (
                 };
                 break;
               }
+              case "publication.image": {
+                const snapshot = await store.publication.read(
+                  payload.bookId,
+                  payload.id,
+                  publicationHash(payload.hash),
+                );
+                value = await store.publicationResources.preview(
+                  payload.bookId,
+                  snapshot,
+                  payload.index,
+                );
+                break;
+              }
               case "publication.chapter": {
                 const snapshot: PublicationSnapshot =
                   await store.publication.read(
@@ -996,7 +1009,7 @@ if (
                 const parentWindow = window;
                 const exporting = (async () => {
                   const hash = publicationHash(payload.hash);
-                  await store.publication.read(
+                  const initialSnapshot = await store.publication.read(
                     payload.bookId,
                     payload.id,
                     hash,
@@ -1007,6 +1020,13 @@ if (
                     )
                   )
                     throw new Error("请选择支持的本地导出格式");
+                  if (
+                    initialSnapshot.content.resources?.length &&
+                    payload.format !== "html"
+                  )
+                    throw new Error(
+                      "含图发布副本当前支持HTML导出，其他格式尚未接入，不会丢弃图片",
+                    );
                   const pdfOptions =
                     payload.format === "pdf"
                       ? publicationPdfOptions(payload.pdfOptions)
@@ -1058,6 +1078,12 @@ if (
                         : payload.format === "docx"
                           ? { options: docxOptions }
                           : undefined,
+                      payload.format === "html"
+                        ? await store.publicationResources.images(
+                            payload.bookId,
+                            snapshot,
+                          )
+                        : undefined,
                     )),
                   };
                 })();

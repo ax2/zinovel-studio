@@ -6,6 +6,16 @@ import type {
 } from "../../packages/novel-domain/publication.mjs";
 import { registerEditorCloseGuard } from "./editor-close-guards";
 import {
+  PublicationResourceEditor,
+  FrozenPublicationImages,
+} from "./publication-resources";
+import {
+  publicationResourceDrafts,
+  publicationResourceSelections,
+  type PublicationResourceSelection,
+  type PublicationResourceReference,
+} from "../../packages/novel-domain/publication-resources.mjs";
+import {
   defaultPublicationDocxOptions,
   publicationDocxOptions,
   type PublicationDocxOptions,
@@ -32,6 +42,7 @@ type Saved = {
   createdAt: string;
   metadata: PublicationMetadata;
   chapterCount: number;
+  resourceCount?: number;
   externalChapterIds: string[];
 };
 type Preview = {
@@ -42,6 +53,7 @@ type Preview = {
     metadata: PublicationMetadata;
     bookRevision: number;
     chapters: Omit<PublicationChapter, "body">[];
+    resources?: readonly PublicationResourceReference[];
   };
 };
 type Job = {
@@ -80,14 +92,25 @@ function initialForm(book: Book, key: string) {
   try {
     const raw = localStorage.getItem(key);
     if (!raw)
-      return { metadata: defaults(book), ids: [] as string[], locked: false };
+      return {
+        metadata: defaults(book),
+        ids: [] as string[],
+        resources: [] as PublicationResourceSelection[],
+        locked: false,
+      };
     const value = JSON.parse(raw);
     if (
-      value.schemaVersion !== 1 ||
-      Object.keys(value).length !== 4 ||
+      ![1, 2].includes(value.schemaVersion) ||
+      Object.keys(value).length !== (value.schemaVersion === 2 ? 5 : 4) ||
       Object.keys(value).some(
         (name) =>
-          !["schemaVersion", "bookId", "metadata", "ids"].includes(name),
+          ![
+            "schemaVersion",
+            "bookId",
+            "metadata",
+            "ids",
+            ...(value.schemaVersion === 2 ? ["resources"] : []),
+          ].includes(name),
       ) ||
       value.bookId !== book.id ||
       !Array.isArray(value.ids) ||
@@ -107,10 +130,20 @@ function initialForm(book: Book, key: string) {
     return {
       metadata: value.metadata as PublicationMetadata,
       ids: value.ids as string[],
+      resources: [
+        ...publicationResourceDrafts(
+          value.schemaVersion === 2 ? value.resources : [],
+        ),
+      ],
       locked: false,
     };
   } catch {
-    return { metadata: defaults(book), ids: [] as string[], locked: true };
+    return {
+      metadata: defaults(book),
+      ids: [] as string[],
+      resources: [] as PublicationResourceSelection[],
+      locked: true,
+    };
   }
 }
 
@@ -125,6 +158,7 @@ export function PublicationPanel({
   const [initial] = useState(() => initialForm(book, key));
   const [metadata, setMetadata] = useState(initial.metadata),
     [ids, setIds] = useState(initial.ids);
+  const [resources, setResources] = useState(initial.resources);
   const [locked, setLocked] = useState(initial.locked),
     [cacheError, setCacheError] = useState("");
   const [catalog, setCatalog] = useState<Catalog | null>(null),
@@ -163,7 +197,7 @@ export function PublicationPanel({
   const [loading, setLoading] = useState(true),
     [historyReady, setHistoryReady] = useState(false);
   const previewHeading = useRef<HTMLHeadingElement>(null);
-  const form = useRef({ metadata, ids }),
+  const form = useRef({ metadata, ids, resources }),
     dirty = useRef(false),
     alive = useRef(true),
     busy = useRef(false),
@@ -172,13 +206,20 @@ export function PublicationPanel({
     catalog?.chapters.map((item) => [item.id, item.title]),
   );
   const missing = ids.some((id) => !titleById.has(id));
+  let resourceError = "";
+  if (resources.length)
+    try {
+      publicationResourceSelections(resources, ids);
+    } catch (e) {
+      resourceError = (e as Error).message;
+    }
   function persist() {
     if (!dirty.current) return true;
     if (locked) return false;
     try {
       localStorage.setItem(
         key,
-        JSON.stringify({ schemaVersion: 1, bookId: book.id, ...form.current }),
+        JSON.stringify({ schemaVersion: 2, bookId: book.id, ...form.current }),
       );
       dirty.current = false;
       setCacheError("");
@@ -196,18 +237,28 @@ export function PublicationPanel({
   useEffect(() => {
     const timer = setTimeout(() => persist(), 120);
     return () => clearTimeout(timer);
-  }, [metadata, ids, locked]);
+  }, [metadata, ids, resources, locked]);
   useEffect(() => {
     alive.current = true;
     return () => {
       alive.current = false;
     };
   }, []);
-  function change(nextMetadata: PublicationMetadata, nextIds: string[]) {
-    form.current = { metadata: nextMetadata, ids: nextIds };
+  function change(
+    nextMetadata: PublicationMetadata,
+    nextIds: string[],
+    nextResources: readonly PublicationResourceSelection[] = form.current
+      .resources,
+  ) {
+    form.current = {
+      metadata: nextMetadata,
+      ids: nextIds,
+      resources: [...nextResources],
+    };
     dirty.current = true;
     setMetadata(nextMetadata);
     setIds(nextIds);
+    setResources([...nextResources]);
   }
   async function refresh() {
     setError("");
@@ -257,6 +308,7 @@ export function PublicationPanel({
       });
       if (!alive.current || sequence !== previewSequence.current) return;
       setPreview(value);
+      if (value.content.resources?.length) setFormat("html");
       setChapterId(value.content.chapters[0]?.id || "");
     } catch (e) {
       if (alive.current && sequence === previewSequence.current)
@@ -335,7 +387,15 @@ export function PublicationPanel({
     };
   }, [jobId]);
   async function capture() {
-    if (busy.current || !catalog || locked || !ids.length || missing) return;
+    if (
+      busy.current ||
+      !catalog ||
+      locked ||
+      !ids.length ||
+      missing ||
+      resourceError
+    )
+      return;
     busy.current = true;
     setCapturing(true);
     setError("");
@@ -348,6 +408,9 @@ export function PublicationPanel({
           catalogHash: catalog.hash,
           chapterIds: [...ids],
           metadata: { ...metadata },
+          ...(resources.length
+            ? { resources: publicationResourceSelections(resources, ids) }
+            : {}),
         },
       });
       setJobId(value.id);
@@ -397,6 +460,18 @@ export function PublicationPanel({
     } finally {
       if (alive.current) setExporting(false);
     }
+  }
+  function frozenImages(placement: PublicationResourceReference["placement"]) {
+    return preview?.content.resources?.length ? (
+      <FrozenPublicationImages
+        bookId={book.id}
+        snapshotId={preview.id}
+        hash={preview.hash}
+        resources={preview.content.resources}
+        chapterId={chapterId}
+        placement={placement}
+      />
+    ) : null;
   }
   function close() {
     if (busy.current || exporting) {
@@ -474,7 +549,7 @@ export function PublicationPanel({
                 try {
                   localStorage.removeItem(key);
                   setLocked(false);
-                  change(defaults(book), []);
+                  change(defaults(book), [], []);
                 } catch {
                   setCacheError("缓存重置失败，原值已保留。");
                 }
@@ -519,6 +594,16 @@ export function PublicationPanel({
                   {fields.slice(2).map(metadataField)}
                 </div>
               </details>
+              <PublicationResourceEditor
+                bookId={book.id}
+                chapters={ids.map((id) => ({
+                  id,
+                  title: titleById.get(id) || "失联章节",
+                }))}
+                value={resources}
+                onChange={(next) => change(metadata, ids, next)}
+              />
+              {resourceError && <p role="alert">{resourceError}</p>}
               <div className="publication-actions">
                 <button
                   onClick={() =>
@@ -676,6 +761,7 @@ export function PublicationPanel({
                 !catalog ||
                 !ids.length ||
                 missing ||
+                !!resourceError ||
                 !metadata.title.trim()
               }
               onClick={() => void capture()}
@@ -726,6 +812,7 @@ export function PublicationPanel({
                   <small>
                     {new Date(item.createdAt).toLocaleString()} ·{" "}
                     {item.chapterCount} 章
+                    {item.resourceCount ? ` · ${item.resourceCount}处图像` : ""}
                     {item.externalChapterIds.length
                       ? " · 含外部改稿，请核对"
                       : ""}
@@ -761,6 +848,7 @@ export function PublicationPanel({
                       </p>
                     ),
                 )}
+                {frozenImages("cover")}
                 <label>
                   副本章节
                   <select
@@ -787,7 +875,9 @@ export function PublicationPanel({
                   {chapter ? (
                     <>
                       <h4>{chapter.title}</h4>
+                      {frozenImages("chapter-start")}
                       <div>{chapter.body}</div>
+                      {frozenImages("chapter-end")}
                     </>
                   ) : (
                     "正在读取副本章节…"
@@ -803,10 +893,30 @@ export function PublicationPanel({
                       onChange={(event) => setFormat(event.target.value)}
                     >
                       <option value="html">HTML 阅读目录</option>
-                      <option value="md">Markdown</option>
-                      <option value="txt">TXT（UTF-8）</option>
-                      <option value="pdf">PDF 排版副本</option>
-                      <option value="docx">DOCX 可编辑副本</option>
+                      <option
+                        value="md"
+                        disabled={!!preview.content.resources?.length}
+                      >
+                        Markdown
+                      </option>
+                      <option
+                        value="txt"
+                        disabled={!!preview.content.resources?.length}
+                      >
+                        TXT（UTF-8）
+                      </option>
+                      <option
+                        value="pdf"
+                        disabled={!!preview.content.resources?.length}
+                      >
+                        PDF 排版副本
+                      </option>
+                      <option
+                        value="docx"
+                        disabled={!!preview.content.resources?.length}
+                      >
+                        DOCX 可编辑副本
+                      </option>
                     </select>
                   </label>
                   <button
@@ -817,6 +927,11 @@ export function PublicationPanel({
                     {exporting ? "正在导出…" : "导出此副本"}
                   </button>
                 </div>
+                {!!preview.content.resources?.length && (
+                  <p>
+                    此副本包含冻结图像，当前支持带图HTML；其他格式尚未接入，未丢弃图片。
+                  </p>
+                )}
                 {(format === "pdf" || format === "docx") && (
                   <fieldset disabled={exporting}>
                     <legend>{printLabel}排版</legend>

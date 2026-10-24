@@ -267,7 +267,7 @@ test("schema2 capture freezes selected image hashes with text, survives restart 
   delete missing.content.resources;
   assert.throws(() => verifyPublicationSnapshot(missing), /格式/);
   assert.throws(() => publicationText(snapshot, "txt"), /带图/);
-  assert.throws(() => publicationHtml(snapshot), /带图/);
+  assert.throws(() => publicationHtml(snapshot), /发行图/);
   assert.throws(() => publicationPdfDocument(snapshot), /带图/);
   await assert.rejects(publicationDocx(snapshot), /带图/);
   await f.store.assets.setDeleted(f.book.id, f.asset, true);
@@ -337,5 +337,70 @@ test("image version changes during text capture reject before commit and retain 
   assert.equal(
     (await f.store.readChapter(f.book.id, ids[0])).body,
     "合成原稿𠮷🌊。",
+  );
+});
+
+test("frozen HTML includes exact local image bytes and escaped public captions while later source changes cannot affect it", async () => {
+  const f = await fixture(),
+    chapterId = f.book.chapters[0].id;
+  const snapshot = await f.store.publication.capture(f.book.id, {
+    catalogHash: (await f.store.publication.catalog(f.book.id)).hash,
+    chapterIds: [chapterId],
+    metadata,
+    resources: [
+      f.selection({ caption: "<script>not executable</script>𠮷🌊" }),
+      f.selection({
+        placement: "chapter-end",
+        chapterId,
+        alt: '图像 "替代" & <文字>',
+      }),
+    ],
+  });
+  const images = await f.store.publicationResources.images(f.book.id, snapshot);
+  const result = publicationHtml(snapshot, images),
+    hash = snapshot.content.resources[0].image.sha256;
+  assert.equal(images.size, 1);
+  assert.deepEqual(result.files.get(`images/${hash}.png`), images.get(hash));
+  assert.match(
+    result.files.get("index.html"),
+    /&lt;script&gt;not executable&lt;\/script&gt;𠮷🌊/,
+  );
+  assert.match(
+    result.files.get(`chapters/${chapterId}.html`),
+    /alt="图像 &quot;替代&quot; &amp; &lt;文字&gt;"/,
+  );
+  assert.doesNotMatch(
+    [...result.files.values()]
+      .filter((value) => typeof value === "string")
+      .join("\n"),
+    /PRIVATE_/,
+  );
+  assert.equal(
+    result.manifest.files.find((item) => item.path === `images/${hash}.png`)
+      .sha256,
+    hash,
+  );
+  const modified = new Map(images);
+  modified.set(hash, Buffer.from("not an image"));
+  assert.throws(() => publicationHtml(snapshot, modified), /校验/);
+  const before = await f.store.publicationResources.preview(
+    f.book.id,
+    snapshot,
+    0,
+  );
+  assert.ok(before.dataUrl.startsWith("data:image/png;base64,"));
+  await assert.rejects(
+    f.store.publicationResources.preview(f.book.id, snapshot, 2),
+    /不属于/,
+  );
+  const anotherBook = await f.store.createBook("另书");
+  await assert.rejects(
+    f.store.publicationResources.preview(anotherBook.id, snapshot, 0),
+    /不属于/,
+  );
+  await f.store.assets.setDeleted(f.book.id, f.asset, true);
+  assert.deepEqual(
+    await f.store.publicationResources.images(f.book.id, snapshot),
+    images,
   );
 });

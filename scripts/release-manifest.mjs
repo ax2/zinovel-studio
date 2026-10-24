@@ -127,6 +127,41 @@ manifest.docxPublication = {
   scope:
     "Actual installed host export; editable OOXML and native development-only LibreOffice reader; no installed Word claim",
 };
+const imagePublication = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/publication-resources/publication-resources-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  imagePublication.status !== "passed" ||
+  imagePublication.version !== pkg.version ||
+  !/^[a-f0-9]{64}$/.test(imagePublication.snapshotHash) ||
+  !Array.isArray(imagePublication.imageFiles) ||
+  imagePublication.imageFiles.length !== 2 ||
+  !imagePublication.imageFiles.every(
+    (item) =>
+      item.path === `images/${item.sha256}.png` &&
+      /^[a-f0-9]{64}$/.test(item.sha256) &&
+      Number.isSafeInteger(item.bytes) &&
+      item.bytes > 0,
+  ) ||
+  !Array.isArray(imagePublication.checks) ||
+  imagePublication.checks.length !== 4
+)
+  throw new Error(
+    "Installed frozen image publication proof is missing or stale",
+  );
+manifest.imagePublication = {
+  version: imagePublication.version,
+  snapshotHash: imagePublication.snapshotHash,
+  images: imagePublication.imageFiles,
+  checks: imagePublication.checks,
+  scope: imagePublication.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

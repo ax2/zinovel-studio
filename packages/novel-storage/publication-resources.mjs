@@ -9,13 +9,84 @@ import {
 } from "../novel-domain/publication-resources.mjs";
 import { preparePublicationImage } from "./publication-image.mjs";
 import { binaryHash } from "./image-decoder.mjs";
+import sharp from "sharp";
+import { verifyPublicationSnapshot } from "../novel-domain/publication.mjs";
 
 /** Shares the book kernel; methods named *Locked require the caller's existing exclusive(). */
 export class PublicationResources {
   #active = 0;
+  #previewTail = Promise.resolve();
+  #previewPending = 0;
   constructor(storage, assets) {
     this.storage = storage;
     this.assets = assets;
+  }
+  async ownedContextLocked(bookId, snapshot) {
+    const ctx = await this.assets.context(bookId);
+    if (!ctx.origins.includes(snapshot.content.bookId))
+      throw new Error("发行图不属于当前作品及恢复来源");
+    return ctx;
+  }
+  async images(bookId, input) {
+    const snapshot = verifyPublicationSnapshot(input),
+      images = new Map();
+    for (const reference of snapshot.content.resources || []) {
+      if (images.has(reference.image.sha256)) continue;
+      images.set(
+        reference.image.sha256,
+        await this.storage.exclusive(async () => {
+          const ctx = await this.ownedContextLocked(bookId, snapshot);
+          return this.bytesLocked(ctx.root, reference.image);
+        }),
+      );
+    }
+    return images;
+  }
+  async preview(bookId, input, index) {
+    const snapshot = verifyPublicationSnapshot(input),
+      resources = snapshot.content.resources || [];
+    if (!Number.isSafeInteger(index) || index < 0 || index >= resources.length)
+      throw new Error("图像不属于该发布副本");
+    if (this.#previewPending >= 32)
+      throw new Error("冻结图像预览繁忙，请稍后重新打开副本");
+    this.#previewPending++;
+    const result = this.#previewTail.then(() =>
+      this.#previewImage(bookId, snapshot, index),
+    );
+    this.#previewTail = result.catch(() => {});
+    try {
+      return await result;
+    } finally {
+      this.#previewPending--;
+    }
+  }
+  async #previewImage(bookId, snapshot, index) {
+    const resources = snapshot.content.resources;
+    const image = resources[index].image;
+    const bytes = await this.storage.exclusive(async () => {
+      const ctx = await this.ownedContextLocked(bookId, snapshot);
+      return this.bytesLocked(ctx.root, image);
+    });
+    const thumbnail = await sharp(bytes, {
+      failOn: "warning",
+      limitInputPixels: 20000000,
+      limitInputChannels: 4,
+    })
+      .resize({
+        width: 512,
+        height: 512,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .png()
+      .toBuffer();
+    if (thumbnail.length > 2 * 1024 * 1024) throw new Error("发行图预览过大");
+    return {
+      sha256: image.sha256,
+      width: image.width,
+      height: image.height,
+      dataUrl: `data:image/png;base64,${thumbnail.toString("base64")}`,
+    };
   }
 
   async bytesLocked(root, image) {

@@ -150,6 +150,10 @@ try {
       "publication-docx/publication-docx-smoke.json",
     ],
     ["smoke-maps-ipc.mjs", "maps-ipc/maps-ipc-smoke.json"],
+    [
+      "smoke-publication-resources.mjs",
+      "publication-resources/publication-resources-smoke.json",
+    ],
     ["smoke-maps-ui.mjs", "maps-ui/maps-ui-smoke.json"],
     ["smoke-map-atlas-ui.mjs", "atlas-ui/atlas-ui-smoke.json"],
     [

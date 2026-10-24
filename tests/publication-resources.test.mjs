@@ -5,6 +5,7 @@ import {
   publicationResourceSelections as selections,
   publicationResourceReferences as references,
   publicationResourceLimits as limits,
+  publicationResourceDrafts as drafts,
 } from "../packages/novel-domain/publication-resources.mjs";
 const chapterId = randomUUID(),
   outsideChapter = randomUUID(),
@@ -18,6 +19,17 @@ const choice = (extra = {}) => ({
   caption: "作者的图注",
   credit: "公开署名",
   ...extra,
+});
+
+test("unfinished publication image drafts retain empty alternative text and chapter adjustments without becoming valid capture input", () => {
+  const input = [
+    choice({ placement: "chapter-end", chapterId: outsideChapter, alt: "" }),
+  ];
+  assert.equal(drafts(input)[0].chapterId, outsideChapter);
+  assert.equal(drafts(input)[0].alt, "");
+  assert.throws(() => selections(input, [chapterId]));
+  assert.throws(() => drafts([choice({ privateNotes: "never public" })]));
+  assert.throws(() => drafts([choice({ alt: "\ud800" })]));
 });
 const reference = (extra = {}) => ({
   source: {

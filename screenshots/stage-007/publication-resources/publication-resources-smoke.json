@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "checks": [
+    "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+    "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+    "image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+    "standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "author-desktop-selection.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-desktop-frozen.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-dark-narrow-frozen.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "html-desktop-cover.png",
+      "width": 1287,
+      "height": 838
+    },
+    {
+      "name": "html-phone-dark-illustration.png",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Actual author UI and host transactions; folder/file picker results instrumented; standalone Chromium file reader is not an actual mobile device",
+  "version": "0.1.0-alpha.25",
+  "formatOptions": [
+    {
+      "value": "html",
+      "disabled": false
+    },
+    {
+      "value": "md",
+      "disabled": true
+    },
+    {
+      "value": "txt",
+      "disabled": true
+    },
+    {
+      "value": "pdf",
+      "disabled": true
+    },
+    {
+      "value": "docx",
+      "disabled": true
+    }
+  ],
+  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-6NPxpj\\中文 图像导出目录\\小说-带图雾港-html-beaeb0af-5d15-43a5-a5a6-6eb3da1f8ffd",
+  "snapshotHash": "add6bec6705a72e2ed817928974e8daee45f5b6671d1fc209ec7d024951a85db",
+  "imageFiles": [
+    {
+      "path": "images/adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a.png",
+      "bytes": 7032,
+      "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a"
+    },
+    {
+      "path": "images/ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575.png",
+      "bytes": 516,
+      "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575"
+    }
+  ]
+}

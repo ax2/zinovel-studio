@@ -112,6 +112,7 @@ const allowed = new Set([
   "publication.capture-status",
   "publication.cancel",
   "publication.preview",
+  "publication.image",
   "publication.chapter",
   "publication.export",
   "library.restore",

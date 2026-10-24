@@ -1969,3 +1969,15 @@ footer {
   .maps-layout:not(.map-catalog-expanded) .map-catalog { display: none; }
   .map-catalog { max-height: 280px; overflow-y: auto; }
 }
+
+.publication-resource-editor { margin: 14px 0; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+.publication-resource-editor summary { cursor: pointer; font-weight: 600; }
+.publication-resource-editor label { display: grid; gap: 5px; margin: 8px 0; font-size: 14px; }
+.publication-resource-editor input, .publication-resource-editor textarea, .publication-resource-editor select { width: 100%; min-width: 0; box-sizing: border-box; padding: 8px; color: var(--text); background: var(--paper); border: 1px solid var(--border); border-radius: 5px; font: inherit; }
+.publication-resource-editor textarea { min-height: 54px; resize: vertical; }
+.publication-resource-editor .publication-resource-choice { padding: 10px; margin-top: 14px; border: 1px solid var(--border); border-radius: 5px; }
+.publication-resource-choice legend { overflow-wrap: anywhere; font-size: 13px; }
+.publication-resource-thumbnail { display: block; max-width: 100%; max-height: 180px; margin: 10px 0; object-fit: contain; }
+.publication-frozen-image { margin: 14px 0; text-align: center; }
+.publication-frozen-image img { max-width: 100%; height: auto; max-height: 320px; object-fit: contain; }
+.publication-frozen-image figcaption { overflow-wrap: anywhere; white-space: normal; }

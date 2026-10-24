@@ -49,7 +49,10 @@ export function makePublicationSnapshot(input: {
 }): PublicationSnapshot;
 export function verifyPublicationSnapshot(input: unknown): PublicationSnapshot;
 export function publicationText(input: unknown, format: "txt" | "md"): string;
-export function publicationHtml(input: unknown): {
-  files: Map<string, string>;
+export function publicationHtml(
+  input: unknown,
+  images?: Map<string, Uint8Array>,
+): {
+  files: Map<string, string | Uint8Array>;
   manifest: PublicationManifest;
 };

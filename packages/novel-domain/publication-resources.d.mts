@@ -34,6 +34,9 @@ export function publicationResourceSelections(
   input: unknown,
   chapterIds: readonly string[],
 ): readonly Readonly<PublicationResourceSelection>[];
+export function publicationResourceDrafts(
+  input: unknown,
+): readonly Readonly<PublicationResourceSelection>[];
 export function publicationResourceReferences(
   input: unknown,
   chapterIds: readonly string[],

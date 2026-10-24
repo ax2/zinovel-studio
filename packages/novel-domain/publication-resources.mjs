@@ -106,6 +106,45 @@ export function publicationResourceSelections(input, selectedIds) {
   });
 }
 
+/** Local form drafts may be incomplete or refer to chapters no longer selected. */
+export function publicationResourceDrafts(input) {
+  if (
+    !Array.isArray(input) ||
+    input.length > publicationResourceLimits.placements
+  )
+    throw new Error("出版图像草稿数量不支持");
+  return Object.freeze(
+    input.map((value) => {
+      exact(value, [
+        "asset",
+        "placement",
+        "chapterId",
+        "alt",
+        "caption",
+        "credit",
+      ]);
+      exact(value.asset, ["id", "revision", "diskHash"]);
+      if (
+        !["cover", "chapter-start", "chapter-end"].includes(value.placement) ||
+        (value.chapterId !== null && typeof value.chapterId !== "string")
+      )
+        throw new Error("出版图像草稿位置不支持");
+      return Object.freeze({
+        asset: Object.freeze({
+          id: assetId(value.asset.id),
+          revision: revision(value.asset.revision),
+          diskHash: assetHash(value.asset.diskHash),
+        }),
+        placement: value.placement,
+        chapterId: value.chapterId === null ? null : assetId(value.chapterId),
+        alt: text(value.alt, 2000),
+        caption: text(value.caption, 4000),
+        credit: text(value.credit, 4000),
+      });
+    }),
+  );
+}
+
 /** A frozen reference is separate from author input: only the host may construct it. */
 export function publicationResourceReferences(input, selectedIds) {
   const result = list(input, selectedIds, (value, selected) => {

@@ -28,6 +28,7 @@ export async function exportPublication(
   format,
   exportId = randomUUID(),
   pdf,
+  images = new Map(),
 ) {
   const snapshot = verifyPublicationSnapshot(input);
   if (!["txt", "md", "html", "pdf", "docx"].includes(format) || !uuid(exportId))
@@ -58,7 +59,7 @@ export async function exportPublication(
   const staging = join(directory, `.zinovel-export-${exportId}.tmp`);
   let files, prepared;
   if (format === "html") {
-    const html = publicationHtml(snapshot);
+    const html = publicationHtml(snapshot, images);
     files = html.files;
     files.delete("publication-manifest.json");
     prepared = html.manifest;
