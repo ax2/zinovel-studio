@@ -131,7 +131,11 @@ test("bad snapshot, unsupported format, invalid identity and non-directory targe
     bad = structuredClone(f.snapshot);
   bad.content.chapters[0].body = "不能偷换的正文";
   await assert.rejects(exportPublication(bad, f.parent, "txt"), /hash/);
-  await assert.rejects(exportPublication(f.snapshot, f.parent, "pdf"), /格式/);
+  await assert.rejects(exportPublication(f.snapshot, f.parent, "docx"), /格式/);
+  await assert.rejects(
+    exportPublication(f.snapshot, f.parent, "pdf"),
+    /排版服务不可用/,
+  );
   await assert.rejects(
     exportPublication(f.snapshot, f.parent, "txt", "../outside"),
     /身份/,
@@ -142,4 +146,52 @@ test("bad snapshot, unsupported format, invalid identity and non-directory targe
   assert.deepEqual(await readdir(f.parent), ["existing.txt"]);
   assert.equal(await readFile(file, "utf8"), "原文件");
   assert.deepEqual(await readFile(f.source), f.before);
+});
+
+test("PDF binary export preserves renderer bytes and records exact layout and snapshot; failures create no target", async () => {
+  const f = await fixture(),
+    bytes = Buffer.from(
+      "%PDF-1.4\n\u0000\u00ff synthetic binary\n%%EOF\n",
+      "latin1",
+    );
+  const result = await exportPublication(
+    f.snapshot,
+    f.parent,
+    "pdf",
+    randomUUID(),
+    {
+      options: { paper: "A4", font: "sans" },
+      engine: { electron: "synthetic-test" },
+      render: async (document) => {
+        assert.equal(document.snapshotHash, f.snapshot.hash);
+        assert.doesNotMatch(
+          document.html,
+          /EXCLUDED_SECRET|内部书目不可自动外发/,
+        );
+        assert.equal((await readdir(f.parent)).length, 0);
+        return bytes;
+      },
+    },
+  );
+  assert.deepEqual(await readFile(join(result.path, "book.pdf")), bytes);
+  const manifest = await verify(result);
+  assert.equal(manifest.layout.paper, "A4");
+  assert.equal(manifest.layout.font, "sans");
+  assert.match(manifest.htmlHash, /^[a-f0-9]{64}$/);
+  assert.equal(manifest.engine.electron, "synthetic-test");
+  assert.deepEqual(await readFile(f.source), f.before);
+  const before = await readdir(f.parent);
+  for (const render of [
+    async () => "text",
+    async () => Buffer.from("%PDF-no EOF"),
+    async () => {
+      throw new Error("合成排版进程失败");
+    },
+  ]) {
+    await assert.rejects(
+      exportPublication(f.snapshot, f.parent, "pdf", randomUUID(), { render }),
+      /无效输出|合成排版进程失败/,
+    );
+    assert.deepEqual(await readdir(f.parent), before);
+  }
 });

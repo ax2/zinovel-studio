@@ -9,6 +9,8 @@ import { mapId } from "../../packages/novel-domain/maps.mjs";
 import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
+import { publicationPdfOptions } from "../../packages/novel-domain/publication-pdf-options.mjs";
+import { renderPublicationPdf } from "./publication-pdf";
 import { claimDesktopSingleInstance } from "./upstream/single-instance";
 import { desktopNodeEnvironment } from "./upstream/node-environment";
 import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
@@ -998,8 +1000,12 @@ if (
                     payload.id,
                     hash,
                   );
-                  if (!["txt", "md", "html"].includes(payload.format))
+                  if (!["txt", "md", "html", "pdf"].includes(payload.format))
                     throw new Error("请选择支持的本地导出格式");
+                  const pdfOptions =
+                    payload.format === "pdf"
+                      ? publicationPdfOptions(payload.pdfOptions)
+                      : undefined;
                   if (publicationClosing)
                     throw new Error("程序正在关闭，未开始导出");
                   const selected = await dialog.showOpenDialog(parentWindow, {
@@ -1022,6 +1028,25 @@ if (
                       snapshot,
                       selected.filePaths[0],
                       payload.format,
+                      undefined,
+                      payload.format === "pdf"
+                        ? {
+                            options: pdfOptions,
+                            engine: {
+                              electron: process.versions.electron,
+                              chromium: process.versions.chrome,
+                            },
+                            render: (
+                              document: Parameters<
+                                typeof renderPublicationPdf
+                              >[0],
+                            ) =>
+                              renderPublicationPdf(
+                                document,
+                                join(dataRoot, "publication-render"),
+                              ),
+                          }
+                        : undefined,
                     )),
                   };
                 })();

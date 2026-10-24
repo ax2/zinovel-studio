@@ -1,0 +1,29 @@
+
+> zinovel-studio@0.1.0-alpha.22 test:publication-ui D:\Work\zinovel-studio
+> node scripts/smoke-publication-ui.mjs && node scripts/smoke-publication-html-output.mjs && node scripts/smoke-publication-pdf-output.mjs
+
+(node:37452) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  viewports: [
+    { name: 'desktop-frozen-preview.png', width: 1426, height: 923 },
+    { name: 'desktop-pdf-layout.png', width: 1426, height: 923 }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  nativeDialog: 'Folder choice instrumented; real host writes and real files verified; native picker interaction not covered',
+  htmlDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-ZS7142\\中文 空格 导出目录\\小说-雾港选章-html-bb093193-ae9a-4ae5-827c-6106ca132b1a',
+  failure: 'page.evaluate: Error: 标题应为 1–200 个字符\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-publication-ui.mjs:285:44'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Error: 标题应为 1–200 个字符
+    at D:\Work\zinovel-studio\scripts\smoke-publication-ui.mjs:285:44
+
+Node.js v26.10.0
+ ELIFECYCLE  Command failed with exit code 1.

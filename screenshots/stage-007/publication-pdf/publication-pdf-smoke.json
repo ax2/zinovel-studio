@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "snapshotHash": "8294232144bb125dac2c60eadf5fbbec61bf14a35acb5e6f9b903e8507ce1a86",
+  "sha256": "b9af54a930d48d2d1f5904674d5aebb410ca3ac72596b40a29cdf9edc99658d5",
+  "bytes": 103968,
+  "inspection": "inspection.json",
+  "renderer": "independent PDFium; actual page review separate"
+}

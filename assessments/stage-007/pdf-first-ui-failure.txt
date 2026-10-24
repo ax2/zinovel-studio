@@ -1,0 +1,31 @@
+(node:41056) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  viewports: [
+    { name: 'desktop-frozen-preview.png', width: 1426, height: 923 },
+    { name: 'desktop-pdf-layout.png', width: 1426, height: 923 },
+    { name: 'narrow-frozen-preview.png', width: 806, height: 803 },
+    { name: 'narrow-reading-body.png', width: 806, height: 803 }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  nativeDialog: 'Folder choice instrumented; real host writes and real files verified; native picker interaction not covered',
+  htmlDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-B6v1Sl\\中文 空格 导出目录\\小说-雾港选章-html-4b31c3a7-f661-421b-8803-129bfc22b659',
+  pdfDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-B6v1Sl\\中文 空格 导出目录\\小说-雾港选章-pdf-3dcca55a-4bd3-4f8c-9487-e38a20fc4a4b',
+  failure: 'TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined\n' +
+    '    at join (node:path:513:7)\n' +
+    '    at file:///D:/Work/zinovel-studio/scripts/smoke-publication-ui.mjs:359:34'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at join (node:path:513:7)
+    at file:///D:/Work/zinovel-studio/scripts/smoke-publication-ui.mjs:359:34 {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v26.10.0

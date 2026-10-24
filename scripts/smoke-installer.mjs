@@ -140,6 +140,10 @@ try {
       "publication-capture/publication-capture-smoke.json",
     ],
     ["smoke-publication-ui.mjs", "publication-ui/publication-ui-smoke.json"],
+    [
+      "smoke-publication-pdf-output.mjs",
+      "publication-pdf/publication-pdf-smoke.json",
+    ],
     ["smoke-assets.mjs", "assets/assets-smoke.json"],
     ["smoke-maps-ipc.mjs", "maps-ipc/maps-ipc-smoke.json"],
     ["smoke-maps-ui.mjs", "maps-ui/maps-ui-smoke.json"],

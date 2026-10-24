@@ -1,0 +1,28 @@
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Traceback (most recent call last):
+
+  File "D:\Work\zinovel-studio\scripts\inspect-publication-pdf.py", line 28, in <module>
+
+    assert "".join(value.split()) in compact, f"Required text missing: {value!r}"
+
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+AssertionError: Required text missing: '雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信'
+
+
+
+1 !== 0
+
+    at file:///D:/Work/zinovel-studio/scripts/smoke-publication-pdf-layout.mjs:75:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.10.0

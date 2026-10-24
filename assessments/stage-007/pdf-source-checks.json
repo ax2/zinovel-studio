@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "scope": "alpha.22 source checks and actual development Electron; no installed package qualification",
+  "checks": 209,
+  "source": [
+    {
+      "path": "apps/desktop/main.ts",
+      "sha256": "37b5ac1496d1a17054c23c3071453c09fec2dda18520edd2ac4dc044b50c514d"
+    },
+    {
+      "path": "apps/desktop/publication-pdf.ts",
+      "sha256": "dc93774454bc738b0863d948f001da357c01dd6221e030d79565f05851067fff"
+    },
+    {
+      "path": "apps/workbench/publication-panel.tsx",
+      "sha256": "463215c5d23c1e0e238585a00231e7097e92c7b75aa4eec1a37691134b203593"
+    },
+    {
+      "path": "packages/novel-domain/publication-pdf.mjs",
+      "sha256": "2127531ec7340e28dafe64bec697f23be2b8b2bff559f2b12952fe4bba5e971b"
+    },
+    {
+      "path": "packages/novel-domain/publication-pdf-options.mjs",
+      "sha256": "e2e41137cca22e6f62244e0f9e4b7fd5d9d010ac5c348bc8a0dfe05b2e05e458"
+    },
+    {
+      "path": "packages/novel-storage/publication-export.mjs",
+      "sha256": "0b135b3dc5df7f9f29ff38752fa2e135db557f0a5f9087f39af2ddc88222bc3e"
+    },
+    {
+      "path": "scripts/smoke-publication-ui.mjs",
+      "sha256": "1d55e89cf566078ab8d21455cbfa7ae330b863208183c3294aa1fecd10adcb3d"
+    },
+    {
+      "path": "scripts/inspect-publication-pdf.py",
+      "sha256": "ed032c5ffc71efeaad0f156dea13cbce5fd368220f14440a6a3b3ec0d84c474c"
+    },
+    {
+      "path": "scripts/smoke-publication-pdf-layout.mjs",
+      "sha256": "ab26f01a09702f24dc4c6d35bde952458337e412444f4da9acef22723542dee6"
+    },
+    {
+      "path": "scripts/smoke-publication-pdf-output.mjs",
+      "sha256": "bee9b9e7c20707b7e75ef31c60e874dcbe1a9613dea77b6b47c1041447a69aa1"
+    }
+  ]
+}

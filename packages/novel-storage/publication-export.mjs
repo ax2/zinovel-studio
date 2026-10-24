@@ -14,6 +14,7 @@ import {
   publicationText,
   publicationHtml,
 } from "../novel-domain/publication.mjs";
+import { publicationPdfDocument } from "../novel-domain/publication-pdf.mjs";
 const digest = (value) => createHash("sha256").update(value).digest("hex");
 const uuid = (value) =>
   typeof value === "string" &&
@@ -25,10 +26,16 @@ export async function exportPublication(
   parent,
   format,
   exportId = randomUUID(),
+  pdf,
 ) {
   const snapshot = verifyPublicationSnapshot(input);
-  if (!["txt", "md", "html"].includes(format) || !uuid(exportId))
+  if (!["txt", "md", "html", "pdf"].includes(format) || !uuid(exportId))
     throw new Error("导出格式或任务身份无效");
+  // Validate before creating output, then render without holding the book queue.
+  const document =
+    format === "pdf" ? publicationPdfDocument(snapshot, pdf?.options) : null;
+  if (document && typeof pdf?.render !== "function")
+    throw new Error("PDF排版服务不可用");
   const directory = await realpath(parent);
   if (!(await stat(directory)).isDirectory()) throw new Error("请选择导出目录");
   const title =
@@ -46,7 +53,6 @@ export async function exportPublication(
     if (error.code !== "ENOENT") throw error;
   }
   const staging = join(directory, `.zinovel-export-${exportId}.tmp`);
-  await mkdir(staging);
   let files, prepared;
   if (format === "html") {
     const html = publicationHtml(snapshot);
@@ -54,7 +60,18 @@ export async function exportPublication(
     files.delete("publication-manifest.json");
     prepared = html.manifest;
   } else {
-    files = new Map([[`book.${format}`, publicationText(snapshot, format)]]);
+    const value = document
+      ? await pdf.render(document)
+      : publicationText(snapshot, format);
+    if (
+      document &&
+      (!Buffer.isBuffer(value) ||
+        value.length > 128 * 1024 * 1024 ||
+        value.subarray(0, 5).toString("ascii") !== "%PDF-" ||
+        !value.subarray(-1024).includes(Buffer.from("%%EOF")))
+    )
+      throw new Error("PDF排版服务返回无效输出，未创建导出目录");
+    files = new Map([[`book.${format}`, value]]);
     const inventory = [...files].map(([path, value]) => ({
       path,
       bytes: Buffer.byteLength(value),
@@ -68,8 +85,17 @@ export async function exportPublication(
       snapshotHash: snapshot.hash,
       files: inventory,
       hash: digest(JSON.stringify(inventory)),
+      ...(document
+        ? {
+            layout: document.options,
+            templateVersion: document.templateVersion,
+            htmlHash: document.htmlHash,
+            engine: pdf.engine,
+          }
+        : {}),
     };
   }
+  await mkdir(staging);
   for (const [path, text] of files) {
     if (
       path

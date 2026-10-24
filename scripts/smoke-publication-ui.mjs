@@ -209,13 +209,111 @@ try {
       filePaths: [path],
     });
   }, exports);
-  for (const [index, format] of ["txt", "md", "html"].entries()) {
+  for (const [index, format] of ["txt", "md", "html", "pdf"].entries()) {
     await panel()
       .getByLabel("发布副本导出格式", { exact: true })
       .selectOption(format);
+    if (format === "pdf") {
+      await panel().getByLabel("PDF纸张", { exact: true }).selectOption("A4");
+      await panel()
+        .getByLabel("PDF正文字体", { exact: true })
+        .selectOption("sans");
+      await panel().getByLabel("PDF字号", { exact: true }).selectOption("12");
+      await panel().getByLabel("PDF行距", { exact: true }).selectOption("1.5");
+      await panel()
+        .getByRole("group", { name: "PDF排版", exact: true })
+        .scrollIntoViewIfNeeded();
+      await shot("desktop-pdf-layout.png");
+      await app.evaluate(({ app: desktop, dialog }) => {
+        globalThis.pdfQaWindows = [];
+        globalThis.pdfQaFailNext = true;
+        desktop.on("browser-window-created", (_event, window) => {
+          const preferences = window.webContents.getLastWebPreferences();
+          if (preferences.javascript !== false) return;
+          globalThis.pdfQaWindows.push({
+            javascript: preferences.javascript,
+            nodeIntegration: preferences.nodeIntegration,
+            sandbox: preferences.sandbox,
+            contextIsolation: preferences.contextIsolation,
+            preload: preferences.preload || null,
+          });
+          if (globalThis.pdfQaFailNext) {
+            globalThis.pdfQaFailNext = false;
+            window.webContents.printToPDF = async () => {
+              throw new Error("合成PDF排版失败");
+            };
+          } else {
+            const print = window.webContents.printToPDF.bind(
+              window.webContents,
+            );
+            window.webContents.printToPDF = async (options) => {
+              await new Promise((resolve) => {
+                globalThis.pdfQaRelease = resolve;
+              });
+              return print(options);
+            };
+          }
+        });
+        dialog.showOpenDialog = async () => ({ canceled: true, filePaths: [] });
+      });
+      await panel()
+        .getByRole("button", { name: "导出此副本", exact: true })
+        .click();
+      await panel()
+        .getByText("已取消导出，未创建文件。", { exact: true })
+        .waitFor();
+      assert.deepEqual(await app.evaluate(() => globalThis.pdfQaWindows), []);
+      assert.equal((await readdir(exports)).length, index);
+      await app.evaluate(({ dialog }, path) => {
+        dialog.showOpenDialog = async () => ({
+          canceled: false,
+          filePaths: [path],
+        });
+      }, exports);
+      await panel()
+        .getByRole("button", { name: "导出此副本", exact: true })
+        .click();
+      await panel().getByText("合成PDF排版失败", { exact: true }).waitFor();
+      assert.equal((await readdir(exports)).length, index);
+      assert.deepEqual(await readdir(join(data, "publication-render")), []);
+    }
     await panel()
       .getByRole("button", { name: "导出此副本", exact: true })
       .click();
+    if (format === "pdf") {
+      const deadline = Date.now() + 10_000;
+      while (!(await app.evaluate(() => Boolean(globalThis.pdfQaRelease)))) {
+        assert.ok(
+          Date.now() < deadline,
+          "PDF renderer did not reach the controlled print hold",
+        );
+        await page.waitForTimeout(25);
+      }
+      const savedDuringRender = await page.evaluate(
+        async ({ bookId, chapterId }) => {
+          const chapter = await window.novel.request("chapter.read", {
+            bookId,
+            chapterId,
+          });
+          return window.novel.request("chapter.save", {
+            bookId,
+            chapterId,
+            title: chapter.title,
+            status: chapter.status,
+            expectedRevision: chapter.revision,
+            expectedHash: chapter.diskHash,
+            body: chapter.body + "\n合成排版进行时单独保存未发布章节。",
+          });
+        },
+        { bookId: book.id, chapterId: book.chapters[2].id },
+      );
+      assert.equal(savedDuringRender.status, "saved");
+      assert.equal((await readdir(exports)).length, index);
+      await app.evaluate(() => {
+        globalThis.pdfQaRelease();
+        globalThis.pdfQaRelease = null;
+      });
+    }
     const entries = await finishedCount(index + 1),
       name = entries.find((name) => name.includes(`-${format}-`));
     assert.ok(name);
@@ -237,6 +335,34 @@ try {
       );
     }
     if (format === "html") report.htmlDirectory = output;
+    if (format === "pdf") {
+      report.pdfDirectory = output;
+      assert.equal(manifest.layout.paper, "A4");
+      assert.equal(manifest.layout.font, "sans");
+      assert.equal(manifest.layout.size, 12);
+      assert.equal(manifest.layout.leading, 1.5);
+      assert.match(manifest.htmlHash, /^[a-f0-9]{64}$/);
+      const bytes = await readFile(join(output, "book.pdf"));
+      assert.equal(bytes.subarray(0, 5).toString("ascii"), "%PDF-");
+      assert.ok(bytes.subarray(-1024).includes(Buffer.from("%%EOF")));
+      assert.deepEqual(await readdir(join(data, "publication-render")), []);
+      assert.equal(
+        await app.evaluate(
+          ({ BrowserWindow }) => BrowserWindow.getAllWindows().length,
+        ),
+        1,
+      );
+      assert.deepEqual(
+        await app.evaluate(() => globalThis.pdfQaWindows),
+        Array.from({ length: 2 }, () => ({
+          javascript: false,
+          nodeIntegration: false,
+          sandbox: true,
+          contextIsolation: true,
+          preload: null,
+        })),
+      );
+    }
   }
   assert.deepEqual(await readFile(manuscript), before);
   await page.setViewportSize({ width: 806, height: 803 });
@@ -333,7 +459,7 @@ try {
   await panel()
     .getByRole("button", { name: "导出此副本", exact: true })
     .click();
-  const afterEditExports = await finishedCount(4),
+  const afterEditExports = await finishedCount(previousExports.size + 1),
     newExport = afterEditExports.find((name) => !previousExports.has(name));
   const oldText = await readFile(join(exports, newExport, "book.txt"), "utf8");
   assert.match(oldText, /雾港选章/);
@@ -413,7 +539,7 @@ try {
   report.checks.push(
     "actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
     "actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
-    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML writes to Chinese/space directory verify every file hash and preserve source bytes",
+    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer; injected print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
     "desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
     "form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export",
   );

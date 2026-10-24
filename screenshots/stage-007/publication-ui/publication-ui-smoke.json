@@ -3,7 +3,7 @@
   "checks": [
     "actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
     "actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
-    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML writes to Chinese/space directory verify every file hash and preserve source bytes",
+    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer; injected print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
     "desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
     "form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export"
   ],
@@ -11,6 +11,11 @@
   "viewports": [
     {
       "name": "desktop-frozen-preview.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "desktop-pdf-layout.png",
       "width": 1426,
       "height": 923
     },
@@ -32,5 +37,6 @@
   ],
   "browser": "Browser plugin not available; repository Playwright/Electron",
   "nativeDialog": "Folder choice instrumented; real host writes and real files verified; native picker interaction not covered",
-  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-hNuqok\\中文 空格 导出目录\\小说-雾港选章-html-48c2f82c-79ca-4730-b31b-122925b261aa"
+  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-jH8dLk\\中文 空格 导出目录\\小说-雾港选章-html-17e5ae98-d533-405b-801e-f02b26e68d61",
+  "pdfDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-jH8dLk\\中文 空格 导出目录\\小说-雾港选章-pdf-afa9fc30-7cc5-4f16-8157-dfc7699a0090"
 }

@@ -29,6 +29,10 @@ jobs:
           node-version: '26'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r scripts/requirements-pdf-qa.txt
       - run: pnpm check
       - run: node scripts/check-upstream.mjs
       - run: pnpm build
@@ -70,6 +74,7 @@ jobs:
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
+      - run: pnpm test:pdf-layout
       - run: pnpm test:assets
       - run: pnpm test:maps-ipc
       - run: pnpm test:maps-ui

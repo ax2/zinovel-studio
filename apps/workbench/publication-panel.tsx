@@ -5,6 +5,10 @@ import type {
   PublicationChapter,
 } from "../../packages/novel-domain/publication.mjs";
 import { registerEditorCloseGuard } from "./editor-close-guards";
+import {
+  defaultPublicationPdfOptions,
+  type PublicationPdfOptions,
+} from "../../packages/novel-domain/publication-pdf-options.mjs";
 
 type Catalog = {
   hash: string;
@@ -131,6 +135,9 @@ export function PublicationPanel({
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [page, setPage] = useState(0);
+  const [pdfOptions, setPdfOptions] = useState<Readonly<PublicationPdfOptions>>(
+    defaultPublicationPdfOptions,
+  );
   const [loading, setLoading] = useState(true),
     [historyReady, setHistoryReady] = useState(false);
   const previewHeading = useRef<HTMLHeadingElement>(null);
@@ -348,7 +355,13 @@ export function PublicationPanel({
     try {
       const result = await api<{ cancelled: boolean; path?: string }>(
         "publication.export",
-        { bookId: book.id, id: preview.id, hash: preview.hash, format },
+        {
+          bookId: book.id,
+          id: preview.id,
+          hash: preview.hash,
+          format,
+          ...(format === "pdf" ? { pdfOptions } : {}),
+        },
       );
       if (alive.current)
         setNotice(
@@ -408,8 +421,8 @@ export function PublicationPanel({
           <div>
             <h2>导出发布副本</h2>
             <p className="muted">
-              选择章节与公开信息，保存独立副本，再导出本地 TXT、Markdown 或
-              HTML。
+              选择章节与公开信息，保存独立副本，再导出本地 TXT、Markdown、HTML
+              或 PDF。
             </p>
           </div>
           <button
@@ -769,6 +782,7 @@ export function PublicationPanel({
                       <option value="html">HTML 阅读目录</option>
                       <option value="md">Markdown</option>
                       <option value="txt">TXT（UTF-8）</option>
+                      <option value="pdf">PDF 排版副本</option>
                     </select>
                   </label>
                   <button
@@ -779,6 +793,92 @@ export function PublicationPanel({
                     {exporting ? "正在导出…" : "导出此副本"}
                   </button>
                 </div>
+                {format === "pdf" && (
+                  <fieldset disabled={exporting}>
+                    <legend>PDF排版</legend>
+                    <p>
+                      从此冻结副本排版，保留书名、作者、简介和公开说明。仅导出选中章节；当前单次内容上限8
+                      MiB。字体采用本机字体，导出后请检查分页与罕见字。
+                    </p>
+                    <div className="publication-actions">
+                      {(
+                        [
+                          [
+                            "paper",
+                            "纸张",
+                            [
+                              ["A5", "A5"],
+                              ["A4", "A4"],
+                            ],
+                          ],
+                          [
+                            "font",
+                            "正文字体",
+                            [
+                              ["serif", "宋体／衬线"],
+                              ["sans", "黑体／无衬线"],
+                            ],
+                          ],
+                          [
+                            "size",
+                            "字号",
+                            [9, 10, 11, 12, 14, 16, 18].map((value) => [
+                              String(value),
+                              `${value} pt`,
+                            ]),
+                          ],
+                          [
+                            "leading",
+                            "行距",
+                            [1.2, 1.5, 1.8, 2, 2.4].map((value) => [
+                              String(value),
+                              String(value),
+                            ]),
+                          ],
+                          [
+                            "margin",
+                            "页边距",
+                            [
+                              ["standard", "标准"],
+                              ["wide", "宽边"],
+                            ],
+                          ],
+                          [
+                            "keepParagraphs",
+                            "段落分页",
+                            [
+                              ["balanced", "短段尽量同页"],
+                              ["flow", "连续排版"],
+                            ],
+                          ],
+                        ] as [keyof PublicationPdfOptions, string, string[][]][]
+                      ).map(([key, label, values]) => (
+                        <label key={key}>
+                          {label}
+                          <select
+                            aria-label={`PDF${label}`}
+                            value={pdfOptions[key]}
+                            onChange={(event) =>
+                              setPdfOptions((current) => ({
+                                ...current,
+                                [key]:
+                                  key === "size" || key === "leading"
+                                    ? Number(event.target.value)
+                                    : event.target.value,
+                              }))
+                            }
+                          >
+                            {values.map(([value, name]) => (
+                              <option key={value} value={value}>
+                                {name}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                )}
               </>
             )}
           </section>
