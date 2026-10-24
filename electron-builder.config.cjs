@@ -1,4 +1,5 @@
 const path = require("node:path");
+const resourceExclusions = require("./plan/runtime-resource-exclusions.json");
 
 module.exports = {
   appId: "com.zicode.zinovelstudio",
@@ -21,6 +22,12 @@ module.exports = {
     "NOTICE",
     "licenses/**/*",
     "apps/desktop/upstream/LICENSE",
+    "plan/runtime-resource-exclusions.json",
+    // The shipped agent uses sdk-minimal plus the novel-only tool patch.
+    // These optional generic-office, voice and inspector payloads are never
+    // mounted by that profile. Retain their manifests, loaders and notices;
+    // verify the exclusions and the actual packaged Harness before release.
+    ...resourceExclusions.patterns.map((pattern) => `!${pattern}`),
   ],
   extraMetadata: { author: "ZiNovel Studio contributors" },
   win: {

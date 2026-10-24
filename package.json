@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-alpha.22",
+  "version": "0.1.0-alpha.23",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",
@@ -72,15 +72,9 @@
   "main": "dist/desktop/main.cjs",
   "packageManager": "pnpm@10.3.0",
   "dependencies": {
-    "@codemirror/commands": "6.11.1",
-    "@codemirror/state": "6.7.6",
-    "@codemirror/view": "6.43.15",
     "@deepseek-ai/dsh": "0.2.1-rc.2",
     "@deepseek-ai/dsh-sdk-client": "0.2.1-rc.2",
     "@deepseek-ai/dsh-token-meter": "0.2.1-rc.2",
-    "lucide-react": "0.468.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
     "sharp": "0.35.5"
   },
   "devDependencies": {
@@ -93,7 +87,13 @@
     "koffi": "3.1.1",
     "playwright": "1.56.1",
     "prettier": "3.6.2",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/view": "6.43.15",
+    "lucide-react": "0.468.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -1,0 +1,171 @@
+{
+  "version": "0.1.0-alpha.22",
+  "appAsarSha256": "139af095d1801713e06a075a6fec3083e518f47053a5f5d1a7b586c9d042eaa0",
+  "files": 28273,
+  "totalLogicalBytes": 512202970,
+  "largestFiles": [
+    {
+      "path": "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/bin/libreoffice-kit.exe",
+      "bytes": 178548224
+    },
+    {
+      "path": "node_modules/@img/sharp-win32-x64/lib/libvips-42.dll",
+      "bytes": 19018240
+    },
+    {
+      "path": "node_modules/sherpa-onnx-win-x64/onnxruntime.dll",
+      "bytes": 17799168
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/entrypoints/lighthouse_worker/lighthouse_worker.js",
+      "bytes": 9204549
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.pdf.js",
+      "bytes": 7108803
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.excel.js",
+      "bytes": 7060462
+    },
+    {
+      "path": "node_modules/@vscode/ripgrep-win32-x64/bin/rg.exe",
+      "bytes": 5429760
+    },
+    {
+      "path": "node_modules/sherpa-onnx-win-x64/sherpa-onnx-c-api.dll",
+      "bytes": 4605952
+    },
+    {
+      "path": "node_modules/lucide-react/dist/umd/lucide-react.js.map",
+      "bytes": 4408807
+    },
+    {
+      "path": "node_modules/lucide-react/dist/cjs/lucide-react.js.map",
+      "bytes": 4340063
+    },
+    {
+      "path": "node_modules/lucide-react/dist/umd/lucide-react.min.js.map",
+      "bytes": 3828353
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-client-ui-settings-account/lib/client.js",
+      "bytes": 3417829
+    },
+    {
+      "path": "dist/workbench/app.js",
+      "bytes": 2436585
+    },
+    {
+      "path": "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/share/registry/main.xcd",
+      "bytes": 1983399
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/chunks/legacy-dM_vujv7.js",
+      "bytes": 1702294
+    },
+    {
+      "path": "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/share/filter/oox-drawingml-cs-presets",
+      "bytes": 1696554
+    },
+    {
+      "path": "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/share/liblangtag/language-subtag-registry.xml",
+      "bytes": 1353740
+    },
+    {
+      "path": "node_modules/node-pty/prebuilds/win32-arm64/conpty/OpenConsole.exe",
+      "bytes": 1110560
+    },
+    {
+      "path": "node_modules/node-pty/third_party/conpty/1.25.260303002/win10-arm64/OpenConsole.exe",
+      "bytes": 1110560
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-api-remotes/lib/client.js",
+      "bytes": 1083920
+    }
+  ],
+  "largestPackages": [
+    {
+      "name": "@deepseek-ai/libreoffice-kit-win32-x64",
+      "bytes": 190868660
+    },
+    {
+      "name": "sherpa-onnx-win-x64",
+      "bytes": 23452212
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-inspector",
+      "bytes": 23445353
+    },
+    {
+      "name": "lucide-react",
+      "bytes": 20956099
+    },
+    {
+      "name": "openai",
+      "bytes": 20763352
+    },
+    {
+      "name": "@img/sharp-win32-x64",
+      "bytes": 19807466
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-documentpreview",
+      "bytes": 14698106
+    },
+    {
+      "name": "@anthropic-ai/sdk",
+      "bytes": 13531424
+    },
+    {
+      "name": "@modelcontextprotocol/client",
+      "bytes": 12616986
+    },
+    {
+      "name": "web-streams-polyfill",
+      "bytes": 8957643
+    },
+    {
+      "name": "@agentclientprotocol/sdk",
+      "bytes": 8771993
+    },
+    {
+      "name": "@google/genai",
+      "bytes": 8721527
+    },
+    {
+      "name": "@opentelemetry/semantic-conventions",
+      "bytes": 8296542
+    },
+    {
+      "name": "node-pty",
+      "bytes": 7197986
+    },
+    {
+      "name": "@modelcontextprotocol/core",
+      "bytes": 7088226
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-market",
+      "bytes": 5979276
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-client-ui-cot-translation",
+      "bytes": 5859158
+    },
+    {
+      "name": "@deepseek-ai/dsh-working-directory",
+      "bytes": 5789427
+    },
+    {
+      "name": "fontkit",
+      "bytes": 5596718
+    },
+    {
+      "name": "@vscode/ripgrep-win32-x64",
+      "bytes": 5431214
+    }
+  ],
+  "scope": "Read-only logical ASAR resource sizes including unpacked entries; not actual disk allocation or runtime reachability proof"
+}

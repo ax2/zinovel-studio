@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "profile": "novel-only-sdk-minimal",
+  "reason": "Generic office, voice, inspector and document/account browser payloads are not mounted by the novel SDK profile. Upstream package manifests, code and notices remain.",
+  "patterns": [
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/bin/**/*",
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/**/*",
+    "node_modules/sherpa-onnx-win-x64/*.dll",
+    "node_modules/sherpa-onnx-win-x64/*.node",
+    "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/**/*",
+    "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client*.js*",
+    "node_modules/@deepseek-ai/dsh-client-ui-settings-account/lib/client*.js*",
+    "node_modules/@deepseek-ai/dsh-experimental-client-ui-cot-translation/lib/client*.js*"
+  ]
+}

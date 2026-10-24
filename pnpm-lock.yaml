@@ -13,15 +13,6 @@ importers:
 
   .:
     dependencies:
-      '@codemirror/commands':
-        specifier: 6.11.1
-        version: 6.11.1
-      '@codemirror/state':
-        specifier: 6.7.6
-        version: 6.7.6
-      '@codemirror/view':
-        specifier: 6.43.15
-        version: 6.43.15
       '@deepseek-ai/dsh':
         specifier: 0.2.1-rc.2
         version: 0.2.1-rc.2(b656ffddf7ce521ce200a9e04595aaca)
@@ -31,19 +22,19 @@ importers:
       '@deepseek-ai/dsh-token-meter':
         specifier: 0.2.1-rc.2
         version: 0.2.1-rc.2(e7ba863eb387b2222cc78a6a6257d49b)
-      lucide-react:
-        specifier: 0.468.0
-        version: 0.468.0(react@18.3.1)
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
       sharp:
         specifier: 0.35.5
         version: 0.35.5(@types/node@22.20.1)
     devDependencies:
+      '@codemirror/commands':
+        specifier: 6.11.1
+        version: 6.11.1
+      '@codemirror/state':
+        specifier: 6.7.6
+        version: 6.7.6
+      '@codemirror/view':
+        specifier: 6.43.15
+        version: 6.43.15
       '@types/node':
         specifier: 22.20.1
         version: 22.20.1
@@ -65,12 +56,21 @@ importers:
       koffi:
         specifier: 3.1.1
         version: 3.1.1
+      lucide-react:
+        specifier: 0.468.0
+        version: 0.468.0(react@18.3.1)
       playwright:
         specifier: 1.56.1
         version: 1.56.1
       prettier:
         specifier: 3.6.2
         version: 3.6.2
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       typescript:
         specifier: 5.9.3
         version: 5.9.3

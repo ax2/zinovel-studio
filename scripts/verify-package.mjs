@@ -1,5 +1,5 @@
 import { readFile, readdir, lstat, writeFile } from "node:fs/promises";
-import { join, resolve, relative, dirname } from "node:path";
+import { join, resolve, relative, dirname, matchesGlob } from "node:path";
 import assert from "node:assert/strict";
 import originalFs from "original-fs";
 
@@ -7,7 +7,16 @@ const root = resolve(import.meta.dirname, "..");
 const unpacked = join(root, "release/win-unpacked");
 const app = join(unpacked, "resources/app.asar");
 const source = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
+const resourceExclusions = JSON.parse(
+  await readFile(join(root, "plan/runtime-resource-exclusions.json"), "utf8"),
+);
 const bundled = JSON.parse(await readFile(join(app, "package.json"), "utf8"));
+assert.deepEqual(
+  JSON.parse(
+    await readFile(join(app, "plan/runtime-resource-exclusions.json"), "utf8"),
+  ),
+  resourceExclusions,
+);
 assert.equal(bundled.version, source.version);
 for (const name of ["dsh", "dsh-sdk-client"]) {
   const pkg = JSON.parse(
@@ -72,6 +81,15 @@ async function inspect(directory, physical) {
     );
     if (stat.isDirectory()) await inspect(path, physical);
     else {
+      if (!physical) {
+        const packagedPath = relative(app, path).replaceAll("\\", "/");
+        assert.ok(
+          !resourceExclusions.patterns.some((pattern) =>
+            matchesGlob(packagedPath, pattern),
+          ),
+          `Unused profile payload included: ${packagedPath}`,
+        );
+      }
       if (physical) {
         fileCount++;
         totalBytes += stat.size;
@@ -120,11 +138,45 @@ assert.ok(
   ),
   "Development tools leaked into the production payload",
 );
+const omittedPayloads = [
+  "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/bin/libreoffice-kit.exe",
+  "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/share/registry/main.xcd",
+  "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/entrypoints/lighthouse_worker/lighthouse_worker.js",
+  "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.pdf.js",
+  "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.excel.js",
+];
+for (const path of omittedPayloads)
+  await assert.rejects(
+    lstat(join(app, path)),
+    { code: "ENOENT" },
+    `Unused payload included: ${path}`,
+  );
+const speechFiles = await readdir(
+  join(app, "node_modules/sherpa-onnx-win-x64"),
+);
+assert.ok(
+  !speechFiles.some((name) => /\.(dll|node)$/i.test(name)),
+  "Unused voice native payload included",
+);
+for (const name of [
+  "@deepseek-ai/libreoffice-kit-win32-x64",
+  "sherpa-onnx-win-x64",
+  "@deepseek-ai/dsh-experimental-inspector",
+  "@deepseek-ai/dsh-client-ui-sidebar-documentpreview",
+])
+  assert.ok(
+    packages.some((pkg) => pkg.name === name),
+    `Retained manifest missing: ${name}`,
+  );
 const inventory = {
   version: source.version,
   fileCount,
   totalBytes,
   packages: packages.sort((a, b) => a.path.localeCompare(b.path)),
+  distributionProfile: resourceExclusions.profile,
+  resourceExclusions: resourceExclusions.patterns,
+  omittedPayloads,
+  note: "Selected generic office/voice/inspector/browser payloads omitted; package metadata, code and notices retained. Dependency manifest presence does not assert every optional upstream resource is shipped.",
 };
 await writeFile(
   join(root, "release/runtime-inventory.json"),
