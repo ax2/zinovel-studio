@@ -933,8 +933,16 @@
       "name": "年代与层级地图",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "历史图层及城市/室内子图切换"
+      "status": "in-progress",
+      "acceptance": "历史图层及城市/室内子图切换",
+      "evidence": [
+        "packages/novel-domain/map-atlas.mjs",
+        "packages/novel-storage/map-atlas.mjs",
+        "tests/map-atlas.test.mjs",
+        "tests/map-atlas-storage.test.mjs",
+        "design/world-map-layers.md",
+        "iterations/stage-006/WORKLOG.md"
+      ]
     },
     {
       "id": "ART-05",

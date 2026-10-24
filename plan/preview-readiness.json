@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.20",
-  "ready": true,
+  "version": "0.1.0-alpha.21",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -31,16 +31,9 @@
     "assessments/stage-006/maps-boundary.json",
     "assessments/release/v0.1.0-alpha.20/README.md"
   ],
-  "reports": [
-    "assessments/release/v0.1.0-alpha.20/installer-smoke.json",
-    "assessments/release/v0.1.0-alpha.20/upgrade-smoke.json",
-    "assessments/release/v0.1.0-alpha.20/image-runtime-verification.json",
-    "assessments/release/v0.1.0-alpha.20/maps-ui-smoke.json",
-    "assessments/release/v0.1.0-alpha.20/maps-ipc-smoke.json",
-    "assessments/release/v0.1.0-alpha.20/assets-smoke.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.20同字节本机129项安装、重装卸载与alpha.3升级通过；首次图像探针跨进程恢复竞争失败保留，修正后完整重跑；本标签仍须独立CI验收",
+    "alpha.21年代层级地图仍在开发，尚无本版运行、安装或升级资格，不继承alpha.20本机报告",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项需求尚未完成：地图年代/层级、行程、图像生成、定妆选定与裁切、带图出版及其他格式/远端发布",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

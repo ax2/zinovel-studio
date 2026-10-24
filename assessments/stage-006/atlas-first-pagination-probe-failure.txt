@@ -1,0 +1,36 @@
+✔ atlas compare-and-swap preserves source frames, history and later revisions without duplicate creation (126.1679ms)
+✔ new associations require same-book live maps and a live parent place/region, while retired or missing references remain diagnosable and removable (169.4275ms)
+✔ atlas transaction preimages reject a real same-revision external change before journal creation (73.1943ms)
+✔ real pending-journal interruption recovers one atlas revision and captures caller input before queue entry (66.8916ms)
+✔ corrupt/future atlas and history bytes remain unchanged and cannot be adopted; book backup restores source lineage independently (175.3676ms)
+✖ paged atlas diagnostics keep missing, unreadable and same-name maps separate and return no geometry (700.405ms)
+✔ manual epoch order and world/city/interior identities remain independent without guessing same names or coordinate transforms (2.232ms)
+✔ duplicate map/epoch identity, missing groups, half anchors and indirect/self cycles reject rather than repair silently (0.9325ms)
+✔ unknown schemas/fields, malformed Unicode, foreign origins and excessive depth preserve input and refuse writes (1.3249ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1423.7486
+
+✖ failing tests:
+
+test at tests\map-atlas-storage.test.mjs:284:1
+✖ paged atlas diagnostics keep missing, unreadable and same-name maps separate and return no geometry (700.405ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  42 !== 41
+  
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/map-atlas-storage.test.mjs:314:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 42,
+    expected: 41,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

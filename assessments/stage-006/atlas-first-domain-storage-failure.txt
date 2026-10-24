@@ -1,0 +1,74 @@
+✖ atlas compare-and-swap preserves source frames, history and later revisions without duplicate creation (64.2372ms)
+✖ new associations require same-book live maps and a live parent place/region, while retired or missing references remain diagnosable and removable (95.9454ms)
+✖ atlas transaction preimages reject a real same-revision external change before journal creation (52.9666ms)
+✖ real pending-journal interruption recovers one atlas revision and captures caller input before queue entry (52.5401ms)
+✖ corrupt/future atlas and history bytes remain unchanged and cannot be adopted; book backup restores source lineage independently (51.6736ms)
+✖ paged atlas diagnostics keep missing, unreadable and same-name maps separate and return no geometry (677.6137ms)
+✔ manual epoch order and world/city/interior identities remain independent without guessing same names or coordinate transforms (2.2168ms)
+✔ duplicate map/epoch identity, missing groups, half anchors and indirect/self cycles reject rather than repair silently (0.7862ms)
+✔ unknown schemas/fields, malformed Unicode, foreign origins and excessive depth preserve input and refuse writes (1.2205ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 3
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1107.968
+
+✖ failing tests:
+
+test at tests\map-atlas-storage.test.mjs:66:1
+✖ atlas compare-and-swap preserves source frames, history and later revisions without duplicate creation (64.2372ms)
+  TypeError [Error]: origins.has is not a function
+      at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+      at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19
+
+test at tests\map-atlas-storage.test.mjs:115:1
+✖ new associations require same-book live maps and a live parent place/region, while retired or missing references remain diagnosable and removable (95.9454ms)
+  TypeError [Error]: origins.has is not a function
+      at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+      at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19
+
+test at tests\map-atlas-storage.test.mjs:184:1
+✖ atlas transaction preimages reject a real same-revision external change before journal creation (52.9666ms)
+  TypeError [Error]: origins.has is not a function
+      at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+      at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19
+
+test at tests\map-atlas-storage.test.mjs:204:1
+✖ real pending-journal interruption recovers one atlas revision and captures caller input before queue entry (52.5401ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /synthetic/. Input:
+  
+  'TypeError: origins.has is not a function'
+  
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/map-atlas-storage.test.mjs:223:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: origins.has is not a function
+        at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+        at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+        at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19,
+    expected: /synthetic/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\map-atlas-storage.test.mjs:233:1
+✖ corrupt/future atlas and history bytes remain unchanged and cannot be adopted; book backup restores source lineage independently (51.6736ms)
+  TypeError [Error]: origins.has is not a function
+      at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+      at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19
+
+test at tests\map-atlas-storage.test.mjs:284:1
+✖ paged atlas diagnostics keep missing, unreadable and same-name maps separate and return no geometry (677.6137ms)
+  TypeError [Error]: origins.has is not a function
+      at validateMapAtlasRecord (file:///D:/Work/zinovel-studio/packages/novel-domain/map-atlas.mjs:97:16)
+      at MapAtlasStore.commit (file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:118:5)
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/map-atlas.mjs:154:19

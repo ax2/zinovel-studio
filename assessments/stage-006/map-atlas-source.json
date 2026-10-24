@@ -1,0 +1,15 @@
+{
+  "version": "0.1.0-alpha.21",
+  "status": "passed",
+  "componentChecks": 10,
+  "fullChecks": 202,
+  "scope": "Source domain/storage tests only; no atlas IPC, editor UI or alpha21 installer qualification",
+  "sources": {
+    "packages/novel-domain/map-atlas.mjs": "385e3704dc3e77d8fce78dbf956caf450f92ebd8867efd55cc6f5cae15a6437d",
+    "packages/novel-domain/map-atlas.d.mts": "560cfc04747fe2def1d7b5084ce25988439e17d33ef2e5cc235b547f9fe669ae",
+    "packages/novel-storage/map-atlas.mjs": "5b18ae8598cdc5a400bdf6347288b1e9bfd300f19be83ffd21c08ddfc6f5b707",
+    "packages/novel-storage/store.mjs": "992bd65a2476628fb9c6c9df22b3ce52d034eb0f8e2cb4a27413b109be3ee7d2",
+    "tests/map-atlas.test.mjs": "ad3fa491329d3aa101944a51d05f34f70b8832785ddda5b7026563dd86496b9f",
+    "tests/map-atlas-storage.test.mjs": "66944594dd62f678e7c3f1906049f56f19ecb2fb0736228a5f7b24aad82a4d97"
+  }
+}
