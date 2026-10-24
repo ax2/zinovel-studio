@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本 [alpha.17](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) 已公开，包含发布副本选章/排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，并修复损坏 UTF-8 原稿保护问题。本机和标签 CI 的实际安装、运行、重装、卸载保稿及 alpha.3 升级均通过；公开 EXE 已下载重新计算 SHA-256 并核对匿名可见性。主分支进入 alpha.18 后续开发，其预览资格尚未取得。详见 [发行证据](assessments/release/v0.1.0-alpha.17/README.md) 与 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+最新阶段版本 [alpha.17](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) 已公开，包含发布副本选章/排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，并修复损坏 UTF-8 原稿保护问题。本机和标签 CI 的实际安装、运行、重装、卸载保稿及 alpha.3 升级均通过；公开 EXE 已下载重新计算 SHA-256 并核对匿名可见性。alpha.18已完成本机121项安装回归、重装/卸载保稿及alpha.3升级，标签发行CI进行中，尚未公开。详见 [发行证据](assessments/release/v0.1.0-alpha.17/README.md) 与 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
@@ -113,6 +113,6 @@ alpha.10 已于 2026-10-23 23:19:45 北京时间公开，标签发行 CI 3997549
 
 alpha.11 已于 2026/10/24 00:52:22 北京时间公开，发行 CI39988528009 全部成功，安装 EXE 与三个元数据附件已核对；完整证据见[alpha.11 发行记录](assessments/release/v0.1.0-alpha.11/README.md)。后续 alpha.12 作者选择未混入该标签。
 
-alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869全部成功。公开EXE222895662字节、SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已下载复算且匿名可见。原文编码保护、冻结发布副本与实际导出/独立HTML通过安装验收；本机EXE与CIEXE分开留证，完整本机运行目录保留D盘。主分支alpha.18资格false，图像资源方案与解码实测见design/assets-and-media.md。
+alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869全部成功。公开EXE222895662字节、SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已下载复算且匿名可见。原文编码保护、冻结发布副本与实际导出/独立HTML通过安装验收；本机EXE与CIEXE分开留证，完整本机运行目录保留D盘。alpha.18本机资格已取得，标签CI与公开安装包仍单独核对；图像资源方案与解码实测见design/assets-and-media.md。
 
-alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版尚未取得安装资格，最新公开安装包仍为alpha.17。
+alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版已取得本机安装/升级资格，标签Windows release [40053936921](https://github.com/ax2/zinovel-studio/actions/runs/40053936921)运行中；公开安装包仍为alpha.17。下一切片[世界地图设计](design/world-map.md)已记录空间对象和冻结底图边界，不算已实现地图。

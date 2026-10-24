@@ -13,3 +13,5 @@ ART-08仅更新in-progress，裁切/选定图尚待实现；人物年龄衣装�
 ## 同字节安装后实测
 
 alpha.18本机EXE SHA256为5f547ef538fec0f43ff252031629fec065c67ddddc5b7f11a1a9552a4ad0ed15，首次安装回归因冲突告警严格选择器命中两个区域失败，原始证据与专用清理回执保留installer-first-failure。只限定保存提示选择器后，同一EXE完整重跑121项通过，原图/原稿字节均保持，重装及卸载保稿通过。安装版图像机器回执和截图为screenshots/release/installed/assets。原生文件选择仍为结果替换，不提升为实际点击验收。独立打包探针通过app-local sharp及DLL/许可hash，详见release/v0.1.0-alpha.18/image-runtime-verification.json；跨版本升级和公开CI仍须单独记录。
+
+原生选择器补充：本机同版打包win-unpacked通过computer-use真实打开、中文空格JPEG路径输入与打开按钮导入、方向显示和第二次选择Escape取消。存储blob/选中文件hash一致且仅1条记录、原稿未变，见native-picker/verification.json。此报告独立于自动化结果替换和实际安装回归，不扩大为CI原生选择器或原生IME验收。

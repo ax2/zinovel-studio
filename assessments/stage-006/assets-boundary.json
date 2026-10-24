@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.18",
+  "node": "24.21.0",
+  "host": {
+    "cpu": "Intel(R) Core(TM) i9-14900HX",
+    "logicalCpus": 32
+  },
+  "dimensions": [
+    5000,
+    4000
+  ],
+  "pixels": 20000000,
+  "sourceBytes": 279263,
+  "sourceSha256": "d1b5195f8996daabbcbf8d56b1061f70a427fb8ac4899aa556cb867f9baf2d32",
+  "importMs": 85.37979999999996,
+  "concurrentManuscriptSaveMs": 18.421399999999977,
+  "decodeCompletedBeforeSave": false,
+  "thumbnail": [
+    512,
+    410
+  ],
+  "rssBytes": 63524864,
+  "scope": "Embedded Node with actual source AssetStore/sharp; synthetic solid PNG at pixel limit, one local measurement; not packaged module isolation, representative image corpus, P95, or capacity certification"
+}

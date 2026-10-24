@@ -97,6 +97,8 @@ async function launch() {
     if (/^https?:/.test(r.url()))
       report.errors.push("Unexpected page HTTP request");
   });
+  // firstWindow may still be about:blank; wait for the actual document before reading its context.
+  await page.waitForURL(/\/workbench\/index\.html$/);
   assert.equal(await page.title(), "ZiNovel Studio");
   assert.ok(page.url().endsWith("/index.html"));
   await page.locator(".book-card").filter({ hasText: book.title }).click();

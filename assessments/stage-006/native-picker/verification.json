@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.18",
+  "scope": "Local already-qualified unpacked EXE; not another installed or CI run",
+  "appAsarSha256": "317d7968090f1712e52f5c59caa2f91bd53e17a7d4cc6c7c6d7ba51782166d76",
+  "sourceKind": "Synthetic JPEG with EXIF orientation 6, Chinese and space path",
+  "storedSourceSha256": "1097ecd585969a330b78a7e17dc8ff19fe113f0c10f1db81efbd03b6f63cdda9",
+  "bytes": 980,
+  "rawDimensions": [
+    80,
+    40
+  ],
+  "displayDimensions": [
+    40,
+    80
+  ],
+  "actualNativeInput": "computer-use @oai/sky: import button, native filename field, literal source path, native Open button; second dialog Escape cancellation",
+  "recordsAfterImportAndCancel": 1,
+  "formalManuscriptPreserved": true,
+  "dialogResultInstrumented": false,
+  "externalTransfer": false
+}

@@ -22,7 +22,9 @@
     "assessments/stage-007/publication-native-html.md",
     "assessments/stage-006/assets-storage-ui.md",
     "iterations/stage-006/WORKLOG.md",
-    "assessments/release/v0.1.0-alpha.18/README.md"
+    "assessments/release/v0.1.0-alpha.18/README.md",
+    "assessments/stage-006/native-picker/verification.json",
+    "assessments/stage-006/assets-boundary.json"
   ],
   "reports": [
     "assessments/release/v0.1.0-alpha.18/installer-smoke.json",
@@ -31,7 +33,7 @@
     "screenshots/release/installed/assets/assets-smoke.json"
   ],
   "limitations": [
-    "Windows x64未签名阶段预览；图像原生文件选择未实测点击，自动化替换选择结果",
+    "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项需求尚未完成：地图坐标与路线、图像生成、定妆选定与裁切、带图出版及其他格式/远端发布",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
   ],

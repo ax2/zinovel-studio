@@ -1,6 +1,6 @@
 # 图像资源与小说地图：下一开发切片
 
-状态：2026-10-24，本地原图资源/元数据/历史与作者界面已在alpha.18源码中实现并实测，尚无本版安装资格。alpha.17已冻结，不含本切片；alpha.18资格保持false。详见iterations/stage-006/WORKLOG.md。
+状态：2026-10-24，本地原图资源/元数据/历史与作者界面已在alpha.18源码中实现并实测，本机安装/重装/卸载及alpha.3升级已通过，alpha.18标签CI运行中。alpha.17已冻结，不含本切片；预览允许进入本标签完整流水线，未提前宣称已公开。详见iterations/stage-006/WORKLOG.md。
 
 ## 调整理由
 
@@ -42,7 +42,7 @@
 
 当前106项功能状态不因本方案提升。仅写出设计不是已交付图片、地图或EPUB。
 
-## 图像解码实现资料（尚未选定新依赖）
+## 图像解码实现资料（依赖选择前的研究记录）
 
 已核对 sharp 官方 [构造参数](https://sharp.pixelplumbing.com/api-constructor/) 和 [metadata](https://sharp.pixelplumbing.com/api-input/)：metadata只读取头部，不解码压缩像素，不能据此把截断图判为可显示；像素/通道限制依赖可信的头部，不等于完整解码安全保证。实现时保留严格warning错误层级、有限像素/通道和真实缩略图解码验证，禁止unlimited；须按EXIF方向区分原始尺寸与显示尺寸，并明确处理多帧图。先验证既有Electron原生图像能力与已有运行依赖，再决定是否新增直接依赖，避免引入重复图像处理栈。
 
@@ -50,7 +50,7 @@
 
 合成探针 scripts/probe-image-decoders.mjs 对 PNG、带方向6的JPEG、WebP、截断PNG及破坏IDAT像素数据PNG逐项验证。原生nativeImage能读取PNG/JPEG，但本机WebP为空，带方向JPEG仍报告64×32；sharp0.35.5可读WebP，并按方向6生成16×32缩略图。破坏像素的PNG仍能读取64×32 metadata，实际缩略图解码拒绝，印证不能只验头部。fixture原始字节均未被解码器修改，原属进程退出核对通过。回执assessments/stage-007/image-decoder-probe.json。
 
-实现资源服务时将显式声明与验证sharp直接依赖，复用已在依赖树中的版本，避免仅靠Electron nativeImage推断WebP和方向能力。当前探针按已安装版本找入口，仅研究使用；生产模块不得依赖.pnpm内部路径。初次硬编码旧lib/index.js入口失败在启动前暴露；改读包main后，Electron evaluate内require不可用，独立失败JSON保留，改传合成字节后通过；不把探针自身错误描述为图像库缺陷。尚未添加生产依赖、导入UI或资源存储。
+实现资源服务时将显式声明与验证sharp直接依赖，复用已在依赖树中的版本，避免仅靠Electron nativeImage推断WebP和方向能力。当前探针按已安装版本找入口，仅研究使用；生产模块不得依赖.pnpm内部路径。初次硬编码旧lib/index.js入口失败在启动前暴露；改读包main后，Electron evaluate内require不可用，独立失败JSON保留，改传合成字节后通过；不把探针自身错误描述为图像库缺陷。该段记录的是探针当时状态；后续正式实现见本文件末尾与Stage-006日志。
 
 Electron支持格式与EXIF说明参考 [官方nativeImage文档](https://www.electronjs.org/docs/latest/api/native-image)，本机行为按探针记录，不能扩大到所有平台。
 

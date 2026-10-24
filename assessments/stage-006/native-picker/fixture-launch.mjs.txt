@@ -1,0 +1,11 @@
+import { _electron as electron } from 'playwright';
+import fs from 'node:fs/promises';import path from 'node:path';import sharp from 'sharp';import {NovelStore} from '../packages/novel-storage/store.mjs';
+const root=path.resolve(import.meta.dirname,'..'),work=await fs.mkdtemp(path.join(root,'.cache','native-image-qa-'));
+const store=new NovelStore(path.join(work,'data/library')),book=await store.importBook('原生选择器验收',[{title:'合成稿',body:'只供本地选择器验收。𠮷🌊'}]);
+const file=path.join(work,'中文 空格 原图.jpg');await sharp({create:{width:80,height:40,channels:3,background:'#126b83'}}).withMetadata({orientation:6}).jpeg().toFile(file);
+await fs.writeFile(path.join(root,'.cache/native-image-current.json'),JSON.stringify({work,bookId:book.id,file},null,2));
+const env={...process.env,ZINOVEL_DATA_ROOT:path.join(work,'data')};delete env.ELECTRON_RUN_AS_NODE;
+const app=await electron.launch({executablePath:path.join(root,'release/win-unpacked/ZiNovel Studio.exe'),args:[],cwd:work,env,timeout:45000});
+const page=await app.firstWindow();await page.locator('.book-card').filter({hasText:'原生选择器验收'}).click();await page.getByLabel('正文编辑器').waitFor();await page.getByRole('button',{name:'图像资源',exact:true}).click();await page.getByRole('dialog',{name:'小说图像资源',exact:true}).waitFor();
+console.log('READY '+file);await new Promise(resolve=>{const timer=setInterval(async()=>{if(await fs.access(path.join(work,'finish')).then(()=>true,()=>false)){clearInterval(timer);resolve();}},500);});
+await page.screenshot({path:path.join(work,'native-result.png')});await app.close();console.log('CLOSED '+work);
