@@ -19,8 +19,17 @@ import {
   rename,
   readdir,
   lstat,
+  realpath,
 } from "node:fs/promises";
-import { join, resolve, dirname, relative, sep, isAbsolute } from "node:path";
+import {
+  join,
+  resolve,
+  dirname,
+  basename,
+  relative,
+  sep,
+  isAbsolute,
+} from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
 import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
@@ -46,6 +55,22 @@ async function readOptional(path) {
     if (error.code === "ENOENT") return null;
     throw error;
   }
+}
+/** Resolve existing ancestors too, so a not-yet-created child cannot conceal a Junction. */
+async function canonicalDestination(path) {
+  try {
+    return await realpath(path);
+  } catch (error) {
+    if (error.code !== "ENOENT" || dirname(path) === path) throw error;
+    return join(await canonicalDestination(dirname(path)), basename(path));
+  }
+}
+function withinDirectory(root, path) {
+  const inside = relative(root, path);
+  return (
+    !inside ||
+    (!isAbsolute(inside) && inside !== ".." && !inside.startsWith(".." + sep))
+  );
 }
 export class NovelStore {
   #storage;
@@ -519,15 +544,15 @@ export class NovelStore {
         throw new Error("备份容量限制无效");
       const root = await this.#storage.bookRoot(bookId);
       await this.#storage.manifest(root);
-      const parent = resolve(destination),
-        inside = relative(root, parent);
-      if (
-        !inside ||
-        (!isAbsolute(inside) &&
-          !inside.startsWith(".." + sep) &&
-          inside !== "..")
-      )
+      const requestedParent = resolve(destination);
+      if (withinDirectory(root, requestedParent))
         throw new Error("备份位置不能位于作品目录内部");
+      const [canonicalRoot, parent] = await Promise.all([
+        realpath(root),
+        canonicalDestination(requestedParent),
+      ]);
+      if (withinDirectory(canonicalRoot, parent))
+        throw new Error("备份位置经目录别名指向原书内部，未创建备份");
       const inventory = async () => {
         const found = [];
         let total = 0;

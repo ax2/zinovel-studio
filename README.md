@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.24](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24)已公开，新增可编辑DOCX，支持TXT/Markdown/HTML/PDF/DOCX五种纯文字导出。约155MB安装EXE经完整独立发行CI、实际安装/重装/卸载保稿及alpha.3升级验证，公开文件已下载复算SHA。alpha.25新增封面/插图版本冻结、预览与带图HTML，225项/完整源码CI、第二轮143项安装/重装/卸载与alpha.3升级通过，准备进入标签重新验收，尚未公开。详见[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)和[下一P0切片](assessments/stage-008/priority-reassessment-alpha25.md)。
+最新阶段版本[alpha.24](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24)已公开，支持五种纯文字导出，约155MB安装EXE已下载复核。alpha.25新增封面/插图版本冻结、预览与带图HTML，本机第二轮143项安装/重装/卸载、旧版升级及源码CI通过，标签发行正在独立重验，尚未公开。主线alpha.26修正备份目的地别名检查，228项与D→C独立磁盘真实宿主备份/恢复通过，无本版安装资格。详见[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[备份源码验证](assessments/stage-008/backup-destination-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
