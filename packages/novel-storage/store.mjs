@@ -10,6 +10,7 @@ import { ReaderStore } from "./reader.mjs";
 import { PublicationStore, publicationOriginIds } from "./publication.mjs";
 import { AssetStore } from "./assets.mjs";
 import { PublicationResources } from "./publication-resources.mjs";
+import { BackupVault } from "./backup-vault.mjs";
 import { MapStore } from "./maps.mjs";
 import { MapAtlasStore } from "./map-atlas.mjs";
 import {
@@ -21,19 +22,12 @@ import {
   lstat,
   realpath,
 } from "node:fs/promises";
-import {
-  join,
-  resolve,
-  dirname,
-  basename,
-  relative,
-  sep,
-  isAbsolute,
-} from "node:path";
+import { join, resolve, dirname } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
 import { createAnchor, resolveAnchor } from "../novel-domain/anchors.mjs";
 import { atomicWriteText as atomic } from "./atomic.mjs";
+import { canonicalDestination, withinDirectory } from "./backup-path.mjs";
 
 export const digest = (text) =>
   createHash("sha256").update(text, "utf8").digest("hex");
@@ -56,27 +50,14 @@ async function readOptional(path) {
     throw error;
   }
 }
-/** Resolve existing ancestors too, so a not-yet-created child cannot conceal a Junction. */
-async function canonicalDestination(path) {
-  try {
-    return await realpath(path);
-  } catch (error) {
-    if (error.code !== "ENOENT" || dirname(path) === path) throw error;
-    return join(await canonicalDestination(dirname(path)), basename(path));
-  }
-}
-function withinDirectory(root, path) {
-  const inside = relative(root, path);
-  return (
-    !inside ||
-    (!isAbsolute(inside) && inside !== ".." && !inside.startsWith(".." + sep))
-  );
-}
 export class NovelStore {
   #storage;
   constructor(root) {
     this.root = resolve(root);
     this.#storage = new BookStorageKernel(this.root);
+    this.backups = new BackupVault(this.#storage, (contents) =>
+      this.#restoreContents(contents),
+    );
     this.materials = new MaterialStore(this.#storage);
     this.assets = new AssetStore(this.#storage, this.materials);
     this.publicationResources = new PublicationResources(
@@ -675,41 +656,44 @@ export class NovelStore {
           throw new Error("备份校验失败，未改动现有作品");
         contents.set(file.path, bytes);
       }
-      const book = JSON.parse(
-        decodeUtf8(contents.get("book.json") || Buffer.from("{}")),
-      );
-      if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
-        throw new Error("备份作品格式不支持");
-      const sourceBookIds = publicationOriginIds(book);
-      if (sourceBookIds.length > 128)
-        throw new Error("恢复来源链达到当前上限，原备份已保留");
-      for (const chapter of book.chapters)
-        if (!contents.has(`manuscript/${checkedId(chapter.id)}.md`))
-          throw new Error("备份缺少章节正文");
-      if (
-        decodeUtf8(
-          contents.get(".zinovel/pending.json") || Buffer.alloc(0),
-        ).trim()
-      )
-        throw new Error("备份含有未完成事务，请先在原位置恢复");
-      const id = randomUUID(),
-        staging = join(this.root, `.restore-${id}`),
-        final = join(this.root, id);
-      await mkdir(staging, { recursive: true });
-      for (const [path, bytes] of contents) {
-        const target = await this.#storage.path(staging, path);
-        await mkdir(dirname(target), { recursive: true });
-        await writeFile(target, bytes);
-      }
-      book.id = id;
-      book.restoredFromBookIds = sourceBookIds;
-      book.title = `${book.title}（恢复）`;
-      book.revision++;
-      book.updatedAt = new Date().toISOString();
-      await atomic(join(staging, "book.json"), json(book));
-      await rename(staging, final);
-      return book;
+      return this.#restoreContents(contents);
     });
+  }
+  async #restoreContents(contents) {
+    const book = JSON.parse(
+      decodeUtf8(contents.get("book.json") || Buffer.from("{}")),
+    );
+    if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
+      throw new Error("备份作品格式不支持");
+    const sourceBookIds = publicationOriginIds(book);
+    if (sourceBookIds.length > 128)
+      throw new Error("恢复来源链达到当前上限，原备份已保留");
+    for (const chapter of book.chapters)
+      if (!contents.has(`manuscript/${checkedId(chapter.id)}.md`))
+        throw new Error("备份缺少章节正文");
+    if (
+      decodeUtf8(
+        contents.get(".zinovel/pending.json") || Buffer.alloc(0),
+      ).trim()
+    )
+      throw new Error("备份含有未完成事务，请先在原位置恢复");
+    const id = randomUUID(),
+      staging = join(this.root, `.restore-${id}`),
+      final = join(this.root, id);
+    await mkdir(staging, { recursive: true });
+    for (const [path, bytes] of contents) {
+      const target = await this.#storage.path(staging, path);
+      await mkdir(dirname(target), { recursive: true });
+      await writeFile(target, bytes, { flag: "wx", flush: true });
+    }
+    book.id = id;
+    book.restoredFromBookIds = sourceBookIds;
+    book.title = `${book.title}（恢复）`;
+    book.revision++;
+    book.updatedAt = new Date().toISOString();
+    await atomic(join(staging, "book.json"), json(book));
+    await rename(staging, final);
+    return book;
   }
   readChapter(bookId, chapterId) {
     return this.#storage.exclusive(async () => {

@@ -1281,7 +1281,10 @@
         "tests/backup-destination.test.mjs",
         "scripts/smoke-independent-backup.mjs",
         "assessments/stage-008/backup-destination-source.md",
-        "design/incremental-backup.md"
+        "design/incremental-backup.md",
+        "packages/novel-storage/backup-vault.mjs",
+        "tests/backup-vault.test.mjs",
+        "assessments/stage-008/vault-backend-source.md"
       ]
     },
     {
@@ -1296,7 +1299,9 @@
         "packages/novel-harness/tools-plugin.mjs",
         "packages/novel-harness/novel.patch.yml",
         "tests/harness-security.test.mjs",
-        "assessments/stage-008/offline-writing-source.md"
+        "assessments/stage-008/offline-writing-source.md",
+        "scripts/smoke-tool-isolation.mjs",
+        "assessments/stage-008/tool-isolation-source.md"
       ]
     },
     {

@@ -1,0 +1,20 @@
+✔ incremental generations keep full logical manifests, copy only unseen bytes and restore any generation after a whole-vault move (273.4557ms)
+✔ identical source bytes share one immutable backup object without linking source files (77.7058ms)
+✔ damaged reused objects prevent new commits and restore without replacing any original or historical bytes (103.9218ms)
+✔ cancel before commit retains previous generations and leaves reusable objects without a false successful snapshot (199.5542ms)
+✔ logical capacity, managed-library aliases and unknown destination folders reject before adoption (30.5024ms)
+✔ writer locks are fail-closed, never reclaimed just because their PID appears stale (93.8804ms)
+✔ future and hash-valid duplicate-path manifests remain preserved and cannot restore (71.0738ms)
+✔ objects reused earlier in an operation are revalidated before snapshot commit (92.1195ms)
+✔ real process termination at ready-to-commit preserves earlier generations and leaves ownership locks untouched (341.4701ms)
+✔ real process termination at committed preserves earlier generations and leaves ownership locks untouched (346.7475ms)
+✔ a notification failure or late cancellation after commit cannot disguise an already recoverable snapshot as failure (114.4694ms)
+✔ incremental restore keeps current manuscript, old frozen publication images, private asset records and immutable original provenance (251.1925ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2114.2261
