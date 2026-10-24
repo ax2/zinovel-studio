@@ -135,6 +135,7 @@ try {
     ["smoke-knowledge.mjs", "knowledge/knowledge-smoke.json"],
     ["smoke-reader.mjs", "reader/reader-smoke.json"],
     ["smoke-utf8-integrity.mjs", "utf8-integrity/utf8-integrity-smoke.json"],
+    ["smoke-offline-writing.mjs", "offline-writing/offline-writing-smoke.json"],
     [
       "smoke-publication-capture.mjs",
       "publication-capture/publication-capture-smoke.json",

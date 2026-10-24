@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": [
+    "renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
+    "switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
+    "provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
+    "after full application restart and loopback provider shutdown, manual save and actual reading preview remain usable without additional provider requests or page errors"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
+  "launchPid": 24020,
+  "version": "0.1.0-alpha.26",
+  "switchedTaskStatus": "cancelled",
+  "providerRequests": 2,
+  "failedTaskStatus": "failed",
+  "foreignBookTextSent": false,
+  "rendererRequestsDenied": 1
+}

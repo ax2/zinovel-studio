@@ -71,6 +71,7 @@ jobs:
       - run: pnpm test:creative-journey
       - run: pnpm test:reader
       - run: pnpm test:utf8-integrity
+      - run: pnpm test:offline-writing
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
@@ -128,6 +129,7 @@ jobs:
             screenshots/stage-007/publication-docx/
             screenshots/stage-007/publication-docx-layout/
             screenshots/stage-007/publication-resources/
+            screenshots/stage-008/offline-writing/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml
             release/image-runtime-verification.json

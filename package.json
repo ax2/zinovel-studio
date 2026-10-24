@@ -62,7 +62,8 @@
     "test:maps-ipc": "node scripts/smoke-maps-ipc.mjs",
     "test:maps-ui": "node scripts/smoke-maps-ui.mjs",
     "test:atlas-ui": "node scripts/smoke-map-atlas-ui.mjs",
-    "test:utf8-integrity": "node scripts/smoke-utf8-integrity.mjs"
+    "test:utf8-integrity": "node scripts/smoke-utf8-integrity.mjs",
+    "test:offline-writing": "node scripts/smoke-offline-writing.mjs"
   },
   "engines": {
     "node": ">=26"

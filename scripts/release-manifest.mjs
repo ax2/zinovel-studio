@@ -162,6 +162,34 @@ manifest.imagePublication = {
   checks: imagePublication.checks,
   scope: imagePublication.scope,
 };
+const offlineWriting = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/offline-writing/offline-writing-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  offlineWriting.status !== "passed" ||
+  offlineWriting.version !== pkg.version ||
+  offlineWriting.switchedTaskStatus !== "cancelled" ||
+  offlineWriting.failedTaskStatus !== "failed" ||
+  offlineWriting.foreignBookTextSent !== false ||
+  offlineWriting.rendererRequestsDenied !== 1 ||
+  offlineWriting.providerRequests < 2 ||
+  !Array.isArray(offlineWriting.errors) ||
+  offlineWriting.errors.length !== 0 ||
+  !Array.isArray(offlineWriting.checks) ||
+  offlineWriting.checks.length !== 4
+)
+  throw new Error("Installed offline writing proof is missing or stale");
+manifest.offlineWriting = {
+  version: offlineWriting.version,
+  checks: offlineWriting.checks,
+  scope: offlineWriting.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),
