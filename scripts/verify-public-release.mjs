@@ -71,6 +71,27 @@ try {
   assert.equal(release.isDraft, false);
   assert.equal(release.isPrerelease, true);
   assert.equal(release.assets.length, 4);
+  const anonymousResponse = await fetch(
+    `https://api.github.com/repos/${repository}/releases/tags/${encodeURIComponent(tag)}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "ZiNovel-release-verifier",
+      },
+      signal: AbortSignal.timeout(30000),
+    },
+  );
+  assert.equal(
+    anonymousResponse.status,
+    200,
+    "Release must be visible without authentication",
+  );
+  const anonymousRelease = await anonymousResponse.json();
+  assert.equal(anonymousRelease.tag_name, tag);
+  assert.equal(anonymousRelease.html_url, release.url);
+  assert.equal(anonymousRelease.draft, false);
+  assert.equal(anonymousRelease.prerelease, true);
+  assert.equal(anonymousRelease.assets.length, 4);
   mkdirSync(output, { recursive: true });
   const metadata = [
     "release-manifest.json",
@@ -103,6 +124,11 @@ try {
   assert.ok(installer);
   assert.equal(installer.digest, `sha256:${manifest.sha256}`);
   assert.equal(installer.size, manifest.bytes);
+  const anonymousInstaller = anonymousRelease.assets.find(
+    (item) => item.name === manifest.installer,
+  );
+  assert.equal(anonymousInstaller?.digest, `sha256:${manifest.sha256}`);
+  assert.equal(anonymousInstaller?.size, manifest.bytes);
   for (const name of metadata)
     assert.equal(
       release.assets.find((item) => item.name === name)?.digest,
@@ -162,6 +188,7 @@ try {
     bytes: manifest.bytes,
     sha256: manifest.sha256,
     metadataDigestsVerified: true,
+    anonymouslyVisible: true,
     downloadedInstallerSha256Verified: true,
     downloadedInstaller,
     publicInstallerExecutionEvidence:
