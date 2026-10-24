@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Real author map UI and host persistence; native folder selection for backup/restore is instrumented, no native IME or physical phone claim",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected \"actual\" to be strictly unequal to:\n\n'99.99999237060547,70.0000228881836 500.0000305175781,70.0000228881836 449.9999694824219,314.9999694824219'\n    at file:///D:/Work/zinovel-studio/scripts/smoke-maps-ui.mjs:253:10"
+}

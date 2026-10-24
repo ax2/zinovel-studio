@@ -4,7 +4,7 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出按实际安装证据完成单项验收；27项 verified、39项 in-progress、40项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、40项 in-progress、40项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.24 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.24/ZiNovel-Studio-0.1.0-alpha.24-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 

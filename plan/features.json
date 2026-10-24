@@ -1123,14 +1123,16 @@
       "name": "DOCX/PDF 导出",
       "priority": "P1",
       "stage": "Stage-007",
-      "status": "verified",
+      "status": "in-progress",
       "acceptance": "分页/字体/中文真实渲染验证",
       "evidence": [
         "design/publication-pdf.md",
         "assessments/stage-007/pdf-source.md",
         "design/publication-docx.md",
         "assessments/stage-007/docx-export-source.md",
-        "assessments/release/v0.1.0-alpha.24/README.md"
+        "assessments/release/v0.1.0-alpha.24/README.md",
+        "design/publishing.md",
+        "assessments/stage-007/publication-scope-reassessment.md"
       ],
       "validation": "assessments/stage-007/docx-pdf-acceptance.md"
     },

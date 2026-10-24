@@ -237,11 +237,57 @@ try {
   await panel()
     .getByRole("button", { name: "结束区域绘制", exact: true })
     .click();
+  // Finishing a region also changes the interaction mode. Wait for the actual
+  // select surface before sending a drag to its newly-rendered handles.
+  await panel().locator("svg.map-mode-select").waitFor();
   const region = svg().locator(".map-region.selected"),
     regionBefore = await region.getAttribute("points"),
     vertex = svg().locator('[data-map-vertex="2"]');
   await vertex.scrollIntoViewIfNeeded();
   const box = await vertex.boundingBox();
+  report.regionGesture = {
+    before: regionBefore,
+    box,
+    hit: await page.evaluate(
+      ({ x, y }) => {
+        const target = document.elementFromPoint(x, y);
+        return {
+          tag: target?.tagName,
+          vertex: target?.getAttribute("data-map-vertex"),
+        };
+      },
+      { x: box.x + box.width / 2, y: box.y + box.height / 2 },
+    ),
+  };
+  assert.equal(
+    report.regionGesture.hit.vertex,
+    "2",
+    "Actual pointer position must hit the selected region vertex",
+  );
+  await svg().evaluate((node) => {
+    globalThis.__mapGestureEvents = [];
+    for (const type of [
+      "pointerdown",
+      "pointermove",
+      "pointerup",
+      "pointercancel",
+      "lostpointercapture",
+    ])
+      node.addEventListener(
+        type,
+        (event) => {
+          globalThis.__mapGestureEvents.push({
+            type,
+            x: event.clientX,
+            y: event.clientY,
+            buttons: event.buttons,
+            vertex: event.target.getAttribute?.("data-map-vertex"),
+            captured: node.hasPointerCapture(event.pointerId),
+          });
+        },
+        { capture: true },
+      );
+  });
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(
@@ -250,6 +296,28 @@ try {
     { steps: 5 },
   );
   await page.mouse.up();
+  report.regionGesture.immediate = await region.getAttribute("points");
+  await region.evaluate(
+    () =>
+      new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      ),
+  );
+  report.regionGesture.afterPaint = await region.getAttribute("points");
+  report.regionGesture.events = await page.evaluate(
+    () => globalThis.__mapGestureEvents,
+  );
+  assert.ok(
+    report.regionGesture.events.some(
+      (event) => event.type === "pointerdown" && event.vertex === "2",
+    ),
+  );
+  assert.ok(
+    report.regionGesture.events.some(
+      (event) =>
+        event.type === "pointermove" && event.buttons === 1 && event.captured,
+    ),
+  );
   assert.notEqual(await region.getAttribute("points"), regionBefore);
   await panel()
     .getByRole("button", { name: "撤销未保存调整", exact: true })

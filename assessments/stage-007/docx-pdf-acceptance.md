@@ -1,5 +1,7 @@
 # PUB-03 DOCX/PDF 导出单项验收
 
+范围修正：此报告记录alpha.24的纯文字子项，不能代替design/publishing.md中图片/目录/注释等完整要求。alpha.25复评后PUB-03恢复in-progress，详见[完整范围复评](publication-scope-reassessment.md)；下列历史实际通过证据继续保留。
+
 2026-10-24，按既有“分页/字体/中文真实渲染验证”验收条件检查，alpha.24本机安装139项与alpha.3升级通过，源码CI40077751136完整success。PUB-03可标verified；这是纯文字导出条件，不代表整个出版流程或完整上架。
 
 | 条目 | 实际证据 |
