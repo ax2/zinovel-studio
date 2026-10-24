@@ -1,0 +1,65 @@
+windows	Run pnpm test:publication-ui	﻿2026-10-24T07:18:22.6214285Z ##[group]Run pnpm test:publication-ui
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6214684Z ^[[36;1mpnpm test:publication-ui^[[0m
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6298158Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6298548Z env:
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6298822Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6299236Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6299726Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6300180Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6300586Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6300998Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:22.6301316Z ##[endgroup]
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.3515457Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.3516617Z > zinovel-studio@0.1.0-alpha.23 test:publication-ui D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.3518446Z > node scripts/smoke-publication-ui.mjs && node scripts/smoke-publication-html-output.mjs && node scripts/smoke-publication-pdf-output.mjs
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.3519458Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.8604929Z (node:1832) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:23.8606898Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0636427Z {
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0636854Z   status: 'failed',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0637229Z   checks: [],
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0637519Z   errors: [],
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0637810Z   viewports: [
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0638392Z     { name: 'desktop-frozen-preview.png', width: 1008, height: 681 },
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0639201Z     { name: 'desktop-pdf-layout.png', width: 1008, height: 681 }
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0639739Z   ],
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0640337Z   browser: 'Browser plugin not available; repository Playwright/Electron',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0641636Z   nativeDialog: 'Folder choice instrumented; real host writes and real files verified; native picker interaction not covered',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0642581Z   version: '0.1.0-alpha.23',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0654625Z   htmlDirectory: 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\publication-ui-oKGYBD\\中文 空格 导出目录\\小说-雾港选章-html-a77f2ffc-30c8-46ac-a383-4d59c00219d6',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0658067Z   failure: 'Error: Export files did not settle\n' +
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0659195Z     '    at finishedCount (file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-publication-ui.mjs:112:9)\n' +
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0660513Z     '    at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-publication-ui.mjs:318:21',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0661556Z   cleanupFailure: 'Error: Command failed: taskkill.exe /PID 756 /F\n' +
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0662371Z     'ERROR: The process with PID 756 could not be terminated.\r\n' +
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0663092Z     'Reason: There is no running instance of the task.\r\r\n'
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0663620Z }
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0664001Z node:internal/errors:999
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0664403Z   const err = new Error(message);
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0664783Z               ^
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0664961Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0665243Z Error: Command failed: taskkill.exe /PID 756 /F
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0665922Z ERROR: The process with PID 756 could not be terminated.
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0666310Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0666581Z Reason: There is no running instance of the task.
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0666924Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0666935Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0666941Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0667182Z     at genericNodeError (node:internal/errors:999:15)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0667702Z     at wrappedFn (node:internal/errors:544:14)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0668259Z     at ChildProcess.exithandler (node:child_process:420:12)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0668833Z     at ChildProcess.emit (node:events:514:20)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0669384Z     at maybeClose (node:internal/child_process:1156:16)
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0673482Z     at ChildProcess._handle.onexit (node:internal/child_process:334:5) {
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0674381Z   code: 1,
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0674844Z   killed: false,
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0675183Z   signal: null,
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0675543Z   cmd: 'taskkill.exe /PID 756 /F',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0675920Z   stdout: '',
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0676458Z   stderr: 'ERROR: The process with PID 756 could not be terminated.\r\n' +
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0677203Z     'Reason: There is no running instance of the task.\r\r\n'
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0677680Z }
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0678308Z 
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0678648Z Node.js v26.12.1
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.0863873Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:publication-ui	2026-10-24T07:18:37.2049531Z ##[error]Process completed with exit code 1.

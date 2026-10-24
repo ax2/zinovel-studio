@@ -24,7 +24,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "创建、排序和移动保留稳定 ID",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-03",
@@ -34,7 +36,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "只读试扫，确认后新建书而不改源",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-04",
@@ -44,7 +48,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "乱码与章节拆分可修正后导入",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-05",
@@ -69,7 +75,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "删除可恢复，引用冲突可见",
-      "evidence": ["iterations/stage-002/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-002/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-07",
@@ -79,7 +87,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "按正文/标题/设定过滤并跳到出处",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "LIB-08",
@@ -479,7 +489,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "输入法/emoji/长段落/粘贴不丢字",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-02",
@@ -489,7 +501,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "崩溃后稿件与待保存内容可恢复",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-03",
@@ -499,7 +513,9 @@
       "stage": "Stage-002",
       "status": "in-progress",
       "acceptance": "手工及 AI 修改均可撤回",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "EDIT-04",
@@ -586,7 +602,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "事实与选区外文本不变",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-02",
@@ -596,7 +614,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "新增场面/信息可见，非简单注水",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-03",
@@ -606,7 +626,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留关键因果并列信息损失",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-04",
@@ -616,7 +638,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "承接实际末段与角色状态",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-05",
@@ -626,7 +650,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "保留不同人物声音和关系",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-06",
@@ -636,7 +662,9 @@
       "stage": "Stage-003",
       "status": "in-progress",
       "acceptance": "锁定事件结果且显示影响",
-      "evidence": ["iterations/stage-001/WORKLOG.md"]
+      "evidence": [
+        "iterations/stage-001/WORKLOG.md"
+      ]
     },
     {
       "id": "AI-07",
@@ -1095,12 +1123,16 @@
       "name": "DOCX/PDF 导出",
       "priority": "P1",
       "stage": "Stage-007",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "分页/字体/中文真实渲染验证",
       "evidence": [
         "design/publication-pdf.md",
-        "assessments/stage-007/pdf-source.md"
-      ]
+        "assessments/stage-007/pdf-source.md",
+        "design/publication-docx.md",
+        "assessments/stage-007/docx-export-source.md",
+        "assessments/release/v0.1.0-alpha.24/README.md"
+      ],
+      "validation": "assessments/stage-007/docx-pdf-acceptance.md"
     },
     {
       "id": "PUB-04",

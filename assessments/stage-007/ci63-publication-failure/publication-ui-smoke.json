@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "desktop-frozen-preview.png",
+      "width": 1008,
+      "height": 681
+    },
+    {
+      "name": "desktop-pdf-layout.png",
+      "width": 1008,
+      "height": 681
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Folder choice instrumented; real host writes and real files verified; native picker interaction not covered",
+  "version": "0.1.0-alpha.23",
+  "htmlDirectory": "D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\publication-ui-oKGYBD\\中文 空格 导出目录\\小说-雾港选章-html-a77f2ffc-30c8-46ac-a383-4d59c00219d6",
+  "failure": "Error: Export files did not settle\n    at finishedCount (file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-publication-ui.mjs:112:9)\n    at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-publication-ui.mjs:318:21",
+  "cleanupFailure": "Error: Command failed: taskkill.exe /PID 756 /F\nERROR: The process with PID 756 could not be terminated.\r\nReason: There is no running instance of the task.\r\r\n"
+}

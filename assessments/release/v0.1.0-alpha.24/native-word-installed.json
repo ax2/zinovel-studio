@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "reader": "Microsoft Word",
+  "version": "16.0",
+  "build": "16.0.20430",
+  "pagesBefore": 3,
+  "pagesAfter": 3,
+  "widthPoints": 595.3,
+  "heightPoints": 841.9,
+  "originalSha256": "049ac15a2221868b042924a4a4cb3ac5c4b121f417969047901594f4d29aff50",
+  "originalUnchanged": true,
+  "nativeEditableCopySaved": true,
+  "scope": "Synthetic QA only; owned new hidden Word process; no existing Word process or user document controlled",
+  "editedCopySha256": "534dcd94464e0bffb7c20b6c834cc6b583c88188a862525ebc4790e2d35a9a28",
+  "versionOfExportingApp": "0.1.0-alpha.24",
+  "localInstallerSha256": "a001f8db1c05a8ba480bb46b0c0213120746dfd53f9088845da6c1a1ed53cf5d"
+}

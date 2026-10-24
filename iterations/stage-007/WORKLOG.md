@@ -74,3 +74,7 @@ alpha.22独立Windows release40070942726首次完整success，BJT2026-10-24 14:5
 ## alpha.24 可编辑 DOCX 源码切片
 冻结副本新增 DOCX 原生段落/标题/页码、Letter/A4/A5 与受控排版；esbuild 内置生产生成器，不依赖本机 Word、Python 或办公引擎。完整213检查与五格式源 UI、独立 HTML/PDF/DOCX 原生阅读器通过，DOCX 三种长文布局6/6/28页均完整渲染，已查看总览和长标题/网址。原生 Word 实际复制编辑保存/前后输出与独立段落比对通过，最终安装版仍待验。17组件原始许可与打包摘要门禁已接。
 过程中保留缺少soffice、Word探针窗口/共享锁、PDF提取顺序和重复目标EEXIST失败；对应修正只影响探针或明确的页脚样式。63c664c的CI在PDF10秒等待失败，失败截图仍在导出；等待改为生产90秒期限加10秒收尾，未删除失败或放松字节/内容/清理验收。设计/评估见design/publication-docx.md、assessments/stage-007/docx-export-source.md。preview仍false，PUB-03与106项统计不提升，下一步源CI、完整安装/升级和阶段Release。
+
+## alpha.24 本机资格与逐项复评
+运行冻结1966e6167c81e91f962372c2ca0d5b19fbf87728，源码CI40077751136首次完整success。精确本机EXE155467909字节/SHA a001f8db1c05a8ba480bb46b0c0213120746dfd53f9088845da6c1a1ed53cf5d，asar87919b4bfc0df31e55e84d67bb615c15db189bda10a440e66503e9cc841e611d。首次完整安装139项、安装8270ms/重装13190ms/卸载4583ms；公开alpha.3升级13440ms、旧稿/设置/任务候选/卸载保稿通过。完整运行133文件622250407字节与EXE真实D盘归档、无ZIP。
+安装版DOCX由独立原生Kit读取3页，再由Word16.0.20430实际复制编辑保存、前后各3页，独立python-docx核对9→10段、原文前缀和源hash不变。已查看桌面DOCX、806×803深色PDF选项、Word/Kit实际末页。改存Word文件只留本地，公开合成截图和报告。PUB-03按原先分页/字体/中文真实渲染条件单项verified，总计27/39/40，图片/目录/导入/远端等不扩大。preview仅准标签重新完整构建验收，稳定false。版本资格、源CI与13份回执保留assessments/release/v0.1.0-alpha.24；发行标签及公开安装字节仍待独立工作流。

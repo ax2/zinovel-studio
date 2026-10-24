@@ -33,4 +33,4 @@ Electron 44.7.0 自带 Node 24.21.0；官方 SDK 通过该 EXE 的 Node 模式�
 
 后续主分支增加可重复命令 `pnpm release:verify-public v0.1.0-alpha.N RELEASE_RUN_ID`：核对本机标签指向、Windows发行工作流成功/标签/提交一致、公开非草稿prerelease与四附件、实际下载三个元数据的GitHub digest、EXE大小/digest/manifest/SHA256SUMS一致、重装卸载与升级回执。报告保存对应版本ci-public/verification.json，失败明确写failed，不残留本次passed。
 
-该命令不下载或再次运行公开EXE；公开字节的执行证据来自同一成功发行CI，不能称为本机再次安装。它可在后续版本工作区复查旧标签，不要求当前package版本等于被复查版本。已对公开alpha.12执行通过；alpha.13须等待自己的发行CI完成再运行。它属于发行后的独立复查，不能替代工作流中的实际安装和升级门禁。
+当前命令实际下载公开EXE到独立指定目录并重新核对大小与SHA-256，另核对三份元数据摘要及匿名可见性；不再次运行该下载EXE。公开字节的执行证据来自同一成功发行CI，不能称为本机再次安装。它可在后续版本工作区复查旧标签，不要求当前package版本等于被复查版本。alpha.23已完成该版本的实际下载与复算证明。此项属于发行后的独立复查，不能替代工作流中的实际安装和升级门禁。

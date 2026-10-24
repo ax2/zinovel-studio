@@ -121,6 +121,11 @@ jobs:
           path: |
             screenshots/release/
             screenshots/stage-005/reader-cleanup-negative/
+            screenshots/stage-007/publication-ui/
+            screenshots/stage-007/publication-html/
+            screenshots/stage-007/publication-pdf/
+            screenshots/stage-007/publication-docx/
+            screenshots/stage-007/publication-docx-layout/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml
             release/image-runtime-verification.json

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "checks": [
+    "real isolated main-window IPC creates/edits a typed map with stable place/region/route IDs; creation reconciliation returns the later version; foreign location and missing creation identity reject without writes; actual JPEG decode freezes EXIF-oriented background",
+    "actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair",
+    "actual host atlas IPC persists explicit epoch/parent/anchor IDs, rejects foreign maps and stale raw-hash saves without overwriting external bytes, returns filtered lightweight diagnostics, preserves exact preimage history and adopts it as a new revision; retired parent is disclosed without changing directory references; no atlas editing UI claim",
+    "actual Electron close retains exact formal manuscript, other-book metadata and selected original image; author workspace is nonblank, renderer has no Node globals, no page errors or external page requests"
+  ],
+  "errors": [],
+  "scope": "Real Electron author workspace and host IPC, including native image decode and actual file transactions; map editing UI is not tested here",
+  "ownedProcessesConfirmedExited": 5,
+  "manuscriptSha256": "db0abe7c692c4dd9526a62b9f3186ac0a4a82faa7edd82e78f28bc0168eb1807"
+}

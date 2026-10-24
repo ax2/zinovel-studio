@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "originalSha256": "049ac15a2221868b042924a4a4cb3ac5c4b121f417969047901594f4d29aff50",
+  "editedSha256": "534dcd94464e0bffb7c20b6c834cc6b583c88188a862525ebc4790e2d35a9a28",
+  "paragraphsBefore": 9,
+  "paragraphsAfter": 10,
+  "originalUnchanged": true,
+  "originalParagraphPrefixUnchanged": true,
+  "appendedMarkerExact": true,
+  "scope": "Independent python-docx inspection of an actual native Word edit/save; synthetic content only"
+}

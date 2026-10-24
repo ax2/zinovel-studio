@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.24",
+  "checks": [
+    "actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts",
+    "independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages"
+  ],
+  "snapshotHash": "02dbf22c71dc1103c855f4fce11b2c5ed90798c21f6a2d6826db51f96ac7402a",
+  "sha256": "40b6d36b60b9428313a889a4411d7f759bd81da4dc71482deb2de0a0b16a0bdb",
+  "bytes": 103968,
+  "inspection": "inspection.json",
+  "renderer": "independent PDFium; actual page review separate"
+}
