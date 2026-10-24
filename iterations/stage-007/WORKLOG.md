@@ -47,3 +47,6 @@ alpha.16标签53d2d93已冻结，发行CI40040294178继续精确重建。主分�
 ## alpha.17 本机阶段资格
 冻结运行源码 d28556a50dc9ecd2eeb985531213e634fd0548a6，源CI40047648309 success。完整157检查、构建/独立HTML/原生目录通过；打包7164、安装96655、升级62791均exit0。精确EXE222895598字节、SHA256 d73dba9269091592c417ccb039435ac5cfefee38859a077d92cae2229c9b5ab7。安装16615ms、重装27118ms、卸载7120ms，安装后116条检查含发布捕获/作者UI/实际产物HTML通过；alpha.3先安装187796ms、覆盖升级32611ms，原稿任务设置精确保留、候选恢复可审阅、卸载保稿通过。没有将旧版首次安装较慢原因归为已证实故障。
 项目路径实际Junction到E卷，仅约2GiB可用，完整新运行目录/EXE/资格保存D:\Work\zinovel-releases\v0.1.0-alpha.17，约598GiB空闲；历史归档不删除，无ZIP。版本化回执与代表图存assessments/release/v0.1.0-alpha.17。preview ready仅允许标签CI，稳定门禁false、106项状态不提升；公开附件与CI哈希仍待同标签完整重建后验证。
+
+## alpha.17标签与alpha.18开发线
+alpha.17不可变标签c820402190be9314581239294f52b17cf0abb74e已推送，Windows release 40048673869开始重新验收，未据排队状态宣称公开。主分支推进alpha.18，preview资格重置false/reports=[]。复查公开核验脚本仅下载三份元数据并比对GitHub附件digest，不能称为已重新哈希实际EXE；18补充下载EXE到独立指定目录、核对实际大小与SHA，回执明确CI执行与本机下载，待17公开后实际运行新核验。

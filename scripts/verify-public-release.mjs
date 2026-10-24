@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
@@ -11,7 +11,7 @@ if (
   !/^\d+$/.test(runId || "")
 )
   throw new Error(
-    "Usage: node scripts/verify-public-release.mjs v0.1.0-alpha.N RELEASE_RUN_ID [output-directory]",
+    "Usage: node scripts/verify-public-release.mjs v0.1.0-alpha.N RELEASE_RUN_ID [output-directory] [installer-directory]",
   );
 const output = resolve(
     root,
@@ -127,6 +127,31 @@ try {
   assert.ok(
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
+  const installerDirectory = resolve(
+    root,
+    process.argv[5] || join(output, "installer"),
+  );
+  mkdirSync(installerDirectory, { recursive: true });
+  run("gh", [
+    "release",
+    "download",
+    tag,
+    "--repo",
+    repository,
+    "--dir",
+    installerDirectory,
+    "--clobber",
+    "--pattern",
+    manifest.installer,
+  ]);
+  const downloadedInstaller = join(installerDirectory, manifest.installer);
+  assert.equal(statSync(downloadedInstaller).size, manifest.bytes);
+  assert.equal(
+    createHash("sha256")
+      .update(readFileSync(downloadedInstaller))
+      .digest("hex"),
+    manifest.sha256,
+  );
   const verification = {
     ...attempt,
     status: "passed",
@@ -137,8 +162,10 @@ try {
     bytes: manifest.bytes,
     sha256: manifest.sha256,
     metadataDigestsVerified: true,
+    downloadedInstallerSha256Verified: true,
+    downloadedInstaller,
     publicInstallerExecutionEvidence:
-      "Release CI installed exact manifest bytes; public EXE not downloaded again on local host",
+      "Release CI installed exact manifest bytes; actual public EXE downloaded and independently rehashed locally; no additional local execution claimed",
   };
   writeFileSync(
     join(output, "verification.json"),
