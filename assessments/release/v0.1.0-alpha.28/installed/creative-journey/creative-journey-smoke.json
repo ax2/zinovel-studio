@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
+    "scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
+    "new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
+    "real desktop restart preserves manuscript, selected pilot, planning placement and all five materials with zero replay; all model content is synthetic fixture data, not literary-quality evidence"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "empty-book-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "planned-chapter-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "written-chapter-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

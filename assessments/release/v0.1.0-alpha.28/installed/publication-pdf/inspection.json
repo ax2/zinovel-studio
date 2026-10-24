@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "pages": 3,
+  "sizes": [
+    [
+      594.95996,
+      841.91998
+    ],
+    [
+      594.95996,
+      841.91998
+    ],
+    [
+      594.95996,
+      841.91998
+    ]
+  ],
+  "sha256": "7eb7c9fd40704177541ce7944e4e21ef1161f44886c0a80004b310b91205621f",
+  "renderedPages": [
+    "page-001.png",
+    "page-002.png",
+    "page-003.png"
+  ],
+  "contactSheet": "contact-sheet.png",
+  "fonts": [
+    {
+      "name": "/AAAAAA+MicrosoftYaHei-Bold",
+      "embedded": true
+    },
+    {
+      "name": "/BAAAAA+MicrosoftYaHei",
+      "embedded": true
+    },
+    {
+      "name": "/CAAAAA+SimSun-ExtB",
+      "embedded": true
+    },
+    {
+      "name": "/DAAAAA+ArialMT",
+      "embedded": true
+    },
+    {
+      "name": "/AAAAAA+MicrosoftYaHei-Bold",
+      "embedded": true
+    },
+    {
+      "name": "/BAAAAA+MicrosoftYaHei",
+      "embedded": true
+    },
+    {
+      "name": "/DAAAAA+ArialMT",
+      "embedded": true
+    },
+    {
+      "name": "/AAAAAA+MicrosoftYaHei-Bold",
+      "embedded": true
+    },
+    {
+      "name": "/BAAAAA+MicrosoftYaHei",
+      "embedded": true
+    },
+    {
+      "name": "/CAAAAA+SimSun-ExtB",
+      "embedded": true
+    },
+    {
+      "name": "/DAAAAA+ArialMT",
+      "embedded": true
+    },
+    {
+      "name": "Type3",
+      "embedded": true
+    }
+  ],
+  "outsidePaper": [],
+  "required": [
+    "雾港选章",
+    "合成作者",
+    "第一章原稿𠮷🌊",
+    "第二章结尾。",
+    "尚未自动保存就打开发布。"
+  ],
+  "outline": "[{'/Title': '雾港选章', '/Page': IndirectObject(2, 0, 2196788951904), '/Type': '/XYZ', '/Left': 45.492188, '/Top': 790.88483, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '第二章 渡口', '/Page': IndirectObject(9, 0, 2196788951904), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '第一章 旧信', '/Page': IndirectObject(11, 0, 2196788951904), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}]]",
+  "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+}

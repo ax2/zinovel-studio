@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checks": [
+    "distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range",
+    "61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click",
+    "deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "relations-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "relation-evidence-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

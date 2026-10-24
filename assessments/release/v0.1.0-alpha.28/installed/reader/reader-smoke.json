@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checks": [
+    "unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution",
+    "actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation",
+    "external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry",
+    "Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "phone-dark-progress.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "directory-refresh-light.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "narrow-reader.png",
+      "width": 806,
+      "height": 803
+    }
+  ],
+  "cleanupOwnership": {
+    "rootPid": 68968,
+    "rendererPid": 79760,
+    "captured": 5
+  }
+}

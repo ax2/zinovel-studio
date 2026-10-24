@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "sha256": "e019c92bd75eb587a0ad61b69b84b7221f9149395551a2d7e03426428ddc3e94",
+  "paragraphs": 9,
+  "chapterHeadings": 2,
+  "paper": "A4",
+  "allTextEditable": true,
+  "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+  "pdfPages": 3,
+  "pdfSha256": "f2f02677ac8e242f492ee31984272802ab9051b408b6d5d9fdad677121e45a83",
+  "renderedPages": [
+    "page-001.png",
+    "page-002.png",
+    "page-003.png"
+  ],
+  "verifiedFooters": [
+    "1 / 3",
+    "2 / 3",
+    "3 / 3"
+  ]
+}
