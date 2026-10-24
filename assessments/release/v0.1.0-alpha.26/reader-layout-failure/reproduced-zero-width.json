@@ -1,0 +1,47 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
+  "launchPid": 69488,
+  "viewport": {
+    "width": 986,
+    "height": 863,
+    "scale": 1.25
+  },
+  "version": "0.1.0-alpha.26",
+  "switchedTaskStatus": "cancelled",
+  "readingLayout": {
+    "dialog": {
+      "left": 0,
+      "right": 986.4000244140625,
+      "top": 0,
+      "bottom": 863.2000122070312,
+      "width": 986.4000244140625,
+      "height": 863.2000122070312
+    },
+    "paragraph": {
+      "left": 977.875,
+      "right": 977.875,
+      "top": 187.3000030517578,
+      "bottom": 511.3000030517578,
+      "width": 0,
+      "height": 324
+    },
+    "layout": {
+      "left": 702.875,
+      "right": 973.2000122070312,
+      "top": 0,
+      "bottom": 806.7999877929688,
+      "width": 270.32501220703125,
+      "height": 806.7999877929688
+    },
+    "horizontalOverflow": false,
+    "viewport": {
+      "width": 986,
+      "height": 863
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Reading text must have a usable line width, not a zero-width offscreen column\n    at file:///D:/Work/zinovel-studio/scripts/smoke-offline-writing.mjs:327:10"
+}

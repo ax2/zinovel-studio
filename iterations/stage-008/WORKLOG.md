@@ -2,6 +2,8 @@
 
 ## alpha.26 离线写作增量
 
+第三轮机器151项passed，安装10717/重装17894/卸载5138ms；查看实际窄屏阅读图发现正文屏外，撤销候选本机资格，不发标签。根因.show-inspector footer把阅读内footer置2/5列，作用域收紧到工作台直接子footer。最初几何探针也放过0宽正文，补可用行宽后实际红灯重现；修复源码同986×863/1.25下段落661.4×36，四段可见、无横向溢出，截图已查看。全部坏图/机器passed/复现回执保留，准备新候选重新完整安装与升级，不能继承旧151资格。见assessments/release/v0.1.0-alpha.26/reader-layout-failure/README.md。
+
 QA补强：整库保护候选第二轮安装10199ms，流式和离线四组通过，独立PDF解析因通用Python缺pdfplumber失败；保留回执/原日志，自身路径/asar/UninstallString核对后卸载，不误称应用PDF失败。增加安装前独立文档依赖预检；配置独立QA Python后第三轮全套重验，新增实际EXE备份边界四组也接入安装/源码CI/发行CI和同asar清单门禁。CI可明确允许同磁盘并记录事实，本机独立磁盘默认仍强制，不把不同盘符当物理独立。
 
 复评状态：LIB-08/OPS-05/OPS-06/OPS-07已有代码与部分运行证据，由planned转in-progress，未晋升verified；总计26 verified/44 in-progress/36 planned，106项范围不变。完整增量备份方案见design/incremental-backup.md，仍是待实现草案。生产源码5870883的CI40097159829完整success；后续仅QA/文档门禁增强另行提交重验。

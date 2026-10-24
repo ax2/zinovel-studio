@@ -308,6 +308,47 @@ try {
   const reader = page.getByRole("dialog", { name: /阅读/ });
   await reader.waitFor();
   assert.ok((await reader.innerText()).includes("服务已关闭仍可保存。"));
+  report.readingLayout = await reader.evaluate((dialog) => {
+    const bounds = (node) => {
+      const r = node.getBoundingClientRect();
+      return {
+        left: r.left,
+        right: r.right,
+        top: r.top,
+        bottom: r.bottom,
+        width: r.width,
+        height: r.height,
+      };
+    };
+    return {
+      dialog: bounds(dialog),
+      paragraph: bounds(dialog.querySelector(".reader-sheet p")),
+      layout: bounds(dialog.querySelector(".reader-layout")),
+      horizontalOverflow: dialog.scrollWidth > dialog.clientWidth + 1,
+      viewport: { width: innerWidth, height: innerHeight },
+    };
+  });
+  const geometry = report.readingLayout;
+  assert.equal(
+    geometry.horizontalOverflow,
+    false,
+    "Reading dialog must not create implicit overflowing columns",
+  );
+  assert.ok(
+    geometry.layout.height > 100,
+    "Reading body must have usable height",
+  );
+  assert.ok(
+    geometry.paragraph.width >= 200,
+    "Reading text must have a usable line width, not a zero-width offscreen column",
+  );
+  assert.ok(
+    geometry.paragraph.left >= 0 &&
+      geometry.paragraph.right <= geometry.viewport.width &&
+      geometry.paragraph.top >= 0 &&
+      geometry.paragraph.bottom <= geometry.viewport.height,
+    "Reading text must actually be visible after entering from a narrow assistant drawer",
+  );
   await page.screenshot({
     path: join(output, "offline-reading-after-restart.png"),
   });
@@ -323,7 +364,7 @@ try {
     "renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
     "switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
     "provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
-    "after full application restart and loopback provider shutdown, manual save and actual reading preview remain usable without additional provider requests or page errors",
+    "after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors",
   );
   report.status = "passed";
 } catch (error) {
