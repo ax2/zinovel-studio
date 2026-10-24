@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "runId": 40070101490,
+  "commit": "9d88f1ab67e95412fa7490a718763ba1b7676f55",
+  "jobs": [
+    {
+      "name": "windows",
+      "conclusion": "success"
+    },
+    {
+      "name": "planning",
+      "conclusion": "success"
+    }
+  ],
+  "scope": "Development checks only; not release CI"
+}

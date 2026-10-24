@@ -63,6 +63,37 @@ if (
 )
   throw new Error("Packaged image runtime verification is missing or stale");
 manifest.imageRuntime = imageRuntime;
+const pdfPublication = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/publication-pdf/publication-pdf-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  pdfPublication.status !== "passed" ||
+  pdfPublication.version !== pkg.version ||
+  !/^[a-f0-9]{64}$/.test(pdfPublication.sha256 || "") ||
+  !/^[a-f0-9]{64}$/.test(pdfPublication.snapshotHash || "") ||
+  !Number.isSafeInteger(pdfPublication.bytes) ||
+  pdfPublication.bytes < 10 ||
+  !Array.isArray(pdfPublication.checks) ||
+  pdfPublication.checks.length < 2
+)
+  throw new Error(
+    "Installed PDF export independent verification is missing or stale",
+  );
+manifest.pdfPublication = {
+  version: pdfPublication.version,
+  snapshotHash: pdfPublication.snapshotHash,
+  sha256: pdfPublication.sha256,
+  bytes: pdfPublication.bytes,
+  checks: pdfPublication.checks,
+  scope:
+    "Synthetic frozen selection exported by installed EXE; independent parser and PDFium, no professional print certification",
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

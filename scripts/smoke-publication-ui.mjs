@@ -113,6 +113,7 @@ async function finishedCount(count) {
 }
 try {
   await launch();
+  report.version = await app.evaluate(({ app }) => app.getVersion());
   assert.equal(await page.title(), "ZiNovel Studio");
   const editor = page.getByLabel("正文编辑器");
   await editor.click();
@@ -374,6 +375,10 @@ try {
     .getByRole("article", { name: "发布副本章节：第一章 旧信", exact: true })
     .scrollIntoViewIfNeeded();
   await shot("narrow-reading-body.png");
+  await panel()
+    .getByRole("group", { name: "PDF排版", exact: true })
+    .scrollIntoViewIfNeeded();
+  await shot("narrow-pdf-layout.png");
   assert.equal(
     await panel().evaluate(
       (element) => element.scrollWidth <= element.clientWidth + 1,
@@ -535,6 +540,19 @@ try {
     .getByRole("article", { name: "发布副本章节：第二章 渡口", exact: true })
     .scrollIntoViewIfNeeded();
   await shot("dark-narrow-frozen-preview.png");
+  await panel()
+    .getByLabel("发布副本导出格式", { exact: true })
+    .selectOption("pdf");
+  await panel()
+    .getByRole("group", { name: "PDF排版", exact: true })
+    .scrollIntoViewIfNeeded();
+  await shot("dark-narrow-pdf-layout.png");
+  assert.equal(
+    await panel().evaluate(
+      (element) => element.scrollWidth <= element.clientWidth + 1,
+    ),
+    true,
+  );
   assert.deepEqual(report.errors, []);
   report.checks.push(
     "actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",

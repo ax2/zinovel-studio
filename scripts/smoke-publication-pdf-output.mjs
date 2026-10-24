@@ -77,6 +77,14 @@ const result = spawnSync(
 );
 const report = {
   status: result.status === 0 ? "passed" : "failed",
+  version: ui.version,
+  checks:
+    result.status === 0
+      ? [
+          "actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts",
+          "independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages",
+        ]
+      : [],
   snapshotHash: manifest.snapshotHash,
   sha256: manifest.files[0].sha256,
   bytes: bytes.length,

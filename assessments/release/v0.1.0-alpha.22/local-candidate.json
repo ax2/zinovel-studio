@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.22",
+  "runtimeSourceCommit": "9d88f1ab67e95412fa7490a718763ba1b7676f55",
+  "archive": "D:\\zinovel-releases\\v0.1.0-alpha.22",
+  "appAsarSha256": "139af095d1801713e06a075a6fec3083e518f47053a5f5d1a7b586c9d042eaa0",
+  "installer": "ZiNovel-Studio-0.1.0-alpha.22-windows-x64-setup.exe",
+  "bytes": 222957259,
+  "sha256": "59f9d87715e465a71d6ca60bcb5e9ca0fc84a6acd57eb163e0dc0e6f0e4ea95d",
+  "fullRuntimeRetained": true,
+  "zipCreated": false
+}
