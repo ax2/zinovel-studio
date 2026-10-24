@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    "Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+    "Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+    "Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
+    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged"
+  ],
+  "errors": [],
+  "sourceDisk": {
+    "DriveLetter": "D",
+    "DiskNumber": 1,
+    "PartitionNumber": 2
+  },
+  "backupDisk": {
+    "DriveLetter": "C",
+    "DiskNumber": 0,
+    "PartitionNumber": 3
+  },
+  "independentDisks": true,
+  "browser": "Browser plugin unavailable; repository Playwright/Electron",
+  "scope": "Synthetic books; actual desktop host and author controls; native picker results and one object-write barrier instrumented. Not physical disk-loss, native-picker clicks or system-IME qualification.",
+  "version": "0.1.0-alpha.27",
+  "packaged": false,
+  "geometry": {
+    "left": 30,
+    "right": 776.4000244140625,
+    "top": 59.67499923706055,
+    "bottom": 743.5250358581543,
+    "width": 806,
+    "height": 803,
+    "scrollWidth": 745,
+    "clientWidth": 745,
+    "scale": 1.25
+  },
+  "manifests": [
+    {
+      "id": "4ff3e516-281a-4a7f-b925-652641686d0c",
+      "hash": "6fb8c5c0b015783dd5ed66e947a48dde4c46d6d72a86e7186a67595757ea599a",
+      "files": 10
+    },
+    {
+      "id": "b4c8d09d-83d7-4f3e-93bd-525b5e92dea7",
+      "hash": "1dd5accc7eaf444c6f09c7bd7cff3c6496855f8e88af2d82e116c8e5f5f47ac7",
+      "files": 10
+    },
+    {
+      "id": "fbd32524-d15d-4c30-addc-491707f51fb2",
+      "hash": "c412e6fbe8afa85e7ad4ad87512cee1a99c58c8a229e6c33070347e31d5aacaa",
+      "files": 11
+    }
+  ]
+}

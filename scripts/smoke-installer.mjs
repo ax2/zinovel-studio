@@ -156,6 +156,11 @@ try {
     ["smoke-utf8-integrity.mjs", "utf8-integrity/utf8-integrity-smoke.json"],
     ["smoke-offline-writing.mjs", "offline-writing/offline-writing-smoke.json"],
     [
+      "smoke-backup-vault.mjs",
+      "incremental-backup/incremental-backup-smoke.json",
+      ["--allow-same-disk"],
+    ],
+    [
       "smoke-independent-backup.mjs",
       "independent-backup/independent-backup-smoke.json",
       ["--allow-same-disk"],

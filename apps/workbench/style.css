@@ -1981,3 +1981,22 @@ p {
 .publication-frozen-image { margin: 14px 0; text-align: center; }
 .publication-frozen-image img { max-width: 100%; height: auto; max-height: 320px; object-fit: contain; }
 .publication-frozen-image figcaption { overflow-wrap: anywhere; white-space: normal; }
+.backup-panel { width: min(940px, calc(100vw - 40px)); max-height: calc(100dvh - 40px); overflow-y: auto; box-sizing: border-box; }
+.backup-panel .modal-heading { align-items: flex-start; gap: 16px; }
+.backup-panel .modal-heading h2 { margin-bottom: 8px; }
+.backup-panel .modal-heading p { margin-top: 0; }
+.backup-panel .muted { font-size: 13px; line-height: 1.65; }
+.backup-actions, .backup-progress, .backup-pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0; }
+.backup-progress, .backup-confirm { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.backup-progress span { flex: 1; min-width: 120px; }
+.backup-notice { padding: 12px; border-left: 3px solid var(--accent); background: var(--surface); }
+.backup-path { overflow-wrap: anywhere; }
+.backup-version-list { max-height: 300px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+.backup-panel .backup-version-list label { display: flex; flex-direction: row; gap: 12px; align-items: center; text-align: left; margin: 0; padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.backup-version-list label.selected { background: var(--surface); box-shadow: inset 3px 0 var(--accent); }
+.backup-version-list input { flex: none; width: auto; }
+.backup-version-list small { display: block; margin-top: 5px; color: var(--muted); }
+.backup-pagination span { flex: 1; min-width: 150px; text-align: center; font-size: 13px; }
+.backup-confirm button { margin-right: 10px; }
+.backup-empty { padding: 30px 12px; color: var(--muted); text-align: center; border: 1px dashed var(--border); border-radius: 8px; }
+@media(max-width: 850px) { .modal.backup-panel { width: calc(100vw - 20px); max-width: none; max-height: calc(100dvh - 20px); padding: 18px; } }

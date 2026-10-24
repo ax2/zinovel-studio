@@ -21,6 +21,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { api, type Book, type Chapter } from "./api";
+import { BackupPanel } from "./backup-panel";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
 import {
   ImportDialog,
@@ -68,6 +69,7 @@ function App() {
   const [pilotsOpen, setPilotsOpen] = useState(false);
   const [readerOpen, setReaderOpen] = useState(false);
   const [publicationOpen, setPublicationOpen] = useState(false);
+  const [backupOpen, setBackupOpen] = useState(false);
   const [assetsOpen, setAssetsOpen] = useState(false);
   const [mapsOpen, setMapsOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
@@ -581,6 +583,18 @@ function App() {
           onClose={() => setPublicationOpen(false)}
         />
       )}
+      {backupOpen && book && (
+        <BackupPanel
+          key={book.id}
+          book={book}
+          onClose={() => setBackupOpen(false)}
+          onRestored={async (restored) => {
+            setBackupOpen(false);
+            await refresh();
+            await openBook(restored);
+          }}
+        />
+      )}
       {assetsOpen && book && (
         <AssetsPanel
           key={book.id}
@@ -733,6 +747,14 @@ function App() {
           />
           <main className="workspace">
             <div className="toolbar">
+              <button
+                disabled={composition}
+                onClick={async () => {
+                  if (await save()) setBackupOpen(true);
+                }}
+              >
+                增量备份
+              </button>
               <button onClick={() => setPlanningOpen(true)}>场景编排</button>
               <button onClick={() => setPilotsOpen(true)}>试写实验室</button>
               <button

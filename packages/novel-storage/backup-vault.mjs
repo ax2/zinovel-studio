@@ -160,11 +160,24 @@ export class BackupVault {
       await unlink(temporary).catch(() => {});
     }
   }
-  capture(bookId, destination, { maxBytes = LIMIT, signal, onProgress } = {}) {
+  capture(
+    bookId,
+    destination,
+    {
+      maxBytes = LIMIT,
+      signal,
+      onProgress,
+      onCommitting,
+      existingVault = false,
+      expectedVaultId,
+    } = {},
+  ) {
     return this.storage.exclusive(async () => {
       if (!Number.isSafeInteger(maxBytes) || maxBytes < 1 || maxBytes > LIMIT)
         throw new Error("增量备份容量限制无效");
       signal?.throwIfAborted();
+      if (expectedVaultId !== undefined && !uuid.test(expectedVaultId))
+        throw new Error("增量备份库授权身份无效");
       const bookRoot = await this.storage.bookRoot(bookId),
         book = await this.storage.manifest(bookRoot);
       if (book.id !== bookId || !uuid.test(bookId))
@@ -201,6 +214,7 @@ export class BackupVault {
           a.path < b.path ? -1 : a.path > b.path ? 1 : 0,
         );
       };
+      await onProgress?.({ phase: "scanning", copiedBytes: 0 });
       const planned = await scan();
       const files = [],
         names = new Set();
@@ -219,20 +233,31 @@ export class BackupVault {
       }
       signal?.throwIfAborted();
       await mkdir(parent, { recursive: true });
-      const root = join(parent, `zinovel-vault-${bookId}`);
+      const root = existingVault
+        ? parent
+        : join(parent, `zinovel-vault-${bookId}`);
       let fresh = false;
-      try {
-        await mkdir(root);
-        fresh = true;
-      } catch (error) {
-        if (error.code !== "EEXIST") throw error;
-      }
+      if (!existingVault)
+        try {
+          await mkdir(root);
+          fresh = true;
+        } catch (error) {
+          if (error.code !== "EEXIST") throw error;
+        }
       if (
         (await lstat(root)).isSymbolicLink() ||
         !(await lstat(root)).isDirectory()
       )
         throw new Error("备份库目录不能是链接");
-      if (!fresh) await this.root(root);
+      if (!fresh) {
+        const selected = await this.root(root);
+        if (
+          selected.identity.bookId !== bookId ||
+          (expectedVaultId !== undefined &&
+            selected.identity.id !== expectedVaultId)
+        )
+          throw new Error("增量备份库已改变或属于另一作品");
+      }
       const operation = randomUUID(),
         lockPath = await this.storage.path(root, ".writer.lock");
       const owner = json({
@@ -264,6 +289,11 @@ export class BackupVault {
         const state = await this.root(root);
         if (state.identity.bookId !== bookId)
           throw new Error("增量备份库属于另一作品");
+        if (
+          expectedVaultId !== undefined &&
+          state.identity.id !== expectedVaultId
+        )
+          throw new Error("增量备份库授权身份已改变");
         for (const name of [".staging", "objects", "snapshots"]) {
           if (!(await lstat(await this.storage.path(root, name))).isDirectory())
             throw new Error("备份库结构无效");
@@ -304,6 +334,11 @@ export class BackupVault {
           });
         }
         // Recheck the exact entire source before publishing the only visible commit record.
+        await onProgress?.({
+          phase: "verifying",
+          copiedBytes,
+          objects: missing.size,
+        });
         for (const file of files) {
           signal?.throwIfAborted();
           const bytes = await readFile(
@@ -335,6 +370,7 @@ export class BackupVault {
           objects: missing.size,
         });
         signal?.throwIfAborted();
+        onCommitting?.();
         await this.publish(
           root,
           `snapshots/${snapshot.id}.json`,
@@ -419,10 +455,12 @@ export class BackupVault {
       };
     });
   }
-  restore(source, snapshotId) {
+  restore(source, snapshotId, { expectedHash, expectedVaultId } = {}) {
     return this.storage.exclusive(async () => {
       if (!uuid.test(snapshotId)) throw new Error("无效增量备份快照ID");
       const { root, identity } = await this.root(source);
+      if (expectedVaultId !== undefined && identity.id !== expectedVaultId)
+        throw new Error("所选增量备份库身份已改变，请重新选择");
       const snapshot = checkedSnapshot(
         JSON.parse(
           await readUtf8File(
@@ -432,6 +470,8 @@ export class BackupVault {
         identity,
       );
       if (snapshot.id !== snapshotId) throw new Error("快照文件身份不一致");
+      if (expectedHash !== undefined && snapshot.hash !== expectedHash)
+        throw new Error("所选增量备份版本已改变，请刷新列表");
       const contents = new Map();
       for (const file of snapshot.files)
         contents.set(file.path, await this.object(root, file));

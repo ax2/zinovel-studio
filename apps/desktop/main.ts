@@ -7,6 +7,7 @@ import { readAssetSource } from "../../packages/novel-storage/image-decoder.mjs"
 import { assetId } from "../../packages/novel-domain/assets.mjs";
 import { mapId } from "../../packages/novel-domain/maps.mjs";
 import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
+import { BackupSessions } from "../../packages/novel-storage/backup-sessions.mjs";
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
 import { publicationPdfOptions } from "../../packages/novel-domain/publication-pdf-options.mjs";
@@ -38,6 +39,7 @@ const dataRoot =
 app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
 const publicationCaptures = new PublicationCaptures(store.publication);
+const backupSessions = new BackupSessions(store.backups);
 const publicationExports = new Set<Promise<unknown>>();
 // Map background/history writes may also decode outside the book queue.
 const assetOperations = new Set<Promise<unknown>>();
@@ -92,6 +94,7 @@ async function closeAfterRecovery() {
   await materialAcceptance.whenIdle();
   await pilotAcceptance.whenIdle();
   await publicationCaptures.stop();
+  await backupSessions.stop();
   await Promise.allSettled([...publicationExports]);
   await Promise.allSettled([...assetOperations]);
   await store.whenIdle();
@@ -223,6 +226,99 @@ if (
           try {
             let value: unknown;
             switch (action) {
+              case "backup.choose":
+              case "backup.open": {
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未选择备份目录");
+                if (Object.keys(payload).some((key) => key !== "bookId"))
+                  throw new Error("备份目录只能通过原生选择器授权");
+                if (
+                  !(await store.listBooks()).books.some(
+                    (book: { id: string }) => book.id === payload.bookId,
+                  )
+                )
+                  throw new Error("作品不可读或已移除，未选择备份目录");
+                const selected = await dialog.showOpenDialog(window, {
+                  title:
+                    action === "backup.choose"
+                      ? "选择书库外的增量备份位置"
+                      : "打开增量备份库文件夹",
+                  properties:
+                    action === "backup.choose"
+                      ? ["openDirectory", "createDirectory"]
+                      : ["openDirectory"],
+                });
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未开始备份操作");
+                value = selected.canceled
+                  ? { cancelled: true }
+                  : action === "backup.choose"
+                    ? backupSessions.startNew(
+                        event.sender.id,
+                        payload.bookId,
+                        selected.filePaths[0],
+                      )
+                    : await backupSessions.open(
+                        event.sender.id,
+                        payload.bookId,
+                        selected.filePaths[0],
+                      );
+                break;
+              }
+              case "backup.append":
+                value = backupSessions.startSelected(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.token,
+                );
+                break;
+              case "backup.refresh":
+                value = await backupSessions.refresh(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.token,
+                );
+                break;
+              case "backup.page":
+                value = backupSessions.page(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.token,
+                  payload.page,
+                );
+                break;
+              case "backup.status":
+                value = backupSessions.status(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "backup.cancel":
+                value = backupSessions.cancel(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "backup.result":
+                value = await backupSessions.completed(
+                  event.sender.id,
+                  payload.bookId,
+                  payload.id,
+                );
+                break;
+              case "backup.restore":
+                value = {
+                  book: await backupSessions.restore(
+                    event.sender.id,
+                    payload.bookId,
+                    payload.token,
+                    payload.id,
+                    payload.hash,
+                  ),
+                };
+                break;
               case "library.list":
                 value = await store.listBooks();
                 break;
@@ -1304,6 +1400,7 @@ if (
                 await materialAcceptance.whenIdle();
                 await pilotAcceptance.whenIdle();
                 await publicationCaptures.stop();
+                await backupSessions.stop();
                 await Promise.allSettled([...publicationExports]);
                 await Promise.allSettled([...assetOperations]);
                 await store.whenIdle();
@@ -1367,6 +1464,7 @@ if (
         try {
           await harness.cancel();
           await publicationCaptures.cancelAll();
+          await backupSessions.cancelAll();
           await Promise.allSettled([...publicationExports]);
           await Promise.allSettled([...assetOperations]);
           await store.whenIdle();

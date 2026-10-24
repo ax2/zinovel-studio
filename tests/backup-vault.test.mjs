@@ -472,3 +472,36 @@ test("incremental restore keeps current manuscript, old frozen publication image
   assert.equal(copiedCard.notes, "PRIVATE_ASSET_NOTES_SYNTHETIC");
   assert.doesNotMatch(JSON.stringify(frozen), /PRIVATE_ASSET_NOTES_SYNTHETIC/);
 });
+
+test("a renamed whole vault can continue appending while stale identity and selected hash baselines refuse changes", async () => {
+  const f = await setup(),
+    first = await f.store.backups.capture(f.book.id, f.destination);
+  const moved = join(f.root, "renamed-vault");
+  await cp(first.path, moved, { recursive: true });
+  const catalog = await f.store.backups.list(moved);
+  const next = await f.store.backups.capture(f.book.id, moved, {
+    existingVault: true,
+    expectedVaultId: catalog.vaultId,
+  });
+  assert.equal(
+    next.path,
+    await (await import("node:fs/promises")).realpath(moved),
+  );
+  assert.equal(next.copiedBytes, 0);
+  const before = await readdir(f.store.root);
+  await assert.rejects(
+    f.store.backups.restore(moved, next.snapshotId, {
+      expectedHash: "0".repeat(64),
+      expectedVaultId: catalog.vaultId,
+    }),
+    /版本已改变/,
+  );
+  await assert.rejects(
+    f.store.backups.capture(f.book.id, moved, {
+      existingVault: true,
+      expectedVaultId: "00000000-0000-0000-0000-000000000000",
+    }),
+    /已改变/,
+  );
+  assert.deepEqual(await readdir(f.store.root), before);
+});

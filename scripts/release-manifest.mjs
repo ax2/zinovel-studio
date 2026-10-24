@@ -248,6 +248,36 @@ manifest.backupBoundary = {
   checks: backupBoundary.checks,
   scope: backupBoundary.scope,
 };
+const incrementalBackup = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/incremental-backup/incremental-backup-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  incrementalBackup.status !== "passed" ||
+  incrementalBackup.version !== pkg.version ||
+  incrementalBackup.packaged !== true ||
+  incrementalBackup.appAsarSha256 !== appAsarSha256 ||
+  incrementalBackup.checks?.length !== 4 ||
+  incrementalBackup.errors?.length !== 0 ||
+  incrementalBackup.manifests?.length !== 3 ||
+  incrementalBackup.geometry?.scrollWidth >
+    incrementalBackup.geometry?.clientWidth + 1
+)
+  throw new Error("Installed incremental backup proof is missing or stale");
+manifest.incrementalBackup = {
+  version: incrementalBackup.version,
+  appAsarSha256: incrementalBackup.appAsarSha256,
+  independentDisks: incrementalBackup.independentDisks,
+  sourceDisk: incrementalBackup.sourceDisk,
+  backupDisk: incrementalBackup.backupDisk,
+  checks: incrementalBackup.checks,
+  scope: incrementalBackup.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),
