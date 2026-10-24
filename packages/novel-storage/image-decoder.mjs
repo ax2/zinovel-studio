@@ -91,7 +91,12 @@ export async function readAssetSource(path) {
     await file.close();
   }
 }
-export async function inspectAssetImage(input) {
+export async function inspectAssetImage(
+  input,
+  previewEdge = assetLimits.thumbnail,
+) {
+  if (![assetLimits.thumbnail, 2048].includes(previewEdge))
+    throw new Error("图像预览尺寸无效");
   const bytes = copyImageBytes(input),
     format = imageFormat(bytes);
   const options = {
@@ -120,14 +125,16 @@ export async function inspectAssetImage(input) {
     const thumbnail = await sharp(bytes, options)
       .autoOrient()
       .resize({
-        width: assetLimits.thumbnail,
-        height: assetLimits.thumbnail,
+        width: previewEdge,
+        height: previewEdge,
         fit: "inside",
         withoutEnlargement: true,
       })
       .png()
       .toBuffer();
-    if (thumbnail.length > 2 * 1024 * 1024) throw new Error("图像预览超出上限");
+    const outputLimit = previewEdge === 2048 ? 20 : 2;
+    if (thumbnail.length > outputLimit * 1024 * 1024)
+      throw new Error("图像预览超出上限");
     return { bytes, blob, thumbnail };
   } catch {
     throw new Error("图像无法完整解码、尺寸过大或格式不支持，原文件未改动");

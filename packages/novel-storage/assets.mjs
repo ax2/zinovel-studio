@@ -35,12 +35,12 @@ export class AssetStore {
     if (book.id !== bookId) throw new Error("图像所属作品不符");
     return { root, book, origins: publicationOriginIds(book) };
   }
-  async decode(bytes) {
+  async decode(bytes, previewEdge) {
     if (this.#decoding >= 2)
       throw new Error("图像处理繁忙，请等待当前预览或导入完成");
     this.#decoding++;
     try {
-      return await inspectAssetImage(bytes);
+      return await inspectAssetImage(bytes, previewEdge);
     } finally {
       this.#decoding--;
     }

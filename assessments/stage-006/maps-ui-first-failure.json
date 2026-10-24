@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Real author map UI and host persistence; native folder selection for backup/restore is instrumented, no native IME or physical phone claim",
+  "failure": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('正文编辑器').locator('.cm-content')\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-maps-ui.mjs:177:57"
+}

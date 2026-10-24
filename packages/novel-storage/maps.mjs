@@ -430,8 +430,8 @@ export class MapStore {
       );
     });
   }
-  async verifyImage(blob, bytes) {
-    const image = await this.assets.decode(bytes);
+  async verifyImage(blob, bytes, previewEdge) {
+    const image = await this.assets.decode(bytes, previewEdge);
     if (Object.keys(image.blob).some((key) => image.blob[key] !== blob[key]))
       throw new Error("冻结地图底图尺寸或格式与记录不符，请保留原件");
     return image;
@@ -458,6 +458,7 @@ export class MapStore {
     const image = await this.verifyImage(
       initial.record.data.background.record.blob,
       initial.bytes,
+      2048,
     );
     await this.storage.exclusive(async () => {
       const ctx = await this.context(bookId);

@@ -72,6 +72,7 @@ jobs:
       - run: pnpm test:publication-ui
       - run: pnpm test:assets
       - run: pnpm test:maps-ipc
+      - run: pnpm test:maps-ui
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

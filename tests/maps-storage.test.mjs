@@ -79,6 +79,42 @@ async function image(color = "#126b83") {
     .toBuffer();
 }
 
+test("map backgrounds derive a bounded 2048px oriented view without changing originals or enlarging small images", async () => {
+  const f = await fixture();
+  const bytes = await sharp({
+    create: { width: 2400, height: 1600, channels: 3, background: "#267383" },
+  })
+    .withMetadata({ orientation: 6 })
+    .jpeg()
+    .toBuffer();
+  const asset = await f.store.assets.import(f.book.id, bytes, assetInput);
+  const map = await f.store.maps.create(f.book.id, input(), randomUUID());
+  const frozen = await f.store.maps.setBackground(f.book.id, map, asset);
+  const preview = await f.store.maps.backgroundPreview(f.book.id, frozen);
+  const metadata = await sharp(
+    Buffer.from(preview.dataUrl.split(",")[1], "base64"),
+  ).metadata();
+  assert.equal(metadata.width, 1365);
+  assert.equal(metadata.height, 2048);
+  assert.deepEqual(preview.background.record.blob, asset.blob);
+  assert.deepEqual((await f.store.assets.decode(bytes)).bytes, bytes);
+  const small = await f.store.assets.import(f.book.id, await image(), {
+    ...assetInput,
+    title: "小底图",
+  });
+  const smallMap = await f.store.maps.setBackground(f.book.id, frozen, small);
+  const smallPreview = await f.store.maps.backgroundPreview(
+    f.book.id,
+    smallMap,
+  );
+  const dimensions = await sharp(
+    Buffer.from(smallPreview.dataUrl.split(",")[1], "base64"),
+  ).metadata();
+  assert.equal(dimensions.width, 40);
+  assert.equal(dimensions.height, 80);
+  await assert.rejects(f.store.assets.decode(bytes, 16384), /预览尺寸/);
+});
+
 test("map creation is idempotent without rewinding later edits; exact-version save, history, recycle and restore keep identities and manuscript", async () => {
   const f = await fixture(),
     id = randomUUID(),

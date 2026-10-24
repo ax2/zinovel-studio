@@ -1,0 +1,54 @@
+{
+  "version": "0.1.0-alpha.20",
+  "status": "passed",
+  "scope": "Source only; 192 unit checks/typecheck/planning, real map author UI/IPC; no alpha20 installer qualification yet",
+  "sources": {
+    "packages/novel-domain/maps.mjs": "ac41b23d85082275a88eff6d83098026036bc9a759822852696242c6e8a11284",
+    "packages/novel-domain/map-drafts.mjs": "089f6a4606b776ae9940faac0dc3e85daab84b6f526ce6d22b84231349d37b9f",
+    "packages/novel-storage/maps.mjs": "e04519f61e287e5ff1de8b3ccd0f38536bd0c7cf40d5b28b280a0b4f4263dfa2",
+    "packages/novel-storage/assets.mjs": "425baaa61231418611feef1894a95b3ff4be91ff80ea34d8f286cc5c24a39b2d",
+    "packages/novel-storage/image-decoder.mjs": "1b580fd512d11a1ea00a641a244179e9e9d370186a22cdada105b273f1207ea7",
+    "apps/workbench/maps-panel.tsx": "d2974466a0d2f604a9e0cc7105b0054b90b7e8dd97efcddb7158cc643716a655",
+    "apps/workbench/map-canvas.tsx": "3beb336fded29c3ed74bd8e7a90f4b53752fba13c1b31edc30216cd62e06982a",
+    "apps/workbench/main.tsx": "dd4cd9d434094e8bf5fcda9680b835dd9c5ee5d67237a919ff18cce06bff4aba",
+    "apps/workbench/style.css": "2c31559b1847fa68e4d00f8e87482147641ef9f91091345050aa3829841eb581",
+    "scripts/smoke-maps-ui.mjs": "cbc7db627f1474ec3757919f5de8c459c358ec52e4eada91c3e51e37b1b5502e",
+    "tests/map-drafts.test.mjs": "c965f981b93bafb18d074d70d7f3c87c894ec15f2d1d1f57e2c1d402d17ce9e3",
+    "tests/maps-storage.test.mjs": "6b0c7ca381006ae70d715d56f525a90e7ecb3f8f8c63921227fbc70847bb9947"
+  },
+  "ui": {
+    "status": "passed",
+    "checks": [
+      "actual map controls create two stable places by pointer/form, same-book location association, three-vertex region, real vertex drag and undo, routed bends and author calibration; Ctrl+S/save applies raw coordinates; explicit background selection freezes bytes and clears prior scale; manuscript unchanged after entry flush",
+      "unfinished coordinate input survives modal close and full Electron restart; synthetic localStorage quota blocks modal and native window close without losing raw input; completing coordinates and explicitly saving still writes the formal map and clears the close guard",
+      "same-revision external edits reject stale saves and retain disk bytes/local input; author explicitly compares and adopts the baseline; exact external preimage survives in history; actual read-only historical background loads and author adopts it as a new revision; keyboard point movement/undo and view-only zoom do not silently write the map",
+      "future local draft remains byte-identical and read-only until explicit discard; map recycle and restore preserve identity; a synthetic checkpoint representing an already committed creation with an unconfirmed result reconciles the later revision without duplicate or rewind; not a simulated IPC transport loss",
+      "desktop and 806px dark/narrow map render without dialog overflow; actual host backup/restore to a new book preserves saved map IDs, original image and frozen background while excluding unfinished local coordinate input; folder chooser results are instrumented"
+    ],
+    "errors": [],
+    "viewports": [
+      {
+        "name": "map-desktop.png",
+        "width": 1426,
+        "height": 923
+      },
+      {
+        "name": "map-quota-protected.png",
+        "width": 1426,
+        "height": 923
+      },
+      {
+        "name": "map-narrow.png",
+        "width": 806,
+        "height": 803
+      },
+      {
+        "name": "map-dark-narrow.png",
+        "width": 806,
+        "height": 803
+      }
+    ],
+    "browser": "Browser plugin not available; repository Playwright/Electron",
+    "scope": "Real author map UI and host persistence; native folder selection for backup/restore is instrumented, no native IME or physical phone claim"
+  }
+}

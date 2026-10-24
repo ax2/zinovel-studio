@@ -38,6 +38,7 @@ import { PilotStudio } from "./pilot-studio";
 import { NovelReader } from "./novel-reader";
 import { PublicationPanel } from "./publication-panel";
 import { AssetsPanel } from "./assets-panel";
+import { MapsPanel } from "./maps-panel";
 import { ContinuityWorkbench } from "./continuity-workbench";
 import { KnowledgeMatrix } from "./knowledge-matrix";
 import { canCloseEditors } from "./editor-close-guards";
@@ -68,6 +69,7 @@ function App() {
   const [readerOpen, setReaderOpen] = useState(false);
   const [publicationOpen, setPublicationOpen] = useState(false);
   const [assetsOpen, setAssetsOpen] = useState(false);
+  const [mapsOpen, setMapsOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
   const [knowledgeOpen, setKnowledgeOpen] = useState(false);
   const [requestedMaterial, setRequestedMaterial] = useState<{
@@ -586,6 +588,24 @@ function App() {
           onClose={() => setAssetsOpen(false)}
         />
       )}
+      {mapsOpen && book && (
+        <MapsPanel
+          key={book.id}
+          book={book}
+          onClose={() => setMapsOpen(false)}
+          onAssets={() => {
+            setMapsOpen(false);
+            setAssetsOpen(true);
+          }}
+          onEditLocation={(id) => {
+            setMapsOpen(false);
+            setMaterialsOpen(true);
+            setReferenceOpen(false);
+            setPanelOpen(true);
+            setRequestedMaterial({ bookId: book.id, id, request: Date.now() });
+          }}
+        />
+      )}
       {knowledgeOpen && book && (
         <KnowledgeMatrix
           key={book.id}
@@ -738,6 +758,14 @@ function App() {
                 }}
               >
                 图像资源
+              </button>
+              <button
+                disabled={composition}
+                onClick={async () => {
+                  if (await save()) setMapsOpen(true);
+                }}
+              >
+                世界地图
               </button>
               <button onClick={() => setContinuityOpen(true)}>全书证据</button>
               <button onClick={() => setKnowledgeOpen(true)}>认知矩阵</button>

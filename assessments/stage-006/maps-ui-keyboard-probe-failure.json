@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "checks": [
+    "actual map controls create two stable places by pointer/form, same-book location association, three-vertex region, real vertex drag and undo, routed bends and author calibration; Ctrl+S/save applies raw coordinates; explicit background selection freezes bytes and clears prior scale; manuscript unchanged after entry flush",
+    "unfinished coordinate input survives modal close and full Electron restart; synthetic localStorage quota blocks modal and native window close without losing raw input; completing coordinates and explicitly saving still writes the formal map and clears the close guard"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "map-desktop.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "map-quota-protected.png",
+      "width": 1426,
+      "height": 923
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Real author map UI and host persistence; native folder selection for backup/restore is instrumented, no native IME or physical phone claim",
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: '小说世界地图', exact: true }).getByRole('button', { name: '撤销未保存调整', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button disabled>撤销未保存调整</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-maps-ui.mjs:387:65"
+}
