@@ -52,6 +52,23 @@ async function launch() {
     env,
   });
   page = await application.firstWindow();
+  await page.locator(".book-card").first().waitFor();
+  await page.evaluate(() => {
+    window.__streamQaActions = [];
+    document.addEventListener(
+      "click",
+      (event) => {
+        const label = event.target.closest?.("button")?.textContent?.trim();
+        if (["生成候选", "取消生成"].includes(label))
+          window.__streamQaActions.push({
+            label,
+            trusted: event.isTrusted,
+            at: Date.now(),
+          });
+      },
+      true,
+    );
+  });
   page.on("pageerror", (error) => report.errors.push(error.message));
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
@@ -172,6 +189,10 @@ try {
 } catch (error) {
   report.status = "failed";
   report.error = String(error);
+  report.providerRequests = model.requests.length;
+  report.actions = await page
+    ?.evaluate(() => window.__streamQaActions)
+    .catch(() => []);
   report.taskStates = await captureTaskDiagnostics(data);
   await writeFile(
     join(screenshots, "stream-smoke.json"),

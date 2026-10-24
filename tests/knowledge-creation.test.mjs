@@ -120,7 +120,10 @@ test("a conflicting draft or later author edit cannot be overwritten or silently
       store.knowledge.save(book.id, input, null, source, null, "../invalid"),
     /身份/,
   );
-  const backup = await store.createBackup(book.id, join(root, "backup")),
+  const backup = await store.createBackup(
+      book.id,
+      await mkdtemp(join(tmpdir(), "novel-creation-backup-")),
+    ),
     restored = await store.restoreBackup(backup.path);
   assert.equal(
     (await store.knowledge.creation(restored.id, creationId)).revision,

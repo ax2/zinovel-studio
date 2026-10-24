@@ -547,12 +547,14 @@ export class NovelStore {
       const requestedParent = resolve(destination);
       if (withinDirectory(root, requestedParent))
         throw new Error("备份位置不能位于作品目录内部");
-      const [canonicalRoot, parent] = await Promise.all([
-        realpath(root),
+      if (withinDirectory(this.root, requestedParent))
+        throw new Error("备份位置不能位于受管书库内部，请选择独立目录");
+      const [canonicalLibrary, parent] = await Promise.all([
+        realpath(this.root),
         canonicalDestination(requestedParent),
       ]);
-      if (withinDirectory(canonicalRoot, parent))
-        throw new Error("备份位置经目录别名指向原书内部，未创建备份");
+      if (withinDirectory(canonicalLibrary, parent))
+        throw new Error("备份位置经目录别名指向受管书库内部，未创建备份");
       const inventory = async () => {
         const found = [];
         let total = 0;

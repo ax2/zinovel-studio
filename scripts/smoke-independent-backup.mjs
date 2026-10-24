@@ -29,6 +29,9 @@ const store = new NovelStore(join(data, "library"));
 const book = await store.importBook("独立备份合成原稿", [
   { title: "旧信", body: "冻结时原稿𠮷🌊。" },
 ]);
+const otherBook = await store.importBook("独立保留的另一合成作品", [
+  { title: "另一书", body: "另一书正文保持独立。" },
+]);
 const bytes = await sharp({
   create: {
     width: 96,
@@ -77,6 +80,13 @@ const bookRoot = join(data, "library", book.id),
 await symlink(
   bookRoot,
   alias,
+  process.platform === "win32" ? "junction" : "dir",
+);
+const otherRoot = join(data, "library", otherBook.id),
+  otherAlias = join(work, "另一作品别名");
+await symlink(
+  otherRoot,
+  otherAlias,
   process.platform === "win32" ? "junction" : "dir",
 );
 const destination = await mkdtemp(
@@ -184,15 +194,37 @@ try {
     assert.ok(Date.now() < until, "Author save did not settle");
     await page.waitForTimeout(30);
   }
-  const entries = (await readdir(bookRoot)).sort();
-  for (const path of [alias, join(alias, "尚未创建的子目录")]) {
+  const entries = (await readdir(bookRoot)).sort(),
+    libraryEntries = (await readdir(join(data, "library"))).sort(),
+    otherEntries = (await readdir(otherRoot)).sort();
+  for (const path of [
+    alias,
+    join(alias, "尚未创建的子目录"),
+    join(data, "library"),
+    otherRoot,
+    join(otherAlias, "尚未创建的子目录"),
+  ]) {
     await choose(path);
     await assert.rejects(
       request("book.backup", { bookId: book.id }),
       /别名|内部/,
     );
     assert.deepEqual((await readdir(bookRoot)).sort(), entries);
+    assert.deepEqual(
+      (await readdir(join(data, "library"))).sort(),
+      libraryEntries,
+    );
+    assert.deepEqual((await readdir(otherRoot)).sort(), otherEntries);
   }
+  assert.equal(
+    (
+      await request("chapter.read", {
+        bookId: otherBook.id,
+        chapterId: otherBook.chapters[0].id,
+      })
+    ).body,
+    "另一书正文保持独立。",
+  );
   await choose(destination, true);
   assert.equal(
     (await request("book.backup", { bookId: book.id })).cancelled,
@@ -299,7 +331,7 @@ try {
   report.snapshotHash = snapshot.hash;
   report.backupManifestSha256 = digest(savedManifest);
   report.checks.push(
-    "actual author edit and save precede backup; canonical existing/prospective Junction aliases into the source book reject before any file creation; cancellation leaves the selected destination empty",
+    "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
     "real host copies all manifest files from one Windows disk to another, independently hashes every saved file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals",
     "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
     "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests",

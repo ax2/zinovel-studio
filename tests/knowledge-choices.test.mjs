@@ -144,7 +144,7 @@ test("external same-revision edits and future fields reject without overwriting 
   const external = await choices.read(book.id, input);
   const backup = await store.createBackup(
     book.id,
-    join(root, "outside-backup"),
+    await mkdtemp(join(tmpdir(), "novel-choice-backup-")),
   );
   const restored = await store.restoreBackup(backup.path);
   const copied = await store.knowledge.choices.read(restored.id, input);

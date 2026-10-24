@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "error": "AssertionError [ERR_ASSERTION]: No persisted live text before completion",
+  "taskStates": [
+    {
+      "id": "98cea297-2de2-4835-8b2a-fa86399efab9",
+      "status": "cancelled",
+      "kind": "writing",
+      "errorCode": "cancelled-or-timeout",
+      "startedAt": "2026-10-24T13:05:14.551Z",
+      "completedAt": "2026-10-24T13:05:15.958Z"
+    }
+  ]
+}

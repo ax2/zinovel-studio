@@ -106,7 +106,10 @@ test("explicit legacy linking freezes old event without rewriting it; unrelated 
   assert.equal(event.origin.status, "changed");
   assert.equal(event.origin.source.event.status, "active");
   assert.equal(event.freshness, "current");
-  const backup = await store.createBackup(book.id, join(root, "backup")),
+  const backup = await store.createBackup(
+      book.id,
+      await mkdtemp(join(tmpdir(), "novel-legacy-backup-")),
+    ),
     restored = await store.restoreBackup(backup.path),
     copied = await store.knowledge.read(restored.id, event.id);
   assert.equal(copied.origin.source.eventId, preview.eventId);

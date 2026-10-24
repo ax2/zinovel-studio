@@ -1,7 +1,7 @@
 {
   "status": "passed",
   "checks": [
-    "actual author edit and save precede backup; canonical existing/prospective Junction aliases into the source book reject before any file creation; cancellation leaves the selected destination empty",
+    "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
     "real host copies all manifest files from one Windows disk to another, independently hashes every saved file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals",
     "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
     "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests"
@@ -21,6 +21,6 @@
   "scope": "Actual host file transactions across distinct Windows disk numbers; picker results instrumented; not a hardware-loss or system-IME simulation",
   "version": "0.1.0-alpha.26",
   "backupFiles": 10,
-  "snapshotHash": "37490429d552e56c541a7d2419c19fac10cc2ecabbd3530c45d4d4b4c03059b8",
-  "backupManifestSha256": "c5b3afacf9b50ffb9c576e07772b196f9f5d5349d1ff9db601c08f3c8897972d"
+  "snapshotHash": "956f071f3581aacef134904384625f5306bd26316d4aa94d7a55777467bb4762",
+  "backupManifestSha256": "1e7e70e09742ce67dc80ba5a8aa499cbab43820c3a8305203119be8b997167d6"
 }

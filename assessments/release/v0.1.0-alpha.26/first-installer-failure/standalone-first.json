@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "error": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+  "providerRequests": 1,
+  "taskStates": [
+    {
+      "id": "64d9e9de-e473-48d4-86f5-c2807d971020",
+      "status": "cancelled",
+      "kind": "writing",
+      "errorCode": "cancelled-or-timeout",
+      "startedAt": "2026-10-24T13:08:31.856Z",
+      "completedAt": "2026-10-24T13:08:33.303Z"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
+  "launchPid": 7000,
+  "version": "0.1.0-alpha.26",
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '生成候选', exact: true })\u001b[22m\n\n    at D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-offline-writing.mjs:202:65"
+}

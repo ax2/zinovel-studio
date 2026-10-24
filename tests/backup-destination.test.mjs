@@ -69,3 +69,34 @@ test("a genuinely external directory alias and a missing child remain valid back
     "原稿𠮷🌊不因备份别名改变。",
   );
 });
+
+for (const targetKind of ["library-root", "other-book", "other-book-alias"])
+  test(`backup cannot embed one book into the managed library (${targetKind})`, async () => {
+    const f = await fixture();
+    const other = await f.store.importBook("另一合成作品", [
+      { title: "独立稿", body: "另一书私有正文。" },
+    ]);
+    const otherRoot = join(f.store.root, other.id);
+    let target = targetKind === "library-root" ? f.store.root : otherRoot;
+    if (targetKind === "other-book-alias") {
+      const alias = join(f.root, "other-book-alias");
+      await symlink(
+        otherRoot,
+        alias,
+        process.platform === "win32" ? "junction" : "dir",
+      );
+      target = join(alias, "not-created-yet");
+    }
+    const beforeLibrary = await readdir(f.store.root),
+      beforeOther = await readdir(otherRoot);
+    await assert.rejects(
+      f.store.createBackup(f.book.id, target),
+      /书库|作品目录|内部/,
+    );
+    assert.deepEqual(await readdir(f.store.root), beforeLibrary);
+    assert.deepEqual(await readdir(otherRoot), beforeOther);
+    assert.equal(
+      (await f.store.readChapter(other.id, other.chapters[0].id)).body,
+      "另一书私有正文。",
+    );
+  });

@@ -1,0 +1,31 @@
+{
+  "version": "0.1.0-alpha.26",
+  "installerSha256": "58217711cb76bf22444495d55de1564d76b7466b5c3a56cf00f59b23b3996b34",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-DuAlir\\中文 安装目录",
+  "checks": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer",
+    "installed: bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes",
+    "installed: forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded",
+    "installed: task list filters by book and remains bounded, accessible and dismissible in narrow viewport",
+    "installed: four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
+    "installed: acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
+    "installed: before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once",
+    "installed: library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
+    "installed: all-book task list opens the exact linked book and chapter",
+    "installed: cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically"
+  ],
+  "status": "failed",
+  "installMs": 8377,
+  "failure": "Error: Command failed: C:\\Program Files\\nodejs\\node.exe D:\\Work\\zinovel-studio\\scripts\\smoke-stream.mjs\n(node:78352) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n(Use `node --trace-deprecation ...` to show where the warning was created)\nnode:internal/modules/run_main:111\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: No persisted live text before completion\r\n    at until (file:///D:/Work/zinovel-studio/scripts/smoke-stream.mjs:68:12)\r\n    at async start (file:///D:/Work/zinovel-studio/scripts/smoke-stream.mjs:76:3)\r\n    at async file:///D:/Work/zinovel-studio/scripts/smoke-stream.mjs:134:21 {\r\n  generatedMessage: false,\r\n  code: 'ERR_ASSERTION',\r\n  actual: false,\r\n  expected: true,\r\n  operator: '==',\r\n  diff: 'simple'\r\n}\r\n\r\nNode.js v26.10.0\r\n\n    at genericNodeError (node:internal/errors:999:15)\n    at wrappedFn (node:internal/errors:544:14)\n    at ChildProcess.exithandler (node:child_process:417:12)\n    at ChildProcess.emit (node:events:514:20)\n    at maybeClose (node:internal/child_process:1156:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:334:5)"
+}
