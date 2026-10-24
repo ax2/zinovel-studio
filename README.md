@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.24](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24)已公开，支持五种纯文字导出，约155MB安装EXE已下载复核。alpha.25新增封面/插图版本冻结、预览与带图HTML，本机第二轮143项安装/重装/卸载、旧版升级及源码CI通过，标签发行正在独立重验，尚未公开。主线alpha.26修正备份目的地别名检查，228项与D→C独立磁盘真实宿主备份/恢复通过，无本版安装资格。详见[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[备份源码验证](assessments/stage-008/backup-destination-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
+最新阶段版本[alpha.25](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.25)已公开：新增封面/插图版本冻结、预览与带图HTML，保留五种纯文字导出。标签发行完整成功，155474664字节安装EXE已实际下载复核SHA256。主线alpha.26修正备份目的地别名检查，228项本地检查与D→C独立磁盘真实宿主备份/恢复通过；首次源码CI外部别名测试路径断言失败已修正，待CI重验，无本版安装资格。详见[alpha.25资格](assessments/release/v0.1.0-alpha.25/README.md)、[备份源码验证](assessments/stage-008/backup-destination-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、40项 in-progress、40项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.24 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.24) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.24/ZiNovel-Studio-0.1.0-alpha.24-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.25 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.25) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.25/ZiNovel-Studio-0.1.0-alpha.25-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 

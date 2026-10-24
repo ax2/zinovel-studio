@@ -1,0 +1,17 @@
+{
+  "tag": "v0.1.0-alpha.25",
+  "runId": "40082752386",
+  "checkedAt": "2026-10-24T10:03:03.737Z",
+  "status": "passed",
+  "release": "https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.25",
+  "publishedAt": "2026-10-24T09:54:09Z",
+  "ci": "https://github.com/ax2/zinovel-studio/actions/runs/40082752386",
+  "commit": "796064b5271969eed365d83e96ad30752626575b",
+  "bytes": 155474664,
+  "sha256": "1d63c79332292093f535f73542c6a3c3774b6047a41ad3846012a86782edf295",
+  "metadataDigestsVerified": true,
+  "anonymouslyVisible": true,
+  "downloadedInstallerSha256Verified": true,
+  "downloadedInstaller": "D:\\zinovel-releases\\v0.1.0-alpha.25\\ci-public\\ZiNovel-Studio-0.1.0-alpha.25-windows-x64-setup.exe",
+  "publicInstallerExecutionEvidence": "Release CI installed exact manifest bytes; actual public EXE downloaded and independently rehashed locally; no additional local execution claimed"
+}

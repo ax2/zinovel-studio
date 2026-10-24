@@ -11,3 +11,6 @@
 独立file页面真实解码封面和章尾图、导航、公开script字面不执行、390×844深色重载偏好，无HTTP请求和横向溢出。已查看安装版1426×923桌面冻结、806×803深色冻结及390px独立HTML图；不扩大为物理手机、原生IME或所有浏览器。PNG按完整尺寸/方向发行并去图元数据，不改原图。当前图片支持HTML，无图副本五格式回归；带图DOCX/PDF/EPUB明确未完成。
 
 按完整设计复评，PUB-03恢复in-progress，纯文字DOCX/PDF通过证据保留；统计26 verified/40 in-progress/40 planned。物理手机、完整格式图/目录/注释、远端发布、离线/权限/独立备份等P0完整资格、真实模型文学质量、自动升级和完整分发/商店认证仍待完成，稳定false。预览ready只允许同标签重建、安装、升级和hash校验后公开，不提前称公开附件已存在。下一P0切片见assessments/stage-008/priority-reassessment-alpha25.md。
+
+## 公开发行复核
+标签796064b5271969eed365d83e96ad30752626575b的Windows release 40082752386首次完整success，北京时间2026-10-24 17:54:09公开。公开EXE155474664字节，SHA256 1d63c79332292093f535f73542c6a3c3774b6047a41ad3846012a86782edf295；已实际下载并独立核对，与上述本机构建a4a511...明确区分。四附件、三份元数据摘要和匿名可见性通过，见ci-public/verification.json。发行CI安装该manifest精确字节；不声称下载后另做一次本机执行。精确公开EXE及元数据保留D:\zinovel-releases\v0.1.0-alpha.25\ci-public。稳定资格仍false，缺口不变。

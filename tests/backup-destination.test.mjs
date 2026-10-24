@@ -61,7 +61,7 @@ test("a genuinely external directory alias and a missing child remain valid back
     join(alias, "new-parent"),
   );
   const actual = await realpath(result.path);
-  assert.ok(!relative(external, actual).startsWith(".."));
+  assert.ok(!relative(await realpath(external), actual).startsWith(".."));
   const restored = await f.store.restoreBackup(result.path);
   assert.notEqual(restored.id, f.book.id);
   assert.equal(
