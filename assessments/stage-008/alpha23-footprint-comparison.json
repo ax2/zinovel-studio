@@ -1,0 +1,11 @@
+{
+  "beforeBytes": 905104365,
+  "afterBytes": 621166433,
+  "savedBytes": 283937932,
+  "savedPercent": 31.37,
+  "beforeMiB": 863.17,
+  "afterMiB": 592.39,
+  "beforePackages": 584,
+  "afterPackages": 567,
+  "scope": "inventory physical file sizes at package verification, not install time or memory benchmark"
+}

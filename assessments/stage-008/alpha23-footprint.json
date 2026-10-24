@@ -1,0 +1,171 @@
+{
+  "version": "0.1.0-alpha.23",
+  "appAsarSha256": "c68f2ef444326f28952879dc7c1b19af237b7cab93055fe4de082a8d355f2eea",
+  "files": 23199,
+  "totalLogicalBytes": 229598866,
+  "largestFiles": [
+    {
+      "path": "node_modules/@img/sharp-win32-x64/lib/libvips-42.dll",
+      "bytes": 19018240
+    },
+    {
+      "path": "node_modules/@vscode/ripgrep-win32-x64/bin/rg.exe",
+      "bytes": 5429760
+    },
+    {
+      "path": "dist/workbench/app.js",
+      "bytes": 2436585
+    },
+    {
+      "path": "node_modules/node-pty/prebuilds/win32-arm64/conpty/OpenConsole.exe",
+      "bytes": 1110560
+    },
+    {
+      "path": "node_modules/node-pty/third_party/conpty/1.25.260303002/win10-arm64/OpenConsole.exe",
+      "bytes": 1110560
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-api-remotes/lib/client.js",
+      "bytes": 1083920
+    },
+    {
+      "path": "node_modules/@mixmark-io/domino/.yarn/plugins/@yarnpkg/plugin-version.cjs",
+      "bytes": 1073677
+    },
+    {
+      "path": "node_modules/@google/genai/dist/node/index.cjs",
+      "bytes": 1062531
+    },
+    {
+      "path": "node_modules/node-pty/build/Release/conpty/OpenConsole.exe",
+      "bytes": 1062472
+    },
+    {
+      "path": "node_modules/node-pty/prebuilds/win32-x64/conpty/OpenConsole.exe",
+      "bytes": 1062472
+    },
+    {
+      "path": "node_modules/node-pty/third_party/conpty/1.25.260303002/win10-x64/OpenConsole.exe",
+      "bytes": 1062472
+    },
+    {
+      "path": "node_modules/@google/genai/dist/node/index.mjs",
+      "bytes": 1058047
+    },
+    {
+      "path": "node_modules/@koromix/koffi-win32-x64/win32_x64/koffi.node",
+      "bytes": 1042944
+    },
+    {
+      "path": "node_modules/@google/genai/dist/index.cjs",
+      "bytes": 1040204
+    },
+    {
+      "path": "node_modules/@google/genai/dist/web/index.mjs",
+      "bytes": 1038324
+    },
+    {
+      "path": "node_modules/@google/genai/dist/index.mjs",
+      "bytes": 1036369
+    },
+    {
+      "path": "node_modules/@deepseek-ai/dsh-web-frontend/dist/assets/index-CN7NIWNw.js",
+      "bytes": 939867
+    },
+    {
+      "path": "node_modules/@xterm/headless/lib-headless/xterm-headless.js.map",
+      "bytes": 812379
+    },
+    {
+      "path": "node_modules/@google/genai/dist/node/index.mjs.map",
+      "bytes": 811184
+    },
+    {
+      "path": "node_modules/@opentelemetry/semantic-conventions/build/esm/experimental_attributes.js.map",
+      "bytes": 805732
+    }
+  ],
+  "largestPackages": [
+    {
+      "name": "openai",
+      "bytes": 20763352
+    },
+    {
+      "name": "@img/sharp-win32-x64",
+      "bytes": 19807466
+    },
+    {
+      "name": "@anthropic-ai/sdk",
+      "bytes": 13531424
+    },
+    {
+      "name": "@modelcontextprotocol/client",
+      "bytes": 12616986
+    },
+    {
+      "name": "web-streams-polyfill",
+      "bytes": 8957643
+    },
+    {
+      "name": "@agentclientprotocol/sdk",
+      "bytes": 8771993
+    },
+    {
+      "name": "@google/genai",
+      "bytes": 8721527
+    },
+    {
+      "name": "@opentelemetry/semantic-conventions",
+      "bytes": 8296542
+    },
+    {
+      "name": "node-pty",
+      "bytes": 7197986
+    },
+    {
+      "name": "@modelcontextprotocol/core",
+      "bytes": 7088226
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-market",
+      "bytes": 5979276
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-client-ui-cot-translation",
+      "bytes": 5817097
+    },
+    {
+      "name": "@deepseek-ai/dsh-working-directory",
+      "bytes": 5789427
+    },
+    {
+      "name": "fontkit",
+      "bytes": 5596718
+    },
+    {
+      "name": "@vscode/ripgrep-win32-x64",
+      "bytes": 5431214
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-frontend",
+      "bytes": 5361360
+    },
+    {
+      "name": "zod",
+      "bytes": 4224422
+    },
+    {
+      "name": "@earendil-works/pi-ai",
+      "bytes": 3949342
+    },
+    {
+      "name": "protobufjs",
+      "bytes": 2925954
+    },
+    {
+      "name": "@js-temporal/polyfill",
+      "bytes": 2866060
+    }
+  ],
+  "scope": "Read-only logical ASAR resource sizes including unpacked entries; not actual disk allocation or runtime reachability proof"
+}
