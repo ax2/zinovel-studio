@@ -4,7 +4,7 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订导出已按实际安装证据完成单项验收；25项 verified、37项 in-progress、44项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订导出已按实际安装证据完成单项验收；25项 verified、38项 in-progress、43项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.18 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.18) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.18/ZiNovel-Studio-0.1.0-alpha.18-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
@@ -116,3 +116,5 @@ alpha.11 已于 2026/10/24 00:52:22 北京时间公开，发行 CI39988528009 �
 alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869全部成功。公开EXE222895662字节、SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已下载复算且匿名可见。原文编码保护、冻结发布副本与实际导出/独立HTML通过安装验收；本机EXE与CIEXE分开留证，完整本机运行目录保留D盘。alpha.18本机资格已取得，标签CI与公开安装包仍单独核对；图像资源方案与解码实测见design/assets-and-media.md。
 
 alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版已取得本机安装/升级资格，标签Windows release [40053936921](https://github.com/ax2/zinovel-studio/actions/runs/40053936921)第2次完整运行成功，alpha.18已公开并下载复算SHA。下一切片[世界地图设计](design/world-map.md)已记录空间对象和冻结底图边界，不算已实现地图。
+
+主分支alpha.20开始地图领域实现：地点/区域/路线稳定ID、简单多边形校验、作者显式比例尺及冻结底图记录，六项领域测试通过；存储服务和可编辑界面尚未接通，ART-03仅in-progress，不继承alpha.19的发行资格。alpha.19标签CI40055840140独立运行中。
