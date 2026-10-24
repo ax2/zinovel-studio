@@ -93,3 +93,5 @@ alpha.20首次完整package:win成功，打包实际Node24.21.0/sharp0.35.5/PNG/
 第一次安装验收实际安装15666ms，89项检查通过后，在图像资源探针的独立源AssetStore写入/恢复日志时发生Windows EPERM rename pending.json，整轮判失败，未开放发行资格。installer-first-failure保留完整报告、日志、图像回执/失败截图。核对探针在运行宿主旁还用独立NovelStore执行读/写，其manifest读取也会recover，与宿主队列无互斥；这违反单写队列前提。不声称已经定位Windows瞬时文件锁的具体进程，也不为产品添加盲目重试。
 
 修正仅在smoke-assets：运行时读断言全部通过真实宿主IPC，外部编辑fixture只修改自己的元数据JSON（递增修订），不启动第二恢复写入器。源码图像回归完整通过。核对失败EXE SHA、注册表卸载字符串及realpath后，仅卸载本轮installer-qa-5mv3Xg目录；第一次准备脚本因路径大小写精确比对拒绝，未执行卸载，按注册记录D:\Work修正后核对通过，26次观察确认EXE消失、注册项消失、合成原稿摘要不变，cleanup.json留档。同字节EXE重跑全部安装验收，不能把第一轮89项当本版完成。
+
+地图容量复评增加真实高纹理边界脚本benchmark-map-preview.mjs：固定种子RGB噪声5000×4000、JPEG85质量14254487字节（约13.6MiB），实际打包EXE内置Node24.21.0运行源存储/解码，无人为解码等待。导入207.58ms，2048×1638 PNG预览8367226字节/344.14ms；真实并行原稿保存44.48ms，在解码完成前结束，采样RSS峰值256368640字节。正文/冻结原图hash核对，maps-boundary.json保存源码SHA/机器信息；单次合成边界，不冒充20MiB容量、P95、安装GUI或大书整体验收。较大派生图说明后续图层/多图并排需要复评内存与缓存，当前最多两解码并发。

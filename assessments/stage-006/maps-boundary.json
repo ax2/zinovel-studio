@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "node": "24.21.0",
+  "cpu": "Intel(R) Core(TM) i9-14900HX",
+  "logicalCpus": 32,
+  "fixture": {
+    "width": 5000,
+    "height": 4000,
+    "pixels": 20000000,
+    "format": "jpeg",
+    "bytes": 14254487,
+    "seed": 123456789,
+    "quality": 85
+  },
+  "importMs": 207.57759999999996,
+  "previewMs": 344.1363,
+  "saveMs": 44.47970000000009,
+  "saveFinishedBeforeDecode": true,
+  "derived": {
+    "width": 2048,
+    "height": 1638,
+    "bytes": 8367226
+  },
+  "peakRssBytes": 256368640,
+  "scope": "Single actual high-texture 20MP source-module observation using embedded Node; no synthetic decoder delay, no P95, 20MiB capacity or installed GUI performance claim",
+  "sources": {
+    "packages/novel-storage/maps.mjs": "e04519f61e287e5ff1de8b3ccd0f38536bd0c7cf40d5b28b280a0b4f4263dfa2",
+    "packages/novel-storage/assets.mjs": "425baaa61231418611feef1894a95b3ff4be91ff80ea34d8f286cc5c24a39b2d",
+    "packages/novel-storage/image-decoder.mjs": "1b580fd512d11a1ea00a641a244179e9e9d370186a22cdada105b273f1207ea7",
+    "scripts/benchmark-map-preview.mjs": "7b018c133592f7776e83e02a1dd1f93a286029e112822a746c102cc466743b4e"
+  }
+}
