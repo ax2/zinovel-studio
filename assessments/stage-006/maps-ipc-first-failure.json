@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "checks": [
+    "real isolated main-window IPC creates/edits a typed map with stable place/region/route IDs; creation reconciliation returns the later version; foreign location and missing creation identity reject without writes; actual JPEG decode freezes EXIF-oriented background",
+    "actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair"
+  ],
+  "errors": [],
+  "scope": "Real Electron author workspace and host IPC, including native image decode and actual file transactions; map editing UI is not tested here",
+  "failure": "TypeError: Cannot read properties of undefined (reading 'length')\n    at file:///D:/Work/zinovel-studio/scripts/smoke-maps-ipc.mjs:319:49"
+}

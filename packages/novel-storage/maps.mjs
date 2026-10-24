@@ -143,6 +143,7 @@ export class MapStore {
     await this.storage.transaction(ctx.root, changes, { expectedBefore });
     return this.view({ data: next, diskHash: binaryHash(Buffer.from(raw)) });
   }
+  /** @param {string} bookId @param {unknown} input @param {string} [creationId] */
   create(bookId, input, creationId = randomUUID()) {
     mapId(creationId);
     const data = mapInput(input),
@@ -435,11 +436,15 @@ export class MapStore {
       throw new Error("冻结地图底图尺寸或格式与记录不符，请保留原件");
     return image;
   }
-  async backgroundPreview(bookId, value) {
+  async backgroundPreview(bookId, value, historical = false) {
+    if (typeof historical !== "boolean") throw new Error("地图预览条件无效");
     const expected = this.expected(value),
       initial = await this.storage.exclusive(async () => {
-        const ctx = await this.context(bookId),
-          record = await this.current(ctx, expected);
+        const ctx = await this.context(bookId);
+        await this.record(ctx, expected.id);
+        const record = historical
+          ? await this.record(ctx, expected.id, expected)
+          : await this.current(ctx, expected);
         if (!record.data.background) return null;
         return {
           record,
@@ -456,7 +461,8 @@ export class MapStore {
     );
     await this.storage.exclusive(async () => {
       const ctx = await this.context(bookId);
-      await this.current(ctx, expected);
+      if (historical) await this.record(ctx, expected.id, expected);
+      else await this.current(ctx, expected);
       await this.assets.blobBytes(
         ctx,
         initial.record.data.background.record.blob,

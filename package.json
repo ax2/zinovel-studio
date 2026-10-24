@@ -56,6 +56,7 @@
     "test:publication-capture": "node scripts/smoke-publication-capture.mjs",
     "test:publication-ui": "node scripts/smoke-publication-ui.mjs && node scripts/smoke-publication-html-output.mjs",
     "test:assets": "node scripts/smoke-assets.mjs",
+    "test:maps-ipc": "node scripts/smoke-maps-ipc.mjs",
     "test:utf8-integrity": "node scripts/smoke-utf8-integrity.mjs"
   },
   "engines": {

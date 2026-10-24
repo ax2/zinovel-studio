@@ -141,6 +141,7 @@ try {
     ],
     ["smoke-publication-ui.mjs", "publication-ui/publication-ui-smoke.json"],
     ["smoke-assets.mjs", "assets/assets-smoke.json"],
+    ["smoke-maps-ipc.mjs", "maps-ipc/maps-ipc-smoke.json"],
     [
       "smoke-publication-html-output.mjs",
       "publication-html/publication-html-output-smoke.json",

@@ -266,6 +266,11 @@ test("frozen background survives later asset replacement/recycle; author calibra
     map.background.record.blob.sha256,
     frozen.background.record.blob.sha256,
   );
+  assert.equal(
+    (await f.store.maps.backgroundPreview(f.book.id, frozen, true)).background
+      .record.blob.sha256,
+    frozen.background.record.blob.sha256,
+  );
   const adopted = await f.store.maps.restoreVersion(f.book.id, map, frozen);
   assert.equal(
     adopted.background.record.blob.sha256,

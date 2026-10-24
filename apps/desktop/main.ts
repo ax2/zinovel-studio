@@ -5,6 +5,7 @@ import { writeFile } from "node:fs/promises";
 import { NovelStore } from "../../packages/novel-storage/store.mjs";
 import { readAssetSource } from "../../packages/novel-storage/image-decoder.mjs";
 import { assetId } from "../../packages/novel-domain/assets.mjs";
+import { mapId } from "../../packages/novel-domain/maps.mjs";
 import { PublicationCaptures } from "../../packages/novel-storage/publication-captures.mjs";
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
@@ -35,6 +36,7 @@ app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
 const publicationCaptures = new PublicationCaptures(store.publication);
 const publicationExports = new Set<Promise<unknown>>();
+// Map background/history writes may also decode outside the book queue.
 const assetOperations = new Set<Promise<unknown>>();
 let publicationClosing = false;
 function publicationHash(hash: unknown): string {
@@ -652,6 +654,88 @@ if (
                     "utf8",
                   );
                 value = { cancelled: selected.canceled };
+                break;
+              }
+              case "maps.list":
+                value = await store.maps.list(payload.bookId, payload.options);
+                break;
+              case "maps.read":
+                value = await store.maps.read(payload.bookId, payload.id);
+                break;
+              case "maps.creation":
+                value = await store.maps.creation(payload.bookId, payload.id);
+                break;
+              case "maps.create":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未创建新的地图");
+                value = await store.maps.create(
+                  payload.bookId,
+                  payload.input,
+                  mapId(payload.creationId),
+                );
+                break;
+              case "maps.save":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未保存新的地图调整");
+                value = await store.maps.save(
+                  payload.bookId,
+                  payload.input,
+                  payload.expected,
+                );
+                break;
+              case "maps.delete":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未改变地图状态");
+                value = await store.maps.setDeleted(
+                  payload.bookId,
+                  payload.expected,
+                  payload.deleted,
+                );
+                break;
+              case "maps.history":
+                value = await store.maps.history(payload.bookId, payload.id);
+                break;
+              case "maps.preview":
+                value = await store.maps.backgroundPreview(
+                  payload.bookId,
+                  payload.expected,
+                  payload.historical ?? false,
+                );
+                break;
+              case "maps.clear-background":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未更改地图底图");
+                value = await store.maps.setBackground(
+                  payload.bookId,
+                  payload.expected,
+                  null,
+                );
+                break;
+              case "maps.set-background":
+              case "maps.restore-version": {
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，未更改地图");
+                if (assetOperations.size >= 2)
+                  throw new Error("请等待当前图像操作完成");
+                const operation =
+                  action === "maps.set-background"
+                    ? store.maps.setBackground(
+                        payload.bookId,
+                        payload.expected,
+                        payload.asset,
+                        payload.historical ?? false,
+                      )
+                    : store.maps.restoreVersion(
+                        payload.bookId,
+                        payload.expected,
+                        payload.historical,
+                      );
+                assetOperations.add(operation);
+                try {
+                  value = await operation;
+                } finally {
+                  assetOperations.delete(operation);
+                }
                 break;
               }
               case "assets.list":
