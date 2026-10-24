@@ -55,3 +55,6 @@ alpha.17不可变标签c820402190be9314581239294f52b17cf0abb74e已推送，Windo
 17发行CI进行时复查各格式验收：EPUB要求封面/插图及真实阅读器，当前仅文字快照，直接增加格式会遗留资源版本问题。决定先做每书不可变图像资源与来源/用途，再接定妆/地图及带图出版。design/assets-and-media.md记录共享队列、二进制先落不可变blob再提交文本元数据、失败不自动删除孤立blob、精确资源版本与授权、备份容量及验收顺序；尚未实现，不提升功能或18资格。
 
 发行等待期评估重复CI：旧Development checks对push不区分标签，会与Windows release重跑同套检查。18改为所有分支push和PR触发，版本标签交给已有完整release验证；同ref开发流水线取消被新提交取代的旧开发run。发行workflow仍cancel-in-progress=false，不受开发合并策略影响。公开核验增加无认证API可见性与附件身份核对，随后重新hash实际下载EXE；17公开后验证其真实行为。
+
+## 文本合订条目复评
+alpha.17本机安装/升级及原生目录证据齐备后，按既有验收逐项核对PUB-01的明确选章排序、UTF-8首尾原文、逐文件hash、坏字节拒绝、取消/不覆盖和重启冻结。仅文本合订标verified，其他PUB保持in-progress/planned，记录于assessments/stage-007/text-export-acceptance.md；总计25 verified /36 in-progress /45 planned。公开CI与本机证据独立，18仍未取得安装资格。

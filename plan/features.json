@@ -1052,7 +1052,7 @@
       "name": "文本合订导出",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "章节顺序/编码/首尾核验；基础版 S002",
       "evidence": [
         "design/publication-snapshots.md",
@@ -1062,8 +1062,13 @@
         "scripts/smoke-publication-ui.mjs",
         "scripts/smoke-publication-capture.mjs",
         "tests/publication-export.test.mjs",
-        "assessments/stage-007/publication-ui.md"
-      ]
+        "assessments/stage-007/publication-ui.md",
+        "tests/publication-storage.test.mjs",
+        "assessments/stage-007/publication-native-html.md",
+        "assessments/release/v0.1.0-alpha.17/installed-publication-ui-smoke.json",
+        "assessments/release/v0.1.0-alpha.17/installer-smoke.json"
+      ],
+      "validation": "assessments/stage-007/text-export-acceptance.md"
     },
     {
       "id": "PUB-02",
