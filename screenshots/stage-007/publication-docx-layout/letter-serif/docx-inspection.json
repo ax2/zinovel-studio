@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "sha256": "4aeab537c8395b50883168f4e6d3c9708fe367be00a695dece88be857b948d59",
+  "paragraphs": 27,
+  "chapterHeadings": 2,
+  "paper": "Letter",
+  "allTextEditable": true,
+  "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+  "pdfPages": 6,
+  "pdfSha256": "d8bf6d66d275d1fbf980afc617ad2a7fde4be7c3befaf16683b012c0400fde89",
+  "renderedPages": [
+    "page-001.png",
+    "page-002.png",
+    "page-003.png",
+    "page-004.png",
+    "page-005.png",
+    "page-006.png"
+  ],
+  "verifiedFooters": [
+    "1 / 6",
+    "2 / 6",
+    "3 / 6",
+    "4 / 6",
+    "5 / 6",
+    "6 / 6"
+  ]
+}

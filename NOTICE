@@ -28,3 +28,9 @@ unused generic office, voice, inspector and browser payloads are omitted;
 upstream module code, manifests and retained notices remain. This is not a
 complete general-purpose DSH desktop distribution. Exact resource patterns
 are retained in plan/runtime-resource-exclusions.json and runtime inventory.
+
+Editable DOCX export (alpha.24 development) bundles docx 9.14.0 and its
+JavaScript runtime dependencies. Retained attribution and complete supplied
+licence texts are in licenses/docx-runtime/ with exact-byte provenance.
+Microsoft Word and the native LibreOffice QA engine are not distributed as
+part of this export feature; user novels retain their authors' own rights.

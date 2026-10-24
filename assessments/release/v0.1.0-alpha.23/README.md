@@ -10,4 +10,6 @@ EXE155322298字节，SHA59f478dab384c76747af54c8e21b4ad413ac9f56bdb5aee8ed42db77
 
 公开alpha.3覆盖升级12520ms通过，旧原稿、任务候选、合成加密设置及卸载保稿均通过。以上均单次观察，不用22重装较慢的一次计时推断因果或性能分位。镜像、安装、升级、作者PDF/图像/地图/地图册及源CI回执独立保留。
 
-本机资格仅允许进入标签重新独立验收，目前无alpha.23公开附件。完整规划仍26 verified/40 in-progress/40 planned，稳定门禁false。未签名；原生IME/辅助技术、真实模型文学质量、大书性能、DOCX/EPUB/带图与远端出版、自动升级及完整分发审核继续待办。未据本次裁剪提升这些验收。
+不可变标签241c3c07329003da4361f13cccc7842f7627b680的Windows release40072281657第二次完整success，BJT2026-10-24 15:23:15公开；首次reader负面清理数量断言失败与缺少stage-005工件的缺口见ci-first-failure，不算首次通过。四附件匿名可见，无ZIP；实际下载公开EXE155322376字节并复算SHAb72ac0c32c1db3120fbff6168d35dd271a9fe764962a845f20c366f006b47367，三元数据摘要通过，ci-public/verification.json留证。精确CI文件保留真实D:\zinovel-releases\v0.1.0-alpha.23\ci-public，与本机59f478...分开；未声称下载后额外本机执行。
+
+完整规划仍26 verified/40 in-progress/40 planned，稳定门禁false。未签名；原生IME/辅助技术、真实模型文学质量、大书性能、DOCX/EPUB/带图与远端出版、自动升级及完整分发审核继续待办。未据本次裁剪提升这些验收。增强的真实root/renderer身份探针在后续主线，23同标签重跑仍采用原先未修改门禁，未移动标签。

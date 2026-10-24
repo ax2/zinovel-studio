@@ -6,7 +6,13 @@ import type {
 } from "../../packages/novel-domain/publication.mjs";
 import { registerEditorCloseGuard } from "./editor-close-guards";
 import {
+  defaultPublicationDocxOptions,
+  publicationDocxOptions,
+  type PublicationDocxOptions,
+} from "../../packages/novel-domain/publication-docx-options.mjs";
+import {
   defaultPublicationPdfOptions,
+  publicationPdfOptions,
   type PublicationPdfOptions,
 } from "../../packages/novel-domain/publication-pdf-options.mjs";
 
@@ -138,6 +144,22 @@ export function PublicationPanel({
   const [pdfOptions, setPdfOptions] = useState<Readonly<PublicationPdfOptions>>(
     defaultPublicationPdfOptions,
   );
+  const [docxOptions, setDocxOptions] = useState<
+    Readonly<PublicationDocxOptions>
+  >(defaultPublicationDocxOptions);
+  const printLabel = format === "docx" ? "DOCX" : "PDF";
+  const printOptions = format === "docx" ? docxOptions : pdfOptions;
+  function setPrintOption(key: keyof PublicationPdfOptions, raw: string) {
+    const value = key === "size" || key === "leading" ? Number(raw) : raw;
+    if (format === "docx")
+      setDocxOptions((current) =>
+        publicationDocxOptions({ ...current, [key]: value }),
+      );
+    else
+      setPdfOptions((current) =>
+        publicationPdfOptions({ ...current, [key]: value }),
+      );
+  }
   const [loading, setLoading] = useState(true),
     [historyReady, setHistoryReady] = useState(false);
   const previewHeading = useRef<HTMLHeadingElement>(null);
@@ -361,6 +383,7 @@ export function PublicationPanel({
           hash: preview.hash,
           format,
           ...(format === "pdf" ? { pdfOptions } : {}),
+          ...(format === "docx" ? { docxOptions } : {}),
         },
       );
       if (alive.current)
@@ -421,8 +444,8 @@ export function PublicationPanel({
           <div>
             <h2>导出发布副本</h2>
             <p className="muted">
-              选择章节与公开信息，保存独立副本，再导出本地 TXT、Markdown、HTML
-              或 PDF。
+              选择章节与公开信息，保存独立副本，再导出本地
+              TXT、Markdown、HTML、DOCX 或 PDF。
             </p>
           </div>
           <button
@@ -783,6 +806,7 @@ export function PublicationPanel({
                       <option value="md">Markdown</option>
                       <option value="txt">TXT（UTF-8）</option>
                       <option value="pdf">PDF 排版副本</option>
+                      <option value="docx">DOCX 可编辑副本</option>
                     </select>
                   </label>
                   <button
@@ -793,12 +817,15 @@ export function PublicationPanel({
                     {exporting ? "正在导出…" : "导出此副本"}
                   </button>
                 </div>
-                {format === "pdf" && (
+                {(format === "pdf" || format === "docx") && (
                   <fieldset disabled={exporting}>
-                    <legend>PDF排版</legend>
+                    <legend>{printLabel}排版</legend>
                     <p>
                       从此冻结副本排版，保留书名、作者、简介和公开说明。仅导出选中章节；当前单次内容上限8
-                      MiB。字体采用本机字体，导出后请检查分页与罕见字。
+                      MiB。
+                      {format === "docx"
+                        ? "生成可编辑的段落与标题；字体由打开文件的软件匹配，请检查分页与罕见字。"
+                        : "字体采用本机字体，导出后请检查分页与罕见字。"}
                     </p>
                     <div className="publication-actions">
                       {(
@@ -807,6 +834,9 @@ export function PublicationPanel({
                             "paper",
                             "纸张",
                             [
+                              ...(format === "docx"
+                                ? [["Letter", "Letter"]]
+                                : []),
                               ["A5", "A5"],
                               ["A4", "A4"],
                             ],
@@ -856,16 +886,10 @@ export function PublicationPanel({
                         <label key={key}>
                           {label}
                           <select
-                            aria-label={`PDF${label}`}
-                            value={pdfOptions[key]}
+                            aria-label={`${printLabel}${label}`}
+                            value={printOptions[key]}
                             onChange={(event) =>
-                              setPdfOptions((current) => ({
-                                ...current,
-                                [key]:
-                                  key === "size" || key === "leading"
-                                    ? Number(event.target.value)
-                                    : event.target.value,
-                              }))
+                              setPrintOption(key, event.target.value)
                             }
                           >
                             {values.map(([value, name]) => (

@@ -94,6 +94,39 @@ manifest.pdfPublication = {
   scope:
     "Synthetic frozen selection exported by installed EXE; independent parser and PDFium, no professional print certification",
 };
+const docxPublication = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/publication-docx/publication-docx-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  docxPublication.status !== "passed" ||
+  docxPublication.version !== pkg.version ||
+  !/^[a-f0-9]{64}$/.test(docxPublication.sha256 || "") ||
+  !/^[a-f0-9]{64}$/.test(docxPublication.snapshotHash || "") ||
+  !Number.isSafeInteger(docxPublication.bytes) ||
+  docxPublication.bytes < 10 ||
+  docxPublication.reader?.backend !== "native" ||
+  !Array.isArray(docxPublication.checks) ||
+  docxPublication.checks.length < 2
+)
+  throw new Error(
+    "Installed DOCX export independent verification is missing or stale",
+  );
+manifest.docxPublication = {
+  version: docxPublication.version,
+  snapshotHash: docxPublication.snapshotHash,
+  sha256: docxPublication.sha256,
+  bytes: docxPublication.bytes,
+  reader: docxPublication.reader,
+  checks: docxPublication.checks,
+  scope:
+    "Actual installed host export; editable OOXML and native development-only LibreOffice reader; no installed Word claim",
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

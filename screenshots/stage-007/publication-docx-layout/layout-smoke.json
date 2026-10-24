@@ -1,0 +1,146 @@
+{
+  "status": "passed",
+  "scope": "Source DOCX generator and development-only independent native reader; not an installed-app claim",
+  "cases": [
+    {
+      "name": "letter-serif",
+      "status": "passed",
+      "sha256": "4aeab537c8395b50883168f4e6d3c9708fe367be00a695dece88be857b948d59",
+      "paragraphs": 27,
+      "chapterHeadings": 2,
+      "paper": "Letter",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 6,
+      "pdfSha256": "d8bf6d66d275d1fbf980afc617ad2a7fde4be7c3befaf16683b012c0400fde89",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png",
+        "page-006.png"
+      ],
+      "verifiedFooters": [
+        "1 / 6",
+        "2 / 6",
+        "3 / 6",
+        "4 / 6",
+        "5 / 6",
+        "6 / 6"
+      ],
+      "reader": {
+        "backend": "native",
+        "missingFonts": []
+      }
+    },
+    {
+      "name": "a4-sans",
+      "status": "passed",
+      "sha256": "cc497f985731339914bbd7150a32a86e5f0d9581ca6fb8f5356686e2de62736f",
+      "paragraphs": 27,
+      "chapterHeadings": 2,
+      "paper": "A4",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 6,
+      "pdfSha256": "ecffdf44fdb281ccb45af1f60bbdaa55b5629ccb9da36123248249910bc629d5",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png",
+        "page-006.png"
+      ],
+      "verifiedFooters": [
+        "1 / 6",
+        "2 / 6",
+        "3 / 6",
+        "4 / 6",
+        "5 / 6",
+        "6 / 6"
+      ],
+      "reader": {
+        "backend": "native",
+        "missingFonts": []
+      }
+    },
+    {
+      "name": "a5-large-wide",
+      "status": "passed",
+      "sha256": "34b47544c3e9ca1f9df630bd6850f9d92e0b6b7a851ac5d22267ffae8c1a88e1",
+      "paragraphs": 27,
+      "chapterHeadings": 2,
+      "paper": "A5",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 28,
+      "pdfSha256": "366275800810fb6ee5a0294adf32c90e8714624880b743f311f1f3873513bcaa",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png",
+        "page-006.png",
+        "page-007.png",
+        "page-008.png",
+        "page-009.png",
+        "page-010.png",
+        "page-011.png",
+        "page-012.png",
+        "page-013.png",
+        "page-014.png",
+        "page-015.png",
+        "page-016.png",
+        "page-017.png",
+        "page-018.png",
+        "page-019.png",
+        "page-020.png",
+        "page-021.png",
+        "page-022.png",
+        "page-023.png",
+        "page-024.png",
+        "page-025.png",
+        "page-026.png",
+        "page-027.png",
+        "page-028.png"
+      ],
+      "verifiedFooters": [
+        "1 / 28",
+        "2 / 28",
+        "3 / 28",
+        "4 / 28",
+        "5 / 28",
+        "6 / 28",
+        "7 / 28",
+        "8 / 28",
+        "9 / 28",
+        "10 / 28",
+        "11 / 28",
+        "12 / 28",
+        "13 / 28",
+        "14 / 28",
+        "15 / 28",
+        "16 / 28",
+        "17 / 28",
+        "18 / 28",
+        "19 / 28",
+        "20 / 28",
+        "21 / 28",
+        "22 / 28",
+        "23 / 28",
+        "24 / 28",
+        "25 / 28",
+        "26 / 28",
+        "27 / 28",
+        "28 / 28"
+      ],
+      "reader": {
+        "backend": "native",
+        "missingFonts": []
+      }
+    }
+  ]
+}

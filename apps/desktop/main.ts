@@ -10,6 +10,7 @@ import { PublicationCaptures } from "../../packages/novel-storage/publication-ca
 import type { PublicationSnapshot } from "../../packages/novel-domain/publication.mjs";
 import { exportPublication } from "../../packages/novel-storage/publication-export.mjs";
 import { publicationPdfOptions } from "../../packages/novel-domain/publication-pdf-options.mjs";
+import { publicationDocxOptions } from "../../packages/novel-domain/publication-docx-options.mjs";
 import { renderPublicationPdf } from "./publication-pdf";
 import { claimDesktopSingleInstance } from "./upstream/single-instance";
 import { desktopNodeEnvironment } from "./upstream/node-environment";
@@ -1000,11 +1001,19 @@ if (
                     payload.id,
                     hash,
                   );
-                  if (!["txt", "md", "html", "pdf"].includes(payload.format))
+                  if (
+                    !["txt", "md", "html", "pdf", "docx"].includes(
+                      payload.format,
+                    )
+                  )
                     throw new Error("请选择支持的本地导出格式");
                   const pdfOptions =
                     payload.format === "pdf"
                       ? publicationPdfOptions(payload.pdfOptions)
+                      : undefined;
+                  const docxOptions =
+                    payload.format === "docx"
+                      ? publicationDocxOptions(payload.docxOptions)
                       : undefined;
                   if (publicationClosing)
                     throw new Error("程序正在关闭，未开始导出");
@@ -1046,7 +1055,9 @@ if (
                                 join(dataRoot, "publication-render"),
                               ),
                           }
-                        : undefined,
+                        : payload.format === "docx"
+                          ? { options: docxOptions }
+                          : undefined,
                     )),
                   };
                 })();

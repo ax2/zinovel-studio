@@ -3,7 +3,7 @@
   "checks": [
     "actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
     "actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
-    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer; injected print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
+    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF/DOCX writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer and DOCX cancellation creates no directory; injected PDF print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
     "desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
     "form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export"
   ],
@@ -20,6 +20,11 @@
       "height": 923
     },
     {
+      "name": "desktop-docx-layout.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
       "name": "narrow-frozen-preview.png",
       "width": 806,
       "height": 803
@@ -30,13 +35,25 @@
       "height": 803
     },
     {
+      "name": "narrow-pdf-layout.png",
+      "width": 806,
+      "height": 803
+    },
+    {
       "name": "dark-narrow-frozen-preview.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "dark-narrow-pdf-layout.png",
       "width": 806,
       "height": 803
     }
   ],
   "browser": "Browser plugin not available; repository Playwright/Electron",
   "nativeDialog": "Folder choice instrumented; real host writes and real files verified; native picker interaction not covered",
-  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-jH8dLk\\中文 空格 导出目录\\小说-雾港选章-html-17e5ae98-d533-405b-801e-f02b26e68d61",
-  "pdfDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-jH8dLk\\中文 空格 导出目录\\小说-雾港选章-pdf-afa9fc30-7cc5-4f16-8157-dfc7699a0090"
+  "version": "0.1.0-alpha.24",
+  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-pPGf4g\\中文 空格 导出目录\\小说-雾港选章-html-99318fc3-01a2-4f54-beff-5b7addb7eab8",
+  "pdfDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-pPGf4g\\中文 空格 导出目录\\小说-雾港选章-pdf-a8eb67cb-df21-4458-9dbb-854e6fc665c8",
+  "docxDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-ui-pPGf4g\\中文 空格 导出目录\\小说-雾港选章-docx-3dfe9fb6-0ad6-4274-bac7-3a0605acc4f3"
 }

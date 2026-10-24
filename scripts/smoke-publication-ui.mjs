@@ -101,7 +101,9 @@ async function shot(name) {
   });
 }
 async function finishedCount(count) {
-  const until = Date.now() + 10000;
+  // The real renderer has a 90-second deadline. CI must allow that contract
+  // to finish before classifying an in-flight export as a failure.
+  const until = Date.now() + 100000;
   while (Date.now() < until) {
     const entries = (await readdir(exports)).filter(
       (name) => !name.startsWith("."),
@@ -109,7 +111,9 @@ async function finishedCount(count) {
     if (entries.length === count) return entries;
     await page.waitForTimeout(30);
   }
-  throw new Error("Export files did not settle");
+  throw new Error(
+    `Export files did not settle within the renderer deadline; panel=${await panel().innerText()}`,
+  );
 }
 try {
   await launch();
@@ -210,7 +214,13 @@ try {
       filePaths: [path],
     });
   }, exports);
-  for (const [index, format] of ["txt", "md", "html", "pdf"].entries()) {
+  for (const [index, format] of [
+    "txt",
+    "md",
+    "html",
+    "pdf",
+    "docx",
+  ].entries()) {
     await panel()
       .getByLabel("发布副本导出格式", { exact: true })
       .selectOption(format);
@@ -278,6 +288,35 @@ try {
       assert.equal((await readdir(exports)).length, index);
       assert.deepEqual(await readdir(join(data, "publication-render")), []);
     }
+    if (format === "docx") {
+      assert.equal(
+        await panel().getByLabel("DOCX纸张", { exact: true }).inputValue(),
+        "Letter",
+      );
+      await panel().getByLabel("DOCX纸张", { exact: true }).selectOption("A4");
+      await panel().getByLabel("DOCX字号", { exact: true }).selectOption("12");
+      await panel().getByLabel("DOCX行距", { exact: true }).selectOption("1.5");
+      await panel()
+        .getByRole("group", { name: "DOCX排版", exact: true })
+        .scrollIntoViewIfNeeded();
+      await shot("desktop-docx-layout.png");
+      await app.evaluate(({ dialog }) => {
+        dialog.showOpenDialog = async () => ({ canceled: true, filePaths: [] });
+      });
+      await panel()
+        .getByRole("button", { name: "导出此副本", exact: true })
+        .click();
+      await panel()
+        .getByText("已取消导出，未创建文件。", { exact: true })
+        .waitFor();
+      assert.equal((await readdir(exports)).length, index);
+      await app.evaluate(({ dialog }, path) => {
+        dialog.showOpenDialog = async () => ({
+          canceled: false,
+          filePaths: [path],
+        });
+      }, exports);
+    }
     await panel()
       .getByRole("button", { name: "导出此副本", exact: true })
       .click();
@@ -336,6 +375,26 @@ try {
       );
     }
     if (format === "html") report.htmlDirectory = output;
+    if (format === "docx") {
+      report.docxDirectory = output;
+      assert.equal(manifest.layout.paper, "A4");
+      assert.equal(manifest.layout.size, 12);
+      assert.equal(manifest.layout.leading, 1.5);
+      assert.equal(manifest.engine, "docx@9.14.0");
+      assert.match(manifest.recipeHash, /^[a-f0-9]{64}$/);
+      assert.equal(
+        (await readFile(join(output, "book.docx")))
+          .subarray(0, 4)
+          .toString("hex"),
+        "504b0304",
+      );
+      assert.equal(
+        await app.evaluate(
+          ({ BrowserWindow }) => BrowserWindow.getAllWindows().length,
+        ),
+        1,
+      );
+    }
     if (format === "pdf") {
       report.pdfDirectory = output;
       assert.equal(manifest.layout.paper, "A4");
@@ -366,6 +425,9 @@ try {
     }
   }
   assert.deepEqual(await readFile(manuscript), before);
+  await panel()
+    .getByLabel("发布副本导出格式", { exact: true })
+    .selectOption("pdf");
   await page.setViewportSize({ width: 806, height: 803 });
   await panel()
     .getByRole("heading", { name: "雾港选章", exact: true })
@@ -557,7 +619,7 @@ try {
   report.checks.push(
     "actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
     "actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
-    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer; injected print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
+    "native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF/DOCX writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer and DOCX cancellation creates no directory; injected PDF print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
     "desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
     "form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export",
   );

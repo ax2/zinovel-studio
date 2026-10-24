@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "entry": "docx@9.14.0",
+  "scope": "Full declared runtime dependency closure of the bundled DOCX producer; type-only packages omitted; retained text and metadata are not a complete distribution certification",
+  "components": [
+    {
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "declaredLicense": "MIT",
+      "notices": [
+        "core-util-is_1.0.3-LICENSE"
+      ]
+    },
+    {
+      "name": "docx",
+      "version": "9.14.0",
+      "declaredLicense": "MIT",
+      "notices": [
+        "docx_9.14.0-LICENSE"
+      ]
+    },
+    {
+      "name": "hash.js",
+      "version": "1.1.7",
+      "declaredLicense": "MIT",
+      "notices": [
+        "hash.js_1.1.7-README.md"
+      ]
+    },
+    {
+      "name": "immediate",
+      "version": "3.0.6",
+      "declaredLicense": "MIT",
+      "notices": [
+        "immediate_3.0.6-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "declaredLicense": "ISC",
+      "notices": [
+        "inherits_2.0.4-LICENSE"
+      ]
+    },
+    {
+      "name": "isarray",
+      "version": "1.0.0",
+      "declaredLicense": "MIT",
+      "notices": [
+        "isarray_1.0.0-README.md"
+      ]
+    },
+    {
+      "name": "jszip",
+      "version": "3.10.2",
+      "declaredLicense": "(MIT OR GPL-3.0-or-later)",
+      "notices": [
+        "jszip_3.10.2-LICENSE.markdown"
+      ]
+    },
+    {
+      "name": "lie",
+      "version": "3.3.0",
+      "declaredLicense": "MIT",
+      "notices": [
+        "lie_3.3.0-license.md"
+      ]
+    },
+    {
+      "name": "minimalistic-assert",
+      "version": "1.0.1",
+      "declaredLicense": "ISC",
+      "notices": [
+        "minimalistic-assert_1.0.1-LICENSE"
+      ]
+    },
+    {
+      "name": "nanoid",
+      "version": "6.0.2",
+      "declaredLicense": "MIT",
+      "notices": [
+        "nanoid_6.0.2-LICENSE"
+      ]
+    },
+    {
+      "name": "pako",
+      "version": "1.0.11",
+      "declaredLicense": "(MIT AND Zlib)",
+      "notices": [
+        "pako_1.0.11-LICENSE"
+      ]
+    },
+    {
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "declaredLicense": "MIT",
+      "notices": [
+        "process-nextick-args_2.0.1-license.md"
+      ]
+    },
+    {
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "declaredLicense": "MIT",
+      "notices": [
+        "readable-stream_2.3.8-LICENSE"
+      ]
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.1.2",
+      "declaredLicense": "MIT",
+      "notices": [
+        "safe-buffer_5.1.2-LICENSE"
+      ]
+    },
+    {
+      "name": "setimmediate",
+      "version": "1.0.5",
+      "declaredLicense": "MIT",
+      "notices": [
+        "setimmediate_1.0.5-LICENSE.txt"
+      ]
+    },
+    {
+      "name": "string_decoder",
+      "version": "1.1.1",
+      "declaredLicense": "MIT",
+      "notices": [
+        "string_decoder_1.1.1-LICENSE"
+      ]
+    },
+    {
+      "name": "util-deprecate",
+      "version": "1.0.2",
+      "declaredLicense": "MIT",
+      "notices": [
+        "util-deprecate_1.0.2-LICENSE"
+      ]
+    }
+  ],
+  "files": {
+    "docx_9.14.0-LICENSE": "b5b2364c0c95a26b2a2399d7e706a61acac680be1d5b180b00592ee85830bffb",
+    "hash.js_1.1.7-README.md": "5df660fe115c8ddcdb81c5d733c117b94abb706b91c26dac3ab7dc817dd9ba71",
+    "jszip_3.10.2-LICENSE.markdown": "566c953c6090b1218ca6217dd7359d45dde46581968586dc607d59a78af6a9c4",
+    "nanoid_6.0.2-LICENSE": "4383cb2c3608397ce7a4159502614ed66890f8999c2a9c056dd3b1024d6721f0",
+    "inherits_2.0.4-LICENSE": "5ffe28e7ade7d8f10d85d5337a73fd793dac5c462fb9a28fbf8c5046c7fbca3b",
+    "minimalistic-assert_1.0.1-LICENSE": "136fee1129ea96ce18b41c26a72f5d4ba196ee41bfd73b55d0b8509cdda148e9",
+    "lie_3.3.0-license.md": "5c81b0caa98593408b03125efa25efe622341ed87ae55561968828cd887d64a4",
+    "pako_1.0.11-LICENSE": "a04665b3b2de56c66730c1f720f528175739e4104f79073614aa611da1e85539",
+    "readable-stream_2.3.8-LICENSE": "ec62dc96da0099b87f4511736c87309335527fb7031639493e06c95728dc8c54",
+    "setimmediate_1.0.5-LICENSE.txt": "c4b4ad3a5746f1f5249a6dd90396ec519264e1bb02e01e48a6522c48a3a97cb4",
+    "immediate_3.0.6-LICENSE.txt": "809e66de579fb7d92503848bbe6d1f348f4f6521a71e5d294fe7cc0c87a3b4ff",
+    "core-util-is_1.0.3-LICENSE": "33b734d60042d0fe0c92dd1fc1e874193a1c899ec3e276a2eb935d2d0bf5b710",
+    "isarray_1.0.0-README.md": "ff138e683771b187f3629c383db72ee7d632009010a36d08e18e8d2a34222ec7",
+    "process-nextick-args_2.0.1-license.md": "ecdccbcf39024f624ded480c01c0b25458e1eca8f26ecf040933865ce56d9a4f",
+    "safe-buffer_5.1.2-LICENSE": "c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac",
+    "string_decoder_1.1.1-LICENSE": "11f2aafb37d06b3ee5bdaf06e9811141d0da05263c316f3d627f45c20d43261b",
+    "util-deprecate_1.0.2-LICENSE": "0154425673db15cdfa80ecba2c9b1f1a867f7197a006764712849bfc3a93cbb7"
+  }
+}

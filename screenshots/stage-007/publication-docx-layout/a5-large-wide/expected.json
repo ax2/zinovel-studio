@@ -1,0 +1,33 @@
+{
+  "paper": "A5",
+  "font": "serif",
+  "size": 18,
+  "leading": 2.4,
+  "margin": "wide",
+  "keepParagraphs": "balanced",
+  "chapters": 2,
+  "required": [
+    "雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信",
+    "段落编号1终",
+    "段落编号2终",
+    "段落编号3终",
+    "段落编号4终",
+    "段落编号5终",
+    "段落编号6终",
+    "段落编号7终",
+    "段落编号8终",
+    "https://invalid.test/long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-long-boundary-",
+    "全文终点𠮷🌊。"
+  ],
+  "forbidden": [
+    "AUTHOR_PRIVATE_SENTINEL"
+  ],
+  "ordered": [
+    "章序1终",
+    "章序2终"
+  ],
+  "counts": {
+    "𠮷": 17,
+    "🌊": 17
+  }
+}

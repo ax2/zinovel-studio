@@ -1,5 +1,13 @@
 import { readFile, readdir, lstat, writeFile } from "node:fs/promises";
-import { join, resolve, relative, dirname, matchesGlob } from "node:path";
+import {
+  join,
+  resolve,
+  relative,
+  dirname,
+  matchesGlob,
+  basename,
+} from "node:path";
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import originalFs from "original-fs";
 
@@ -168,6 +176,22 @@ for (const name of [
     packages.some((pkg) => pkg.name === name),
     `Retained manifest missing: ${name}`,
   );
+const docxNoticeBytes = await readFile(
+  join(app, "licenses/docx-runtime/provenance.json"),
+);
+const docxNotices = JSON.parse(docxNoticeBytes.toString("utf8"));
+assert.equal(docxNotices.entry, `docx@${source.devDependencies.docx}`);
+for (const [name, hash] of Object.entries(docxNotices.files)) {
+  assert.equal(name, basename(name));
+  assert.ok(!name.includes("\\"));
+  assert.equal(
+    createHash("sha256")
+      .update(await readFile(join(app, "licenses/docx-runtime", name)))
+      .digest("hex"),
+    hash,
+    `DOCX retained notice changed: ${name}`,
+  );
+}
 const inventory = {
   version: source.version,
   fileCount,
@@ -177,6 +201,14 @@ const inventory = {
   resourceExclusions: resourceExclusions.patterns,
   omittedPayloads,
   note: "Selected generic office/voice/inspector/browser payloads omitted; package metadata, code and notices retained. Dependency manifest presence does not assert every optional upstream resource is shipped.",
+  bundledDocx: {
+    entry: docxNotices.entry,
+    components: docxNotices.components,
+    noticeCount: Object.keys(docxNotices.files).length,
+    provenanceSha256: createHash("sha256")
+      .update(docxNoticeBytes)
+      .digest("hex"),
+  },
 };
 await writeFile(
   join(root, "release/runtime-inventory.json"),

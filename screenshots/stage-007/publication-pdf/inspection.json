@@ -15,7 +15,7 @@
       841.91998
     ]
   ],
-  "sha256": "b9af54a930d48d2d1f5904674d5aebb410ca3ac72596b40a29cdf9edc99658d5",
+  "sha256": "399f363a8900e9ad9ba1e7b29d65eb96714981e732672a60d381370ce814f858",
   "renderedPages": [
     "page-001.png",
     "page-002.png",
@@ -80,6 +80,6 @@
     "第二章结尾。",
     "尚未自动保存就打开发布。"
   ],
-  "outline": "[{'/Title': '雾港选章', '/Page': IndirectObject(2, 0, 1323278004496), '/Type': '/XYZ', '/Left': 45.492188, '/Top': 790.88483, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '第二章 渡口', '/Page': IndirectObject(9, 0, 1323278004496), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '第一章 旧信', '/Page': IndirectObject(11, 0, 1323278004496), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}]]",
+  "outline": "[{'/Title': '雾港选章', '/Page': IndirectObject(2, 0, 2266888180208), '/Type': '/XYZ', '/Left': 45.492188, '/Top': 790.88483, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '第二章 渡口', '/Page': IndirectObject(9, 0, 2266888180208), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '第一章 旧信', '/Page': IndirectObject(11, 0, 2266888180208), '/Type': '/XYZ', '/Left': 45.070313, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}]]",
   "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
 }

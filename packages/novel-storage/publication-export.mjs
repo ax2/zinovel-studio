@@ -15,6 +15,7 @@ import {
   publicationHtml,
 } from "../novel-domain/publication.mjs";
 import { publicationPdfDocument } from "../novel-domain/publication-pdf.mjs";
+import { publicationDocxOptions } from "../novel-domain/publication-docx-options.mjs";
 const digest = (value) => createHash("sha256").update(value).digest("hex");
 const uuid = (value) =>
   typeof value === "string" &&
@@ -29,13 +30,15 @@ export async function exportPublication(
   pdf,
 ) {
   const snapshot = verifyPublicationSnapshot(input);
-  if (!["txt", "md", "html", "pdf"].includes(format) || !uuid(exportId))
+  if (!["txt", "md", "html", "pdf", "docx"].includes(format) || !uuid(exportId))
     throw new Error("导出格式或任务身份无效");
   // Validate before creating output, then render without holding the book queue.
   const document =
     format === "pdf" ? publicationPdfDocument(snapshot, pdf?.options) : null;
   if (document && typeof pdf?.render !== "function")
     throw new Error("PDF排版服务不可用");
+  const docxOptions =
+    format === "docx" ? publicationDocxOptions(pdf?.options) : null;
   const directory = await realpath(parent);
   if (!(await stat(directory)).isDirectory()) throw new Error("请选择导出目录");
   const title =
@@ -60,9 +63,16 @@ export async function exportPublication(
     files.delete("publication-manifest.json");
     prepared = html.manifest;
   } else {
+    const docx = docxOptions
+      ? await (
+          await import("../novel-domain/publication-docx.mjs")
+        ).publicationDocx(snapshot, docxOptions)
+      : null;
     const value = document
       ? await pdf.render(document)
-      : publicationText(snapshot, format);
+      : docx
+        ? docx.bytes
+        : publicationText(snapshot, format);
     if (
       document &&
       (!Buffer.isBuffer(value) ||
@@ -91,6 +101,14 @@ export async function exportPublication(
             templateVersion: document.templateVersion,
             htmlHash: document.htmlHash,
             engine: pdf.engine,
+          }
+        : {}),
+      ...(docx
+        ? {
+            layout: docx.options,
+            templateVersion: docx.templateVersion,
+            recipeHash: docx.recipeHash,
+            engine: docx.engine,
           }
         : {}),
     };

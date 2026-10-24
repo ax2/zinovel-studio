@@ -11,9 +11,11 @@ import {
 import { join, dirname } from "node:path";
 import { tmpdir } from "node:os";
 import { randomUUID, createHash } from "node:crypto";
+import { createRequire } from "node:module";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { exportPublication } from "../packages/novel-storage/publication-export.mjs";
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
+const JSZip = createRequire(import.meta.resolve("docx"))("jszip");
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), "novel-export-"));
   const store = new NovelStore(join(root, "library"));
@@ -126,12 +128,53 @@ test("an existing export and unrelated files are never overwritten on repeated e
   await verify(result);
   assert.deepEqual(await readFile(f.source), f.before);
 });
+test("DOCX export writes exact binary and frozen public selection without touching current manuscripts or existing exports", async () => {
+  const f = await fixture(),
+    id = randomUUID();
+  await writeFile(f.source, "作者在捕获之后另外修改正文。");
+  const result = await exportPublication(f.snapshot, f.parent, "docx", id, {
+    options: { paper: "A4", font: "sans", size: 12 },
+  });
+  const manifest = await verify(result);
+  assert.equal(manifest.format, "docx");
+  assert.equal(manifest.layout.paper, "A4");
+  assert.equal(manifest.layout.font, "sans");
+  assert.equal(manifest.layout.size, 12);
+  assert.equal(manifest.engine, "docx@9.14.0");
+  assert.match(manifest.recipeHash, /^[a-f0-9]{64}$/);
+  const bytes = await readFile(join(result.path, "book.docx"));
+  const zip = await JSZip.loadAsync(bytes, { checkCRC32: true });
+  const xml = await zip.file("word/document.xml").async("string");
+  assert.match(xml, /第一段𠮷🌊/);
+  assert.match(xml, /最后一段。/);
+  assert.doesNotMatch(
+    xml,
+    /作者在捕获之后|EXCLUDED_SECRET|内部书目不可自动外发/,
+  );
+  await assert.rejects(
+    exportPublication(f.snapshot, f.parent, "docx", id),
+    /已存在/,
+  );
+  await assert.rejects(
+    exportPublication(f.snapshot, f.parent, "docx", randomUUID(), {
+      options: { paper: "unsafe" },
+    }),
+    /DOCX/,
+  );
+  assert.deepEqual(await readFile(join(result.path, "book.docx")), bytes);
+  assert.equal((await readdir(f.parent)).length, 1);
+  assert.equal(
+    await readFile(f.source, "utf8"),
+    "作者在捕获之后另外修改正文。",
+  );
+});
+
 test("bad snapshot, unsupported format, invalid identity and non-directory targets fail without modifying targets", async () => {
   const f = await fixture(),
     bad = structuredClone(f.snapshot);
   bad.content.chapters[0].body = "不能偷换的正文";
   await assert.rejects(exportPublication(bad, f.parent, "txt"), /hash/);
-  await assert.rejects(exportPublication(f.snapshot, f.parent, "docx"), /格式/);
+  await assert.rejects(exportPublication(f.snapshot, f.parent, "epub"), /格式/);
   await assert.rejects(
     exportPublication(f.snapshot, f.parent, "pdf"),
     /排版服务不可用/,

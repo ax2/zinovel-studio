@@ -75,6 +75,7 @@ jobs:
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
       - run: pnpm test:pdf-layout
+      - run: pnpm test:docx-layout
       - run: pnpm test:assets
       - run: pnpm test:maps-ipc
       - run: pnpm test:maps-ui
