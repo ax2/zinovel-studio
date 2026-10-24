@@ -11,3 +11,11 @@
 ART-03的地点/区域/路线结构化ID与可编辑行为按实际安装结果提升单项verified；ART-05只有显式作者比例尺距离，行程检查继续in-progress。当前26 verified、38 in-progress、42 planned，不以该单项验收宣称全部地图/产品完成。年代层级、角色路径、生成、定妆、带图出版和完整上架继续待办。
 
 完整运行目录875文件及安装EXE保留实际D:\zinovel-releases\v0.1.0-alpha.20，复制0失败、归档asar摘要相同，无ZIP，未代码签名。公开alpha.3升级通过20580ms，旧原稿、任务、候选、加密合成设置和卸载保稿通过。release-manifest.json绑定当前EXE和本机资格；预览门禁现允许本版进入标签流水线，稳定门禁仍false。标签CI和公开附件尚未生成，不把本机SHA冒充CI SHA。
+
+## 标签与公开安装程序
+
+2026-10-24 13:03:39北京时间，冻结6caf444a6116217a099e9622f7f452ada111b436的Windows release40063745258首次完整运行success，包含该标签源码/作者界面、实际安装后地图与官方Harness回归、重装/卸载和公开alpha.3升级。已匿名公开为非草稿预览，四个附件，无ZIP。
+
+公开EXE222945005字节，SHA256 1b889cc705dff13991f63704d3d920405f3732aa34572a814ce531b11649e65d，实际下载至真实D:\zinovel-releases\v0.1.0-alpha.20\ci-public并重新计算，与GitHub digest/公开清单一致；三份元数据摘要及匿名200可见通过。CI安装证据对应这组字节；本机下载后没有声称再次执行，ci-public/verification.json完整留证。
+
+本机4a6fcab...与公开1b889cc...为不同构建，分别留证。完整本机运行目录+EXE、公开EXE和对应公开清单继续保留实际D盘。alpha.21地图册领域/存储/宿主IPC与后续UI不属于本Release，完整功能和稳定上架门禁仍未完成。
