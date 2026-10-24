@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "runId": 40082014738,
+  "commit": "8f6e4c8aba9b1a2bb554736f37062fd509527453",
+  "runtimeSourceCommit": "428ffb5005e867a9f8c009bcf3393b82c89a8b6d",
+  "jobs": [
+    {
+      "name": "planning",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows",
+      "conclusion": "success"
+    }
+  ],
+  "scope": "Development checks after QA-only map readiness/observation change; not release CI"
+}

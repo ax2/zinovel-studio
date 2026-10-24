@@ -95,3 +95,7 @@ Windows release40078509892在不可变标签2ce27fed01cd97ec36be00f706a39260374c
 ## alpha.25安装首轮失败与范围复评
 源码428ffb5的Development40081206533完整success，首次包构建和原生图像/许可通过；本机EXE155474646字节/SHA a4a511f931d5eee031b2d3a83dd0079647c1ead3b9a2b6d1c68759ed6c198a26、asar ebc35bb17c74f0b8cdaf28c229c54abdca564a73ab5621b8d4ed1c8fbcfd454a，完整133文件/622297154字节归档真实D盘，无ZIP。首次安装12119ms、新带图流程已过，但区域拖动points立即读取未变化，整套failed，未取得资格。保留图片/报告与独立三次相同安装EXE完整地图复核通过证明；首轮没有pointer证据，根因未定。QA改为等选择模式、核对实际命中/捕获事件及绘制帧再比较，不改生产地图/运行EXE；第二轮整套进行中，详见25/first-installer-failure。
 对照design/publishing.md完整要求，PUB-03尚缺图片/目录/注释配置，不能仅按矩阵简写的纯文字分页/字体/中文条件判整个ID完成。保留alpha.24真实成功与原纯文字子项证据，主线恢复in-progress，26/40/40，稳定门禁一直false。其他发布目标/授权/移动阅读也按完整设计单列，未提前提升；复评见assessments/stage-007/publication-scope-reassessment.md。下一步完成同包完整安装/重装/卸载与升级，再进入标签独立重验。
+
+## alpha.25本机阶段资格
+第二轮143项完整安装成功，安装6805ms、重装12607ms、卸载4330ms；公开alpha.3覆盖升级14242ms，旧稿/任务候选/合成设置和卸载保稿通过。新增带图流程已在精确安装EXE跑通，逐文件hash与独立390px HTML图像/夜间重载通过，查看安装版桌面冻结/深色窄窗/独立阅读图。新QA增强源码8f6e4c8的CI40082014738两job全部success；实际运行包仍428ffb5编译未变。首次失败保留，不称首次整体通过；资格文件/13类回执与全运行目录真实D盘归档，无ZIP。
+preview现只允许同标签再完整重建/安装/升级/hash后发布，稳定false；26/40/40，PUB-03范围复评维持，后续优先P0离线/隔离/独立备份等，EPUB仍保留并有官方工具研究，不提前声称完成。版本说明见iterations/releases/v0.1.0-alpha.25.md，公开附件尚待新标签流程。

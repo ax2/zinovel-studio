@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "version": "0.1.0-alpha.25",
-  "ready": false,
+  "ready": true,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -43,13 +43,31 @@
     "assessments/release/v0.1.0-alpha.23/README.md",
     "design/publication-docx.md",
     "assessments/stage-007/docx-pdf-acceptance.md",
-    "assessments/release/v0.1.0-alpha.24/README.md"
+    "assessments/release/v0.1.0-alpha.24/README.md",
+    "design/publication-resources.md",
+    "assessments/stage-007/publication-resources-ui.md",
+    "assessments/stage-007/publication-scope-reassessment.md",
+    "assessments/release/v0.1.0-alpha.25/README.md",
+    "assessments/stage-008/priority-reassessment-alpha25.md"
   ],
-  "reports": [],
+  "reports": [
+    "assessments/release/v0.1.0-alpha.25/local-candidate.json",
+    "assessments/release/v0.1.0-alpha.25/source-ci-verification.json",
+    "assessments/release/v0.1.0-alpha.25/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.25/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.25/publication-resources.json",
+    "assessments/release/v0.1.0-alpha.25/publication-ui.json",
+    "assessments/release/v0.1.0-alpha.25/pdf-output.json",
+    "assessments/release/v0.1.0-alpha.25/docx-output.json",
+    "assessments/release/v0.1.0-alpha.25/assets.json",
+    "assessments/release/v0.1.0-alpha.25/maps-ui.json",
+    "assessments/release/v0.1.0-alpha.25/maps-ipc.json",
+    "assessments/release/v0.1.0-alpha.25/atlas-ui.json"
+  ],
   "limitations": [
-    "alpha.25带图出版资源冻结开发中，无本版安装/升级资格，不继承alpha.24",
+    "alpha.25第二轮完整143项安装/重装/卸载、alpha.3升级及225项/完整源码CI通过；首轮地图拖动观察失败留存，同标签须重新独立验收公开字节",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
-    "完整106项需求尚未完成：空间地图时态/行程、图像生成、定妆、带图出版、EPUB与远端发布等",
+    "完整106项仍26 verified/40 in-progress/40 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
