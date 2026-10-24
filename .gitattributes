@@ -18,4 +18,5 @@ apps/desktop/upstream/*.ts -text
 apps/desktop/upstream/LICENSE -text
 licenses/image-runtime/** -text whitespace=cr-at-eol
 licenses/docx-runtime/** -text whitespace=cr-at-eol,-blank-at-eof
+licenses/vault-runtime/** -text whitespace=cr-at-eol
 assessments/stage-007/ci63-publication-failure/raw-log.txt -text whitespace=-blank-at-eol
