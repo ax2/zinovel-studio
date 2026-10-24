@@ -138,6 +138,9 @@ async function openMaps() {
 async function openAtlas() {
   await maps().getByRole("button", { name: "年代与层级", exact: true }).click();
   await panel().getByLabel("地图册说明", { exact: true }).waitFor();
+  await panel()
+    .getByText("正在读取地图册…", { exact: true })
+    .waitFor({ state: "hidden" });
 }
 async function closeApp() {
   await app.close();
