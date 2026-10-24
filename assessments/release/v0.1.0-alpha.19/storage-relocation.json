@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "sourceRepo": "E:\\zinovel-studio",
+  "artifactRoot": "D:\\zinovel-artifacts-alpha19-mJ0Qfe",
+  "archiveRoot": "D:\\zinovel-releases",
+  "copiedBy": "robocopy /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /XJ; exit 1 means copied successfully, 0 failed files",
+  "paths": [
+    {
+      "path": "D:\\work\\zinovel-studio\\release",
+      "real": "D:\\zinovel-artifacts-alpha19-mJ0Qfe\\release",
+      "retainedOriginal": "D:\\work\\zinovel-studio\\release-before-D-20261024",
+      "checks": [
+        {
+          "path": "win-unpacked/resources/app.asar",
+          "sha256": "f642870731370129c62ee09150010da713f2c448bd43332474ac68278e9ffa61"
+        },
+        {
+          "path": "win-unpacked/ZiNovel Studio.exe",
+          "sha256": "8e856b2c026bf9b40b2e66f6da5cec45bd567a241258a41f6e9cc570deed8917"
+        }
+      ]
+    },
+    {
+      "path": "D:\\work\\zinovel-studio\\.cache",
+      "real": "D:\\zinovel-artifacts-alpha19-mJ0Qfe\\cache",
+      "retainedOriginal": "D:\\work\\zinovel-studio\\.cache-before-D-20261024",
+      "checks": [
+        {
+          "path": "public-alpha3-upgrade/ZiNovel-Studio-0.1.0-alpha.3-windows-x64-setup.exe",
+          "sha256": "e88243c6ed68ba4430bdcb100743db42ff808363abd5a6500ac5a6f21b83abd6"
+        },
+        {
+          "path": "public-alpha3-upgrade/release-manifest.json",
+          "sha256": "5a2a707c3cd06dbc66485b52d4d5ed9ef8f54cc3da08e68ad882adbd0b961e84"
+        }
+      ]
+    }
+  ]
+}

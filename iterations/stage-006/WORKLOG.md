@@ -47,3 +47,11 @@
 标签CI首轮失败：40053936921在smoke-assets首次launch读取page.title时导航上下文销毁；主分支40053924739同处在后续真实重启阶段失败。都尚未打包/公开。原日志保留ci-first-failure。主分支改等待真实/workbench/index.html文档完成再读标题，本机完整test:assets通过（.cache/alpha18-assets-navigation-fix.log）；冻结18不移动，仅完整重跑一次，并明确重跑不含本主分支等待修复。若再失败保留失败标签并进入新版本，不伪装重跑已修代码。
 
 主分支进入alpha.19修复候选：导航等待仅在faa72fb主分支中，18重跑仍是原标签，不靠碰巧通过代替后续修复。为使下一发行标签携带稳健启动验证，19重新打包并独立安装/升级；未移动18标签、不复用18资格。地图设计仍在后续，本候选只加固图像阶段验收。19门禁false/reports[]。
+
+alpha.19首次本机打包失败：NSIS makensis无法写入67108864字节，EXE未取得资格。核对发现D:\Work本身指向E:\，此前D:\Work\zinovel-releases也仍在E卷；早先声称该目录是实际D卷的判断错误。本轮将E:\zinovel-releases实际迁移到D:\zinovel-releases并保留旧路径junction，18安装EXE与完整asar摘要重核一致。
+
+构建输出和QA缓存另复制至真实D:\zinovel-artifacts-alpha19-mJ0Qfe，原release和.cache原目录改名保留在项目内的*-before-D-20261024目录，仅以.git/info/exclude隐藏本机缓存，不删除原件。106379个缓存文件共6.538GiB通过原生robocopy完成（exit1为成功复制，0失败）；路径切换前核对实际realpath、当前asar/EXE与公开alpha.3 EXE/manifest摘要。NodeRepl整库复制超时重置，之后原生完整复制补齐，不把中断副本当完成。切换回执storage-relocation.json。首次19失败EXE仍在保留原目录，实际D输出只重跑NSIS阶段，不宣称第一次完整package:win成功。
+
+迁移后19实际EXE的sharp/两DLL/原生.node/许可证探针通过，asar SHA f642870731370129c62ee09150010da713f2c448bd43332474ac68278e9ffa61；安装和升级仍待验。所有历史完整运行目录与EXE继续保留，无ZIP。
+
+公开18阶段完成：发行CI40053936921第2次完整运行成功，2026-10-24 10:41:23北京时间公开。实际公开EXE222923634字节，SHA0757156acfd122bde30a23aefb709dd64651f8ecd0f9a2abd675e89fcb2d5a3c，已下载到真实D盘重新计算，并核对匿名可见/4个附件/元数据摘要。首次CI失败与重跑边界保留，公开EXE与本机5f547ef构建分别留证。alpha.19继续独立验收，完整地图/生成/带图出版及稳定资格仍未完成。

@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "stage": "NSIS packaging on E: through D:/Work junction",
+  "logSha256": "a5c3a610fb8423abec5bf57e5792d5aa0645d80b934f851e1ce3533f17e7e1cd",
+  "failure": "makensis: cannot write 67108864 bytes to output",
+  "retainedLog": "D:/work/zinovel-studio/.cache-before-D-20261024/alpha19-package.log",
+  "retainedPartialOutput": "D:/work/zinovel-studio/release-before-D-20261024/ZiNovel-Studio-0.1.0-alpha.19-windows-x64-setup.exe",
+  "qualification": false
+}

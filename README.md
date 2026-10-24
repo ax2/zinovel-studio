@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新阶段版本 [alpha.17](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) 已公开，包含发布副本选章/排序、公开信息、冻结预览及本地 TXT/Markdown/HTML 导出，并修复损坏 UTF-8 原稿保护问题。本机和标签 CI 的实际安装、运行、重装、卸载保稿及 alpha.3 升级均通过；公开 EXE 已下载重新计算 SHA-256 并核对匿名可见性。alpha.18已完成本机121项安装回归、重装/卸载保稿及alpha.3升级，标签发行CI进行中，尚未公开。详见 [发行证据](assessments/release/v0.1.0-alpha.17/README.md) 与 [Stage-007 工作日志](iterations/stage-007/WORKLOG.md)。
+最新阶段版本 [alpha.18](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.18) 已公开，提供小说原图导入、方向预览、来源与权利说明、资料关联、版本历史与回收恢复。本机和标签CI的实际安装、运行、重装/卸载保稿及alpha.3升级通过，公开EXE已下载复算SHA并核对匿名可见性。标签首轮CI启动校验竞态失败、第2次完整运行通过，原始证据保留；主分支alpha.19已修正等待实际文档加载，正在独立安装资格验证。详见[发行证据](assessments/release/v0.1.0-alpha.18/README.md)和[Stage-006日志](iterations/stage-006/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：文本合订导出已按实际安装证据完成单项验收；25项 verified、37项 in-progress、44项 planned。独立阅读、创作资料与小说专用图像/地图、更多出版格式继续完善。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.17 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.17) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.17/ZiNovel-Studio-0.1.0-alpha.17-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.18 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.18) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.18/ZiNovel-Studio-0.1.0-alpha.18-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
@@ -115,4 +115,4 @@ alpha.11 已于 2026/10/24 00:52:22 北京时间公开，发行 CI39988528009 �
 
 alpha.17 已于2026-10-24 09:23:23北京时间公开，标签发行CI40048673869全部成功。公开EXE222895662字节、SHA256 824d8f2926f57c3800dd2050e268e67e1c86418a579926790568735b7c2f5cc3，已下载复算且匿名可见。原文编码保护、冻结发布副本与实际导出/独立HTML通过安装验收；本机EXE与CIEXE分开留证，完整本机运行目录保留D盘。alpha.18本机资格已取得，标签CI与公开安装包仍单独核对；图像资源方案与解码实测见design/assets-and-media.md。
 
-alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版已取得本机安装/升级资格，标签Windows release [40053936921](https://github.com/ax2/zinovel-studio/actions/runs/40053936921)运行中；公开安装包仍为alpha.17。下一切片[世界地图设计](design/world-map.md)已记录空间对象和冻结底图边界，不算已实现地图。
+alpha.18开发源码已接入[小说图像资源库](iterations/stage-006/WORKLOG.md)：原图导入与方向预览、来源/权利/用途、资料关联、历史采用和回收恢复；完整地图、图像生成及带图出版仍在后续。本版已取得本机安装/升级资格，标签Windows release [40053936921](https://github.com/ax2/zinovel-studio/actions/runs/40053936921)第2次完整运行成功，alpha.18已公开并下载复算SHA。下一切片[世界地图设计](design/world-map.md)已记录空间对象和冻结底图边界，不算已实现地图。
