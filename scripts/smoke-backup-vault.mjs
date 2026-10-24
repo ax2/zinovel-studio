@@ -519,8 +519,67 @@ try {
   assert.equal(picture.sha256, snapshot.content.resources[0].image.sha256);
   await checkedManifests(vault, 3);
   await page.screenshot({ path: join(out, "restored-old-version.png") });
+  await openPanel();
+  await choose(vault);
+  await panel()
+    .getByRole("button", { name: "打开已有备份库", exact: true })
+    .click();
+  await waitPanelIdle();
+  assert.equal(
+    await panel()
+      .getByRole("button", { name: "追加备份", exact: true })
+      .isEnabled(),
+    false,
+  );
+  const foreignSelection = await request("backup.open", {
+    bookId: restored.id,
+  });
+  await assert.rejects(
+    request("backup.append", {
+      bookId: restored.id,
+      token: foreignSelection.token,
+    }),
+    /其他作品/,
+  );
+  const damaged = first.files.find((item) =>
+    item.path.startsWith("manuscript/"),
+  );
+  assert.ok(damaged);
+  const damagedPath = join(vault, "objects", damaged.sha256),
+    originalBytes = await readFile(damagedPath);
+  await writeFile(damagedPath, "合成损坏对象，原书不改");
+  await panel().getByRole("radio").last().check();
+  await panel()
+    .getByRole("button", { name: "恢复所选版本", exact: true })
+    .click();
+  await panel()
+    .getByRole("button", { name: "确认恢复为新作品", exact: true })
+    .click();
+  await waitPanelIdle();
+  assert.match(
+    await panel().getByRole("alert").innerText(),
+    /校验|损坏|对象大小或类型无效/,
+  );
+  assert.equal(
+    (await request("library.list", {})).books.length,
+    library.length,
+  );
+  assert.equal(
+    (
+      await request("chapter.read", {
+        bookId: restored.id,
+        chapterId: book.chapters[0].id,
+      })
+    ).body,
+    expected,
+  );
+  await writeFile(damagedPath, originalBytes);
+  await checkedManifests(vault, 3);
+  await panel()
+    .getByRole("button", { name: "关闭增量备份", exact: true })
+    .click();
   report.checks.push(
-    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged",
+    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations",
   );
   report.manifests = all.map((item) => ({
     id: item.id,

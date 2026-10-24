@@ -213,9 +213,11 @@ const nativeModules = Object.keys(packagedRequire.cache).filter(
 );
 assert.equal(nativeModules.length, 1);
 const vaultNativePath = nativeModules[0];
+const canonicalApp = originalFs.realpathSync(app);
 assert.ok(
-  vaultNativePath.startsWith(app + "\\") ||
-    vaultNativePath.startsWith(app + "/"),
+  vaultNativePath.startsWith(canonicalApp + "\\") ||
+    vaultNativePath.startsWith(canonicalApp + "/"),
+  `Native module must remain inside packaged app: ${vaultNativePath}; expected ${canonicalApp}`,
 );
 const nativePhysicalPath = vaultNativePath.replace(
   "app.asar",
@@ -253,7 +255,10 @@ const inventory = {
   vaultRuntime: {
     koffi: source.dependencies.koffi,
     node: process.versions.node,
-    nativePath: relative(unpacked, nativePhysicalPath).replaceAll("\\", "/"),
+    nativePath: relative(
+      originalFs.realpathSync(unpacked),
+      nativePhysicalPath,
+    ).replaceAll("\\", "/"),
     nativeBytes: originalFs.statSync(nativePhysicalPath).size,
     nativeSha256: createHash("sha256")
       .update(originalFs.readFileSync(nativePhysicalPath))

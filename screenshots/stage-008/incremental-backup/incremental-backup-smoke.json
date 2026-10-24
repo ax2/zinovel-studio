@@ -4,7 +4,7 @@
     "Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
     "Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
     "Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
-    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged"
+    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations"
   ],
   "errors": [],
   "sourceDisk": {
@@ -35,19 +35,19 @@
   },
   "manifests": [
     {
-      "id": "4ff3e516-281a-4a7f-b925-652641686d0c",
-      "hash": "6fb8c5c0b015783dd5ed66e947a48dde4c46d6d72a86e7186a67595757ea599a",
-      "files": 10
-    },
-    {
-      "id": "b4c8d09d-83d7-4f3e-93bd-525b5e92dea7",
-      "hash": "1dd5accc7eaf444c6f09c7bd7cff3c6496855f8e88af2d82e116c8e5f5f47ac7",
-      "files": 10
-    },
-    {
-      "id": "fbd32524-d15d-4c30-addc-491707f51fb2",
-      "hash": "c412e6fbe8afa85e7ad4ad87512cee1a99c58c8a229e6c33070347e31d5aacaa",
+      "id": "a192b313-e952-4573-88a8-b504b3eb83b1",
+      "hash": "dc0f25dfb27a06422ae0ec705f62a940f51bb4b718d420cca2b9b6d72803b889",
       "files": 11
+    },
+    {
+      "id": "a6208e40-a36d-4806-9c67-8d29d25c1d7a",
+      "hash": "3dc02e2f2b632983917b2fcb7e03a6da5518b2ccbb79cc1cf5de43e3aaf3dc2e",
+      "files": 10
+    },
+    {
+      "id": "f008931a-7e1c-4908-8bd6-9af6f721ac86",
+      "hash": "99943560663fe628f146f53a2fc91d2cfd57f247aad24ed9da01ac053026824f",
+      "files": 10
     }
   ]
 }

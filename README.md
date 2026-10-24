@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.26](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.26)已公开，修正备份目的地隔离和窄屏阅读布局；公开155474864字节安装EXE已实际下载复核SHA256，标签CI40099800838完整success。本机151项安装/重装/卸载、alpha.3升级及231项源码检查已通过。主线alpha.27正式六配置权限探针/30次越权拒绝及CAS增量备份后端开发中，原生锁与完整244项源码检查通过，尚无宿主/作者界面/本版安装资格。详见[alpha.26资格](assessments/release/v0.1.0-alpha.26/README.md)、[权限专项](assessments/stage-008/tool-isolation-source.md)、[增量后端](assessments/stage-008/vault-backend-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
+最新阶段版本[alpha.26](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.26)已公开，修正备份目的地隔离和窄屏阅读布局；公开155474864字节安装EXE已实际下载复核SHA256，标签CI40099800838完整success。本机151项安装/重装/卸载、alpha.3升级及231项源码检查已通过。主线alpha.27新增六配置权限探针/30次越权拒绝、CAS增量备份宿主和作者界面；251项源码及真实D到C备份/取消/重启/历史恢复四组通过，安装资格仍在验证。详见[alpha.26资格](assessments/release/v0.1.0-alpha.26/README.md)、[权限专项](assessments/stage-008/tool-isolation-source.md)、[增量作者流程](assessments/stage-008/vault-desktop-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
