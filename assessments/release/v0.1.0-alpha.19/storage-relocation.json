@@ -18,7 +18,8 @@
           "path": "win-unpacked/ZiNovel Studio.exe",
           "sha256": "8e856b2c026bf9b40b2e66f6da5cec45bd567a241258a41f6e9cc570deed8917"
         }
-      ]
+      ],
+      "retainedOriginalReal": "E:\\zinovel-studio\\work\\storage-retained-20261024-uJ1n7g\\release"
     },
     {
       "path": "D:\\work\\zinovel-studio\\.cache",
@@ -33,7 +34,8 @@
           "path": "public-alpha3-upgrade/release-manifest.json",
           "sha256": "5a2a707c3cd06dbc66485b52d4d5ed9ef8f54cc3da08e68ad882adbd0b961e84"
         }
-      ]
+      ],
+      "retainedOriginalReal": "E:\\zinovel-studio\\work\\storage-retained-20261024-uJ1n7g\\cache"
     }
   ]
 }

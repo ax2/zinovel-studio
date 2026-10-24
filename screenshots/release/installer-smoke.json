@@ -1,7 +1,7 @@
 {
-  "version": "0.1.0-alpha.18",
-  "installerSha256": "5f547ef538fec0f43ff252031629fec065c67ddddc5b7f11a1a9552a4ad0ed15",
-  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-IMQznT\\中文 安装目录",
+  "version": "0.1.0-alpha.19",
+  "installerSha256": "ed82a85b0f4ea2e8ab4762b22128f9b522294b00f92883868d69a67554ffa3fd",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-g1r5Pt\\中文 安装目录",
   "checks": [
     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
@@ -126,19 +126,19 @@
     "real NSIS uninstall removes app and registration and retains synthetic user manuscript"
   ],
   "status": "passed",
-  "installMs": 14434,
-  "reinstallMs": 26738,
+  "installMs": 15288,
+  "reinstallMs": 25686,
   "uninstallObservation": {
-    "attempts": 26,
+    "attempts": 28,
     "permissionRetries": 0,
     "permissionErrorCodes": [],
-    "elapsedMs": 5088
+    "elapsedMs": 5487
   },
   "uninstallRegistryObservation": {
     "attempts": 1,
     "permissionRetries": 0,
     "permissionErrorCodes": [],
-    "elapsedMs": 24
+    "elapsedMs": 25
   },
-  "uninstallMs": 6072
+  "uninstallMs": 6345
 }
