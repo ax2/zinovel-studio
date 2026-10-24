@@ -1,0 +1,20 @@
+✔ atlas compare-and-swap preserves source frames, history and later revisions without duplicate creation (180.1765ms)
+✔ new associations require same-book live maps and a live parent place/region, while retired or missing references remain diagnosable and removable (255.6763ms)
+✔ atlas transaction preimages reject a real same-revision external change before journal creation (137.0122ms)
+✔ real pending-journal interruption recovers one atlas revision and captures caller input before queue entry (116.0161ms)
+✔ corrupt/future atlas and history bytes remain unchanged and cannot be adopted; book backup restores source lineage independently (224.8876ms)
+✔ oversized atlas input fails before dependency reads, journal changes or output (81.7041ms)
+✔ paged atlas diagnostics keep missing, unreadable and same-name maps separate and return no geometry (1455.8135ms)
+✔ local atlas drafts retain empty epoch names, incomplete anchors, temporarily cyclic choices and unfinished Unicode without accepting them as formal data (1.4171ms)
+✔ future, foreign or malformed local atlas draft envelopes preserve raw input and reject ambiguous identities (0.2648ms)
+✔ manual epoch order and world/city/interior identities remain independent without guessing same names or coordinate transforms (0.1646ms)
+✔ duplicate map/epoch identity, missing groups, half anchors and indirect/self cycles reject rather than repair silently (0.2181ms)
+✔ unknown schemas/fields, malformed Unicode, foreign origins and excessive depth preserve input and refuse writes (0.7381ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2588.8627

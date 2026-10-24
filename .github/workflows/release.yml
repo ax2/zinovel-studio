@@ -73,6 +73,7 @@ jobs:
       - run: pnpm test:assets
       - run: pnpm test:maps-ipc
       - run: pnpm test:maps-ui
+      - run: pnpm test:atlas-ui
       - run: pnpm package:win
       - name: Verify packaged image decoder, native DLLs and retained notices
         run: node scripts/verify-image-package.mjs

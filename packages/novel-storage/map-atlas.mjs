@@ -181,7 +181,10 @@ export class MapAtlasStore {
       typeof options !== "object" ||
       Array.isArray(options) ||
       Object.keys(options).some(
-        (k) => !["offset", "parentId", "epochId"].includes(k),
+        (k) =>
+          !["offset", "parentId", "epochId", "anchorId", "historical"].includes(
+            k,
+          ),
       )
     )
       throw new Error("地图册筛选条件无效");
@@ -189,12 +192,16 @@ export class MapAtlasStore {
     if (!Number.isSafeInteger(offset) || offset < 0)
       throw new Error("地图册分页无效");
     const filters = {};
-    for (const field of ["parentId", "epochId"])
+    for (const field of ["parentId", "epochId", "anchorId"])
       if (Object.hasOwn(options, field))
         filters[field] = options[field] === null ? null : mapId(options[field]);
+    const historical =
+      options.historical === undefined
+        ? null
+        : this.expected(options.historical);
     return this.storage.exclusive(async () => {
       const ctx = await this.maps.context(bookId),
-        record = await this.record(ctx);
+        record = await this.record(ctx, historical);
       const entries = (record?.data.entries || []).filter((e) =>
         Object.entries(filters).every(([key, value]) => e[key] === value),
       );
@@ -259,6 +266,7 @@ export class MapAtlasStore {
         total: entries.length,
         offset,
         limit: 40,
+        mapNames: "current",
       };
     });
   }

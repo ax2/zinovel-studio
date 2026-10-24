@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版本[alpha.20](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.20)已公开，包含手工世界地图的地点/区域/路线、作者比例尺、冻结底图、历史/回收及可恢复草稿，并保留小说图像资源库。标签CI实际安装、运行、重装/卸载保稿和alpha.3升级通过，公开EXE已下载复算SHA并确认匿名可见。本机首次图像探针失败及修正后的同字节重试分别留证。主分支alpha.21已接年代层级地图册的领域、存储和宿主IPC；作者界面正在本机验证，本版安装待验。详见[发行证据](assessments/release/v0.1.0-alpha.20/README.md)与[Stage-006日志](iterations/stage-006/WORKLOG.md)。
+最新阶段版本[alpha.20](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.20)已公开，包含手工世界地图的地点/区域/路线、作者比例尺、冻结底图、历史/回收及可恢复草稿，并保留小说图像资源库。标签CI实际安装、运行、重装/卸载保稿和alpha.3升级通过，公开EXE已下载复算SHA并确认匿名可见。本机首次图像探针失败及修正后的同字节重试分别留证。主分支alpha.21已接年代层级地图册及作者界面，204项检查和真实桌面操作通过，本版安装仍待验。详见[发行证据](assessments/release/v0.1.0-alpha.20/README.md)与[Stage-006日志](iterations/stage-006/WORKLOG.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 

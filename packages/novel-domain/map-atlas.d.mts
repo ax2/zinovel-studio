@@ -32,6 +32,19 @@ export const atlasLimits: Readonly<{
   bytes: number;
 }>;
 export function mapAtlasInput(value: unknown): MapAtlasInput;
+export function mapAtlasDraftInput(value: unknown): MapAtlasInput;
+export interface MapAtlasReference {
+  revision: number;
+  diskHash: string;
+}
+export interface MapAtlasDraft {
+  schemaVersion: 1;
+  bookId: string;
+  expected: MapAtlasReference | null;
+  input: MapAtlasInput;
+  selectedMapId: string | null;
+}
+export function parseMapAtlasDraft(raw: unknown, bookId: string): MapAtlasDraft;
 export function validateMapAtlasRecord(
   value: unknown,
   origins: string[],

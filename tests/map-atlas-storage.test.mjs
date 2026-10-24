@@ -99,6 +99,15 @@ test("atlas compare-and-swap preserves source frames, history and later revision
     (await f.store.atlas.history(f.book.id)).items[0].diskHash,
     first.diskHash,
   );
+  const historicalView = await f.store.atlas.inspect(f.book.id, {
+    historical: first,
+    parentId: f.world.id,
+    anchorId: f.anchor.id,
+  });
+  assert.equal(historicalView.record.diskHash, first.diskHash);
+  assert.equal(historicalView.rows.length, 1);
+  assert.equal(historicalView.rows[0].entry.mapId, f.city.id);
+  assert.equal(historicalView.mapNames, "current");
   const restored = await f.store.atlas.restoreVersion(f.book.id, atlas, first);
   assert.equal(restored.revision, 3);
   assert.equal(restored.notes, first.notes);

@@ -5,6 +5,8 @@ import {
   mapAtlasInput,
   validateMapAtlasRecord,
   atlasLimits,
+  mapAtlasDraftInput,
+  parseMapAtlasDraft,
 } from "../packages/novel-domain/map-atlas.mjs";
 const entry = (
   mapId = randomUUID(),
@@ -16,6 +18,50 @@ const input = () => ({
   notes: "作者目录，不推断年代顺序𠮷🌊",
   epochs: [],
   entries: [],
+});
+test("local atlas drafts retain empty epoch names, incomplete anchors, temporarily cyclic choices and unfinished Unicode without accepting them as formal data", () => {
+  const bookId = randomUUID(),
+    root = entry();
+  const value = {
+    schemaVersion: 1,
+    bookId,
+    expected: null,
+    input: {
+      ...input(),
+      notes: "未完成\ud800",
+      epochs: [{ id: randomUUID(), title: "", notes: "" }],
+      entries: [{ ...root, parentId: root.mapId, anchorId: null }],
+    },
+    selectedMapId: root.mapId,
+  };
+  const raw = JSON.stringify(value);
+  assert.deepEqual(parseMapAtlasDraft(raw, bookId), value);
+  assert.deepEqual(mapAtlasDraftInput(value.input), value.input);
+  assert.throws(() => mapAtlasInput(value.input));
+  assert.equal(JSON.stringify(value), raw);
+});
+test("future, foreign or malformed local atlas draft envelopes preserve raw input and reject ambiguous identities", () => {
+  const bookId = randomUUID(),
+    value = {
+      schemaVersion: 1,
+      bookId,
+      expected: { revision: 2, diskHash: "a".repeat(64) },
+      input: input(),
+      selectedMapId: null,
+    };
+  assert.deepEqual(parseMapAtlasDraft(JSON.stringify(value), bookId), value);
+  for (const invalid of [
+    { ...value, schemaVersion: 99 },
+    { ...value, bookId: randomUUID() },
+    { ...value, future: true },
+    { ...value, expected: { revision: 2, diskHash: "bad" } },
+    { ...value, selectedMapId: "bad" },
+    { ...value, input: { ...input(), entries: [entry("bad")] } },
+  ]) {
+    const raw = JSON.stringify(invalid);
+    assert.throws(() => parseMapAtlasDraft(raw, bookId));
+    assert.equal(JSON.stringify(invalid), raw);
+  }
 });
 test("manual epoch order and world/city/interior identities remain independent without guessing same names or coordinate transforms", () => {
   const world = entry(),
@@ -80,10 +126,7 @@ test("unknown schemas/fields, malformed Unicode, foreign origins and excessive d
     { ...record, revision: 1.5 },
   ])
     assert.throws(() => validateMapAtlasRecord(value, [bookId]));
-  assert.throws(
-    () => validateMapAtlasRecord(record, [randomUUID()]),
-    /所属/,
-  );
+  assert.throws(() => validateMapAtlasRecord(record, [randomUUID()]), /所属/);
   const nodes = [entry()];
   for (let i = 1; i < atlasLimits.depth; i++)
     nodes.push(entry(randomUUID(), nodes[i - 1].mapId, randomUUID()));

@@ -58,6 +58,7 @@
     "test:assets": "node scripts/smoke-assets.mjs",
     "test:maps-ipc": "node scripts/smoke-maps-ipc.mjs",
     "test:maps-ui": "node scripts/smoke-maps-ui.mjs",
+    "test:atlas-ui": "node scripts/smoke-map-atlas-ui.mjs",
     "test:utf8-integrity": "node scripts/smoke-utf8-integrity.mjs"
   },
   "engines": {
