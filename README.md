@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新公开阶段版仍为[alpha.26](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.26)，公开安装EXE已下载复核。alpha.27增量备份已通过本机155项安装、alpha.3升级及完整源码CI40104571130，不可变标签正在独立发行CI40105233629重验，尚未声称公开。主线alpha.28开发当前会话脱敏诊断：256项源码及真实作者预览/导出/清空/重启三组通过，尚无本版安装资格。详见[alpha.27资格](assessments/release/v0.1.0-alpha.27/README.md)、[诊断设计](design/diagnostics.md)、[增量作者流程](assessments/stage-008/vault-desktop-source.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
+最新阶段版[alpha.27](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27)已公开，提供增量备份与选版恢复。标签CI40105233629首次完整success；公开155483341字节安装EXE已实际下载复核SHA256，四附件/元数据摘要/匿名可见通过。本机155项安装及alpha.3升级证据独立保留。主线alpha.28当前会话脱敏诊断已通过158项本机安装、升级和源码CI，标签CI40107313526独立发行中，尚未公开。详见[alpha.27资格](assessments/release/v0.1.0-alpha.27/README.md)、[alpha.28资格](assessments/release/v0.1.0-alpha.28/README.md)、[诊断设计](design/diagnostics.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、45项 in-progress、35项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.26 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.26) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.26/ZiNovel-Studio-0.1.0-alpha.26-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.27 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.27/ZiNovel-Studio-0.1.0-alpha.27-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
