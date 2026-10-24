@@ -1,0 +1,122 @@
+{
+  "status": "passed",
+  "scope": "Synthetic decoder research only; no novel asset feature, renderer preview or installed-app qualification",
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "native": [
+    {
+      "name": "plain.png",
+      "empty": false,
+      "size": {
+        "width": 64,
+        "height": 32
+      }
+    },
+    {
+      "name": "oriented.jpg",
+      "empty": false,
+      "size": {
+        "width": 64,
+        "height": 32
+      }
+    },
+    {
+      "name": "plain.webp",
+      "empty": true,
+      "size": {
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "name": "truncated.png",
+      "empty": true,
+      "size": {
+        "width": 0,
+        "height": 0
+      }
+    },
+    {
+      "name": "corrupt-pixels.png",
+      "empty": true,
+      "size": {
+        "width": 0,
+        "height": 0
+      }
+    }
+  ],
+  "sharp": [
+    {
+      "name": "plain.png",
+      "metadata": {
+        "format": "png",
+        "width": 64,
+        "height": 32,
+        "autoOrient": {
+          "width": 64,
+          "height": 32
+        }
+      },
+      "preview": {
+        "width": 32,
+        "height": 16,
+        "bytes": 114
+      }
+    },
+    {
+      "name": "oriented.jpg",
+      "metadata": {
+        "format": "jpeg",
+        "width": 64,
+        "height": 32,
+        "orientation": 6,
+        "autoOrient": {
+          "width": 32,
+          "height": 64
+        }
+      },
+      "preview": {
+        "width": 16,
+        "height": 32,
+        "bytes": 114
+      }
+    },
+    {
+      "name": "plain.webp",
+      "metadata": {
+        "format": "webp",
+        "width": 64,
+        "height": 32,
+        "autoOrient": {
+          "width": 64,
+          "height": 32
+        }
+      },
+      "preview": {
+        "width": 32,
+        "height": 16,
+        "bytes": 153
+      }
+    },
+    {
+      "name": "truncated.png",
+      "rejected": "Input buffer has corrupt header:"
+    },
+    {
+      "name": "corrupt-pixels.png",
+      "metadata": {
+        "format": "png",
+        "width": 64,
+        "height": 32,
+        "autoOrient": {
+          "width": 64,
+          "height": 32
+        }
+      },
+      "rejected": "vipspng: libpng read error\nvips2png: unable to write to target target"
+    }
+  ],
+  "errors": []
+}

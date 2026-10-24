@@ -58,3 +58,5 @@ alpha.17不可变标签c820402190be9314581239294f52b17cf0abb74e已推送，Windo
 
 ## 文本合订条目复评
 alpha.17本机安装/升级及原生目录证据齐备后，按既有验收逐项核对PUB-01的明确选章排序、UTF-8首尾原文、逐文件hash、坏字节拒绝、取消/不覆盖和重启冻结。仅文本合订标verified，其他PUB保持in-progress/planned，记录于assessments/stage-007/text-export-acceptance.md；总计25 verified /36 in-progress /45 planned。公开CI与本机证据独立，18仍未取得安装资格。
+
+图像技术验证继续：Electron44原生PNG/JPEG可读，WebP为空、方向6JPEG保持未旋转64×32；现有sharp0.35.5支持WebP和方向，并实测“像素已损坏但metadata仍读出64×32”的PNG只能在真实解码时拒绝。确定资源实现需完整解码与方向处理，后续显式声明直接依赖。仅合成研究，未新增资源产品能力；初次旧入口和evaluate require错误分别说明并保留实际失败回执。

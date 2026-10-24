@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "scope": "Synthetic decoder research only; no novel asset feature, renderer preview or installed-app qualification",
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "native": [],
+  "sharp": [],
+  "errors": [
+    "electronApplication.evaluate: ReferenceError: require is not defined\n    at eval (eval at evaluate (:290:30), <anonymous>:2:18)\n    at UtilityScript.evaluate (<anonymous>:292:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at D:\\Work\\zinovel-studio\\scripts\\probe-image-decoders.mjs:76:29"
+  ]
+}
