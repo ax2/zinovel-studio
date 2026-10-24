@@ -659,6 +659,36 @@ if (
               case "maps.list":
                 value = await store.maps.list(payload.bookId, payload.options);
                 break;
+              case "atlas.read":
+                value = await store.atlas.read(payload.bookId);
+                break;
+              case "atlas.inspect":
+                value = await store.atlas.inspect(
+                  payload.bookId,
+                  payload.options,
+                );
+                break;
+              case "atlas.history":
+                value = await store.atlas.history(payload.bookId);
+                break;
+              case "atlas.save":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，地图册未提交");
+                value = await store.atlas.save(
+                  payload.bookId,
+                  payload.input,
+                  payload.expected,
+                );
+                break;
+              case "atlas.restore-version":
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，地图册未提交");
+                value = await store.atlas.restoreVersion(
+                  payload.bookId,
+                  payload.expected,
+                  payload.historical,
+                );
+                break;
               case "maps.read":
                 value = await store.maps.read(payload.bookId, payload.id);
                 break;

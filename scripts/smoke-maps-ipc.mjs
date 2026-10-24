@@ -312,6 +312,110 @@ try {
   report.checks.push(
     "actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair",
   );
+  assert.equal(await request("atlas.read", { bookId: book.id }), null);
+  const child = await request("maps.create", {
+    bookId: book.id,
+    creationId: randomUUID(),
+    input: { ...input, title: "雾港城市子图", elements: [] },
+  });
+  const foreignMap = await request("maps.create", {
+    bookId: other.id,
+    creationId: randomUUID(),
+    input: { ...input, title: "同名但外书", elements: [] },
+  });
+  const epoch = { id: randomUUID(), title: "河历三年", notes: "作者手工分组" };
+  const atlasInput = {
+    notes: "作者地图册，不转换坐标",
+    epochs: [epoch],
+    entries: [
+      {
+        mapId: map.id,
+        parentId: null,
+        anchorId: null,
+        epochId: null,
+        notes: "",
+      },
+      {
+        mapId: child.id,
+        parentId: map.id,
+        anchorId: a.id,
+        epochId: epoch.id,
+        notes: "从世界图城门进入城市图",
+      },
+    ],
+  };
+  await assert.rejects(
+    request("atlas.save", {
+      bookId: book.id,
+      input: {
+        ...atlasInput,
+        entries: [{ ...atlasInput.entries[0], mapId: foreignMap.id }],
+      },
+      expected: null,
+    }),
+  );
+  let atlas = await request("atlas.save", {
+    bookId: book.id,
+    input: atlasInput,
+    expected: null,
+  });
+  const atlasRows = await request("atlas.inspect", {
+    bookId: book.id,
+    options: { epochId: epoch.id },
+  });
+  assert.equal(atlasRows.total, 1);
+  assert.equal(atlasRows.rows[0].entry.mapId, child.id);
+  assert.equal(atlasRows.rows[0].anchorState, "ready");
+  const atlasFile = join(data, "library", book.id, "world/map-atlas.json"),
+    atlasExternal = JSON.parse(await readFile(atlasFile, "utf8"));
+  atlasExternal.notes = "同修订的真实外部地图册调整";
+  const atlasExternalRaw = JSON.stringify(atlasExternal, null, 2) + "\n";
+  await writeFile(atlasFile, atlasExternalRaw);
+  await assert.rejects(
+    request("atlas.save", {
+      bookId: book.id,
+      input: { ...atlasInput, notes: "过期本机输入" },
+      expected: atlas,
+    }),
+    /其他操作/,
+  );
+  assert.equal(await readFile(atlasFile, "utf8"), atlasExternalRaw);
+  const atlasBaseline = await request("atlas.read", { bookId: book.id });
+  atlas = await request("atlas.save", {
+    bookId: book.id,
+    input: { ...atlasInput, notes: "明确采用磁盘基线后的说明" },
+    expected: atlasBaseline,
+  });
+  const atlasHistory = await request("atlas.history", { bookId: book.id });
+  assert.equal(atlasHistory.items[0].notes, atlasExternal.notes);
+  atlas = await request("atlas.restore-version", {
+    bookId: book.id,
+    expected: atlas,
+    historical: atlasHistory.items[0],
+  });
+  assert.equal(atlas.revision, 3);
+  assert.equal(atlas.notes, atlasExternal.notes);
+  const retiredParent = await request("maps.delete", {
+    bookId: book.id,
+    expected: withoutBackground,
+    deleted: true,
+  });
+  assert.equal(
+    (await request("atlas.inspect", { bookId: book.id })).rows[1].anchorState,
+    "parent-unavailable",
+  );
+  assert.equal(
+    (await request("atlas.read", { bookId: book.id })).diskHash,
+    atlas.diskHash,
+  );
+  await request("maps.delete", {
+    bookId: book.id,
+    expected: retiredParent,
+    deleted: false,
+  });
+  report.checks.push(
+    "actual host atlas IPC persists explicit epoch/parent/anchor IDs, rejects foreign maps and stale raw-hash saves without overwriting external bytes, returns filtered lightweight diagnostics, preserves exact preimage history and adopts it as a new revision; retired parent is disclosed without changing directory references; no atlas editing UI claim",
+  );
   await page.screenshot({ path: join(output, "map-host-workspace.png") });
   await app.close();
   app = null;
