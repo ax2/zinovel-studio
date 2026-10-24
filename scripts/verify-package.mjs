@@ -10,6 +10,7 @@ import {
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import originalFs from "original-fs";
+import { createRequire } from "node:module";
 
 const root = resolve(import.meta.dirname, "..");
 const unpacked = join(root, "release/win-unpacked");
@@ -192,6 +193,46 @@ for (const [name, hash] of Object.entries(docxNotices.files)) {
     `DOCX retained notice changed: ${name}`,
   );
 }
+const packagedRequire = createRequire(join(app, "package.json"));
+const koffi = packagedRequire("koffi");
+assert.equal(
+  JSON.parse(
+    await readFile(
+      join(dirname(packagedRequire.resolve("koffi")), "package.json"),
+      "utf8",
+    ),
+  ).version,
+  source.dependencies.koffi,
+);
+const getPid = koffi
+  .load("kernel32.dll")
+  .func("uint32_t __stdcall GetCurrentProcessId()");
+assert.equal(getPid(), process.pid);
+const nativeModules = Object.keys(packagedRequire.cache).filter(
+  (path) => path.endsWith(".node") && path.includes("koffi"),
+);
+assert.equal(nativeModules.length, 1);
+const vaultNativePath = nativeModules[0];
+assert.ok(
+  vaultNativePath.startsWith(app + "\\") ||
+    vaultNativePath.startsWith(app + "/"),
+);
+const nativePhysicalPath = vaultNativePath.replace(
+  "app.asar",
+  "app.asar.unpacked",
+);
+assert.ok(originalFs.statSync(nativePhysicalPath).isFile());
+const vaultNotice = await readFile(
+  join(app, "licenses/vault-runtime/Koffi-LICENSE.txt"),
+);
+assert.deepEqual(
+  vaultNotice,
+  await readFile(join(root, "licenses/vault-runtime/Koffi-LICENSE.txt")),
+);
+assert.deepEqual(
+  vaultNotice,
+  await readFile(join(app, "node_modules/koffi/LICENSE.txt")),
+);
 const inventory = {
   version: source.version,
   fileCount,
@@ -208,6 +249,18 @@ const inventory = {
     provenanceSha256: createHash("sha256")
       .update(docxNoticeBytes)
       .digest("hex"),
+  },
+  vaultRuntime: {
+    koffi: source.dependencies.koffi,
+    node: process.versions.node,
+    nativePath: relative(unpacked, nativePhysicalPath).replaceAll("\\", "/"),
+    nativeBytes: originalFs.statSync(nativePhysicalPath).size,
+    nativeSha256: createHash("sha256")
+      .update(originalFs.readFileSync(nativePhysicalPath))
+      .digest("hex"),
+    noticeBytes: vaultNotice.length,
+    noticeSha256: createHash("sha256").update(vaultNotice).digest("hex"),
+    kernel32Call: "GetCurrentProcessId matched the embedded-Node process",
   },
 };
 await writeFile(
