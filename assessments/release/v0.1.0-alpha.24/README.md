@@ -10,4 +10,6 @@
 
 已查看安装版桌面DOCX选项、深色806×803 PDF选项、Word/Kit安装产物末页；源Word三页及40页长文总览另外查看。字体回退依赖阅读器，Word与Kit的emoji配色不同，不宣称像素一致。真实原生选择器另有历史合成实测，本轮CI目录选择结果为替换，不冒充原生点击或中文IME。
 
-PUB-03按既有“分页/字体/中文真实渲染”条件单项验收，详见 stage-007/docx-pdf-acceptance.md；总计27 verified/39 in-progress/40 planned。预览门禁仅允许进入同标签重新构建/139项安装/升级/hash流水线，不提前声称公开。未签名，EPUB、封面插图、远端发布、真实模型文学质量、原生IME/辅助技术、大书与自动升级、完整许可证/商店审核仍未完成，稳定门禁false。
+PUB-03按既有“分页/字体/中文真实渲染”条件单项验收，详见 stage-007/docx-pdf-acceptance.md；总计27 verified/39 in-progress/40 planned。本机预览资格用于进入同标签重新构建/139项安装/升级/hash流水线；公开结果另见下段。未签名，EPUB、封面插图、远端发布、真实模型文学质量、原生IME/辅助技术、大书与自动升级、完整许可证/商店审核仍未完成，稳定门禁false。
+
+不可变标签2ce27fed01cd97ec36be00f706a39260374c0b63的Windows release40078509892首次完整success，BJT2026-10-24 16:49:32公开。四个附件匿名可见，无ZIP；实际下载公开EXE155467859字节并复算SHA256 fe0a5201c26a6fa58c937495867353d5b4f1e54aea3dc36d029021c27f7b1c81，三份元数据digest匹配。ci-public/verification.json和真实D盘ci-public保存证明；与本机a001f8...构建严格分开，公开EXE执行证据来自精确CI安装流程，不宣称下载后额外本机执行。
