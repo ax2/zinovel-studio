@@ -9,6 +9,7 @@ import { MixedContext } from "./context.mjs";
 import { ReaderStore } from "./reader.mjs";
 import { PublicationStore, publicationOriginIds } from "./publication.mjs";
 import { AssetStore } from "./assets.mjs";
+import { PublicationResources } from "./publication-resources.mjs";
 import { MapStore } from "./maps.mjs";
 import { MapAtlasStore } from "./map-atlas.mjs";
 import {
@@ -53,6 +54,10 @@ export class NovelStore {
     this.#storage = new BookStorageKernel(this.root);
     this.materials = new MaterialStore(this.#storage);
     this.assets = new AssetStore(this.#storage, this.materials);
+    this.publicationResources = new PublicationResources(
+      this.#storage,
+      this.assets,
+    );
     this.maps = new MapStore(this.#storage, this.materials, this.assets);
     this.atlas = new MapAtlasStore(this.#storage, this.maps);
     this.reader = new ReaderStore(this.#storage);

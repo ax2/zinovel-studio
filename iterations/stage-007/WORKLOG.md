@@ -78,3 +78,7 @@ alpha.22独立Windows release40070942726首次完整success，BJT2026-10-24 14:5
 ## alpha.24 本机资格与逐项复评
 运行冻结1966e6167c81e91f962372c2ca0d5b19fbf87728，源码CI40077751136首次完整success。精确本机EXE155467909字节/SHA a001f8db1c05a8ba480bb46b0c0213120746dfd53f9088845da6c1a1ed53cf5d，asar87919b4bfc0df31e55e84d67bb615c15db189bda10a440e66503e9cc841e611d。首次完整安装139项、安装8270ms/重装13190ms/卸载4583ms；公开alpha.3升级13440ms、旧稿/设置/任务候选/卸载保稿通过。完整运行133文件622250407字节与EXE真实D盘归档、无ZIP。
 安装版DOCX由独立原生Kit读取3页，再由Word16.0.20430实际复制编辑保存、前后各3页，独立python-docx核对9→10段、原文前缀和源hash不变。已查看桌面DOCX、806×803深色PDF选项、Word/Kit实际末页。改存Word文件只留本地，公开合成截图和报告。PUB-03按原先分页/字体/中文真实渲染条件单项verified，总计27/39/40，图片/目录/导入/远端等不扩大。preview仅准标签重新完整构建验收，稳定false。版本资格、源CI与13份回执保留assessments/release/v0.1.0-alpha.24；发行标签及公开安装字节仍待独立工作流。
+
+## alpha.24标签与alpha.25资源基础
+alpha.24不可变标签2ce27fed01cd97ec36be00f706a39260374c0b63已推送，Windows release40078509892独立重新验收，尚未称公开。主线alpha.25重置preview=false/reports=[]，不继承24资格。下一切片先冻结作者选定发行图，再做EPUB，避免图像替换后改变旧出版物；核对W3C EPUB3.3的OCF与core media types，PNG是兼容选择，未误称WebP不受标准支持。
+新增资源选择/引用纯模型与同一BookStorageKernel下的独立发行图服务，PNG保留全尺寸/透明、JPEG方向、剥离图像元数据、原图不变、不可覆盖blob、CAS/取消/容量/两项并发和备份恢复单独验证。初步221项/类型全部通过。尚未schema2捕获/作者界面/带图HTML/EPUB，不提升功能状态；详见design/publication-resources.md和assessments/stage-007/publication-resources-core.md。下一步接入后再做真实宿主/安装与阶段发行。
