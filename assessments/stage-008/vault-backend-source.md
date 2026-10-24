@@ -1,5 +1,11 @@
 # alpha.27 增量备份源码后端
 
+## 原生锁复评增量
+
+下方12项是首个wx锁原型的历史结果，保留原日志。当前源码已改为Windows CreateFileW无共享、非继承排他句柄，锁文件身份是信息，不是按PID/时间删锁的依据。独立进程实际持锁时另一capture与unlink失败；释放后不删除路径即可继续；真实进程在清单提交前/后退出，旧身份记录保留，后续capture由系统重新授予OS锁并复用对象，不再需要人工删遗留锁。13项专项、完整244项/类型/规划及构建通过，新日志vault-native-source.txt。
+
+Koffi3.1.1由既有dev移为生产依赖，未换版本，锁文件仅固定用途，不暴露通用系统调用工具；build将koffi保留外部，实际安装内的原生模块、许可与体积尚需重新验证。此适配限Windows，本机Node/普通NTFS目录通过不等于网络盘共享语义、其他OS或断电认证。宿主/作者界面、原生选择器和异盘v2仍未接入，不改变OPS-05的in-progress或27ready=false。
+
 已实现NovelStore.backups的capture/list/restore，共享唯一作品队列。完整逻辑清单v2+内容hash对象池；同一作品无变更再备份实际copiedBytes/newObjects均为0，新增事务/元数据等按真实内容变化计入增量，不假定改一章只新增一个文件。现有v1完整副本保持默认路径和恢复兼容。
 
 12项专项通过，完整243项/类型/规划及构建通过。实际证据日志为vault-source.txt，代码tests/backup-vault.test.mjs，两个进程检查点由tests/fixtures/vault-crash.mjs实际退出91完成。

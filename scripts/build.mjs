@@ -9,7 +9,7 @@ await Promise.all([
     target: "node22",
     format: "cjs",
     outfile: "dist/desktop/main.cjs",
-    external: ["electron", "@deepseek-ai/dsh-sdk-client", "sharp"],
+    external: ["electron", "@deepseek-ai/dsh-sdk-client", "sharp", "koffi"],
   }),
   build({
     entryPoints: ["apps/desktop/preload.ts"],

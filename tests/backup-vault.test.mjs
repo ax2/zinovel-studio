@@ -16,6 +16,7 @@ import { createHash } from "node:crypto";
 import { execFile } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import { acquireVaultWriteLock } from "../packages/novel-storage/vault-lock.mjs";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 
 async function setup() {
@@ -197,19 +198,72 @@ test("logical capacity, managed-library aliases and unknown destination folders 
   await assert.rejects(f.store.backups.capture(f.book.id, f.destination));
   assert.deepEqual(await readdir(target), ["user-file.txt"]);
 });
-test("writer locks are fail-closed, never reclaimed just because their PID appears stale", async () => {
+test("actual native writer ownership blocks capture and deletion, while stale metadata alone is not an active lock", async () => {
   const f = await setup(),
     first = await f.store.backups.capture(f.book.id, f.destination),
     lock = join(first.path, ".writer.lock"),
     sentinel = "synthetic owner, keep even when stale";
-  await writeFile(lock, sentinel, { flag: "wx" });
-  await assert.rejects(
-    f.store.backups.capture(f.book.id, f.destination),
-    /写入锁/,
-  );
+  const held = acquireVaultWriteLock(lock, sentinel);
+  try {
+    await assert.rejects(
+      f.store.backups.capture(f.book.id, f.destination),
+      /写入锁/,
+    );
+    await assert.rejects(unlink(lock));
+    assert.equal(await commitCount(first.path), 1);
+  } finally {
+    held.close();
+  }
   assert.equal(await readFile(lock, "utf8"), sentinel);
   assert.equal(await commitCount(first.path), 1);
-  await unlink(lock); // Explicitly release the lock created by this test, not another writer.
+  assert.equal(
+    (await f.store.backups.capture(f.book.id, f.destination)).copiedBytes,
+    0,
+  );
+});
+
+test("another live process holds exclusive native ownership until explicitly released", async () => {
+  const f = await setup(),
+    first = await f.store.backups.capture(f.book.id, f.destination);
+  const child = execFile(
+    process.execPath,
+    [
+      fileURLToPath(
+        new URL("./fixtures/vault-lock-holder.mjs", import.meta.url),
+      ),
+      join(first.path, ".writer.lock"),
+    ],
+    { windowsHide: true, timeout: 20000 },
+  );
+  const exited = new Promise((resolve, reject) => {
+    child.once("error", reject);
+    child.once("exit", (code) => resolve(code));
+  });
+  try {
+    await new Promise((resolve, reject) => {
+      child.stdout.once("data", (data) => {
+        try {
+          assert.match(data.toString(), /locked/);
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+      child.once("error", reject);
+      child.once("exit", () =>
+        reject(new Error("Lock holder exited before ready")),
+      );
+    });
+    process.kill(child.pid, 0); // Confirm this specific owner really is live.
+    await assert.rejects(
+      f.store.backups.capture(f.book.id, f.destination),
+      /写入锁/,
+    );
+    assert.equal(await commitCount(first.path), 1);
+  } finally {
+    child.stdin.end("release\n");
+  }
+  assert.equal(await exited, 0);
   assert.equal(
     (await f.store.backups.capture(f.book.id, f.destination)).copiedBytes,
     0,
@@ -276,7 +330,7 @@ test("objects reused earlier in an operation are revalidated before snapshot com
 });
 
 for (const checkpoint of ["ready-to-commit", "committed"])
-  test(`real process termination at ${checkpoint} preserves earlier generations and leaves ownership locks untouched`, async () => {
+  test(`real process termination at ${checkpoint} preserves earlier generations and releases native ownership without deleting lock metadata`, async () => {
     const f = await setup(),
       first = await f.store.backups.capture(f.book.id, f.destination);
     await edit(f, "进程中断前的新稿。");
@@ -313,14 +367,9 @@ for (const checkpoint of ["ready-to-commit", "committed"])
       lockBytes = await readFile(lockPath),
       owner = JSON.parse(lockBytes);
     assert.equal(owner.pid, childPid);
-    await assert.rejects(
-      f.store.backups.capture(f.book.id, f.destination),
-      /写入锁/,
-    );
-    assert.deepEqual(await readFile(lockPath), lockBytes);
     assert.throws(() => process.kill(childPid, 0), { code: "ESRCH" });
-    await unlink(lockPath); // Explicit QA recovery of this proven-exited synthetic owner; not an automatic product feature.
     const resumed = await f.store.backups.capture(f.book.id, f.destination);
+    assert.equal(JSON.parse(await readFile(lockPath, "utf8")).pid, process.pid);
     assert.equal(resumed.copiedBytes, 0);
     const restored = await f.store.backups.restore(
       first.path,

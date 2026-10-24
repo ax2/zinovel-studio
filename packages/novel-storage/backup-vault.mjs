@@ -13,6 +13,7 @@ import { join, resolve } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { readUtf8File } from "./encoding.mjs";
 import { canonicalDestination, withinDirectory } from "./backup-path.mjs";
+import { acquireVaultWriteLock } from "./vault-lock.mjs";
 
 const LIMIT = 512 * 1024 * 1024;
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -234,25 +235,14 @@ export class BackupVault {
       if (!fresh) await this.root(root);
       const operation = randomUUID(),
         lockPath = await this.storage.path(root, ".writer.lock");
-      let lock;
-      try {
-        lock = await open(lockPath, "wx", 0o600);
-      } catch (error) {
-        if (error.code === "EEXIST")
-          throw new Error(
-            "增量备份库已有写入锁；不自动删除活跃或遗留锁，请保留目录",
-          );
-        throw error;
-      }
       const owner = json({
         operation,
         pid: process.pid,
         startedAt: new Date().toISOString(),
       });
+      const lock = acquireVaultWriteLock(lockPath, owner);
       let committed;
       try {
-        await lock.writeFile(owner);
-        await lock.sync();
         if (fresh) {
           await mkdir(await this.storage.path(root, ".staging"));
           const identity = {
@@ -372,10 +362,7 @@ export class BackupVault {
         return committed;
       } finally {
         try {
-          await lock.close();
-          if ((await readFile(lockPath, "utf8").catch(() => null)) === owner)
-            await unlink(lockPath);
-          else if (committed) committed.lockReleaseFailed = true;
+          lock.close();
         } catch (error) {
           if (committed) committed.lockReleaseFailed = true;
           else throw error;
