@@ -1,0 +1,11 @@
+node:path:513
+      validateString(arg, 'path');
+      ^
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string. Received undefined
+    at join (node:path:513:7)
+    at file:///D:/Work/zinovel-studio/scripts/smoke-character-looks.mjs:43:14 {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+
+Node.js v26.10.0

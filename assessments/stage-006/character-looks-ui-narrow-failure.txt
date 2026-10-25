@@ -1,0 +1,41 @@
+(node:64420) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [
+    'Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait',
+    'Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'fixed-portrait-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim',
+  version: '0.1.0-alpha.34',
+  packaged: false,
+  desktopBundleSha256: '55dd9e95fdabfc1cdfbc4cbf6c798aa013de43e94f589269c939fc61ac844f62',
+  failure: 'locator.click: Timeout 30000ms exceeded.\n' +
+    'Call log:\n' +
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('region', { name: '人物形象版本', exact: true }).getByRole('button', { name: '预览此形象', exact: true })
+
+    at D:\Work\zinovel-studio\scripts\smoke-character-looks.mjs:257:6 {
+  name: 'TimeoutError'
+}
+
+Node.js v26.10.0
+    "\x1B[2m  - waiting for getByRole('region', { name: '人物形象版本', exact: true }).getByRole('button', { name: '预览此形象', exact: true })\x1B[22m\n" +
+    '\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-character-looks.mjs:257:6'
+}

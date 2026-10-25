@@ -153,7 +153,11 @@ try {
   assert.ok(
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
-  if (["0.1.0-alpha.32", "0.1.0-alpha.33"].includes(manifest.version)) {
+  if (
+    ["0.1.0-alpha.32", "0.1.0-alpha.33", "0.1.0-alpha.34"].includes(
+      manifest.version,
+    )
+  ) {
     const recent = manifest.recentUpgrade;
     assert.equal(recent?.fromVersion, "0.1.0-alpha.31");
     assert.equal(
@@ -178,7 +182,7 @@ try {
     ])
       assert.equal(manifest.imageStudio[key], true);
   }
-  if (manifest.version === "0.1.0-alpha.33") {
+  if (["0.1.0-alpha.33", "0.1.0-alpha.34"].includes(manifest.version)) {
     assert.equal(manifest.processRecovery?.handlePinned, true);
     assert.equal(manifest.processRecovery?.birthPrecision, "100ns");
     assert.equal(manifest.processRecovery?.rootStatus, "terminated");
@@ -186,6 +190,14 @@ try {
       manifest.processRecovery?.appAsarSha256,
       manifest.imageStudio.appAsarSha256,
     );
+  }
+  if (manifest.version === "0.1.0-alpha.34") {
+    assert.equal(manifest.characterLooks?.version, manifest.version);
+    assert.equal(
+      manifest.characterLooks?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
+    assert.equal(manifest.characterLooks?.checks?.length, 4);
   }
   const installerDirectory = resolve(
     root,

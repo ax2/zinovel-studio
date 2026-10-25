@@ -908,7 +908,11 @@
         "packages/novel-domain/character-looks.mjs",
         "packages/novel-storage/character-looks.mjs",
         "tests/character-looks.test.mjs",
-        "assessments/stage-006/character-looks-storage.md"
+        "assessments/stage-006/character-looks-storage.md",
+        "apps/workbench/character-looks.tsx",
+        "scripts/smoke-character-looks.mjs",
+        "screenshots/stage-006/character-looks/character-looks-smoke.json",
+        "assessments/stage-006/character-looks-ui.md"
       ]
     },
     {
@@ -924,7 +928,11 @@
         "packages/novel-domain/character-looks.mjs",
         "packages/novel-storage/character-looks.mjs",
         "tests/character-looks.test.mjs",
-        "assessments/stage-006/character-looks-storage.md"
+        "assessments/stage-006/character-looks-storage.md",
+        "apps/workbench/character-looks.tsx",
+        "scripts/smoke-character-looks.mjs",
+        "screenshots/stage-006/character-looks/character-looks-smoke.json",
+        "assessments/stage-006/character-looks-ui.md"
       ]
     },
     {

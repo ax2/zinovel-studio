@@ -85,6 +85,32 @@ manifest.processRecovery = {
     taskRecovery.termination.ownedProcessesConfirmedExited,
   verification: taskRecovery.termination.verification,
 };
+const characterLooks = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/character-looks/character-looks-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  characterLooks.status !== "passed" ||
+  characterLooks.version !== pkg.version ||
+  characterLooks.packaged !== true ||
+  characterLooks.appAsarSha256 !== appAsarSha256 ||
+  characterLooks.checks?.length !== 4 ||
+  characterLooks.errors?.length !== 0
+)
+  throw new Error(
+    "Installed fixed character appearance and explicit portrait choice proof is missing or stale",
+  );
+manifest.characterLooks = {
+  version: characterLooks.version,
+  appAsarSha256,
+  checks: characterLooks.checks,
+  scope: characterLooks.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

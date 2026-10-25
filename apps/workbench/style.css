@@ -13,6 +13,16 @@
   --rail: #34444e;
   --shadow: 0 16px 60px #152a3b26;
 }
+.character-looks { border-top: 1px solid var(--border); margin: 22px 0; padding: 16px 0; min-width: 0; }
+.character-looks section, .character-looks article, .character-looks fieldset { min-width: 0; overflow-wrap: anywhere; }
+.character-looks article { padding: 14px; border: 1px solid var(--border); border-radius: 7px; margin: 12px 0; }
+.character-looks label { display: flex; flex-direction: column; gap: 6px; margin: 12px 0; }
+.character-looks textarea, .character-looks select, .character-looks input:not([type="checkbox"]) { width: 100%; min-width: 0; box-sizing: border-box; padding: 9px; color: var(--text); background: var(--paper); border: 1px solid var(--border); border-radius: 5px; font: inherit; }
+.character-looks .checkbox-row { display: flex; flex-direction: row; align-items: flex-start; }
+.character-looks input[type="checkbox"] { flex: none; width: auto; }
+.character-looks button { white-space: normal; overflow-wrap: anywhere; }
+.look-preview { margin: 16px 0; padding: 12px; border: 1px solid var(--border); text-align: center; }
+.look-preview img { max-width: 100%; max-height: 360px; object-fit: contain; }
 .model-profiles-panel select {
   width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--border);
   border-radius: 5px; background: var(--surface); color: var(--text); font: inherit;

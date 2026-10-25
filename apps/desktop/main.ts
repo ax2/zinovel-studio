@@ -1111,6 +1111,102 @@ if (
                 }
                 break;
               }
+              case "looks.read":
+              case "looks.preview":
+              case "looks.save":
+              case "looks.choose":
+              case "looks.delete": {
+                const fields: Record<string, string[]> = {
+                  "looks.read": ["bookId", "characterId"],
+                  "looks.preview": [
+                    "bookId",
+                    "characterId",
+                    "expected",
+                    "entryId",
+                    "selected",
+                  ],
+                  "looks.save": [
+                    "bookId",
+                    "character",
+                    "expected",
+                    "entryId",
+                    "input",
+                    "asset",
+                  ],
+                  "looks.choose": [
+                    "bookId",
+                    "character",
+                    "expected",
+                    "entryId",
+                    "confirmation",
+                  ],
+                  "looks.delete": [
+                    "bookId",
+                    "characterId",
+                    "expected",
+                    "entryId",
+                    "deleted",
+                  ],
+                };
+                if (
+                  !payload ||
+                  typeof payload !== "object" ||
+                  Array.isArray(payload) ||
+                  Object.keys(payload).some(
+                    (key) => !fields[action].includes(key),
+                  )
+                )
+                  throw new Error("人物形象请求格式不支持");
+                if (publicationClosing)
+                  throw new Error("程序正在关闭，请稍后查看人物形象");
+                if (assetOperations.size >= 4)
+                  throw new Error("图像操作繁忙，请稍后重试");
+                const operation =
+                  action === "looks.read"
+                    ? store.characterLooks.read(
+                        payload.bookId,
+                        payload.characterId,
+                      )
+                    : action === "looks.preview"
+                      ? store.characterLooks.preview(
+                          payload.bookId,
+                          payload.characterId,
+                          payload.expected,
+                          payload.entryId,
+                          payload.selected ?? false,
+                        )
+                      : action === "looks.save"
+                        ? store.characterLooks.save(
+                            payload.bookId,
+                            payload.character,
+                            payload.expected,
+                            payload.entryId,
+                            payload.input,
+                            payload.asset ?? null,
+                          )
+                        : action === "looks.choose"
+                          ? store.characterLooks.choose(
+                              payload.bookId,
+                              payload.character,
+                              payload.expected,
+                              payload.entryId,
+                              payload.confirmation,
+                            )
+                          : store.characterLooks.setDeleted(
+                              payload.bookId,
+                              payload.characterId,
+                              payload.expected,
+                              payload.entryId,
+                              payload.deleted,
+                            );
+                assetOperations.add(operation);
+                try {
+                  value = await operation;
+                } finally {
+                  assetOperations.delete(operation);
+                }
+                break;
+              }
               case "assets.list":
                 value = await store.assets.list(
                   payload.bookId,

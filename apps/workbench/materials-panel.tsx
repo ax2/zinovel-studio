@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
 import type { TextAnchor } from "./manuscript-editor";
 import { MaterialAssistant } from "./material-assistant";
+import { CharacterLooks } from "./character-looks";
 import {
   MaterialEvidence,
   type EvidenceSource,
@@ -608,6 +609,15 @@ export function MaterialsPanel({
                 </button>
               ))}
             </div>
+          )}
+          {current?.kind === "character" && !current.deletedAt && (
+            <CharacterLooks
+              key={`${current.id}:${current.revision}`}
+              book={book}
+              material={current}
+              disabled={busy || dirty}
+              refreshMaterial={() => void select(current.id)}
+            />
           )}
           {current && !current.deletedAt && (
             <MaterialAssistant

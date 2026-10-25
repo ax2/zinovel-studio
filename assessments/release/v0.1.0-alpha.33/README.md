@@ -11,3 +11,9 @@ manifest 184条资格检查，47份安装JSON、48份passed报告进入阶段门
 完整106项26 verified/49 in-progress/31 planned，稳定false。人物形象/参考图仅后续设计；真实模型文学/视觉质量、原生IME、辅助技术、大书性能、代码签名与商店认证仍待。
 
 源码CI40175601147在4ce598888038b13d092d8de496765af4e9bdff22完成success，原始步骤摘要source-ci.json；本次资格提交只含文档、报告、截图与预览门禁，不改变生产代码。
+
+## 独立公开发行完成
+
+不可变标签fe42752be17d4e17e9da6126903164c54a673dcd，发行40176289336完整success，2026-10-25 08:37:28 UTC公开4项附件。CI实际安装、重装、卸载、公开alpha.3及alpha.31双升级、184条manifest检查通过；根进程确实terminated/原6进程退出，回执绑定公开asar 0f406e098c4070226b1306573c22010c283377a8003a84751e268d684ff59b89。
+
+公开EXE 155523659字节，SHA256 403acb68b027ff23e069391fe755f3f7bef53a30b1e4140647b16f2063b2a38f，已实际下载至D:/zinovel-releases/v0.1.0-alpha.33/ci-public并复算，三个元数据摘要、版本提交与匿名可见均通过，见ci-public/verification.json。公开与本机构建不同字节分开保留；精确公开字节执行证据来自本次CI，未声称又在本机重复执行公开包。本版未签名阶段预览，稳定资格保持关闭。

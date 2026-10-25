@@ -1,5 +1,10 @@
 import { contextBridge, ipcRenderer } from "electron";
 const allowed = new Set([
+  "looks.read",
+  "looks.preview",
+  "looks.save",
+  "looks.choose",
+  "looks.delete",
   "image.settings",
   "image.status",
   "image.list",
