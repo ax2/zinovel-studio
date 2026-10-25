@@ -392,6 +392,98 @@ try {
       "unknownRecordPreserved",
     ])
       assert.equal(origin[key], true);
+    const upgrade = manifest.importPublicUpgrade;
+    assert.equal(upgrade?.fromVersion, "0.1.0-alpha.37");
+    assert.equal(
+      upgrade.previousInstallerSha256,
+      "5331029f3dbd689b1f3ca0839447812eca91158555de4af7011d1d6a1d395a72",
+    );
+    assert.equal(
+      upgrade.previousAsarSha256,
+      "12f96bfa9def62b8edcd755bb485cd000470747a87e8b16b53e80f8cb40a31e9",
+    );
+    assert.equal(upgrade.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.equal(upgrade.checks?.length, 7);
+    assert.ok(upgrade.upgradeMs > 0);
+    assert.equal(upgrade.originalMaterialDraftSchema, 1);
+    assert.ok(
+      Number.isSafeInteger(upgrade.sceneTreeReadbacks) &&
+        upgrade.sceneTreeReadbacks >= 3,
+    );
+    assert.ok(
+      Number.isSafeInteger(upgrade.legacyImportReadbacks) &&
+        upgrade.legacyImportReadbacks >= 3,
+    );
+    assert.deepEqual(upgrade.requests, { text: 0, image: 3 });
+    for (const flag of [
+      "legacyImportPreserved",
+      "legacyOriginNotFabricated",
+      "plannedScenePreserved",
+      "schema1DraftPreservedUntilExplicitSave",
+      "fixedAppearancePreserved",
+      "postUninstallDataReadable",
+      "uninstallPreserved",
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "previousV2ReceiptPreserved",
+      "previousV2Readable",
+      "previousAdoptedAssetPreserved",
+      "fixedAppearancePreviewReadable",
+      "lookDraftPreserved",
+      "explicitSchema1DraftCreated",
+    ])
+      assert.equal(upgrade[flag], true);
+    assert.equal(upgrade.legacyImportedBook?.chapterIds?.length, 3);
+    assert.equal(upgrade.legacyImportedBook?.chapterHashes?.length, 3);
+    assert.equal(upgrade.legacyImportFiles?.length, 4);
+    assert.match(upgrade.plannedScene.id, /^[a-f0-9-]{36}$/);
+    assert.match(upgrade.plannedScene.chapterId, /^[a-f0-9-]{36}$/);
+    assert.ok(
+      Number.isSafeInteger(upgrade.plannedScene.planningRevision) &&
+        upgrade.plannedScene.planningRevision > 0,
+    );
+    assert.match(upgrade.newScene.id, /^[a-f0-9-]{36}$/);
+    assert.match(upgrade.newScene.diskHash, /^[a-f0-9]{64}$/);
+    assert.ok(
+      Number.isSafeInteger(upgrade.newScene.revision) &&
+        upgrade.newScene.revision > 0,
+    );
+    assert.match(upgrade.legacyImportedBook.id, /^[a-f0-9-]{36}$/);
+    for (const [index, id] of upgrade.legacyImportedBook.chapterIds.entries()) {
+      assert.match(id, /^[a-f0-9-]{36}$/);
+      assert.match(
+        upgrade.legacyImportedBook.chapterHashes[index],
+        /^[a-f0-9]{64}$/,
+      );
+      assert.equal(
+        upgrade.legacyImportFiles.find((file) => file.name === `${id}.md`)
+          ?.sha256,
+        upgrade.legacyImportedBook.chapterHashes[index],
+      );
+    }
+    assert.ok(
+      upgrade.legacyImportFiles.some((file) => file.name === "book.json"),
+    );
+    for (const file of [
+      ...upgrade.legacyImportFiles,
+      ...upgrade.sceneFiles,
+      ...upgrade.previousV2Files,
+      ...upgrade.appearanceFiles,
+    ]) {
+      assert.match(file.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(file.bytes) && file.bytes > 0);
+    }
+    assert.equal(
+      upgrade.sceneFiles.find((file) => file.name === "planning.json")?.sha256,
+      upgrade.plannedScene.planningHash,
+    );
+    assert.equal(
+      upgrade.sceneFiles.find(
+        (file) => file.name === `${upgrade.plannedScene.id}.json`,
+      )?.sha256,
+      upgrade.plannedScene.diskHash,
+    );
   }
   const installerDirectory = resolve(
     root,

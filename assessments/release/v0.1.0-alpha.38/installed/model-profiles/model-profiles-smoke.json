@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "checks": [
+    "Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task",
+    "Real author UI creates independent B and selects it; stale or missing displayed revision refuses before network; the ordinary writing button sends only selected B key through official Harness; old task metadata remains frozen and manuscript is not auto-applied",
+    "An externally changed profile revision rejects UI save without overwriting bytes and keeps the Chinese form draft; explicit cancel/refresh permits confirmed deletion of an unused empty-key configuration; clearing B key affects neither A nor image C and prevents B network until its key is explicitly replaced",
+    "Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests",
+    "Future schema and foreign store identity preserve exact bytes and refuse use; missing list blocks generation without legacy fallback; explicit desktop recovery restores only the original single configuration while preserving held newer profiles and exact migration backup; original manuscript remains unchanged",
+    "Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports"
+  ],
+  "errors": [],
+  "scope": "Synthetic keys and manuscript; real desktop UI, CurrentUser DPAPI for new keys, actual legacy Electron ciphertext and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
+  "initialViewport": {
+    "width": 1426,
+    "height": 923,
+    "scale": 1.25
+  },
+  "version": "0.1.0-alpha.38",
+  "packaged": true,
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "newCredentialEnvelope": "win-dpapi-v1",
+  "legacyCipherAfterRestart": true,
+  "geometry": {
+    "left": 123.20000457763672,
+    "right": 683.2000045776367,
+    "top": 48.1875,
+    "bottom": 755,
+    "width": 806,
+    "height": 803,
+    "scroll": 543,
+    "client": 543,
+    "scale": 1.25,
+    "theme": "dark"
+  },
+  "requests": [
+    3,
+    6,
+    0
+  ]
+}

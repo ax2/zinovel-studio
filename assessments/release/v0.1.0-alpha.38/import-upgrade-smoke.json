@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.37",
+  "toVersion": "0.1.0-alpha.38",
+  "previousInstallerSha256": "5331029f3dbd689b1f3ca0839447812eca91158555de4af7011d1d6a1d395a72",
+  "currentInstallerSha256": "cd679afb84d281bd78f73dee169a57060f85bc1efc34ad5b23f71e573a002393",
+  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-Om7axK\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-Om7axK\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.37 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "Actual public 0.1.0-alpha.37 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "Actual public 0.1.0-alpha.37 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+    "Actual public37 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; new UI honestly reports absent legacy origin instead of inventing metadata"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.37 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 12439,
+  "previousAsarSha256": "12f96bfa9def62b8edcd755bb485cd000470747a87e8b16b53e80f8cb40a31e9",
+  "upgradeMs": 17445,
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "sceneTreeReadbacks": 3,
+  "legacyImportReadbacks": 3,
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "schema1DraftPreservedUntilExplicitSave": true,
+  "explicitSchema1DraftCreated": true,
+  "postUninstallDataReadable": true,
+  "previousV2ReceiptPreserved": true,
+  "previousV2Readable": true,
+  "previousAdoptedAssetPreserved": true,
+  "previousV2Files": [
+    {
+      "name": "8b1a7d4d-ea67-4260-a781-01db75c04dde.json",
+      "sha256": "b22fb33cb7256516d3d98f77f9337eace981a6fe1918187314b10ccd81fc099d",
+      "bytes": 2914
+    },
+    {
+      "name": "e8a66d2e-432f-4e26-979a-d63ec59bb8de.json",
+      "sha256": "7f54a09d5c533bfe02d750d0f632d91ac6c4b989c957f568b824baf9020d61b5",
+      "bytes": 870
+    },
+    {
+      "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+      "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+      "bytes": 449
+    }
+  ],
+  "appearanceFiles": [
+    {
+      "name": "7fc70b33-0c67-42f0-9b6a-7a1a96ca96fe.json",
+      "sha256": "fe92b4540886e9c9de8971f30aaa7257e0ed49c87e7008d1fd298c618aa8ea32",
+      "bytes": 2582
+    },
+    {
+      "name": "1-1a315fc4ff7b452f9ed8aee0c115808b900f87d6dc4e626fb212efdaba6d59c1.json",
+      "sha256": "1a315fc4ff7b452f9ed8aee0c115808b900f87d6dc4e626fb212efdaba6d59c1",
+      "bytes": 2144
+    },
+    {
+      "name": "2-94003c10bf25c385faa3a7ba57d87b937aa0273965ad2e043e6b318bdc59897a.json",
+      "sha256": "94003c10bf25c385faa3a7ba57d87b937aa0273965ad2e043e6b318bdc59897a",
+      "bytes": 2582
+    }
+  ],
+  "fixedAppearancePreserved": true,
+  "fixedAppearancePreviewReadable": true,
+  "lookDraftPreserved": true,
+  "lookDraftSha256": "9597a6428f49105124ce5ecb86bf403d227c6ca3a6bebfbe53a1e5905d60cc8c",
+  "oldMaterialDraftSha256": "c436273cdf78644bf9eef3607be8896a1fea6e0342afaf597c3ef9242d337bbd",
+  "newScene": {
+    "id": "f38aeb71-e8f9-4851-9cad-4be288a99924",
+    "revision": 1,
+    "diskHash": "aa6a87cbe3380eb4dd49933e60f7391c4e8fa52bf8e4ee16d55bf93d72f6d2cc"
+  },
+  "plannedScenePreserved": true,
+  "originalMaterialDraftSchema": 1,
+  "plannedScene": {
+    "id": "a90ea8a4-fff9-4081-b8dc-aa317a2a2e1b",
+    "diskHash": "5182d9e7982ac195b1e0e7f421464e111176d0525ffdf3c7f7907114781afc5c",
+    "chapterId": "4c9e7b49-c163-41ee-a42e-6c063255ef27",
+    "planningHash": "e4a06a7e697c742b8c6740a6559f8c64c49b2c55f5d92840e72bb76cc9ef4a1c",
+    "planningRevision": 1
+  },
+  "sceneFiles": [
+    {
+      "name": "planning.json",
+      "sha256": "e4a06a7e697c742b8c6740a6559f8c64c49b2c55f5d92840e72bb76cc9ef4a1c",
+      "bytes": 253
+    },
+    {
+      "name": "a90ea8a4-fff9-4081-b8dc-aa317a2a2e1b.json",
+      "sha256": "5182d9e7982ac195b1e0e7f421464e111176d0525ffdf3c7f7907114781afc5c",
+      "bytes": 506
+    }
+  ],
+  "requests": {
+    "text": 0,
+    "image": 3
+  },
+  "uninstallPreserved": true,
+  "legacyImportPreserved": true,
+  "legacyOriginNotFabricated": true,
+  "legacyImportedBook": {
+    "id": "87424dba-94a8-4b06-95d1-a8208886b972",
+    "title": "公开37手工导入升级书",
+    "chapterIds": [
+      "a68da315-2be3-4030-9fcf-d22a5ec3695f",
+      "947b2b69-2a42-45fc-bab6-ed56bc8cb46a",
+      "c7c91be1-1105-4c51-99b1-ff2fe18e8637"
+    ],
+    "chapterHashes": [
+      "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+      "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+      "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+    ]
+  },
+  "legacyImportFiles": [
+    {
+      "name": "book.json",
+      "sha256": "8ab51acac74f220ce4f0197fcea851d6b10d1729d9db46629d07d2371da5a489",
+      "bytes": 1161
+    },
+    {
+      "name": "a68da315-2be3-4030-9fcf-d22a5ec3695f.md",
+      "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+      "bytes": 7
+    },
+    {
+      "name": "947b2b69-2a42-45fc-bab6-ed56bc8cb46a.md",
+      "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+      "bytes": 7
+    },
+    {
+      "name": "c7c91be1-1105-4c51-99b1-ff2fe18e8637.md",
+      "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575",
+      "bytes": 24
+    }
+  ]
+}

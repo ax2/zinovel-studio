@@ -153,6 +153,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Public scene release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/scene-upgrade-source/ZiNovel-Studio-0.1.0-alpha.36-windows-x64-setup.exe .cache/scene-upgrade-source/release-manifest.json scene-upgrade
           if ($LASTEXITCODE -ne 0) { throw 'Arranged scene and schema1 draft upgrade failed' }
+      - name: Upgrade public alpha.37 manually imported books without inventing origins
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/import-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.37 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/import-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Public manual-import release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/import-upgrade-source/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe .cache/import-upgrade-source/release-manifest.json import-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Legacy manual-import book and absent-origin upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft
         shell: pwsh

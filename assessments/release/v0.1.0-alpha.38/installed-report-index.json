@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.38",
+  "productionCommit": "2a72b8b036fc1996c5e0c4feae9d5b4f300f8f2b",
+  "sourceCi": "https://github.com/ax2/zinovel-studio/actions/runs/40197762316",
+  "files": 53,
+  "reports": 58,
+  "checks": 202,
+  "qualification": 229,
+  "installerSha256": "cd679afb84d281bd78f73dee169a57060f85bc1efc34ad5b23f71e573a002393",
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "bytes": 155539718,
+  "installMs": 9911,
+  "reinstallMs": 24571,
+  "uninstallMs": 7740,
+  "upgrades": [
+    {
+      "from": "0.1.0-alpha.3",
+      "ms": 27347
+    },
+    {
+      "from": "0.1.0-alpha.31",
+      "ms": 20719
+    },
+    {
+      "from": "0.1.0-alpha.33",
+      "ms": 20765
+    },
+    {
+      "from": "0.1.0-alpha.35",
+      "ms": 50831
+    },
+    {
+      "from": "0.1.0-alpha.36",
+      "ms": 17058
+    },
+    {
+      "from": "0.1.0-alpha.37",
+      "ms": 17445
+    }
+  ],
+  "reportPaths": [
+    "assessments/release/v0.1.0-alpha.38/installed/acceptance/acceptance-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/assets/assets-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/atlas-ui/atlas-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/budget/budget-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/candidate-review/candidate-review-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/character-looks/character-looks-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/compatibility/compatibility-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/context/context-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/continuity/continuity-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/creative-journey/creative-journey-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/desktop-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/diagnostics/diagnostics-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/evidence/evidence-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/image-studio/image-studio-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/import-boundary/import-boundary-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/import-origin/import-origin-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/import-review/import-review-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/incremental-backup/incremental-backup-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/independent-backup/independent-backup-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge/knowledge-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge-choices/knowledge-choices-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge-context/knowledge-context-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge-context-targets/knowledge-context-targets-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge-creation/knowledge-creation-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/knowledge-legacy/knowledge-legacy-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/maps-ipc/maps-ipc-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/maps-ui/maps-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/material-proposal/material-proposal-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/materials/materials-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/model-credentials/model-credentials-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/model-profiles/model-profiles-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/offline-writing/offline-writing-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/pilot-agent/pilot-agent-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/pilots/pilots-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/planning/planning-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-capture/publication-capture-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-docx/docx-inspection.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-docx/publication-docx-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-html/publication-html-output-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-pdf/inspection.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-pdf/publication-pdf-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-resources/publication-resources-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/publication-ui/publication-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/reader/reader-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/relationships/relationships-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/scene-tree/scene-tree-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/scene-tree-operations/scene-tree-operations-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/stream/stream-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/tasks/task-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/utf8-integrity/utf8-integrity-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installed/world-proposals/world-proposals-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/recent-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/current-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/appearance-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/scene-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.38/import-upgrade-smoke.json"
+  ],
+  "scope": "New exact-asar 202 installation and six real public source upgrades; current source391 CI passed. Unknown-origin source fixtures may retain expected invalid data by design. Independent tag/public bytes pending."
+}

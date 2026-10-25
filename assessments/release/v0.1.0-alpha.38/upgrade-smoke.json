@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "installDirectory": "D:\\work\\zinovel-studio\\.cache\\upgrade-qa-Kg3qwG\\中文 升级目录",
+  "syntheticDataDirectory": "D:\\work\\zinovel-studio\\.cache\\upgrade-qa-Kg3qwG\\synthetic-data",
+  "fromVersion": "0.1.0-alpha.3",
+  "toVersion": "0.1.0-alpha.38",
+  "previousInstallerSha256": "01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7",
+  "currentInstallerSha256": "cd679afb84d281bd78f73dee169a57060f85bc1efc34ad5b23f71e573a002393",
+  "checks": [
+    "manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings",
+    "new version silently installed over old app in the same directory; all prior library/task/settings bytes retained and opened in the exact new packaged EXE with system-only PATH",
+    "old candidate recovered in new review UI, saved review draft separately without changing formal manuscript; upgraded app uninstalled while retaining user data"
+  ],
+  "errors": [],
+  "previousInstallMs": 26657,
+  "upgradeMs": 27347,
+  "uninstallObservation": {
+    "attempts": 22,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 4296
+  },
+  "uninstallRegistryObservation": {
+    "attempts": 2,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 279
+  }
+}

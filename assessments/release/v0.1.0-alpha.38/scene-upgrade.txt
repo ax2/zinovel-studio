@@ -1,0 +1,102 @@
+{
+  status: 'passed',
+  fromVersion: '0.1.0-alpha.36',
+  toVersion: '0.1.0-alpha.38',
+  previousInstallerSha256: '50425dd87f735bfda379863e1844d6846632ceafe70611a575743cfa58ecb3d3',
+  currentInstallerSha256: 'cd679afb84d281bd78f73dee169a57060f85bc1efc34ad5b23f71e573a002393',
+  installDirectory: 'D:\\work\\zinovel-studio\\.cache\\recent-upgrade-MjBDmj\\中文 最近版升级',
+  syntheticDataDirectory: 'D:\\work\\zinovel-studio\\.cache\\recent-upgrade-MjBDmj\\synthetic-data',
+  checks: [
+    'Exact public 0.1.0-alpha.36 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade',
+    'Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request',
+    'Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt',
+    'Actual public 0.1.0-alpha.36 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade',
+    'New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay',
+    'Actual public 0.1.0-alpha.36 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save'
+  ],
+  errors: [],
+  scope: 'Exact public 0.1.0-alpha.36 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification',
+  previousInstallMs: 11455,
+  previousAsarSha256: '6684495567bd9d2a0c057277e3877905deaeba448fbd478cbc48601c6425421c',
+  upgradeMs: 17058,
+  appAsarSha256: 'a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d',
+  sceneTreeReadbacks: 3,
+  reviewedOldCandidateWithoutRequest: true,
+  credentialsPreserved: true,
+  profileBytesPreserved: true,
+  schema1DraftPreservedUntilExplicitSave: true,
+  explicitSchema1DraftCreated: true,
+  postUninstallDataReadable: true,
+  previousV2ReceiptPreserved: true,
+  previousV2Readable: true,
+  previousAdoptedAssetPreserved: true,
+  previousV2Files: [
+    {
+      name: '94ffbc81-e89c-47bf-9cfc-0cdcd48777e8.json',
+      sha256: '1f858f61ab098436dce0a0c28139e13d07258af1758ce867ddad64db2f8f6ca4',
+      bytes: 2914
+    },
+    {
+      name: '10a27e00-43d0-446e-9f1a-ca5267f5cb83.json',
+      sha256: '80250d03f48a8a92df9f1b468409b94fdc72fa92f68197e3f0c1f40aeed96c28',
+      bytes: 870
+    },
+    {
+      name: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png',
+      sha256: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa',
+      bytes: 449
+    }
+  ],
+  appearanceFiles: [
+    {
+      name: '5b4abdb3-97b9-432e-b8f7-92aacf43762f.json',
+      sha256: 'deacc20f1d7236666763bc269d01a84a0739a6cee9ce7139ef7dd0d7e7819412',
+      bytes: 2582
+    },
+    {
+      name: '1-cf0725ccc635d2e7226ee85d7852bb0bd18c83cb00cd0ed0808563a700973e0d.json',
+      sha256: 'cf0725ccc635d2e7226ee85d7852bb0bd18c83cb00cd0ed0808563a700973e0d',
+      bytes: 2144
+    },
+    {
+      name: '2-4bebc0e94e5ff16c784d5daae1048703d6960d6d4a0f6fdebfc108f8779991ca.json',
+      sha256: '4bebc0e94e5ff16c784d5daae1048703d6960d6d4a0f6fdebfc108f8779991ca',
+      bytes: 2582
+    }
+  ],
+  fixedAppearancePreserved: true,
+  fixedAppearancePreviewReadable: true,
+  lookDraftPreserved: true,
+  lookDraftSha256: 'f93499174d0ee31ff2595409541ebf7e447e6214299474ffc3a24d9d8a578af5',
+  oldMaterialDraftSha256: '757c9c91b80ac1c6d4ea421dc022a6c65df8e9aa11873dfb23a9bfdcda897b76',
+  newScene: {
+    id: '1dde6060-7894-4fa0-9851-0a70c4f2aa23',
+    revision: 1,
+    diskHash: '866fb17ceb09050d62485be14102016a302d20e0f550d8848203cd3b37ffefd2'
+  },
+  plannedScenePreserved: true,
+  originalMaterialDraftSchema: 1,
+  plannedScene: {
+    id: '95627e10-dc10-40b5-850b-01402f225a27',
+    diskHash: 'c63ee0ec2cc2244a1a39b25216d268db796b00658abde9c0c91a1c43b522f078',
+    chapterId: '2541dbc7-2308-44ad-844e-daac681d1180',
+    planningHash: 'c0b06354fa951c0aadedce016e6f568c028b8095dc78dca0ffdf5a7d1a5ab56b',
+    planningRevision: 1
+  },
+  sceneFiles: [
+    {
+      name: 'planning.json',
+      sha256: 'c0b06354fa951c0aadedce016e6f568c028b8095dc78dca0ffdf5a7d1a5ab56b',
+      bytes: 253
+    },
+    {
+      name: '95627e10-dc10-40b5-850b-01402f225a27.json',
+      sha256: 'c63ee0ec2cc2244a1a39b25216d268db796b00658abde9c0c91a1c43b522f078',
+      bytes: 506
+    }
+  ],
+  requests: { text: 0, image: 3 },
+  uninstallPreserved: true
+}
+(node:89332) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

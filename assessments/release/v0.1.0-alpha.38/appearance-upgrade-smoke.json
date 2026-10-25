@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.35",
+  "toVersion": "0.1.0-alpha.38",
+  "previousInstallerSha256": "a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a",
+  "currentInstallerSha256": "cd679afb84d281bd78f73dee169a57060f85bc1efc34ad5b23f71e573a002393",
+  "installDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-9qcj23\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-9qcj23\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.35 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "Actual public 0.1.0-alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.35 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 23470,
+  "previousAsarSha256": "b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2",
+  "upgradeMs": 50831,
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "legacyDraftPreservedUntilExplicitSave": true,
+  "explicitSchema1DraftCreated": true,
+  "postUninstallDataReadable": true,
+  "previousV2ReceiptPreserved": true,
+  "previousV2Readable": true,
+  "previousAdoptedAssetPreserved": true,
+  "previousV2Files": [
+    {
+      "name": "ffac81d3-dd1c-4425-a3c8-844ccdd80dd8.json",
+      "sha256": "d7eb3e47a7028e8667721df364a45d9aa05c2295462bc38ae4880e37c5c78b9a",
+      "bytes": 2914
+    },
+    {
+      "name": "f38f9bc2-c6d3-4e77-8dfb-6305878d12db.json",
+      "sha256": "695538315214391cd7fb5619fdff42baaa06fab815ca2f2637e131018c719014",
+      "bytes": 870
+    },
+    {
+      "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+      "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+      "bytes": 449
+    }
+  ],
+  "appearanceFiles": [
+    {
+      "name": "1329a8e8-326e-482d-8d04-af78752c3e79.json",
+      "sha256": "e79db144783577572788d16ddb4f7daa1620e9cc1ae867ed934217f8b3c5229e",
+      "bytes": 2582
+    },
+    {
+      "name": "1-e6794e3b212fbb4aa030dcf73581569a6d3ff77c5fea871394653100b94c49d4.json",
+      "sha256": "e6794e3b212fbb4aa030dcf73581569a6d3ff77c5fea871394653100b94c49d4",
+      "bytes": 2144
+    },
+    {
+      "name": "2-3c05791f2a0e6c55bf6bb3fc294785ffcfefe531c42b2f1ea6b530272725a4a1.json",
+      "sha256": "3c05791f2a0e6c55bf6bb3fc294785ffcfefe531c42b2f1ea6b530272725a4a1",
+      "bytes": 2582
+    }
+  ],
+  "fixedAppearancePreserved": true,
+  "fixedAppearancePreviewReadable": true,
+  "lookDraftPreserved": true,
+  "lookDraftSha256": "bd88e518f6fe47bec4dd9b5550e5a267f6785fda4ccbac15ab622c6d7944c496",
+  "oldMaterialDraftSha256": "03b9e3b4891de1fd6ded0b17f75ea65627c3dd00f8a9e17645e68cba64214b4a",
+  "newScene": {
+    "id": "62bacef5-f03e-44b4-9a3d-9c0f2e2b01c0",
+    "revision": 1,
+    "diskHash": "1afe9dfcab024c6f223095a95df1e23c57f6b09c177b924eaf16cd2652aee01d"
+  },
+  "requests": {
+    "text": 0,
+    "image": 3
+  },
+  "uninstallPreserved": true
+}

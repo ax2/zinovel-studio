@@ -964,6 +964,126 @@ manifest.sceneUpgrade = {
 manifest.qualification.push(
   ...sceneUpgrade.checks.map((check) => `public-scene-upgrade: ${check}`),
 );
+const importUpgrade = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/import-upgrade/recent-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const importSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.37/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const importFlags = [
+  ...sceneFlags,
+  "legacyImportPreserved",
+  "legacyOriginNotFabricated",
+];
+const imported = importUpgrade.legacyImportedBook;
+if (
+  importUpgrade.status !== "passed" ||
+  importUpgrade.fromVersion !== "0.1.0-alpha.37" ||
+  importUpgrade.fromVersion !== importSource.version ||
+  importUpgrade.toVersion !== pkg.version ||
+  importUpgrade.currentInstallerSha256 !== sha256 ||
+  importUpgrade.appAsarSha256 !== appAsarSha256 ||
+  importUpgrade.previousInstallerSha256 !== importSource.sha256 ||
+  importUpgrade.previousAsarSha256 !== importSource.imageStudio.appAsarSha256 ||
+  importUpgrade.checks?.length !== 7 ||
+  importUpgrade.errors?.length !== 0 ||
+  !importFlags.every((key) => importUpgrade[key] === true) ||
+  importUpgrade.originalMaterialDraftSchema !== 1 ||
+  !Number.isSafeInteger(importUpgrade.sceneTreeReadbacks) ||
+  importUpgrade.sceneTreeReadbacks < 3 ||
+  !Number.isSafeInteger(importUpgrade.legacyImportReadbacks) ||
+  importUpgrade.legacyImportReadbacks < 3 ||
+  !Number.isFinite(importUpgrade.upgradeMs) ||
+  importUpgrade.upgradeMs <= 0 ||
+  JSON.stringify(importUpgrade.requests) !==
+    JSON.stringify({ text: 0, image: 3 }) ||
+  importUpgrade.previousV2Files?.length !== 3 ||
+  !Array.isArray(importUpgrade.appearanceFiles) ||
+  importUpgrade.appearanceFiles.length < 3 ||
+  importUpgrade.sceneFiles?.length !== 2 ||
+  importUpgrade.legacyImportFiles?.length !== 4 ||
+  ![
+    ...(importUpgrade.previousV2Files || []),
+    ...(importUpgrade.appearanceFiles || []),
+    ...(importUpgrade.sceneFiles || []),
+    ...(importUpgrade.legacyImportFiles || []),
+  ].every(
+    (file) =>
+      hashIsValid(file.sha256) &&
+      Number.isSafeInteger(file.bytes) &&
+      file.bytes > 0,
+  ) ||
+  !/^[a-f0-9-]{36}$/.test(imported?.id || "") ||
+  imported.chapterIds?.length !== 3 ||
+  imported.chapterHashes?.length !== 3 ||
+  !imported.chapterIds.every((id) => /^[a-f0-9-]{36}$/.test(id)) ||
+  !imported.chapterHashes.every(hashIsValid) ||
+  new Set(imported.chapterIds).size !== 3 ||
+  !imported.chapterIds.every(
+    (id, index) =>
+      importUpgrade.legacyImportFiles.find((file) => file.name === `${id}.md`)
+        ?.sha256 === imported.chapterHashes[index],
+  ) ||
+  !importUpgrade.legacyImportFiles.some((file) => file.name === "book.json") ||
+  !/^[a-f0-9-]{36}$/.test(importUpgrade.plannedScene?.id || "") ||
+  !/^[a-f0-9-]{36}$/.test(importUpgrade.plannedScene?.chapterId || "") ||
+  !Number.isSafeInteger(importUpgrade.plannedScene?.planningRevision) ||
+  importUpgrade.plannedScene.planningRevision < 1 ||
+  !hashIsValid(importUpgrade.plannedScene?.diskHash) ||
+  !hashIsValid(importUpgrade.plannedScene?.planningHash) ||
+  importUpgrade.sceneFiles.find((file) => file.name === "planning.json")
+    ?.sha256 !== importUpgrade.plannedScene.planningHash ||
+  importUpgrade.sceneFiles.find(
+    (file) => file.name === `${importUpgrade.plannedScene.id}.json`,
+  )?.sha256 !== importUpgrade.plannedScene.diskHash ||
+  !/^[a-f0-9-]{36}$/.test(importUpgrade.newScene?.id || "") ||
+  !Number.isSafeInteger(importUpgrade.newScene?.revision) ||
+  importUpgrade.newScene.revision < 1 ||
+  !hashIsValid(importUpgrade.newScene?.diskHash) ||
+  !hashIsValid(importUpgrade.lookDraftSha256) ||
+  !hashIsValid(importUpgrade.oldMaterialDraftSha256)
+)
+  throw new Error(
+    "Public alpha.37 manual-import book, stable chapters and honest legacy-origin proof is missing or stale",
+  );
+manifest.importPublicUpgrade = {
+  fromVersion: importUpgrade.fromVersion,
+  previousInstallerSha256: importUpgrade.previousInstallerSha256,
+  previousAsarSha256: importUpgrade.previousAsarSha256,
+  appAsarSha256,
+  upgradeMs: importUpgrade.upgradeMs,
+  ...Object.fromEntries(importFlags.map((key) => [key, true])),
+  originalMaterialDraftSchema: 1,
+  sceneTreeReadbacks: importUpgrade.sceneTreeReadbacks,
+  legacyImportReadbacks: importUpgrade.legacyImportReadbacks,
+  plannedScene: importUpgrade.plannedScene,
+  sceneFiles: importUpgrade.sceneFiles,
+  legacyImportedBook: imported,
+  legacyImportFiles: importUpgrade.legacyImportFiles,
+  appearanceFiles: importUpgrade.appearanceFiles,
+  previousV2Files: importUpgrade.previousV2Files,
+  newScene: importUpgrade.newScene,
+  lookDraftSha256: importUpgrade.lookDraftSha256,
+  oldMaterialDraftSha256: importUpgrade.oldMaterialDraftSha256,
+  requests: importUpgrade.requests,
+  checks: importUpgrade.checks,
+  scope: importUpgrade.scope,
+};
+manifest.qualification.push(
+  ...importUpgrade.checks.map((check) => `public-import-upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),

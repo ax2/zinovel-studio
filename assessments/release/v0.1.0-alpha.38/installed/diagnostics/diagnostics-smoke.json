@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual author save and failed synthetic settings produce fixed metadata only; unique manuscript/title/IDs/path/credential absent from preview and export; injected path refused before native chooser and cancelled choice writes nothing",
+    "Explicit native-selected JSON created once; actual delayed write guards panel and native-window close until completion; repeat refuses overwrite byte-for-byte; prospective data-root Junction child refused before creation; manuscript and private task/settings storage never gathered or changed",
+    "Desktop and dark narrow previews fit; clear is explicitly confirmed and cancellation preserves events; clear removes metadata alone; complete process restart discards prior errors and metadata while author manuscript persists without automatic diagnostic storage"
+  ],
+  "errors": [],
+  "scope": "Synthetic desktop host and author controls; save-dialog results instrumented, not native dialog clicks, system IME, upstream session-log audit or complete product qualification; packaged field identifies actual EXE execution",
+  "version": "0.1.0-alpha.38",
+  "packaged": true,
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "geometry": {
+    "left": 30,
+    "right": 776.4000244140625,
+    "top": 54.875,
+    "bottom": 748.3250122070312,
+    "width": 806,
+    "height": 803,
+    "client": 745,
+    "scroll": 745,
+    "scale": 1.25
+  },
+  "exportBytes": 1108
+}

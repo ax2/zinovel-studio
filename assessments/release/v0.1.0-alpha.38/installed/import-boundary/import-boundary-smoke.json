@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": [
+    "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+    "A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token",
+    "Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals"
+  ],
+  "errors": [],
+  "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.",
+  "version": "0.1.0-alpha.38",
+  "packaged": true,
+  "appAsarSha256": "a2e9301ec5e3e3c3f45f9592c52c195e0d309d413ff694d3444753c6258be88d",
+  "encodings": [
+    "utf-8",
+    "utf-16le",
+    "utf-16be",
+    "gb18030"
+  ]
+}
