@@ -1,0 +1,56 @@
+✔ unfinished local image notes round-trip separately from canonical validation (1.1292ms)
+✔ real PNG/JPEG/WebP decode preserves original bytes and applies EXIF direction only to derived thumbnails (148.5107ms)
+✔ unknown signatures, corrupt pixels, oversized and animated images reject before any visible asset is created (94.6674ms)
+✔ edits use exact versions; replacement preserves old image history; recycle and restore never delete bytes (228.3088ms)
+✔ duplicate bytes allow different author records while exact creation retry cannot duplicate or rewind later edits (103.3607ms)
+✔ input is captured before awaits and decoding does not hold the shared manuscript writer queue (96.5241ms)
+✔ corrupt metadata and original bytes remain visible as errors and cannot be silently repaired or overwritten (62.8696ms)
+✔ new links and resource identities are book-scoped; backup restores original blobs and history under explicit origin lineage (193.5916ms)
+✔ a binary-only orphan after metadata failure is preserved and reusable; interrupted text commit recovers once with exact creation identity (62.5535ms)
+✔ a linked assets directory refuses writes outside the book, preserving the selected original (26.4766ms)
+✔ backup capacity preflight refuses an oversized image-bearing tree before staging, retaining every original (114.5472ms)
+✔ image association labels read only same-book metadata even when manuscript bytes cannot be decoded (39.1929ms)
+✖ explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything (192.8577ms)
+✔ adoption refuses wrong purpose, discarded tasks, stale CAS and corrupted bytes without visible resources (148.4354ms)
+✖ a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate (176.9093ms)
+✔ a previously accepted resource removed outside the app is never silently recreated by adoption retry (129.6427ms)
+✔ a restored pending candidate is adopted only into the explicitly selected restored book, preserving the origin task and source assets (311.4219ms)
+✔ actual process exit at adoption journal recovers both exact records through one journal without duplicate assets or a network call (272.0188ms)
+✔ actual process exit at adoption first-record recovers both exact records through one journal without duplicate assets or a network call (250.8669ms)
+✔ actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript (126.9208ms)
+✔ stable creation IDs reconcile existing state without re-sending and reject different frozen inputs (55.4613ms)
+✔ restart makes a durable send intent unknown; it cannot be relabelled as unsent or receive a fabricated return from a new session (91.2307ms)
+✔ target versions are checked before sending, but later author edits do not discard paid returned candidates (167.5445ms)
+✔ foreign targets, plaintext credentials, unsupported schema, invalid UTF-8 and changed fingerprints refuse without overwriting originals (85.7594ms)
+✔ raw-byte conflicts, wrong attempts and corrupt shared image objects never overwrite task state or create visible assets (94.9967ms)
+✔ full book backup and restore retain unadopted candidates and frozen origin without resuming a provider request (163.4565ms)
+✔ a worker exits after durable intent journal creation; startup recovery retains unknown result rather than automatically sending (173.9041ms)
+✔ image services cannot be attached to a different writer kernel (17.4016ms)
+✔ restored interrupted tasks can be explicitly discarded while keeping dispatch unknown, never rewritten as unsent (116.1387ms)
+✔ chapter illustrations freeze chapter identity, revision and body hash and reject an external same-revision edit before sending (36.3493ms)
+✔ received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy (82.5712ms)
+✔ paid candidate decoding waits for a reserved existing slot while ordinary excess previews still refuse (23.2489ms)
+✔ a worker exit after receive intent keeps known response hashes and incomplete files, then exact original bytes can be saved without another request (289.2781ms)
+✔ a worker exit after candidate blob publication is reconciled locally to received and never creates visible resource metadata (342.289ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 32
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3497.1972
+
+✖ failing tests:
+
+test at tests\image-tasks.test.mjs:91:1
+✖ explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything (192.8577ms)
+  TypeError [Error]: f.store.assets.update is not a function
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/image-tasks.test.mjs:111:39)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests\image-tasks.test.mjs:195:1
+✖ a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate (176.9093ms)
+  Error: 资料已被其他操作或外部编辑修改。当前调整已保留，请重新读取后对照。
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/materials.mjs:266:15

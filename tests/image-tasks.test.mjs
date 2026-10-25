@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, writeFile, mkdir } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
@@ -78,6 +78,302 @@ async function received(f) {
     sent.attemptId,
     returned(),
   );
+}
+const adoptionInput = () => ({
+  title: "雾港·封面候选🌊",
+  purpose: "cover",
+  source: "合成模型候选；作者明确采用",
+  rights: "合成测试",
+  notes: "不自动设为封面",
+  linkedIds: [],
+});
+
+test("explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    body = await readFile(
+      join(f.root, f.book.id, "manuscript", f.book.chapters[0].id + ".md"),
+    ),
+    old = await f.store.assets.import(f.book.id, picture, adoptionInput());
+  const adopted = await f.store.imageTasks.adopt(
+    f.book.id,
+    expected(value),
+    0,
+    adoptionInput(),
+  );
+  assert.equal(adopted.alreadyAccepted, false);
+  assert.equal(adopted.task.candidates[0].decision, "accepted");
+  assert.equal(adopted.task.responseHash, value.responseHash);
+  assert.equal(adopted.asset.id, value.candidates[0].assetId);
+  assert.equal(adopted.asset.blob.sha256, digest(picture));
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 2);
+  assert.deepEqual(await f.store.assets.read(f.book.id, old.id), old);
+  const edited = await f.store.assets.save(
+    f.book.id,
+    {
+      ...adoptionInput(),
+      title: "作者后改",
+    },
+    adopted.asset,
+  );
+  const again = await f.store.imageTasks.adopt(
+    f.book.id,
+    expected(adopted.task),
+    0,
+    adoptionInput(),
+  );
+  assert.equal(again.alreadyAccepted, true);
+  assert.equal(again.asset.title, edited.title);
+  assert.equal(again.asset.revision, edited.revision);
+  assert.deepEqual(again.task, adopted.task);
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(adopted.task), 0, {
+      ...adoptionInput(),
+      title: "换说明",
+    }),
+    /已经按另一份说明/,
+  );
+  const discarded = await f.store.imageTasks.discard(
+    f.book.id,
+    expected(adopted.task),
+  );
+  assert.equal(discarded.candidates[0].decision, "accepted");
+  assert.deepEqual(
+    discarded.candidates[0].adoption,
+    adopted.task.candidates[0].adoption,
+  );
+  assert.deepEqual(
+    await readFile(
+      join(f.root, f.book.id, "manuscript", f.book.chapters[0].id + ".md"),
+    ),
+    body,
+  );
+});
+
+test("adoption refuses wrong purpose, discarded tasks, stale CAS and corrupted bytes without visible resources", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    before = await readFile(f.path);
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, {
+      ...adoptionInput(),
+      purpose: "reference",
+    }),
+    /用途/,
+  );
+  await writeFile(f.path, Buffer.concat([before, Buffer.from(" \n")]));
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, adoptionInput()),
+    /已改变/,
+  );
+  await writeFile(f.path, before);
+  const blob = join(
+    f.root,
+    f.book.id,
+    "assets/blobs",
+    value.candidates[0].blob.sha256 + ".png",
+  );
+  await writeFile(blob, Buffer.alloc(picture.length, 0));
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, adoptionInput()),
+    /校验/,
+  );
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+  await writeFile(blob, picture);
+  const discarded = await f.store.imageTasks.discard(
+    f.book.id,
+    expected(value),
+  );
+  await assert.rejects(
+    f.store.imageTasks.adopt(
+      f.book.id,
+      expected(discarded),
+      0,
+      adoptionInput(),
+    ),
+    /已放弃/,
+  );
+});
+
+test("a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate", async () => {
+  const f = await fixture(),
+    material = await f.store.materials.save(f.book.id, {
+      kind: "character",
+      title: "合成人物",
+      status: "planned",
+      fields: {},
+      notes: "旧",
+      chapterIds: [],
+    });
+  f.input.target = {
+    purpose: "portrait",
+    material: expected(material),
+    chapter: null,
+  };
+  const value = await received(f),
+    before = await readFile(f.path),
+    input = {
+      ...adoptionInput(),
+      purpose: "portrait",
+      linkedIds: [material.id],
+    };
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, {
+      ...input,
+      linkedIds: [],
+    }),
+    /关联人物/,
+  );
+  const decode = f.store.assets.decode.bind(f.store.assets);
+  f.store.assets.decode = async (...args) => {
+    const decoded = await decode(...args);
+    await f.store.materials.save(
+      f.book.id,
+      { ...material, notes: "作者新改" },
+      material,
+    );
+    return decoded;
+  };
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, input),
+    /目标资料已改变/,
+  );
+  f.store.assets.decode = decode;
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+  assert.equal(
+    (await f.store.imageTasks.preview(f.book.id, value.id, 0)).blob.sha256,
+    digest(picture),
+  );
+});
+
+test("a previously accepted resource removed outside the app is never silently recreated by adoption retry", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    adopted = await f.store.imageTasks.adopt(
+      f.book.id,
+      expected(value),
+      0,
+      adoptionInput(),
+    ),
+    path = join(f.root, f.book.id, "assets/items", adopted.asset.id + ".json");
+  await rename(path, path + ".retained");
+  await assert.rejects(
+    f.store.imageTasks.adopt(
+      f.book.id,
+      expected(adopted.task),
+      0,
+      adoptionInput(),
+    ),
+    { code: "ENOENT" },
+  );
+  assert.deepEqual(
+    await f.store.imageTasks.read(f.book.id, value.id),
+    adopted.task,
+  );
+  await assert.rejects(readFile(path), { code: "ENOENT" });
+});
+
+test("a restored pending candidate is adopted only into the explicitly selected restored book, preserving the origin task and source assets", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    before = await readFile(f.path),
+    backup = await f.store.createBackup(f.book.id, f.work),
+    restored = await f.store.restoreBackup(backup.path),
+    copied = await f.store.imageTasks.read(restored.id, value.id),
+    adopted = await f.store.imageTasks.adopt(
+      restored.id,
+      expected(copied),
+      0,
+      adoptionInput(),
+    );
+  assert.equal(adopted.asset.bookId, restored.id);
+  assert.equal(adopted.task.bookId, f.book.id);
+  assert.equal(adopted.task.candidates[0].adoption.bookId, restored.id);
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+  assert.equal((await f.store.assets.list(restored.id)).items.length, 1);
+  const backup2 = await f.store.createBackup(restored.id, f.work),
+    twice = await f.store.restoreBackup(backup2.path),
+    twiceTask = await f.store.imageTasks.read(twice.id, value.id),
+    lookup = await f.store.imageTasks.adopt(
+      twice.id,
+      expected(twiceTask),
+      0,
+      adoptionInput(),
+    );
+  assert.equal(lookup.alreadyAccepted, true);
+  assert.equal(lookup.asset.bookId, restored.id);
+  assert.equal((await f.store.assets.list(twice.id)).items.length, 1);
+});
+
+test("simultaneous adoption clicks commit once, and a separately occupied reserved identity is never overwritten or silently attached", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    attempts = await Promise.allSettled([
+      f.store.imageTasks.adopt(f.book.id, expected(value), 0, adoptionInput()),
+      f.store.imageTasks.adopt(f.book.id, expected(value), 0, adoptionInput()),
+    ]);
+  assert.equal(
+    attempts.filter((item) => item.status === "fulfilled").length,
+    1,
+  );
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 1);
+  const g = await fixture(),
+    pending = await received(g),
+    before = await readFile(g.path),
+    occupied = await g.store.assets.import(
+      g.book.id,
+      picture,
+      adoptionInput(),
+      pending.candidates[0].assetId,
+    );
+  await assert.rejects(
+    g.store.imageTasks.adopt(g.book.id, expected(pending), 0, adoptionInput()),
+    /预留身份已有资源/,
+  );
+  assert.deepEqual(await readFile(g.path), before);
+  assert.deepEqual(await g.store.assets.read(g.book.id, occupied.id), occupied);
+});
+
+for (const [stage, code] of [
+  ["journal", 95],
+  ["first-record", 96],
+]) {
+  test(`actual process exit at adoption ${stage} recovers both exact records through one journal without duplicate assets or a network call`, async () => {
+    const f = await fixture(),
+      value = await received(f);
+    await assert.rejects(
+      promisify(execFile)(
+        process.execPath,
+        [
+          resolve("tests/fixtures/image-adoption-crash.mjs"),
+          f.root,
+          f.book.id,
+          JSON.stringify(expected(value)),
+          JSON.stringify(adoptionInput()),
+          stage,
+        ],
+        { windowsHide: true, timeout: 15000 },
+      ),
+      (error) => error.code === code,
+    );
+    const restarted = new NovelStore(f.root),
+      recovered = await restarted.imageTasks.read(f.book.id, value.id);
+    assert.equal(recovered.candidates[0].decision, "accepted");
+    assert.equal(recovered.responseHash, value.responseHash);
+    assert.equal((await restarted.assets.list(f.book.id)).items.length, 1);
+    const lookup = await restarted.imageTasks.adopt(
+      f.book.id,
+      expected(recovered),
+      0,
+      adoptionInput(),
+    );
+    assert.equal(lookup.alreadyAccepted, true);
+    assert.equal(lookup.asset.id, value.candidates[0].assetId);
+    assert.equal(lookup.asset.blob.sha256, digest(picture));
+  });
 }
 
 test("actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript", async () => {

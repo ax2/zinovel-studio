@@ -4,7 +4,9 @@ import {
   assetHash,
   assetPurposes,
   validateAssetBlob,
+  assetInput,
 } from "./assets.mjs";
+import { assetCreationHash } from "./asset-creation-hash.mjs";
 import {
   imageGenerationPreflight,
   imageGenerationLimits,
@@ -117,13 +119,35 @@ export function imageTaskOutcome(value) {
   };
 }
 function candidate(value, index) {
-  keys(value, ["index", "blob", "revisedPrompt", "decision", "assetId"]);
+  keys(value, [
+    "index",
+    "blob",
+    "revisedPrompt",
+    "decision",
+    "assetId",
+    "adoption",
+  ]);
   if (
     value.index !== index ||
-    !["pending", "discarded"].includes(value.decision)
+    !["pending", "discarded", "accepted"].includes(value.decision)
   )
     throw new Error("图像候选状态无效");
   validateAssetBlob(value.blob);
+  if (value.decision === "accepted") {
+    keys(value.adoption, ["bookId", "input", "creationHash", "adoptedAt"]);
+    if (
+      assetCreationHash(
+        value.assetId,
+        value.adoption.bookId,
+        value.adoption.input,
+        value.blob,
+      ) !== assetHash(value.adoption.creationHash) ||
+      typeof value.adoption.adoptedAt !== "string" ||
+      !Number.isFinite(Date.parse(value.adoption.adoptedAt))
+    )
+      throw new Error("图像采用回执无效");
+  } else if (value.adoption !== undefined)
+    throw new Error("未采用的候选不能声明采用回执");
   if (value.blob.bytes > imageGenerationLimits.imageBytes)
     throw new Error("图像候选过大");
   if (
@@ -234,6 +258,23 @@ export function validateImageTask(value, id, origins) {
   )
     throw new Error("图像候选清单无效");
   value.candidates.forEach(candidate);
+  if (
+    new Set(value.candidates.map((item) => item.assetId)).size !==
+    value.candidates.length
+  )
+    throw new Error("图像候选资源身份重复");
+  for (const item of value.candidates) {
+    if (item.decision !== "accepted") continue;
+    const adoptedInput = assetInput(item.adoption.input);
+    if (
+      !["received", "discarded"].includes(value.status) ||
+      !origins.includes(item.adoption.bookId) ||
+      adoptedInput.purpose !== value.target.purpose ||
+      (value.target.material &&
+        !adoptedInput.linkedIds.includes(value.target.material.id))
+    )
+      throw new Error("图像采用目标或所属作品不符");
+  }
   if (value.attemptId !== undefined) assetId(value.attemptId);
   if (value.status === "prepared" && value.attemptId !== undefined)
     throw new Error("有发送意图的任务不能重置为待发送");

@@ -2,7 +2,8 @@ import { lstat, open, readdir } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { decodeUtf8, readUtf8File } from "./encoding.mjs";
 import { binaryHash, copyImageBytes } from "./image-decoder.mjs";
-import { assetId, assetHash } from "../novel-domain/assets.mjs";
+import { assetId, assetHash, assetInput } from "../novel-domain/assets.mjs";
+import { assetCreationHash } from "../novel-domain/asset-creation-hash.mjs";
 import { imageGenerationLimits } from "../novel-domain/image-generation.mjs";
 import {
   imageTaskInput,
@@ -36,7 +37,7 @@ const expectedValue = (value) => {
 };
 
 /** Book-local image ledger. Every mutation uses the injected unique book kernel.
- * No network, automatic retry, adoption or independent writer is created here.
+ * No network, automatic retry or independent writer is created here.
  */
 export class ImageTaskStore {
   #active = new Set();
@@ -492,10 +493,121 @@ export class ImageTaskStore {
         updatedAt: new Date().toISOString(),
         candidates: previous.data.candidates.map((item) => ({
           ...item,
-          decision: "discarded",
+          decision: item.decision === "accepted" ? "accepted" : "discarded",
         })),
       };
       return this.view(ctx, await this.commit(ctx, next, previous));
+    });
+  }
+  async adopt(bookId, expected, index, input) {
+    const requested = expectedValue(expected),
+      data = assetInput(input);
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= imageGenerationLimits.count
+    )
+      throw new Error("图像候选不存在");
+    const capture = await this.storage.exclusive(async () => {
+      const ctx = await this.context(bookId),
+        previous = await this.current(ctx, requested),
+        item = previous.data.candidates[index];
+      if (
+        previous.data.status !== "received" ||
+        !item ||
+        item.decision === "discarded"
+      )
+        throw new Error("请先完成候选本地核对，已放弃任务不能采用");
+      if (
+        data.purpose !== previous.data.target.purpose ||
+        (previous.data.target.material &&
+          !data.linkedIds.includes(previous.data.target.material.id))
+      )
+        throw new Error("采用用途或关联人物与已确认目标不符");
+      if (item.decision === "accepted") {
+        if (
+          assetCreationHash(
+            item.assetId,
+            item.adoption.bookId,
+            data,
+            item.blob,
+          ) !== item.adoption.creationHash
+        )
+          throw new Error("该候选已经按另一份说明采用，请编辑现有资源");
+        // Receipt lookup only. Never recreate a removed resource or overwrite later edits.
+        const asset = await this.assets.record(ctx, item.assetId);
+        if (asset.data.creationHash !== item.adoption.creationHash)
+          throw new Error("已采用资源身份不符，请保留原文件");
+        return {
+          result: {
+            task: this.view(ctx, previous),
+            asset: this.assets.view(asset),
+            alreadyAccepted: true,
+          },
+        };
+      }
+      await this.target(ctx, previous.data.target);
+      return {
+        bytes: await this.assets.blobBytes(ctx, item.blob),
+        blob: item.blob,
+      };
+    });
+    if (capture.result) return capture.result;
+    const image = await this.assets.decode(capture.bytes);
+    if (
+      Object.keys(capture.blob).some(
+        (field) => capture.blob[field] !== image.blob[field],
+      )
+    )
+      throw new Error("候选实际图像与接收回执不符");
+    return this.storage.exclusive(async () => {
+      const ctx = await this.context(bookId),
+        previous = await this.current(ctx, requested),
+        item = previous.data.candidates[index];
+      await this.target(ctx, previous.data.target);
+      // Check bytes again after decoding outside the queue; external edits cannot be hidden by a cached preview.
+      await this.assets.blobBytes(ctx, item.blob);
+      const prepared = await this.assets.prepareImport(
+        ctx,
+        image,
+        data,
+        item.assetId,
+      );
+      if (prepared.existing)
+        throw new Error("候选预留身份已有资源，请保留文件并核对采用记录");
+      const next = structuredClone(previous.data);
+      next.revision++;
+      next.updatedAt = new Date().toISOString();
+      next.candidates[index].decision = "accepted";
+      next.candidates[index].adoption = {
+        bookId,
+        input: data,
+        creationHash: prepared.next.creationHash,
+        adoptedAt: next.updatedAt,
+      };
+      validateImageTask(next, next.id, ctx.origins);
+      const raw = json(next),
+        path = taskPath(next.id);
+      if (Buffer.byteLength(raw) > MAX_RECORD)
+        throw new Error("图像采用说明超限，未覆盖原记录");
+      // The kernel journal commits both records together. Recovery completes the exact confirmed adoption without network.
+      await this.storage.transaction(
+        ctx.root,
+        { [prepared.path]: prepared.raw, [path]: raw },
+        { expectedBefore: { [prepared.path]: null, [path]: previous.raw } },
+      );
+      return {
+        task: this.view(ctx, {
+          data: next,
+          raw,
+          diskHash: binaryHash(Buffer.from(raw)),
+        }),
+        asset: this.assets.view({
+          data: prepared.next,
+          diskHash: binaryHash(Buffer.from(prepared.raw)),
+        }),
+        alreadyAccepted: false,
+      };
     });
   }
   async preview(bookId, id, index) {

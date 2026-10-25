@@ -9,6 +9,7 @@ import {
   assetLimits,
   validateAssetRecord,
 } from "../novel-domain/assets.mjs";
+import { assetCreationHash } from "../novel-domain/asset-creation-hash.mjs";
 import { publicationOriginIds } from "./publication.mjs";
 import {
   binaryHash,
@@ -227,6 +228,47 @@ export class AssetStore {
       diskHash: binaryHash(Buffer.from(json(next))),
     });
   }
+  // Internal preparation; caller holds the shared kernel. No writes or nested lock.
+  async prepareImport(ctx, image, input, creationId) {
+    const data = assetInput(input),
+      creationHash = assetCreationHash(
+        creationId,
+        ctx.book.id,
+        data,
+        image.blob,
+      );
+    let existing;
+    try {
+      existing = await this.record(ctx, creationId);
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    if (existing) {
+      if (existing.data.creationHash !== creationHash)
+        throw new Error(
+          "该导入身份已经保存其他内容，请先查看已保存图像再开始新的导入",
+        );
+      return { existing };
+    }
+    await this.links(ctx, data, null);
+    const at = new Date().toISOString(),
+      next = {
+        schemaVersion: 1,
+        id: creationId,
+        creationHash,
+        bookId: ctx.book.id,
+        revision: 1,
+        createdAt: at,
+        updatedAt: at,
+        ...data,
+        blob: image.blob,
+      };
+    validateAssetRecord(next, creationId, ctx.origins);
+    const raw = json(next);
+    if (Buffer.byteLength(raw) > 128 * 1024)
+      throw new Error("图像说明保存后过大，请缩短说明；当前调整已保留");
+    return { next, raw, path: `assets/items/${creationId}.json` };
+  }
   async import(bookId, bytes, input, creationId = randomUUID()) {
     assetId(creationId);
     const data = assetInput(input),
@@ -235,47 +277,10 @@ export class AssetStore {
     const image = await this.decode(capturedBytes);
     return this.storage.exclusive(async () => {
       const ctx = await this.context(bookId);
-      const creationHash = binaryHash(
-        Buffer.from(
-          JSON.stringify({
-            id: creationId,
-            bookId,
-            input: data,
-            blob: image.blob,
-          }),
-        ),
-      );
-      let existing;
-      try {
-        existing = await this.record(ctx, creationId);
-      } catch (error) {
-        if (error.code !== "ENOENT") throw error;
-      }
-      if (existing) {
-        if (existing.data.creationHash !== creationHash)
-          throw new Error(
-            "该导入身份已经保存其他内容，请先查看已保存图像再开始新的导入",
-          );
-        return this.view(existing);
-      }
-      await this.links(ctx, data, null);
+      const prepared = await this.prepareImport(ctx, image, data, creationId);
+      if (prepared.existing) return this.view(prepared.existing);
       await this.putBlob(ctx, image);
-      const at = new Date().toISOString();
-      return this.commit(
-        ctx,
-        {
-          schemaVersion: 1,
-          id: creationId,
-          creationHash,
-          bookId,
-          revision: 1,
-          createdAt: at,
-          updatedAt: at,
-          ...data,
-          blob: image.blob,
-        },
-        null,
-      );
+      return this.commit(ctx, prepared.next, null);
     });
   }
   read(bookId, id) {
