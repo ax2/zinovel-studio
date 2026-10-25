@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
+    "real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
+    "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
+    "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests"
+  ],
+  "errors": [],
+  "sourceDisk": {
+    "DriveLetter": "D",
+    "DiskNumber": 1,
+    "PartitionNumber": 2
+  },
+  "backupDisk": {
+    "DriveLetter": "C",
+    "DiskNumber": 0,
+    "PartitionNumber": 3
+  },
+  "independentDisks": true,
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Actual host file transactions; Windows disk numbers are distinct; picker results instrumented; not a hardware-loss or system-IME simulation",
+  "version": "0.1.0-alpha.32",
+  "packaged": true,
+  "appAsarSha256": "961085a7647adf8d1ab302e39bd4201cc433ae17f542385afd298885e037b1cb",
+  "backupFiles": 10,
+  "snapshotHash": "78a1871cef58b550a792597e6a452f6b3c5f782a15ca0655630e4891cc0f7010",
+  "backupManifestSha256": "bcd876c5ded8d8ebe2198bb544e2d20edb752389b98ddf5bfe7bfbc05dbba14d"
+}

@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)已公开，含AI图像工作室、混合候选保留与Windows新Key崩溃持久性修复；324项源码、175项实际安装/重装/卸载及公开alpha.3升级通过，独立标签CI成功，公开EXE已下载复算hash。主线alpha.32已接目标变化后的明确复评与本地采用：337项/账本41项/实际图像11组通过，复评不新增HTTP；旧31实际EXE拒绝新回执并保留文件。前一比较基线完整CI已通过，本批新CI与32实际安装仍待，ready=false。详见[31公开资格](assessments/release/v0.1.0-alpha.31/README.md)、[32明确复评](assessments/stage-006/image-reviewed-adoption.md)、[复评设计](design/image-target-review.md)。
+最新阶段版[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)已公开，含AI图像工作室、混合候选保留与Windows新Key崩溃持久性修复；324项源码、175项实际安装/重装/卸载及公开alpha.3升级通过，独立标签CI成功，公开EXE已下载复算hash。主线alpha.32已接目标变化后的明确复评与本地采用：337项/账本41项/实际图像11组通过，复评不新增HTTP；旧31实际EXE拒绝新回执并保留文件。本批完整源码CI、178项实际安装与公开alpha.3/31双升级均通过，32本机阶段资格开放，独立标签发行尚待。详见[31公开资格](assessments/release/v0.1.0-alpha.31/README.md)、[32明确复评](assessments/stage-006/image-reviewed-adoption.md)、[复评设计](design/image-target-review.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

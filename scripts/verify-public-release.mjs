@@ -153,6 +153,31 @@ try {
   assert.ok(
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
+  if (manifest.version === "0.1.0-alpha.32") {
+    const recent = manifest.recentUpgrade;
+    assert.equal(recent?.fromVersion, "0.1.0-alpha.31");
+    assert.equal(
+      recent.previousInstallerSha256,
+      "7c41eed5bc9844dd3ca187690efa5dea9cf53683f23ef2b51ff987b6f63e93dc",
+    );
+    assert.ok(recent.upgradeMs > 0);
+    assert.equal(recent.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    for (const key of [
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "uninstallPreserved",
+    ])
+      assert.equal(recent[key], true);
+    assert.deepEqual(recent.requests, { text: 0, image: 2 });
+    assert.equal(manifest.imageStudio.checks.length, 11);
+    for (const key of [
+      "reviewedTargetAdoption",
+      "reviewedChapterAdoption",
+      "reviewedTargetNarrowConfirmation",
+    ])
+      assert.equal(manifest.imageStudio[key], true);
+  }
   const installerDirectory = resolve(
     root,
     process.argv[5] || join(output, "installer"),

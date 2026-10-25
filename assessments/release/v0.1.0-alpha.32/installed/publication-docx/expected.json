@@ -1,0 +1,27 @@
+{
+  "paper": "A4",
+  "size": 12,
+  "font": "serif",
+  "leading": 1.5,
+  "chapters": 2,
+  "required": [
+    "雾港选章",
+    "合成作者",
+    "第一章原稿𠮷🌊",
+    "第二章结尾。",
+    "尚未自动保存就打开发布。"
+  ],
+  "forbidden": [
+    "EXCLUDED_FUTURE_SENTINEL",
+    "AUTHOR_PRIVATE_SENTINEL",
+    "作者捕获后明确外部改稿"
+  ],
+  "ordered": [
+    "第二章 渡口",
+    "第一章 旧信"
+  ],
+  "counts": {
+    "𠮷": 2,
+    "🌊": 1
+  }
+}

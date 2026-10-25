@@ -1,0 +1,35 @@
+
+> zinovel-studio@0.1.0-alpha.32 test:upgrade D:\Work\zinovel-studio
+> node scripts/smoke-upgrade.mjs
+
+(node:87124) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  installDirectory: 'D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-kkeCJ1\\中文 升级目录',
+  syntheticDataDirectory: 'D:\\Work\\zinovel-studio\\.cache\\upgrade-qa-kkeCJ1\\synthetic-data',
+  fromVersion: '0.1.0-alpha.3',
+  toVersion: '0.1.0-alpha.32',
+  previousInstallerSha256: '01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7',
+  currentInstallerSha256: '99297c7543792d6cbcb1e694be84a3398c0def3d479f16af28fe3a7fdcdfb8f3',
+  checks: [
+    'manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings',
+    'new version silently installed over old app in the same directory; all prior library/task/settings bytes retained and opened in the exact new packaged EXE with system-only PATH',
+    'old candidate recovered in new review UI, saved review draft separately without changing formal manuscript; upgraded app uninstalled while retaining user data'
+  ],
+  errors: [],
+  previousInstallMs: 20611,
+  upgradeMs: 16830,
+  uninstallObservation: {
+    attempts: 18,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 3516
+  },
+  uninstallRegistryObservation: {
+    attempts: 2,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 275
+  }
+}

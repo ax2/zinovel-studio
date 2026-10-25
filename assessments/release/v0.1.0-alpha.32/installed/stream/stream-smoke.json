@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checks": [
+    "official Harness text is atomically captured while the SSE response is still open and no proposal exists",
+    "UI cancellation flushes visible text, survives restart and provides reference-only recovery without replay or manuscript writes",
+    "forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay"
+  ],
+  "errors": [],
+  "ownedProcessesConfirmedExited": 6,
+  "terminationVerification": "Windows Toolhelp + GetProcessTimes PID and creation time"
+}

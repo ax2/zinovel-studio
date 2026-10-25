@@ -1,0 +1,3581 @@
+{
+  "version": "0.1.0-alpha.32",
+  "fileCount": 132,
+  "totalBytes": 622482524,
+  "packages": [
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@agentclientprotocol/sdk/node_modules/zod/package.json"
+    },
+    {
+      "name": "@agentclientprotocol/sdk",
+      "version": "1.4.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@agentclientprotocol/sdk/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@anthropic-ai/sdk/node_modules/zod/package.json"
+    },
+    {
+      "name": "@anthropic-ai/sdk",
+      "version": "0.129.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@anthropic-ai/sdk/package.json"
+    },
+    {
+      "name": "@aws-sdk/token-providers",
+      "version": "3.1127.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/client-bedrock-runtime/node_modules/@aws-sdk/token-providers/package.json"
+    },
+    {
+      "name": "@aws-sdk/client-bedrock-runtime",
+      "version": "3.1127.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/client-bedrock-runtime/package.json"
+    },
+    {
+      "name": "@aws-sdk/core",
+      "version": "3.978.5",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/core/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-env",
+      "version": "3.972.76",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-env/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-http",
+      "version": "3.972.78",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-http/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-ini",
+      "version": "3.973.21",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-ini/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-login",
+      "version": "3.972.83",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-login/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-node",
+      "version": "3.972.88",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-node/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-process",
+      "version": "3.972.76",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-process/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-sso",
+      "version": "3.973.20",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-sso/package.json"
+    },
+    {
+      "name": "@aws-sdk/credential-provider-web-identity",
+      "version": "3.972.82",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/credential-provider-web-identity/package.json"
+    },
+    {
+      "name": "@aws-sdk/eventstream-handler-node",
+      "version": "3.972.38",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/eventstream-handler-node/package.json"
+    },
+    {
+      "name": "@aws-sdk/middleware-eventstream",
+      "version": "3.972.33",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/middleware-eventstream/package.json"
+    },
+    {
+      "name": "@aws-sdk/middleware-websocket",
+      "version": "3.972.58",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/middleware-websocket/package.json"
+    },
+    {
+      "name": "@aws-sdk/nested-clients",
+      "version": "3.997.50",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/nested-clients/package.json"
+    },
+    {
+      "name": "@aws-sdk/signature-v4-multi-region",
+      "version": "3.996.49",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/signature-v4-multi-region/package.json"
+    },
+    {
+      "name": "@aws-sdk/token-providers",
+      "version": "3.1155.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/token-providers/package.json"
+    },
+    {
+      "name": "@aws-sdk/types",
+      "version": "3.975.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/types/package.json"
+    },
+    {
+      "name": "@aws-sdk/xml-builder",
+      "version": "3.972.41",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws-sdk/xml-builder/package.json"
+    },
+    {
+      "name": "@aws/lambda-invoke-store",
+      "version": "0.3.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@aws/lambda-invoke-store/package.json"
+    },
+    {
+      "name": "@babel/code-frame",
+      "version": "7.29.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@babel/code-frame/package.json"
+    },
+    {
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@babel/helper-validator-identifier/package.json"
+    },
+    {
+      "name": "@babel/runtime",
+      "version": "7.29.10",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@babel/runtime/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-group",
+      "version": "1.0.5",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cordis-plugin-group/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-include",
+      "version": "1.0.10",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cordis-plugin-include/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-loader",
+      "version": "1.0.6",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cordis-plugin-loader/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cordis-plugin-timer",
+      "version": "1.1.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cordis-plugin-timer/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cordis",
+      "version": "4.0.5",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cordis/package.json"
+    },
+    {
+      "name": "@deepseek-ai/cosmokit",
+      "version": "1.8.6",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/cosmokit/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-acp-app",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-acp-app/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-acp",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-acp/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-default-model",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-default-model/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-instructions",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-instructions/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-loop",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-loop/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-preset-registry",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-preset-registry/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-preset",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-preset/package.json"
+    },
+    {
+      "name": "@local/my-decoration",
+      "version": "1.0.0",
+      "license": "not-declared",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-preset/skills/cordis-plugin-development/templates/decoration/package.json"
+    },
+    {
+      "name": "@local/demo-mcp",
+      "version": "1.0.0",
+      "license": "not-declared",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-preset/skills/cordis-plugin-development/templates/mcp/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent-tool-presentation",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent-tool-presentation/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-agent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-agent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-anonymous-user-id",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-anonymous-user-id/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-account-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-account-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-gateway",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-gateway/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-job-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-job-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-remote-access",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-remote-access/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-remotes",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-remotes/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-session-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-session-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-settings-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-settings-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-terminal-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-terminal-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-workspace-controller",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-workspace-controller/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-api-workspace-files",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-api-workspace-files/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-app-boot",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-app-boot/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-atomic-write",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-atomic-write/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-attachment-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-attachment-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-attachment",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-attachment/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-authorization",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-authorization/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-base",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-base/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-bash-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-bash-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-bash-sandbox",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-bash-sandbox/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-brand",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-brand/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-chunked-list",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-chunked-list/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-connection",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-connection/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-file-upload",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-file-upload/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-hmr",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-hmr/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-locale",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-locale/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-modules",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-modules/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-product-analytics",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-product-analytics/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-resources",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-resources/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-shortcuts",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-shortcuts/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-agent-preset",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-agent-preset/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-approval",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-approval/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-attachment",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-attachment/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-brand-official",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-brand-official/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-chat",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-chat/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-commands",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-commands/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-conversation",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-conversation/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-cordis",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-cordis/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-deepseek-model-label-1017",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-deepseek-model-label-1017/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-deliverables",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-deliverables/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-directory-picker-browse",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-directory-picker-browse/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-directory-picker-native",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-directory-picker-native/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-goal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-goal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-input-trigger",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-input-trigger/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-jobs",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-jobs/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-layout",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-layout/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-message-feedback",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-message-feedback/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-model-selection",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-model-selection/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-open-in-app",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-open-in-app/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-permission-presets",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-permission-presets/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-plan",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-plan/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-plugin-manager",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-plugin-manager/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-plugin-market",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-plugin-market/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-reference",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-reference/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-renderer",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-renderer/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-schedule",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-schedule/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-secret-mask",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-secret-mask/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-session",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-session/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-account",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-account/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-agent-loop",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-agent-loop/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-general",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-general/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-models",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-models/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-plugin-inventory",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-plugin-inventory/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-plugins",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-plugins/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-session-log",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-session-log/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-shell",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-shell/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-subagent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-subagent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings-web-search",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings-web-search/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-settings",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-settings/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-shortcuts",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-shortcuts/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-browser",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar-browser/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-documentpreview",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-files",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar-files/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-right",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar-right/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar-terminal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar-terminal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-sidebar",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-sidebar/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-skill",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-skill/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-subagent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-subagent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-theme",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-theme/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-tool",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-tool/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-trajectory",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-trajectory/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-user-questions",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-user-questions/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-workflow-run",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-workflow-run/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-client-ui-workspace",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-client-ui-workspace/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-cmdline",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-cmdline/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-command-compact",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-command-compact/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-command-feedback",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-command-feedback/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-command-goal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-command-goal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-commands",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-commands/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-compaction-basic",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-compaction-basic/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-compaction-image-offload",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-compaction-image-offload/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-compaction-tool-result-pruner",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-compaction-tool-result-pruner/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-compaction",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-compaction/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-config-editor",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-config-editor/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-cordis-client-runner",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-cordis-client-runner/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-cordis-host-runner",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-cordis-host-runner/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-credentials-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-credentials-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-credentials",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-credentials/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-deepseek-account-platform",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-deepseek-account-platform/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-deepseek-account",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-deepseek-account/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-deepseek-llm-api-extensions",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-deepseek-llm-api-extensions/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-deque",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-deque/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-agent-team-profile",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-agent-team-profile/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-agent-team",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-agent-team/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-api-speech-to-text",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-api-speech-to-text/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-auto-review",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-auto-review/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-badge-skill-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-badge-skill-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-client-ui-agent-team",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-client-ui-agent-team/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-client-ui-cot-translation/node_modules/zod/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-client-ui-cot-translation",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-client-ui-cot-translation/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-client-ui-voice-input",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-client-ui-voice-input/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-cot-translation-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-cot-translation-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-inspector-profile",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-inspector-profile/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-inspector",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-inspector/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-plugin-market-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-plugin-market-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-ralph-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-ralph-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-session-inspector",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-session-inspector/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-session-search",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-session-search/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-session-titles-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-session-titles-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-speech-to-text-sensevoice",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-speech-to-text-sensevoice/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-speech-to-text",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-speech-to-text/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-terminal-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-terminal-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-tool-agent-team",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-tool-agent-team/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-tool-worktree",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-tool-worktree/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-translator",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-translator/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-voice-input-bundle",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-voice-input-bundle/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-experimental-worktree",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-experimental-worktree/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-file-reference-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-file-reference-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-file-reference",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-file-reference/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-fs-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-fs-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-fs-observation-policy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-fs-observation-policy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-fs-sandbox",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-fs-sandbox/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-fs",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-fs/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-goal-round-driver",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-goal-round-driver/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-goal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-goal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-harness-dev-context",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-harness-dev-context/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-headless",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-headless/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-hmr",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-hmr/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-home-paths",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-home-paths/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-directory-picker-auto",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-directory-picker-auto/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-directory-picker-browse",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-directory-picker-browse/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-directory-picker-native",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-directory-picker-native/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-directory-picker",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-directory-picker/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-frontend-static",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-frontend-static/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-open-in-app",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-open-in-app/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-plugin-inventory",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-plugin-inventory/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-product-telemetry-otel",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-product-telemetry-otel/package.json"
+    },
+    {
+      "name": "negotiator",
+      "version": "1.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-webserver/node_modules/negotiator/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-host-webserver",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-host-webserver/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-http-proxy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-http-proxy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-jobs-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-jobs-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-jobs",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-jobs/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-launch-environment",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-launch-environment/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-lazy-require",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-lazy-require/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm-deepseek-account",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm-deepseek-account/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm-deepseek-api-key",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm-deepseek-api-key/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm-deepseek",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm-deepseek/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm-pi-ai",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm-pi-ai/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm-retry",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm-retry/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-llm",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-llm/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-mcp-client",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-mcp-client/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-mcp-resources",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-mcp-resources/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-message-feedback",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-message-feedback/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-native-command",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-native-command/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-office-to-pdf",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-office-to-pdf/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-otel",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-otel/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-output-retention",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-output-retention/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-package-manifest",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-package-manifest/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-permission-presets",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-permission-presets/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-persona",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-persona/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-plan-mode",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plan-mode/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-manager",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plugin-manager/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-market-index",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plugin-market-index/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plugin-market/node_modules/zod/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-market",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plugin-market/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-plugin-package-inventory-deepseek",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-plugin-package-inventory-deepseek/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-ptc-runtime-node",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-ptc-runtime-node/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-ptc-runtime",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-ptc-runtime/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-pwsh-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-pwsh-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-pwsh-sandbox",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-pwsh-sandbox/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-repeat-tool-reminder",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-repeat-tool-reminder/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sandbox-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sandbox-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sandbox-policy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sandbox-policy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sandbox-windows-acl",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sandbox-windows-acl/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sandbox",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sandbox/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-schedule",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-schedule/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-scope",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-scope/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sdk-app",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sdk-app/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sdk-client",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sdk-client/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sdk-jsonrpc-server",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sdk-jsonrpc-server/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sdk-minimal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sdk-minimal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-sdk-protocol",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-sdk-protocol/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-checkpoint-policy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-checkpoint-policy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format-catalog",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format-catalog/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format-v0-to-v1",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format-v0-to-v1/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format-v1-to-v2",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format-v1-to-v2/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format-v2-to-v3",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format-v2-to-v3/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format-v3-to-v4",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format-v3-to-v4/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-format",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-format/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-log-deepseek",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-log-deepseek/package.json"
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-log-export/node_modules/fflate/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-log-export",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-log-export/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-persistence-jsonl",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-persistence-jsonl/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-persistence",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-persistence/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-projection-cache",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-projection-cache/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-projection",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-projection/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-query-sqlite",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-query-sqlite/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-query",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-query/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-reference",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-reference/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-stats",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-stats/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-telemetry-otel",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-telemetry-otel/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-telemetry",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-telemetry/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-title-all-prompts-llm",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-title-all-prompts-llm/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-title-first-prompt-llm",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-title-first-prompt-llm/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-title-llm",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-title-llm/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-title",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-title/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session-turn-outline",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session-turn-outline/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-session",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-session/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-settings",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-settings/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-shell-env",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-shell-env/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-shell",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-shell/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-skill-badge",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-skill-badge/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-skill-filesystem",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-skill-filesystem/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-skill-office",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-skill-office/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-skill",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-skill/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-spill-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-spill-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-spill-policy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-spill-policy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-spill",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-spill/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-storage-domain",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-storage-domain/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-storage-json",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-storage-json/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-storage",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-storage/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subagent-fork-in-process",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-subagent-fork-in-process/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subagent-spawn-in-process",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-subagent-spawn-in-process/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subagent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-subagent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subprocess-local",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-subprocess-local/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-subprocess",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-subprocess/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-system-prompt",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-system-prompt/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-terminal-bash",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-terminal-bash/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-terminal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-terminal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-time-context",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-time-context/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-timeout",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-timeout/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tmux-context",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tmux-context/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-token-meter",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-token-meter/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-ask-user",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-ask-user/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-bash-persistent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-bash-persistent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-bash",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-bash/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-call-timeout-policy",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-call-timeout-policy/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-cordis",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-cordis/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-fs-search",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-fs-search/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-fs",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-fs/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-goal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-goal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-jobs",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-jobs/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-present",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-present/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-pwsh-persistent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-pwsh-persistent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-pwsh",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-pwsh/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-ralph",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-ralph/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-schedule",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-schedule/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-session-query",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-session-query/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-skill",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-skill/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-str-replace-editor",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-str-replace-editor/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-subagent-control",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-subagent-control/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-subagent",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-subagent/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-terminal",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-terminal/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-todo",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-todo/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-web",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-web/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-workflow",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-workflow/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-working-directory",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-working-directory/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tool-workspace-dependencies",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tool-workspace-dependencies/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-tools",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-tools/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-typert-loader",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-typert-loader/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-typert-protocol",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-typert-protocol/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-typert-registry",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-typert-registry/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-user-approval",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-user-approval/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-user-questions",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-user-questions/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-util-code-language",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-util-code-language/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-util-crypto",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-util-crypto/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-util-time",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-util-time/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-util-values",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-util-values/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-util-workspace-path",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-util-workspace-path/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-app",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web-app/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-deepseek-api",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web-deepseek-api/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-fetch-http",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web-fetch-http/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-frontend",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web-frontend/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web-search-deepseek",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web-search-deepseek/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-web",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-web/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-win32-process",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-win32-process/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-workflow-ptc",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-workflow-ptc/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-workflow",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-workflow/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-working-directory/node_modules/zod/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-working-directory",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-working-directory/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-workspace-changes",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-workspace-changes/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh-workspace",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh-workspace/package.json"
+    },
+    {
+      "name": "@deepseek-ai/dsh",
+      "version": "0.2.1-rc.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/dsh/package.json"
+    },
+    {
+      "name": "@deepseek-ai/libreoffice-kit-win32-x64",
+      "version": "0.1.5",
+      "license": "MPL-2.0",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/libreoffice-kit-win32-x64/package.json"
+    },
+    {
+      "name": "@deepseek-ai/libreoffice-kit",
+      "version": "0.1.5",
+      "license": "MPL-2.0",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/libreoffice-kit/package.json"
+    },
+    {
+      "name": "@deepseek-ai/node-addon-system",
+      "version": "0.1.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/node-addon-system/package.json"
+    },
+    {
+      "name": "@deepseek-ai/schemastery",
+      "version": "3.18.5",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@deepseek-ai/schemastery/package.json"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "9.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@earendil-works/pi-ai/node_modules/https-proxy-agent/package.json"
+    },
+    {
+      "name": "@earendil-works/pi-ai",
+      "version": "1.4.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@earendil-works/pi-ai/package.json"
+    },
+    {
+      "name": "@earendil-works/pi-telemetry",
+      "version": "1.4.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@earendil-works/pi-telemetry/package.json"
+    },
+    {
+      "name": "@eslint-community/regexpp",
+      "version": "4.12.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@eslint-community/regexpp/package.json"
+    },
+    {
+      "name": "@google/genai",
+      "version": "2.21.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@google/genai/package.json"
+    },
+    {
+      "name": "@img/colour",
+      "version": "1.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@img/colour/package.json"
+    },
+    {
+      "name": "@img/sharp-win32-x64",
+      "version": "0.35.5",
+      "license": "Apache-2.0 AND LGPL-3.0-or-later",
+      "path": "resources/app.asar/node_modules/@img/sharp-win32-x64/package.json"
+    },
+    {
+      "name": "@joplin/turndown-plugin-gfm",
+      "version": "1.0.68",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@joplin/turndown-plugin-gfm/package.json"
+    },
+    {
+      "name": "@js-temporal/polyfill",
+      "version": "0.5.1",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/@js-temporal/polyfill/package.json"
+    },
+    {
+      "name": "@keyv/serialize",
+      "version": "1.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@keyv/serialize/package.json"
+    },
+    {
+      "name": "@koromix/koffi-win32-x64",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@koromix/koffi-win32-x64/package.json"
+    },
+    {
+      "name": "@mixmark-io/domino",
+      "version": "2.2.0",
+      "license": "BSD-2-Clause",
+      "path": "resources/app.asar/node_modules/@mixmark-io/domino/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@modelcontextprotocol/client/node_modules/zod/package.json"
+    },
+    {
+      "name": "@modelcontextprotocol/client",
+      "version": "2.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@modelcontextprotocol/client/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@modelcontextprotocol/core/node_modules/zod/package.json"
+    },
+    {
+      "name": "@modelcontextprotocol/core",
+      "version": "2.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@modelcontextprotocol/core/package.json"
+    },
+    {
+      "name": "@opentelemetry/api-logs",
+      "version": "0.222.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/api-logs/package.json"
+    },
+    {
+      "name": "@opentelemetry/api",
+      "version": "1.10.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/api/package.json"
+    },
+    {
+      "name": "@opentelemetry/core",
+      "version": "2.11.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/core/package.json"
+    },
+    {
+      "name": "@opentelemetry/otlp-exporter-base",
+      "version": "0.222.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/otlp-exporter-base/package.json"
+    },
+    {
+      "name": "@opentelemetry/otlp-transformer",
+      "version": "0.222.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/otlp-transformer/package.json"
+    },
+    {
+      "name": "@opentelemetry/resources",
+      "version": "2.11.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/resources/package.json"
+    },
+    {
+      "name": "@opentelemetry/sdk-logs",
+      "version": "0.222.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/sdk-logs/package.json"
+    },
+    {
+      "name": "@opentelemetry/sdk-metrics",
+      "version": "2.11.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/sdk-metrics/package.json"
+    },
+    {
+      "name": "@opentelemetry/sdk-trace",
+      "version": "2.11.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/sdk-trace/package.json"
+    },
+    {
+      "name": "@opentelemetry/semantic-conventions",
+      "version": "1.43.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@opentelemetry/semantic-conventions/package.json"
+    },
+    {
+      "name": "@protobufjs/aspromise",
+      "version": "1.1.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/aspromise/package.json"
+    },
+    {
+      "name": "@protobufjs/base64",
+      "version": "1.1.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/base64/package.json"
+    },
+    {
+      "name": "@protobufjs/codegen",
+      "version": "2.0.5",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/codegen/package.json"
+    },
+    {
+      "name": "@protobufjs/eventemitter",
+      "version": "1.1.1",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/eventemitter/package.json"
+    },
+    {
+      "name": "@protobufjs/fetch",
+      "version": "1.1.1",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/fetch/package.json"
+    },
+    {
+      "name": "@protobufjs/float",
+      "version": "1.0.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/float/package.json"
+    },
+    {
+      "name": "@protobufjs/path",
+      "version": "1.1.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/path/package.json"
+    },
+    {
+      "name": "@protobufjs/pool",
+      "version": "1.1.0",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/pool/package.json"
+    },
+    {
+      "name": "@protobufjs/utf8",
+      "version": "1.1.2",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/@protobufjs/utf8/package.json"
+    },
+    {
+      "name": "@sec-ant/readable-stream",
+      "version": "0.4.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@sec-ant/readable-stream/package.json"
+    },
+    {
+      "name": "@sindresorhus/is",
+      "version": "7.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@sindresorhus/is/package.json"
+    },
+    {
+      "name": "@sindresorhus/merge-streams",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@sindresorhus/merge-streams/package.json"
+    },
+    {
+      "name": "@smithy/core",
+      "version": "3.36.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/core/package.json"
+    },
+    {
+      "name": "@smithy/credential-provider-imds",
+      "version": "4.5.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/credential-provider-imds/package.json"
+    },
+    {
+      "name": "@smithy/fetch-http-handler",
+      "version": "5.8.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/fetch-http-handler/package.json"
+    },
+    {
+      "name": "@smithy/node-http-handler",
+      "version": "4.12.1",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/node-http-handler/package.json"
+    },
+    {
+      "name": "@smithy/signature-v4",
+      "version": "5.7.4",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/signature-v4/package.json"
+    },
+    {
+      "name": "@smithy/types",
+      "version": "4.19.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@smithy/types/package.json"
+    },
+    {
+      "name": "@stablelib/base64",
+      "version": "1.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@stablelib/base64/package.json"
+    },
+    {
+      "name": "@standard-schema/spec",
+      "version": "1.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@standard-schema/spec/package.json"
+    },
+    {
+      "name": "@swc/helpers",
+      "version": "0.5.23",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/@swc/helpers/package.json"
+    },
+    {
+      "name": "@types/http-cache-semantics",
+      "version": "4.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@types/http-cache-semantics/package.json"
+    },
+    {
+      "name": "@types/node",
+      "version": "22.20.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@types/node/package.json"
+    },
+    {
+      "name": "@types/retry",
+      "version": "0.12.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@types/retry/package.json"
+    },
+    {
+      "name": "@vscode/ripgrep-win32-x64",
+      "version": "1.18.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@vscode/ripgrep-win32-x64/package.json"
+    },
+    {
+      "name": "@vscode/ripgrep",
+      "version": "1.18.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@vscode/ripgrep/package.json"
+    },
+    {
+      "name": "@xterm/addon-serialize",
+      "version": "0.14.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@xterm/addon-serialize/package.json"
+    },
+    {
+      "name": "@xterm/headless",
+      "version": "6.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/@xterm/headless/package.json"
+    },
+    {
+      "name": "agent-base",
+      "version": "9.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/agent-base/package.json"
+    },
+    {
+      "name": "ajv",
+      "version": "8.20.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ajv/package.json"
+    },
+    {
+      "name": "argparse",
+      "version": "2.0.1",
+      "license": "Python-2.0",
+      "path": "resources/app.asar/node_modules/argparse/package.json"
+    },
+    {
+      "name": "base64-js",
+      "version": "1.5.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/base64-js/package.json"
+    },
+    {
+      "name": "bignumber.js",
+      "version": "9.3.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/bignumber.js/package.json"
+    },
+    {
+      "name": "bowser",
+      "version": "2.14.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/bowser/package.json"
+    },
+    {
+      "name": "brotli",
+      "version": "1.3.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/brotli/package.json"
+    },
+    {
+      "name": "buffer-equal-constant-time",
+      "version": "1.0.1",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/buffer-equal-constant-time/package.json"
+    },
+    {
+      "name": "bundle-name",
+      "version": "4.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/bundle-name/package.json"
+    },
+    {
+      "name": "byte-counter",
+      "version": "0.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/byte-counter/package.json"
+    },
+    {
+      "name": "bytes",
+      "version": "3.1.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/bytes/package.json"
+    },
+    {
+      "name": "cacheable-lookup",
+      "version": "7.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/cacheable-lookup/package.json"
+    },
+    {
+      "name": "cacheable-request",
+      "version": "13.0.19",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/cacheable-request/package.json"
+    },
+    {
+      "name": "chokidar",
+      "version": "5.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/chokidar/package.json"
+    },
+    {
+      "name": "clone",
+      "version": "2.1.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/clone/package.json"
+    },
+    {
+      "name": "commander",
+      "version": "15.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/commander/package.json"
+    },
+    {
+      "name": "compressible",
+      "version": "2.0.18",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/compressible/package.json"
+    },
+    {
+      "name": "debug",
+      "version": "2.6.9",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/compression/node_modules/debug/package.json"
+    },
+    {
+      "name": "ms",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/compression/node_modules/ms/package.json"
+    },
+    {
+      "name": "compression",
+      "version": "1.8.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/compression/package.json"
+    },
+    {
+      "name": "content-type",
+      "version": "2.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/content-type/package.json"
+    },
+    {
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/cross-spawn/package.json"
+    },
+    {
+      "name": "data-uri-to-buffer",
+      "version": "4.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/data-uri-to-buffer/package.json"
+    },
+    {
+      "name": "debug",
+      "version": "4.4.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/debug/package.json"
+    },
+    {
+      "name": "decompress-response",
+      "version": "10.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/decompress-response/package.json"
+    },
+    {
+      "name": "default-browser-id",
+      "version": "5.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/default-browser-id/package.json"
+    },
+    {
+      "name": "default-browser",
+      "version": "5.5.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/default-browser/package.json"
+    },
+    {
+      "name": "define-lazy-prop",
+      "version": "3.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/define-lazy-prop/package.json"
+    },
+    {
+      "name": "depd",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/depd/package.json"
+    },
+    {
+      "name": "destroy",
+      "version": "1.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/destroy/package.json"
+    },
+    {
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/detect-libc/package.json"
+    },
+    {
+      "name": "dfa",
+      "version": "1.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/dfa/package.json"
+    },
+    {
+      "name": "diff",
+      "version": "9.0.0",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/diff/package.json"
+    },
+    {
+      "name": "ecdsa-sig-formatter",
+      "version": "1.0.11",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/ecdsa-sig-formatter/package.json"
+    },
+    {
+      "name": "ee-first",
+      "version": "1.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ee-first/package.json"
+    },
+    {
+      "name": "encodeurl",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/encodeurl/package.json"
+    },
+    {
+      "name": "escape-html",
+      "version": "1.0.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/escape-html/package.json"
+    },
+    {
+      "name": "etag",
+      "version": "1.8.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/etag/package.json"
+    },
+    {
+      "name": "eventsource-parser",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/eventsource-parser/package.json"
+    },
+    {
+      "name": "eventsource",
+      "version": "3.0.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/eventsource/package.json"
+    },
+    {
+      "name": "execa",
+      "version": "10.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/execa/package.json"
+    },
+    {
+      "name": "extend",
+      "version": "3.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/extend/package.json"
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/fast-deep-equal/package.json"
+    },
+    {
+      "name": "fast-sha256",
+      "version": "1.3.0",
+      "license": "Unlicense",
+      "path": "resources/app.asar/node_modules/fast-sha256/package.json"
+    },
+    {
+      "name": "benchmark",
+      "version": "1.0.0",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/fast-uri/benchmark/package.json"
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.9",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/fast-uri/package.json"
+    },
+    {
+      "name": "fetch-blob",
+      "version": "3.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/fetch-blob/package.json"
+    },
+    {
+      "name": "fflate",
+      "version": "0.8.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/fflate/package.json"
+    },
+    {
+      "name": "figures",
+      "version": "6.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/figures/package.json"
+    },
+    {
+      "name": "fontkit",
+      "version": "2.0.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/fontkit/package.json"
+    },
+    {
+      "name": "form-data-encoder",
+      "version": "4.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/form-data-encoder/package.json"
+    },
+    {
+      "name": "formdata-polyfill",
+      "version": "4.0.10",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/formdata-polyfill/package.json"
+    },
+    {
+      "name": "fresh",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/fresh/package.json"
+    },
+    {
+      "name": "gaxios",
+      "version": "7.3.1",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/gaxios/package.json"
+    },
+    {
+      "name": "gcp-metadata",
+      "version": "8.1.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/gcp-metadata/package.json"
+    },
+    {
+      "name": "get-stream",
+      "version": "9.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/get-stream/package.json"
+    },
+    {
+      "name": "google-auth-library",
+      "version": "10.9.1",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/google-auth-library/package.json"
+    },
+    {
+      "name": "google-logging-utils",
+      "version": "1.1.3",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/google-logging-utils/package.json"
+    },
+    {
+      "name": "got",
+      "version": "14.6.6",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/got/package.json"
+    },
+    {
+      "name": "http-cache-semantics",
+      "version": "4.3.0",
+      "license": "BSD-2-Clause",
+      "path": "resources/app.asar/node_modules/http-cache-semantics/package.json"
+    },
+    {
+      "name": "http-errors",
+      "version": "2.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/http-errors/package.json"
+    },
+    {
+      "name": "http-proxy-agent",
+      "version": "9.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/http-proxy-agent/package.json"
+    },
+    {
+      "name": "http2-wrapper",
+      "version": "2.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/http2-wrapper/package.json"
+    },
+    {
+      "name": "agent-base",
+      "version": "7.1.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/https-proxy-agent/node_modules/agent-base/package.json"
+    },
+    {
+      "name": "https-proxy-agent",
+      "version": "7.0.6",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/https-proxy-agent/package.json"
+    },
+    {
+      "name": "human-signals",
+      "version": "8.0.1",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/human-signals/package.json"
+    },
+    {
+      "name": "inherits",
+      "version": "2.0.4",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/inherits/package.json"
+    },
+    {
+      "name": "ipaddr.js",
+      "version": "2.5.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ipaddr.js/package.json"
+    },
+    {
+      "name": "is-docker",
+      "version": "3.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-docker/package.json"
+    },
+    {
+      "name": "is-in-ssh",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-in-ssh/package.json"
+    },
+    {
+      "name": "is-inside-container",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-inside-container/package.json"
+    },
+    {
+      "name": "is-plain-obj",
+      "version": "4.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-plain-obj/package.json"
+    },
+    {
+      "name": "is-stream",
+      "version": "4.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-stream/package.json"
+    },
+    {
+      "name": "is-unicode-supported",
+      "version": "2.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-unicode-supported/package.json"
+    },
+    {
+      "name": "is-wsl",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/is-wsl/package.json"
+    },
+    {
+      "name": "isexe",
+      "version": "2.0.0",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/isexe/package.json"
+    },
+    {
+      "name": "jose",
+      "version": "6.2.13",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/jose/package.json"
+    },
+    {
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/js-tokens/package.json"
+    },
+    {
+      "name": "js-yaml",
+      "version": "4.3.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/js-yaml/package.json"
+    },
+    {
+      "name": "jsbi",
+      "version": "4.3.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/jsbi/package.json"
+    },
+    {
+      "name": "json-bigint",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/json-bigint/package.json"
+    },
+    {
+      "name": "json-schema-to-ts",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/json-schema-to-ts/package.json"
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/json-schema-traverse/package.json"
+    },
+    {
+      "name": "jwa",
+      "version": "2.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/jwa/package.json"
+    },
+    {
+      "name": "jws",
+      "version": "4.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/jws/package.json"
+    },
+    {
+      "name": "keyv",
+      "version": "5.6.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/keyv/package.json"
+    },
+    {
+      "name": "koffi",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/koffi/package.json"
+    },
+    {
+      "name": "long",
+      "version": "5.3.2",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/long/package.json"
+    },
+    {
+      "name": "lowercase-keys",
+      "version": "3.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/lowercase-keys/package.json"
+    },
+    {
+      "name": "mime-db",
+      "version": "1.54.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/mime-db/package.json"
+    },
+    {
+      "name": "mime-types",
+      "version": "3.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/mime-types/package.json"
+    },
+    {
+      "name": "mimic-response",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/mimic-response/package.json"
+    },
+    {
+      "name": "minisearch",
+      "version": "7.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/minisearch/package.json"
+    },
+    {
+      "name": "ms",
+      "version": "2.1.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ms/package.json"
+    },
+    {
+      "name": "negotiator",
+      "version": "0.6.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/negotiator/package.json"
+    },
+    {
+      "name": "node-addon-api",
+      "version": "7.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-addon-api/package.json"
+    },
+    {
+      "name": "node-addon-native-custom-loader",
+      "version": "0.1.9",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-addon-native-custom-loader/package.json"
+    },
+    {
+      "name": "node-addon-require-builtin-win32-x64-msvc",
+      "version": "0.1.9",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-addon-require-builtin-win32-x64-msvc/package.json"
+    },
+    {
+      "name": "node-addon-require-builtin",
+      "version": "0.1.9",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-addon-require-builtin/package.json"
+    },
+    {
+      "name": "node-domexception",
+      "version": "1.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-domexception/package.json"
+    },
+    {
+      "name": "node-fetch",
+      "version": "3.3.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-fetch/package.json"
+    },
+    {
+      "name": "node-pty",
+      "version": "1.2.0-beta.15",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/node-pty/package.json"
+    },
+    {
+      "name": "normalize-url",
+      "version": "8.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/normalize-url/package.json"
+    },
+    {
+      "name": "path-key",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/npm-run-path/node_modules/path-key/package.json"
+    },
+    {
+      "name": "npm-run-path",
+      "version": "6.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/npm-run-path/package.json"
+    },
+    {
+      "name": "on-finished",
+      "version": "2.4.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/on-finished/package.json"
+    },
+    {
+      "name": "on-headers",
+      "version": "1.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/on-headers/package.json"
+    },
+    {
+      "name": "open",
+      "version": "11.0.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/open/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/openai/node_modules/zod/package.json"
+    },
+    {
+      "name": "openai",
+      "version": "7.19.0",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/openai/package.json"
+    },
+    {
+      "name": "p-cancelable",
+      "version": "4.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/p-cancelable/package.json"
+    },
+    {
+      "name": "p-limit",
+      "version": "7.3.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/p-limit/package.json"
+    },
+    {
+      "name": "p-retry",
+      "version": "4.6.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/p-retry/package.json"
+    },
+    {
+      "name": "pako",
+      "version": "0.2.9",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/pako/package.json"
+    },
+    {
+      "name": "parse-ms",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/parse-ms/package.json"
+    },
+    {
+      "name": "parseurl",
+      "version": "1.3.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/parseurl/package.json"
+    },
+    {
+      "name": "partial-json",
+      "version": "0.1.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/partial-json/package.json"
+    },
+    {
+      "name": "path-key",
+      "version": "3.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/path-key/package.json"
+    },
+    {
+      "name": "picocolors",
+      "version": "1.1.1",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/picocolors/package.json"
+    },
+    {
+      "name": "picomatch",
+      "version": "4.0.7",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/picomatch/package.json"
+    },
+    {
+      "name": "pkce-challenge",
+      "version": "5.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/pkce-challenge/package.json"
+    },
+    {
+      "name": "powershell-utils",
+      "version": "0.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/powershell-utils/package.json"
+    },
+    {
+      "name": "pretty-ms",
+      "version": "9.3.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/pretty-ms/package.json"
+    },
+    {
+      "name": "protobufjs",
+      "version": "7.6.6",
+      "license": "BSD-3-Clause",
+      "path": "resources/app.asar/node_modules/protobufjs/package.json"
+    },
+    {
+      "name": "proxy-agent-negotiate",
+      "version": "1.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/proxy-agent-negotiate/package.json"
+    },
+    {
+      "name": "quick-lru",
+      "version": "5.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/quick-lru/package.json"
+    },
+    {
+      "name": "range-parser",
+      "version": "1.3.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/range-parser/package.json"
+    },
+    {
+      "name": "readdirp",
+      "version": "5.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/readdirp/package.json"
+    },
+    {
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/require-from-string/package.json"
+    },
+    {
+      "name": "resolve-alpn",
+      "version": "1.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/resolve-alpn/package.json"
+    },
+    {
+      "name": "resolve.exports",
+      "version": "2.0.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/resolve.exports/package.json"
+    },
+    {
+      "name": "responselike",
+      "version": "4.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/responselike/package.json"
+    },
+    {
+      "name": "restructure",
+      "version": "3.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/restructure/package.json"
+    },
+    {
+      "name": "retry",
+      "version": "0.13.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/retry/package.json"
+    },
+    {
+      "name": "run-applescript",
+      "version": "7.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/run-applescript/package.json"
+    },
+    {
+      "name": "safe-buffer",
+      "version": "5.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/safe-buffer/package.json"
+    },
+    {
+      "name": "saxes",
+      "version": "6.0.0",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/saxes/package.json"
+    },
+    {
+      "name": "semver",
+      "version": "7.8.5",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/semver/package.json"
+    },
+    {
+      "name": "send",
+      "version": "1.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/send/package.json"
+    },
+    {
+      "name": "serve-static",
+      "version": "2.2.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/serve-static/package.json"
+    },
+    {
+      "name": "setprototypeof",
+      "version": "1.2.0",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/setprototypeof/package.json"
+    },
+    {
+      "name": "sharp",
+      "version": "0.35.5",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/sharp/package.json"
+    },
+    {
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/shebang-command/package.json"
+    },
+    {
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/shebang-regex/package.json"
+    },
+    {
+      "name": "sherpa-onnx-node",
+      "version": "1.13.8",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/sherpa-onnx-node/package.json"
+    },
+    {
+      "name": "sherpa-onnx-win-x64",
+      "version": "1.13.8",
+      "license": "Apache-2.0",
+      "path": "resources/app.asar/node_modules/sherpa-onnx-win-x64/package.json"
+    },
+    {
+      "name": "signal-exit",
+      "version": "4.1.0",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/signal-exit/package.json"
+    },
+    {
+      "name": "standardwebhooks",
+      "version": "1.1.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/standardwebhooks/package.json"
+    },
+    {
+      "name": "statuses",
+      "version": "2.0.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/statuses/package.json"
+    },
+    {
+      "name": "strip-final-newline",
+      "version": "4.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/strip-final-newline/package.json"
+    },
+    {
+      "name": "tiny-inflate",
+      "version": "1.0.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/tiny-inflate/package.json"
+    },
+    {
+      "name": "toidentifier",
+      "version": "1.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/toidentifier/package.json"
+    },
+    {
+      "name": "ts-algebra",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ts-algebra/package.json"
+    },
+    {
+      "name": "tslib",
+      "version": "2.8.1",
+      "license": "0BSD",
+      "path": "resources/app.asar/node_modules/tslib/package.json"
+    },
+    {
+      "name": "turndown",
+      "version": "7.2.4",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/turndown/package.json"
+    },
+    {
+      "name": "type-fest",
+      "version": "4.41.0",
+      "license": "(MIT OR CC0-1.0)",
+      "path": "resources/app.asar/node_modules/type-fest/package.json"
+    },
+    {
+      "name": "typebox",
+      "version": "1.3.27",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/typebox/package.json"
+    },
+    {
+      "name": "undici-types",
+      "version": "6.21.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/undici-types/package.json"
+    },
+    {
+      "name": "undici",
+      "version": "8.11.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/undici/package.json"
+    },
+    {
+      "name": "unicode-properties",
+      "version": "1.4.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/unicode-properties/package.json"
+    },
+    {
+      "name": "unicode-trie",
+      "version": "2.0.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/unicode-trie/package.json"
+    },
+    {
+      "name": "unicorn-magic",
+      "version": "0.3.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/unicorn-magic/package.json"
+    },
+    {
+      "name": "vary",
+      "version": "1.1.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/vary/package.json"
+    },
+    {
+      "name": "web-streams-polyfill",
+      "version": "3.3.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/web-streams-polyfill/package.json"
+    },
+    {
+      "name": "which-command",
+      "version": "0.1.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/which-command/package.json"
+    },
+    {
+      "name": "which",
+      "version": "2.0.2",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/which/package.json"
+    },
+    {
+      "name": "ws",
+      "version": "8.22.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/ws/package.json"
+    },
+    {
+      "name": "wsl-utils",
+      "version": "1.0.1",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/wsl-utils/package.json"
+    },
+    {
+      "name": "xmlchars",
+      "version": "2.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/xmlchars/package.json"
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.1",
+      "license": "ISC",
+      "path": "resources/app.asar/node_modules/yaml/package.json"
+    },
+    {
+      "name": "yocto-queue",
+      "version": "1.2.2",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/yocto-queue/package.json"
+    },
+    {
+      "name": "yoctocolors",
+      "version": "2.2.0",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/yoctocolors/package.json"
+    },
+    {
+      "name": "zod",
+      "version": "4.4.3",
+      "license": "MIT",
+      "path": "resources/app.asar/node_modules/zod/package.json"
+    }
+  ],
+  "distributionProfile": "novel-only-sdk-minimal",
+  "resourceExclusions": [
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/bin/**/*",
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/**/*",
+    "node_modules/sherpa-onnx-win-x64/*.dll",
+    "node_modules/sherpa-onnx-win-x64/*.node",
+    "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/**/*",
+    "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client*.js*",
+    "node_modules/@deepseek-ai/dsh-client-ui-settings-account/lib/client*.js*",
+    "node_modules/@deepseek-ai/dsh-experimental-client-ui-cot-translation/lib/client*.js*"
+  ],
+  "omittedPayloads": [
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/bin/libreoffice-kit.exe",
+    "node_modules/@deepseek-ai/libreoffice-kit-win32-x64/program/share/registry/main.xcd",
+    "node_modules/@deepseek-ai/dsh-experimental-inspector/lib/devtools/entrypoints/lighthouse_worker/lighthouse_worker.js",
+    "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.pdf.js",
+    "node_modules/@deepseek-ai/dsh-client-ui-sidebar-documentpreview/lib/client.excel.js"
+  ],
+  "note": "Selected generic office/voice/inspector/browser payloads omitted; package metadata, code and notices retained. Dependency manifest presence does not assert every optional upstream resource is shipped.",
+  "bundledDocx": {
+    "entry": "docx@9.14.0",
+    "components": [
+      {
+        "name": "core-util-is",
+        "version": "1.0.3",
+        "declaredLicense": "MIT",
+        "notices": [
+          "core-util-is_1.0.3-LICENSE"
+        ]
+      },
+      {
+        "name": "docx",
+        "version": "9.14.0",
+        "declaredLicense": "MIT",
+        "notices": [
+          "docx_9.14.0-LICENSE"
+        ]
+      },
+      {
+        "name": "hash.js",
+        "version": "1.1.7",
+        "declaredLicense": "MIT",
+        "notices": [
+          "hash.js_1.1.7-README.md"
+        ]
+      },
+      {
+        "name": "immediate",
+        "version": "3.0.6",
+        "declaredLicense": "MIT",
+        "notices": [
+          "immediate_3.0.6-LICENSE.txt"
+        ]
+      },
+      {
+        "name": "inherits",
+        "version": "2.0.4",
+        "declaredLicense": "ISC",
+        "notices": [
+          "inherits_2.0.4-LICENSE"
+        ]
+      },
+      {
+        "name": "isarray",
+        "version": "1.0.0",
+        "declaredLicense": "MIT",
+        "notices": [
+          "isarray_1.0.0-README.md"
+        ]
+      },
+      {
+        "name": "jszip",
+        "version": "3.10.2",
+        "declaredLicense": "(MIT OR GPL-3.0-or-later)",
+        "notices": [
+          "jszip_3.10.2-LICENSE.markdown"
+        ]
+      },
+      {
+        "name": "lie",
+        "version": "3.3.0",
+        "declaredLicense": "MIT",
+        "notices": [
+          "lie_3.3.0-license.md"
+        ]
+      },
+      {
+        "name": "minimalistic-assert",
+        "version": "1.0.1",
+        "declaredLicense": "ISC",
+        "notices": [
+          "minimalistic-assert_1.0.1-LICENSE"
+        ]
+      },
+      {
+        "name": "nanoid",
+        "version": "6.0.2",
+        "declaredLicense": "MIT",
+        "notices": [
+          "nanoid_6.0.2-LICENSE"
+        ]
+      },
+      {
+        "name": "pako",
+        "version": "1.0.11",
+        "declaredLicense": "(MIT AND Zlib)",
+        "notices": [
+          "pako_1.0.11-LICENSE"
+        ]
+      },
+      {
+        "name": "process-nextick-args",
+        "version": "2.0.1",
+        "declaredLicense": "MIT",
+        "notices": [
+          "process-nextick-args_2.0.1-license.md"
+        ]
+      },
+      {
+        "name": "readable-stream",
+        "version": "2.3.8",
+        "declaredLicense": "MIT",
+        "notices": [
+          "readable-stream_2.3.8-LICENSE"
+        ]
+      },
+      {
+        "name": "safe-buffer",
+        "version": "5.1.2",
+        "declaredLicense": "MIT",
+        "notices": [
+          "safe-buffer_5.1.2-LICENSE"
+        ]
+      },
+      {
+        "name": "setimmediate",
+        "version": "1.0.5",
+        "declaredLicense": "MIT",
+        "notices": [
+          "setimmediate_1.0.5-LICENSE.txt"
+        ]
+      },
+      {
+        "name": "string_decoder",
+        "version": "1.1.1",
+        "declaredLicense": "MIT",
+        "notices": [
+          "string_decoder_1.1.1-LICENSE"
+        ]
+      },
+      {
+        "name": "util-deprecate",
+        "version": "1.0.2",
+        "declaredLicense": "MIT",
+        "notices": [
+          "util-deprecate_1.0.2-LICENSE"
+        ]
+      }
+    ],
+    "noticeCount": 17,
+    "provenanceSha256": "1412852b753117d54f512ec3e33f27edb449c1838449287fe39ef98204fba116"
+  },
+  "vaultRuntime": {
+    "koffi": "3.1.1",
+    "node": "24.21.0",
+    "nativePath": "resources/app.asar.unpacked/node_modules/@koromix/koffi-win32-x64/win32_x64/koffi.node",
+    "nativeBytes": 1042944,
+    "nativeSha256": "eb0587c804bb76262968bf83028528da4dc2d4322f558845cce205c709e2ba20",
+    "noticeBytes": 1117,
+    "noticeSha256": "22bcbbbacd739b026a8dc484f62a31484ce4c4e31f3408b60b29b4e41d62b290",
+    "kernel32Call": "GetCurrentProcessId matched the embedded-Node process"
+  }
+}

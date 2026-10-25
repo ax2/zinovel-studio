@@ -437,6 +437,61 @@ manifest.upgrade = {
 manifest.qualification.push(
   ...upgrade.checks.map((check) => `upgrade: ${check}`),
 );
+const recent = JSON.parse(
+    await readFile(
+      new URL(
+        "screenshots/release/recent-upgrade/recent-upgrade-smoke.json",
+        root,
+      ),
+      "utf8",
+    ),
+  ),
+  previousPublic = JSON.parse(
+    await readFile(
+      new URL(
+        "assessments/release/v0.1.0-alpha.31/ci-public/release-manifest.json",
+        root,
+      ),
+      "utf8",
+    ),
+  );
+if (
+  recent.status !== "passed" ||
+  recent.fromVersion !== previousPublic.version ||
+  recent.toVersion !== pkg.version ||
+  recent.currentInstallerSha256 !== sha256 ||
+  recent.previousInstallerSha256 !== previousPublic.sha256 ||
+  recent.appAsarSha256 !== appAsarSha256 ||
+  recent.previousAsarSha256 !== previousPublic.imageStudio.appAsarSha256 ||
+  recent.errors?.length !== 0 ||
+  recent.checks?.length !== 3 ||
+  !Number.isFinite(recent.upgradeMs) ||
+  recent.upgradeMs <= 0 ||
+  recent.reviewedOldCandidateWithoutRequest !== true ||
+  recent.credentialsPreserved !== true ||
+  recent.profileBytesPreserved !== true ||
+  recent.uninstallPreserved !== true ||
+  JSON.stringify(recent.requests) !== JSON.stringify({ text: 0, image: 2 })
+)
+  throw new Error(
+    "Recent public-version encrypted profile and image-task upgrade proof is missing or stale",
+  );
+manifest.recentUpgrade = {
+  fromVersion: recent.fromVersion,
+  previousInstallerSha256: recent.previousInstallerSha256,
+  upgradeMs: recent.upgradeMs,
+  appAsarSha256: recent.appAsarSha256,
+  reviewedOldCandidateWithoutRequest: true,
+  credentialsPreserved: true,
+  profileBytesPreserved: true,
+  uninstallPreserved: true,
+  requests: recent.requests,
+  checks: recent.checks,
+  scope: recent.scope,
+};
+manifest.qualification.push(
+  ...recent.checks.map((check) => `recent-upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),

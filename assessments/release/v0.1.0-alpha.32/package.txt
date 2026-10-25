@@ -1,0 +1,68 @@
+
+> zinovel-studio@0.1.0-alpha.32 package:win D:\Work\zinovel-studio
+> pnpm package:dir && node scripts/smoke-packaged.mjs && electron-builder --config electron-builder.config.cjs --prepackaged release/win-unpacked --win --x64 --publish never
+
+
+> zinovel-studio@0.1.0-alpha.32 package:dir D:\Work\zinovel-studio
+> pnpm build && electron-builder --config electron-builder.config.cjs --win --x64 --dir --publish never && node scripts/verify-package-launch.mjs
+
+
+> zinovel-studio@0.1.0-alpha.32 build D:\Work\zinovel-studio
+> node scripts/build.mjs
+
+Built desktop and writing workbench.
+  • electron-builder  version=26.17.0 os=10.0.26300
+  • loaded configuration  file=D:\Work\zinovel-studio\electron-builder.config.cjs
+  • skipped dependencies rebuild  reason=npmRebuild is set to false
+  • packaging       platform=win32 arch=x64 electron=44.7.0 appOutDir=release\win-unpacked
+  • using custom unpacked Electron distribution  electronDist=node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist
+  • copying unpacked Electron  source=D:\Work\zinovel-studio\node_modules\.pnpm\electron@44.7.0\node_modules\electron\dist destination=D:\Work\zinovel-studio\release\win-unpacked
+  • searching for node modules  pm=traversal searchDir=D:\Work\zinovel-studio
+  • using manual traversal of node_modules to build dependency tree
+  • missing optional dependencies  dependencies=["node-addon-require-builtin-darwin-arm64@0.1.9","node-addon-require-builtin-linux-arm64-gnu@0.1.9","node-addon-require-builtin-linux-arm64-musl@0.1.9","node-addon-require-builtin-linux-x64-gnu@0.1.9","node-addon-require-builtin-darwin-x64@0.1.9","node-addon-require-builtin-linux-x64-musl@0.1.9","node-addon-require-builtin-win32-arm64-msvc@0.1.9","node-addon-require-builtin-win32-ia32-msvc@0.1.9","@img/sharp-darwin-arm64@0.35.5","@img/sharp-darwin-x64@0.35.5","@img/sharp-freebsd-wasm32@0.35.5","@img/sharp-libvips-darwin-arm64@1.3.4","@img/sharp-libvips-darwin-x64@1.3.4","@img/sharp-libvips-linux-arm@1.3.4","@img/sharp-libvips-linux-arm64@1.3.4","@img/sharp-libvips-linux-ppc64@1.3.4","@img/sharp-libvips-linux-riscv64@1.3.4","@img/sharp-libvips-linux-s390x@1.3.4","@img/sharp-libvips-linux-x64@1.3.4","@img/sharp-libvips-linuxmusl-arm64@1.3.4","@img/sharp-libvips-linuxmusl-x64@1.3.4","@img/sharp-linux-arm@0.35.5","@img/sharp-linux-arm64@0.35.5","@img/sharp-linux-ppc64@0.35.5","@img/sharp-linux-riscv64@0.35.5","@img/sharp-linux-s390x@0.35.5","@img/sharp-linux-x64@0.35.5","@img/sharp-linuxmusl-arm64@0.35.5","@img/sharp-linuxmusl-x64@0.35.5","@img/sharp-webcontainers-wasm32@0.35.5","@img/sharp-win32-arm64@0.35.5","@img/sharp-win32-ia32@0.35.5","@koromix/koffi-linux-arm64@3.1.1","@koromix/koffi-linux-ia32@3.1.1","@koromix/koffi-linux-x64@3.1.1","@koromix/koffi-linux-riscv64@3.1.1","@koromix/koffi-freebsd-ia32@3.1.1","@koromix/koffi-freebsd-x64@3.1.1","@koromix/koffi-freebsd-arm64@3.1.1","@koromix/koffi-openbsd-ia32@3.1.1","@koromix/koffi-openbsd-x64@3.1.1","@koromix/koffi-win32-ia32@3.1.1","@koromix/koffi-win32-arm64@3.1.1","@koromix/koffi-darwin-x64@3.1.1","@koromix/koffi-darwin-arm64@3.1.1","@koromix/koffi-linux-loong64@3.1.1","bufferutil@^4.0.1","utf-8-validate@>=5.0.2","@modelcontextprotocol/sdk@^1.25.2","kerberos@^2.0.0","@smithy/hash-node@>=4.3.0 <5","@deepseek-ai/node-addon-system-darwin-arm64@0.1.2","@deepseek-ai/node-addon-system-darwin-x64@0.1.2","@deepseek-ai/node-addon-system-linux-x64@0.1.2","@deepseek-ai/node-addon-system-linux-arm64@0.1.2","@vscode/ripgrep-darwin-x64@1.18.0","@vscode/ripgrep-darwin-arm64@1.18.0","@vscode/ripgrep-win32-arm64@1.18.0","@vscode/ripgrep-win32-ia32@1.18.0","@vscode/ripgrep-linux-x64@1.18.0","@vscode/ripgrep-linux-arm64@1.18.0","@vscode/ripgrep-linux-arm@1.18.0","@vscode/ripgrep-linux-ppc64@1.18.0","@vscode/ripgrep-linux-riscv64@1.18.0","@vscode/ripgrep-linux-s390x@1.18.0","@vscode/ripgrep-linux-ia32@1.18.0","@deepseek-ai/libreoffice-kit-darwin-arm64@0.1.5","@deepseek-ai/libreoffice-kit-darwin-x64@0.1.5","@deepseek-ai/libreoffice-kit-wasm@0.1.5","@deepseek-ai/libreoffice-kit-win32-arm64@0.1.5","sherpa-onnx-darwin-arm64@^1.13.8","sherpa-onnx-darwin-x64@^1.13.8","sherpa-onnx-linux-x64@^1.13.8","sherpa-onnx-linux-arm64@^1.13.8","sherpa-onnx-win-ia32@^1.13.8"]
+  • updating asar integrity executable resource  executablePath=release\win-unpacked\ZiNovel Studio.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\ZiNovel Studio.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\node-pty\third_party\conpty\1.25.260303002\win10-x64\OpenConsole.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\node-pty\third_party\conpty\1.25.260303002\win10-arm64\OpenConsole.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\node-pty\prebuilds\win32-x64\conpty\OpenConsole.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\node-pty\prebuilds\win32-arm64\conpty\OpenConsole.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\node-pty\build\Release\conpty\OpenConsole.exe
+  • no code signing certificate configured, signing is skipped  path=release\win-unpacked\resources\app.asar.unpacked\node_modules\@vscode\ripgrep-win32-x64\bin\rg.exe
+{"version":"0.1.0-alpha.32","fileCount":132,"totalBytes":622482524,"packageEntries":567,"status":"passed"}
+(node:44892) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-4bRDIy",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "installed executable is packaged; system-only PATH without development Node/pnpm",
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration",
+    "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "literal find/replace previews before mutation and undoes as one transaction",
+    "stale AI proposal cannot overwrite edits made during generation",
+    "isolated renderer has no Node globals; IPC rejects unknown operations",
+    "narrow-window assistant remains reachable through reference drawer"
+  ],
+  "errors": [],
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "status": "passed"
+}
+  • electron-builder  version=26.17.0 os=10.0.26300
+  • loaded configuration  file=D:\Work\zinovel-studio\electron-builder.config.cjs
+  • building        target=nsis file=release\ZiNovel-Studio-0.1.0-alpha.32-windows-x64-setup.exe archs=x64 oneClick=false perMachine=false
+  • no code signing certificate configured, signing is skipped  path=C:\Users\ax2\AppData\Local\Temp\t-6fKbEh\elevate-staging-0\resources\elevate.exe
+  • no code signing certificate configured, signing is skipped  path=release\ZiNovel-Studio-0.1.0-alpha.32-windows-x64-setup.__uninstaller.exe
+  • no code signing certificate configured, signing is skipped  path=release\ZiNovel-Studio-0.1.0-alpha.32-windows-x64-setup.exe
+  • building block map  blockMapFile=release\ZiNovel-Studio-0.1.0-alpha.32-windows-x64-setup.exe.blockmap
