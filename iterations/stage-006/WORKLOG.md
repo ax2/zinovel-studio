@@ -302,3 +302,5 @@ d3cd174源码完整CI40172110041 success，原始摘要image-reviewed-adoption-c
 
 被取消34的形象功能随35重新打包验收：新EXE SHA004f4de5…、asar9d8b888d…，形象4组、图像11组通过；实际查看808×803深色确认界面。182项实际安装和公开alpha.3/31/33三路径升级全部通过，旧v2回执及原图保留，完整证据在assessments/release/v0.1.0-alpha.35。本机门禁开启仅允许进入标签流水线，公开状态仍待独立发行；参考图AI变体和视觉质量仍未验收。
 
+
+2026-10-25公开收尾：不可变4f8994e，源码CI40183611914与独立发行40183617073均success，18:30:14北京时间公开四附件。EXE155531102字节，SHA256a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a，公开asarb3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2，与本机候选004f4de5…/9d8b888d…分开。匿名可见、三个元数据digest、校验文件和实际下载hash均通过。另对下载公开NSIS实际安装11335ms，运行官方Harness/编辑/历史恢复11项，真实卸载4162ms并保留1份合成稿件，13项附加检查passed。完整公开安装目录保留D:/zinovel-releases/v0.1.0-alpha.35/ci-public/win-installed，无ZIP。详见assessments/release/v0.1.0-alpha.35/ci-public；不扩大为签名、商店或完整106项完成。

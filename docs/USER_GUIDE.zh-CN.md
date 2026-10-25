@@ -1,6 +1,6 @@
 # ZiNovel Studio 技术预览使用说明
 
-最新公开版仍为alpha.33，旧版手改manuscript/、book.json、planning.json、规划历史或接受回执前请关闭程序并保留独立备份。alpha.35正文/规划保护和本地形象版本已通过366项、182项实际安装及公开alpha.3/31/33三条升级，独立发行与公开下载/hash仍待。完整平台仍在开发，稳定资格保持关闭。
+最新公开版为[alpha.35](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.35)，交付正文/规划提交前像保护和本地形象版本，公开EXE已下载/hash核对并额外实际安装运行官方Harness与卸载。源码/独立发行CI、182项安装和公开alpha.3/31/33三升级通过。旧版手改作品文件前请关闭程序并保留独立备份。主线alpha.36树为开发中，本版安装与完整稳定资格均保持关闭。
 
 ## 安装与开始写作
 

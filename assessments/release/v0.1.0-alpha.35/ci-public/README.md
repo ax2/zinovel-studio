@@ -1,0 +1,7 @@
+# alpha.35公开下载与实际安装验证
+
+独立发行40183617073及标签源码CI40183611914成功；2026-10-25 18:30:14北京时间发布。不可变提交4f8994eb1d6c5aa5391262509f6ca152b55766d5，四附件匿名可见。实际下载EXE 155531102字节，SHA256 a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a；三元数据digest和SHA256SUMS一致，verification.json为下载专项的原始回执。
+
+随后额外实际安装这份公开EXE，11335ms；安装后整个asar为b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2，与公开manifest完全一致。system-only PATH下运行实际官方Harness两工具、编辑/单次接受撤销、外部冲突/历史恢复、窄窗等11项全部通过；加安装/真实卸载共13项。卸载4162ms，登记与EXE移除、1份合成正文hash保留，public-install.json和desktop-smoke.json为原始结果。未把CI实际执行、下载检查与本机执行混为一项。
+
+公开完整安装目录与EXE/元数据保留D:/zinovel-releases/v0.1.0-alpha.35/ci-public，无ZIP。它与本机阶段候选155530920字节/004f4de5…、asar9d8b888d…不同，两套分别归档。所有材料为隔离合成数据，未访问用户书稿/模型Key。Windows未签名预览，稳定资格false；alpha.36场景树不在本包。
