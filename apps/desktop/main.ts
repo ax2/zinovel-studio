@@ -19,7 +19,7 @@ import { desktopNodeEnvironment } from "./upstream/node-environment";
 import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
 import { ModelSettings } from "./settings";
 import { ImageJobService } from "../../packages/novel-harness/image-jobs.mjs";
-import { previewImport } from "../../packages/novel-storage/importer.mjs";
+import { ImportSessions } from "../../packages/novel-storage/import-session.mjs";
 import { randomUUID } from "node:crypto";
 import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
 import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
@@ -157,10 +157,10 @@ function requestWindowClose() {
     );
   }, 8000);
 }
-const imports = new Map<
-  string,
-  { paths: string[]; preview: Awaited<ReturnType<typeof previewImport>> }
->();
+const imports = new ImportSessions({
+  createBook: (title: string, chapters: any[]) =>
+    store.importBook(title, chapters),
+});
 
 async function materialTaskInput(payload: any) {
   const card = await store.materials.read(payload.bookId, payload.expected?.id);
@@ -938,48 +938,30 @@ if (
                   value = { cancelled: true };
                   break;
                 }
-                const id = randomUUID();
-                // Keep paths for a decoding retry even if the first UTF-8 preview fails.
-                imports.set(id, { paths: selected.filePaths, preview: null! });
-                if (imports.size > 5)
-                  imports.delete(imports.keys().next().value!);
-                try {
-                  const preview = await previewImport(selected.filePaths);
-                  imports.set(id, { paths: selected.filePaths, preview });
-                  value = { id, preview };
-                } catch (error) {
-                  value = {
-                    id,
-                    error:
-                      error instanceof TypeError
-                        ? "初次 UTF-8 解码失败，请更换编码重试。"
-                        : error instanceof Error
-                          ? error.message
-                          : "无法预览所选稿件",
-                  };
-                }
+                value = await imports.choose(selected.filePaths);
                 break;
               }
               case "import.preview": {
-                const intake = imports.get(payload.id);
-                if (!intake) throw new Error("导入预览已失效，请重新选择文件");
-                intake.preview = null!;
-                intake.preview = await previewImport(
-                  intake.paths,
+                value = await imports.preview(
+                  payload.id,
                   payload.encoding,
                   payload.split,
                 );
-                value = { id: payload.id, preview: intake.preview };
                 break;
               }
-              case "import.commit": {
-                const intake = imports.get(payload.id);
-                if (!intake?.preview) throw new Error("请先完成导入预览");
-                value = await store.importBook(
-                  payload.title,
-                  intake.preview.chapters,
+              case "import.review":
+                value = imports.edit(
+                  payload.id,
+                  payload.revision,
+                  payload.operation,
                 );
-                imports.delete(payload.id);
+                break;
+              case "import.commit": {
+                value = await imports.commit(
+                  payload.id,
+                  payload.revision,
+                  payload.title,
+                );
                 break;
               }
               case "book.export": {

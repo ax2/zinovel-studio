@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "scope": "Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim.",
+  "version": "0.1.0-alpha.37",
+  "packaged": false,
+  "desktopBundleSha256": "f4fc25cc749c1d678c4921bb035dc2d94a952a2037401496225065095d5e53f2",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 3\n"
+}

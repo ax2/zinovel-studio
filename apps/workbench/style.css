@@ -1235,12 +1235,39 @@ p {
 .import-preview small {
   color: var(--muted);
 }
-.import-preview pre {
+.import-preview .import-body {
+  background: var(--paper);
+  color: var(--text);
   white-space: pre-wrap;
   overflow: auto;
   margin: 0;
   padding: 15px;
-  font: 15px/1.8 inherit;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.8;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  resize: none;
+  border: 0;
+  border-radius: 0;
+}
+.import-edit {
+  margin-bottom: 24px;
+}
+.import-edit-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin: 12px 0;
+}
+.import-edit-fields label {
+  display: flex;
+  flex: 1 1 240px;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
 }
 .book-fields {
   display: grid;

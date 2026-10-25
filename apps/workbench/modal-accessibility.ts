@@ -9,7 +9,7 @@ export function useModalAccessibility() {
     const focusable = (dialog: HTMLElement) =>
       Array.from(
         dialog.querySelectorAll<HTMLElement>(
-          'button, input, textarea, select, a[href], [tabindex="0"], [contenteditable="true"]',
+          'button, input, textarea, select, summary, a[href], [tabindex="0"], [contenteditable="true"]',
         ),
       ).filter(
         (element) =>

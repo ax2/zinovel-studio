@@ -289,6 +289,12 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.importBoundary?.checks?.length, 3);
+    assert.equal(manifest.importReview?.version, manifest.version);
+    assert.equal(
+      manifest.importReview?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
+    assert.equal(manifest.importReview?.checks?.length, 4);
   }
   const installerDirectory = resolve(
     root,

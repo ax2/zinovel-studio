@@ -17,26 +17,29 @@ function* manuscriptLines(text) {
 }
 
 export function splitManuscript(text, fallbackTitle, limit = 2000) {
+  text = text.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
   const chapters = [];
   let volume = "",
     title = fallbackTitle,
-    lines = [],
+    bodyStart = 0,
+    position = 0,
     explicit = false;
-  const flush = () => {
-    if (explicit || lines.some((line) => line.trim())) {
+  const flush = (end) => {
+    const body = text.slice(bodyStart, end);
+    if (explicit || body.trim()) {
       if (chapters.length >= limit)
         throw new Error("拆分后超过 2000 章，请调整导入范围");
-      chapters.push({ title, volume, body: lines.join("\n") });
+      chapters.push({ title, volume, body });
     }
-    lines = [];
     explicit = false;
   };
-  for (const line of manuscriptLines(
-    text.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n"),
-  )) {
+  for (const line of manuscriptLines(text)) {
+    const start = position;
+    position += line.length + 1;
     const heading = line.replace(/^#{1,3}\s+/, "").trim();
     if (/^第[零〇一二三四五六七八九十百千万两\d]+卷.{0,120}$/.test(heading)) {
-      flush();
+      flush(Math.max(bodyStart, start - 1));
+      bodyStart = Math.min(position, text.length);
       volume = heading;
       title = `${volume} · 卷前`;
       continue;
@@ -47,14 +50,14 @@ export function splitManuscript(text, fallbackTitle, limit = 2000) {
       ) ||
       /^#{1,3}\s+/.test(line)
     ) {
-      flush();
+      flush(Math.max(bodyStart, start - 1));
+      bodyStart = Math.min(position, text.length);
       title = heading;
       explicit = true;
       continue;
     }
-    lines.push(line);
   }
-  flush();
+  flush(text.length);
   if (!chapters.length)
     chapters.push({ title: fallbackTitle, volume: "", body: "" });
   return chapters;

@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 1000,
+  "seed": 37,
+  "baseline": "v0.1.0-alpha.36",
+  "importerSha256": "9a49736b4160e2b281fd3b6a4ace1ab68cf8cedfd1debc52653b90755288e950",
+  "scope": "Controlled deterministic source parser compatibility for whitespace/BOM/CRLF/heading/volume combinations; not independent literary semantics or all external files"
+}

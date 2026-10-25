@@ -1,0 +1,39 @@
+
+> zinovel-studio@0.1.0-alpha.37 test:import-review D:\Work\zinovel-studio
+> node scripts/smoke-import-review.mjs
+
+(node:71992) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources',
+    'Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite',
+    'Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays',
+    'Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'manual-split-light.png',
+      width: 994,
+      height: 766,
+      theme: 'light'
+    },
+    {
+      name: 'manual-review-dark.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim.',
+  version: '0.1.0-alpha.37',
+  packaged: false,
+  desktopBundleSha256: 'f4fc25cc749c1d678c4921bb035dc2d94a952a2037401496225065095d5e53f2',
+  frontend: {
+    'app.js': 'd896f19dfa603a4e5b1639c5ca2af899d4ceef7215945dabcae72b64731b75c4',
+    'app.css': '75c34d5bfbc8804d53b1a753ff3ab1d231c6e03715228146a45147921e770e30',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  }
+}

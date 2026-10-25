@@ -9,12 +9,10 @@ import {
 } from "lucide-react";
 import { api, type Book } from "./api";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
-
-type Preview = {
-  chapters: { title: string; body: string; volume: string }[];
-  sources: { name: string }[];
-  totalCharacters: number;
-};
+import {
+  ImportPreviewEditor,
+  type ImportPreview,
+} from "./import-preview-editor";
 export function ImportDialog({
   onClose,
   onImported,
@@ -23,7 +21,8 @@ export function ImportDialog({
   onImported: (book: Book) => void;
 }) {
   const [id, setId] = useState(""),
-    [preview, setPreview] = useState<Preview | null>(null),
+    [preview, setPreview] = useState<ImportPreview | null>(null),
+    [revision, setRevision] = useState(""),
     [title, setTitle] = useState("导入的小说");
   const [encoding, setEncoding] = useState("utf-8"),
     [split, setSplit] = useState(true),
@@ -40,6 +39,7 @@ export function ImportDialog({
         setSplit(true);
         setId(result.id);
         setPreview(result.preview || null);
+        setRevision(result.revision || "");
         setError(result.error || "");
         setSelected(0);
       }
@@ -56,7 +56,29 @@ export function ImportDialog({
     try {
       const result = await api("import.preview", { id, encoding, split });
       setPreview(result.preview);
+      setRevision(result.revision);
       setSelected(0);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function review(operation: Record<string, unknown>) {
+    setBusy(true);
+    setError("");
+    try {
+      const result = await api("import.review", { id, revision, operation });
+      setPreview(result.preview);
+      setRevision(result.revision);
+      setSelected(
+        Math.max(
+          0,
+          result.preview.chapters.findIndex(
+            (item: { id: string }) => item.id === operation.chapterId,
+          ),
+        ),
+      );
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -73,7 +95,7 @@ export function ImportDialog({
       >
         <div className="modal-heading">
           <h2>导入作品</h2>
-          <button aria-label="关闭导入" onClick={onClose}>
+          <button aria-label="关闭导入" onClick={onClose} disabled={busy}>
             <X />
           </button>
         </div>
@@ -96,6 +118,7 @@ export function ImportDialog({
                 编码
                 <select
                   aria-label="导入编码"
+                  disabled={busy}
                   value={encoding}
                   onChange={(e) => {
                     setEncoding(e.target.value);
@@ -110,6 +133,7 @@ export function ImportDialog({
               <label>
                 <input
                   type="checkbox"
+                  disabled={busy}
                   checked={split}
                   onChange={(e) => {
                     setSplit(e.target.checked);
@@ -128,25 +152,18 @@ export function ImportDialog({
                   {preview.sources.length} 个源文件 · {preview.chapters.length}{" "}
                   章 · {preview.totalCharacters.toLocaleString()} 字符
                 </p>
-                <div className="import-preview">
-                  <div>
-                    {preview.chapters.map((chapter, index) => (
-                      <button
-                        key={index}
-                        className={selected === index ? "selected" : ""}
-                        onClick={() => setSelected(index)}
-                      >
-                        {chapter.volume && <small>{chapter.volume}</small>}
-                        {chapter.title}
-                      </button>
-                    ))}
-                  </div>
-                  <pre>{preview.chapters[selected]?.body}</pre>
-                </div>
+                <ImportPreviewEditor
+                  preview={preview}
+                  selected={selected}
+                  onSelected={setSelected}
+                  busy={busy}
+                  onEdit={review}
+                />
                 <label className="stacked-label">
                   新作品名称
                   <input
                     aria-label="导入作品名称"
+                    disabled={busy}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     maxLength={200}
@@ -162,14 +179,16 @@ export function ImportDialog({
           </p>
         )}
         <div className="modal-actions">
-          <button onClick={onClose}>取消</button>
+          <button onClick={onClose} disabled={busy}>
+            取消
+          </button>
           <button
             className="primary"
             disabled={!preview || busy || !title.trim()}
             onClick={async () => {
               setBusy(true);
               try {
-                onImported(await api("import.commit", { id, title }));
+                onImported(await api("import.commit", { id, revision, title }));
               } catch (e) {
                 setError((e as Error).message);
               } finally {

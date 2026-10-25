@@ -104,10 +104,11 @@ try {
   ]);
   await page.getByRole("checkbox", { name: "按章卷标题自动拆分" }).uncheck();
   await page.getByRole("button", { name: "重新预览", exact: true }).click();
-  await page
-    .locator(".import-preview pre")
-    .getByText("第二章 灯塔", { exact: false })
-    .waitFor();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("textarea.import-body")
+      ?.value.includes("第二章 灯塔"),
+  );
   await page.screenshot({ path: join(out, "directory-preview.png") });
   report.checks.push(
     "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
@@ -124,10 +125,9 @@ try {
   );
   await page.getByLabel("导入编码").selectOption("gb18030");
   await page.getByRole("button", { name: "重新预览", exact: true }).click();
-  await page
-    .locator(".import-preview pre")
-    .getByText("你好", { exact: true })
-    .waitFor();
+  await page.waitForFunction(
+    () => document.querySelector("textarea.import-body")?.value === "你好",
+  );
   const id = await page.evaluate(async () => {
     // Get a separate actual host preview token to test stale-preview revocation.
     return (await window.novel.request("import.choose", {})).id;

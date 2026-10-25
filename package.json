@@ -73,7 +73,8 @@
     "test:model-credentials": "node scripts/smoke-model-credentials.mjs",
     "test:model-profiles": "node scripts/smoke-model-profiles.mjs",
     "test:character-looks": "node scripts/smoke-character-looks.mjs",
-    "test:import-boundary": "node scripts/smoke-import-boundary.mjs"
+    "test:import-boundary": "node scripts/smoke-import-boundary.mjs",
+    "test:import-review": "node scripts/smoke-import-review.mjs"
   },
   "engines": {
     "node": ">=26"

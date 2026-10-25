@@ -42,7 +42,10 @@
       "status": "in-progress",
       "acceptance": "只读试扫，确认后新建书而不改源",
       "evidence": [
-        "iterations/stage-002/WORKLOG.md"
+        "iterations/stage-002/WORKLOG.md",
+        "assessments/stage-002/import-review/README.md",
+        "packages/novel-storage/import-session.mjs",
+        "scripts/smoke-import-review.mjs"
       ]
     },
     {
@@ -54,7 +57,10 @@
       "status": "in-progress",
       "acceptance": "乱码与章节拆分可修正后导入",
       "evidence": [
-        "iterations/stage-002/WORKLOG.md"
+        "iterations/stage-002/WORKLOG.md",
+        "assessments/stage-002/import-review/README.md",
+        "packages/novel-storage/import-session.mjs",
+        "scripts/smoke-import-review.mjs"
       ]
     },
     {

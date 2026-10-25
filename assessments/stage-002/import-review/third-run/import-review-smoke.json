@@ -1,0 +1,73 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "scope": "Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim.",
+  "version": "0.1.0-alpha.37",
+  "packaged": false,
+  "desktopBundleSha256": "f4fc25cc749c1d678c4921bb035dc2d94a952a2037401496225065095d5e53f2",
+  "caretEvents": [
+    {
+      "type": "keydown",
+      "key": "Control",
+      "code": "ControlLeft",
+      "ctrl": true,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "keydown",
+      "key": "Home",
+      "code": "Home",
+      "ctrl": true,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "keyup",
+      "key": "Home",
+      "code": "Home",
+      "ctrl": true,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "keyup",
+      "key": "Control",
+      "code": "ControlLeft",
+      "ctrl": false,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "keydown",
+      "key": "ArrowRight",
+      "code": "ArrowRight",
+      "ctrl": false,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "keyup",
+      "key": "ArrowRight",
+      "code": "ArrowRight",
+      "ctrl": false,
+      "prevented": false,
+      "start": 0,
+      "end": 0
+    }
+  ],
+  "caretDiagnostic": {
+    "start": 0,
+    "end": 0,
+    "focused": true,
+    "active": true
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n0 !== 3\n"
+}

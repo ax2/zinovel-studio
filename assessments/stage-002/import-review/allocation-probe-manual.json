@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "scope": "Six isolated Node26 processes, one synthetic 16777210-byte Unicode/newline file; actual filesystem preview, not Electron/IPC, UI latency or large-book p95 qualification",
+  "runs": [
+    {
+      "label": "alpha36",
+      "iteration": 1,
+      "elapsedMs": 408,
+      "rssBefore": 60530688,
+      "rssAfter": 272531456,
+      "maxRssKiB": 420720,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    },
+    {
+      "label": "alpha37",
+      "iteration": 1,
+      "elapsedMs": 236,
+      "rssBefore": 60760064,
+      "rssAfter": 99942400,
+      "maxRssKiB": 97604,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    },
+    {
+      "label": "alpha36",
+      "iteration": 2,
+      "elapsedMs": 419,
+      "rssBefore": 60694528,
+      "rssAfter": 272576512,
+      "maxRssKiB": 420612,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    },
+    {
+      "label": "alpha37",
+      "iteration": 2,
+      "elapsedMs": 237,
+      "rssBefore": 60698624,
+      "rssAfter": 99991552,
+      "maxRssKiB": 97652,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    },
+    {
+      "label": "alpha36",
+      "iteration": 3,
+      "elapsedMs": 410,
+      "rssBefore": 60575744,
+      "rssAfter": 273154048,
+      "maxRssKiB": 420768,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    },
+    {
+      "label": "alpha37",
+      "iteration": 3,
+      "elapsedMs": 230,
+      "rssBefore": 60698624,
+      "rssAfter": 99938304,
+      "maxRssKiB": 97600,
+      "characters": 6710884,
+      "sources": 1,
+      "chapters": 1,
+      "sourceSha256": "c8a4a0d44a67a0d8269bc649741fcef26d6e356df0ca11085c77b19c999d68d0"
+    }
+  ]
+}

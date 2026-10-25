@@ -47,6 +47,7 @@ jobs:
           ZINOVEL_QA_VIEWPORT: ci
       - run: node scripts/smoke-library.mjs
       - run: pnpm test:import-boundary
+      - run: pnpm test:import-review
       - run: pnpm test:editor-tools
       - run: pnpm test:recovery
       - run: pnpm test:merge

@@ -156,6 +156,7 @@ const allowed = new Set([
   "library.restore",
   "import.choose",
   "import.preview",
+  "import.review",
   "import.commit",
   "book.export",
 ]);

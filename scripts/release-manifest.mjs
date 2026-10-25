@@ -189,6 +189,32 @@ manifest.importBoundary = {
   checks: importBoundary.checks,
   scope: importBoundary.scope,
 };
+const importReview = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/import-review/import-review-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  importReview.status !== "passed" ||
+  importReview.version !== pkg.version ||
+  importReview.packaged !== true ||
+  importReview.appAsarSha256 !== appAsarSha256 ||
+  importReview.checks?.length !== 4 ||
+  importReview.errors?.length !== 0
+)
+  throw new Error(
+    "Installed manual import review and exact preview commit proof is missing or stale",
+  );
+manifest.importReview = {
+  version: importReview.version,
+  appAsarSha256,
+  checks: importReview.checks,
+  scope: importReview.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||
