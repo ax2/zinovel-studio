@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.32",
+  "previousVersion": "0.1.0-alpha.31",
+  "previousAsarSha256": "9125f87466031013e86ed0278dbb764f0780aef3bb7567d1c7216f9a337876f8",
+  "checks": [
+    "Actual old alpha.31 packaged UI refuses the v2 task and reports unreadable history; no automatic rewrite, discard or replay",
+    "After old UI exits, exact task/manuscript/asset bytes remain unchanged and current storage reads the original reviewed adoption receipt"
+  ],
+  "errors": [],
+  "scope": "Actual retained local alpha.31 packaged EXE opens synthetic v2 task created by current production storage; no installer, downgrade support, provider or native IME qualification"
+}

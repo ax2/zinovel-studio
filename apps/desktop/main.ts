@@ -263,6 +263,8 @@ if (
               case "image.reconcile":
               case "image.preview":
               case "image.adopt":
+              case "image.compare-target":
+              case "image.adopt-reviewed":
               case "image.discard": {
                 const fields: Record<string, string[]> = {
                   "image.settings": [],
@@ -281,6 +283,14 @@ if (
                   "image.reconcile": ["bookId", "expected"],
                   "image.preview": ["bookId", "id", "index"],
                   "image.adopt": ["bookId", "expected", "index", "input"],
+                  "image.compare-target": ["bookId", "expected", "index"],
+                  "image.adopt-reviewed": [
+                    "bookId",
+                    "expected",
+                    "index",
+                    "input",
+                    "review",
+                  ],
                   "image.discard": ["bookId", "expected"],
                 };
                 if (
@@ -352,25 +362,43 @@ if (
                   );
                 } else {
                   const operation =
-                    action === "image.adopt"
-                      ? store.imageTasks.adopt(
+                    action === "image.compare-target"
+                      ? store.imageTasks.compareTarget(
                           payload.bookId,
                           payload.expected,
                           payload.index,
-                          payload.input,
                         )
-                      : action === "image.reconcile"
-                        ? store.imageTasks.reconcileReceived(
+                      : action === "image.adopt-reviewed"
+                        ? store.imageTasks.adoptReviewed(
                             payload.bookId,
                             payload.expected,
+                            payload.index,
+                            payload.input,
+                            payload.review,
                           )
-                        : store.imageTasks
-                            .preview(payload.bookId, payload.id, payload.index)
-                            .then((result: any) => ({
-                              blob: result.blob,
-                              diskHash: result.diskHash,
-                              thumbnail: `data:image/png;base64,${Buffer.from(result.thumbnail).toString("base64")}`,
-                            }));
+                        : action === "image.adopt"
+                          ? store.imageTasks.adopt(
+                              payload.bookId,
+                              payload.expected,
+                              payload.index,
+                              payload.input,
+                            )
+                          : action === "image.reconcile"
+                            ? store.imageTasks.reconcileReceived(
+                                payload.bookId,
+                                payload.expected,
+                              )
+                            : store.imageTasks
+                                .preview(
+                                  payload.bookId,
+                                  payload.id,
+                                  payload.index,
+                                )
+                                .then((result: any) => ({
+                                  blob: result.blob,
+                                  diskHash: result.diskHash,
+                                  thumbnail: `data:image/png;base64,${Buffer.from(result.thumbnail).toString("base64")}`,
+                                }));
                   assetOperations.add(operation);
                   try {
                     value = await operation;

@@ -15,6 +15,7 @@ import { requestImageCandidates } from "../packages/novel-harness/image-provider
 import {
   validateImageTask,
   imageTaskResponseHash,
+  imageTaskTargetReviewHash,
 } from "../packages/novel-domain/image-tasks.mjs";
 
 const picture = await sharp({
@@ -103,6 +104,381 @@ const adoptionInput = () => ({
   notes: "不自动设为封面",
   linkedIds: [],
 });
+
+async function reviewFixture() {
+  const f = await fixture(),
+    material = await f.store.materials.save(f.book.id, {
+      title: "复评人物",
+      kind: "character",
+      status: "planned",
+      fields: {},
+      notes: "生成时计划",
+      chapterIds: [],
+    });
+  f.input.target = {
+    purpose: "portrait",
+    material: expected(material),
+    chapter: null,
+  };
+  const value = await received(f),
+    current = await f.store.materials.save(
+      f.book.id,
+      { ...material, notes: "生成后改为旅行衣装" },
+      material,
+    ),
+    comparison = await f.store.imageTasks.compareTarget(
+      f.book.id,
+      expected(value),
+      0,
+    );
+  return {
+    ...f,
+    value,
+    current,
+    review: {
+      target: comparison.current,
+      responseHash: value.responseHash,
+      confirmation: "adopt-for-current-target-v1",
+    },
+    adoption: {
+      ...adoptionInput(),
+      purpose: "portrait",
+      linkedIds: [material.id],
+    },
+  };
+}
+
+test("explicit reviewed adoption retains original generation facts, writes a versioned target receipt and retries without overwriting later author edits", async () => {
+  const f = await reviewFixture();
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(f.value), 0, f.adoption),
+    /目标资料已改变/,
+  );
+  const result = await f.store.imageTasks.adoptReviewed(
+    f.book.id,
+    expected(f.value),
+    0,
+    f.adoption,
+    f.review,
+  );
+  assert.equal(result.task.schemaVersion, 2);
+  assert.deepEqual(result.task.target, f.value.target);
+  assert.equal(result.task.creationHash, f.value.creationHash);
+  assert.equal(result.task.responseHash, f.value.responseHash);
+  assert.deepEqual(result.task.candidates[0].blob, f.value.candidates[0].blob);
+  const receipt = result.task.candidates[0].adoption;
+  assert.deepEqual(receipt.targetReview.target, f.review.target);
+  assert.equal(
+    receipt.targetReview.hash,
+    imageTaskTargetReviewHash(result.task, 0, receipt),
+  );
+  const edited = await f.store.assets.save(
+    f.book.id,
+    { ...f.adoption, notes: "作者后来改资源说明" },
+    result.asset,
+  );
+  await f.store.materials.save(
+    f.book.id,
+    { ...f.current, notes: "再次修改人物" },
+    f.current,
+  );
+  const again = await f.store.imageTasks.adoptReviewed(
+    f.book.id,
+    expected(result.task),
+    0,
+    f.adoption,
+    f.review,
+  );
+  assert.equal(again.alreadyAccepted, true);
+  assert.deepEqual(again.asset, edited);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 1);
+});
+
+test("reviewed adoption refuses missing confirmation, forged response, unchanged or foreign target and wrong purpose without rewriting paid results", async () => {
+  const f = await reviewFixture(),
+    before = await readFile(f.path);
+  for (const review of [
+    null,
+    { ...f.review, confirmation: "" },
+    { ...f.review, unexpected: true },
+    { ...f.review, responseHash: "b".repeat(64) },
+    { ...f.review, target: f.value.target },
+    {
+      ...f.review,
+      target: {
+        ...f.review.target,
+        material: { ...f.review.target.material, id: randomUUID() },
+      },
+    },
+    { ...f.review, target: { ...f.review.target, purpose: "reference" } },
+  ]) {
+    await assert.rejects(
+      f.store.imageTasks.adoptReviewed(
+        f.book.id,
+        expected(f.value),
+        0,
+        f.adoption,
+        review,
+      ),
+    );
+  }
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+});
+
+test("a target changed while decoding a reviewed adoption refuses the old confirmation and retains paid candidates", async () => {
+  const f = await reviewFixture(),
+    before = await readFile(f.path),
+    decode = f.store.assets.decode.bind(f.store.assets);
+  f.store.assets.decode = async (...args) => {
+    const image = await decode(...args);
+    await f.store.materials.save(
+      f.book.id,
+      { ...f.current, notes: "解码期间新改动" },
+      f.current,
+    );
+    return image;
+  };
+  await assert.rejects(
+    f.store.imageTasks.adoptReviewed(
+      f.book.id,
+      expected(f.value),
+      0,
+      f.adoption,
+      f.review,
+    ),
+    /目标再次改变/,
+  );
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+});
+
+test("reviewed chapter adoption refuses unresolved external bytes and adopts only the confirmed formally saved revision", async () => {
+  const f = await fixture(),
+    chapter = await f.store.readChapter(f.book.id, f.book.chapters[0].id);
+  f.input.target = {
+    purpose: "illustration",
+    material: null,
+    chapter: expected(chapter),
+  };
+  const value = await received(f);
+  await f.store.saveChapter({
+    bookId: f.book.id,
+    chapterId: chapter.id,
+    title: chapter.title,
+    expectedRevision: chapter.revision,
+    expectedHash: chapter.diskHash,
+    body: "正式新稿𠮷🌊。",
+  });
+  const compare = await f.store.imageTasks.compareTarget(
+      f.book.id,
+      expected(value),
+      0,
+    ),
+    review = {
+      target: compare.current,
+      responseHash: value.responseHash,
+      confirmation: "adopt-for-current-target-v1",
+    },
+    input = { ...adoptionInput(), purpose: "illustration" },
+    file = join(f.root, f.book.id, "manuscript", chapter.id + ".md");
+  await writeFile(file, "尚未解决的外部修改");
+  await assert.rejects(
+    f.store.imageTasks.adoptReviewed(
+      f.book.id,
+      expected(value),
+      0,
+      input,
+      review,
+    ),
+    /尚未处理的外部修改/,
+  );
+  assert.equal(await readFile(file, "utf8"), "尚未解决的外部修改");
+  await writeFile(file, "正式新稿𠮷🌊。");
+  const result = await f.store.imageTasks.adoptReviewed(
+    f.book.id,
+    expected(value),
+    0,
+    input,
+    review,
+  );
+  assert.deepEqual(
+    result.task.candidates[0].adoption.targetReview.target.chapter,
+    compare.current.chapter,
+  );
+  assert.equal(await readFile(file, "utf8"), "正式新稿𠮷🌊。");
+});
+
+test("review receipt tampering and downgrade refuse while v2 backup restoration preserves both generation and later confirmation origins", async () => {
+  const f = await reviewFixture(),
+    result = await f.store.imageTasks.adoptReviewed(
+      f.book.id,
+      expected(f.value),
+      0,
+      f.adoption,
+      f.review,
+    );
+  for (const mutate of [
+    (t) => (t.schemaVersion = 1),
+    (t) => (t.schemaVersion = 3),
+    (t) => t.candidates[0].adoption.targetReview.target.material.revision++,
+    (t) => (t.candidates[0].adoption.targetReview.hash = "a".repeat(64)),
+  ]) {
+    const copy = structuredClone(result.task);
+    delete copy.diskHash;
+    delete copy.storedStatus;
+    delete copy.restoredSource;
+    delete copy.dispatchState;
+    assert.doesNotThrow(() => validateImageTask(copy, copy.id, [f.book.id]));
+    mutate(copy);
+    assert.throws(() => validateImageTask(copy, copy.id, [f.book.id]));
+  }
+  const backup = await f.store.createBackup(f.book.id, f.work),
+    restored = await f.store.restoreBackup(backup.path),
+    task = await f.store.imageTasks.read(restored.id, f.value.id),
+    again = await f.store.imageTasks.adoptReviewed(
+      restored.id,
+      expected(task),
+      0,
+      f.adoption,
+      f.review,
+    );
+  assert.equal(task.bookId, f.book.id);
+  assert.equal(task.candidates[0].adoption.bookId, f.book.id);
+  assert.equal(again.alreadyAccepted, true);
+  assert.deepEqual(
+    task.candidates[0].adoption.targetReview,
+    result.task.candidates[0].adoption.targetReview,
+  );
+  assert.equal((await f.store.assets.list(restored.id)).items.length, 1);
+});
+
+test("review confirmation and author input are captured before waiting for the book queue", async () => {
+  const f = await reviewFixture(),
+    originalReview = structuredClone(f.review),
+    originalTitle = f.adoption.title;
+  let entered, release;
+  const ready = new Promise((resolve) => (entered = resolve)),
+    held = f.store.assets.storage.exclusive(() => {
+      entered();
+      return new Promise((resolve) => (release = resolve));
+    });
+  await ready;
+  const pending = f.store.imageTasks.adoptReviewed(
+    f.book.id,
+    expected(f.value),
+    0,
+    f.adoption,
+    f.review,
+  );
+  f.review.target.material.revision += 100;
+  f.adoption.title = "等待期间被调用者改写";
+  release();
+  await held;
+  const result = await pending;
+  assert.equal(result.asset.title, originalTitle);
+  assert.deepEqual(
+    result.task.candidates[0].adoption.targetReview.target,
+    originalReview.target,
+  );
+});
+
+test("external target change during resource preparation refuses reviewed adoption before creating either record", async () => {
+  const f = await reviewFixture(),
+    before = await readFile(f.path),
+    prepare = f.store.assets.prepareImport.bind(f.store.assets),
+    path = join(f.root, f.book.id, "materials", f.current.id + ".json");
+  let external;
+  f.store.assets.prepareImport = async (...args) => {
+    const result = await prepare(...args),
+      record = JSON.parse(await readFile(path, "utf8"));
+    record.notes = "资源准备期间的外部改稿";
+    record.revision++;
+    external = JSON.stringify(record, null, 2) + "\n";
+    await writeFile(path, external);
+    return result;
+  };
+  await assert.rejects(
+    f.store.imageTasks.adoptReviewed(
+      f.book.id,
+      expected(f.value),
+      0,
+      f.adoption,
+      f.review,
+    ),
+    /目标再次改变/,
+  );
+  assert.equal(await readFile(path, "utf8"), external);
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+});
+
+test("reviewed adoption of a restored pending task records the current book, and simultaneous confirmations create exactly one asset", async () => {
+  const f = await reviewFixture(),
+    backup = await f.store.createBackup(f.book.id, f.work),
+    restored = await f.store.restoreBackup(backup.path),
+    task = await f.store.imageTasks.read(restored.id, f.value.id),
+    results = await Promise.allSettled(
+      [0, 1].map(() =>
+        f.store.imageTasks.adoptReviewed(
+          restored.id,
+          expected(task),
+          0,
+          f.adoption,
+          f.review,
+        ),
+      ),
+    );
+  assert.equal(results.filter((r) => r.status === "fulfilled").length, 1);
+  const result = results.find((r) => r.status === "fulfilled").value;
+  assert.equal(result.task.bookId, f.book.id);
+  assert.equal(result.task.candidates[0].adoption.bookId, restored.id);
+  assert.equal(result.asset.bookId, restored.id);
+  assert.equal((await f.store.assets.list(restored.id)).items.length, 1);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+});
+
+for (const [stage, code] of [
+  ["journal", 95],
+  ["first-record", 96],
+]) {
+  test(`actual process exit during reviewed adoption ${stage} recovers the exact target receipt and asset together`, async () => {
+    const f = await reviewFixture();
+    await assert.rejects(
+      promisify(execFile)(
+        process.execPath,
+        [
+          resolve("tests/fixtures/image-adoption-crash.mjs"),
+          f.root,
+          f.book.id,
+          JSON.stringify(expected(f.value)),
+          JSON.stringify(f.adoption),
+          stage,
+          JSON.stringify(f.review),
+        ],
+        { windowsHide: true, timeout: 15000 },
+      ),
+      (e) => e.code === code,
+    );
+    const restarted = new NovelStore(f.root),
+      task = await restarted.imageTasks.read(f.book.id, f.value.id),
+      lookup = await restarted.imageTasks.adoptReviewed(
+        f.book.id,
+        expected(task),
+        0,
+        f.adoption,
+        f.review,
+      );
+    assert.equal(task.schemaVersion, 2);
+    assert.equal(lookup.alreadyAccepted, true);
+    assert.deepEqual(
+      task.candidates[0].adoption.targetReview.target,
+      f.review.target,
+    );
+    assert.equal(task.responseHash, f.value.responseHash);
+    assert.equal((await restarted.assets.list(f.book.id)).items.length, 1);
+  });
+}
 
 test("explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything", async () => {
   const f = await fixture(),

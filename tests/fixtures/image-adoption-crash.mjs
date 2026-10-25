@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { NovelStore } from "../../packages/novel-storage/store.mjs";
 import { BookStorageKernel } from "../../packages/novel-storage/kernel.mjs";
-const [root, bookId, expected, input, stage] = process.argv.slice(2);
+const [root, bookId, expected, input, stage, review] = process.argv.slice(2);
 const originalPath = BookStorageKernel.prototype.path;
 BookStorageKernel.prototype.path = async function (bookRoot, path) {
   const resolved = await originalPath.call(this, bookRoot, path);
@@ -35,10 +35,19 @@ BookStorageKernel.prototype.path = async function (bookRoot, path) {
   return resolved;
 };
 const store = new NovelStore(root);
-await store.imageTasks.adopt(
-  bookId,
-  JSON.parse(expected),
-  0,
-  JSON.parse(input),
-);
+if (review)
+  await store.imageTasks.adoptReviewed(
+    bookId,
+    JSON.parse(expected),
+    0,
+    JSON.parse(input),
+    JSON.parse(review),
+  );
+else
+  await store.imageTasks.adopt(
+    bookId,
+    JSON.parse(expected),
+    0,
+    JSON.parse(input),
+  );
 throw new Error("Adoption crash checkpoint was not reached");

@@ -357,7 +357,7 @@ if (
   imageStudio.packaged !== true ||
   imageStudio.appAsarSha256 !== appAsarSha256 ||
   imageStudio.errors?.length !== 0 ||
-  imageStudio.checks?.length !== 9 ||
+  imageStudio.checks?.length !== 11 ||
   JSON.stringify(imageStudio.requests) !== JSON.stringify([0, 9, 0]) ||
   imageStudio.closeProtected !== true ||
   imageStudio.remoteUnknownAfterRestart !== true ||
@@ -367,7 +367,10 @@ if (
   imageStudio.crashCredentialsRetained !== true ||
   imageStudio.characterTargetVersionChecked !== true ||
   imageStudio.chapterTargetVersionChecked !== true ||
-  imageStudio.rendererRecoveryRetainsPaidResult !== true
+  imageStudio.rendererRecoveryRetainsPaidResult !== true ||
+  imageStudio.reviewedTargetAdoption !== true ||
+  imageStudio.reviewedChapterAdoption !== true ||
+  imageStudio.reviewedTargetNarrowConfirmation !== true
 )
   throw new Error("Installed image author workflow proof is missing or stale");
 manifest.imageStudio = {
@@ -385,6 +388,9 @@ manifest.imageStudio = {
   characterTargetVersionChecked: true,
   chapterTargetVersionChecked: true,
   rendererRecoveryRetainsPaidResult: true,
+  reviewedTargetAdoption: true,
+  reviewedChapterAdoption: true,
+  reviewedTargetNarrowConfirmation: true,
 };
 if (
   modelProfiles.status !== "passed" ||

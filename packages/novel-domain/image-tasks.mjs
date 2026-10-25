@@ -118,7 +118,40 @@ export function imageTaskOutcome(value) {
     remoteResult: value.remoteResult,
   };
 }
-function candidate(value, index) {
+export function imageTaskReviewedTarget(original, value) {
+  const before = imageTaskTarget(original),
+    after = imageTaskTarget(value);
+  if (
+    before.purpose !== after.purpose ||
+    ["material", "chapter"].some(
+      (field) => (before[field]?.id ?? null) !== (after[field]?.id ?? null),
+    )
+  )
+    throw new Error(
+      "复评只能确认同一人物或章节的新版本，不能改变用途或目标身份",
+    );
+  if (JSON.stringify(before) === JSON.stringify(after))
+    throw new Error("目标没有变化，请使用普通采用");
+  return after;
+}
+export function imageTaskTargetReviewHash(task, index, adoption) {
+  const item = task.candidates[index];
+  return hash({
+    format: "zinovel-image-target-review",
+    schemaVersion: 1,
+    taskId: task.id,
+    creationHash: task.creationHash,
+    responseHash: task.responseHash,
+    index,
+    assetId: item.assetId,
+    original: imageTaskTarget(task.target),
+    target: imageTaskReviewedTarget(task.target, adoption.targetReview.target),
+    adoptedBookId: adoption.bookId,
+    creation: adoption.creationHash,
+    adoptedAt: adoption.adoptedAt,
+  });
+}
+function candidate(value, index, version) {
   keys(value, [
     "index",
     "blob",
@@ -142,7 +175,13 @@ function candidate(value, index) {
   )
     throw new Error("图像候选原返回位置无效");
   if (value.decision === "accepted") {
-    keys(value.adoption, ["bookId", "input", "creationHash", "adoptedAt"]);
+    keys(value.adoption, [
+      "bookId",
+      "input",
+      "creationHash",
+      "adoptedAt",
+      ...(version === 2 ? ["targetReview"] : []),
+    ]);
     if (
       assetCreationHash(
         value.assetId,
@@ -248,7 +287,7 @@ export function validateImageTask(value, id, origins) {
   ]);
   if (
     value.format !== "zinovel-image-task" ||
-    value.schemaVersion !== 1 ||
+    ![1, 2].includes(value.schemaVersion) ||
     value.id !== assetId(id) ||
     !origins.includes(assetId(value.bookId)) ||
     ![
@@ -287,7 +326,9 @@ export function validateImageTask(value, id, origins) {
     typeof value.interruptedAfterResponse !== "boolean"
   )
     throw new Error("图像候选清单无效");
-  value.candidates.forEach(candidate);
+  value.candidates.forEach((item, index) =>
+    candidate(item, index, value.schemaVersion),
+  );
   const candidateErrors =
     value.candidateErrors === undefined
       ? []
@@ -313,7 +354,22 @@ export function validateImageTask(value, id, origins) {
         !adoptedInput.linkedIds.includes(value.target.material.id))
     )
       throw new Error("图像采用目标或所属作品不符");
+    if (item.adoption.targetReview !== undefined) {
+      const review = item.adoption.targetReview;
+      keys(review, ["schemaVersion", "target", "hash"]);
+      if (
+        review.schemaVersion !== 1 ||
+        imageTaskTargetReviewHash(value, item.index, item.adoption) !==
+          assetHash(review.hash)
+      )
+        throw new Error("图像目标复评回执校验不符，原记录已保留");
+    }
   }
+  if (
+    value.schemaVersion === 2 &&
+    !value.candidates.some((item) => item.adoption?.targetReview)
+  )
+    throw new Error("图像任务新版本缺少明确复评事实");
   if (value.attemptId !== undefined) assetId(value.attemptId);
   if (value.status === "prepared" && value.attemptId !== undefined)
     throw new Error("有发送意图的任务不能重置为待发送");

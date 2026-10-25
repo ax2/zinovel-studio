@@ -856,7 +856,7 @@ try {
   await panel()
     .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
     .waitFor();
-  const changedMaterial = await request("materials.save", {
+  let changedMaterial = await request("materials.save", {
     bookId: book.id,
     expected: expected(material),
     input: {
@@ -885,6 +885,130 @@ try {
   assert.equal(
     (await request("assets.list", { bookId: book.id })).items.length,
     3,
+  );
+  const stalePortraitPath = join(
+      data,
+      "library",
+      book.id,
+      ".zinovel/image-tasks",
+      stalePortrait.id + ".json",
+    ),
+    portraitBeforeReview = await readFile(stalePortraitPath),
+    reviewRegion = () =>
+      panel().getByRole("region", { name: "目标版本复评", exact: true }),
+    reviewButton = () =>
+      panel().getByRole("button", {
+        name: "确认按当前目标采用（不重新生成）",
+        exact: true,
+      }),
+    reviewCheckbox = () =>
+      panel().getByLabel(
+        "我已核对画面与当前目标，确认将旧候选关联当前版本（不重新生成）",
+        { exact: true },
+      );
+  await assert.rejects(
+    request("image.compare-target", {
+      bookId: book.id,
+      expected: expected(stalePortrait),
+      index: 0,
+      apiKey: "synthetic-rejected",
+    }),
+    /额外字段/,
+  );
+  await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  await reviewRegion()
+    .getByText("原生成目标与当前目标", { exact: true })
+    .waitFor();
+  assert.equal(await reviewButton().isDisabled(), true);
+  assert.equal(calls[1].length, 7);
+  assert.deepEqual(await readFile(stalePortraitPath), portraitBeforeReview);
+  await panel()
+    .getByRole("button", { name: "取消本次复评", exact: true })
+    .click();
+  assert.equal(await reviewRegion().count(), 0);
+  assert.equal(
+    await panel().getByLabel("采用后的图像标题", { exact: true }).inputValue(),
+    "人物定妆·冲突说明不丢失",
+  );
+  assert.deepEqual(await readFile(stalePortraitPath), portraitBeforeReview);
+  await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  await reviewRegion().waitFor();
+  changedMaterial = await request("materials.save", {
+    bookId: book.id,
+    expected: expected(changedMaterial),
+    input: {
+      title: material.title,
+      kind: "character",
+      status: "planned",
+      fields: { appearance: "旅行斗篷𠮷🌊" },
+      notes: "作者在复评后再次修改；必须重读当前版本",
+      chapterIds: [],
+    },
+  });
+  await reviewCheckbox().check();
+  await reviewButton().click();
+  await panel()
+    .getByRole("alert")
+    .filter({ hasText: "目标再次改变" })
+    .waitFor();
+  assert.equal(await reviewCheckbox().isChecked(), false);
+  assert.deepEqual(await readFile(stalePortraitPath), portraitBeforeReview);
+  await panel()
+    .getByRole("button", { name: "关闭图像工作室", exact: true })
+    .click();
+  await open();
+  await panel().locator(`[data-task-id="${stalePortrait.id}"]`).click();
+  await panel()
+    .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
+    .waitFor();
+  assert.equal(await reviewRegion().count(), 0);
+  await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  await reviewRegion().getByText("旅行斗篷𠮷🌊", { exact: true }).waitFor();
+  assert.equal(await reviewCheckbox().isChecked(), false);
+  await reviewCheckbox().check();
+  await reviewRegion().scrollIntoViewIfNeeded();
+  await screenshot("portrait-target-review.png");
+  await reviewButton().click();
+  await panel()
+    .getByRole("status")
+    .filter({ hasText: "已有候选已按明确复评的当前目标采用" })
+    .waitFor();
+  const reviewedPortrait = await request("image.read", {
+    bookId: book.id,
+    id: stalePortrait.id,
+  });
+  assert.equal(reviewedPortrait.schemaVersion, 2);
+  const originalPortraitReceipt = JSON.parse(
+    portraitBeforeReview.toString("utf8"),
+  );
+  assert.equal(
+    reviewedPortrait.responseHash,
+    originalPortraitReceipt.responseHash,
+  );
+  assert.equal(
+    reviewedPortrait.candidates[0].assetId,
+    originalPortraitReceipt.candidates[0].assetId,
+  );
+  assert.deepEqual(
+    reviewedPortrait.candidates[0].blob,
+    originalPortraitReceipt.candidates[0].blob,
+  );
+  assert.deepEqual(reviewedPortrait.target, stalePortrait.target);
+  assert.equal(
+    reviewedPortrait.candidates[0].adoption.targetReview.target.material
+      .revision,
+    changedMaterial.revision,
+  );
+  assert.equal(calls[1].length, 7);
+  report.reviewedTargetAdoption = true;
+  report.checks.push(
+    "Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call",
   );
   const freshPortrait = await prepare(
     "合成人物定妆：作者明确选择当前人物修订。",
@@ -974,11 +1098,80 @@ try {
     .getByLabel("采用后的图像标题", { exact: true })
     .fill("章节港口图·明确采用");
   await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  await reviewRegion()
+    .getByRole("status")
+    .filter({ hasText: "当前目标与生成时版本一致" })
+    .waitFor();
+  await panel()
+    .getByRole("button", { name: "取消本次复评", exact: true })
+    .click();
+  const chapterForRename = await request("chapter.read", {
+      bookId: book.id,
+      chapterId: book.chapters[0].id,
+    }),
+    renamed = await request("chapter.save", {
+      bookId: book.id,
+      chapterId: chapterForRename.id,
+      expectedRevision: chapterForRename.revision,
+      expectedHash: chapterForRename.diskHash,
+      title: "港口·复评当前标题",
+      body: chapterForRename.body,
+    });
+  assert.equal(renamed.status, "saved");
+  await panel()
     .getByRole("button", { name: "明确采用当前候选", exact: true })
     .click();
   await panel()
+    .getByRole("alert")
+    .filter({ hasText: "图像目标章节已改变" })
+    .waitFor();
+  await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  assert.equal(
+    await reviewRegion()
+      .getByLabel("当前目标正文供核对", { exact: true })
+      .inputValue(),
+    body,
+  );
+  await reviewRegion()
+    .getByText("港口·复评当前标题", { exact: true })
+    .waitFor();
+  assert.equal(await reviewButton().isDisabled(), true);
+  await reviewCheckbox().check();
+  await reviewRegion().scrollIntoViewIfNeeded();
+  await screenshot("chapter-target-review.png");
+  await panel()
+    .getByRole("button", { name: "关闭图像工作室", exact: true })
+    .click();
+  await app.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].setBounds({ width: 820, height: 840 }),
+  );
+  await page.getByTitle("深色主题", { exact: true }).click();
+  await open();
+  await panel().getByRole("button", { name: "任务记录", exact: true }).click();
+  await panel().locator(`[data-task-id="${freshChapter.id}"]`).click();
+  await panel()
+    .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
+    .waitFor();
+  await panel()
+    .getByRole("button", { name: "比较原目标与当前版本", exact: true })
+    .click();
+  await reviewRegion().waitFor();
+  assert.equal(await reviewCheckbox().isChecked(), false);
+  await reviewCheckbox().check();
+  await reviewRegion()
+    .getByLabel("当前目标正文供核对", { exact: true })
+    .scrollIntoViewIfNeeded();
+  await screenshot("chapter-target-review-dark-narrow.png");
+  await reviewButton().scrollIntoViewIfNeeded();
+  await screenshot("chapter-target-confirm-dark-narrow.png");
+  await reviewButton().click();
+  await panel()
     .getByRole("status")
-    .filter({ hasText: "候选已新增到图像资源库" })
+    .filter({ hasText: "已有候选已按明确复评的当前目标采用" })
     .waitFor();
   const chapterSaved = await request("image.read", {
       bookId: book.id,
@@ -990,14 +1183,32 @@ try {
     });
   assert.equal(chapterSaved.target.chapter.id, book.chapters[0].id);
   assert.equal(chapterAsset.purpose, "illustration");
+  assert.equal(
+    chapterSaved.candidates[0].adoption.targetReview.target.chapter.revision,
+    renamed.chapter.revision,
+  );
+  assert.equal(
+    chapterSaved.target.chapter.revision,
+    freshChapter.target.chapter.revision,
+  );
+  assert.equal(calls[1].length, 9);
+  report.reviewedChapterAdoption = true;
+  report.reviewedTargetNarrowConfirmation = true;
+  report.checks.push(
+    "Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP",
+  );
   report.chapterTargetVersionChecked = true;
   report.checks.push(
-    "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair then a new author-confirmed task can adopt the chapter illustration",
+    "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review",
   );
 
   await panel()
     .getByRole("button", { name: "关闭图像工作室", exact: true })
     .click();
+  await page.getByTitle("浅色主题", { exact: true }).click();
+  await app.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].setBounds({ width: 1440, height: 960 }),
+  );
   const draftKey = `zinovel-image-studio/${book.id}`,
     future = JSON.stringify({
       schemaVersion: 999,
@@ -1038,6 +1249,19 @@ try {
   assert.equal(invalidAfterRestart.responseHash, allInvalidSaved.responseHash);
   assert.equal(invalidAfterRestart.dispatchState, "response-received");
   assert.equal(calls[1].length, 9);
+  for (const original of [reviewedPortrait, chapterSaved]) {
+    const reread = await request("image.read", {
+      bookId: book.id,
+      id: original.id,
+    });
+    assert.equal(reread.schemaVersion, 2);
+    assert.equal(reread.responseHash, original.responseHash);
+    assert.deepEqual(
+      reread.candidates[0].adoption.targetReview,
+      original.candidates[0].adoption.targetReview,
+    );
+    assert.deepEqual(reread.target, original.target);
+  }
   report.mixedBatchRecovery = true;
   report.checks.push(
     "A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
@@ -1132,6 +1356,15 @@ try {
     changedMaterial.notes,
   );
   assert.deepEqual(report.errors, []);
+  assert.equal(
+    (
+      await request("chapter.read", {
+        bookId: book.id,
+        chapterId: book.chapters[0].id,
+      })
+    ).title,
+    "港口·复评当前标题",
+  );
   report.originalsPreserved = true;
   report.requests = calls.map((rows) => rows.length);
   report.checks.push(

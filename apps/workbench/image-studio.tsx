@@ -2,10 +2,32 @@ import React, { useEffect, useRef, useState } from "react";
 import { api, type Book } from "./api";
 import { registerEditorCloseGuard } from "./editor-close-guards";
 import { imageGenerationPreflight } from "../../packages/novel-domain/image-generation.mjs";
+import { materialKinds } from "../../packages/novel-domain/materials.mjs";
 import type { AssetPurpose } from "../../packages/novel-domain/assets.mjs";
 import type { ModelChoice } from "./model-choice";
 
 type Expected = { id: string; revision: number; diskHash: string };
+type ImageTarget = {
+  purpose: AssetPurpose;
+  material: Expected | null;
+  chapter: Expected | null;
+};
+type TargetComparison = {
+  task: Expected;
+  index: number;
+  assetId: string;
+  responseHash: string;
+  original: ImageTarget;
+  current: ImageTarget;
+  changed: boolean;
+};
+type TargetSummary = Expected & {
+  title: string;
+  kind?: string;
+  notes?: string;
+  fields?: Record<string, string>;
+  body?: string;
+};
 type ImageModel = {
   id: string;
   label: string;
@@ -26,11 +48,7 @@ type Task = Expected & {
   createdAt: string;
   request: { prompt: string; n: number; size: string; responseMode: string };
   profile: { label: string; model: string; revision: number; diskHash: string };
-  target: {
-    purpose: AssetPurpose;
-    material: Expected | null;
-    chapter: Expected | null;
-  };
+  target: ImageTarget;
   budget: ImageModel["imageBudget"];
   interruptedAfterResponse: boolean;
   candidates: {
@@ -40,6 +58,9 @@ type Task = Expected & {
     decision: string;
     blob: { sha256: string; displayWidth: number; displayHeight: number };
     revisedPrompt?: string;
+    adoption?: {
+      targetReview?: { schemaVersion: 1; target: ImageTarget; hash: string };
+    };
   }[];
   candidateErrors?: { sourceIndex: number; code: string }[];
   outcome?: { code: string; dispatched: boolean; remoteResult: string };
@@ -201,6 +222,61 @@ export function ImageStudio({
       [],
     ),
     [cardTotal, setCardTotal] = useState(0);
+  const [comparison, setComparison] = useState<TargetComparison | null>(null),
+    [targetSummaries, setTargetSummaries] = useState<TargetSummary[]>([]),
+    [reviewConfirmed, setReviewConfirmed] = useState(false);
+  useEffect(() => {
+    setComparison(null);
+    setTargetSummaries([]);
+    setReviewConfirmed(false);
+  }, [task?.id, task?.diskHash, index]);
+  const comparisonMatches =
+    !!comparison &&
+    !!task &&
+    comparison.task.id === task.id &&
+    comparison.task.diskHash === task.diskHash &&
+    comparison.index === index;
+  async function compareCurrentTarget() {
+    if (!task) return;
+    setComparison(null);
+    setTargetSummaries([]);
+    setReviewConfirmed(false);
+    const next = await api<TargetComparison>("image.compare-target", {
+        bookId: book.id,
+        expected: expected(task),
+        index,
+      }),
+      summaries: TargetSummary[] = [];
+    for (const [kind, target] of [
+      ["material", next.current.material],
+      ["chapter", next.current.chapter],
+    ] as const) {
+      if (!target) continue;
+      const record = await api<TargetSummary>(
+        kind === "material" ? "materials.read" : "chapter.read",
+        kind === "material"
+          ? { bookId: book.id, id: target.id }
+          : { bookId: book.id, chapterId: target.id },
+      );
+      if (JSON.stringify(expected(record)) !== JSON.stringify(target))
+        throw new Error("比较期间目标再次改变，请重新读取当前版本");
+      summaries.push(record);
+    }
+    if (alive.current) {
+      setComparison(next);
+      setTargetSummaries(summaries);
+    }
+  }
+  function adoptionInput(selected: Task) {
+    return {
+      title: draft.title,
+      purpose: selected.target.purpose,
+      source: `AI生成；${selected.profile.label} / ${selected.profile.model}；任务 ${selected.id}；原返回候选 ${(selected.candidates[index].sourceIndex ?? index) + 1}`,
+      rights: draft.rights,
+      notes: "",
+      linkedIds: selected.target.material ? [selected.target.material.id] : [],
+    };
+  }
   function showTask(next: Task) {
     taskRef.current = next;
     setTask(next);
@@ -976,9 +1052,20 @@ export function ImageStudio({
                       </details>
                     )}
                     {candidate.decision === "accepted" ? (
-                      <p role="status">
-                        该候选已采用为资源。请到图像资源库编辑、回收或另选封面；这里不会重建或覆盖它。
-                      </p>
+                      <>
+                        <p role="status">
+                          该候选已采用为资源。请到图像资源库编辑、回收或另选封面；这里不会重建或覆盖它。
+                        </p>
+                        {candidate.adoption?.targetReview && (
+                          <p>
+                            采用前已明确复评当前目标。生成时的目标和提示词保持原样；
+                            {candidate.adoption.targetReview.target.material &&
+                              `采用时人物资料修订 ${candidate.adoption.targetReview.target.material.revision}。`}
+                            {candidate.adoption.targetReview.target.chapter &&
+                              `采用时章节修订 ${candidate.adoption.targetReview.target.chapter.revision}。`}
+                          </p>
+                        )}
+                      </>
                     ) : (
                       <fieldset
                         disabled={
@@ -1015,39 +1102,190 @@ export function ImageStudio({
                         <p>
                           明确采用只新增资源，不自动设为封面、定妆或地图底图，也不进入出版物。请自行核对服务使用条件与画面质量。
                         </p>
-                        <button
-                          disabled={!draft.title.trim()}
-                          onClick={() =>
-                            void perform(async () => {
-                              const result = await api<{ task: Task }>(
-                                "image.adopt",
-                                {
-                                  bookId: book.id,
-                                  expected: expected(task),
-                                  index,
-                                  input: {
-                                    title: draft.title,
-                                    purpose: task.target.purpose,
-                                    source: `AI生成；${task.profile.label} / ${task.profile.model}；任务 ${task.id}；原返回候选 ${(candidate.sourceIndex ?? index) + 1}`,
-                                    rights: draft.rights,
-                                    notes: "",
-                                    linkedIds: task.target.material
-                                      ? [task.target.material.id]
-                                      : [],
+                        {(task.target.material || task.target.chapter) && (
+                          <>
+                            <button
+                              onClick={() => void perform(compareCurrentTarget)}
+                            >
+                              比较原目标与当前版本
+                            </button>
+                            {comparisonMatches && comparison && (
+                              <section
+                                className="image-target-review"
+                                aria-label="目标版本复评"
+                              >
+                                <h4>原生成目标与当前目标</h4>
+                                {(["material", "chapter"] as const).map(
+                                  (kind) => {
+                                    const original = comparison.original[kind],
+                                      current = comparison.current[kind];
+                                    return original && current ? (
+                                      <p key={kind}>
+                                        {kind === "material"
+                                          ? "人物资料"
+                                          : "章节"}
+                                        ：原修订 {original.revision} → 当前修订{" "}
+                                        {current.revision}；
+                                        {original.diskHash === current.diskHash
+                                          ? "内容一致"
+                                          : "内容已改变"}
+                                      </p>
+                                    ) : null;
                                   },
-                                },
-                              );
-                              if (alive.current) {
-                                showTask(result.task);
-                                setNotice(
-                                  "候选已新增到图像资源库，正文和已选图片保持原样。",
+                                )}
+                                <p>
+                                  原任务未保存当时资料或章稿的全文。请对照上方冻结提示词、候选画面和下面当前内容核对；比较不会把这些内容发送给模型。
+                                </p>
+                                {targetSummaries.map((record) => (
+                                  <div key={record.id}>
+                                    <h5>{record.title}</h5>
+                                    {record.fields && (
+                                      <dl>
+                                        {Object.entries(record.fields)
+                                          .filter(([, value]) => value)
+                                          .map(([key, value]) => (
+                                            <React.Fragment key={key}>
+                                              <dt>
+                                                {materialKinds
+                                                  .find(
+                                                    (kind) =>
+                                                      kind.id === record.kind,
+                                                  )
+                                                  ?.fields.find(
+                                                    (field) =>
+                                                      field.key === key,
+                                                  )?.label || key}
+                                              </dt>
+                                              <dd>{value}</dd>
+                                            </React.Fragment>
+                                          ))}
+                                      </dl>
+                                    )}
+                                    {record.notes && (
+                                      <label>
+                                        当前目标备注
+                                        <textarea
+                                          aria-label="当前目标备注"
+                                          rows={4}
+                                          readOnly
+                                          value={record.notes}
+                                        />
+                                      </label>
+                                    )}
+                                    {record.body !== undefined && (
+                                      <label>
+                                        当前目标正文供核对
+                                        <textarea
+                                          aria-label="当前目标正文供核对"
+                                          rows={6}
+                                          readOnly
+                                          value={record.body}
+                                        />
+                                      </label>
+                                    )}
+                                  </div>
+                                ))}
+                                {comparison.changed ? (
+                                  <>
+                                    <p role="status">
+                                      目标已变化，这张图可能不符合当前设定。只有再次核对并确认，才能把已有候选关联当前版本；不会重新生成或计为新请求。
+                                    </p>
+                                    <label className="checkbox-row">
+                                      <input
+                                        type="checkbox"
+                                        checked={reviewConfirmed}
+                                        onChange={(e) =>
+                                          setReviewConfirmed(e.target.checked)
+                                        }
+                                      />
+                                      我已核对画面与当前目标，确认将旧候选关联当前版本（不重新生成）
+                                    </label>
+                                    <button
+                                      disabled={
+                                        !reviewConfirmed || !draft.title.trim()
+                                      }
+                                      onClick={() =>
+                                        void perform(async () => {
+                                          try {
+                                            const result = await api<{
+                                              task: Task;
+                                            }>("image.adopt-reviewed", {
+                                              bookId: book.id,
+                                              expected: comparison.task,
+                                              index,
+                                              input: adoptionInput(task),
+                                              review: {
+                                                target: comparison.current,
+                                                responseHash:
+                                                  comparison.responseHash,
+                                                confirmation:
+                                                  "adopt-for-current-target-v1",
+                                              },
+                                            });
+                                            if (alive.current) {
+                                              showTask(result.task);
+                                              setNotice(
+                                                "已有候选已按明确复评的当前目标采用，没有重新生成。",
+                                              );
+                                            }
+                                          } catch (error) {
+                                            if (alive.current)
+                                              setReviewConfirmed(false);
+                                            throw error;
+                                          }
+                                        })
+                                      }
+                                    >
+                                      确认按当前目标采用（不重新生成）
+                                    </button>
+                                  </>
+                                ) : (
+                                  <p role="status">
+                                    当前目标与生成时版本一致，可使用普通采用。
+                                  </p>
+                                )}
+                                <button
+                                  onClick={() => {
+                                    setComparison(null);
+                                    setTargetSummaries([]);
+                                    setReviewConfirmed(false);
+                                    setNotice(
+                                      "已取消复评，候选和原目标未修改。",
+                                    );
+                                  }}
+                                >
+                                  取消本次复评
+                                </button>
+                              </section>
+                            )}
+                          </>
+                        )}
+                        {!(comparisonMatches && comparison?.changed) && (
+                          <button
+                            disabled={!draft.title.trim()}
+                            onClick={() =>
+                              void perform(async () => {
+                                const result = await api<{ task: Task }>(
+                                  "image.adopt",
+                                  {
+                                    bookId: book.id,
+                                    expected: expected(task),
+                                    index,
+                                    input: adoptionInput(task),
+                                  },
                                 );
-                              }
-                            })
-                          }
-                        >
-                          明确采用当前候选
-                        </button>
+                                if (alive.current) {
+                                  showTask(result.task);
+                                  setNotice(
+                                    "候选已新增到图像资源库，正文和已选图片保持原样。",
+                                  );
+                                }
+                              })
+                            }
+                          >
+                            明确采用当前候选
+                          </button>
+                        )}
                       </fieldset>
                     )}
                   </>

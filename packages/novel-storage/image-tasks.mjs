@@ -8,6 +8,8 @@ import { imageGenerationLimits } from "../novel-domain/image-generation.mjs";
 import {
   imageTaskInput,
   imageTaskTarget,
+  imageTaskReviewedTarget,
+  imageTaskTargetReviewHash,
   imageTaskCreationHash,
   imageTaskOutcome,
   imageTaskResponseHash,
@@ -136,7 +138,7 @@ export class ImageTaskStore {
   }
   async target(ctx, target) {
     if (ctx.book.deletedAt || ctx.book.archivedAt)
-      throw new Error("作品已回收或归档，未发送图像请求");
+      throw new Error("作品已回收或归档，当前图像操作已停止");
     if (target.material) {
       const record = await this.materials.record(ctx.root, target.material.id);
       if (
@@ -525,6 +527,39 @@ export class ImageTaskStore {
       return this.view(ctx, await this.commit(ctx, next, previous));
     });
   }
+  async currentTarget(ctx, original) {
+    const current = imageTaskTarget(original);
+    if (original.material) {
+      const record = await this.materials.record(
+        ctx.root,
+        original.material.id,
+      );
+      current.material = {
+        id: original.material.id,
+        revision: record.data.revision,
+        diskHash: record.diskHash,
+      };
+    }
+    if (original.chapter) {
+      const chapter = ctx.book.chapters.find(
+        (value) => value.id === original.chapter.id && !value.deletedAt,
+      );
+      if (!chapter) throw new Error("图像目标章节已回收或不存在");
+      const raw = await readUtf8File(
+          await this.storage.path(ctx.root, `manuscript/${chapter.id}.md`),
+        ),
+        diskHash = binaryHash(Buffer.from(raw));
+      if (chapter.hash !== diskHash)
+        throw new Error("目标正文存在尚未处理的外部修改，请先在编辑器处理冲突");
+      current.chapter = {
+        id: chapter.id,
+        revision: chapter.revision,
+        diskHash,
+      };
+    }
+    await this.target(ctx, current);
+    return current;
+  }
   async compareTarget(bookId, expected, index) {
     const requested = expectedValue(expected);
     if (
@@ -544,40 +579,9 @@ export class ImageTaskStore {
       )
         throw new Error("只有待采用的已接收候选可比较目标");
       const original = imageTaskTarget(previous.data.target),
-        current = structuredClone(original);
-      if (original.material) {
-        const record = await this.materials.record(
-          ctx.root,
-          original.material.id,
-        );
-        current.material = {
-          id: original.material.id,
-          revision: record.data.revision,
-          diskHash: record.diskHash,
-        };
-      }
-      if (original.chapter) {
-        const chapter = ctx.book.chapters.find(
-          (value) => value.id === original.chapter.id && !value.deletedAt,
-        );
-        if (!chapter) throw new Error("图像目标章节已回收或不存在");
-        const raw = await readUtf8File(
-            await this.storage.path(ctx.root, `manuscript/${chapter.id}.md`),
-          ),
-          diskHash = binaryHash(Buffer.from(raw));
-        if (chapter.hash !== diskHash)
-          throw new Error(
-            "目标正文存在尚未处理的外部修改，请先在编辑器处理冲突",
-          );
-        current.chapter = {
-          id: chapter.id,
-          revision: chapter.revision,
-          diskHash,
-        };
-      }
+        current = await this.currentTarget(ctx, original);
       // Read-only comparison is not permission to adopt. The eventual confirmed
       // adoption must recheck both task and target after decoding, then commit once.
-      await this.target(ctx, current);
       return {
         task: {
           id: previous.data.id,
@@ -593,7 +597,36 @@ export class ImageTaskStore {
       };
     });
   }
-  async adopt(bookId, expected, index, input) {
+  adopt(bookId, expected, index, input) {
+    return this.#adopt(bookId, expected, index, input, null);
+  }
+  async adoptReviewed(bookId, expected, index, input, review) {
+    if (
+      !review ||
+      typeof review !== "object" ||
+      Array.isArray(review) ||
+      Object.keys(review).some(
+        (key) => !["target", "responseHash", "confirmation"].includes(key),
+      ) ||
+      review.confirmation !== "adopt-for-current-target-v1"
+    )
+      throw new Error("请先比较当前目标并明确确认本地采用，不会重新生成");
+    const captured = {
+      target: imageTaskTarget(review.target),
+      responseHash: assetHash(review.responseHash),
+    };
+    return this.#adopt(bookId, expected, index, input, captured);
+  }
+  async adoptionTarget(ctx, task, review) {
+    if (!review) return this.target(ctx, task.target);
+    const target = imageTaskReviewedTarget(task.target, review.target);
+    if (review.responseHash !== task.responseHash)
+      throw new Error("图像返回回执已改变，请重新比较");
+    const current = await this.currentTarget(ctx, task.target);
+    if (JSON.stringify(current) !== JSON.stringify(target))
+      throw new Error("复评后的目标再次改变，请保留输入并重新比较");
+  }
+  async #adopt(bookId, expected, index, input, review) {
     const requested = expectedValue(expected),
       data = assetInput(input);
     if (
@@ -620,6 +653,14 @@ export class ImageTaskStore {
         throw new Error("采用用途或关联人物与已确认目标不符");
       if (item.decision === "accepted") {
         if (
+          review &&
+          (!item.adoption.targetReview ||
+            review.responseHash !== previous.data.responseHash ||
+            JSON.stringify(review.target) !==
+              JSON.stringify(item.adoption.targetReview.target))
+        )
+          throw new Error("该候选已有另一份采用决定，请编辑现有资源");
+        if (
           assetCreationHash(
             item.assetId,
             item.adoption.bookId,
@@ -640,7 +681,7 @@ export class ImageTaskStore {
           },
         };
       }
-      await this.target(ctx, previous.data.target);
+      await this.adoptionTarget(ctx, previous.data, review);
       return {
         bytes: await this.assets.blobBytes(ctx, item.blob),
         blob: item.blob,
@@ -658,7 +699,6 @@ export class ImageTaskStore {
       const ctx = await this.context(bookId),
         previous = await this.current(ctx, requested),
         item = previous.data.candidates[index];
-      await this.target(ctx, previous.data.target);
       // Check bytes again after decoding outside the queue; external edits cannot be hidden by a cached preview.
       await this.assets.blobBytes(ctx, item.blob);
       const prepared = await this.assets.prepareImport(
@@ -669,6 +709,7 @@ export class ImageTaskStore {
       );
       if (prepared.existing)
         throw new Error("候选预留身份已有资源，请保留文件并核对采用记录");
+      await this.adoptionTarget(ctx, previous.data, review);
       const next = structuredClone(previous.data);
       next.revision++;
       next.updatedAt = new Date().toISOString();
@@ -679,6 +720,16 @@ export class ImageTaskStore {
         creationHash: prepared.next.creationHash,
         adoptedAt: next.updatedAt,
       };
+      if (review) {
+        next.schemaVersion = 2;
+        const adoption = next.candidates[index].adoption;
+        adoption.targetReview = { schemaVersion: 1, target: review.target };
+        adoption.targetReview.hash = imageTaskTargetReviewHash(
+          next,
+          index,
+          adoption,
+        );
+      }
       validateImageTask(next, next.id, ctx.origins);
       const raw = json(next),
         path = taskPath(next.id);

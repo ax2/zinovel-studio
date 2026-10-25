@@ -1,0 +1,60 @@
+✔ a real prior v1 synthetic receipt without optional partial-response fields retains its original immutable response hash (4.5509ms)
+✖ explicit reviewed adoption retains original generation facts, writes a versioned target receipt and retries without overwriting later author edits (264.0733ms)
+✔ reviewed adoption refuses missing confirmation, forged response, unchanged or foreign target and wrong purpose without rewriting paid results (195.3913ms)
+✔ a target changed while decoding a reviewed adoption refuses the old confirmation and retains paid candidates (239.6622ms)
+✔ reviewed chapter adoption refuses unresolved external bytes and adopts only the confirmed formally saved revision (193.295ms)
+✔ review receipt tampering and downgrade refuse while v2 backup restoration preserves both generation and later confirmation origins (380.9098ms)
+✔ reviewed adoption of a restored pending task records the current book, and simultaneous confirmations create exactly one asset (353.0965ms)
+✔ actual process exit during reviewed adoption journal recovers the exact target receipt and asset together (388.7223ms)
+✔ actual process exit during reviewed adoption first-record recovers the exact target receipt and asset together (414.1933ms)
+✔ explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything (254.7573ms)
+✔ adoption refuses wrong purpose, discarded tasks, stale CAS and corrupted bytes without visible resources (165.889ms)
+✔ a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate (287.9081ms)
+✔ a previously accepted resource removed outside the app is never silently recreated by adoption retry (257.2867ms)
+✔ a restored pending candidate is adopted only into the explicitly selected restored book, preserving the origin task and source assets (673.2118ms)
+✔ simultaneous adoption clicks commit once, and a separately occupied reserved identity is never overwritten or silently attached (503.7683ms)
+✔ actual process exit at adoption journal recovers both exact records through one journal without duplicate assets or a network call (397.5081ms)
+✔ actual process exit at adoption first-record recovers both exact records through one journal without duplicate assets or a network call (404.0337ms)
+✔ actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript (264.6905ms)
+✔ stable creation IDs reconcile existing state without re-sending and reject different frozen inputs (139.9214ms)
+✔ restart makes a durable send intent unknown; it cannot be relabelled as unsent or receive a fabricated return from a new session (187.847ms)
+✔ target versions are checked before sending, but later author edits do not discard paid returned candidates (386.5005ms)
+✔ foreign targets, plaintext credentials, unsupported schema, invalid UTF-8 and changed fingerprints refuse without overwriting originals (181.1968ms)
+✔ raw-byte conflicts, wrong attempts and corrupt shared image objects never overwrite task state or create visible assets (209.2388ms)
+✔ full book backup and restore retain unadopted candidates and frozen origin without resuming a provider request (377.8014ms)
+✔ a worker exits after durable intent journal creation; startup recovery retains unknown result rather than automatically sending (234.2063ms)
+✔ image services cannot be attached to a different writer kernel (38.8355ms)
+✔ restored interrupted tasks can be explicitly discarded while keeping dispatch unknown, never rewritten as unsent (272.9237ms)
+✔ chapter illustrations freeze chapter identity, revision and body hash and reject an external same-revision edit before sending (81.4228ms)
+✔ read-only target comparison exposes the same character's current version without rewriting the paid task or authorizing stale adoption (278.1229ms)
+✔ chapter comparison reads the current formally saved version but refuses unresolved external manuscript edits without changing either file (257.3377ms)
+✔ target comparison preserves unchanged tasks and refuses accepted, discarded and stale task identities (513.7267ms)
+✔ received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy (209.6994ms)
+✔ paid candidate decoding waits for a reserved existing slot while ordinary excess previews still refuse (50.9946ms)
+✔ a worker exit after receive intent keeps known response hashes and incomplete files, then exact original bytes can be saved without another request (373.7853ms)
+✔ a worker exit after candidate blob publication is reconciled locally to received and never creates visible resource metadata (475.6229ms)
+✔ a mixed-response receipt survives actual process exit before blobs, rejects altered errors and restores only exact original positions without a request (386.2759ms)
+✔ partial image receipts retain valid original positions, bounded failures, late cancellation and adoption identity through restart (264.6349ms)
+✔ all invalid structured items record a known received response and per-item failures, never unknown or adoptable phantom images (367.7266ms)
+✔ duplicate, missing and unbounded per-item positions refuse the receipt without overwriting send intent (134.1326ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 38
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11277.8202
+
+✖ failing tests:
+
+test at tests\image-tasks.test.mjs:151:1
+✖ explicit reviewed adoption retains original generation facts, writes a versioned target receipt and retries without overwriting later author edits (264.0733ms)
+  Error: 图像资源格式不支持，请保留原文件
+      at keys (file:///D:/Work/zinovel-studio/packages/novel-domain/assets.mjs:34:11)
+      at inputFields (file:///D:/Work/zinovel-studio/packages/novel-domain/assets.mjs:47:3)
+      at assetInput (file:///D:/Work/zinovel-studio/packages/novel-domain/assets.mjs:64:38)
+      at AssetStore.save (file:///D:/Work/zinovel-studio/packages/novel-storage/assets.mjs:397:18)
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/image-tasks.test.mjs:175:39)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
