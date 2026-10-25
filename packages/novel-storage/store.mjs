@@ -9,6 +9,7 @@ import { MixedContext } from "./context.mjs";
 import { ReaderStore } from "./reader.mjs";
 import { PublicationStore, publicationOriginIds } from "./publication.mjs";
 import { AssetStore } from "./assets.mjs";
+import { ImageTaskStore } from "./image-tasks.mjs";
 import { PublicationResources } from "./publication-resources.mjs";
 import { BackupVault } from "./backup-vault.mjs";
 import { MapStore } from "./maps.mjs";
@@ -60,6 +61,11 @@ export class NovelStore {
     );
     this.materials = new MaterialStore(this.#storage);
     this.assets = new AssetStore(this.#storage, this.materials);
+    this.imageTasks = new ImageTaskStore(
+      this.#storage,
+      this.assets,
+      this.materials,
+    );
     this.publicationResources = new PublicationResources(
       this.#storage,
       this.assets,

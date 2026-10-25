@@ -1,0 +1,23 @@
+✔ actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript (142.1605ms)
+✔ stable creation IDs reconcile existing state without re-sending and reject different frozen inputs (59.6017ms)
+✔ restart makes a durable send intent unknown; it cannot be relabelled as unsent or receive a fabricated return from a new session (91.3473ms)
+✔ target versions are checked before sending, but later author edits do not discard paid returned candidates (167.9274ms)
+✔ foreign targets, plaintext credentials, unsupported schema, invalid UTF-8 and changed fingerprints refuse without overwriting originals (87.7812ms)
+✔ raw-byte conflicts, wrong attempts and corrupt shared image objects never overwrite task state or create visible assets (97.7716ms)
+✔ full book backup and restore retain unadopted candidates and frozen origin without resuming a provider request (168.869ms)
+✔ a worker exits after durable intent journal creation; startup recovery retains unknown result rather than automatically sending (179.2063ms)
+✔ image services cannot be attached to a different writer kernel (20.9136ms)
+✔ restored interrupted tasks can be explicitly discarded while keeping dispatch unknown, never rewritten as unsent (130.4327ms)
+✔ chapter illustrations freeze chapter identity, revision and body hash and reject an external same-revision edit before sending (40.5986ms)
+✔ received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy (86.4156ms)
+✔ paid candidate decoding waits for a reserved existing slot while ordinary excess previews still refuse (23.0679ms)
+✔ a worker exit after receive intent keeps known response hashes and incomplete files, then exact original bytes can be saved without another request (232.509ms)
+✔ a worker exit after candidate blob publication is reconciled locally to received and never creates visible resource metadata (238.7697ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1896.0935

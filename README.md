@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，新增独立模型管理、凭据与文字路由及重试模型说明。167项本机安装和alpha.3升级、完整源码CI通过；标签cc1ac34独立发行CI40158310006首次完整success。公开155500176字节EXE已实际下载/hash复算，四附件、元数据摘要和匿名可见通过。本机与CI文件哈希分别保留。主线alpha.31图像传输后端10项专项/完整278项源码通过，尚无持久任务/图像界面/本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31源码](assessments/stage-006/image-transport-source.md)、[图像完整设计](design/image-generation-delivery.md)。
+最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，新增独立模型管理、凭据与文字路由及重试模型说明。167项本机安装和alpha.3升级、完整源码CI通过；标签cc1ac34独立发行CI40158310006首次完整success。公开155500176字节EXE已实际下载/hash复算，四附件、元数据摘要和匿名可见通过。本机与CI文件哈希分别保留。主线alpha.31图像传输10项与持久任务账本15项、完整293项源码通过，图像资源Electron回归5组通过；尚无生成界面/采用/本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31传输](assessments/stage-006/image-transport-source.md)、[31账本](assessments/stage-006/image-ledger-source.md)、[图像完整设计](design/image-generation-delivery.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

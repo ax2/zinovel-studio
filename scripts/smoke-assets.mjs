@@ -94,6 +94,21 @@ async function launch() {
   });
   owned = await captureOwnedProcesses(app.process().pid);
   page = await app.firstWindow();
+  const runtime = await app.evaluate(({ app }) => ({
+    version: app.getVersion(),
+    packaged: app.isPackaged,
+    path: app.getAppPath(),
+  }));
+  if (report.version && report.version !== runtime.version)
+    throw new Error("Asset validation runtime changed between launches");
+  report.version = runtime.version;
+  report.packaged = runtime.packaged;
+  if (runtime.packaged)
+    report.appAsarSha256 = binaryHash(await readFile(runtime.path));
+  else
+    report.desktopBundleSha256 = binaryHash(
+      await readFile(join(runtime.path, "dist/desktop/main.cjs")),
+    );
   page.on("pageerror", (e) => report.errors.push(e.message));
   page.on("console", (m) => {
     if (["error", "warning"].includes(m.type())) report.errors.push(m.text());

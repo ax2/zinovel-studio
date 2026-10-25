@@ -1,6 +1,6 @@
 # 图像生成接入复评（alpha.30 之后）
 
-状态：alpha.31已有请求/预算与有限图像传输源码后端，10项专项/完整278项检查通过；尚未接入持久任务、宿主或界面，image profile仍不可运行。alpha.30只交付独立模型配置与文字调用，不包含图像生成；不能把目前openai-images配置统一翻为可运行来替代能力确认。
+状态：alpha.31已有请求/预算、有限图像传输与书内持久任务账本，10项传输+15项账本/完整293项检查及既有图像资源5组Electron回归通过；账本注入唯一NovelStore内核，尚未接宿主、采用或生成界面，image profile仍不可运行。alpha.30只交付独立模型配置与文字调用，不包含图像生成；不能把目前openai-images配置统一翻为可运行来替代能力确认。
 
 2026-10-25核对[官方Images API](https://developers.openai.com/api/reference/resources/images)与[图像生成指南](https://developers.openai.com/api/docs/guides/image-generation)：GPT图像默认返回base64，其他支持该参数的模型可明确请求response_format=b64_json；不同模型的参数支持不相同。因此不能根据一个模型名字猜全部兼容性，不能对所有兼容服务强塞同一response_format。以下为项目实现选择，不是供应商保证。
 

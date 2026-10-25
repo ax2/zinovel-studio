@@ -25,6 +25,7 @@ const fields = (record) =>
   );
 export class AssetStore {
   #decoding = 0;
+  #decodeWaiters = [];
   constructor(storage, materials) {
     this.storage = storage;
     this.materials = materials;
@@ -35,14 +36,20 @@ export class AssetStore {
     if (book.id !== bookId) throw new Error("图像所属作品不符");
     return { root, book, origins: publicationOriginIds(book) };
   }
-  async decode(bytes, previewEdge) {
-    if (this.#decoding >= 2)
-      throw new Error("图像处理繁忙，请等待当前预览或导入完成");
-    this.#decoding++;
+  async decode(bytes, previewEdge, { wait = false } = {}) {
+    const captured = wait ? copyImageBytes(bytes) : bytes;
+    if (this.#decoding >= 2) {
+      if (!wait) throw new Error("图像处理繁忙，请等待当前预览或导入完成");
+      // A received paid candidate can wait for the same two decoding slots.
+      // Release transfers a reserved slot, so new previews cannot steal it.
+      await new Promise((resolve) => this.#decodeWaiters.push(resolve));
+    } else this.#decoding++;
     try {
-      return await inspectAssetImage(bytes, previewEdge);
+      return await inspectAssetImage(captured, previewEdge);
     } finally {
-      this.#decoding--;
+      const next = this.#decodeWaiters.shift();
+      if (next) next();
+      else this.#decoding--;
     }
   }
   async record(ctx, id, historical = null) {
