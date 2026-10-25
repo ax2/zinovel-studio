@@ -4,6 +4,11 @@ import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
+import {
+  captureOwnedProcesses,
+  confirmOwnedProcessesExited,
+  terminateOwnedProcesses,
+} from "./windows-owned-processes.mjs";
 
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
@@ -38,7 +43,7 @@ const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
 const screenshots = join(root, "screenshots", "stage-002", "shelf");
 await mkdir(screenshots, { recursive: true });
-let application, page;
+let application, page, owned;
 const report = { books: 100, checks: [], errors: [], status: "running" };
 async function launch() {
   application = await electron.launch({
@@ -47,9 +52,16 @@ async function launch() {
     cwd: root,
     env,
   });
+  owned = await captureOwnedProcesses(application.process().pid);
   page = await application.firstWindow();
   page.on("pageerror", (e) => report.errors.push(e.message));
   await page.getByLabel("筛选作品类型").waitFor();
+}
+async function close() {
+  await application.close();
+  await confirmOwnedProcessesExited(owned);
+  application = undefined;
+  owned = undefined;
 }
 try {
   await launch();
@@ -71,7 +83,7 @@ try {
   await page.getByText("没有符合筛选条件的作品", { exact: true }).waitFor();
   await page.getByLabel("书库归档范围").selectOption("archived");
   await page.locator(".book-card").waitFor();
-  await application.close();
+  await close();
   await launch();
   assert.equal(await page.getByLabel("筛选作品类型").inputValue(), "幻想");
   assert.equal(await page.getByLabel("书库归档范围").inputValue(), "archived");
@@ -88,13 +100,13 @@ try {
   await page.locator(".book-card").filter({ hasText: "合成作品000" }).click();
   await page.getByLabel("正文编辑器").waitFor();
   await page.getByLabel("筛选章节状态").selectOption("final");
-  assert.equal(await page.locator(".chapter-list button").count(), 1);
+  assert.equal(await page.locator(".chapter-list .chapter-entry").count(), 1);
   assert.equal(
-    await page.locator(".chapter-list button").innerText(),
+    await page.locator(".chapter-list .chapter-entry").innerText(),
     "第二章 远海\n正式",
   );
   await page.getByLabel("筛选章节状态").selectOption("draft");
-  assert.equal(await page.locator(".chapter-list button").count(), 1);
+  assert.equal(await page.locator(".chapter-list .chapter-entry").count(), 1);
   await page.getByLabel("筛选章节状态").selectOption("all");
   await page
     .getByRole("button", { name: "管理作品 / 回收站", exact: true })
@@ -116,14 +128,15 @@ try {
     changed.chapters.map((chapter) => chapter.id),
     first.chapters.map((chapter) => chapter.id).reverse(),
   );
+  await page.screenshot({
+    path: join(screenshots, "chapter-state-and-order.png"),
+  });
+  await close();
   const snapshot = await store.exportSnapshot(first.id);
   assert.deepEqual(
     snapshot.chapters.map((chapter) => chapter.body),
     ["正式章原稿。", "合成原稿0。"],
   );
-  await page.screenshot({
-    path: join(screenshots, "chapter-state-and-order.png"),
-  });
   report.checks.push(
     "draft/final chapter filters and whole-volume reorder preserve chapter IDs, manuscript bytes and export order",
   );
@@ -134,10 +147,20 @@ try {
   report.failure = String(error);
   throw error;
 } finally {
-  await application?.close();
-  await writeFile(
-    join(screenshots, "shelf-smoke.json"),
-    JSON.stringify(report, null, 2) + "\n",
-  );
-  console.log(report);
+  try {
+    if (owned) {
+      if (report.status === "failed") await terminateOwnedProcesses(owned);
+      else await close();
+    }
+  } catch (error) {
+    report.status = "failed";
+    report.cleanupFailure = String(error);
+    throw error;
+  } finally {
+    await writeFile(
+      join(screenshots, "shelf-smoke.json"),
+      JSON.stringify(report, null, 2) + "\n",
+    );
+    console.log(report);
+  }
 }

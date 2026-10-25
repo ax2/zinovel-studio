@@ -98,7 +98,7 @@ try {
   const editor = page.getByLabel("正文编辑器", { exact: true });
   await editor.waitFor();
   await page
-    .locator(".chapter-list button")
+    .locator(".chapter-list .chapter-entry")
     .filter({ hasText: "第二章 损坏" })
     .click();
   await page
@@ -165,7 +165,7 @@ try {
     "\ufeff外部修复后的正文。\r\n真实替换字符：\ufffd；生僻字：𠮷";
   await writeFile(manuscript, repaired, "utf8");
   await page
-    .locator(".chapter-list button")
+    .locator(".chapter-list .chapter-entry")
     .filter({ hasText: "第二章 损坏" })
     .click();
   await page.waitForFunction(() =>

@@ -290,7 +290,7 @@ try {
   application = null;
   await launch();
   await page
-    .locator(".chapter-list button")
+    .locator(".chapter-list .chapter-entry")
     .filter({ hasText: chapterTitle })
     .click();
   assert.equal(

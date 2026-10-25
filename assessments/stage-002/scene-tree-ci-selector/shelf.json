@@ -1,0 +1,9 @@
+{
+  "books": 100,
+  "checks": [
+    "100 real stored books: intersect genre/series/title filters, title sort, archive/unarchive and restart retain list and preferences",
+    "draft/final chapter filters and whole-volume reorder preserve chapter IDs, manuscript bytes and export order"
+  ],
+  "errors": [],
+  "status": "passed"
+}

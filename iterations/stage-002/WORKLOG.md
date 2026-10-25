@@ -121,3 +121,8 @@ ASAR 全包实验通过：包内依赖检查、完整目录 EXE 与真实官方 
 新专项接开发/发行CI及安装套件，今后manifest要求精确安装后的四组树证明与asar一致；公开核对用alpha阶段下限继承既有三升级/进程/定妆合同，未知发行家族明确拒绝，避免仅枚举已知版本号而将未来版漏检。主线36仍ready=false、reports=[]，LIB-02仍in-progress；直接树内创建/重排、导入边界和通用未知缓存格式仍待。
 
 2026-10-25公开收尾：不可变4f8994e，源码CI40183611914与独立发行40183617073均success，18:30:14北京时间公开四附件。EXE155531102字节，SHA256a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a，公开asarb3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2，与本机候选004f4de5…/9d8b888d…分开。匿名可见、三个元数据digest、校验文件和实际下载hash均通过。另对下载公开NSIS实际安装11335ms，运行官方Harness/编辑/历史恢复11项，真实卸载4162ms并保留1份合成稿件，13项附加检查passed。完整公开安装目录保留D:/zinovel-releases/v0.1.0-alpha.35/ci-public/win-installed，无ZIP。详见assessments/release/v0.1.0-alpha.35/ci-public；不扩大为签名、商店或完整106项完成。
+
+## 2026-10-25 章节入口CI定位修正
+
+源码CI40185043516的shelf正式章断言3!=1，原因是新树两个工具按钮被泛化定位计入。增加稳定chapter-entry/data-chapter-id并收紧书架/任务/创作/UTF8章节定位，原1项/标题/状态断言保留。实际100书筛选两组、任务、创作、UTF8回归通过；离线导出改在原桌面退出确认后。真实CI失败和修正回执在scene-tree-ci-selector，36资格仍false，继续树内新建/重排。
+

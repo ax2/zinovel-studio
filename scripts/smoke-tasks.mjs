@@ -161,7 +161,7 @@ try {
       .getByRole("button", { name: "关闭创作参考", exact: true })
       .click();
   await page
-    .locator(".chapter-list button")
+    .locator(".chapter-list .chapter-entry")
     .filter({ hasText: "另一章" })
     .click();
   await history();

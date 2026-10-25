@@ -1,0 +1,48 @@
+windows	Run pnpm test:shelf	﻿2026-10-25T10:33:54.5930083Z ##[group]Run pnpm test:shelf
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5930644Z ^[[36;1mpnpm test:shelf^[[0m
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5994766Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5995296Z env:
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5995641Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5996173Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5996875Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5997455Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5997950Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5998413Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:shelf	2026-10-25T10:33:54.5998874Z ##[endgroup]
+windows	Run pnpm test:shelf	2026-10-25T10:33:55.1361457Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:55.1362248Z > zinovel-studio@0.1.0-alpha.36 test:shelf D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:shelf	2026-10-25T10:33:55.1362964Z > node scripts/smoke-shelf.mjs
+windows	Run pnpm test:shelf	2026-10-25T10:33:55.1363354Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:56.8422852Z (node:4296) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:shelf	2026-10-25T10:33:56.8425090Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2008136Z {
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2008650Z   books: 100,
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2009192Z   checks: [
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2010121Z     '100 real stored books: intersect genre/series/title filters, title sort, archive/unarchive and restart retain list and preferences'
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2010883Z   ],
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2011258Z   errors: [],
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2011677Z   status: 'failed',
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2012375Z   failure: 'AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n' +
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2013869Z     '\n' +
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2015453Z     '3 !== 1\n'
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2016410Z }
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2017855Z node:internal/modules/run_main:111
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2018600Z     triggerUncaughtException(
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2019104Z     ^
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2019279Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2019596Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2019884Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2020018Z 3 !== 1
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2020230Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2020497Z     at file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-shelf.mjs:91:10 {
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2020997Z   generatedMessage: true,
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2021338Z   code: 'ERR_ASSERTION',
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2021633Z   actual: 3,
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2021945Z   expected: 1,
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2022237Z   operator: 'strictEqual',
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2022515Z   diff: 'simple'
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2022846Z }
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2022966Z 
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2023110Z Node.js v26.12.1
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.2186540Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:shelf	2026-10-25T10:33:59.3237579Z ##[error]Process completed with exit code 1.

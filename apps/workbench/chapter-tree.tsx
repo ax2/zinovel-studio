@@ -96,7 +96,8 @@ export const ChapterTree = memo(function ChapterTree({
                 {chapters.map((chapter) => (
                   <React.Fragment key={chapter.id}>
                     <button
-                      className={chapter.id === chapterId ? "selected" : ""}
+                      className={`chapter-entry ${chapter.id === chapterId ? "selected" : ""}`}
+                      data-chapter-id={chapter.id}
                       onClick={() => onOpen(chapter.id)}
                     >
                       <FileText size={17} />
