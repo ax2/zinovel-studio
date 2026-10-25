@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "checks": [
+    "four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
+    "acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
+    "before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once"
+  ],
+  "errors": [],
+  "cases": [
+    {
+      "checkpoint": "intent-written",
+      "laterExternalEdit": false,
+      "recoveredStatus": "awaiting-review",
+      "manuscriptPreserved": true
+    },
+    {
+      "checkpoint": "manuscript-saved",
+      "laterExternalEdit": false,
+      "recoveredStatus": "applied",
+      "manuscriptPreserved": true
+    },
+    {
+      "checkpoint": "intent-written",
+      "laterExternalEdit": true,
+      "recoveredStatus": "acceptance-uncertain",
+      "manuscriptPreserved": true
+    },
+    {
+      "checkpoint": "manuscript-saved",
+      "laterExternalEdit": true,
+      "recoveredStatus": "applied",
+      "manuscriptPreserved": true
+    }
+  ]
+}

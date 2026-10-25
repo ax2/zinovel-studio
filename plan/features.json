@@ -1223,7 +1223,11 @@
         "design/model-profiles-and-capabilities.md",
         "packages/novel-storage/model-profiles.mjs",
         "tests/model-profiles.test.mjs",
-        "assessments/stage-003/model-profiles-source.md"
+        "assessments/stage-003/model-profiles-source.md",
+        "assessments/stage-003/model-profiles-desktop.md",
+        "apps/desktop/settings.ts",
+        "apps/workbench/profiles-panel.tsx",
+        "scripts/smoke-model-profiles.mjs"
       ]
     },
     {

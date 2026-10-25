@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "checks": [
+    "two worker processes actually exit after material intent / durable book receipt; actual desktop startup restores pending review or applied state without overwriting later author edits or calling the model",
+    "real official Harness exposes exactly material-read/propose; preview sends no model requests; typed candidate leaves original card/manuscript unchanged; saved author review survives restart without replay and explicit acceptance preserves host-owned fields",
+    "accepted task is read-only; subsequent proposal rejects competing card edits and keeps both candidate and current card; light desktop and dark narrow semantic review remain usable"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "review-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "stale-proposal.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "review-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "review-dark-fields.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

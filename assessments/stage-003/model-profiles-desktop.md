@@ -1,6 +1,6 @@
 # alpha.30 多模型桌面接入
 
-状态：源码桌面专项通过；尚无本版安装与公开发行资格。OPS-01仍in-progress，不把保存图像配置当图像生成。
+状态：源码桌面专项及alpha.30最新本机安装/升级通过，完整源码CI40157638076 success；不可变标签独立发行尚待。OPS-01仍in-progress，不把保存图像配置当图像生成。
 
 在独立合成书库中通过真实Electron、Windows safeStorage和官方Harness完成六组行为：显式迁移与原字节备份；两个文字服务的独立Key及作者按钮发送；陈旧版本保存保留中文草稿、清除与删除；独立图像路由/预算与重启；未来版本/异源身份拒绝和缺失列表明确恢复；深色窄窗表单与未保存Key清除。请求凭据证据只保存布尔值，文字A三次、B六次、图像零次，不记录Key或提示正文。
 
@@ -11,3 +11,5 @@
 证据：[六组报告](../../screenshots/stage-003/model-profiles/model-profiles-smoke.json)、[浅色管理](../../screenshots/stage-003/model-profiles/desktop-profiles.png)、[深色窄窗](../../screenshots/stage-003/model-profiles/dark-narrow-profile-editor.png)。窄窗实际806×803 CSS像素、设备缩放1.25，表单纵向滚动、水平无溢出。不是原生中文IME或屏幕阅读器资格。旧服务凭据隔离、真实故障恢复和预算专项亦完成源码回归。
 
 图像适配器明确runnable=false，在支持校验前不解密、不发送；图像候选、取消/未知结果、参考图与采用事务仍按完整设计推进。图像第三方真实协议、真实模型文学/视觉质量、签名和完整商店验收尚未完成。六组专项加入push、tag发行及安装后套件；manifest要求同版、同asar、packaged=true、零异常和实际请求数，不能借源码报告发布安装附件。
+
+本机最终安装候选asar0240fed9…，六组报告确为packaged=true，A/B/图像请求3/6/0；完整167项、重装/卸载及alpha.3升级通过，见[本版资格](../release/v0.1.0-alpha.30/README.md)。后续复评补历史重试的当前模型说明，并实际查看安装截图。CI探针加载态/窄抽屉/独立目录与书架异步等待失败分别保留，不以本机通过代替完整CI；应用生产源码c8a6f68，其后修正为QA/证据。
