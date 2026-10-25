@@ -40,6 +40,9 @@ jobs:
       - run: pnpm check
       - run: node scripts/check-upstream.mjs
       - run: pnpm build
+      - run: pnpm test:model-profiles
+        env:
+          ZINOVEL_PROFILE_START_NARROW: '1'
       - run: pnpm test:agent
       - run: pnpm test:tool-isolation
       - run: pnpm test:library
@@ -77,7 +80,6 @@ jobs:
       - run: pnpm test:backup-vault
       - run: pnpm test:diagnostics
       - run: pnpm test:model-credentials
-      - run: pnpm test:model-profiles
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui

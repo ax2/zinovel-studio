@@ -1,0 +1,49 @@
+windows	Run pnpm test:model-profiles	﻿2026-10-25T03:03:38.5513943Z ##[group]Run pnpm test:model-profiles
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5514232Z ^[[36;1mpnpm test:model-profiles^[[0m
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5567393Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5567698Z env:
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5567874Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5568120Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5568399Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5568851Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5569089Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5569334Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.5569527Z ##[endgroup]
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.9696817Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.9697562Z > zinovel-studio@0.1.0-alpha.30 test:model-profiles D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.9697983Z > node scripts/smoke-model-profiles.mjs
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:38.9698105Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:39.2790452Z (node:6436) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:model-profiles	2026-10-25T03:03:39.2791443Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8233816Z {
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8234093Z   status: 'failed',
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8234294Z   checks: [
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8234955Z     'Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task'
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8236852Z   ],
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8236996Z   errors: [],
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8239406Z   scope: 'Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; image adapter intentionally unavailable; no real provider or native IME qualification',
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8241125Z   version: '0.1.0-alpha.30',
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8241360Z   packaged: false,
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8241550Z   failure: 'locator.waitFor: Timeout 30000ms exceeded.\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8241756Z     'Call log:\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8244217Z     "\x1B[2m  - waiting for getByLabel('本次文字模型').filter({ hasText: '文字服务B' }) to be visible\x1B[22m\n" +
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8244997Z     '\x1B[2m    64 × locator resolved to hidden <div aria-label="本次文字模型" class="generation-estimate">…</div>\x1B[22m\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8245402Z     '\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8245721Z     '    at D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-model-profiles.mjs:222:6'
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246044Z }
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246251Z node:internal/modules/run_main:111
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246427Z     triggerUncaughtException(
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246569Z     ^
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246643Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246740Z locator.waitFor: Timeout 30000ms exceeded.
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8246896Z Call log:
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8247188Z ^[[2m  - waiting for getByLabel('本次文字模型').filter({ hasText: '文字服务B' }) to be visible^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8247629Z ^[[2m    64 × locator resolved to hidden <div aria-label="本次文字模型" class="generation-estimate">…</div>^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8247843Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8247995Z     at D:\a\zinovel-studio\zinovel-studio\scripts\smoke-model-profiles.mjs:222:6 {
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8248242Z   name: 'TimeoutError'
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8248362Z }
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8248418Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8248467Z Node.js v26.12.1
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.8374357Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:model-profiles	2026-10-25T03:04:11.9271641Z ##[error]Process completed with exit code 1.

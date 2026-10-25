@@ -84,8 +84,20 @@ async function launch() {
   owned = await captureOwnedProcesses(app.process().pid);
   page = await app.firstWindow();
   page.on("pageerror", (e) => report.errors.push(e.message));
+  if (process.env.ZINOVEL_PROFILE_START_NARROW === "1") {
+    await page.locator(".book-card").filter({ hasText: book.title }).waitFor();
+    await app.evaluate(({ BrowserWindow }) =>
+      BrowserWindow.getAllWindows()[0].setBounds({ width: 1100, height: 840 }),
+    );
+  }
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
+  if (!report.initialViewport)
+    report.initialViewport = await page.evaluate(() => ({
+      width: innerWidth,
+      height: innerHeight,
+      scale: devicePixelRatio,
+    }));
 }
 async function close() {
   owned = await captureOwnedProcesses(app.process().pid);
@@ -216,13 +228,20 @@ try {
   await assert.rejects(generate(stale), /已变化/);
   await assert.rejects(generate(), /重新读取模型配置/);
   assert.equal(received[1].length, 0);
+  const editor = page.getByLabel("正文编辑器");
+  await editor.click();
+  await page.keyboard.press("Control+A");
+  if (
+    !(await page
+      .getByRole("button", { name: "生成候选", exact: true })
+      .isVisible())
+  ) {
+    await page.getByTitle("打开创作参考").click();
+  }
   await page
     .getByLabel("本次文字模型")
     .filter({ hasText: "文字服务B" })
     .waitFor();
-  const editor = page.getByLabel("正文编辑器");
-  await editor.click();
-  await page.keyboard.press("Control+A");
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
   await page
     .getByRole("button", { name: "取消生成", exact: true })
