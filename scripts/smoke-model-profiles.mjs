@@ -12,8 +12,9 @@ import {
   terminateOwnedProcesses,
 } from "./windows-owned-processes.mjs";
 
-const root = resolve(import.meta.dirname, ".."),
-  work = await mkdtemp(join(root, ".cache", "model-profiles-")),
+const root = resolve(import.meta.dirname, "..");
+await mkdir(join(root, ".cache"), { recursive: true });
+const work = await mkdtemp(join(root, ".cache", "model-profiles-")),
   data = join(work, "data"),
   out = join(
     root,

@@ -1,0 +1,33 @@
+windows	Run pnpm test:model-profiles	﻿2026-10-25T03:10:14.6837993Z ##[group]Run pnpm test:model-profiles
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6838390Z ^[[36;1mpnpm test:model-profiles^[[0m
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6910209Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6910598Z env:
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6911389Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6912677Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6913231Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6913902Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6914315Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6914722Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6915061Z   ZINOVEL_PROFILE_START_NARROW: 1
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:14.6915283Z ##[endgroup]
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:15.3145666Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:15.3146692Z > zinovel-studio@0.1.0-alpha.30 test:model-profiles D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:15.3147713Z > node scripts/smoke-model-profiles.mjs
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:15.3148056Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:15.7328651Z Downloading Electron binary...
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8525116Z node:internal/fs/promises:2131
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8526478Z   return await PromisePrototypeThen(
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8527949Z          ^
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8528158Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8528933Z Error: ENOENT: no such file or directory, mkdtemp 'D:\a\zinovel-studio\zinovel-studio\.cache\model-profiles-XXXXXX'
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8529973Z     at async mkdtemp (node:internal/fs/promises:2131:10)
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8530823Z     at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-model-profiles.mjs:16:10 {
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8531330Z   errno: -4058,
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8531535Z   code: 'ENOENT',
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8531740Z   syscall: 'mkdtemp',
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8532137Z   path: 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\model-profiles-XXXXXX'
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8532588Z }
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8532684Z 
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8532768Z Node.js v26.12.1
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.8663229Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:model-profiles	2026-10-25T03:10:22.9995629Z ##[error]Process completed with exit code 1.
