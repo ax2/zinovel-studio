@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "checks": [
+    "Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript",
+    "Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request",
+    "Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
+    "Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
+    "Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses",
+    "Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call",
+    "Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+    "Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP",
+    "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review",
+    "A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+    "Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption, process restart and renderer-only crash. Native recovery choice instrumented; fresh CDP observes the original app-reopened window without extra reload. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
+  "version": "0.1.0-alpha.36",
+  "packaged": true,
+  "appAsarSha256": "4a615eb1b9ac3dd28f1ea560eef3810568261b46858b504fa47bd665a37a38da",
+  "viewports": [
+    {
+      "name": "image-studio-desktop.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "renderer-recovered-paid-result.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "mixed-candidates.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "all-invalid-results.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "portrait-target-review.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "chapter-target-review.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "chapter-target-review-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "scale": 1.25,
+      "theme": "dark",
+      "scroll": 806
+    },
+    {
+      "name": "chapter-target-confirm-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "scale": 1.25,
+      "theme": "dark",
+      "scroll": 806
+    },
+    {
+      "name": "image-studio-narrow.png",
+      "width": 806,
+      "height": 803,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 806
+    },
+    {
+      "name": "image-studio-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "scale": 1.25,
+      "theme": "dark",
+      "scroll": 806
+    }
+  ],
+  "rendererRecoveryObserver": "Fresh CDP observation of the app-reopened original window; no extra reload",
+  "rendererRecoveryRetainsPaidResult": true,
+  "closeProtected": true,
+  "retainedSaveRecoveredLocally": true,
+  "crashCredentialProbe": {
+    "before": {
+      "provider": "current-user-dpapi",
+      "available": true,
+      "readable": true,
+      "roundtrip": true
+    },
+    "after": {
+      "provider": "current-user-dpapi",
+      "available": true,
+      "readable": true,
+      "roundtrip": true
+    },
+    "wrappedKeyChanged": null
+  },
+  "crashCredentialsRetained": true,
+  "remoteUnknownAfterRestart": true,
+  "reviewedTargetAdoption": true,
+  "characterTargetVersionChecked": true,
+  "reviewedChapterAdoption": true,
+  "reviewedTargetNarrowConfirmation": true,
+  "chapterTargetVersionChecked": true,
+  "mixedBatchRecovery": true,
+  "originalsPreserved": true,
+  "requests": [
+    0,
+    9,
+    0
+  ]
+}

@@ -6,13 +6,13 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、50项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，27项 verified、49项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.35 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.35) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.35/ZiNovel-Studio-0.1.0-alpha.35-windows-x64-setup.exe)。独立CI完成182项实际安装/重装/卸载和公开alpha.3/31/33升级；公开文件另外本机安装运行与卸载通过。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
-主线alpha.36已补树中创建、拖拽/键盘/跨章移动和未知资料缓存保护，366项、树导航4组/直接操作创建5组及资料/定妆/书架回归通过；本版最新CI、安装和四条升级资格尚待，证据见[源码验收](assessments/stage-002/scene-tree-operations-source/README.md)。
+主线alpha.36已完成树中创建/拖拽/键盘/跨章移动和资料草稿保护，366项、191项实际安装、公开3/31/33/35四升级与205条清单检查通过；本机阶段资格齐备，独立标签与公开核对尚待。LIB-02按稳定ID验收，完整平台仍在开发。见[36本机证据](assessments/release/v0.1.0-alpha.36/README.md)。
 
 ## 产品方向
 

@@ -674,6 +674,95 @@ manifest.currentPublicUpgrade = {
 manifest.qualification.push(
   ...currentPublic.checks.map((check) => `current-public-upgrade: ${check}`),
 );
+const appearance = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/appearance-upgrade/recent-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const appearanceSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.35/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const appearanceFlags = [
+  "reviewedOldCandidateWithoutRequest",
+  "credentialsPreserved",
+  "profileBytesPreserved",
+  "uninstallPreserved",
+  "previousV2ReceiptPreserved",
+  "previousV2Readable",
+  "previousAdoptedAssetPreserved",
+  "fixedAppearancePreserved",
+  "fixedAppearancePreviewReadable",
+  "lookDraftPreserved",
+  "legacyDraftPreservedUntilExplicitSave",
+  "explicitSchema1DraftCreated",
+  "postUninstallDataReadable",
+];
+const hashIsValid = (value) =>
+  typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+if (
+  appearance.status !== "passed" ||
+  appearance.fromVersion !== appearanceSource.version ||
+  appearance.toVersion !== pkg.version ||
+  appearance.currentInstallerSha256 !== sha256 ||
+  appearance.previousInstallerSha256 !== appearanceSource.sha256 ||
+  appearance.previousAsarSha256 !==
+    appearanceSource.imageStudio.appAsarSha256 ||
+  appearance.appAsarSha256 !== appAsarSha256 ||
+  appearance.errors?.length !== 0 ||
+  appearance.checks?.length !== 5 ||
+  !Number.isFinite(appearance.upgradeMs) ||
+  appearance.upgradeMs <= 0 ||
+  JSON.stringify(appearance.requests) !==
+    JSON.stringify({ text: 0, image: 3 }) ||
+  !appearanceFlags.every((key) => appearance[key] === true) ||
+  appearance.previousV2Files?.length !== 3 ||
+  !Array.isArray(appearance.appearanceFiles) ||
+  appearance.appearanceFiles.length < 3 ||
+  ![...appearance.previousV2Files, ...appearance.appearanceFiles].every(
+    (file) =>
+      hashIsValid(file.sha256) &&
+      Number.isSafeInteger(file.bytes) &&
+      file.bytes > 0,
+  ) ||
+  !hashIsValid(appearance.lookDraftSha256) ||
+  !hashIsValid(appearance.oldMaterialDraftSha256) ||
+  !/^[a-f0-9-]{36}$/.test(appearance.newScene?.id || "") ||
+  !Number.isSafeInteger(appearance.newScene?.revision) ||
+  appearance.newScene.revision < 1 ||
+  !hashIsValid(appearance.newScene?.diskHash)
+)
+  throw new Error(
+    "Public alpha.35 fixed appearance/history/cache and explicit legacy-draft upgrade proof is missing or stale",
+  );
+manifest.appearanceUpgrade = {
+  fromVersion: appearance.fromVersion,
+  previousInstallerSha256: appearance.previousInstallerSha256,
+  previousAsarSha256: appearance.previousAsarSha256,
+  appAsarSha256,
+  upgradeMs: appearance.upgradeMs,
+  ...Object.fromEntries(appearanceFlags.map((key) => [key, true])),
+  appearanceFiles: appearance.appearanceFiles,
+  previousV2Files: appearance.previousV2Files,
+  lookDraftSha256: appearance.lookDraftSha256,
+  oldMaterialDraftSha256: appearance.oldMaterialDraftSha256,
+  newScene: appearance.newScene,
+  requests: appearance.requests,
+  checks: appearance.checks,
+  scope: appearance.scope,
+};
+manifest.qualification.push(
+  ...appearance.checks.map((check) => `public-appearance-upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),

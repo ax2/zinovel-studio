@@ -24,7 +24,7 @@ import {
 
 if (process.platform !== "win32" || !process.argv[2] || !process.argv[3])
   throw new Error(
-    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_SOURCE_INSTALLER PUBLIC_SOURCE_MANIFEST [recent-upgrade|current-upgrade]",
+    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_SOURCE_INSTALLER PUBLIC_SOURCE_MANIFEST [recent-upgrade|current-upgrade|appearance-upgrade]",
   );
 const root = resolve(import.meta.dirname, ".."),
   run = promisify(execFile),
@@ -46,11 +46,29 @@ const root = resolve(import.meta.dirname, ".."),
   }),
   expected = (value) => ({ id: value.id, ...baseline(value) });
 const stage = process.argv[4] ?? "recent-upgrade";
-assert.ok(["recent-upgrade", "current-upgrade"].includes(stage));
-const currentPublic = stage === "current-upgrade",
-  sourceVersion = currentPublic ? "0.1.0-alpha.33" : "0.1.0-alpha.31",
-  sourceLabel = currentPublic ? "公开33" : "公开31";
+assert.ok(
+  ["recent-upgrade", "current-upgrade", "appearance-upgrade"].includes(stage),
+);
+const appearancePublic = stage === "appearance-upgrade",
+  currentPublic = stage !== "recent-upgrade",
+  sourceVersion = appearancePublic
+    ? "0.1.0-alpha.35"
+    : currentPublic
+      ? "0.1.0-alpha.33"
+      : "0.1.0-alpha.31",
+  sourceLabel = appearancePublic
+    ? "公开35"
+    : currentPublic
+      ? "公开33"
+      : "公开31";
 assert.equal(previous.version, sourceVersion);
+if (appearancePublic) {
+  assert.equal(previous.characterLooks?.version, sourceVersion);
+  assert.equal(
+    previous.characterLooks?.appAsarSha256,
+    previous.imageStudio.appAsarSha256,
+  );
+}
 assert.notEqual(pkg.version, previous.version);
 assert.equal(basename(oldInstaller), previous.installer);
 assert.equal(await digest(oldInstaller), previous.sha256);
@@ -79,6 +97,55 @@ async function registrationExists() {
     if (error.code === 1) return false;
     throw error;
   }
+}
+async function removeFailedOwnedInstall() {
+  if (!(await registrationExists())) return;
+  const name = (await readdir(install)).find((item) =>
+    /^Uninstall .*\.exe$/i.test(item),
+  );
+  assert.ok(name);
+  const uninstaller = join(install, name);
+  const registered = await run(
+    "powershell.exe",
+    [
+      "-NoProfile",
+      "-NonInteractive",
+      "-Command",
+      "$ErrorActionPreference='Stop'; [Console]::OutputEncoding=[Text.Encoding]::UTF8; (Get-ItemProperty -LiteralPath 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\81b55339-fc21-4fe7-949e-a90dc443ef5a').UninstallString | ConvertTo-Json -Compress",
+    ],
+    { windowsHide: true },
+  );
+  const value = JSON.parse(registered.stdout.replace(/^\uFEFF/, "").trim());
+  assert.ok(value, "Owned uninstall registration is missing");
+  const match = /^"([^"]+)"|^(.+?\.exe)(?:\s|$)/i.exec(value);
+  assert.equal(
+    resolve(match?.[1] || match?.[2] || "").toLowerCase(),
+    resolve(uninstaller).toLowerCase(),
+    "Refusing to remove another installation",
+  );
+  const asar = await digest(join(install, "resources/app.asar"));
+  assert.ok(
+    [
+      previous.imageStudio.appAsarSha256,
+      await digest(join(root, "release/win-unpacked/resources/app.asar")),
+    ].includes(asar),
+    "Unknown installed runtime must be retained",
+  );
+  await run(uninstaller, ["/S", "/currentuser"], options);
+  await waitForCondition(
+    async () => !(await registrationExists()),
+    "Failed QA fixture registration remained",
+  );
+  await waitForCondition(async () => {
+    try {
+      await access(executable);
+      return false;
+    } catch (e) {
+      if (e.code === "ENOENT") return true;
+      throw e;
+    }
+  }, "Failed QA fixture executable remained");
+  report.failedOwnedInstallRemoved = true;
 }
 assert.equal(
   await registrationExists(),
@@ -165,9 +232,9 @@ const request = (action, payload = {}) =>
     ),
   panel = () =>
     page.getByRole("dialog", { name: "AI 图像工作室", exact: true });
-async function launch(version) {
+async function launch(version, binary = executable) {
   app = await electron.launch({
-    executablePath: executable,
+    executablePath: binary,
     args: [],
     cwd: work,
     env,
@@ -212,6 +279,35 @@ async function close() {
 async function openImages() {
   await page.getByRole("button", { name: "AI 图像", exact: true }).click();
   await panel().getByLabel("图像提示词", { exact: true }).waitFor();
+}
+async function openCharacterForm(character) {
+  if (await panel().isVisible())
+    await panel()
+      .getByRole("button", { name: "关闭图像工作室", exact: true })
+      .click();
+  const tab = page.getByRole("button", { name: "资料卡", exact: true });
+  if (!(await tab.isVisible()))
+    await page.getByTitle("打开创作参考", { exact: true }).click();
+  await tab.click();
+  const form = page.getByRole("region", { name: "创作资料", exact: true });
+  await form
+    .getByRole("combobox", { name: "资料类型", exact: true })
+    .selectOption("character");
+  await form.getByLabel("搜索资料", { exact: true }).fill("");
+  await form
+    .locator(".material-list button")
+    .filter({ hasText: character.title })
+    .click();
+  await form.getByLabel("资料标题", { exact: true }).waitFor();
+  const details = page.locator(".character-looks");
+  await details.waitFor();
+  if (!((await details.getAttribute("open")) !== null))
+    await details.locator(":scope > summary").click();
+  await page
+    .getByRole("region", { name: "人物形象版本", exact: true })
+    .getByRole("button", { name: "新建形象版本", exact: true })
+    .waitFor();
+  return form;
 }
 async function generate(prompt) {
   await panel().getByLabel("图像提示词", { exact: true }).fill(prompt);
@@ -350,6 +446,17 @@ try {
     },
   });
   const priorRecords = [];
+  const appearanceRecords = [];
+  let oldAppearance = null,
+    oldLookDraft = null,
+    oldMaterialDraft = null,
+    newScene = null;
+  const lookKey = `zinovel.character-look-draft.${book.id}.${character.id}`,
+    materialKey = `zinovel.material-draft.${book.id}.new`,
+    cacheHash = (raw) =>
+      createHash("sha256")
+        .update(raw ?? "<absent>")
+        .digest("hex");
   let previousReviewed = null,
     previousAsset = null;
   if (currentPublic) {
@@ -395,7 +502,9 @@ try {
     await panel()
       .getByLabel("目标人物", { exact: true })
       .selectOption(character.id);
-    oldTask = await generate("公开33另行生成的待采用候选，升级后再明确复评。");
+    oldTask = await generate(
+      `${sourceLabel}另行生成的待采用候选，升级后再明确复评。`,
+    );
     assert.equal(oldTask.schemaVersion, 1);
     assert.equal(oldTask.candidates[0].decision, "pending");
     currentCharacter = await request("materials.save", {
@@ -406,15 +515,138 @@ try {
         kind: "character",
         status: "planned",
         fields: { appearance: "旅行斗篷𠮷" },
-        notes: "公开33已有v2回执后再次修改人物",
+        notes: `${sourceLabel}已有v2回执后再次修改人物`,
         chapterIds: [],
       },
     });
   }
+  if (appearancePublic) {
+    const form = await openCharacterForm(currentCharacter),
+      looks = page.getByRole("region", { name: "人物形象版本", exact: true });
+    await looks
+      .getByRole("button", { name: "新建形象版本", exact: true })
+      .click();
+    await looks
+      .getByLabel("形象名称", { exact: true })
+      .fill("公开35少年定妆𠮷🌊");
+    await looks.getByLabel("年龄描述", { exact: true }).fill("十六岁");
+    await looks.getByLabel("衣装", { exact: true }).fill("少年蓝衣");
+    await looks
+      .getByLabel("此版本使用的固定图像", { exact: true })
+      .selectOption(previousAsset.id);
+    await looks
+      .getByRole("button", { name: "保存形象版本（不自动选定）", exact: true })
+      .click();
+    await looks
+      .getByRole("status")
+      .filter({ hasText: "形象版本已保存" })
+      .waitFor();
+    assert.equal(
+      (
+        await request("looks.read", {
+          bookId: book.id,
+          characterId: character.id,
+        })
+      ).record.selected,
+      null,
+    );
+    await looks
+      .getByRole("button", { name: "预览此形象", exact: true })
+      .click();
+    await looks.getByAltText("形象候选固定版本预览", { exact: true }).waitFor();
+    await looks
+      .getByLabel("我已核对人物与固定版本，确认本次定妆选择", { exact: true })
+      .check();
+    await looks
+      .getByRole("button", { name: "明确选此版本为当前定妆", exact: true })
+      .click();
+    await looks.getByRole("status").filter({ hasText: "已明确选定" }).waitFor();
+    await looks
+      .getByRole("button", { name: "编辑形象版本", exact: true })
+      .click();
+    await looks.getByLabel("年龄描述", { exact: true }).fill("三十岁");
+    await looks.getByLabel("衣装", { exact: true }).fill("成年灰衣");
+    await looks
+      .getByRole("button", { name: "保存形象版本（不自动选定）", exact: true })
+      .click();
+    await looks
+      .getByRole("status")
+      .filter({ hasText: "形象版本已保存" })
+      .waitFor();
+    oldAppearance = await request("looks.read", {
+      bookId: book.id,
+      characterId: character.id,
+    });
+    assert.equal(oldAppearance.selectedEntry.input.outfit, "少年蓝衣");
+    assert.equal(oldAppearance.record.entries[0].input.outfit, "成年灰衣");
+    assert.equal(oldAppearance.selectedError, null);
+    const collectionPath = join(
+        data,
+        "library",
+        book.id,
+        "world/character-looks",
+        character.id + ".json",
+      ),
+      history = join(
+        data,
+        "library",
+        book.id,
+        ".zinovel/character-look-history",
+        character.id,
+      );
+    for (const path of [
+      collectionPath,
+      ...(await readdir(history)).map((name) => {
+        assert.match(name, /^\d+-[a-f0-9]{64}\.json$/);
+        return join(history, name);
+      }),
+    ])
+      appearanceRecords.push({ path, bytes: await readFile(path) });
+    assert.ok(appearanceRecords.length >= 3);
+    await looks
+      .getByRole("button", { name: "新建形象版本", exact: true })
+      .click();
+    await looks
+      .getByLabel("形象名称", { exact: true })
+      .fill("公开35未保存形象𠮷🌊");
+    await looks.getByLabel("衣装", { exact: true }).fill("待作者决定的外套");
+    await looks
+      .getByLabel("此版本使用的固定图像", { exact: true })
+      .selectOption(previousAsset.id);
+    oldLookDraft = await page.evaluate(
+      (key) => localStorage.getItem(key),
+      lookKey,
+    );
+    assert.ok(oldLookDraft);
+    await page.screenshot({
+      path: join(out, "old-public35-fixed-look-and-draft.png"),
+    });
+    await form
+      .getByRole("combobox", { name: "新建类型", exact: true })
+      .selectOption("scene");
+    await form.getByRole("button", { name: "新建资料", exact: true }).click();
+    await form
+      .getByLabel("资料标题", { exact: true })
+      .fill("公开35未保存场景𠮷🌊");
+    await form.getByLabel("场景目标", { exact: true }).fill("找到旧桥的送信人");
+    await form
+      .getByLabel("资料笔记", { exact: true })
+      .fill("留待新版本由作者明确保存。");
+    oldMaterialDraft = await page.evaluate(
+      (key) => localStorage.getItem(key),
+      materialKey,
+    );
+    assert.ok(oldMaterialDraft);
+    assert.equal(
+      Object.hasOwn(JSON.parse(oldMaterialDraft), "schemaVersion"),
+      false,
+    );
+    assert.deepEqual(calls, { text: 0, image: 2 });
+  }
   const beforeRequests = currentPublic ? 2 : 1,
     finalRequests = beforeRequests + 1;
   const verifyPrior = async () => {
-    for (const item of priorRecords)
+    for (const item of [...priorRecords, ...appearanceRecords])
       assert.deepEqual(await readFile(item.path), item.bytes);
   };
   const verifyPriorInHost = async () => {
@@ -436,6 +668,62 @@ try {
     });
     assert.equal(asset.diskHash, previousAsset.diskHash);
     assert.deepEqual(asset.blob, previousAsset.blob);
+    if (appearancePublic) {
+      const view = await request("looks.read", {
+        bookId: book.id,
+        characterId: character.id,
+      });
+      assert.deepEqual(view.record, oldAppearance.record);
+      assert.deepEqual(view.selectedEntry, oldAppearance.selectedEntry);
+      assert.equal(view.selectedError, null);
+      await openCharacterForm(currentCharacter);
+      const looks = page.getByRole("region", {
+        name: "人物形象版本",
+        exact: true,
+      });
+      assert.equal(
+        await looks.getByLabel("形象名称", { exact: true }).inputValue(),
+        "公开35未保存形象𠮷🌊",
+      );
+      assert.equal(
+        cacheHash(
+          await page.evaluate((key) => localStorage.getItem(key), lookKey),
+        ),
+        cacheHash(oldLookDraft),
+      );
+      assert.equal(
+        await looks
+          .getByLabel("我已核对人物与固定版本，确认本次定妆选择", {
+            exact: true,
+          })
+          .isChecked(),
+        false,
+      );
+      await looks
+        .getByRole("button", { name: "预览当前定妆", exact: true })
+        .click();
+      await page.waitForFunction(() => {
+        const image = document.querySelector('img[alt="当前定妆固定版本预览"]');
+        return image?.complete && image.naturalWidth > 0;
+      });
+      if (newScene) {
+        const scene = await request("materials.read", {
+          bookId: book.id,
+          id: newScene.id,
+        });
+        assert.equal(scene.diskHash, newScene.diskHash);
+        assert.equal(scene.fields.goal, "找到旧桥的送信人");
+      } else
+        assert.equal(
+          cacheHash(
+            await page.evaluate(
+              (key) => localStorage.getItem(key),
+              materialKey,
+            ),
+          ),
+          cacheHash(oldMaterialDraft),
+        );
+    }
   };
   await page.screenshot({ path: join(out, "before-upgrade.png") });
   await close();
@@ -489,6 +777,58 @@ try {
   assert.deepEqual(await readFile(taskPath), taskAfter);
   assert.deepEqual(await readFile(manuscript), beforeBody);
   assert.deepEqual(calls, { text: 0, image: finalRequests });
+  if (appearancePublic) {
+    if (!(await page.locator(".chapters").isVisible()))
+      await page
+        .getByRole("button", { name: "关闭创作参考", exact: true })
+        .click();
+    await page
+      .getByRole("button", { name: "新建场景资料", exact: true })
+      .click();
+    const form = page.getByRole("region", { name: "创作资料", exact: true });
+    await form.getByLabel("资料标题", { exact: true }).waitFor();
+    assert.equal(
+      await form.getByLabel("资料标题", { exact: true }).inputValue(),
+      "公开35未保存场景𠮷🌊",
+    );
+    assert.equal(
+      cacheHash(
+        await page.evaluate((key) => localStorage.getItem(key), materialKey),
+      ),
+      cacheHash(oldMaterialDraft),
+    );
+    await form
+      .getByLabel("资料笔记", { exact: true })
+      .fill("升级后作者明确修改并保存𠮷🌊。");
+    assert.equal(
+      await page.evaluate(
+        (key) => JSON.parse(localStorage.getItem(key)).schemaVersion,
+        materialKey,
+      ),
+      1,
+    );
+    await form.getByRole("button", { name: "保存资料", exact: true }).click();
+    await form.getByRole("status").filter({ hasText: "已保存资料" }).waitFor();
+    const result = await request("materials.list", {
+      bookId: book.id,
+      options: { kind: "scene", query: "公开35未保存场景𠮷🌊" },
+    });
+    assert.equal(result.items.length, 1);
+    newScene = await request("materials.read", {
+      bookId: book.id,
+      id: result.items[0].id,
+    });
+    assert.equal(newScene.fields.goal, "找到旧桥的送信人");
+    assert.equal(
+      await page.evaluate((key) => localStorage.getItem(key), materialKey),
+      null,
+    );
+    report.legacyDraftPreservedUntilExplicitSave = true;
+    report.explicitSchema1DraftCreated = true;
+    await page.screenshot({
+      path: join(out, "new-author-saved-legacy-scene.png"),
+    });
+  }
   await close();
   const uninstaller = (await readdir(install)).find((name) =>
     /^Uninstall .*\.exe$/i.test(name),
@@ -508,6 +848,17 @@ try {
     async () => !(await registrationExists()),
     "Recent upgrade registration remained",
   );
+  if (appearancePublic) {
+    await launch(
+      pkg.version,
+      join(root, "release/win-unpacked/ZiNovel Studio.exe"),
+    );
+    await verifyPriorInHost();
+    await close();
+    assert.equal(await registrationExists(), false);
+    await assert.rejects(access(executable), { code: "ENOENT" });
+    report.postUninstallDataReadable = true;
+  }
   assert.deepEqual(await readFile(taskPath), taskAfter);
   assert.deepEqual(await readFile(manuscript), beforeBody);
   assert.deepEqual(
@@ -526,6 +877,23 @@ try {
       bytes: r.bytes.length,
     }));
   }
+  if (appearancePublic) {
+    report.appearanceFiles = appearanceRecords.map((r) => ({
+      name: r.path.split(/[\\/]/).slice(-1)[0],
+      sha256: createHash("sha256").update(r.bytes).digest("hex"),
+      bytes: r.bytes.length,
+    }));
+    report.fixedAppearancePreserved = true;
+    report.fixedAppearancePreviewReadable = true;
+    report.lookDraftPreserved = true;
+    report.lookDraftSha256 = cacheHash(oldLookDraft);
+    report.oldMaterialDraftSha256 = cacheHash(oldMaterialDraft);
+    report.newScene = {
+      id: newScene.id,
+      revision: newScene.revision,
+      diskHash: newScene.diskHash,
+    };
+  }
   report.requests = calls;
   report.uninstallPreserved = true;
   report.checks.push(
@@ -533,6 +901,11 @@ try {
     "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
     "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
   );
+  if (appearancePublic)
+    report.checks.push(
+      "Actual public alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade",
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; legacy scene draft remains unchanged across upgrade/restart until explicit author edit creates schema1 and saves one stable formal scene; uninstall preserves all data without model replay",
+    );
   report.status = "passed";
 } catch (error) {
   report.status = "failed";
@@ -540,7 +913,21 @@ try {
   await page?.screenshot({ path: join(out, "failure.png") }).catch(() => {});
   throw error;
 } finally {
-  if (owned) await terminateOwnedProcesses(owned);
+  try {
+    if (owned) await terminateOwnedProcesses(owned);
+  } catch (error) {
+    report.status = "failed";
+    report.cleanupFailure = String(error);
+    process.exitCode = 1;
+  }
+  if (report.status === "failed") {
+    try {
+      await removeFailedOwnedInstall();
+    } catch (error) {
+      report.cleanupFailure = String(error);
+      process.exitCode = 1;
+    }
+  }
   server.closeAllConnections();
   await new Promise((resolve) => server.close(resolve));
   await writeFile(

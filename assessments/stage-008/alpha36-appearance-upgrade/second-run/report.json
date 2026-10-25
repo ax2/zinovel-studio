@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "fromVersion": "0.1.0-alpha.35",
+  "toVersion": "0.1.0-alpha.36",
+  "previousInstallerSha256": "a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a",
+  "currentInstallerSha256": "cf146993cdf13f7aa12f26c5ba50b4748209b560995285c9f91836ef1b880250",
+  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-5qPv8n\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-5qPv8n\\synthetic-data",
+  "checks": [],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.35 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 6875,
+  "previousAsarSha256": "b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2",
+  "upgradeMs": 11571,
+  "appAsarSha256": "4a615eb1b9ac3dd28f1ea560eef3810568261b46858b504fa47bd665a37a38da",
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "failure": "TypeError: Cannot read properties of undefined (reading 'goal')\n    at file:///D:/Work/zinovel-studio/scripts/smoke-recent-upgrade.mjs:815:34",
+  "cleanupFailure": "AssertionError [ERR_ASSERTION]: Refusing to remove another installation\n+ actual - expected\n\n+ 'd:\\\\work\\\\zinovel-studio\\\\.cache\\\\recent-upgrade-5qpv8n\\\\���� ���������\\\\uninstall zinovel studio.exe'\n- 'd:\\\\work\\\\zinovel-studio\\\\.cache\\\\recent-upgrade-5qpv8n\\\\中文 最近版升级\\\\uninstall zinovel studio.exe'\n"
+}

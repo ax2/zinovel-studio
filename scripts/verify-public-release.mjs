@@ -239,6 +239,48 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.sceneTreeOperations?.checks?.length, 5);
+    const appearance = manifest.appearanceUpgrade;
+    assert.equal(appearance?.fromVersion, "0.1.0-alpha.35");
+    assert.equal(
+      appearance.previousInstallerSha256,
+      "a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a",
+    );
+    assert.equal(
+      appearance.previousAsarSha256,
+      "b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2",
+    );
+    assert.equal(appearance.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.ok(appearance.upgradeMs > 0);
+    assert.deepEqual(appearance.requests, { text: 0, image: 3 });
+    assert.equal(appearance.checks.length, 5);
+    assert.equal(appearance.previousV2Files.length, 3);
+    assert.ok(appearance.appearanceFiles.length >= 3);
+    for (const key of [
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "uninstallPreserved",
+      "previousV2ReceiptPreserved",
+      "previousV2Readable",
+      "previousAdoptedAssetPreserved",
+      "fixedAppearancePreserved",
+      "fixedAppearancePreviewReadable",
+      "lookDraftPreserved",
+      "legacyDraftPreservedUntilExplicitSave",
+      "explicitSchema1DraftCreated",
+      "postUninstallDataReadable",
+    ])
+      assert.equal(appearance[key], true);
+    for (const file of [
+      ...appearance.previousV2Files,
+      ...appearance.appearanceFiles,
+    ]) {
+      assert.match(file.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(file.bytes) && file.bytes > 0);
+    }
+    assert.match(appearance.newScene.diskHash, /^[a-f0-9]{64}$/);
+    assert.match(appearance.lookDraftSha256, /^[a-f0-9]{64}$/);
+    assert.match(appearance.oldMaterialDraftSha256, /^[a-f0-9]{64}$/);
   }
   const installerDirectory = resolve(
     root,

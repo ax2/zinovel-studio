@@ -1,0 +1,47 @@
+(node:58824) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  fromVersion: '0.1.0-alpha.33',
+  toVersion: '0.1.0-alpha.36',
+  previousInstallerSha256: '403acb68b027ff23e069391fe755f3f7bef53a30b1e4140647b16f2063b2a38f',
+  currentInstallerSha256: 'cf146993cdf13f7aa12f26c5ba50b4748209b560995285c9f91836ef1b880250',
+  installDirectory: 'D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-3JCUJA\\中文 最近版升级',
+  syntheticDataDirectory: 'D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-3JCUJA\\synthetic-data',
+  checks: [
+    'Exact public 0.1.0-alpha.33 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade',
+    'Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request',
+    'Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt'
+  ],
+  errors: [],
+  scope: 'Exact public 0.1.0-alpha.33 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification',
+  previousInstallMs: 7912,
+  previousAsarSha256: '0f406e098c4070226b1306573c22010c283377a8003a84751e268d684ff59b89',
+  upgradeMs: 11703,
+  appAsarSha256: '4a615eb1b9ac3dd28f1ea560eef3810568261b46858b504fa47bd665a37a38da',
+  reviewedOldCandidateWithoutRequest: true,
+  credentialsPreserved: true,
+  profileBytesPreserved: true,
+  previousV2ReceiptPreserved: true,
+  previousV2Readable: true,
+  previousAdoptedAssetPreserved: true,
+  previousV2Files: [
+    {
+      name: '38650748-b175-4082-8b34-c36c2ac1217f.json',
+      sha256: '5193c68ca48b51e829dd5ecaf928d12c6edccad287639ffd7aa2703f5bb5d615',
+      bytes: 2914
+    },
+    {
+      name: '6f91d006-8234-4d53-a127-a8b5915c9d75.json',
+      sha256: 'e5faae9aa96693b2a6a15912d8e3b20aad5b47e9427e3ea5bf9472410c731820',
+      bytes: 870
+    },
+    {
+      name: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png',
+      sha256: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa',
+      bytes: 449
+    }
+  ],
+  requests: { text: 0, image: 3 },
+  uninstallPreserved: true
+}

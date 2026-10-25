@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "checks": [
+    "Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+    "Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+    "Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
+    "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations"
+  ],
+  "errors": [],
+  "sourceDisk": {
+    "DriveLetter": "D",
+    "DiskNumber": 1,
+    "PartitionNumber": 2
+  },
+  "backupDisk": {
+    "DriveLetter": "C",
+    "DiskNumber": 0,
+    "PartitionNumber": 3
+  },
+  "independentDisks": true,
+  "browser": "Browser plugin unavailable; repository Playwright/Electron",
+  "scope": "Synthetic books; actual desktop host and author controls; native picker results and one object-write barrier instrumented. Not physical disk-loss, native-picker clicks or system-IME qualification.",
+  "version": "0.1.0-alpha.36",
+  "packaged": true,
+  "appAsarSha256": "4a615eb1b9ac3dd28f1ea560eef3810568261b46858b504fa47bd665a37a38da",
+  "geometry": {
+    "left": 30,
+    "right": 776.4000244140625,
+    "top": 59.67499923706055,
+    "bottom": 743.5250358581543,
+    "width": 806,
+    "height": 803,
+    "scrollWidth": 745,
+    "clientWidth": 745,
+    "scale": 1.25
+  },
+  "manifests": [
+    {
+      "id": "63b3d829-bffb-4397-9a33-4a95b7b21a31",
+      "hash": "1baf64ac874b30a8be304ad4b4013480b9774028238f40cfca93a61ad9830fa9",
+      "files": 10
+    },
+    {
+      "id": "8324d3a0-255c-4765-847c-b56c1596c950",
+      "hash": "4b84c270d39f6adbee5c9ed2b1bae0aeffeb7115f0f11dcf26febf35f6c3b3ee",
+      "files": 11
+    },
+    {
+      "id": "e0b41861-9b32-493d-b6d7-7e8c5cbf3584",
+      "hash": "3a11639afb9b226ad15520fb4a3eb0642a86814ffa9922b37be43febf9437261",
+      "files": 10
+    }
+  ]
+}

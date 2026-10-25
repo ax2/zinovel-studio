@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "fromVersion": "0.1.0-alpha.35",
+  "toVersion": "0.1.0-alpha.36",
+  "previousInstallerSha256": "a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a",
+  "currentInstallerSha256": "cf146993cdf13f7aa12f26c5ba50b4748209b560995285c9f91836ef1b880250",
+  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-PXv1o7\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-PXv1o7\\synthetic-data",
+  "checks": [],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.35 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 7450,
+  "previousAsarSha256": "b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2",
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '创作资料', exact: true }).getByLabel('资料类型', { exact: true })\u001b[22m\n\n    at openCharacterForm (D:\\Work\\zinovel-studio\\scripts\\smoke-recent-upgrade.mjs:244:50)\n    at async file:///D:/Work/zinovel-studio/scripts/smoke-recent-upgrade.mjs:473:18"
+}

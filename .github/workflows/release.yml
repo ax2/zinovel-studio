@@ -130,6 +130,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Current public release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/current-upgrade-source/ZiNovel-Studio-0.1.0-alpha.33-windows-x64-setup.exe .cache/current-upgrade-source/release-manifest.json current-upgrade
           if ($LASTEXITCODE -ne 0) { throw 'Current public v1/v2 upgrade failed' }
+      - name: Upgrade public alpha.35 fixed appearances and legacy material drafts
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/appearance-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.35 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/appearance-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Public appearance release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/appearance-upgrade-source/ZiNovel-Studio-0.1.0-alpha.35-windows-x64-setup.exe .cache/appearance-upgrade-source/release-manifest.json appearance-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Fixed appearance and legacy draft upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft
         shell: pwsh

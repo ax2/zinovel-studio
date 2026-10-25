@@ -22,13 +22,16 @@
       "name": "卷章场景树",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "创建、排序和移动保留稳定 ID",
       "evidence": [
         "iterations/stage-001/WORKLOG.md",
         "assessments/stage-002/scene-tree-source/README.md",
-        "assessments/stage-002/scene-tree-operations-source/README.md"
-      ]
+        "assessments/stage-002/scene-tree-operations-source/README.md",
+        "assessments/stage-002/scene-tree-acceptance.md",
+        "assessments/release/v0.1.0-alpha.36/README.md"
+      ],
+      "validation": "assessments/stage-002/scene-tree-acceptance.md"
     },
     {
       "id": "LIB-03",

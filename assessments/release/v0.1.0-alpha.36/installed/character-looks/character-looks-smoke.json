@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait",
+    "Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged",
+    "Full restart restores only the local appearance draft and clears choice confirmation; dark narrow author controls explicitly choose the newer version, reject arbitrary-path IPC, preserve manuscript bytes and emit no renderer errors or HTTP requests",
+    "Synthetic local quota failure retains typed appearance notes and cancels actual window close until formal save; an unknown future draft survives full restart byte-for-byte, blocks replacement, and is removed only by explicit discard without changing saved appearances or manuscript"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "fixed-portrait-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "preview-confirm-dark-narrow.png",
+      "width": 808,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "choose-portrait-dark-narrow.png",
+      "width": 808,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "quota-close-protected.png",
+      "width": 808,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim",
+  "version": "0.1.0-alpha.36",
+  "packaged": true,
+  "appAsarSha256": "4a615eb1b9ac3dd28f1ea560eef3810568261b46858b504fa47bd665a37a38da"
+}
