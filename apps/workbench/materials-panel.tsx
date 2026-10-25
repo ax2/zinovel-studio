@@ -4,6 +4,10 @@ import type { TextAnchor } from "./manuscript-editor";
 import { MaterialAssistant } from "./material-assistant";
 import { CharacterLooks } from "./character-looks";
 import {
+  canCloseEditors,
+  registerEditorCloseGuard,
+} from "./editor-close-guards";
+import {
   MaterialEvidence,
   type EvidenceSource,
   type Evidence,
@@ -69,6 +73,20 @@ export function MaterialsPanel({
   const [createKind, setCreateKind] = useState("character");
   const listRequest = useRef(0),
     detailRequest = useRef(0);
+  const safety = useRef({ saved: true, busy: false });
+  safety.current.busy = busy;
+  const ownGuard = useRef(() => safety.current.saved && !safety.current.busy);
+  useEffect(() => registerEditorCloseGuard(ownGuard.current), []);
+  function mayLeave(discard = false) {
+    if (
+      safety.current.busy ||
+      !canCloseEditors(discard ? ownGuard.current : undefined)
+    ) {
+      setError("尚有未能暂存的资料或形象，请先保存后再切换；原输入仍保留。");
+      return false;
+    }
+    return true;
+  }
   const draftKey = (id = current?.id || "new") =>
     `zinovel.material-draft.${book.id}.${id}`;
   async function refresh() {
@@ -137,6 +155,7 @@ export function MaterialsPanel({
     }
   }
   async function select(id: string, discard = false) {
+    if (!mayLeave(discard)) return;
     const token = ++detailRequest.current;
     setBusy(true);
     setError("");
@@ -150,6 +169,7 @@ export function MaterialsPanel({
       });
       if (token !== detailRequest.current) return;
       if (discard) localStorage.removeItem(draftKey(id));
+      safety.current.saved = true;
       setCurrent(value);
       restoreDraft(id, value, {
         id: value.id,
@@ -180,11 +200,14 @@ export function MaterialsPanel({
         draftKey(),
         JSON.stringify({ input: next, expected }),
       );
+      safety.current.saved = true;
     } catch {
+      safety.current.saved = false;
       setError("本机草稿暂存失败，请保持窗口打开并点击保存资料。");
     }
   }
   function create() {
+    if (!mayLeave()) return;
     detailRequest.current++;
     setCurrent(null);
     setHistory(null);
@@ -212,6 +235,7 @@ export function MaterialsPanel({
         diskHash: value.diskHash,
       });
       setDirty(false);
+      safety.current.saved = true;
       localStorage.removeItem(key);
       setMessage(`已保存资料 · 版本 ${value.revision}`);
       setHistory(null);
@@ -519,11 +543,17 @@ export function MaterialsPanel({
               <button
                 disabled={busy}
                 onClick={() => {
-                  localStorage.removeItem(draftKey("new"));
-                  setInput(fresh(createKind));
-                  setExpected(null);
-                  setDirty(false);
-                  setMessage("已清空未保存的新建资料");
+                  if (!mayLeave(true)) return;
+                  try {
+                    localStorage.removeItem(draftKey("new"));
+                    safety.current.saved = true;
+                    setInput(fresh(createKind));
+                    setExpected(null);
+                    setDirty(false);
+                    setMessage("已清空未保存的新建资料");
+                  } catch {
+                    setError("未能清空本机草稿，原输入仍保留。");
+                  }
                 }}
               >
                 清空新建草稿

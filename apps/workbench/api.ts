@@ -42,21 +42,27 @@ const referenceMutations = new Set([
   "knowledge.clear-choice",
   "ai.materialAccept",
   "book.structure",
+  "chapter.create",
 ]);
 export const api = async <T = any>(
   action: string,
   payload?: object,
 ): Promise<T> => {
   const result = await window.novel.request<T>(action, payload);
-  if (referenceMutations.has(action)) {
+  if (referenceMutations.has(action) || action === "planning.move") {
     const bookId =
       payload && "bookId" in payload && typeof payload.bookId === "string"
         ? payload.bookId
         : undefined;
     window.dispatchEvent(
-      new CustomEvent("novel-reference-options-changed", {
-        detail: { bookId },
-      }),
+      new CustomEvent(
+        action === "planning.move"
+          ? "novel-scene-planning-changed"
+          : "novel-reference-options-changed",
+        {
+          detail: { bookId },
+        },
+      ),
     );
   }
   return result;

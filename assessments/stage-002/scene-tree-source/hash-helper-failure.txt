@@ -1,0 +1,26 @@
+(node:44768) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  viewports: [],
+  failure: 'electronApplication.evaluate: ReferenceError: require is not defined\n' +
+    '    at eval (eval at evaluate (:290:30), <anonymous>:2:16)\n' +
+    '    at UtilityScript.evaluate (<anonymous>:292:16)\n' +
+    '    at UtilityScript.<anonymous> (<anonymous>:1:44)\n' +
+    '    at launch (D:\\Work\\zinovel-studio\\scripts\\smoke-scene-tree.mjs:129:38)\n' +
+    '    at async file:///D:/Work/zinovel-studio/scripts/smoke-scene-tree.mjs:172:3'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+electronApplication.evaluate: ReferenceError: require is not defined
+    at eval (eval at evaluate (:290:30), <anonymous>:2:16)
+    at UtilityScript.evaluate (<anonymous>:292:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at launch (D:\Work\zinovel-studio\scripts\smoke-scene-tree.mjs:129:38)
+    at async file:///D:/Work/zinovel-studio/scripts/smoke-scene-tree.mjs:172:3
+
+Node.js v26.10.0

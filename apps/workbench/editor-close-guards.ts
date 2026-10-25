@@ -5,6 +5,6 @@ export function registerEditorCloseGuard(guard: () => boolean) {
     guards.delete(guard);
   };
 }
-export function canCloseEditors() {
-  return [...guards].every((guard) => guard());
+export function canCloseEditors(except?: () => boolean) {
+  return [...guards].every((guard) => guard === except || guard());
 }

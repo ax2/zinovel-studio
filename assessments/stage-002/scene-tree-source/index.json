@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.36",
+  "packaged": false,
+  "checks": {
+    "sceneTree": 4,
+    "materials": 4,
+    "planning": 3,
+    "characterLooks": 4
+  },
+  "frontend": {
+    "app.js": {
+      "bytes": 2628476,
+      "sha256": "41742022792e28388588ceff242add428e656802b03b122bbd2b548caa0d336f"
+    },
+    "app.css": {
+      "bytes": 77724,
+      "sha256": "f74ad7795640069b54dfcded4526f3191ab04dee48a1f8ead1635287caa4c6dd"
+    },
+    "index.html": {
+      "bytes": 534,
+      "sha256": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+    }
+  },
+  "scope": "Exact final source renderer for tree and character-look workflows; material/planning JSON and logs captured from same completed build. Installation and release qualification are not open."
+}

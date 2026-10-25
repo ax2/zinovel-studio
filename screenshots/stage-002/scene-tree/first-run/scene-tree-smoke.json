@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "version": "0.1.0-alpha.36",
+  "packaged": false,
+  "desktopBundleSha256": "b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353",
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.chapters').getByRole('button', { name: '开场𠮷🌊', exact: true }) to be visible\u001b[22m\n\n    at launch (D:\\Work\\zinovel-studio\\scripts\\smoke-scene-tree.mjs:136:69)\n    at async file:///D:/Work/zinovel-studio/scripts/smoke-scene-tree.mjs:145:3"
+}

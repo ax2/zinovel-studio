@@ -111,6 +111,32 @@ manifest.characterLooks = {
   checks: characterLooks.checks,
   scope: characterLooks.scope,
 };
+const sceneTree = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/scene-tree/scene-tree-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  sceneTree.status !== "passed" ||
+  sceneTree.version !== pkg.version ||
+  sceneTree.packaged !== true ||
+  sceneTree.appAsarSha256 !== appAsarSha256 ||
+  sceneTree.checks?.length !== 4 ||
+  sceneTree.errors?.length !== 0
+)
+  throw new Error(
+    "Installed scene tree and material draft navigation proof is missing or stale",
+  );
+manifest.sceneTree = {
+  version: sceneTree.version,
+  appAsarSha256,
+  checks: sceneTree.checks,
+  scope: sceneTree.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

@@ -1,0 +1,68 @@
+(node:40328) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'real Electron creates all 13 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged',
+    'author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification',
+    'saved cards survive actual desktop restart, unsaved local adjustment is recovered explicitly, aliases search finds the character and author-confirmed status remains distinct from canon',
+    'external same-revision edit blocks stale save and preserves both copies; trash restore retains identity and historical version is loaded only as an explicit new revision'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'initial-materials.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'organization-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'item-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'ability-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'research-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'research-boundary-history.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'character-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'external-conflict.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'character-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}

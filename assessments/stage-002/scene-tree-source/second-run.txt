@@ -1,0 +1,40 @@
+(node:27360) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at D:\Work\zinovel-studio\scripts\smoke-scene-tree.mjs:312:14 {
+  name: 'TimeoutError'
+}
+{
+  status: 'failed',
+  checks: [
+    'Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and disabled missing records; scene-title search retains its chapter context',
+    'Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material',
+    'Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'tree-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'quota-protected.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    }
+  ],
+  version: '0.1.0-alpha.36',
+  packaged: false,
+  desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+  failure: 'page.waitForFunction: Timeout 30000ms exceeded.\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-scene-tree.mjs:312:14'
+}
+
+Node.js v26.10.0

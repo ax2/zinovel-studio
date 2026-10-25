@@ -1,0 +1,31 @@
+(node:24964) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  viewports: [],
+  version: '0.1.0-alpha.36',
+  packaged: false,
+  desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+  failure: 'locator.waitFor: Timeout 30000ms exceeded.\n' +
+    'Call log:\n' +
+    "\x1B[2m  - waiting for locator('.chapters').getByRole('button', { name: '开场𠮷🌊', exact: true }) to be visible\x1B[22m\n" +
+    '\n' +
+    '    at launch (D:\\Work\\zinovel-studio\\scripts\\smoke-scene-tree.mjs:136:69)\n' +
+    '    at async file:///D:/Work/zinovel-studio/scripts/smoke-scene-tree.mjs:145:3'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.chapters').getByRole('button', { name: '开场𠮷🌊', exact: true }) to be visible
+
+    at launch (D:\Work\zinovel-studio\scripts\smoke-scene-tree.mjs:136:69)
+    at async file:///D:/Work/zinovel-studio/scripts/smoke-scene-tree.mjs:145:3 {
+  name: 'TimeoutError'
+}
+
+Node.js v26.10.0

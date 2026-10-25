@@ -113,6 +113,13 @@ try {
     inventory = json(readFileSync(join(output, metadata[1]), "utf8"));
   assert.equal(manifest.commit, expectedCommit);
   assert.equal(manifest.version, tag.slice(1));
+  const alpha = /^0\.1\.0-alpha\.(\d+)$/.exec(manifest.version);
+  assert.ok(
+    alpha,
+    "Public verification contracts for this release family must be configured explicitly",
+  );
+  const milestone = Number(alpha[1]);
+  assert.ok(Number.isSafeInteger(milestone) && milestone > 0);
   assert.equal(inventory.version, manifest.version);
   assert.equal(
     manifest.installer,
@@ -153,14 +160,7 @@ try {
   assert.ok(
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
-  if (
-    [
-      "0.1.0-alpha.32",
-      "0.1.0-alpha.33",
-      "0.1.0-alpha.34",
-      "0.1.0-alpha.35",
-    ].includes(manifest.version)
-  ) {
+  if (milestone >= 32) {
     const recent = manifest.recentUpgrade;
     assert.equal(recent?.fromVersion, "0.1.0-alpha.31");
     assert.equal(
@@ -185,11 +185,7 @@ try {
     ])
       assert.equal(manifest.imageStudio[key], true);
   }
-  if (
-    ["0.1.0-alpha.33", "0.1.0-alpha.34", "0.1.0-alpha.35"].includes(
-      manifest.version,
-    )
-  ) {
+  if (milestone >= 33) {
     assert.equal(manifest.processRecovery?.handlePinned, true);
     assert.equal(manifest.processRecovery?.birthPrecision, "100ns");
     assert.equal(manifest.processRecovery?.rootStatus, "terminated");
@@ -198,7 +194,7 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
   }
-  if (["0.1.0-alpha.34", "0.1.0-alpha.35"].includes(manifest.version)) {
+  if (milestone >= 34) {
     const current = manifest.currentPublicUpgrade;
     assert.equal(current?.fromVersion, "0.1.0-alpha.33");
     assert.equal(
@@ -229,6 +225,14 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.characterLooks?.checks?.length, 4);
+  }
+  if (milestone >= 36) {
+    assert.equal(manifest.sceneTree?.version, manifest.version);
+    assert.equal(
+      manifest.sceneTree?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
+    assert.equal(manifest.sceneTree?.checks?.length, 4);
   }
   const installerDirectory = resolve(
     root,

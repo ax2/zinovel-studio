@@ -219,6 +219,7 @@ function App() {
           try {
             if (!canCloseEditors()) {
               await api("app.close-cancelled");
+              setError("请先保存资料或形象的未存内容，再关闭窗口。");
               return;
             }
             if (await saveRef.current()) await api("app.close-ready");
@@ -270,7 +271,13 @@ function App() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
+  function editorsReady() {
+    if (canCloseEditors()) return true;
+    setError("请先保存资料或形象的未存内容，再切换作品。");
+    return false;
+  }
   async function openChapter(selectedBook: Book, selectedId: string) {
+    if (latest.current.book?.id !== selectedBook.id && !editorsReady()) return;
     if (!(await save())) return;
     try {
       const next = await api<Chapter>("chapter.read", {
@@ -318,6 +325,7 @@ function App() {
       throw new Error("章节未能打开，请保留任务并检查正文提示");
   }
   async function openBook(selected: Book) {
+    if (!editorsReady()) return;
     if (!(await save())) return;
     setQuery("");
     setBook(selected);
@@ -377,6 +385,23 @@ function App() {
   );
   const manageTreeBook = useCallback(async () => {
     if (await treeActions.current.save()) setStructureOpen(true);
+  }, []);
+  const openTreeScene = useCallback(async (id: string) => {
+    const selected = latest.current.book;
+    if (!selected) return;
+    if (!canCloseEditors()) {
+      setError("请先保存创作资料或形象的未存内容，再打开另一场景。");
+      return;
+    }
+    if (!(await saveRef.current()) || latest.current.book?.id !== selected.id)
+      return;
+    setMaterialsOpen(true);
+    setReferenceOpen(false);
+    setPanelOpen(true);
+    setRequestedMaterial({ bookId: selected.id, id, request: Date.now() });
+  }, []);
+  const planTreeScenes = useCallback(async () => {
+    if (await saveRef.current()) setPlanningOpen(true);
   }, []);
   const count = Array.from(body.replace(/\s/g, "")).length;
   const statusLabel =
@@ -502,7 +527,7 @@ function App() {
         <button
           className={!book ? "active" : ""}
           onClick={async () => {
-            if (await save()) {
+            if (editorsReady() && (await save())) {
               setBook(null);
               setChapter(null);
               await refresh();
@@ -553,7 +578,7 @@ function App() {
             <Search size={16} />
             <input
               aria-label="搜索章节"
-              placeholder="搜索章节标题…"
+              placeholder="搜索章节或场景…"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -768,6 +793,8 @@ function App() {
             onOpen={openTreeChapter}
             onCreate={createTreeChapter}
             onManage={manageTreeBook}
+            onScene={openTreeScene}
+            onPlan={planTreeScenes}
           />
           <main className="workspace">
             <div className="toolbar">
@@ -825,7 +852,7 @@ function App() {
               <button onClick={() => setKnowledgeOpen(true)}>认知矩阵</button>
               <button
                 onClick={async () => {
-                  if (await save()) {
+                  if (editorsReady() && (await save())) {
                     setBook(null);
                     setChapter(null);
                     await refresh();

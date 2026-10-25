@@ -1,24 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { api } from "./api";
-type Scene = {
-  id: string;
-  title: string;
-  state: string;
-  fields?: Record<string, string>;
-};
-type Column = {
-  id: string | null;
-  title: string;
-  state: string;
-  volume?: string;
-  scenes: Scene[];
-};
-type Snapshot = {
-  revision: number;
-  diskHash: string | null;
-  errorCount: number;
-  columns: Column[];
-};
+import type { PlanningSnapshot as Snapshot } from "./planning-types";
 export function ScenePlanner({
   bookId,
   onClose,
@@ -362,7 +344,8 @@ export function ScenePlanner({
             })}
         </div>
         <p className="scene-help">
-        字段显示前 240 字符；完整内容请打开资料。新增场景：创作参考 → 资料卡 → 场景。
+          字段显示前 240 字符；完整内容请打开资料。新增场景：创作参考 → 资料卡 →
+          场景。
         </p>
       </section>
     </div>
