@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.31",
+  "toVersion": "0.1.0-alpha.34",
+  "previousInstallerSha256": "7c41eed5bc9844dd3ca187690efa5dea9cf53683f23ef2b51ff987b6f63e93dc",
+  "currentInstallerSha256": "c6783caa8b9be8696b174f3d641e123db00b9ff8cfb79a9d0c9132341a833c32",
+  "installDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-vkzOy1\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\Work\\zinovel-studio\\.cache\\recent-upgrade-vkzOy1\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.31 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.31 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 9314,
+  "previousAsarSha256": "e0818e3ab92ec22f817ff89f7ea50c7b30e25f176bce9e8377887ebb38942cbe",
+  "upgradeMs": 15958,
+  "appAsarSha256": "3694d79af883bc4c9f22eb1af552a26a2c004020daf67ad183a0462cb75b4615",
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "requests": {
+    "text": 0,
+    "image": 2
+  },
+  "uninstallPreserved": true
+}

@@ -117,6 +117,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Recent public release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/recent-upgrade-source/ZiNovel-Studio-0.1.0-alpha.31-windows-x64-setup.exe .cache/recent-upgrade-source/release-manifest.json
           if ($LASTEXITCODE -ne 0) { throw 'Recent image-task upgrade failed' }
+      - name: Upgrade public alpha.33 pending and already reviewed image candidates
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/current-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.33 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/current-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Current public release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/current-upgrade-source/ZiNovel-Studio-0.1.0-alpha.33-windows-x64-setup.exe .cache/current-upgrade-source/release-manifest.json current-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Current public v1/v2 upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft
         shell: pwsh

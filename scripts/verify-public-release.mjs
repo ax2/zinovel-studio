@@ -192,6 +192,30 @@ try {
     );
   }
   if (manifest.version === "0.1.0-alpha.34") {
+    const current = manifest.currentPublicUpgrade;
+    assert.equal(current?.fromVersion, "0.1.0-alpha.33");
+    assert.equal(
+      current.previousInstallerSha256,
+      "403acb68b027ff23e069391fe755f3f7bef53a30b1e4140647b16f2063b2a38f",
+    );
+    assert.equal(
+      current.previousAsarSha256,
+      "0f406e098c4070226b1306573c22010c283377a8003a84751e268d684ff59b89",
+    );
+    assert.equal(current.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.ok(current.upgradeMs > 0);
+    assert.deepEqual(current.requests, { text: 0, image: 3 });
+    for (const key of [
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "uninstallPreserved",
+      "previousV2ReceiptPreserved",
+      "previousV2Readable",
+      "previousAdoptedAssetPreserved",
+    ])
+      assert.equal(current[key], true);
+    assert.equal(current.previousV2Files.length, 3);
     assert.equal(manifest.characterLooks?.version, manifest.version);
     assert.equal(
       manifest.characterLooks?.appAsarSha256,

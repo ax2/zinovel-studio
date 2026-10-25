@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)，包含[Windows x64 安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.33/ZiNovel-Studio-0.1.0-alpha.33-windows-x64-setup.exe)。独立CI完成实际安装、重装、卸载与双升级，公开安装包已下载/hash核对；32标签失败未发布。主线alpha.34的人物形象版本/明确定妆选择已通过356项及4组实际界面流程，本版安装与升级仍待、预览资格关闭。完整106项26 verified/50 in-progress/30 planned。详见[33发行证据](assessments/release/v0.1.0-alpha.33/README.md)与[形象界面验收](assessments/stage-006/character-looks-ui.md)。
+最新公开版为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.33/ZiNovel-Studio-0.1.0-alpha.33-windows-x64-setup.exe)，公开附件已下载/hash核对。主线alpha.34的人物形象版本与明确定妆选择已通过356项、182项实际安装和公开alpha.3/31/33三条升级；阶段本机资格齐备，等待新标签独立发行及公开字节复核。完整106项26 verified/50 in-progress/30 planned，稳定门禁关闭。详见[34验收](assessments/release/v0.1.0-alpha.34/README.md)及[33公开证据](assessments/release/v0.1.0-alpha.33/ci-public/verification.json)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

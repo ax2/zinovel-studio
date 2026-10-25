@@ -24,7 +24,7 @@ import {
 
 if (process.platform !== "win32" || !process.argv[2] || !process.argv[3])
   throw new Error(
-    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_ALPHA31_INSTALLER PUBLIC_ALPHA31_MANIFEST",
+    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_SOURCE_INSTALLER PUBLIC_SOURCE_MANIFEST [recent-upgrade|current-upgrade]",
   );
 const root = resolve(import.meta.dirname, ".."),
   run = promisify(execFile),
@@ -45,7 +45,12 @@ const root = resolve(import.meta.dirname, ".."),
     diskHash: value.diskHash,
   }),
   expected = (value) => ({ id: value.id, ...baseline(value) });
-assert.equal(previous.version, "0.1.0-alpha.31");
+const stage = process.argv[4] ?? "recent-upgrade";
+assert.ok(["recent-upgrade", "current-upgrade"].includes(stage));
+const currentPublic = stage === "current-upgrade",
+  sourceVersion = currentPublic ? "0.1.0-alpha.33" : "0.1.0-alpha.31",
+  sourceLabel = currentPublic ? "公开33" : "公开31";
+assert.equal(previous.version, sourceVersion);
 assert.notEqual(pkg.version, previous.version);
 assert.equal(basename(oldInstaller), previous.installer);
 assert.equal(await digest(oldInstaller), previous.sha256);
@@ -53,7 +58,7 @@ const pinned = JSON.parse(
   await readFile(
     join(
       root,
-      "assessments/release/v0.1.0-alpha.31/ci-public/release-manifest.json",
+      `assessments/release/v${sourceVersion}/ci-public/release-manifest.json`,
     ),
     "utf8",
   ),
@@ -61,7 +66,7 @@ const pinned = JSON.parse(
 assert.equal(
   previous.sha256,
   pinned.sha256,
-  "Recent upgrade uses exact independently verified public alpha.31 bytes",
+  `Upgrade uses exact independently verified public ${sourceVersion} bytes`,
 );
 const currentInstallerSha256 = await digest(newInstaller),
   registry =
@@ -85,7 +90,7 @@ const work = await mkdtemp(join(root, ".cache/recent-upgrade-")),
   install = join(work, "中文 最近版升级"),
   data = join(work, "synthetic-data"),
   executable = join(install, "ZiNovel Studio.exe"),
-  out = join(root, "screenshots/release/recent-upgrade"),
+  out = join(root, "screenshots/release", stage),
   options = {
     cwd: work,
     windowsHide: true,
@@ -94,7 +99,7 @@ const work = await mkdtemp(join(root, ".cache/recent-upgrade-")),
   };
 await mkdir(out, { recursive: true });
 const store = new NovelStore(join(data, "library")),
-  body = "公开31升级合成原稿𠮷🌊。候选操作不改正文。",
+  body = `${sourceLabel}升级合成原稿𠮷🌊。候选操作不改正文。`,
   book = await store.importBook("最近公开版升级验收", [
     { title: "港口", body: "初始化合成正文。" },
   ]);
@@ -144,8 +149,7 @@ const baseURL = `http://127.0.0.1:${server.address().port}`,
     syntheticDataDirectory: data,
     checks: [],
     errors: [],
-    scope:
-      "Exact public alpha.31 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+    scope: `Exact public ${sourceVersion} NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification`,
   };
 let app, page, owned;
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
@@ -230,110 +234,8 @@ async function generate(prompt) {
     .waitFor();
   return request("image.read", { bookId: book.id, id });
 }
-try {
-  let started = Date.now();
-  await run(oldInstaller, ["/S", `/D=${install}`], options);
-  report.previousInstallMs = Date.now() - started;
-  await launch(previous.version);
-  await page.getByLabel("正文编辑器").fill(body);
-  await page.getByLabel("正文编辑器").press("Control+s");
-  await page.waitForFunction(
-    () => document.querySelector(".save-state")?.textContent === "已保存",
-  );
-  await request("settings.save", {
-    baseURL: `${baseURL}/text/v1`,
-    model: "synthetic-recent-text",
-    apiKey: keys.text,
-  });
-  let profiles = await request("profiles.list");
-  profiles = await request("profiles.migrate", {
-    legacyToken: profiles.legacyToken,
-  });
-  profiles = await request("profiles.add", {
-    expected: baseline(profiles),
-    input: {
-      label: "公开31图像配置",
-      protocol: "openai-images",
-      baseURL: `${baseURL}/image/v1`,
-      model: "synthetic-recent-image",
-      apiKey: keys.image,
-      imageBudget: { maxImages: 1, maxCost: 0, pricing: null },
-      imageOptions: { responseMode: "request-base64" },
-    },
-  });
-  const profile = profiles.profiles.find((p) => p.label === "公开31图像配置");
-  await request("profiles.select", {
-    capability: "image",
-    id: profile.id,
-    expected: baseline(profiles),
-  });
-  const character = await request("materials.save", {
-    bookId: book.id,
-    input: {
-      title: "合成旅行者",
-      kind: "character",
-      status: "planned",
-      fields: { appearance: "旧蓝衣" },
-      notes: "生成前设定",
-      chapterIds: [],
-    },
-  });
-  await openImages();
-  await panel()
-    .getByLabel("图像用途", { exact: true })
-    .selectOption("portrait");
-  await panel()
-    .getByLabel("目标人物", { exact: true })
-    .selectOption(character.id);
-  const oldTask = await generate("公开31生成后保留的合成人物候选。");
-  assert.equal(oldTask.schemaVersion, 1);
-  assert.equal(oldTask.candidates[0].decision, "pending");
-  assert.deepEqual(calls, { text: 0, image: 1 });
-  const currentCharacter = await request("materials.save", {
-    bookId: book.id,
-    expected: expected(character),
-    input: {
-      title: character.title,
-      kind: "character",
-      status: "planned",
-      fields: { appearance: "旅行斗篷𠮷" },
-      notes: "公开31作者生成后修改",
-      chapterIds: [],
-    },
-  });
-  await page.screenshot({ path: join(out, "before-upgrade.png") });
-  await close();
-  const taskPath = join(
-      data,
-      "library",
-      book.id,
-      ".zinovel/image-tasks",
-      oldTask.id + ".json",
-    ),
-    manuscript = join(
-      data,
-      "library",
-      book.id,
-      "manuscript",
-      book.chapters[0].id + ".md",
-    ),
-    beforeTask = await readFile(taskPath),
-    beforeProfiles = await readFile(join(data, "model-profiles.json")),
-    beforeBody = await readFile(manuscript);
-  assert.equal(beforeBody.toString("utf8"), body);
-  started = Date.now();
-  await run(newInstaller, ["/S", `/D=${install}`], options);
-  report.upgradeMs = Date.now() - started;
-  await launch(pkg.version);
-  assert.deepEqual(await readFile(taskPath), beforeTask);
-  assert.deepEqual(
-    await readFile(join(data, "model-profiles.json")),
-    beforeProfiles,
-  );
-  assert.deepEqual(await readFile(manuscript), beforeBody);
-  assert.deepEqual(calls, { text: 0, image: 1 });
-  await openImages();
-  await panel().locator(`[data-task-id="${oldTask.id}"]`).click();
+async function reviewTarget(task, target) {
+  await panel().locator(`[data-task-id="${task.id}"]`).click();
   await panel()
     .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
     .waitFor();
@@ -362,21 +264,218 @@ try {
     .waitFor();
   const reviewed = await request("image.read", {
     bookId: book.id,
-    id: oldTask.id,
+    id: task.id,
   });
   assert.equal(reviewed.schemaVersion, 2);
-  assert.deepEqual(reviewed.target, oldTask.target);
-  assert.equal(reviewed.responseHash, oldTask.responseHash);
-  assert.equal(reviewed.candidates[0].assetId, oldTask.candidates[0].assetId);
+  assert.deepEqual(reviewed.target, task.target);
+  assert.equal(reviewed.responseHash, task.responseHash);
+  assert.equal(reviewed.candidates[0].assetId, task.candidates[0].assetId);
   assert.equal(
     reviewed.candidates[0].adoption.targetReview.target.material.revision,
-    currentCharacter.revision,
+    target.revision,
   );
+  return reviewed;
+}
+try {
+  let started = Date.now();
+  await run(oldInstaller, ["/S", `/D=${install}`], options);
+  report.previousInstallMs = Date.now() - started;
+  await launch(previous.version);
+  await page.getByLabel("正文编辑器").fill(body);
+  await page.getByLabel("正文编辑器").press("Control+s");
+  await page.waitForFunction(
+    () => document.querySelector(".save-state")?.textContent === "已保存",
+  );
+  await request("settings.save", {
+    baseURL: `${baseURL}/text/v1`,
+    model: "synthetic-recent-text",
+    apiKey: keys.text,
+  });
+  let profiles = await request("profiles.list");
+  profiles = await request("profiles.migrate", {
+    legacyToken: profiles.legacyToken,
+  });
+  profiles = await request("profiles.add", {
+    expected: baseline(profiles),
+    input: {
+      label: `${sourceLabel}图像配置`,
+      protocol: "openai-images",
+      baseURL: `${baseURL}/image/v1`,
+      model: "synthetic-recent-image",
+      apiKey: keys.image,
+      imageBudget: { maxImages: 1, maxCost: 0, pricing: null },
+      imageOptions: { responseMode: "request-base64" },
+    },
+  });
+  const profile = profiles.profiles.find(
+    (p) => p.label === `${sourceLabel}图像配置`,
+  );
+  await request("profiles.select", {
+    capability: "image",
+    id: profile.id,
+    expected: baseline(profiles),
+  });
+  const character = await request("materials.save", {
+    bookId: book.id,
+    input: {
+      title: "合成旅行者",
+      kind: "character",
+      status: "planned",
+      fields: { appearance: "旧蓝衣" },
+      notes: "生成前设定",
+      chapterIds: [],
+    },
+  });
+  await openImages();
+  await panel()
+    .getByLabel("图像用途", { exact: true })
+    .selectOption("portrait");
+  await panel()
+    .getByLabel("目标人物", { exact: true })
+    .selectOption(character.id);
+  let oldTask = await generate(`${sourceLabel}生成后保留的合成人物候选。`);
+  assert.equal(oldTask.schemaVersion, 1);
+  assert.equal(oldTask.candidates[0].decision, "pending");
   assert.deepEqual(calls, { text: 0, image: 1 });
+  let currentCharacter = await request("materials.save", {
+    bookId: book.id,
+    expected: expected(character),
+    input: {
+      title: character.title,
+      kind: "character",
+      status: "planned",
+      fields: { appearance: "旅行斗篷𠮷" },
+      notes: `${sourceLabel}作者生成后修改`,
+      chapterIds: [],
+    },
+  });
+  const priorRecords = [];
+  let previousReviewed = null,
+    previousAsset = null;
+  if (currentPublic) {
+    const oldReviewed = await reviewTarget(oldTask, currentCharacter);
+    assert.match(oldReviewed.diskHash, /^[a-f0-9]{64}$/);
+    previousReviewed = oldReviewed;
+    assert.equal(oldReviewed.schemaVersion, 2);
+    assert.deepEqual(calls, { text: 0, image: 1 });
+    const asset = await request("assets.read", {
+      bookId: book.id,
+      id:
+        oldReviewed.candidates[0].adoption.assetId ??
+        oldReviewed.candidates[0].assetId,
+    });
+    previousAsset = asset;
+    assert.match(previousAsset.diskHash, /^[a-f0-9]{64}$/);
+    for (const path of [
+      join(
+        data,
+        "library",
+        book.id,
+        ".zinovel/image-tasks",
+        oldTask.id + ".json",
+      ),
+      join(data, "library", book.id, "assets/items", asset.id + ".json"),
+      join(
+        data,
+        "library",
+        book.id,
+        "assets/blobs",
+        asset.blob.sha256 + "." + asset.blob.format,
+      ),
+    ])
+      priorRecords.push({ path, bytes: await readFile(path) });
+    await page.screenshot({ path: join(out, "old-public-reviewed-v2.png") });
+    await panel()
+      .getByRole("button", { name: "关闭图像工作室", exact: true })
+      .click();
+    await openImages();
+    await panel()
+      .getByLabel("图像用途", { exact: true })
+      .selectOption("portrait");
+    await panel()
+      .getByLabel("目标人物", { exact: true })
+      .selectOption(character.id);
+    oldTask = await generate("公开33另行生成的待采用候选，升级后再明确复评。");
+    assert.equal(oldTask.schemaVersion, 1);
+    assert.equal(oldTask.candidates[0].decision, "pending");
+    currentCharacter = await request("materials.save", {
+      bookId: book.id,
+      expected: expected(currentCharacter),
+      input: {
+        title: character.title,
+        kind: "character",
+        status: "planned",
+        fields: { appearance: "旅行斗篷𠮷" },
+        notes: "公开33已有v2回执后再次修改人物",
+        chapterIds: [],
+      },
+    });
+  }
+  const beforeRequests = currentPublic ? 2 : 1,
+    finalRequests = beforeRequests + 1;
+  const verifyPrior = async () => {
+    for (const item of priorRecords)
+      assert.deepEqual(await readFile(item.path), item.bytes);
+  };
+  const verifyPriorInHost = async () => {
+    await verifyPrior();
+    if (!previousReviewed) return;
+    const receipt = await request("image.read", {
+      bookId: book.id,
+      id: previousReviewed.id,
+    });
+    assert.equal(receipt.schemaVersion, 2);
+    assert.equal(receipt.diskHash, previousReviewed.diskHash);
+    assert.deepEqual(
+      receipt.candidates[0].adoption,
+      previousReviewed.candidates[0].adoption,
+    );
+    const asset = await request("assets.read", {
+      bookId: book.id,
+      id: previousAsset.id,
+    });
+    assert.equal(asset.diskHash, previousAsset.diskHash);
+    assert.deepEqual(asset.blob, previousAsset.blob);
+  };
+  await page.screenshot({ path: join(out, "before-upgrade.png") });
+  await close();
+  const taskPath = join(
+      data,
+      "library",
+      book.id,
+      ".zinovel/image-tasks",
+      oldTask.id + ".json",
+    ),
+    manuscript = join(
+      data,
+      "library",
+      book.id,
+      "manuscript",
+      book.chapters[0].id + ".md",
+    ),
+    beforeTask = await readFile(taskPath),
+    beforeProfiles = await readFile(join(data, "model-profiles.json")),
+    beforeBody = await readFile(manuscript);
+  assert.equal(beforeBody.toString("utf8"), body);
+  started = Date.now();
+  await run(newInstaller, ["/S", `/D=${install}`], options);
+  report.upgradeMs = Date.now() - started;
+  await launch(pkg.version);
+  await verifyPriorInHost();
+  assert.deepEqual(await readFile(taskPath), beforeTask);
+  assert.deepEqual(
+    await readFile(join(data, "model-profiles.json")),
+    beforeProfiles,
+  );
+  assert.deepEqual(await readFile(manuscript), beforeBody);
+  assert.deepEqual(calls, { text: 0, image: beforeRequests });
+  await openImages();
+  const reviewed = await reviewTarget(oldTask, currentCharacter);
+  assert.deepEqual(calls, { text: 0, image: beforeRequests });
   report.reviewedOldCandidateWithoutRequest = true;
   await page.screenshot({ path: join(out, "after-review.png") });
-  await generate("当前安装版明确发起的新候选，用原公开31图像Key。");
-  assert.deepEqual(calls, { text: 0, image: 2 });
+  await generate(`当前安装版明确发起的新候选，用原${sourceLabel}图像Key。`);
+  assert.deepEqual(calls, { text: 0, image: finalRequests });
   assert.deepEqual(
     await readFile(join(data, "model-profiles.json")),
     beforeProfiles,
@@ -386,9 +485,10 @@ try {
   const taskAfter = await readFile(taskPath);
   await close();
   await launch(pkg.version);
+  await verifyPriorInHost();
   assert.deepEqual(await readFile(taskPath), taskAfter);
   assert.deepEqual(await readFile(manuscript), beforeBody);
-  assert.deepEqual(calls, { text: 0, image: 2 });
+  assert.deepEqual(calls, { text: 0, image: finalRequests });
   await close();
   const uninstaller = (await readdir(install)).find((name) =>
     /^Uninstall .*\.exe$/i.test(name),
@@ -415,10 +515,21 @@ try {
     beforeProfiles,
   );
   assert.deepEqual(report.errors, []);
+  await verifyPrior();
+  if (currentPublic) {
+    report.previousV2ReceiptPreserved = true;
+    report.previousV2Readable = true;
+    report.previousAdoptedAssetPreserved = true;
+    report.previousV2Files = priorRecords.map((r) => ({
+      name: r.path.split(/[\\/]/).slice(-1)[0],
+      sha256: createHash("sha256").update(r.bytes).digest("hex"),
+      bytes: r.bytes.length,
+    }));
+  }
   report.requests = calls;
   report.uninstallPreserved = true;
   report.checks.push(
-    "Exact public alpha.31 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate",
+    `Exact public ${sourceVersion} installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate${currentPublic ? "; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade" : ""}`,
     "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
     "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
   );

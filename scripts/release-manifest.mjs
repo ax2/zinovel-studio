@@ -548,6 +548,80 @@ manifest.recentUpgrade = {
 manifest.qualification.push(
   ...recent.checks.map((check) => `recent-upgrade: ${check}`),
 );
+const currentPublic = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/current-upgrade/recent-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const currentSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.33/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  currentPublic.status !== "passed" ||
+  currentPublic.fromVersion !== currentSource.version ||
+  currentPublic.toVersion !== pkg.version ||
+  currentPublic.currentInstallerSha256 !== sha256 ||
+  currentPublic.previousInstallerSha256 !== currentSource.sha256 ||
+  currentPublic.previousAsarSha256 !==
+    currentSource.imageStudio.appAsarSha256 ||
+  currentPublic.appAsarSha256 !== appAsarSha256 ||
+  currentPublic.errors?.length !== 0 ||
+  currentPublic.checks?.length !== 3 ||
+  !Number.isFinite(currentPublic.upgradeMs) ||
+  currentPublic.upgradeMs <= 0 ||
+  JSON.stringify(currentPublic.requests) !==
+    JSON.stringify({ text: 0, image: 3 }) ||
+  ![
+    "reviewedOldCandidateWithoutRequest",
+    "credentialsPreserved",
+    "profileBytesPreserved",
+    "uninstallPreserved",
+    "previousV2ReceiptPreserved",
+    "previousV2Readable",
+    "previousAdoptedAssetPreserved",
+  ].every((key) => currentPublic[key] === true) ||
+  currentPublic.previousV2Files?.length !== 3 ||
+  !currentPublic.previousV2Files.every(
+    (file) =>
+      /^[a-f0-9]{64}$/.test(file.sha256) &&
+      Number.isSafeInteger(file.bytes) &&
+      file.bytes > 0,
+  )
+)
+  throw new Error(
+    "Current public-version v1 candidate and actual v2 receipt/asset upgrade proof is missing or stale",
+  );
+manifest.currentPublicUpgrade = {
+  fromVersion: currentPublic.fromVersion,
+  previousInstallerSha256: currentPublic.previousInstallerSha256,
+  previousAsarSha256: currentPublic.previousAsarSha256,
+  appAsarSha256,
+  upgradeMs: currentPublic.upgradeMs,
+  requests: currentPublic.requests,
+  reviewedOldCandidateWithoutRequest: true,
+  credentialsPreserved: true,
+  profileBytesPreserved: true,
+  uninstallPreserved: true,
+  previousV2ReceiptPreserved: true,
+  previousV2Readable: true,
+  previousAdoptedAssetPreserved: true,
+  previousV2Files: currentPublic.previousV2Files,
+  checks: currentPublic.checks,
+  scope: currentPublic.scope,
+};
+manifest.qualification.push(
+  ...currentPublic.checks.map((check) => `current-public-upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),
