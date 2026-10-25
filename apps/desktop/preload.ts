@@ -158,6 +158,7 @@ const allowed = new Set([
   "import.preview",
   "import.review",
   "import.commit",
+  "book.import-origin",
   "book.export",
 ]);
 contextBridge.exposeInMainWorld("novel", {

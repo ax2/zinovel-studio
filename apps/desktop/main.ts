@@ -158,8 +158,9 @@ function requestWindowClose() {
   }, 8000);
 }
 const imports = new ImportSessions({
-  createBook: (title: string, chapters: any[]) =>
-    store.importBook(title, chapters),
+  createBook: (title: string, chapters: any[], metadata: any) =>
+    store.importBook(title, chapters, metadata),
+  applicationVersion: app.getVersion(),
 });
 
 async function materialTaskInput(payload: any) {
@@ -955,6 +956,9 @@ if (
                   payload.revision,
                   payload.operation,
                 );
+                break;
+              case "book.import-origin":
+                value = await store.importOrigins.read(payload.bookId);
                 break;
               case "import.commit": {
                 value = await imports.commit(

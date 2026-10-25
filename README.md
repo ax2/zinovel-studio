@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版为[alpha.36](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.36)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.36/ZiNovel-Studio-0.1.0-alpha.36-windows-x64-setup.exe)。交付场景树创建、排序/跨章移动及草稿保护；独立发行完成191项安装与公开3/31/33/35四升级，公开EXE另外下载/hash并实际安装、运行官方Harness/编辑/历史恢复及卸载。详见[公开证据](assessments/release/v0.1.0-alpha.36/ci-public/README.md)。当前未签名，完整平台和稳定上架资格仍未完成。
+最新公开版为[alpha.37](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.37)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.37/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe)。交付手工导入分章/合并/改名、四编码预览和快照确认保护；源码与独立发行CI、198项完整安装、五条公开升级及218条清单通过，公开EXE另外下载/hash和实际安装运行、卸载。详见[公开证据](assessments/release/v0.1.0-alpha.37/ci-public/README.md)。当前未签名，完整平台和稳定上架仍未完成。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
@@ -8,11 +8,11 @@
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，29项 verified、47项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.36 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.36) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.36/ZiNovel-Studio-0.1.0-alpha.36-windows-x64-setup.exe)。独立CI191项实际安装/重装/卸载、四条公开升级与205条清单通过，公开文件另有本机安装运行与卸载证据。保留完整运行目录和EXE，无ZIP。
+Windows 技术预览版：[v0.1.0-alpha.37 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.37) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.37/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe)。独立CI198项安装/重装/卸载、五升级和218条清单通过，公开文件另有本机安装运行与卸载证据；完整运行目录和EXE留档，无ZIP。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
-主线alpha.37已完成手工预览分章与保护：本机384项、198项实际安装、五条公开升级与218条清单通过；生产0ff93a2源码CI40192606561成功。LIB-03/04按原验收通过，完整106项29/47/30，独立标签/公开核对尚待。详见[37候选证据](assessments/release/v0.1.0-alpha.37/candidate2/README.md)。
+主线alpha.38正在增加导入来源的书内确认记录、分页查看与备份恢复；本机基础和真实桌面证据在持续归档，尚待实际安装、最新公开37升级及独立发行，38资格关闭。完整106项仍29/47/30，其他需求继续推进。
 
 ## 产品方向
 

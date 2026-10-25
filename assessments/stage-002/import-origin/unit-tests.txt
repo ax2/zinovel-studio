@@ -1,0 +1,15 @@
+✔ confirmed source metadata is in the same creation transaction and contains no absolute source path or duplicated manuscript (56.7036ms)
+✔ backup restore keeps exact import record and chapter IDs while recognizing the restored book lineage (119.3031ms)
+✔ unknown, malformed and oversized origin records stay byte-identical and never appear as an empty legacy record (74.151ms)
+✔ a replayed partial creation log recovers both book manifest and receipt through the one storage kernel (73.4618ms)
+✔ queued import captures chapter and receipt inputs before the caller can mutate their references (30.9265ms)
+✔ invalid source metadata cannot create a partial book or persist an absolute filename (2.8808ms)
+✔ public publication snapshots exclude private source filenames and raw source fingerprints (65.5617ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 576.6377

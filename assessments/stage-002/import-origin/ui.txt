@@ -1,0 +1,52 @@
+
+> zinovel-studio@0.1.0-alpha.38 test:import-origin D:\Work\zinovel-studio
+> node scripts/smoke-import-origin.mjs
+
+(node:62824) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory',
+    'Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart',
+    'A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript',
+    'Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'origin-light-pagination.png',
+      width: 994,
+      height: 766,
+      theme: 'light'
+    },
+    {
+      name: 'origin-restored-dark.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    },
+    {
+      name: 'origin-unknown-preserved.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Browser plugin not available; actual Electron import-origin viewer and host storage/backup. Native chooser returns synthetic fixture paths; no user manuscript, native IME or arbitrary external-write atomicity claim.',
+  version: '0.1.0-alpha.38',
+  packaged: false,
+  desktopBundleSha256: '0556b4219b18dcd08fc16b3b3cb50c99c49e20ba3912f49441960f76f6bbf728',
+  frontend: {
+    'app.js': '867f511ed6deb38c939a44ff340561dd10108c896246e760960c81de1e8a38a9',
+    'app.css': '85a08bca6ed421888d75e926dcc59a4b8c6c4a4109ab01ce7a643cd58f3b6c2d',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  },
+  originSchemaVersion: 1,
+  sourceCount: 21,
+  chapterCount: 21,
+  absolutePathsExcluded: true,
+  receiptSha256: '9db92207ac0b283596349aa1a2fb735e08cf6b5ab2edba5655d701f6813b3614',
+  restoredRecordBytesPreserved: true,
+  unknownRecordPreserved: true
+}

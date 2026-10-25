@@ -218,6 +218,50 @@ manifest.importReview = {
   checks: importReview.checks,
   scope: importReview.scope,
 };
+const importOrigin = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/import-origin/import-origin-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  importOrigin.status !== "passed" ||
+  importOrigin.version !== pkg.version ||
+  importOrigin.packaged !== true ||
+  importOrigin.appAsarSha256 !== appAsarSha256 ||
+  importOrigin.checks?.length !== 4 ||
+  importOrigin.errors?.length !== 0 ||
+  importOrigin.originSchemaVersion !== 1 ||
+  !Number.isSafeInteger(importOrigin.sourceCount) ||
+  importOrigin.sourceCount < 21 ||
+  !Number.isSafeInteger(importOrigin.chapterCount) ||
+  importOrigin.chapterCount < 21 ||
+  !/^[a-f0-9]{64}$/.test(importOrigin.receiptSha256 || "") ||
+  ![
+    "absolutePathsExcluded",
+    "restoredRecordBytesPreserved",
+    "unknownRecordPreserved",
+  ].every((key) => importOrigin[key] === true)
+)
+  throw new Error(
+    "Installed private import origin, full pagination and restored/future record proof is missing or stale",
+  );
+manifest.importOrigin = {
+  version: importOrigin.version,
+  appAsarSha256,
+  originSchemaVersion: importOrigin.originSchemaVersion,
+  sourceCount: importOrigin.sourceCount,
+  chapterCount: importOrigin.chapterCount,
+  receiptSha256: importOrigin.receiptSha256,
+  absolutePathsExcluded: true,
+  restoredRecordBytesPreserved: true,
+  unknownRecordPreserved: true,
+  checks: importOrigin.checks,
+  scope: importOrigin.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

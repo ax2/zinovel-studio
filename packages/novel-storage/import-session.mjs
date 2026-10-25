@@ -49,6 +49,20 @@ class ImportReview {
       throw new Error("导入预览已经改变，请核对最新预览后重试");
     return this.#chapters.map((x) => ({ ...x }));
   }
+  provenance(applicationVersion) {
+    return {
+      applicationVersion,
+      encoding: this.#metadata.encoding,
+      automaticSplit: this.#metadata.split,
+      originalChapterCount: this.#original.length,
+      manualAdjustmentCount: this.#adjustments,
+      sources: this.#metadata.sources.map((source) => ({
+        name: source.name,
+        bytes: source.bytes,
+        sha256: source.sha256,
+      })),
+    };
+  }
   edit(revision, operation) {
     const next = this.chapters(revision);
     if (!operation || typeof operation !== "object")
@@ -119,9 +133,16 @@ export class ImportSessions {
   #entries = new Map();
   #preview;
   #createBook;
-  constructor({ createBook, preview = previewImport }) {
+  #applicationVersion;
+  /** @param {{createBook: Function, preview?: typeof previewImport, applicationVersion?: string | null}} options */
+  constructor({
+    createBook,
+    preview = previewImport,
+    applicationVersion = null,
+  }) {
     this.#createBook = createBook;
     this.#preview = preview;
+    this.#applicationVersion = applicationVersion;
   }
   #entry(id) {
     const intake = this.#entries.get(id);
@@ -179,7 +200,11 @@ export class ImportSessions {
     const chapters = intake.review.chapters(revision);
     intake.committing = true;
     try {
-      const book = await this.#createBook(title, chapters);
+      const book = await this.#createBook(
+        title,
+        chapters,
+        intake.review.provenance(this.#applicationVersion),
+      );
       this.#entries.delete(id);
       return book;
     } finally {

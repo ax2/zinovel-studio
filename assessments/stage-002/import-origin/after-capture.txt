@@ -1,0 +1,27 @@
+✔ confirmed source metadata is in the same creation transaction and contains no absolute source path or duplicated manuscript (59.4146ms)
+✔ backup restore keeps exact import record and chapter IDs while recognizing the restored book lineage (131.9547ms)
+✔ unknown, malformed and oversized origin records stay byte-identical and never appear as an empty legacy record (80.5363ms)
+✔ a replayed partial creation log recovers both book manifest and receipt through the one storage kernel (90.4059ms)
+✔ queued import captures chapter and receipt inputs before the caller can mutate their references (29.3538ms)
+✔ manual split/rename/merge conserves Unicode body and only final confirmed revision is imported (8.7323ms)
+✔ invalid split, stale/missing IDs and malformed labels cannot mutate an accepted preview (2.4704ms)
+✔ reset returns exact original frozen chapter IDs/body/metadata without re-reading changed source (3.3932ms)
+✔ host snapshots cannot be changed through response objects, and a fresh preview revokes even the original token (8.3529ms)
+✔ overlapping reads cannot replace the latest requested preview or leave a stale failed preview committable (0.3545ms)
+✔ a pending commit blocks duplicate writes, and failed creation preserves the same preview for retry (0.2671ms)
+✔ choosing a sixth session expires the old token instead of using another session's chapters (8.0859ms)
+✔ an oversized chapter fails before creating a book, then manual split retries against the same frozen source (195.5533ms)
+✔ volume order, stable chapter IDs, reviewed status and trash survive restart (124.1394ms)
+✔ UTF-8 import preview preserves source bytes and chapter/volume order (51.6679ms)
+✔ verified backup restores into a new book; corruption is rejected without overwriting originals (89.067ms)
+✔ preview supports legacy Chinese encoding and retains deliberately empty chapters (2.4265ms)
+✔ utf-16le preview and actual new-book import preserve supplementary text; malformed input stays untouched (51.224ms)
+✔ utf-16be preview and actual new-book import preserve supplementary text; malformed input stays untouched (28.1399ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 547.2124

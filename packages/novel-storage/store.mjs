@@ -1,5 +1,10 @@
 import { readUtf8File, decodeUtf8 } from "./encoding.mjs";
 import { BookStorageKernel } from "./kernel.mjs";
+import {
+  ImportOriginStore,
+  createImportOrigin,
+  importOriginPath,
+} from "./import-origin.mjs";
 import { MaterialStore } from "./materials.mjs";
 import { PlanningStore } from "./planning.mjs";
 import { PilotStore } from "./pilots.mjs";
@@ -57,6 +62,7 @@ export class NovelStore {
   constructor(root) {
     this.root = resolve(root);
     this.#storage = new BookStorageKernel(this.root);
+    this.importOrigins = new ImportOriginStore(this.#storage);
     this.backups = new BackupVault(this.#storage, (contents) =>
       this.#restoreContents(contents),
     );
@@ -284,7 +290,26 @@ export class NovelStore {
       return book;
     });
   }
-  importBook(title, chapters) {
+  importBook(title, chapters, importMetadata) {
+    // Capture the fields this operation consumes before joining the writer queue.
+    // Strings stay shared/immutable; no full-manuscript deep copy is needed.
+    try {
+      if (Array.isArray(chapters))
+        chapters = chapters.map((chapter) => ({
+          title: chapter?.title,
+          body: chapter?.body,
+          volume: chapter?.volume,
+        }));
+      if (importMetadata && typeof importMetadata === "object")
+        importMetadata = {
+          ...importMetadata,
+          sources: Array.isArray(importMetadata.sources)
+            ? importMetadata.sources.map((source) => ({ ...source }))
+            : importMetadata.sources,
+        };
+    } catch (error) {
+      return Promise.reject(error);
+    }
     return this.#storage.exclusive(async () => {
       const name = titleOf(title);
       if (
@@ -345,6 +370,8 @@ export class NovelStore {
         changes[`manuscript/${chapter.id}.md`] = input.body;
       }
       changes["book.json"] = json(book);
+      if (importMetadata !== undefined)
+        changes[importOriginPath] = createImportOrigin(book, importMetadata);
       await mkdir(root, { recursive: true });
       await this.#storage.transaction(root, changes);
       return book;

@@ -1255,6 +1255,15 @@ p {
 .import-edit {
   margin-bottom: 24px;
 }
+.import-origin {
+  border: 1px solid var(--border);
+  padding: 12px;
+  margin: 12px 0;
+}
+.import-origin summary { cursor: pointer; }
+.import-origin p, .import-origin li { overflow-wrap: anywhere; }
+.import-origin code { font-size: 13px; white-space: normal; overflow-wrap: anywhere; }
+.import-origin-files li { margin: 12px 0; }
 .import-edit-fields {
   display: flex;
   flex-wrap: wrap;

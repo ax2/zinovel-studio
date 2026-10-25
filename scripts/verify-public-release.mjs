@@ -373,6 +373,26 @@ try {
     assert.match(scene.lookDraftSha256, /^[a-f0-9]{64}$/);
     assert.match(scene.oldMaterialDraftSha256, /^[a-f0-9]{64}$/);
   }
+  if (milestone >= 38) {
+    const origin = manifest.importOrigin;
+    assert.equal(origin?.version, manifest.version);
+    assert.equal(origin?.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.equal(origin?.originSchemaVersion, 1);
+    assert.equal(origin?.checks?.length, 4);
+    assert.ok(
+      Number.isSafeInteger(origin.sourceCount) && origin.sourceCount >= 21,
+    );
+    assert.ok(
+      Number.isSafeInteger(origin.chapterCount) && origin.chapterCount >= 21,
+    );
+    assert.match(origin.receiptSha256, /^[a-f0-9]{64}$/);
+    for (const key of [
+      "absolutePathsExcluded",
+      "restoredRecordBytesPreserved",
+      "unknownRecordPreserved",
+    ])
+      assert.equal(origin[key], true);
+  }
   const installerDirectory = resolve(
     root,
     process.argv[5] || join(output, "installer"),

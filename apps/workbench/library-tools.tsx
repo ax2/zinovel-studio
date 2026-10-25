@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { api, type Book } from "./api";
 import { orderedChapters } from "../../packages/novel-domain/structure.mjs";
+import { ImportOriginPanel } from "./import-origin-panel";
 import {
   ImportPreviewEditor,
   type ImportPreview,
@@ -254,6 +255,7 @@ export function StructureDialog({
             <X />
           </button>
         </div>
+        <ImportOriginPanel key={current.id} bookId={current.id} />
         <div className="book-fields">
           <label>
             书名

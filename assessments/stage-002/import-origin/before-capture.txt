@@ -1,0 +1,32 @@
+✔ confirmed source metadata is in the same creation transaction and contains no absolute source path or duplicated manuscript (52.8035ms)
+✔ backup restore keeps exact import record and chapter IDs while recognizing the restored book lineage (115.0283ms)
+✔ unknown, malformed and oversized origin records stay byte-identical and never appear as an empty legacy record (89.3992ms)
+✔ a replayed partial creation log recovers both book manifest and receipt through the one storage kernel (91.1264ms)
+✖ queued import captures chapter and receipt inputs before the caller can mutate their references (39.8832ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 529.9504
+
+✖ failing tests:
+
+test at tests\import-origin.test.mjs:188:1
+✖ queued import captures chapter and receipt inputs before the caller can mutate their references (39.8832ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '调用后修改' !== '原确认正文'
+  
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/import-origin.test.mjs:210:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '调用后修改',
+    expected: '原确认正文',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
