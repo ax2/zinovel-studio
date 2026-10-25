@@ -1217,8 +1217,14 @@
       "name": "模型与能力选择",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "文本/图像能力不同，失败可见"
+      "status": "in-progress",
+      "acceptance": "文本/图像能力不同，失败可见",
+      "evidence": [
+        "design/model-profiles-and-capabilities.md",
+        "packages/novel-storage/model-profiles.mjs",
+        "tests/model-profiles.test.mjs",
+        "assessments/stage-003/model-profiles-source.md"
+      ]
     },
     {
       "id": "OPS-02",

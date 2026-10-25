@@ -145,3 +145,6 @@
 - 本地 alpha.5 安装、升级报告版本与 SHA-256 一致；已有安装结果不等于产品达到上架质量。
 - 用户本次要求“达到上架质量后再发布”优先于前述恢复步骤 3/4。停止提前发布新预览版；保留自动 tag 发行能力并增加产品资格门禁。代码与文档继续正常提交 GitHub。
 - 本次恢复开发从 Stage-004 结构化创作资料开始；共享单实例存储队列与恢复事务，不开第二写入队列。
+
+## 2026-10-25 alpha.30 独立模型配置后端
+后续用户已明确要求阶段成果可发布含安装EXE的预览；历史暂停/门禁记录保留，不把阶段预览当完整上架。29原生/安装/升级及独立标签CI40152224401已success，公开附件核对中；原28失败和凭据资格撤销证据不抹去。新30按完整OPS-01先建独立profile ID、protocol/capability、route、Key和预算，不借文字Key冒充图片能力。ModelProfiles文件首次create-only迁移、修订+原始hash、原生无共享写锁、外部改动/未来schema/坏UTF8/数量与体积边界保留拒绝；公开视图不回读密文。8项专项/完整267项/类型/规划通过，单元codec明确为合成，未称OS加密或真实图像验证。新类尚未连接ModelSettings/宿主/管理界面/正文请求，image runnable=false并在解密前拒绝；后续仍需完整DPAPI、界面、官方Harness与图像候选生命周期。OPS-01由planned到in-progress，现26/46/34，稳定false、30ready=false。方案design/model-profiles-and-capabilities.md，证据assessments/stage-003/model-profiles-source.md，原始check文本同目录。
