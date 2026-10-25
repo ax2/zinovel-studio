@@ -34,3 +34,33 @@ export function modelCredentialPlan(previousScope, nextService, input) {
     credentialScope: scope,
   };
 }
+
+export function modelProfileReference(input) {
+  if (input === undefined) return undefined;
+  if (
+    !input ||
+    typeof input !== "object" ||
+    Array.isArray(input) ||
+    Object.keys(input).some(
+      (key) => !["id", "label", "revision", "protocol"].includes(key),
+    ) ||
+    typeof input.id !== "string" ||
+    !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(
+      input.id,
+    ) ||
+    typeof input.label !== "string" ||
+    !input.label.trim() ||
+    input.label.length > 80 ||
+    !input.label.isWellFormed() ||
+    !Number.isSafeInteger(input.revision) ||
+    input.revision < 1 ||
+    input.protocol !== "anthropic-text"
+  )
+    throw new Error("文字模型配置引用无效");
+  return {
+    id: input.id,
+    label: input.label,
+    revision: input.revision,
+    protocol: input.protocol,
+  };
+}

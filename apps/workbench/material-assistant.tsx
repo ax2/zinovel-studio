@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { api } from "./api";
+import { useModelChoice, ModelChoiceNotice } from "./model-choice";
 import type { Material } from "./materials-panel";
 import { ContextSelector, type ContextSelection } from "./context-selector";
 import { materialKind } from "../../packages/novel-domain/materials.mjs";
@@ -50,6 +51,7 @@ export function MaterialAssistant({
   disabled: boolean;
   updated: (value: Material) => void;
 }) {
+  const model = useModelChoice();
   const [instruction, setInstruction] = useState(""),
     [skillId, setSkill] = useState(methods[material.kind]),
     [skills, setSkills] = useState<{ id: string; name: string }[]>([]),
@@ -72,7 +74,13 @@ export function MaterialAssistant({
   const active = useRef(true);
   useEffect(
     () => setEstimate(""),
-    [material.diskHash, skillId, context.pack?.hash],
+    [
+      material.diskHash,
+      skillId,
+      context.pack?.hash,
+      model.ready,
+      model.choice?.diskHash,
+    ],
   );
   useEffect(() => {
     const reset = () => setEstimate("");
@@ -108,6 +116,7 @@ export function MaterialAssistant({
     };
   }, [bookId, material.id, offset, reload]);
   const payload = () => ({
+    modelChoice: model.choice,
     bookId,
     expected: {
       id: material.id,
@@ -167,6 +176,7 @@ export function MaterialAssistant({
     <section className="material-assistant" aria-label="资料 AI 协作">
       <details>
         <summary>AI 完善这份资料</summary>
+        <ModelChoiceNotice value={model} />
         <p className="muted">
           发送这份资料及明确选择的参考，生成独立候选。类型、章节关联、作者确认状态和正文证据保持；明确接受前不会改资料或正文。
         </p>
@@ -205,7 +215,9 @@ export function MaterialAssistant({
         />
         <div className="material-actions">
           <button
-            disabled={disabled || generating || busy || !context.ready}
+            disabled={
+              disabled || generating || busy || !context.ready || !model.ready
+            }
             onClick={async () => {
               setBusy(true);
               setError("");
@@ -235,6 +247,7 @@ export function MaterialAssistant({
               generating ||
               busy ||
               !context.ready ||
+              !model.ready ||
               !instruction.trim()
             }
             onClick={async () => {

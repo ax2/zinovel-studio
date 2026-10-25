@@ -13,6 +13,16 @@
   --rail: #34444e;
   --shadow: 0 16px 60px #152a3b26;
 }
+.model-profiles-panel select {
+  width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--border);
+  border-radius: 5px; background: var(--surface); color: var(--text); font: inherit;
+}
+.model-profiles-panel > label { display: flex; flex-direction: column; gap: 8px; }
+.model-profiles-panel fieldset { min-width: 0; margin: 16px 0; border: 1px solid var(--border); border-radius: 6px; }
+.model-profile-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.model-profile-row strong, .model-profile-row > span { flex-basis: 100%; min-width: 0; }
+.model-profile-row > span { color: var(--muted); font-size: 13px; }
+.model-profiles-panel .modal-actions { flex-wrap: wrap; }
 .task-history-trigger {
   width: 100%;
   margin-top: 12px;

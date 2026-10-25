@@ -1,5 +1,8 @@
 import { materialContextText } from "../novel-domain/material-context.mjs";
-import { modelServiceURL } from "../novel-domain/model-service.mjs";
+import {
+  modelServiceURL,
+  modelProfileReference,
+} from "../novel-domain/model-service.mjs";
 import { materialProposal } from "../novel-domain/material-proposal.mjs";
 import { materialKind } from "../novel-domain/materials.mjs";
 import { pilotReplacement } from "../novel-domain/pilots.mjs";
@@ -98,6 +101,9 @@ export function validateSettings(input) {
     baseURL,
     model,
     budget: validateBudget(input.budget),
+    ...(input.modelProfile !== undefined
+      ? { modelProfile: modelProfileReference(input.modelProfile) }
+      : {}),
   };
 }
 
@@ -320,6 +326,7 @@ export class NovelHarness {
         skillId,
         skillVersion: skill.version,
         model: config.model,
+        ...(config.modelProfile ? { modelProfile: config.modelProfile } : {}),
         kind: pilotTarget ? "pilot" : materialTarget ? "material" : "writing",
         bookId: pilotTarget?.bookId || materialTarget?.bookId || target?.bookId,
         pilotId: pilotTarget?.id,

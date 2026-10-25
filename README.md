@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)已公开，修复更换服务时旧Key复用并交付会话诊断。独立发行CI40152224401首次完整success；公开155487567字节EXE已实际下载/hash复核、四附件/元数据摘要/匿名可见通过。本机161项安装及alpha.3升级独立保留。28失败未发布且资格已撤销。主线alpha.30独立模型配置后端8项专项/完整267项源码通过，尚无宿主、管理界面、图像调用或本版安装资格。详见[29资格](assessments/release/v0.1.0-alpha.29/README.md)、[30后端](assessments/stage-003/model-profiles-source.md)、[完整能力设计](design/model-profiles-and-capabilities.md)。
+最新阶段版[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)已公开，修复更换服务时旧Key复用并交付会话诊断。独立发行CI40152224401首次完整success；公开155487567字节EXE已实际下载/hash复核、四附件/元数据摘要/匿名可见通过。本机161项安装及alpha.3升级独立保留。28失败未发布且资格已撤销。主线alpha.30已接入独立模型管理、系统凭据与文字路由，9项后端/完整268项源码及6组真实桌面专项通过；图像仅可配置，尚无本版安装资格。详见[29资格](assessments/release/v0.1.0-alpha.29/README.md)、[30桌面](assessments/stage-003/model-profiles-desktop.md)、[完整能力设计](design/model-profiles-and-capabilities.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
@@ -30,7 +30,7 @@ Windows 技术预览版：[v0.1.0-alpha.29 下载与说明](https://github.com/a
 | [阶段路线图](plan/roadmap.md) | Stage-001 至 Stage-008 的依赖及交付门槛 |
 | [上游研究](design/upstream-research.md) | 官方桌面证据、提交号、复用边界 |
 | [架构设计](design/architecture.md) | Electron、官方 Harness、小说插件与最小运行时 |
-| [模型配置与能力后续设计](design/model-profiles-and-capabilities.md) | 独立文字/图像路由、Key范围与完整验证要求；尚未实现 |
+| [模型配置与能力后续设计](design/model-profiles-and-capabilities.md) | 独立文字/图像路由、Key范围与完整验证要求；alpha.30接入文字，图像生成待实现 |
 | [数据与存储](design/data-model.md) | 文件结构、版本、事务、迁移、冲突 |
 | [编辑与交互](design/interaction.md) | 书架、工作台、局部 AI 修改与可访问性 |
 | [技能与工具](design/skills-tools.md) | 技能路由、工具能力、上下文和任务执行 |

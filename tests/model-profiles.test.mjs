@@ -321,3 +321,36 @@ test("profile count and oversized-file limits refuse additional writes without e
   await assert.rejects(f.store.add(text(), expected(view)), /无法读取/);
   assert.deepEqual(await readFile(f.store.path), tooLarge);
 });
+
+test("migration activation failure publishes no profiles; an activation interrupted after its pointer can be explicitly retried", async () => {
+  const root = await mkdtemp(join(tmpdir(), "zinovel-model-activation-")),
+    store = new ModelProfiles(root, codec),
+    legacy = {
+      baseURL: "https://a.example/anthropic",
+      model: "synthetic-A",
+      encryptedKey: seal("synthetic-A"),
+    };
+  let activation;
+  await assert.rejects(
+    store.initializeFromLegacy(legacy, {
+      beforeCommit: async (view) => {
+        activation = view.storeId;
+        assert.equal((await store.inspect()).initialized, false);
+        throw new Error("synthetic activation interruption");
+      },
+    }),
+    /synthetic activation interruption/,
+  );
+  assert.match(activation, /^[a-f0-9-]{36}$/);
+  assert.equal((await store.inspect()).initialized, false);
+  const saved = await store.initializeFromLegacy(legacy, {
+    beforeCommit: async (view) => {
+      activation = view.storeId;
+    },
+  });
+  assert.equal(saved.storeId, activation);
+  assert.equal(
+    (await store.resolve("text", expected(saved), { secret: true })).apiKey,
+    "synthetic-A",
+  );
+});

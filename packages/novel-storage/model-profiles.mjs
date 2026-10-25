@@ -138,6 +138,7 @@ function documentRecord(input) {
     !ownKeys(input, [
       "format",
       "schemaVersion",
+      "storeId",
       "revision",
       "updatedAt",
       "routes",
@@ -145,6 +146,7 @@ function documentRecord(input) {
     ]) ||
     input.format !== "zinovel-model-profiles" ||
     input.schemaVersion !== 1 ||
+    !uuid.test(input.storeId) ||
     !Number.isSafeInteger(input.revision) ||
     input.revision < 1 ||
     typeof input.updatedAt !== "string" ||
@@ -182,6 +184,7 @@ function documentRecord(input) {
   return {
     format: "zinovel-model-profiles",
     schemaVersion: 1,
+    storeId: input.storeId,
     revision: input.revision,
     updatedAt: input.updatedAt,
     routes: { ...input.routes },
@@ -247,6 +250,7 @@ export class ModelProfiles {
     return state
       ? {
           initialized: true,
+          storeId: state.record.storeId,
           revision: state.record.revision,
           diskHash: state.diskHash,
           routes: { ...state.record.routes },
@@ -295,7 +299,7 @@ export class ModelProfiles {
       throw new Error("模型配置总量超过2MiB，原文件已保留");
     return text;
   }
-  async #createOnly(record) {
+  async #createOnly(record, beforeCommit) {
     const temporary = join(this.root, `.model-profiles-${randomUUID()}.tmp`),
       text = this.#serialized(record);
     let committed = false,
@@ -308,6 +312,9 @@ export class ModelProfiles {
       } finally {
         await file.close();
       }
+      await beforeCommit?.(
+        this.#view({ record: documentRecord(record), diskHash: digest(text) }),
+      );
       await link(temporary, this.path);
       committed = true;
     } finally {
@@ -323,7 +330,8 @@ export class ModelProfiles {
       ...(cleanupPending ? { cleanupPending: true } : {}),
     };
   }
-  async initializeFromLegacy(legacy) {
+  /** @param {any} legacy @param {{beforeCommit?: (view: any) => Promise<void>}} [options] */
+  async initializeFromLegacy(legacy, { beforeCommit } = {}) {
     return this.#locked(async () => {
       if (await this.#read()) throw new Error("模型配置已经建立，未再次迁移");
       const config = validateSettings(legacy),
@@ -343,14 +351,18 @@ export class ModelProfiles {
             service: modelServiceURL(legacy.credentialScope ?? config.baseURL),
           },
         };
-      return this.#createOnly({
-        format: "zinovel-model-profiles",
-        schemaVersion: 1,
-        revision: 1,
-        updatedAt: new Date().toISOString(),
-        routes: { text: id, image: null },
-        profiles: [profile],
-      });
+      return this.#createOnly(
+        {
+          format: "zinovel-model-profiles",
+          schemaVersion: 1,
+          storeId: randomUUID(),
+          revision: 1,
+          updatedAt: new Date().toISOString(),
+          routes: { text: id, image: null },
+          profiles: [profile],
+        },
+        beforeCommit,
+      );
     });
   }
   async #mutate(expected, operation) {

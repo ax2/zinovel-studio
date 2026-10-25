@@ -160,6 +160,7 @@ try {
       "smoke-model-credentials.mjs",
       "model-credentials/model-credentials-smoke.json",
     ],
+    ["smoke-model-profiles.mjs", "model-profiles/model-profiles-smoke.json"],
     [
       "smoke-backup-vault.mjs",
       "incremental-backup/incremental-backup-smoke.json",

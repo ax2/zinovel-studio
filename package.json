@@ -68,7 +68,8 @@
     "test:tool-isolation": "node scripts/smoke-tool-isolation.mjs",
     "test:backup-vault": "node scripts/smoke-backup-vault.mjs --allow-same-disk",
     "test:diagnostics": "node scripts/smoke-diagnostics.mjs",
-    "test:model-credentials": "node scripts/smoke-model-credentials.mjs"
+    "test:model-credentials": "node scripts/smoke-model-credentials.mjs",
+    "test:model-profiles": "node scripts/smoke-model-profiles.mjs"
   },
   "engines": {
     "node": ">=26"

@@ -1,5 +1,11 @@
 import { contextBridge, ipcRenderer } from "electron";
 const allowed = new Set([
+  "profiles.list",
+  "profiles.migrate",
+  "profiles.add",
+  "profiles.update",
+  "profiles.select",
+  "profiles.remove",
   "diagnostics.get",
   "diagnostics.clear",
   "diagnostics.export",

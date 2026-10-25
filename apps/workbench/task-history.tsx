@@ -43,6 +43,12 @@ export type StoredTask = {
   } | null;
   reviewDraftError?: string;
   record: TaskSummary & {
+    modelProfile?: {
+      id: string;
+      label: string;
+      revision: number;
+      protocol: string;
+    };
     candidate?: string;
     acceptedText?: string;
     partialCandidate?: boolean;
@@ -167,6 +173,9 @@ export function TaskHistory({
               · {statusLabels[selected.record.status] || selected.record.status}
             </p>
             <p className="muted">
+              {selected.record.modelProfile
+                ? `${selected.record.modelProfile.label}（配置修订 ${selected.record.modelProfile.revision}） · `
+                : ""}
               {selected.record.model} ·{" "}
               {new Date(selected.record.startedAt).toLocaleString("zh-CN")}
             </p>

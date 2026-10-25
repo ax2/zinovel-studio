@@ -333,6 +333,34 @@ manifest.modelCredentials = {
   checks: modelCredentials.checks,
   scope: modelCredentials.scope,
 };
+const modelProfiles = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/model-profiles/model-profiles-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  modelProfiles.status !== "passed" ||
+  modelProfiles.version !== pkg.version ||
+  modelProfiles.packaged !== true ||
+  modelProfiles.appAsarSha256 !== appAsarSha256 ||
+  modelProfiles.errors?.length !== 0 ||
+  modelProfiles.checks?.length !== 6 ||
+  JSON.stringify(modelProfiles.requests) !== JSON.stringify([3, 6, 0])
+)
+  throw new Error(
+    "Installed independent model profile proof is missing or stale",
+  );
+manifest.modelProfiles = {
+  version: modelProfiles.version,
+  appAsarSha256: modelProfiles.appAsarSha256,
+  checks: modelProfiles.checks,
+  scope: modelProfiles.scope,
+  requests: modelProfiles.requests,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

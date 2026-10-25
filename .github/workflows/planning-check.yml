@@ -77,6 +77,7 @@ jobs:
       - run: pnpm test:backup-vault
       - run: pnpm test:diagnostics
       - run: pnpm test:model-credentials
+      - run: pnpm test:model-profiles
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui

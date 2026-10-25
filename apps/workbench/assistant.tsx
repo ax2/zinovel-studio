@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
+import { ProfilesPanel } from "./profiles-panel";
+import { useModelChoice, ModelChoiceNotice } from "./model-choice";
 import { modelServiceURL } from "../../packages/novel-domain/model-service.mjs";
 import { TaskHistory, type StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
@@ -20,16 +22,19 @@ type Settings = {
   encryptionAvailable: boolean;
   budget: BudgetSettings;
   credentialMismatch?: boolean;
+  profilesEnabled?: boolean;
 };
 export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
   const [config, setConfig] = useState<Settings | null>(null),
     [key, setKey] = useState(""),
     [error, setError] = useState(""),
-    [saving, setSaving] = useState(false);
+    [saving, setSaving] = useState(false),
+    [profiles, setProfiles] = useState(false);
   const savedService = useRef<string | null>(null);
   function adopt(value: Settings) {
     savedService.current = value.baseURL;
     setConfig(value);
+    if (value.profilesEnabled) setProfiles(true);
   }
   let endpointChanged = false;
   if (config && savedService.current) {
@@ -45,6 +50,7 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
       .then(adopt)
       .catch((e) => setError(e.message));
   }, []);
+  if (profiles) return <ProfilesPanel onClose={onClose} />;
   return (
     <div className="modal-backdrop">
       <form
@@ -77,6 +83,16 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
           AI 任务通过官方 DeepSeek Harness
           运行。开始生成时，选区、当前章节和你明确选择的资料快照会发送到你配置的模型服务。
         </p>
+        <button
+          type="button"
+          disabled={saving}
+          onClick={() => {
+            setKey("");
+            setProfiles(true);
+          }}
+        >
+          管理多个模型与能力
+        </button>
         {config && (
           <>
             <label>
@@ -200,6 +216,7 @@ export function WritingAssistant({
   openChapter: (id: string, bookId?: string) => Promise<void>;
   bookId: string;
 }) {
+  const model = useModelChoice();
   const [skills, setSkills] = useState<{ id: string; name: string }[]>([]),
     [skillId, setSkillId] = useState("novel-polish"),
     [instruction, setInstruction] = useState("保留情节和人物意图，改善表达。");
@@ -253,9 +270,10 @@ export function WritingAssistant({
     let active = true;
     setPreview(null);
     setPreviewFailed(false);
-    if (!snapshot) return;
+    if (!snapshot || !model.ready) return;
     const timer = setTimeout(() => {
       api<NonNullable<typeof preview>>("ai.estimate", {
+        modelChoice: model.choice,
         skillId,
         instruction,
         context: snapshot.body,
@@ -282,14 +300,17 @@ export function WritingAssistant({
     previewRevision,
     materialSelection.pack?.hash,
     materialSelection.ready,
+    model.ready,
+    model.choice?.diskHash,
   ]);
   async function generate(retry?: StoredTask) {
-    if (!snapshot || !materialSelection.ready) return;
+    if (!snapshot || !materialSelection.ready || !model.ready) return;
     const base = { ...snapshot };
     setError("");
     setRunning(true);
     try {
       const result = await api<{ id: string; text: string }>("ai.generate", {
+        modelChoice: model.choice,
         skillId: retry?.record.skillId || skillId,
         instruction: retry?.snapshot.instruction || instruction,
         retryOf: retry?.record.id,
@@ -318,6 +339,7 @@ export function WritingAssistant({
           <Settings2 size={16} />
         </button>
       </div>
+      <ModelChoiceNotice value={model} />
       <label>
         创作方法
         <select
@@ -380,7 +402,10 @@ export function WritingAssistant({
         <button
           className="primary"
           disabled={
-            !snapshot || !instruction.trim() || !materialSelection.ready
+            !snapshot ||
+            !instruction.trim() ||
+            !materialSelection.ready ||
+            !model.ready
           }
           onClick={() => void generate()}
         >

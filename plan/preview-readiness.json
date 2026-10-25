@@ -60,11 +60,12 @@
     "assessments/release/v0.1.0-alpha.28/README.md",
     "design/model-credentials.md",
     "assessments/stage-003/model-credentials-source.md",
-    "assessments/release/v0.1.0-alpha.29/README.md"
+    "assessments/release/v0.1.0-alpha.29/README.md",
+    "assessments/stage-003/model-profiles-desktop.md"
   ],
   "reports": [],
   "limitations": [
-    "alpha.30多模型/文字图像能力配置开发中，未有本版安装资格；29不可变标签正在独立发行，不继承旧版本资格；28已失败且资格撤销",
+    "alpha.30独立模型宿主与作者界面、系统凭据及六组真实Harness桌面专项通过，尚无本版安装资格；29已独立公开验证，不继承旧资格；28失败且资格撤销",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项仍26 verified/46 in-progress/34 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/诊断/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

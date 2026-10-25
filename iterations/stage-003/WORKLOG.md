@@ -148,3 +148,7 @@
 
 ## 2026-10-25 alpha.30 独立模型配置后端
 后续用户已明确要求阶段成果可发布含安装EXE的预览；历史暂停/门禁记录保留，不把阶段预览当完整上架。29原生/安装/升级及独立标签CI40152224401已success，公开附件核对中；原28失败和凭据资格撤销证据不抹去。新30按完整OPS-01先建独立profile ID、protocol/capability、route、Key和预算，不借文字Key冒充图片能力。ModelProfiles文件首次create-only迁移、修订+原始hash、原生无共享写锁、外部改动/未来schema/坏UTF8/数量与体积边界保留拒绝；公开视图不回读密文。8项专项/完整267项/类型/规划通过，单元codec明确为合成，未称OS加密或真实图像验证。新类尚未连接ModelSettings/宿主/管理界面/正文请求，image runnable=false并在解密前拒绝；后续仍需完整DPAPI、界面、官方Harness与图像候选生命周期。OPS-01由planned到in-progress，现26/46/34，稳定false、30ready=false。方案design/model-profiles-and-capabilities.md，证据assessments/stage-003/model-profiles-source.md，原始check文本同目录。
+
+### alpha.30 宿主与作者界面接入
+
+已核对主线3710cc2的Development checks 40153854867 success；29公开EXE下载/hash、四附件和匿名可见均通过，分开保留本机与CI安装摘要。新30接入真实safeStorage、多模型管理、文字/图像独立路由和预算、明确迁移/恢复、Key清除与配置删除。迁移方案修正为原字节私有备份+schema2活动指针+storeId，缺失列表阻止发稿而非静默回旧服务。全部文字/资料/试写估算与生成绑定作者可见修订，任务冻结profile并展示历史名称。真实Harness两个文字端点六组桌面专项通过，含陈旧UI草稿、清除互不影响、重启、未来schema/身份错误与恢复；图像未请求。旧凭据、恢复、预算专项通过。界面实看后修列表换行和暗色select；测试定位/弹窗顺序失败留原缓存。详见assessments/stage-003/model-profiles-desktop.md。新专项进入源码、发行与安装套件；同版安装、升级和独立CI尚待，ready=false不变。

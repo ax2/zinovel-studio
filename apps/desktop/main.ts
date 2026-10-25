@@ -236,6 +236,42 @@ if (
           try {
             let value: unknown;
             switch (action) {
+              case "profiles.list":
+                if (Object.keys(payload).length)
+                  throw new Error("模型列表读取不接受自定义路径");
+                value = await settings.profileList();
+                break;
+              case "profiles.migrate":
+                if (
+                  Object.keys(payload).some(
+                    (key) => !["legacyToken", "restoreMissing"].includes(key),
+                  ) ||
+                  typeof payload.legacyToken !== "string" ||
+                  (payload.restoreMissing !== undefined &&
+                    typeof payload.restoreMissing !== "boolean")
+                )
+                  throw new Error("请明确确认已读取的迁移或恢复配置");
+                value = await settings.migrateProfiles(
+                  payload as Parameters<ModelSettings["migrateProfiles"]>[0],
+                );
+                break;
+              case "profiles.add":
+              case "profiles.update":
+              case "profiles.select":
+              case "profiles.remove": {
+                const keys =
+                  action === "profiles.add"
+                    ? ["input", "expected"]
+                    : action === "profiles.update"
+                      ? ["id", "input", "expected"]
+                      : action === "profiles.select"
+                        ? ["capability", "id", "expected"]
+                        : ["id", "expected"];
+                if (Object.keys(payload).some((key) => !keys.includes(key)))
+                  throw new Error("模型配置操作不接受额外字段");
+                value = await settings.mutateProfiles(action, payload);
+                break;
+              }
               case "diagnostics.get":
               case "diagnostics.clear":
               case "diagnostics.export": {
@@ -1249,7 +1285,7 @@ if (
                   payload.selectedText,
                   chapter,
                 );
-                const config = await settings.secret();
+                const config = await settings.secret(payload.modelChoice);
                 const materialContext = payload.materialIds?.length
                   ? await store.context.pack(target.bookId, payload.materialIds)
                   : undefined;
@@ -1275,7 +1311,7 @@ if (
               }
               case "ai.materialGenerate": {
                 const input = await materialTaskInput(payload);
-                const config = await settings.secret();
+                const config = await settings.secret(payload.modelChoice);
                 value = await harness.generate(
                   input,
                   config.settings,
@@ -1291,7 +1327,7 @@ if (
                 break;
               case "ai.pilotGenerate": {
                 const input = await pilotTaskInput(payload),
-                  config = await settings.secret();
+                  config = await settings.secret(payload.modelChoice);
                 value = await harness.generate(
                   input,
                   config.settings,
@@ -1302,7 +1338,7 @@ if (
               case "ai.pilotEstimate":
                 value = await harness.preview(
                   await pilotTaskInput(payload),
-                  await settings.public(),
+                  await settings.writingPublic(payload.modelChoice),
                 );
                 break;
               case "ai.pilotAccept":
@@ -1325,7 +1361,7 @@ if (
               case "ai.materialEstimate":
                 value = await harness.preview(
                   await materialTaskInput(payload),
-                  await settings.public(),
+                  await settings.writingPublic(payload.modelChoice),
                 );
                 break;
               case "ai.materialAccept":
@@ -1354,7 +1390,7 @@ if (
                   : undefined;
                 value = await harness.preview(
                   { ...payload, materialContext },
-                  await settings.public(),
+                  await settings.writingPublic(payload.modelChoice),
                 );
                 break;
               }

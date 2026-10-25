@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { api } from "./api";
+import { useModelChoice, ModelChoiceNotice } from "./model-choice";
 import type { Pilot } from "./pilot-studio";
 import type { StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
@@ -43,6 +44,7 @@ export function PilotAssistant({
   disabled: boolean;
   updated: () => Promise<void>;
 }) {
+  const model = useModelChoice();
   const [pack, setPack] = useState<Pack | null>(null),
     [instruction, setInstruction] = useState(
       "按本样稿的视角和声音试写共同场景，用人物行动推进冲突，保留读者承诺。",
@@ -66,7 +68,15 @@ export function PilotAssistant({
     ids: [],
     pack: null,
   });
-  useEffect(() => setEstimate(""), [references.ready, references.pack?.hash]);
+  useEffect(
+    () => setEstimate(""),
+    [
+      references.ready,
+      references.pack?.hash,
+      model.ready,
+      model.choice?.diskHash,
+    ],
+  );
   async function snapshot() {
     const request = ++snapshotRequest.current;
     setPack(null);
@@ -123,6 +133,7 @@ export function PilotAssistant({
     }
   }
   const payload = () => ({
+    modelChoice: model.choice,
     bookId,
     expected: {
       id: pilot.id,
@@ -154,7 +165,12 @@ export function PilotAssistant({
     );
   }
   const unavailable =
-    busy || generating || disabled || !pack || !references.ready;
+    busy ||
+    generating ||
+    disabled ||
+    !pack ||
+    !references.ready ||
+    !model.ready;
   const displayed = task
     ? task.record.status === "applied" && task.record.acceptedText !== undefined
       ? task.record.acceptedText
@@ -164,6 +180,7 @@ export function PilotAssistant({
     <section className="pilot-assistant" aria-label="试写 AI 协作">
       <details>
         <summary>AI 试写当前分支</summary>
+        <ModelChoiceNotice value={model} />
         <p>
           使用内置“开篇试写”方法；先审阅候选，再明确接受。只改当前样稿正文，不改标题、场景字段或正式章节。多种方案请分别复制分支后生成。
         </p>
