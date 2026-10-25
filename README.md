@@ -1,14 +1,14 @@
 # ZiNovel Studio
 
-最新已核对公开版本为[alpha.27](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27)。alpha.29修复跨服务Key保留并继承诊断，本机161项安装/升级和独立发行CI40152224401均通过，正在实际下载公开附件核对。alpha.28失败未发布且本机资格已撤销。主线alpha.30独立模型配置后端已通过8项专项/完整267项源码，尚无宿主、管理界面、图像调用或本版安装资格。详见[29资格](assessments/release/v0.1.0-alpha.29/README.md)、[30后端](assessments/stage-003/model-profiles-source.md)、[完整能力设计](design/model-profiles-and-capabilities.md)。
+最新阶段版[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)已公开，修复更换服务时旧Key复用并交付会话诊断。独立发行CI40152224401首次完整success；公开155487567字节EXE已实际下载/hash复核、四附件/元数据摘要/匿名可见通过。本机161项安装及alpha.3升级独立保留。28失败未发布且资格已撤销。主线alpha.30独立模型配置后端8项专项/完整267项源码通过，尚无宿主、管理界面、图像调用或本版安装资格。详见[29资格](assessments/release/v0.1.0-alpha.29/README.md)、[30后端](assessments/stage-003/model-profiles-source.md)、[完整能力设计](design/model-profiles-and-capabilities.md)。
 
-**模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。alpha.29本机及独立发行已通过，公开附件正在下载核对，完成后更新推荐入口；公开Release说明已同步提醒。
+**模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、46项 in-progress、34项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.27 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.27/ZiNovel-Studio-0.1.0-alpha.27-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.29 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.29/ZiNovel-Studio-0.1.0-alpha.29-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
