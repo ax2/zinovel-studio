@@ -1,0 +1,51 @@
+✖ an external planning edit after the baseline read is preserved at the transaction boundary (134.4401ms)
+✖ an occupied planning history identity never overwrites another file or the current planning (113.4578ms)
+✖ caller-owned scene and baseline objects cannot change a pending move's original intent (74.316ms)
+✔ one scene order serves board and outline without changing manuscript or reference links; backup retains identities (323.0687ms)
+✔ stale and external same-revision changes reject without overwrite; foreign/deleted targets and adjacent identities reject (167.9232ms)
+✔ soft-deleted and missing scene/chapter identities remain visible; restoration keeps placement (144.3155ms)
+✔ partial planning transaction rolls forward via shared kernel without losing old history (129.676ms)
+✔ volume order, chapter rename and deletion change display without changing scene identity or placement (159.4393ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 5
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1377.0685
+
+✖ failing tests:
+
+test at tests\planning.test.mjs:38:1
+✖ an external planning edit after the baseline read is preserved at the transaction boundary (134.4401ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/planning.test.mjs:58:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\planning.test.mjs:63:1
+✖ an occupied planning history identity never overwrites another file or the current planning (113.4578ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/planning.test.mjs:70:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /历史/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\planning.test.mjs:75:1
+✖ caller-owned scene and baseline objects cannot change a pending move's original intent (74.316ms)
+  Error: 场景规划已被其他操作或外部编辑修改。移动未执行，请刷新规划后重试。
+      at file:///D:/Work/zinovel-studio/packages/novel-storage/planning.mjs:155:15

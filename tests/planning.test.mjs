@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, writeFile, readdir } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile, readdir, mkdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
@@ -34,6 +34,135 @@ async function fixture() {
   }
   return { root, store, book, scenes, path, move };
 }
+
+for (const existing of [false, true])
+  test(`an external ${existing ? "update" : "creation"} after the planning baseline read is preserved at the transaction boundary`, async () => {
+    const f = await fixture();
+    if (existing) await f.move(f.scenes[0], f.book.chapters[0].id);
+    const baseline = await f.store.planning.read(f.book.id);
+    const record = f.store.planning.record.bind(f.store.planning),
+      material = f.store.materials.record.bind(f.store.materials);
+    let readBaseline = false,
+      changed = false,
+      external;
+    f.store.planning.record = async (...args) => {
+      const r = await record(...args);
+      readBaseline = true;
+      return r;
+    };
+    f.store.materials.record = async (...args) => {
+      const r = await material(...args);
+      if (readBaseline && !changed) {
+        changed = true;
+        const value = existing
+          ? JSON.parse(await readFile(f.path, "utf8"))
+          : {
+              schemaVersion: 1,
+              revision: 0,
+              placements: [
+                {
+                  sceneId: f.scenes[0].id,
+                  chapterId: f.book.chapters[0].id,
+                  order: 0,
+                },
+              ],
+            };
+        value.revision++;
+        value.updatedAt = "2026-10-25T09:00:00.000Z";
+        value.placements[0].chapterId = f.book.chapters[1].id;
+        external = JSON.stringify(value, null, 2) + "\n";
+        await writeFile(f.path, external);
+      }
+      return r;
+    };
+    await assert.rejects(
+      f.store.planning.move(
+        f.book.id,
+        {
+          sceneId: f.scenes[1].id,
+          chapterId: f.book.chapters[0].id,
+          beforeId: null,
+        },
+        baseline,
+      ),
+      /前像|已改变/,
+    );
+    assert.equal(changed, true);
+    assert.equal(await readFile(f.path, "utf8"), external);
+  });
+
+test("an occupied planning history identity never overwrites another file or the current planning", async () => {
+  const f = await fixture();
+  await f.move(f.scenes[0], f.book.chapters[0].id);
+  const snapshot = await f.store.planning.read(f.book.id),
+    original = await readFile(f.path);
+  const folder = join(
+    f.root,
+    "library",
+    f.book.id,
+    ".zinovel/planning-history",
+  );
+  await mkdir(folder, { recursive: true });
+  const history = join(
+      folder,
+      `${snapshot.revision}-${snapshot.diskHash}.json`,
+    ),
+    occupied = "外部保留文件𠮷🌊";
+  await writeFile(history, occupied);
+  await assert.rejects(
+    f.store.planning.move(
+      f.book.id,
+      {
+        sceneId: f.scenes[1].id,
+        chapterId: f.book.chapters[1].id,
+        beforeId: null,
+      },
+      snapshot,
+    ),
+    /历史/,
+  );
+  assert.equal(await readFile(history, "utf8"), occupied);
+  assert.deepEqual(await readFile(f.path), original);
+});
+
+test("caller-owned scene and baseline objects cannot change a pending move's original intent", async () => {
+  const f = await fixture(),
+    expected = await f.store.planning.read(f.book.id);
+  const scan = f.store.planning.scenes.bind(f.store.planning);
+  let release, signal;
+  const entered = new Promise((done) => {
+      signal = done;
+    }),
+    gate = new Promise((done) => {
+      release = done;
+    });
+  f.store.planning.scenes = async (...args) => {
+    signal();
+    await gate;
+    return scan(...args);
+  };
+  const mutation = {
+    sceneId: f.scenes[0].id,
+    chapterId: f.book.chapters[0].id,
+    beforeId: null,
+  };
+  const pending = f.store.planning.move(f.book.id, mutation, expected);
+  await entered;
+  mutation.sceneId = f.scenes[1].id;
+  mutation.chapterId = f.book.chapters[1].id;
+  expected.revision = 999;
+  release();
+  await pending;
+  const state = await f.store.planning.read(f.book.id);
+  assert.equal(
+    state.columns.find((c) => c.id === f.book.chapters[0].id).scenes[0].id,
+    f.scenes[0].id,
+  );
+  assert.equal(
+    state.columns.find((c) => c.id === f.book.chapters[1].id).scenes.length,
+    0,
+  );
+});
 test("one scene order serves board and outline without changing manuscript or reference links; backup retains identities", async () => {
   const { root, store, book, scenes, move } = await fixture();
   const before = await Promise.all(
@@ -174,16 +303,34 @@ test("volume order, chapter rename and deletion change display without changing 
   let book = initial;
   await move(scenes[0], book.chapters[0].id);
   const snapshot = await store.planning.read(book.id);
-  book = await store.updateStructure(book.id, book.revision, { type: "volume-move", volumeId: book.volumes[1].id, beforeId: book.volumes[0].id });
+  book = await store.updateStructure(book.id, book.revision, {
+    type: "volume-move",
+    volumeId: book.volumes[1].id,
+    beforeId: book.volumes[0].id,
+  });
   let next = await store.planning.read(book.id);
-  assert.deepEqual(next.columns.slice(1).map((column) => column.id), [initial.chapters[1].id, initial.chapters[0].id]);
+  assert.deepEqual(
+    next.columns.slice(1).map((column) => column.id),
+    [initial.chapters[1].id, initial.chapters[0].id],
+  );
   const chapter = await store.readChapter(book.id, initial.chapters[0].id);
-  await store.saveChapter({ bookId: book.id, chapterId: chapter.id, title: "重命名的章节", body: chapter.body, expectedRevision: chapter.revision, expectedHash: chapter.diskHash });
+  await store.saveChapter({
+    bookId: book.id,
+    chapterId: chapter.id,
+    title: "重命名的章节",
+    body: chapter.body,
+    expectedRevision: chapter.revision,
+    expectedHash: chapter.diskHash,
+  });
   book = (await store.listBooks()).books[0];
-  book = await store.updateStructure(book.id, book.revision, { type: "chapter-trash", chapterId: chapter.id });
+  book = await store.updateStructure(book.id, book.revision, {
+    type: "chapter-trash",
+    chapterId: chapter.id,
+  });
   next = await store.planning.read(book.id);
   const deleted = next.columns.find((column) => column.id === chapter.id);
-  assert.equal(deleted.title, "重命名的章节"); assert.equal(deleted.state, "deleted");
+  assert.equal(deleted.title, "重命名的章节");
+  assert.equal(deleted.state, "deleted");
   assert.equal(deleted.scenes[0].id, scenes[0].id);
   assert.equal(next.diskHash, snapshot.diskHash);
   await assert.rejects(move(scenes[1], chapter.id), /目标章节/);

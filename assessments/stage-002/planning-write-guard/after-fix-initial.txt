@@ -1,0 +1,16 @@
+✔ an external planning edit after the baseline read is preserved at the transaction boundary (123.646ms)
+✔ an occupied planning history identity never overwrites another file or the current planning (103.2147ms)
+✔ caller-owned scene and baseline objects cannot change a pending move's original intent (99.2727ms)
+✔ one scene order serves board and outline without changing manuscript or reference links; backup retains identities (320.4164ms)
+✔ stale and external same-revision changes reject without overwrite; foreign/deleted targets and adjacent identities reject (181.3268ms)
+✔ soft-deleted and missing scene/chapter identities remain visible; restoration keeps placement (152.6871ms)
+✔ partial planning transaction rolls forward via shared kernel without losing old history (121.012ms)
+✔ volume order, chapter rename and deletion change display without changing scene identity or placement (170.2445ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1490.6377

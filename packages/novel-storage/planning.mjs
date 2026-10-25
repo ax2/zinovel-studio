@@ -1,6 +1,7 @@
 import { readUtf8File } from "./encoding.mjs";
 import { createHash } from "node:crypto";
 import { orderedChapters } from "../novel-domain/structure.mjs";
+import { lstat } from "node:fs/promises";
 const hash = (text) => createHash("sha256").update(text).digest("hex");
 const json = (value) => JSON.stringify(value, null, 2) + "\n";
 const isId = (value) =>
@@ -142,6 +143,23 @@ export class PlanningStore {
       mutation.beforeId === mutation.sceneId
     )
       throw new Error("无效的场景移动参数");
+    if (
+      !expected ||
+      !Number.isSafeInteger(expected.revision) ||
+      expected.revision < 0 ||
+      (expected.revision === 0
+        ? expected.diskHash !== null
+        : typeof expected.diskHash !== "string" ||
+          !/^[a-f0-9]{64}$/.test(expected.diskHash))
+    )
+      throw new Error("场景规划基线无效，请重新读取后移动");
+    // Capture caller-owned values before the batched scan yields.
+    mutation = {
+      sceneId: mutation.sceneId,
+      chapterId: mutation.chapterId,
+      beforeId: mutation.beforeId,
+    };
+    expected = { revision: expected.revision, diskHash: expected.diskHash };
     // Scan in bounded batches, then validate the actual moved identities inside the write transaction.
     const { scenes } = await this.scenes(bookId);
     return this.storage.exclusive(async () => {
@@ -191,11 +209,25 @@ export class PlanningStore {
         placements: placements.map((item, order) => ({ ...item, order })),
       };
       const changes = { "planning.json": json(next) };
-      if (previous.raw)
-        changes[
-          `.zinovel/planning-history/${previous.data.revision}-${previous.diskHash}.json`
-        ] = previous.raw;
-      await this.storage.transaction(root, changes);
+      const expectedBefore = { "planning.json": previous.raw ?? null };
+      if (previous.raw) {
+        const path = `.zinovel/planning-history/${previous.data.revision}-${previous.diskHash}.json`;
+        let prior = null;
+        try {
+          const file = await this.storage.path(root, path),
+            stat = await lstat(file);
+          if (!stat.isFile() || stat.size !== Buffer.byteLength(previous.raw))
+            throw new Error("场景规划历史已改变，请保留原件");
+          prior = await readUtf8File(file);
+        } catch (error) {
+          if (error.code !== "ENOENT") throw error;
+        }
+        if (prior !== null && prior !== previous.raw)
+          throw new Error("场景规划历史已改变，请保留原件");
+        changes[path] = previous.raw;
+        expectedBefore[path] = prior;
+      }
+      await this.storage.transaction(root, changes, { expectedBefore });
       return { revision: next.revision, diskHash: hash(json(next)) };
     });
   }

@@ -4,6 +4,12 @@ import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
+import { createHash } from "node:crypto";
+import {
+  captureOwnedProcesses,
+  confirmOwnedProcessesExited,
+  terminateOwnedProcesses,
+} from "./windows-owned-processes.mjs";
 const root = resolve(import.meta.dirname, "..");
 await mkdir(join(root, ".cache"), { recursive: true });
 const data = await mkdtemp(join(root, ".cache", "planning-ui-")),
@@ -72,7 +78,12 @@ if (process.env.ZINOVEL_TEST_EXECUTABLE) {
     if (key.toLowerCase() === "path") delete env[key];
   env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
 }
-let application, page;
+let application, page, owned;
+const hostRequest = (action, payload) =>
+  page.evaluate(
+    ({ action, payload }) => window.novel.request(action, payload),
+    { action, payload },
+  );
 const report = { status: "running", checks: [], errors: [], viewports: [] };
 const dialog = () =>
   page.getByRole("dialog", { name: "场景编排", exact: true });
@@ -83,16 +94,43 @@ const card = (title, parent = dialog()) =>
 async function launch() {
   application = await electron.launch({
     executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
-    args: process.env.ZINOVEL_APP_EXE ? [] : [root],
+    args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
     cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
     env,
   });
+  owned = await captureOwnedProcesses(application.process().pid);
   page = await application.firstWindow();
+  const runtime = await application.evaluate(({ app }) => ({
+    version: app.getVersion(),
+    packaged: app.isPackaged,
+    path: app.getAppPath(),
+  }));
+  assert.equal(
+    runtime.version,
+    JSON.parse(await readFile(join(root, "package.json"), "utf8")).version,
+  );
+  if (report.version) assert.equal(report.version, runtime.version);
+  report.version = runtime.version;
+  report.packaged = runtime.packaged;
+  const identity = createHash("sha256")
+    .update(
+      await readFile(
+        runtime.packaged ? runtime.path : join(root, "dist/desktop/main.cjs"),
+      ),
+    )
+    .digest("hex");
+  report[runtime.packaged ? "appAsarSha256" : "desktopBundleSha256"] = identity;
   page.on("pageerror", (e) => report.errors.push(e.message));
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
   await page.getByRole("button", { name: "场景编排", exact: true }).click();
   await card("寻找信使").waitFor();
+}
+async function close() {
+  await application.close();
+  await confirmOwnedProcessesExited(owned);
+  application = null;
+  owned = null;
 }
 async function screenshot(name) {
   await page.screenshot({ path: join(screenshots, name) });
@@ -139,8 +177,7 @@ try {
     "actual pointer drag moves one scene across chapters before a neighbor; board and outline share the order and semantic fields; keyboard Enter reorders without changing manuscript",
   );
 
-  await application.close();
-  application = null;
+  await close();
   await launch();
   assert.deepEqual(
     await column("抵达旧港").locator(".scene-card h4").allTextContents(),
@@ -158,9 +195,10 @@ try {
   await refresh();
   await dialog().getByRole("alert").waitFor({ state: "hidden" });
 
-  book = await store.updateStructure(book.id, book.revision, {
-    type: "chapter-trash",
-    chapterId: book.chapters[0].id,
+  book = await hostRequest("book.structure", {
+    bookId: book.id,
+    expectedRevision: book.revision,
+    mutation: { type: "chapter-trash", chapterId: book.chapters[0].id },
   });
   await refresh();
   await column("抵达旧港")
@@ -170,12 +208,20 @@ try {
     .getByRole("combobox")
     .selectOption(book.chapters[1].id);
   await card("寻找信使", column("未拆的信")).waitFor();
-  const deleted = await store.materials.setDeleted(book.id, scenes[2], true);
+  const deleted = await hostRequest("materials.delete", {
+    bookId: book.id,
+    expected: scenes[2],
+    deleted: true,
+  });
   await refresh();
   await card("旧钟重响")
     .getByText(/场景已删除/)
     .waitFor();
-  await store.materials.setDeleted(book.id, deleted, false);
+  await hostRequest("materials.delete", {
+    bookId: book.id,
+    expected: deleted,
+    deleted: false,
+  });
   await refresh();
   await card("旧钟重响")
     .getByRole("button", { name: "编辑场景完整资料" })
@@ -244,6 +290,8 @@ try {
     ),
     original,
   );
+  // Stop the actual host before the offline backup/restore fixture uses its own kernel.
+  await close();
   const backup = await store.createBackup(book.id, join(data, "backup")),
     restored = await store.restoreBackup(backup.path);
   assert.deepEqual(
@@ -264,10 +312,20 @@ try {
       .catch(() => {});
   throw e;
 } finally {
-  if (application) await application.close();
-  await writeFile(
-    join(screenshots, "planning-smoke.json"),
-    JSON.stringify(report, null, 2),
-  );
-  console.log(report);
+  try {
+    if (owned) {
+      if (report.status === "failed") await terminateOwnedProcesses(owned);
+      else await close();
+    }
+  } catch (error) {
+    report.status = "failed";
+    report.cleanupFailure = String(error);
+    throw error;
+  } finally {
+    await writeFile(
+      join(screenshots, "planning-smoke.json"),
+      JSON.stringify(report, null, 2),
+    );
+    console.log(report);
+  }
 }
