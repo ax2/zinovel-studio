@@ -170,3 +170,7 @@
 应用生产源码c8a6f68，随后为QA和证据修正。最终EXE155500145字节/SHA92fddb4c276c2f67c2a0ca9e2c3e5ecd8302aa1308b3ee9993f118bca731f1b6，asar0240fed9b1a56787ce51d94066e10d06f8bf0f8d64a793565affb23df2cde97f。完整167项安装/重装/卸载通过，计时9265/15580/4641ms；alpha.3精确公开包升级16710ms通过，原稿/旧任务/系统加密设置保留，卸载后留原稿。安装模型六组确认A3/B6/图像0次，实际查看浅色管理、深色窄窗与重试当前模型说明。原生清点132文件622330722字节567包记录，实际原生/图像/许可检查通过。完整运行目录、EXE和原始QA复制至实际D盘D:\zinovel-releases\v0.1.0-alpha.30，复制后核对EXE/asar，无ZIP；46份安装JSON中44份passed回执与2份出版比对数据分别保存，安装/升级回执另存。
 
 干净检出第三轮40157096270因专项缺.cache父目录失败，补独立mkdir；第四轮40157314154已通过模型专项但旧书架探针读取异步排序前的界面失败，补完成条件，仍精确核对章节ID/磁盘导出。源码与发行检查完整保留。最终3b51429完整Development checks 40157638076 completed/success，planning与Windows通过，source-ci.json保存完整观测。预览门禁47份passed报告及证据路径通过，ready=true仅进入标签流水线，稳定false和26/46/34范围不变。后续必须独立构建安装升级，再公开并实际下载/hash复核，不能用本机SHA冒充CI公开字节。
+
+### alpha.30 已独立公开并下载复核
+
+cc1ac348e4cdd836ecba3e604974a6db31d16fba标签v0.1.0-alpha.30不可变，独立Windows release40158310006首次完整success，于2026-10-25 11:42:50北京时间公开。四附件uploaded/匿名可见，三个元数据GitHub digest核对通过。实际下载公开EXE至D:\zinovel-releases\v0.1.0-alpha.30\ci-public，155500176字节，重算SHA f8a51c70c15009c900517f57e1c5d536cfa92a990660c3ac568fa8c63c78fe53，符合manifest/checksum/附件digest。公开文件执行证据是该CI对精确字节安装、重装、卸载和alpha.3升级，本机另做下载/复算，未冒称再次安装CI下载件；本机92fddb4c…构建独立保留。ci-public/verification.json与下载元数据已归档，README/使用说明更新30下载。主线31 ready=false/reports[]，传输后端278项源码检查通过但未有图像任务/界面/安装资格；原106项和稳定门禁保持。

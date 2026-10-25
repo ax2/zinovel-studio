@@ -63,11 +63,12 @@
     "assessments/release/v0.1.0-alpha.29/README.md",
     "assessments/stage-003/model-profiles-desktop.md",
     "assessments/release/v0.1.0-alpha.30/README.md",
-    "design/image-generation-delivery.md"
+    "design/image-generation-delivery.md",
+    "assessments/stage-006/image-transport-source.md"
   ],
   "reports": [],
   "limitations": [
-    "alpha.31图像传输后端源码开发中，尚未接入持久任务/宿主/界面，无本版安装资格；30不可变标签独立发行中，不继承旧资格",
+    "alpha.31图像传输源码278项通过，尚未接入持久任务/宿主/界面，无本版安装资格；30独立发行及公开EXE下载/hash已通过，不继承旧资格",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项仍26 verified/46 in-progress/34 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/诊断/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

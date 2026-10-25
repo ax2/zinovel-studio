@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开阶段版仍为[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)，公开EXE已实际下载/hash复核。alpha.30新增模型管理/独立凭据/文字路由及重试模型说明，167项本机安装和alpha.3升级、完整源码CI40157638076通过；标签cc1ac34正由独立发行CI40158310006构建验收，公开附件尚待核对。主线进入alpha.31图像传输后端，10项专项/完整278项源码通过，尚无持久任务/图像界面/本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31源码](assessments/stage-006/image-transport-source.md)、[图像完整设计](design/image-generation-delivery.md)。
+最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，新增独立模型管理、凭据与文字路由及重试模型说明。167项本机安装和alpha.3升级、完整源码CI通过；标签cc1ac34独立发行CI40158310006首次完整success。公开155500176字节EXE已实际下载/hash复算，四附件、元数据摘要和匿名可见通过。本机与CI文件哈希分别保留。主线alpha.31图像传输后端10项专项/完整278项源码通过，尚无持久任务/图像界面/本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31源码](assessments/stage-006/image-transport-source.md)、[图像完整设计](design/image-generation-delivery.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
@@ -8,7 +8,7 @@
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、46项 in-progress、34项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.29 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.29/ZiNovel-Studio-0.1.0-alpha.29-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
+Windows 技术预览版：[v0.1.0-alpha.30 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.30/ZiNovel-Studio-0.1.0-alpha.30-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 

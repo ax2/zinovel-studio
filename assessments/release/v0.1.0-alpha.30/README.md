@@ -1,6 +1,10 @@
 # v0.1.0-alpha.30 阶段候选
 
-本机最新候选已通过安装与升级；完整源码CI40157638076（3b51429）completed/success，planning与Windows全部通过，见source-ci.json。preview-ready=true仅允许进入不可变标签完整流水线，尚未核对公开附件。稳定版资格保持false，完整106项仍26 verified/46 in-progress/34 planned。
+已公开：不可变标签cc1ac348e4cdd836ecba3e604974a6db31d16fba独立Windows release40158310006首次完整success，2026-10-25 11:42:50北京时间公开。公开EXE已实际下载/hash复算，四附件及元数据摘要/匿名可见通过，见ci-public/verification.json。源码CI40157638076（3b51429）及本机167项安装/升级分别通过。标签预览资格仅属本版，主线alpha.31 ready=false；稳定资格false，完整106项仍26 verified/46 in-progress/34 planned。
+
+## 独立公开字节
+
+公开EXE155500176字节，SHA256 `f8a51c70c15009c900517f57e1c5d536cfa92a990660c3ac568fa8c63c78fe53`，与ci-public中的manifest/SHA256SUMS及GitHub附件digest相符。真实下载文件在实际D盘`D:\zinovel-releases\v0.1.0-alpha.30\ci-public`，三个元数据摘要复核通过，未登录访问可见。公开包执行证据来自该成功发行CI的精确字节安装/重装/卸载与alpha.3升级；本机只另做公开下载及复算，没有声称再次执行下载的CI EXE。以下本机独立构建SHA不同，均保留，不混算。
 
 ## 当前精确候选
 
