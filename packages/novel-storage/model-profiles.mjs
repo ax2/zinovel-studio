@@ -9,6 +9,7 @@ import {
   modelCredentialPlan,
 } from "../novel-domain/model-service.mjs";
 import { validateSettings } from "../novel-harness/runtime.mjs";
+import { imageGenerationBudget as imageBudget } from "../novel-domain/image-generation.mjs";
 
 const LIMIT = 2 * 1024 * 1024,
   uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -33,39 +34,6 @@ function label(value) {
   )
     throw new Error("模型配置名称无效或过长");
   return value.trim().normalize("NFC");
-}
-function imageBudget(input = {}) {
-  if (!ownKeys(input, ["maxImages", "maxCost", "pricing"]))
-    throw new Error("图像预算格式不支持");
-  const maxImages = input.maxImages ?? 1,
-    maxCost = input.maxCost ?? 0;
-  if (
-    !Number.isInteger(maxImages) ||
-    maxImages < 1 ||
-    maxImages > 4 ||
-    !Number.isFinite(maxCost) ||
-    maxCost < 0 ||
-    maxCost > 1000000
-  )
-    throw new Error("图像预算超出范围");
-  let pricing = null;
-  if (input.pricing !== undefined && input.pricing !== null) {
-    if (
-      !ownKeys(input.pricing, ["currency", "perImage"]) ||
-      !["CNY", "USD"].includes(input.pricing.currency) ||
-      !Number.isFinite(input.pricing.perImage) ||
-      input.pricing.perImage < 0 ||
-      input.pricing.perImage > 1000000
-    )
-      throw new Error("图像预算单价无效");
-    pricing = {
-      currency: input.pricing.currency,
-      perImage: input.pricing.perImage,
-    };
-  }
-  if (maxCost > 0 && !pricing)
-    throw new Error("图像费用阈值需要作者填写单价，未知价格不能当零费用");
-  return { maxImages, maxCost, pricing };
 }
 function configuration(input) {
   if (!Object.hasOwn(protocols, input.protocol))

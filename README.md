@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开阶段版仍为[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)，公开EXE已实际下载/hash复核。主线alpha.30已接入独立模型管理、系统凭据、文字路由及历史重试模型说明：9项后端/完整268项源码、6组真实桌面专项、167项本机安装/重装/卸载和alpha.3升级通过，完整开发CI40157638076 success。仅允许进入标签独立发行，公开附件尚待核对；图像仅可配置，稳定资格未完成。28失败及30中间候选/各轮CI失败保留，不继承旧资格。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[30桌面](assessments/stage-003/model-profiles-desktop.md)、[完整能力设计](design/model-profiles-and-capabilities.md)。
+最新公开阶段版仍为[alpha.29](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.29)，公开EXE已实际下载/hash复核。alpha.30新增模型管理/独立凭据/文字路由及重试模型说明，167项本机安装和alpha.3升级、完整源码CI40157638076通过；标签cc1ac34正由独立发行CI40158310006构建验收，公开附件尚待核对。主线进入alpha.31图像传输后端，10项专项/完整278项源码通过，尚无持久任务/图像界面/本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31源码](assessments/stage-006/image-transport-source.md)、[图像完整设计](design/image-generation-delivery.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

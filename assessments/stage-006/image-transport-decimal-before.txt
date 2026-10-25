@@ -1,0 +1,32 @@
+✔ image request and manual pricing preflight require explicit compatible modes; unknown price is never zero (0.8812ms)
+✖ manual decimal price boundaries do not reject an exact budget or hide a representable overage (0.1303ms)
+✔ actual HTTP uses only the frozen selected credential and tenant prefix; three image formats really decode and explicit modes differ (35.8974ms)
+✔ invalid settings, missing intent, budget excess, failed intent and pre-send cancellation cause zero network calls (3.3045ms)
+✔ HTTP rejection is redacted and not retried; redirects never forward the credential to a second endpoint (9.4918ms)
+✔ URL-only results, malformed encodings, bad images, wrong counts and invalid usage never create adoptable candidates (16.393ms)
+✔ response MIME, declared byte cap and strict UTF-8 fail closed without retaining raw response text (7.4049ms)
+✔ post-send abort and deadline leave remote result unknown and never automatically retry (103.7516ms)
+✔ an actual chunked response cannot exceed the cumulative byte cap when no Content-Length is declared (230.2682ms)
+✔ cancellation at the end-of-body checkpoint retains received decoded candidates rather than pretending nothing returned (8.3394ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 537.2339
+
+✖ failing tests:
+
+test at tests\image-provider.test.mjs:143:1
+✖ manual decimal price boundaries do not reject an exact budget or hide a representable overage (0.1303ms)
+  Error: 图像手填价格估算超过费用阈值，未发送请求
+      at imageGenerationPreflight (file:///D:/Work/zinovel-studio/packages/novel-domain/image-generation.mjs:77:11)
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/image-provider.test.mjs:145:18)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
