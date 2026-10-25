@@ -6,6 +6,7 @@ import { validateSettings } from "../../packages/novel-harness/runtime.mjs";
 import { atomicWriteText } from "../../packages/novel-storage/atomic.mjs";
 import { decodeUtf8 } from "../../packages/novel-storage/encoding.mjs";
 import { ModelProfiles } from "../../packages/novel-storage/model-profiles.mjs";
+import { createCredentialCodec } from "../../packages/novel-storage/credential-codec.mjs";
 import {
   modelServiceURL,
   modelCredentialPlan,
@@ -23,25 +24,15 @@ type Input = {
 };
 const hash = (bytes: Buffer) =>
   createHash("sha256").update(bytes).digest("hex");
-const available = () =>
-  safeStorage.isEncryptionAvailable() &&
-  !(
-    process.platform === "linux" &&
-    safeStorage.getSelectedStorageBackend() === "basic_text"
-  );
+const credentialCodec = createCredentialCodec(safeStorage);
+const available = () => credentialCodec.available();
 const pointerFormat = "zinovel-model-profile-pointer";
 
 export class ModelSettings {
   private queue: Promise<unknown> = Promise.resolve();
   private profiles: ModelProfiles;
   constructor(private root: string) {
-    this.profiles = new ModelProfiles(root, {
-      available,
-      encode: (key: string) =>
-        safeStorage.encryptString(key).toString("base64"),
-      decode: (value: string) =>
-        safeStorage.decryptString(Buffer.from(value, "base64")),
-    });
+    this.profiles = new ModelProfiles(root, credentialCodec);
   }
   private serial<T>(operation: () => Promise<T>) {
     const next = this.queue.then(operation);
@@ -197,9 +188,7 @@ export class ModelSettings {
         ...(secret
           ? {
               apiKey: data.encryptedKey
-                ? safeStorage.decryptString(
-                    Buffer.from(data.encryptedKey, "base64"),
-                  )
+                ? credentialCodec.decode(data.encryptedKey)
                 : "",
             }
           : {}),
@@ -290,9 +279,7 @@ export class ModelSettings {
     if (plan.action === "clear") encryptedKey = "";
     if (plan.action === "replace") {
       if (!available()) throw new Error("系统安全存储不可用，未保存 API Key");
-      encryptedKey = safeStorage
-        .encryptString(input.apiKey!.trim())
-        .toString("base64");
+      encryptedKey = credentialCodec.encode(input.apiKey!.trim());
     }
     const data = {
       schemaVersion: 1,

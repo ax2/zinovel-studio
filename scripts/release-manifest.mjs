@@ -357,13 +357,16 @@ if (
   imageStudio.packaged !== true ||
   imageStudio.appAsarSha256 !== appAsarSha256 ||
   imageStudio.errors?.length !== 0 ||
-  imageStudio.checks?.length !== 5 ||
-  JSON.stringify(imageStudio.requests) !== JSON.stringify([0, 4, 0]) ||
+  imageStudio.checks?.length !== 8 ||
+  JSON.stringify(imageStudio.requests) !== JSON.stringify([0, 9, 0]) ||
   imageStudio.closeProtected !== true ||
   imageStudio.remoteUnknownAfterRestart !== true ||
   imageStudio.retainedSaveRecoveredLocally !== true ||
   imageStudio.originalsPreserved !== true ||
-  imageStudio.mixedBatchRecovery !== true
+  imageStudio.mixedBatchRecovery !== true ||
+  imageStudio.crashCredentialsRetained !== true ||
+  imageStudio.characterTargetVersionChecked !== true ||
+  imageStudio.chapterTargetVersionChecked !== true
 )
   throw new Error("Installed image author workflow proof is missing or stale");
 manifest.imageStudio = {
@@ -377,6 +380,9 @@ manifest.imageStudio = {
   retainedSaveRecoveredLocally: true,
   originalsPreserved: true,
   mixedBatchRecovery: true,
+  crashCredentialsRetained: true,
+  characterTargetVersionChecked: true,
+  chapterTargetVersionChecked: true,
 };
 if (
   modelProfiles.status !== "passed" ||
@@ -385,12 +391,16 @@ if (
   modelProfiles.appAsarSha256 !== appAsarSha256 ||
   modelProfiles.errors?.length !== 0 ||
   modelProfiles.checks?.length !== 6 ||
+  modelProfiles.newCredentialEnvelope !== "win-dpapi-v1" ||
+  modelProfiles.legacyCipherAfterRestart !== true ||
   JSON.stringify(modelProfiles.requests) !== JSON.stringify([3, 6, 0])
 )
   throw new Error(
     "Installed independent model profile proof is missing or stale",
   );
 manifest.modelProfiles = {
+  newCredentialEnvelope: modelProfiles.newCredentialEnvelope,
+  legacyCipherAfterRestart: true,
   version: modelProfiles.version,
   appAsarSha256: modelProfiles.appAsarSha256,
   checks: modelProfiles.checks,

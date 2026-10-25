@@ -60,7 +60,7 @@ const report = {
   checks: [],
   errors: [],
   scope:
-    "Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
+    "Synthetic keys and manuscript; real desktop UI, CurrentUser DPAPI for new keys, actual legacy Electron ciphertext and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
 };
 const request = (action, payload = {}) =>
   page.evaluate(
@@ -161,7 +161,16 @@ try {
     model: "synthetic-text-A",
     apiKey: keys[0],
   });
-  const legacyBytes = await readFile(join(data, "model.json"));
+  // Seed this fixture's A key as a real legacy Electron ciphertext, so migration
+  // and Harness A exercise the old decoder; ordinary UI writes for B/C use DPAPI.
+  const legacyFile = join(data, "model.json"),
+    legacyData = JSON.parse(await readFile(legacyFile, "utf8"));
+  legacyData.encryptedKey = await app.evaluate(
+    ({ safeStorage }, key) => safeStorage.encryptString(key).toString("base64"),
+    keys[0],
+  );
+  await writeFile(legacyFile, JSON.stringify(legacyData, null, 2) + "\n");
+  const legacyBytes = await readFile(legacyFile);
   await open();
   assert.equal(
     await panel()
@@ -221,6 +230,13 @@ try {
     .waitFor();
   view = await request("profiles.list");
   const profileB = view.profiles.find((p) => p.label === "文字服务B");
+  assert.equal(
+    JSON.parse(await readFile(join(data, "model-profiles.json"), "utf8"))
+      .profiles.find((entry) => entry.id === profileB.id)
+      .encryptedKey.startsWith("win-dpapi-v1:"),
+    true,
+  );
+  report.newCredentialEnvelope = "win-dpapi-v1";
   const stale = baseline(view);
   await panel()
     .getByLabel("文字写作服务", { exact: true })
@@ -389,6 +405,16 @@ try {
   view = await request("profiles.list");
   assert.equal(view.routes.text, profileB.id);
   assert.equal(view.routes.image, image.id);
+  assert.equal(
+    await app.evaluate(
+      ({ safeStorage }, input) =>
+        safeStorage.decryptString(Buffer.from(input.cipher, "base64")) ===
+        input.expected,
+      { cipher: legacyData.encryptedKey, expected: keys[0] },
+    ),
+    true,
+  );
+  report.legacyCipherAfterRestart = true;
   assert.deepEqual(
     received.map((x) => x.length),
     [3, 3, 0],

@@ -10,6 +10,7 @@ import {
   imageTaskCreationHash,
   imageTaskOutcome,
   imageTaskResponseHash,
+  imageTaskCandidateErrors,
   validateImageTask,
 } from "../novel-domain/image-tasks.mjs";
 
@@ -99,7 +100,7 @@ export class ImageTaskStore {
       storedStatus: record.data.status,
       diskHash: record.diskHash,
       restoredSource: !own,
-      dispatchState: record.data.candidates.length
+      dispatchState: record.data.responseHash
         ? "response-received"
         : record.data.outcome?.dispatched === true
           ? "attempted"
@@ -251,12 +252,15 @@ export class ImageTaskStore {
     if (
       !response ||
       !Array.isArray(response.candidates) ||
-      response.candidates.length < 1 ||
       response.candidates.length > imageGenerationLimits.count ||
       typeof response.interruptedAfterResponse !== "boolean"
     )
       throw new Error("图像返回清单无效");
-    const capturedUsage = structuredClone(response.usage ?? null),
+    const capturedErrors =
+        response.errors === undefined
+          ? undefined
+          : imageTaskCandidateErrors(response.errors),
+      capturedUsage = structuredClone(response.usage ?? null),
       interrupted = response.interruptedAfterResponse;
     const captured = response.candidates.map((item) => {
       const bytes = copyImageBytes(item.bytes);
@@ -269,7 +273,11 @@ export class ImageTaskStore {
           item.revisedPrompt.length > imageGenerationLimits.prompt)
       )
         throw new Error("图像候选说明无效");
-      return { bytes, revisedPrompt: item.revisedPrompt };
+      return {
+        bytes,
+        revisedPrompt: item.revisedPrompt,
+        sourceIndex: item.sourceIndex,
+      };
     });
     const initial = await this.storage.exclusive(async () => {
       const ctx = await this.context(bookId),
@@ -284,7 +292,7 @@ export class ImageTaskStore {
         throw new Error("图像返回与当前发送会话不符");
       return record.data;
     });
-    if (captured.length !== initial.request.n)
+    if (captured.length + (capturedErrors?.length ?? 0) !== initial.request.n)
       throw new Error("图像返回清单无效");
     const key = `${bookId}/${requested.id}`;
     if (this.#receiving.has(key))
@@ -299,6 +307,7 @@ export class ImageTaskStore {
             wait: true,
           }),
           revisedPrompt: item.revisedPrompt,
+          sourceIndex: item.sourceIndex,
         });
       return await this.storage.exclusive(async () => {
         const ctx = await this.context(bookId),
@@ -313,6 +322,9 @@ export class ImageTaskStore {
           blob: item.image.blob,
           decision: "pending",
           assetId: randomUUID(),
+          ...(item.sourceIndex !== undefined
+            ? { sourceIndex: item.sourceIndex }
+            : {}),
           ...(item.revisedPrompt !== undefined
             ? { revisedPrompt: item.revisedPrompt }
             : {}),
@@ -323,6 +335,9 @@ export class ImageTaskStore {
           updatedAt: new Date().toISOString(),
           status: "receive-intent",
           candidates,
+          ...(capturedErrors !== undefined
+            ? { candidateErrors: capturedErrors }
+            : {}),
           usage: capturedUsage,
           interruptedAfterResponse: interrupted,
         };
@@ -331,10 +346,18 @@ export class ImageTaskStore {
           next.responseHash = imageTaskResponseHash(next);
           receipt = await this.commit(ctx, next, previous);
         } else {
+          if (
+            JSON.stringify(previous.data.candidateErrors ?? []) !==
+              JSON.stringify(capturedErrors ?? []) ||
+            previous.data.candidates.length !== decoded.length
+          )
+            throw new Error("重试保存的逐项错误与已记录回执不符");
           for (let index = 0; index < decoded.length; index++) {
             const expectedBlob = previous.data.candidates[index].blob,
               actual = decoded[index].image.blob;
             if (
+              (previous.data.candidates[index].sourceIndex ?? index) !==
+                (decoded[index].sourceIndex ?? index) ||
               Object.keys(expectedBlob).some(
                 (field) => expectedBlob[field] !== actual[field],
               )
@@ -667,6 +690,7 @@ export class ImageTaskStore {
             purpose: value.target.purpose,
             createdAt: value.createdAt,
             candidateCount: value.candidates.length,
+            candidateErrorCount: value.candidateErrors?.length ?? 0,
             restoredSource: value.restoredSource,
           });
         } catch {

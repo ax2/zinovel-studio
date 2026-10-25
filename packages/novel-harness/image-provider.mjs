@@ -192,33 +192,45 @@ export async function requestImageCandidates(
       fail("RESPONSE", true, "received-invalid");
     if (document.data.length !== preflight.request.n)
       fail("LIMIT", true, "received-invalid");
-    const candidates = [];
-    for (const entry of document.data) {
-      if (
-        !entry ||
-        typeof entry !== "object" ||
-        Array.isArray(entry) ||
-        typeof entry.b64_json !== "string"
-      )
-        fail("RESPONSE", true, "received-invalid");
-      const bytes = decodedImage(entry.b64_json);
-      let decoded;
+    const candidates = [],
+      errors = [];
+    for (const [sourceIndex, entry] of document.data.entries()) {
       try {
-        decoded = await inspectAssetImage(bytes);
-      } catch {
-        fail("IMAGE", true, "received-invalid");
+        if (
+          !entry ||
+          typeof entry !== "object" ||
+          Array.isArray(entry) ||
+          typeof entry.b64_json !== "string"
+        )
+          fail("RESPONSE", true, "received-invalid");
+        const bytes = decodedImage(entry.b64_json);
+        let decoded;
+        try {
+          decoded = await inspectAssetImage(bytes);
+        } catch {
+          fail("IMAGE", true, "received-invalid");
+        }
+        candidates.push({
+          ...decoded,
+          sourceIndex,
+          ...(typeof entry.revised_prompt === "string" &&
+          entry.revised_prompt.length <= imageGenerationLimits.prompt &&
+          entry.revised_prompt.isWellFormed()
+            ? { revisedPrompt: entry.revised_prompt }
+            : {}),
+        });
+      } catch (error) {
+        if (
+          !(error instanceof ImageProviderError) ||
+          !["RESPONSE", "IMAGE", "LIMIT"].includes(error.code)
+        )
+          throw error;
+        errors.push({ sourceIndex, code: error.code });
       }
-      candidates.push({
-        ...decoded,
-        ...(typeof entry.revised_prompt === "string" &&
-        entry.revised_prompt.length <= imageGenerationLimits.prompt &&
-        entry.revised_prompt.isWellFormed()
-          ? { revisedPrompt: entry.revised_prompt }
-          : {}),
-      });
     }
     return {
       candidates,
+      errors,
       usage: usage(document.usage),
       estimatedCost: preflight.estimatedCost,
       currency: preflight.currency,

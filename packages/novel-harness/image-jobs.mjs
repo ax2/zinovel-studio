@@ -126,8 +126,10 @@ export class ImageJobService {
     return job.promise;
   }
   async #run(job, requested, choice) {
+    let checking = "读取任务";
     try {
       const task = await this.tasks.read(job.bookId, job.id);
+      checking = "任务修订与所属作品";
       if (
         task.revision !== requested.revision ||
         task.diskHash !== requested.diskHash ||
@@ -135,14 +137,17 @@ export class ImageJobService {
         task.restoredSource
       )
         throw new Error("图像任务已变化或不能发送，请重新核对");
+      checking = "任务与所选模型修订";
       if (
         task.profile.revision !== choice.revision ||
         task.profile.diskHash !== choice.diskHash
       )
         throw new Error("图像任务与当前确认模型不符，请重新准备");
+      checking = "独立图像模型与系统凭据";
       const selected = await this.resolveModel("image", choice, {
         secret: true,
       });
+      checking = "图像协议与明确适配选项";
       if (
         !selected.profile.runnable ||
         JSON.stringify(frozenProfile(selected)) !==
@@ -184,7 +189,7 @@ export class ImageJobService {
         this.#job = null;
         // Resolver/IO failures must not expose credential codec/provider raw errors.
         throw new Error(
-          "图像任务或模型核对失败，未发送请求；请刷新后核对配置与任务",
+          `图像核对未通过（${checking}），未发送请求；请刷新后核对配置与任务`,
         );
       }
       job.outcome =
@@ -232,8 +237,12 @@ export class ImageJobService {
       if (current.status === "received") {
         if (
           current.candidates.length !== job.response.candidates.length ||
+          JSON.stringify(current.candidateErrors ?? []) !==
+            JSON.stringify(job.response.errors ?? []) ||
           current.candidates.some(
             (item, index) =>
+              (item.sourceIndex ?? index) !==
+                (job.response.candidates[index].sourceIndex ?? index) ||
               item.blob.sha256 !==
                 binaryHash(job.response.candidates[index].bytes) ||
               item.revisedPrompt !==

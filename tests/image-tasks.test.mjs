@@ -12,12 +12,28 @@ import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { BookStorageKernel } from "../packages/novel-storage/kernel.mjs";
 import { ImageTaskStore } from "../packages/novel-storage/image-tasks.mjs";
 import { requestImageCandidates } from "../packages/novel-harness/image-provider.mjs";
+import {
+  validateImageTask,
+  imageTaskResponseHash,
+} from "../packages/novel-domain/image-tasks.mjs";
 
 const picture = await sharp({
   create: { width: 80, height: 48, channels: 4, background: "#286b8b" },
 })
   .png()
   .toBuffer();
+test("a real prior v1 synthetic receipt without optional partial-response fields retains its original immutable response hash", async () => {
+  const prior = JSON.parse(
+    await readFile(
+      new URL("./fixtures/image-task-v1-complete.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.equal(prior.candidateErrors, undefined);
+  assert.ok(prior.candidates.every((item) => item.sourceIndex === undefined));
+  validateImageTask(prior, prior.id, [prior.bookId]);
+  assert.equal(imageTaskResponseHash(prior), prior.responseHash);
+});
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const expected = (value) => ({
   id: value.id,
@@ -934,4 +950,185 @@ test("a worker exit after candidate blob publication is reconciled locally to re
     digest(picture),
   );
   assert.equal((await restarted.assets.list(f.book.id)).items.length, 0);
+});
+
+const mixedReturn = () => ({
+  candidates: [
+    { bytes: Buffer.from(picture), sourceIndex: 0 },
+    { bytes: Buffer.from(picture), sourceIndex: 2 },
+  ],
+  errors: [{ sourceIndex: 1, code: "IMAGE" }],
+  usage: { total_tokens: 18 },
+  interruptedAfterResponse: true,
+});
+test("a mixed-response receipt survives actual process exit before blobs, rejects altered errors and restores only exact original positions without a request", async () => {
+  const f = await fixture();
+  f.input.request.n = 3;
+  f.input.budget.maxImages = 3;
+  const prepared = await f.store.imageTasks.create(f.book.id, f.input);
+  await assert.rejects(
+    promisify(execFile)(
+      process.execPath,
+      [
+        resolve("tests/fixtures/image-task-crash.mjs"),
+        f.root,
+        f.book.id,
+        JSON.stringify(expected(prepared)),
+        "mixed-receive-intent",
+      ],
+      { windowsHide: true, timeout: 15000 },
+    ),
+    (error) => error.code === 97,
+  );
+  const restarted = new NovelStore(f.root),
+    pending = await restarted.imageTasks.read(f.book.id, prepared.id);
+  assert.equal(pending.status, "received-pending-check");
+  assert.deepEqual(pending.candidateErrors, [
+    { sourceIndex: 1, code: "IMAGE" },
+  ]);
+  assert.equal(
+    (await restarted.imageTasks.reconcileReceived(f.book.id, expected(pending)))
+      .status,
+    "incomplete",
+  );
+  const altered = mixedReturn();
+  altered.errors[0].code = "RESPONSE";
+  await assert.rejects(
+    restarted.imageTasks.receive(
+      f.book.id,
+      expected(pending),
+      pending.attemptId,
+      altered,
+    ),
+    /逐项错误/,
+  );
+  const completed = await restarted.imageTasks.receive(
+    f.book.id,
+    expected(pending),
+    pending.attemptId,
+    mixedReturn(),
+  );
+  assert.equal(completed.status, "received");
+  assert.equal(completed.responseHash, pending.responseHash);
+  assert.deepEqual(
+    completed.candidates.map((item) => item.assetId),
+    pending.candidates.map((item) => item.assetId),
+  );
+  assert.deepEqual(
+    completed.candidates.map((item) => item.sourceIndex),
+    [0, 2],
+  );
+  assert.equal((await restarted.assets.list(f.book.id)).items.length, 0);
+});
+
+test("partial image receipts retain valid original positions, bounded failures, late cancellation and adoption identity through restart", async () => {
+  const f = await fixture();
+  f.input.request.n = 3;
+  f.input.budget.maxImages = 3;
+  const prepared = await f.store.imageTasks.create(f.book.id, f.input),
+    sent = await f.store.imageTasks.markSending(f.book.id, expected(prepared)),
+    saved = await f.store.imageTasks.receive(
+      f.book.id,
+      expected(sent),
+      sent.attemptId,
+      mixedReturn(),
+    );
+  assert.equal(saved.status, "received");
+  assert.equal(saved.dispatchState, "response-received");
+  assert.deepEqual(
+    saved.candidates.map((item) => item.sourceIndex),
+    [0, 2],
+  );
+  assert.deepEqual(saved.candidateErrors, [{ sourceIndex: 1, code: "IMAGE" }]);
+  const restarted = new NovelStore(f.root),
+    loaded = await restarted.imageTasks.read(f.book.id, saved.id);
+  assert.equal(loaded.responseHash, saved.responseHash);
+  assert.equal(loaded.interruptedAfterResponse, true);
+  const adopted = await restarted.imageTasks.adopt(
+    f.book.id,
+    expected(loaded),
+    1,
+    adoptionInput(),
+  );
+  assert.equal(adopted.task.candidates[1].sourceIndex, 2);
+  assert.equal(adopted.asset.id, loaded.candidates[1].assetId);
+  assert.deepEqual(adopted.task.candidateErrors, loaded.candidateErrors);
+  assert.equal((await restarted.assets.list(f.book.id)).items.length, 1);
+  const damaged = JSON.parse(await readFile(f.path, "utf8"));
+  damaged.candidateErrors[0].code = "RESPONSE";
+  const raw = JSON.stringify(damaged);
+  await writeFile(f.path, raw);
+  await assert.rejects(
+    restarted.imageTasks.read(f.book.id, saved.id),
+    /接收回执/,
+  );
+  assert.equal(await readFile(f.path, "utf8"), raw);
+});
+
+test("all invalid structured items record a known received response and per-item failures, never unknown or adoptable phantom images", async () => {
+  const f = await fixture(),
+    prepared = await f.store.imageTasks.create(f.book.id, f.input),
+    sent = await f.store.imageTasks.markSending(f.book.id, expected(prepared)),
+    saved = await f.store.imageTasks.receive(
+      f.book.id,
+      expected(sent),
+      sent.attemptId,
+      {
+        candidates: [],
+        errors: [{ sourceIndex: 0, code: "RESPONSE" }],
+        usage: null,
+        interruptedAfterResponse: false,
+      },
+    );
+  assert.equal(saved.status, "received");
+  assert.equal(saved.dispatchState, "response-received");
+  assert.equal(saved.candidates.length, 0);
+  assert.ok(saved.responseHash);
+  const restarted = new NovelStore(f.root),
+    current = await restarted.imageTasks.read(f.book.id, saved.id);
+  assert.equal(
+    (await restarted.imageTasks.reconcileReceived(f.book.id, expected(current)))
+      .status,
+    "received",
+  );
+  await assert.rejects(
+    restarted.imageTasks.preview(f.book.id, current.id, 0),
+    /不存在/,
+  );
+  assert.equal((await restarted.assets.list(f.book.id)).items.length, 0);
+  const discarded = await restarted.imageTasks.discard(
+    f.book.id,
+    expected(current),
+  );
+  assert.equal(discarded.responseHash, current.responseHash);
+  assert.equal(discarded.dispatchState, "response-received");
+});
+
+test("duplicate, missing and unbounded per-item positions refuse the receipt without overwriting send intent", async () => {
+  const f = await fixture();
+  f.input.request.n = 3;
+  f.input.budget.maxImages = 3;
+  const prepared = await f.store.imageTasks.create(f.book.id, f.input),
+    sent = await f.store.imageTasks.markSending(f.book.id, expected(prepared)),
+    before = await readFile(f.path);
+  for (const errors of [
+    [{ sourceIndex: 0, code: "IMAGE" }],
+    [{ sourceIndex: 3, code: "IMAGE" }],
+    [
+      {
+        sourceIndex: 1,
+        code: "IMAGE",
+        raw: "synthetic private provider error",
+      },
+    ],
+    [{ sourceIndex: 1, code: "untrusted raw error" }],
+  ]) {
+    await assert.rejects(
+      f.store.imageTasks.receive(f.book.id, expected(sent), sent.attemptId, {
+        ...mixedReturn(),
+        errors,
+      }),
+    );
+    assert.deepEqual(await readFile(f.path), before);
+  }
 });

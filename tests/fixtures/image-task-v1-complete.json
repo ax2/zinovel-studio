@@ -1,0 +1,61 @@
+{
+  "format": "zinovel-image-task",
+  "schemaVersion": 1,
+  "bookId": "b1e557c4-f867-4087-a8b8-e6ebb00c1dc1",
+  "creationHash": "71d5ee891ccecedf34e125045eb76e241c74489df401f063710e82eecf4e17c1",
+  "id": "d83e2c78-6299-49a8-83c5-39ffb1e43ccc",
+  "request": {
+    "prompt": "合成补存候选；收到后测试本地原图保存失败。",
+    "n": 1,
+    "size": "1024x1024",
+    "responseMode": "request-base64"
+  },
+  "budget": {
+    "maxImages": 3,
+    "maxCost": 0,
+    "pricing": null
+  },
+  "profile": {
+    "id": "780e2d3e-8b01-46af-ac79-884c846f7702",
+    "label": "图像专用B",
+    "model": "synthetic-images-1",
+    "protocol": "openai-images",
+    "revision": 4,
+    "diskHash": "844302e5cec5cec3e46242df12a5a9eee389e063da0f5a5b5239d41a9be42fbf"
+  },
+  "target": {
+    "purpose": "cover",
+    "material": null,
+    "chapter": null
+  },
+  "revision": 4,
+  "createdAt": "2026-10-25T05:12:12.394Z",
+  "updatedAt": "2026-10-25T05:12:13.412Z",
+  "status": "received",
+  "candidates": [
+    {
+      "index": 0,
+      "blob": {
+        "sha256": "6563722ede99788d3b6b5ef5a28de4cb177954526f18946a5a30596774705f1b",
+        "bytes": 1211,
+        "format": "png",
+        "mime": "image/png",
+        "width": 160,
+        "height": 220,
+        "orientation": 1,
+        "displayWidth": 160,
+        "displayHeight": 220
+      },
+      "decision": "pending",
+      "assetId": "637afa09-9102-4ed5-ad3b-f053d4197c3b",
+      "revisedPrompt": "自行合成候选 1；只作说明"
+    }
+  ],
+  "usage": {
+    "input_tokens": 7,
+    "output_tokens": 11
+  },
+  "interruptedAfterResponse": false,
+  "attemptId": "59389480-3825-465a-bd1f-3b3743a1dd35",
+  "responseHash": "b9a4e5050c7ab460d0013c210922102384df97fb4ad3ad579d8595bc5b142d98"
+}

@@ -5,22 +5,41 @@
     "Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
     "Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
     "Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses",
-    "Unknown future draft retained through full restart until explicit discard; ordinary Chinese/astral prompt persists without generation; desktop/narrow/dark screenshots, no horizontal overflow/renderer external requests/errors, original manuscript/old asset/material unchanged"
+    "Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+    "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair then a new author-confirmed task can adopt the chapter illustration",
+    "A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+    "Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained"
   ],
   "errors": [],
   "browser": "Browser plugin not available; repository Playwright/Electron",
-  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
   "version": "0.1.0-alpha.31",
   "packaged": false,
-  "desktopBundleSha256": "80d90dbab7b63c4c1ea190ed241f0b0def81ad118203286ed4fb1aca26a098f9",
+  "desktopBundleSha256": "6be8b2a329644d35e6237de0569d46825cfbacddba1bfbec0d577b85fadc6f63",
   "workbench": {
-    "app.js": "9616b7da9fb4ab2cce2d8857d68d2dad3a098ffb279846d23584dd68933a20f0",
+    "app.js": "261834e7a62e30eed698370533d81dddab5f29920182937abd434d910cc53d16",
     "app.css": "c7991f00c798ae039a4bc5fbd7d6777a3ec11404916c58107cd0b26f0f8105e4",
     "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
   },
   "viewports": [
     {
       "name": "image-studio-desktop.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "mixed-candidates.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    },
+    {
+      "name": "all-invalid-results.png",
       "width": 1426,
       "height": 923,
       "scale": 1.25,
@@ -46,11 +65,30 @@
   ],
   "closeProtected": true,
   "retainedSaveRecoveredLocally": true,
+  "crashCredentialProbe": {
+    "before": {
+      "provider": "current-user-dpapi",
+      "available": true,
+      "readable": true,
+      "roundtrip": true
+    },
+    "after": {
+      "provider": "current-user-dpapi",
+      "available": true,
+      "readable": true,
+      "roundtrip": true
+    },
+    "wrappedKeyChanged": null
+  },
+  "crashCredentialsRetained": true,
   "remoteUnknownAfterRestart": true,
+  "characterTargetVersionChecked": true,
+  "chapterTargetVersionChecked": true,
+  "mixedBatchRecovery": true,
   "originalsPreserved": true,
   "requests": [
     0,
-    4,
+    9,
     0
   ]
 }

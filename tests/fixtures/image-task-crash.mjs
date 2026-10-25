@@ -18,7 +18,8 @@ BookStorageKernel.prototype.recover = async function (bookRoot) {
     pending?.entries?.some(
       (entry) =>
         entry.path === `.zinovel/image-tasks/${JSON.parse(expected).id}.json` &&
-        JSON.parse(entry.after).status === stage,
+        JSON.parse(entry.after).status ===
+          (stage === "mixed-receive-intent" ? "receive-intent" : stage),
     )
   )
     process.exit(97);
@@ -43,7 +44,21 @@ if (stage !== "send-intent") {
     bookId,
     { id: sent.id, revision: sent.revision, diskHash: sent.diskHash },
     sent.attemptId,
-    { candidates: [{ bytes }], usage: null, interruptedAfterResponse: false },
+    stage === "mixed-receive-intent"
+      ? {
+          candidates: [
+            { bytes, sourceIndex: 0 },
+            { bytes, sourceIndex: 2 },
+          ],
+          errors: [{ sourceIndex: 1, code: "IMAGE" }],
+          usage: { total_tokens: 18 },
+          interruptedAfterResponse: true,
+        }
+      : {
+          candidates: [{ bytes }],
+          usage: null,
+          interruptedAfterResponse: false,
+        },
   );
 }
 throw new Error("Crash checkpoint was not reached");

@@ -1,5 +1,7 @@
 # alpha.31 作者图像工作流源码验证
 
+本记录对应b428c39切片，后续其CI40165070759已通过。混合批次、Windows凭据中断及人物/章节UI的修复与最新运行结果见[后续证据](image-partial-and-credentials.md)；以下保留初始312项/5组当时的边界。
+
 状态：宿主IPC、明确配置激活及作者候选面板已接入；完整312项/类型/规划/构建通过，图像工作流实际Electron5组、模型管理6组、桌面基础10组通过。基线3e2999f的Development checks40163227291已完整success，image-studio-baseline-ci.json留证；本批新界面CI尚待提交。没有alpha.31安装资格，ready=false/reports[]；公开alpha.30没有图像生成。
 
 只有明确保存response模式的image配置才可运行；旧配置/空模式继续不可运行，在解密前拒绝。ModelSettings.image核对激活指针和storeId，不使用旧文字Key或路由。主进程对image.*逐项限制字段、主frame与关闭状态；前端不能传Key、服务地址或预算。复用唯一NovelStore/BookStorageKernel。采用/本地核对等锁外解码操作加入退出等待集合，活动网络或未保存候选阻止退出。普通关闭的拒绝Promise现在由写作窗口捕获并取消退出计时，避免未处理拒绝。renderer独立崩溃时有待处理图像只提供重新打开；该renderer-only分支尚未注入验证，不冒充完整主进程中断测试。

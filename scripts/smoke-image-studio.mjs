@@ -8,6 +8,12 @@ import assert from "node:assert/strict";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { binaryHash } from "../packages/novel-storage/image-decoder.mjs";
 import {
+  WINDOWS_CREDENTIAL_PREFIX,
+  windowsCredentialAvailable,
+  protectWindowsCredential,
+  unprotectWindowsCredential,
+} from "../packages/novel-storage/windows-credentials.mjs";
+import {
   captureOwnedProcesses,
   confirmOwnedProcessesExited,
   terminateOwnedProcesses,
@@ -110,13 +116,21 @@ const servers = await Promise.all(
         response.writeHead(200, { "content-type": "application/json" });
         response.end(
           JSON.stringify({
-            data: Array.from({ length: value.n }, (_, n) => ({
-              b64_json: (value.prompt.includes("补存")
-                ? rescue
-                : pictures[n % pictures.length]
-              ).toString("base64"),
-              revised_prompt: `自行合成候选 ${n + 1}；只作说明`,
-            })),
+            data: Array.from({ length: value.n }, (_, n) =>
+              value.prompt.includes("整批坏图") ||
+              (value.prompt.includes("混合坏图") && n === 1)
+                ? {
+                    b64_json: "not base64",
+                    private_error: "synthetic private pixel failure",
+                  }
+                : {
+                    b64_json: (value.prompt.includes("补存")
+                      ? rescue
+                      : pictures[n % pictures.length]
+                    ).toString("base64"),
+                    revised_prompt: `自行合成候选 ${n + 1}；只作说明`,
+                  },
+            ),
             usage: {
               input_tokens: 7,
               output_tokens: 11,
@@ -140,7 +154,7 @@ const report = {
   errors: [],
   browser: "Browser plugin not available; repository Playwright/Electron",
   scope:
-    "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
+    "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
 };
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
@@ -163,6 +177,68 @@ const baseline = (value) => ({
   diskHash: value.diskHash,
 });
 const expected = (value) => ({ id: value.id, ...baseline(value) });
+async function credentialProbe() {
+  const profiles = JSON.parse(
+      await readFile(join(data, "model-profiles.json"), "utf8"),
+    ),
+    cipher = profiles.profiles.find(
+      (item) => item.label === "图像专用B",
+    ).encryptedKey;
+  if (cipher.startsWith(WINDOWS_CREDENTIAL_PREFIX)) {
+    let readable = false,
+      roundtrip = false;
+    try {
+      readable = unprotectWindowsCredential(cipher) === keys[1];
+    } catch {}
+    try {
+      roundtrip =
+        unprotectWindowsCredential(
+          protectWindowsCredential("synthetic-roundtrip-probe"),
+        ) === "synthetic-roundtrip-probe";
+    } catch {}
+    return {
+      provider: "current-user-dpapi",
+      available: windowsCredentialAvailable(),
+      readable,
+      roundtrip,
+      fingerprint: null,
+    };
+  }
+  let wrapped;
+  try {
+    wrapped = JSON.parse(await readFile(join(data, "Local State"), "utf8"))
+      ?.os_crypt?.encrypted_key;
+  } catch {}
+  const state = await app.evaluate(
+    ({ safeStorage }, input) => {
+      let readable = false,
+        roundtrip = false;
+      try {
+        readable =
+          safeStorage.decryptString(Buffer.from(input.cipher, "base64")) ===
+          input.expected;
+      } catch {}
+      try {
+        roundtrip =
+          safeStorage.decryptString(
+            safeStorage.encryptString("synthetic-roundtrip-probe"),
+          ) === "synthetic-roundtrip-probe";
+      } catch {}
+      return {
+        available: safeStorage.isEncryptionAvailable(),
+        readable,
+        roundtrip,
+      };
+    },
+    { cipher, expected: keys[1] },
+  );
+  return {
+    ...state,
+    osKeyPresent: typeof wrapped === "string",
+    fingerprint:
+      typeof wrapped === "string" ? binaryHash(Buffer.from(wrapped)) : null,
+  };
+}
 async function launch() {
   app = await electron.launch({
     executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
@@ -510,12 +586,27 @@ try {
   while (calls[1].length < 4 && Date.now() < dispatchDeadline)
     await new Promise((done) => setTimeout(done, 25));
   assert.equal(calls[1].length, 4);
+  const credentialBeforeCrash = await credentialProbe();
   owned = await captureOwnedProcesses(app.process().pid);
   await terminateOwnedProcesses(owned);
   app = null;
   owned = null;
   hold = false;
   await launch();
+  const credentialAfterCrash = await credentialProbe();
+  report.crashCredentialProbe = {
+    before: { ...credentialBeforeCrash, fingerprint: undefined },
+    after: { ...credentialAfterCrash, fingerprint: undefined },
+    wrappedKeyChanged:
+      credentialBeforeCrash.fingerprint && credentialAfterCrash.fingerprint
+        ? credentialBeforeCrash.fingerprint !== credentialAfterCrash.fingerprint
+        : null,
+  };
+  assert.equal(credentialBeforeCrash.provider, "current-user-dpapi");
+  assert.equal(credentialBeforeCrash.readable, true);
+  assert.equal(credentialAfterCrash.readable, true);
+  assert.equal(credentialAfterCrash.roundtrip, true);
+  report.crashCredentialsRetained = true;
   await open();
   await panel()
     .getByRole("button")
@@ -546,6 +637,247 @@ try {
   );
   report.remoteUnknownAfterRestart = true;
 
+  const mixedTask = await prepare(
+    "混合坏图批次：保留原返回1和3，记录第2项无效。",
+    3,
+  );
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "部分候选可审阅" })
+    .waitFor();
+  await panel()
+    .getByRole("region", { name: "逐项图像结果", exact: true })
+    .getByText(/原返回第 2 项/)
+    .waitFor();
+  await panel().getByLabel("审阅候选", { exact: true }).selectOption("1");
+  await panel()
+    .getByRole("img", { name: "候选 3 实际原图预览", exact: true })
+    .waitFor();
+  await panel()
+    .getByLabel("采用后的图像标题", { exact: true })
+    .fill("混合批次·有效原候选3𠮷");
+  await panel()
+    .getByRole("button", { name: "明确采用当前候选", exact: true })
+    .click();
+  await panel()
+    .getByRole("status")
+    .filter({ hasText: "候选已新增到图像资源库" })
+    .waitFor();
+  const mixedSaved = await request("image.read", {
+    bookId: book.id,
+    id: mixedTask.id,
+  });
+  assert.deepEqual(
+    mixedSaved.candidates.map((item) => item.sourceIndex),
+    [0, 2],
+  );
+  assert.deepEqual(mixedSaved.candidateErrors, [
+    { sourceIndex: 1, code: "IMAGE" },
+  ]);
+  assert.equal(mixedSaved.candidates[1].decision, "accepted");
+  assert.equal(
+    (
+      await request("assets.read", {
+        bookId: book.id,
+        id: mixedSaved.candidates[1].assetId,
+      })
+    ).blob.sha256,
+    binaryHash(pictures[2]),
+  );
+  assert.ok(
+    !JSON.stringify(mixedSaved).includes("synthetic private pixel failure"),
+  );
+  await panel()
+    .getByRole("region", { name: "逐项图像结果", exact: true })
+    .scrollIntoViewIfNeeded();
+  await screenshot("mixed-candidates.png");
+  const allInvalidTask = await prepare(
+    "整批坏图：已收到响应，不得伪报未知或创建图片。",
+    2,
+  );
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "响应无可用候选" })
+    .waitFor();
+  const allInvalidSaved = await request("image.read", {
+    bookId: book.id,
+    id: allInvalidTask.id,
+  });
+  assert.equal(allInvalidSaved.status, "received");
+  assert.equal(allInvalidSaved.dispatchState, "response-received");
+  assert.equal(allInvalidSaved.candidates.length, 0);
+  assert.equal(allInvalidSaved.candidateErrors.length, 2);
+  assert.equal(
+    await panel()
+      .getByRole("button", { name: "明确采用当前候选", exact: true })
+      .count(),
+    0,
+  );
+  assert.equal(
+    (await request("assets.list", { bookId: book.id })).items.length,
+    3,
+  );
+  await screenshot("all-invalid-results.png");
+
+  await panel()
+    .getByLabel("图像用途", { exact: true })
+    .selectOption("portrait");
+  await panel()
+    .getByLabel("目标人物", { exact: true })
+    .selectOption(material.id);
+  const stalePortrait = await prepare(
+    "合成人物定妆：返回后修改资料必须拒绝旧采用。",
+  );
+  assert.equal(stalePortrait.target.material.id, material.id);
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "候选待审阅" })
+    .waitFor();
+  await panel()
+    .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
+    .waitFor();
+  const changedMaterial = await request("materials.save", {
+    bookId: book.id,
+    expected: expected(material),
+    input: {
+      title: material.title,
+      kind: "character",
+      status: "planned",
+      fields: {},
+      notes: "作者通过宿主明确修改目标；旧候选须重新核对",
+      chapterIds: [],
+    },
+  });
+  await panel()
+    .getByLabel("采用后的图像标题", { exact: true })
+    .fill("人物定妆·冲突说明不丢失");
+  await panel()
+    .getByRole("button", { name: "明确采用当前候选", exact: true })
+    .click();
+  await panel()
+    .getByRole("alert")
+    .filter({ hasText: "图像目标资料已改变" })
+    .waitFor();
+  assert.equal(
+    await panel().getByLabel("采用后的图像标题", { exact: true }).inputValue(),
+    "人物定妆·冲突说明不丢失",
+  );
+  assert.equal(
+    (await request("assets.list", { bookId: book.id })).items.length,
+    3,
+  );
+  const freshPortrait = await prepare(
+    "合成人物定妆：作者明确选择当前人物修订。",
+  );
+  assert.equal(
+    freshPortrait.target.material.revision,
+    changedMaterial.revision,
+  );
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "候选待审阅" })
+    .waitFor();
+  await panel()
+    .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
+    .waitFor();
+  await panel()
+    .getByLabel("采用后的图像标题", { exact: true })
+    .fill("人物定妆·当前版本明确采用");
+  await panel()
+    .getByRole("button", { name: "明确采用当前候选", exact: true })
+    .click();
+  await panel()
+    .getByRole("status")
+    .filter({ hasText: "候选已新增到图像资源库" })
+    .waitFor();
+  const portraitSaved = await request("image.read", {
+      bookId: book.id,
+      id: freshPortrait.id,
+    }),
+    portraitAsset = await request("assets.read", {
+      bookId: book.id,
+      id: portraitSaved.candidates[0].assetId,
+    });
+  assert.equal(portraitAsset.purpose, "portrait");
+  assert.deepEqual(portraitAsset.linkedIds, [material.id]);
+  report.characterTargetVersionChecked = true;
+  report.checks.push(
+    "Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+  );
+
+  await panel()
+    .getByLabel("图像用途", { exact: true })
+    .selectOption("illustration");
+  await panel()
+    .getByLabel("目标章节", { exact: true })
+    .selectOption(book.chapters[0].id);
+  const staleChapter = await prepare("合成章节插图：准备后正文外改不能发送。");
+  const manuscriptPath = join(
+      data,
+      "library",
+      book.id,
+      "manuscript",
+      book.chapters[0].id + ".md",
+    ),
+    originalBody = await readFile(manuscriptPath),
+    externalBody = Buffer.concat([
+      originalBody,
+      Buffer.from("\n合成外部修改必须保留"),
+    ]);
+  await writeFile(manuscriptPath, externalBody);
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "请求未完成" })
+    .waitFor();
+  const blockedChapter = await request("image.read", {
+    bookId: book.id,
+    id: staleChapter.id,
+  });
+  assert.equal(blockedChapter.outcome.dispatched, false);
+  assert.equal(blockedChapter.outcome.code, "INTENT");
+  assert.equal(calls[1].length, 8);
+  assert.deepEqual(await readFile(manuscriptPath), externalBody);
+  await writeFile(manuscriptPath, originalBody); // Explicit repair of this fixture's external edit.
+  const freshChapter = await prepare("合成章节插图：当前原稿版本明确确认。");
+  assert.equal(freshChapter.target.chapter.diskHash, binaryHash(originalBody));
+  await send();
+  await panel()
+    .locator(".image-review h3")
+    .filter({ hasText: "候选待审阅" })
+    .waitFor();
+  await panel()
+    .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
+    .waitFor();
+  await panel()
+    .getByLabel("采用后的图像标题", { exact: true })
+    .fill("章节港口图·明确采用");
+  await panel()
+    .getByRole("button", { name: "明确采用当前候选", exact: true })
+    .click();
+  await panel()
+    .getByRole("status")
+    .filter({ hasText: "候选已新增到图像资源库" })
+    .waitFor();
+  const chapterSaved = await request("image.read", {
+      bookId: book.id,
+      id: freshChapter.id,
+    }),
+    chapterAsset = await request("assets.read", {
+      bookId: book.id,
+      id: chapterSaved.candidates[0].assetId,
+    });
+  assert.equal(chapterSaved.target.chapter.id, book.chapters[0].id);
+  assert.equal(chapterAsset.purpose, "illustration");
+  report.chapterTargetVersionChecked = true;
+  report.checks.push(
+    "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair then a new author-confirmed task can adopt the chapter illustration",
+  );
+
   await panel()
     .getByRole("button", { name: "关闭图像工作室", exact: true })
     .click();
@@ -561,6 +893,38 @@ try {
   await close();
   await launch();
   await open();
+  const mixedAfterRestart = await request("image.read", {
+      bookId: book.id,
+      id: mixedTask.id,
+    }),
+    invalidAfterRestart = await request("image.read", {
+      bookId: book.id,
+      id: allInvalidTask.id,
+    });
+  assert.equal(mixedAfterRestart.responseHash, mixedSaved.responseHash);
+  assert.deepEqual(
+    mixedAfterRestart.candidateErrors,
+    mixedSaved.candidateErrors,
+  );
+  assert.deepEqual(
+    mixedAfterRestart.candidates.map((item) => [
+      item.sourceIndex,
+      item.assetId,
+      item.decision,
+    ]),
+    mixedSaved.candidates.map((item) => [
+      item.sourceIndex,
+      item.assetId,
+      item.decision,
+    ]),
+  );
+  assert.equal(invalidAfterRestart.responseHash, allInvalidSaved.responseHash);
+  assert.equal(invalidAfterRestart.dispatchState, "response-received");
+  assert.equal(calls[1].length, 9);
+  report.mixedBatchRecovery = true;
+  report.checks.push(
+    "A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+  );
   await panel()
     .getByRole("button", {
       name: "明确放弃无法识别的本机图像草稿",
@@ -571,11 +935,7 @@ try {
     await page.evaluate((key) => localStorage.getItem(key), draftKey),
     future,
   );
-  await panel()
-    .locator(".image-task-list button")
-    .filter({ hasText: "候选待审阅" })
-    .first()
-    .click();
+  await panel().locator(`[data-task-id="${paid.id}"]`).click();
   await panel()
     .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
     .waitFor();
@@ -620,11 +980,7 @@ try {
     "dark",
   );
   await panel().getByRole("button", { name: "任务记录", exact: true }).click();
-  await panel()
-    .locator(".image-task-list button")
-    .filter({ hasText: "候选待审阅" })
-    .first()
-    .click();
+  await panel().locator(`[data-task-id="${paid.id}"]`).click();
   await panel()
     .getByRole("img", { name: "候选 1 实际原图预览", exact: true })
     .waitFor();
@@ -632,7 +988,7 @@ try {
   await screenshot("image-studio-dark-narrow.png");
   assert.deepEqual(
     calls.map((rows) => rows.length),
-    [0, 4, 0],
+    [0, 9, 0],
   );
   assert.ok(calls[1].every((row) => row.selectedKey));
   assert.equal(
@@ -653,11 +1009,16 @@ try {
       .title,
     material.title,
   );
+  assert.equal(
+    (await request("materials.read", { bookId: book.id, id: material.id }))
+      .notes,
+    changedMaterial.notes,
+  );
   assert.deepEqual(report.errors, []);
   report.originalsPreserved = true;
   report.requests = calls.map((rows) => rows.length);
   report.checks.push(
-    "Unknown future draft retained through full restart until explicit discard; ordinary Chinese/astral prompt persists without generation; desktop/narrow/dark screenshots, no horizontal overflow/renderer external requests/errors, original manuscript/old asset/material unchanged",
+    "Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained",
   );
   report.status = "passed";
 } catch (error) {

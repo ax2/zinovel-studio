@@ -1,0 +1,34 @@
+
+> zinovel-studio@0.1.0-alpha.31 test:image-studio D:\Work\zinovel-studio
+> node scripts/smoke-image-studio.mjs
+
+(node:73760) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.',
+  version: '0.1.0-alpha.31',
+  packaged: false,
+  desktopBundleSha256: '576424a3217a1b8b4aa25469ecabb29afee3d06e1d7d8d72b1dba9cbf3fad6c4',
+  workbench: {
+    'app.js': 'b56df17be09f94c006626e76b0d83650e542e7537aa9b96f448737f85417e075',
+    'app.css': 'c7991f00c798ae039a4bc5fbd7d6777a3ec11404916c58107cd0b26f0f8105e4',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  },
+  failure: 'page.evaluate: Target page, context or browser has been closed\n' +
+    '    at request (D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:169:8)\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:340:9'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+page.evaluate: Target page, context or browser has been closed
+    at request (D:\Work\zinovel-studio\scripts\smoke-image-studio.mjs:169:8)
+    at D:\Work\zinovel-studio\scripts\smoke-image-studio.mjs:340:9
+
+Node.js v26.10.0
+ ELIFECYCLE  Command failed with exit code 1.

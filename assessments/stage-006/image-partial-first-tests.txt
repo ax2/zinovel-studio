@@ -1,0 +1,67 @@
+✔ image coordinator freezes only host-resolved image identity, sends once, saves candidates without adoption and exposes no key (146.6864ms)
+✔ unconfirmed adapters, mismatched mode and renderer-supplied credential fields refuse before creating any task (31.2281ms)
+✔ a stale model or raw codec error never uses a fallback or exposes private errors and releases the global slot (47.8109ms)
+✔ cancellation while awaiting host model resolution records a not-sent cancellation with zero HTTP requests (70.6869ms)
+✔ only one global request is allowed; cancelling after actual HTTP receipt records unknown and never retries (93.0608ms)
+✔ a paid response whose blob save fails keeps one response in memory, reports unsafe shutdown, blocks new requests and retries only local storage (120.99ms)
+✔ retained unsaved candidates are released only after explicit, version-checked durable discard, keeping the known response receipt (105.026ms)
+✔ successful receive commit without a receipt reconciles the exact retained response locally (117.4435ms)
+✔ an HTTP rejection whose outcome write fails is retained and retries only the durable outcome (86.1266ms)
+✔ a durable send-intent commit with a missing receipt still records the actual transport not-sent fact (71.9087ms)
+✔ image request and manual pricing preflight require explicit compatible modes; unknown price is never zero (1.0197ms)
+✔ manual decimal price boundaries do not reject an exact budget or hide a representable overage (0.183ms)
+✔ actual HTTP uses only the frozen selected credential and tenant prefix; three image formats really decode and explicit modes differ (36.0691ms)
+✔ invalid settings, missing intent, budget excess, failed intent and pre-send cancellation cause zero network calls (2.8738ms)
+✔ HTTP rejection is redacted and not retried; redirects never forward the credential to a second endpoint (8.69ms)
+✖ URL-only results, malformed encodings, bad images, wrong counts and invalid usage never create adoptable candidates (3.556ms)
+✔ response MIME, declared byte cap and strict UTF-8 fail closed without retaining raw response text (9.2127ms)
+✔ post-send abort and deadline leave remote result unknown and never automatically retry (103.7189ms)
+✔ an actual chunked response cannot exceed the cumulative byte cap when no Content-Length is declared (253.7373ms)
+✔ cancellation at the end-of-body checkpoint retains received decoded candidates rather than pretending nothing returned (9.0544ms)
+✔ explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything (226.109ms)
+✔ adoption refuses wrong purpose, discarded tasks, stale CAS and corrupted bytes without visible resources (138.7772ms)
+✔ a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate (149.8458ms)
+✔ a previously accepted resource removed outside the app is never silently recreated by adoption retry (124.0354ms)
+✔ a restored pending candidate is adopted only into the explicitly selected restored book, preserving the origin task and source assets (289.5251ms)
+✔ simultaneous adoption clicks commit once, and a separately occupied reserved identity is never overwritten or silently attached (235.9898ms)
+✔ actual process exit at adoption journal recovers both exact records through one journal without duplicate assets or a network call (244.4405ms)
+✔ actual process exit at adoption first-record recovers both exact records through one journal without duplicate assets or a network call (250.0368ms)
+✔ actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript (247.2611ms)
+✔ stable creation IDs reconcile existing state without re-sending and reject different frozen inputs (57.1881ms)
+✔ restart makes a durable send intent unknown; it cannot be relabelled as unsent or receive a fabricated return from a new session (84.1153ms)
+✔ target versions are checked before sending, but later author edits do not discard paid returned candidates (163.5835ms)
+✔ foreign targets, plaintext credentials, unsupported schema, invalid UTF-8 and changed fingerprints refuse without overwriting originals (91.0515ms)
+✔ raw-byte conflicts, wrong attempts and corrupt shared image objects never overwrite task state or create visible assets (99.0376ms)
+✔ full book backup and restore retain unadopted candidates and frozen origin without resuming a provider request (163.5729ms)
+✔ a worker exits after durable intent journal creation; startup recovery retains unknown result rather than automatically sending (174.6887ms)
+✔ image services cannot be attached to a different writer kernel (20.9206ms)
+✔ restored interrupted tasks can be explicitly discarded while keeping dispatch unknown, never rewritten as unsent (118.8193ms)
+✔ chapter illustrations freeze chapter identity, revision and body hash and reject an external same-revision edit before sending (86.8815ms)
+✔ received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy (230.7143ms)
+✔ paid candidate decoding waits for a reserved existing slot while ordinary excess previews still refuse (49.9728ms)
+✔ a worker exit after receive intent keeps known response hashes and incomplete files, then exact original bytes can be saved without another request (354.5943ms)
+✔ a worker exit after candidate blob publication is reconciled locally to received and never creates visible resource metadata (329.6174ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 42
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4096.0547
+
+✖ failing tests:
+
+test at tests\image-provider.test.mjs:340:1
+✖ URL-only results, malformed encodings, bad images, wrong counts and invalid usage never create adoptable candidates (3.556ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/image-provider.test.mjs:352:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

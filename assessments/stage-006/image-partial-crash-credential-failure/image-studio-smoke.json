@@ -1,0 +1,49 @@
+{
+  "status": "failed",
+  "checks": [
+    "Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript",
+    "Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
+    "Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
+    "Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
+  "version": "0.1.0-alpha.31",
+  "packaged": false,
+  "desktopBundleSha256": "5a58b45ad1ec338e6b0931fa836fb419f5b9867b401676bfc7f33dc398bf5c2f",
+  "workbench": {
+    "app.js": "b56df17be09f94c006626e76b0d83650e542e7537aa9b96f448737f85417e075",
+    "app.css": "c7991f00c798ae039a4bc5fbd7d6777a3ec11404916c58107cd0b26f0f8105e4",
+    "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+  },
+  "viewports": [
+    {
+      "name": "image-studio-desktop.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    }
+  ],
+  "closeProtected": true,
+  "retainedSaveRecoveredLocally": true,
+  "crashCredentialProbe": {
+    "before": {
+      "available": true,
+      "readable": true,
+      "roundtrip": true,
+      "osKeyPresent": false
+    },
+    "after": {
+      "available": true,
+      "readable": false,
+      "roundtrip": true,
+      "osKeyPresent": false
+    },
+    "wrappedKeyChanged": false
+  },
+  "remoteUnknownAfterRestart": true,
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).locator('.image-review h3').filter({ hasText: '部分候选可审阅' }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:615:6"
+}

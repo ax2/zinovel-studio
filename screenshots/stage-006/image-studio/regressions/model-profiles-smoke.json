@@ -9,7 +9,7 @@
     "Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports"
   ],
   "errors": [],
-  "scope": "Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
+  "scope": "Synthetic keys and manuscript; real desktop UI, CurrentUser DPAPI for new keys, actual legacy Electron ciphertext and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
   "initialViewport": {
     "width": 1426,
     "height": 923,
@@ -17,7 +17,9 @@
   },
   "version": "0.1.0-alpha.31",
   "packaged": false,
-  "desktopBundleSha256": "80d90dbab7b63c4c1ea190ed241f0b0def81ad118203286ed4fb1aca26a098f9",
+  "desktopBundleSha256": "6be8b2a329644d35e6237de0569d46825cfbacddba1bfbec0d577b85fadc6f63",
+  "newCredentialEnvelope": "win-dpapi-v1",
+  "legacyCipherAfterRestart": true,
   "geometry": {
     "left": 123.20000457763672,
     "right": 683.2000045776367,

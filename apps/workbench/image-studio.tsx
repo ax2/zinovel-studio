@@ -35,11 +35,13 @@ type Task = Expected & {
   interruptedAfterResponse: boolean;
   candidates: {
     index: number;
+    sourceIndex?: number;
     assetId: string;
     decision: string;
     blob: { sha256: string; displayWidth: number; displayHeight: number };
     revisedPrompt?: string;
   }[];
+  candidateErrors?: { sourceIndex: number; code: string }[];
   outcome?: { code: string; dispatched: boolean; remoteResult: string };
 };
 type Job = {
@@ -94,6 +96,17 @@ const expected = (task: Expected): Expected => ({
   revision: task.revision,
   diskHash: task.diskHash,
 });
+const resultLabel = (status: string, valid = 0, invalid = 0) =>
+  status === "received" && invalid > 0
+    ? valid > 0
+      ? "部分候选可审阅"
+      : "响应无可用候选"
+    : statuses[status] || status;
+const itemErrorLabel: Record<string, string> = {
+  RESPONSE: "缺少受支持的内联图像；没有下载远端URL",
+  IMAGE: "图像编码或实际解码无效",
+  LIMIT: "图像超出资源上限",
+};
 const message = (error: unknown) =>
   error instanceof Error
     ? error.message
@@ -153,7 +166,14 @@ export function ImageStudio({
     [model, setModel] = useState<ImageModel | null>(null),
     [choice, setChoice] = useState<ModelChoice | null>(null),
     [rows, setRows] = useState<
-      { id: string; status: string; purpose: AssetPurpose; createdAt: string }[]
+      {
+        id: string;
+        status: string;
+        purpose: AssetPurpose;
+        createdAt: string;
+        candidateCount?: number;
+        candidateErrorCount?: number;
+      }[]
     >([]),
     [offset, setOffset] = useState(0),
     [total, setTotal] = useState(0),
@@ -705,12 +725,17 @@ export function ImageStudio({
                 {rows.map((row) => (
                   <button
                     key={row.id}
+                    data-task-id={row.id}
                     disabled={busy}
                     aria-pressed={task?.id === row.id}
                     onClick={() => void select(row.id)}
                   >
                     {purposes[row.purpose]} ·{" "}
-                    {statuses[row.status] || row.status}
+                    {resultLabel(
+                      row.status,
+                      row.candidateCount,
+                      row.candidateErrorCount,
+                    )}
                     <small>{new Date(row.createdAt).toLocaleString()}</small>
                   </button>
                 ))}
@@ -734,7 +759,14 @@ export function ImageStudio({
           <div className="image-review">
             {task ? (
               <>
-                <h3>核对与审阅 · {statuses[task.status] || task.status}</h3>
+                <h3>
+                  核对与审阅 ·{" "}
+                  {resultLabel(
+                    task.status,
+                    task.candidates.length,
+                    task.candidateErrors?.length,
+                  )}
+                </h3>
                 <p>
                   {task.profile.label} · {task.profile.model} ·{" "}
                   {purposes[task.target.purpose]} · {task.request.n} 张 ·{" "}
@@ -881,6 +913,26 @@ export function ImageStudio({
                 {task.interruptedAfterResponse && (
                   <p>取消到达时已收到有效图像，候选已保留供审阅。</p>
                 )}
+                {!!task.candidateErrors?.length && (
+                  <section aria-label="逐项图像结果">
+                    <h4>
+                      图像响应已收到，有 {task.candidateErrors.length} 项无效
+                    </h4>
+                    <p>
+                      {task.candidates.length
+                        ? "其余有效候选已独立保留，可逐项审阅采用。"
+                        : "本次没有有效图像，不会自动重试；已请求的图片仍可能计费。"}
+                    </p>
+                    <ul>
+                      {task.candidateErrors.map((item) => (
+                        <li key={item.sourceIndex}>
+                          原返回第 {item.sourceIndex + 1} 项：
+                          {itemErrorLabel[item.code] || "无法获取有效图像"}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
                 {candidate && (
                   <>
                     <label>
@@ -892,7 +944,7 @@ export function ImageStudio({
                       >
                         {task.candidates.map((item) => (
                           <option key={item.index} value={item.index}>
-                            候选 {item.index + 1} ·{" "}
+                            候选 {(item.sourceIndex ?? item.index) + 1} ·{" "}
                             {item.decision === "accepted"
                               ? "已采用"
                               : item.decision === "discarded"
@@ -906,7 +958,7 @@ export function ImageStudio({
                       {previewMatches ? (
                         <img
                           src={preview}
-                          alt={`候选 ${index + 1} 实际原图预览`}
+                          alt={`候选 ${(candidate.sourceIndex ?? index) + 1} 实际原图预览`}
                         />
                       ) : (
                         <p>{previewError || "正在校验候选原图…"}</p>
@@ -976,7 +1028,7 @@ export function ImageStudio({
                                   input: {
                                     title: draft.title,
                                     purpose: task.target.purpose,
-                                    source: `AI生成；${task.profile.label} / ${task.profile.model}；任务 ${task.id}`,
+                                    source: `AI生成；${task.profile.label} / ${task.profile.model}；任务 ${task.id}；原返回候选 ${(candidate.sourceIndex ?? index) + 1}`,
                                     rights: draft.rights,
                                     notes: "",
                                     linkedIds: task.target.material

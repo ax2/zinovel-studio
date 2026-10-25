@@ -126,6 +126,7 @@ function candidate(value, index) {
     "decision",
     "assetId",
     "adoption",
+    "sourceIndex",
   ]);
   if (
     value.index !== index ||
@@ -133,6 +134,13 @@ function candidate(value, index) {
   )
     throw new Error("图像候选状态无效");
   validateAssetBlob(value.blob);
+  if (
+    value.sourceIndex !== undefined &&
+    (!Number.isInteger(value.sourceIndex) ||
+      value.sourceIndex < 0 ||
+      value.sourceIndex >= imageGenerationLimits.count)
+  )
+    throw new Error("图像候选原返回位置无效");
   if (value.decision === "accepted") {
     keys(value.adoption, ["bookId", "input", "creationHash", "adoptedAt"]);
     if (
@@ -167,12 +175,30 @@ function candidate(value, index) {
       : {}),
   };
 }
+export function imageTaskCandidateErrors(value) {
+  if (!Array.isArray(value) || value.length > imageGenerationLimits.count)
+    throw new Error("图像逐项错误清单无效");
+  return value.map((item) => {
+    keys(item, ["sourceIndex", "code"]);
+    if (
+      !Number.isInteger(item.sourceIndex) ||
+      item.sourceIndex < 0 ||
+      item.sourceIndex >= imageGenerationLimits.count ||
+      !["RESPONSE", "IMAGE", "LIMIT"].includes(item.code)
+    )
+      throw new Error("图像逐项错误事实无效");
+    return { sourceIndex: item.sourceIndex, code: item.code };
+  });
+}
 export function imageTaskResponseHash(value) {
   return hash({
     attemptId: value.attemptId,
     candidates: value.candidates.map((item) => ({
       index: item.index,
       assetId: item.assetId,
+      ...(item.sourceIndex !== undefined
+        ? { sourceIndex: item.sourceIndex }
+        : {}),
       blob: Object.fromEntries(
         [
           "sha256",
@@ -192,6 +218,9 @@ export function imageTaskResponseHash(value) {
     })),
     usage: value.usage,
     interruptedAfterResponse: value.interruptedAfterResponse,
+    ...(value.candidateErrors !== undefined
+      ? { candidateErrors: imageTaskCandidateErrors(value.candidateErrors) }
+      : {}),
   });
 }
 export function validateImageTask(value, id, origins) {
@@ -215,6 +244,7 @@ export function validateImageTask(value, id, origins) {
     "usage",
     "interruptedAfterResponse",
     "responseHash",
+    "candidateErrors",
   ]);
   if (
     value.format !== "zinovel-image-task" ||
@@ -258,6 +288,15 @@ export function validateImageTask(value, id, origins) {
   )
     throw new Error("图像候选清单无效");
   value.candidates.forEach(candidate);
+  const candidateErrors =
+    value.candidateErrors === undefined
+      ? []
+      : imageTaskCandidateErrors(value.candidateErrors);
+  if (
+    value.candidateErrors !== undefined &&
+    !["receive-intent", "received", "discarded"].includes(value.status)
+  )
+    throw new Error("尚未收到图像响应，不能声明逐项错误");
   if (
     new Set(value.candidates.map((item) => item.assetId)).size !==
     value.candidates.length
@@ -287,9 +326,20 @@ export function validateImageTask(value, id, origins) {
     throw new Error("图像发送事实缺失");
   if (
     ["receive-intent", "received"].includes(value.status) &&
-    value.candidates.length !== input.request.n
+    value.candidates.length + candidateErrors.length !== input.request.n
   )
     throw new Error("图像候选数量不符");
+  if (value.candidates.length || candidateErrors.length) {
+    const positions = [
+      ...value.candidates.map((item) => item.sourceIndex ?? item.index),
+      ...candidateErrors.map((item) => item.sourceIndex),
+    ].sort((a, b) => a - b);
+    if (
+      positions.length !== input.request.n ||
+      positions.some((position, index) => position !== index)
+    )
+      throw new Error("图像原返回位置缺失或重复");
+  }
   if (
     !["receive-intent", "received", "discarded"].includes(value.status) &&
     value.candidates.length
@@ -338,7 +388,7 @@ export function validateImageTask(value, id, origins) {
     )
       throw new Error("图像用量无效");
   }
-  if (value.candidates.length) {
+  if (value.candidates.length || candidateErrors.length) {
     if (imageTaskResponseHash(value) !== assetHash(value.responseHash))
       throw new Error("图像接收回执校验不符，原记录已保留");
   } else if (value.responseHash !== undefined)

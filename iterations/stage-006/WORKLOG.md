@@ -174,3 +174,23 @@ ImageJobService新增全局一项运行/待补存限制，宿主独立image解�
 首次select精确label与第二次有内容textarea的精确label定位失败，真实报告/截图/日志分别保留，补固定aria-label及表单深色样式后重跑通过；没有保存两轮完整renderer构建，不能当版本安装证明。未知缓存时采用说明也保持禁用，避免新输入无处保存。详见image-studio-source.md和screenshots/stage-006/image-studio。
 
 复评现有transport发现同批坏图会整体抛错，可能丢弃其他有效付费候选。31发布前先修逐项错误与有效候选保留，并补持久恢复/UI/安装证据；manifest强制mixedBatchRecovery=true，当前回执尚无该证据，ready=false/reports[]不变，不以正常批次通过跳过。已将新探针接入源码/标签CI、实际安装与同版本asar清单，未执行本版安装。人物/章节目标UI及目标变化后的明确基线复评仍待；参考/变体/选定/排字/章图位置/带图出版不缩减。ART-01/06/07进入in-progress而非verified，106项26/49/31，完整上架继续待。
+
+## 2026-10-25 alpha.31 混合响应推进与凭据中断复现
+
+b428c39完整源码CI40165070759 success，原始摘要归档。其后本批未提交改动逐项保留有效候选/固定错误与原序号，旧v1原hash兼容；账本28项通过，含混合回执落盘后实际退出97再用原字节/位置/错误本地补存，传输/协调相关检查也通过，未冒充本批完整CI。混合UI逐项结果已实现，探针扩为6组和6次图像HTTP。
+
+实际UI重复失败在进程中断重启后的首次新请求，固定阶段定位为模型与系统凭据核对；合成探针表明旧密文readable从true变false，而新进程加密可用且即时往返正常。原Key/密文从未输出，Local State只查字段名及存在性。源码与现象支持首次OSCrypt材料未持久化的推断，但未跟踪精确写盘时序。三次真实失败均保留，混合测试尚未进入第5次HTTP，不设置mixedBatchRecovery或发行资格。详见image-partial-work-in-progress.md。
+
+下一步先做Windows自包含当前用户DPAPI封装及旧密文读取兼容，复用现有Koffi；从全新合成环境保留强制中断步骤，不能重输已知测试Key绕过问题。修后补混合UI、全量检查和实际安装；31 ready=false/reports[]，原106项26/49/31保持，目标继续active。
+
+## 2026-10-25 alpha.31 当前用户DPAPI与混合/目标实测通过
+
+上一轮为具体进展：b428c39已推送且完整CI40165070759 success，混合源码与崩溃Key问题有实际失败证据。本轮实现Windows自包含CurrentUser DPAPI凭据，固定版本前缀、受保护内容/digest、严格UTF8和大小、异常不回退旧格式；复用Koffi，系统目录加载DLL，不用LocalMachine或提示UI，finally清理缓冲/原生内存。新写入不用Local State，旧Electron密文仍读取、不静默改为明文或重写。已经丢失旧材料的Key不承诺恢复。
+
+第一版Node原生6项通过，但实际Electron第一次保存即退出；没有该次有效截图，JSON/原始日志另存credential-native-first-failure。结合Koffi/Electron对external ArrayBuffer的限制，移除view，改decode复制和encode清除后，实际桌面完整通过，sandbox/contextIsolation不变。Windows原生6项含子进程写密文fsync后exit91再次解密；旧v1回执、混合回执进程退出后本地补存等账本28项也通过。完整324项/类型/规划/构建通过。
+
+实际图像8组与HTTP[0,9,0]通过：保留真实主进程强制终止，前后同一合成密文readable/roundtrip均true，后续混合/全坏请求继续正确Key；坏第2项不丢有效1/3，明确采用原3，整批坏也收到响应而零图片，完整重启保留回执。人物选择后目标改变拒绝旧采用/保留说明，当前修订新任务能关联人物；章节同修订外改在HTTP前拒绝并保留外部字节，探针仅修复自己的合成外改后新任务可采用。窄窗历史/审阅、未来草稿只读与原稿旧图保持继续通过。
+
+模型管理6组明确种入真实Electron旧密文A，新B/C通过普通UI用DPAPI；官方Harness A3/B6/图像C0及重启后旧密文仍可解密通过，服务隔离3组/桌面基础10组通过。已查看混合与全坏结果浅色截图；raw日志和source版/hash绑定回执归档image-partial-and-credentials.md。人物/章节只是基础版本关联，参考/年龄/衣装/选定/章图位置/出版没有宣称完成；106项26/49/31保持。
+
+新清单要求图像8组/[0,9,0]/混合/崩溃Key/人物章节版本，以及新封装/旧密文重启兼容，同版asar必须实际安装。当前ready=false/reports[]，没有31安装/发行资格。下一步提交新CI并保留30运行目录后打包，做完整安装、重装、卸载、alpha.3升级，再核对阶段发行。

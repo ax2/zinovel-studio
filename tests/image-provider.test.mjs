@@ -349,15 +349,22 @@ test("URL-only results, malformed encodings, bad images, wrong counts and invali
       reply(response, value),
     );
     try {
-      await assert.rejects(
+      const invoke = () =>
         requestImageCandidates(configuration(service.url), {
           beforeDispatch: async () => {},
-        }),
-        (error) => {
+        });
+      if (value.data.length === 1) {
+        const result = await invoke();
+        assert.equal(result.candidates.length, 0);
+        assert.equal(result.errors.length, 1);
+        assert.equal(result.errors[0].sourceIndex, 0);
+        assert.ok(["RESPONSE", "IMAGE"].includes(result.errors[0].code));
+        assert.equal(result.remoteResult, "received");
+      } else
+        await assert.rejects(invoke(), (error) => {
           assert.ok(["RESPONSE", "IMAGE", "LIMIT"].includes(error.code));
           return errorIs(error.code, true, "received-invalid")(error);
-        },
-      );
+        });
       assert.equal(service.requests.length, 1);
     } finally {
       await service.close();
@@ -378,6 +385,38 @@ test("URL-only results, malformed encodings, bad images, wrong counts and invali
       ).usage,
       null,
     );
+  } finally {
+    await service.close();
+  }
+});
+
+test("mixed valid and invalid inline images retain valid PNG/WebP bytes with original positions and bounded per-item errors", async () => {
+  const service = await fixture((_request, response) =>
+    reply(response, {
+      data: [
+        document([images[0]]).data[0],
+        { b64_json: "not base64", private: keyA },
+        document([images[2]]).data[0],
+      ],
+    }),
+  );
+  try {
+    const config = configuration(service.url);
+    config.request.n = 3;
+    const result = await requestImageCandidates(config, {
+      beforeDispatch: async () => {},
+    });
+    assert.deepEqual(
+      result.candidates.map((item) => item.sourceIndex),
+      [0, 2],
+    );
+    assert.deepEqual(
+      result.candidates.map((item) => item.bytes),
+      [images[0], images[2]],
+    );
+    assert.deepEqual(result.errors, [{ sourceIndex: 1, code: "IMAGE" }]);
+    assert.equal(service.requests.length, 1);
+    assert.ok(!JSON.stringify(result.errors).includes(keyA));
   } finally {
     await service.close();
   }
