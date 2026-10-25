@@ -304,6 +304,35 @@ manifest.diagnostics = {
   checks: diagnostics.checks,
   scope: diagnostics.scope,
 };
+const modelCredentials = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/model-credentials/model-credentials-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  modelCredentials.status !== "passed" ||
+  modelCredentials.version !== pkg.version ||
+  modelCredentials.packaged !== true ||
+  modelCredentials.appAsarSha256 !== appAsarSha256 ||
+  modelCredentials.oldCredentialForwarded !== false ||
+  modelCredentials.newCredentialRequests !== 3 ||
+  modelCredentials.errors?.length !== 0 ||
+  modelCredentials.checks?.length !== 3
+)
+  throw new Error(
+    "Installed service credential isolation proof is missing or stale",
+  );
+manifest.modelCredentials = {
+  version: modelCredentials.version,
+  appAsarSha256: modelCredentials.appAsarSha256,
+  oldCredentialForwarded: false,
+  checks: modelCredentials.checks,
+  scope: modelCredentials.scope,
+};
 const upgrade = JSON.parse(
   await readFile(
     new URL("screenshots/release/upgrade/upgrade-smoke.json", root),

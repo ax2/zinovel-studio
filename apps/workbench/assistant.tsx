@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Settings2, Sparkles, X, Square } from "lucide-react";
 import { api } from "./api";
+import { modelServiceURL } from "../../packages/novel-domain/model-service.mjs";
 import { TaskHistory, type StoredTask } from "./task-history";
 import { CandidateReview } from "./candidate-review";
 import { ContextSelector, type ContextSelection } from "./context-selector";
@@ -18,15 +19,30 @@ type Settings = {
   hasKey: boolean;
   encryptionAvailable: boolean;
   budget: BudgetSettings;
+  credentialMismatch?: boolean;
 };
 export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
   const [config, setConfig] = useState<Settings | null>(null),
     [key, setKey] = useState(""),
     [error, setError] = useState(""),
     [saving, setSaving] = useState(false);
+  const savedService = useRef<string | null>(null);
+  function adopt(value: Settings) {
+    savedService.current = value.baseURL;
+    setConfig(value);
+  }
+  let endpointChanged = false;
+  if (config && savedService.current) {
+    try {
+      endpointChanged =
+        modelServiceURL(config.baseURL) !== savedService.current;
+    } catch {
+      endpointChanged = true;
+    }
+  }
   useEffect(() => {
     api<Settings>("settings.get")
-      .then(setConfig)
+      .then(adopt)
       .catch((e) => setError(e.message));
   }, []);
   return (
@@ -67,15 +83,26 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
               服务地址
               <input
                 value={config.baseURL}
-                onChange={(e) =>
+                onChange={(e) => {
+                  setKey("");
                   setConfig({
                     ...config,
                     baseURL: e.target.value,
                     budget: { ...config.budget, pricing: null, maxCost: 0 },
-                  })
-                }
+                  });
+                }}
               />
             </label>
+            {endpointChanged && (
+              <p role="status" className="muted">
+                服务地址已更改；留空保存会清除旧服务的密钥，请为新服务重新输入。修改地址也会清空尚未保存的Key。
+              </p>
+            )}
+            {config.credentialMismatch && (
+              <p role="alert" className="inline-error">
+                服务地址与已保存凭据不匹配，旧密钥不会发送；请明确重新输入或清除。
+              </p>
+            )}
             <label>
               模型名称
               <input
@@ -97,7 +124,11 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
                 value={key}
                 onChange={(e) => setKey(e.target.value)}
                 placeholder={
-                  config.hasKey ? "已安全保存，留空保持原值" : "输入 API Key"
+                  endpointChanged
+                    ? "新服务需重新输入Key；留空会清除旧Key"
+                    : config.hasKey
+                      ? "已安全保存，留空保持原值"
+                      : "输入 API Key"
                 }
               />
             </label>
@@ -108,14 +139,15 @@ export function ModelSettingsDialog({ onClose }: { onClose: () => void }) {
               value={config.budget}
               onChange={(budget) => setConfig({ ...config, budget })}
             />
-            {config.hasKey && (
+            {(config.hasKey || config.credentialMismatch) && (
               <button
                 type="button"
                 onClick={async () => {
                   try {
-                    setConfig(
+                    adopt(
                       await api("settings.save", { ...config, clearKey: true }),
                     );
+                    setKey("");
                   } catch (e) {
                     setError((e as Error).message);
                   }

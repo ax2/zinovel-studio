@@ -1,0 +1,9 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
+  "launchPid": 6404,
+  "failure": "page.evaluate: Execution context was destroyed, most likely because of a navigation\n    at launch (D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-offline-writing.mjs:126:32)\n    at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-offline-writing.mjs:201:3"
+}

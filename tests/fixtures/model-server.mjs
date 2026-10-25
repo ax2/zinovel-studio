@@ -119,7 +119,7 @@ export async function modelFixture({
         },
         { type: "message_stop" },
       ];
-      await beforeReply?.(requests.length);
+      await beforeReply?.(requests.length, request.headers);
       if (omitUsage)
         for (const event of events) {
           if (event.message) delete event.message.usage;

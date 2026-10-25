@@ -1,6 +1,8 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.27](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27)已公开，提供增量备份与选版恢复。标签CI40105233629首次完整success；公开155483341字节安装EXE已实际下载复核SHA256，四附件/元数据摘要/匿名可见通过。本机155项安装及alpha.3升级证据独立保留。主线alpha.28当前会话脱敏诊断已通过158项本机安装、升级和源码CI，标签CI40107313526独立发行中，尚未公开。详见[alpha.27资格](assessments/release/v0.1.0-alpha.27/README.md)、[alpha.28资格](assessments/release/v0.1.0-alpha.28/README.md)、[诊断设计](design/diagnostics.md)、[范围复评](assessments/stage-007/publication-scope-reassessment.md)。
+最新阶段版[alpha.27](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.27)已公开，提供增量备份与选版恢复，公开安装包已下载复核。alpha.28标签CI40107313526在源码离线探针初始导航阶段失败，未发布；新增服务凭据负面复现也撤销其本机资格。主线alpha.29修复跨服务Key保留并继承诊断，259项源码及真实凭据三组/离线四组通过，尚无本版安装资格。详见[凭据规则](design/model-credentials.md)、[alpha.28失败与撤销](assessments/release/v0.1.0-alpha.28/README.md)、[诊断设计](design/diagnostics.md)、[完整范围](assessments/stage-007/publication-scope-reassessment.md)。
+
+**模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。alpha.29源码修复已通过合成验证，安装版仍待验收；公开Release说明已同步提醒。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 

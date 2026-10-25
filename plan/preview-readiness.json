@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.28",
-  "ready": true,
+  "version": "0.1.0-alpha.29",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -59,15 +59,9 @@
     "assessments/stage-008/diagnostics-source.md",
     "assessments/release/v0.1.0-alpha.28/README.md"
   ],
-  "reports": [
-    "assessments/release/v0.1.0-alpha.28/installer-smoke.json",
-    "assessments/release/v0.1.0-alpha.28/upgrade-smoke.json",
-    "assessments/release/v0.1.0-alpha.28/installed/diagnostics/diagnostics-smoke.json",
-    "assessments/release/v0.1.0-alpha.28/installed/incremental-backup/incremental-backup-smoke.json",
-    "assessments/release/v0.1.0-alpha.28/source-ci.json"
-  ],
+  "reports": [],
   "limitations": [
-    "alpha.28本机158项安装、alpha.3升级与源码CI40106354478通过；仅允许同标签独立完整重验，不继承本机SHA或alpha.27资格",
+    "alpha.28标签CI40107313526首次失败，未发布；新增跨服务凭据负面复现撤销本机资格。alpha.29修复中，尚无同版本安装资格，不继承旧版资格",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
     "完整106项仍26 verified/45 in-progress/35 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/诊断/异盘增量备份及空间时态/图像生成等仍待完成",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

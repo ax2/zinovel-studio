@@ -157,6 +157,10 @@ try {
     ["smoke-offline-writing.mjs", "offline-writing/offline-writing-smoke.json"],
     ["smoke-diagnostics.mjs", "diagnostics/diagnostics-smoke.json"],
     [
+      "smoke-model-credentials.mjs",
+      "model-credentials/model-credentials-smoke.json",
+    ],
+    [
       "smoke-backup-vault.mjs",
       "incremental-backup/incremental-backup-smoke.json",
       ["--allow-same-disk"],

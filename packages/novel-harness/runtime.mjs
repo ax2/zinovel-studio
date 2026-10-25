@@ -1,4 +1,5 @@
 import { materialContextText } from "../novel-domain/material-context.mjs";
+import { modelServiceURL } from "../novel-domain/model-service.mjs";
 import { materialProposal } from "../novel-domain/material-proposal.mjs";
 import { materialKind } from "../novel-domain/materials.mjs";
 import { pilotReplacement } from "../novel-domain/pilots.mjs";
@@ -89,22 +90,12 @@ export function isolatedEnvironment(source) {
   );
 }
 export function validateSettings(input) {
-  const url = new URL(input.baseURL || "https://api.deepseek.com/anthropic");
-  if (url.username || url.password || url.search || url.hash)
-    throw new Error("模型地址不能包含凭据、查询参数或片段");
-  if (
-    url.protocol !== "https:" &&
-    !(
-      url.protocol === "http:" &&
-      ["127.0.0.1", "[::1]", "localhost"].includes(url.hostname)
-    )
-  )
-    throw new Error("模型服务需使用 HTTPS；本机服务可以使用 HTTP");
+  const baseURL = modelServiceURL(input.baseURL);
   const model = input.model || "deepseek-v4-flash";
   if (typeof model !== "string" || !/^[\w.:-]{1,128}$/.test(model))
     throw new Error("模型标识无效");
   return {
-    baseURL: url.href.replace(/\/$/, ""),
+    baseURL,
     model,
     budget: validateBudget(input.budget),
   };

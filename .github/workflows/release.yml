@@ -76,6 +76,7 @@ jobs:
       - run: pnpm test:backup-boundary
       - run: pnpm test:backup-vault
       - run: pnpm test:diagnostics
+      - run: pnpm test:model-credentials
       - run: pnpm test:publication-foundation
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
@@ -137,6 +138,7 @@ jobs:
             screenshots/stage-008/independent-backup/
             screenshots/stage-008/incremental-backup/
             screenshots/stage-008/diagnostics/
+            screenshots/stage-003/model-credentials/
             screenshots/stage-008/tool-isolation/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml

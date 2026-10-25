@@ -9,13 +9,13 @@
   "errors": [],
   "browser": "Browser plugin not available; repository Playwright/Electron",
   "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
-  "launchPid": 43604,
+  "launchPid": 76652,
   "viewport": {
     "width": 986,
     "height": 863,
     "scale": 1.25
   },
-  "version": "0.1.0-alpha.26",
+  "version": "0.1.0-alpha.29",
   "switchedTaskStatus": "cancelled",
   "readingLayout": {
     "dialog": {

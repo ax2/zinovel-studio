@@ -17,6 +17,8 @@
 
 ## 失败与边界
 
+后续已用alpha.28同一旧设置逻辑复现更换模型地址时保留旧Key并向第二服务转发。alpha.27也沿用该逻辑，现有Release说明已提醒更换地址前先清除已存Key，再输入新服务Key；修复在alpha.29验证中。原155项与公开附件核对结果只证明原有检查范围，不当成完整凭据安全认证。
+
 首次package:win在原生模块的词法路径断言失败：归档经release Junction解析为实际D路径。此前真实模块加载和系统调用已成功；修正为original-fs真实路径后对**同一asar**重新严格验证通过，再执行打包Harness和NSIS，未隐藏失败或换产品逻辑。日志`.cache/alpha27-package-first.log`、native-path-diagnostic/fixed保留。
 
 新增UI损坏探针首轮产品正确拒绝“对象大小或类型无效”，探针只匹配“校验/损坏”而失败；补实际语义后重新通过。更早主进程require全局假设失败也保留；详情见stage-008/vault-desktop-source.md。源/目标全部合成，不含真实稿件或凭据。

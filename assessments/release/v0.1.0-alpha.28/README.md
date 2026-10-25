@@ -1,6 +1,8 @@
 # alpha.28 阶段资格
 
-本机158项完整安装、早期公开alpha.3升级与完整源码CI40106354478均通过，不可变标签8fe8080已推送，发行CI40107313526正在独立完整验证；此时尚未公开alpha.28。稳定门禁false，106项26 verified/45 in-progress/35 planned。
+**资格撤销，未发布。** 不可变标签8fe8080发行CI40107313526首次在源码offline-writing启动导航evaluate失败，未进入打包发布；原始步骤日志/JSON/截图在ci-first-failure。主线将等待实际书卡就绪再读viewport，不给旧标签换代码或重新发布。此外alpha.28已用合成Key确认更换服务地址后旧Key被第二端点三次实际Harness请求复用；新增证据撤销本机资格，不能据旧158项通过报告重跑发行。alpha.29修复与重验中。稳定门禁false，本版106项26 verified/45 in-progress/35 planned。
+
+以下保留当时本机机器检查与源码CI的实际通过事实；其覆盖面不包含后来新增负面复现，不能替代被撤销的完整阶段资格。凭据复现见assessments/stage-003/model-credential-legacy/model-credentials-smoke.json，规则见design/model-credentials.md。
 
 本阶段为当前会话脱敏诊断，OPS-08已有固定字段日志、预览、明确清空/导出及真实桌面证据，保持in-progress。完整上游日志审计、原生IME/辅助技术、真实模型文学质量、大书性能、自动备份策略、完整出版与远端发布等仍待完成，不缩减原始产品范围。
 

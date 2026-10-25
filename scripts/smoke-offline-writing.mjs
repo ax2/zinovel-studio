@@ -123,6 +123,8 @@ async function launch() {
   await app.evaluate(({ BrowserWindow }) => {
     BrowserWindow.getAllWindows()[0].setBounds({ width: 1000, height: 900 });
   });
+  // firstWindow can attach while the initial file navigation is still replacing its context.
+  await page.locator(".book-card").first().waitFor();
   report.viewport = await page.evaluate(() => ({
     width: innerWidth,
     height: innerHeight,
