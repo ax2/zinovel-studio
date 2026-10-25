@@ -1,0 +1,14 @@
+{
+  "artifactId": 12593825748,
+  "scope": "Compressed HTTP payload read in memory; only exact named report and optional failure PNG retained; no ZIP written",
+  "files": [
+    {
+      "file": "ci-character-looks-smoke.json",
+      "bytes": 1538
+    },
+    {
+      "file": "ci-failure.png",
+      "bytes": 48392
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "status": "failed",
+  "checks": [
+    "Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait",
+    "Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "fixed-portrait-light.png",
+      "width": 1008,
+      "height": 682,
+      "theme": "light"
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim",
+  "version": "0.1.0-alpha.34",
+  "packaged": false,
+  "desktopBundleSha256": "55dd9e95fdabfc1cdfbc4cbf6c798aa013de43e94f589269c939fc61ac844f62",
+  "workbenchFilesSha256": {
+    "app.js": "5871d07d0f10cf18872705593cf352b4ff5501ea3a6b952b7f574983dd80c38c",
+    "app.css": "5ad4bedb38c49d6153c4202df8130ad23cbf04282a9c0b213c19786539685cdb",
+    "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+  },
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('region', { name: '人物形象版本', exact: true }).getByRole('button', { name: '预览此形象', exact: true })\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\.qa-character-looks-compact-before-fix.mjs:290:6"
+}

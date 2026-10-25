@@ -90,6 +90,10 @@ async function launch() {
   });
   owned = await captureOwnedProcesses(app.process().pid);
   page = await app.firstWindow();
+  if (process.env.ZINOVEL_LOOKS_START_COMPACT === "1")
+    await app.evaluate(({ BrowserWindow }) =>
+      BrowserWindow.getAllWindows()[0].setContentSize(1008, 681),
+    );
   page.on("pageerror", (e) => report.errors.push(e.message));
   page.on("console", (m) => {
     if (["error", "warning"].includes(m.type())) report.errors.push(m.text());
@@ -282,7 +286,9 @@ try {
   await app.evaluate(({ BrowserWindow }) => {
     BrowserWindow.getAllWindows()[0].setContentSize(806, 803);
   });
-  await page.getByTitle("打开创作参考", { exact: true }).click();
+  await page.waitForFunction(() => innerWidth <= 850);
+  if (!(await panel().isVisible()))
+    await page.getByTitle("打开创作参考", { exact: true }).click();
   await page.getByTitle("深色主题", { exact: true }).click();
   await panel()
     .getByRole("button", { name: "预览此形象", exact: true })

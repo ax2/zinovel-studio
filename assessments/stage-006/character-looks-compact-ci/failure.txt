@@ -1,0 +1,63 @@
+windows	Run pnpm test:character-looks	﻿2026-10-25T09:06:05.0101361Z ##[group]Run pnpm test:character-looks
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0101757Z ^[[36;1mpnpm test:character-looks^[[0m
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0179379Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0179816Z env:
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0180142Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0180680Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0181293Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0181869Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0182386Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0183296Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.0183831Z ##[endgroup]
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.6086186Z 
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.6087380Z > zinovel-studio@0.1.0-alpha.34 test:character-looks D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.6088094Z > node scripts/smoke-character-looks.mjs
+windows	Run pnpm test:character-looks	2026-10-25T09:06:05.6088325Z 
+windows	Run pnpm test:character-looks	2026-10-25T09:06:06.0960500Z (node:5000) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:character-looks	2026-10-25T09:06:06.0962350Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4457997Z {
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4461047Z   status: 'failed',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4461707Z   checks: [
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4469285Z node:internal/modules/run_main:111
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4470856Z     'Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4472245Z     triggerUncaughtException(
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4472641Z     ^
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4472802Z 
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4473043Z locator.click: Timeout 30000ms exceeded.
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4473500Z Call log:
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4474581Z ^[[2m  - waiting for getByRole('region', { name: '人物形象版本', exact: true }).getByRole('button', { name: '预览此形象', exact: true })^[[22m
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4475045Z 
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4475537Z     at D:\a\zinovel-studio\zinovel-studio\scripts\smoke-character-looks.mjs:289:6 {
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4475973Z   name: 'TimeoutError'
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4476192Z }
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4476298Z 
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4476385Z Node.js v26.12.1
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4477065Z     'Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged'
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4477724Z   ],
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4477899Z   errors: [],
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4478086Z   viewports: [
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4478275Z     {
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4478500Z       name: 'fixed-portrait-light.png',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4478772Z       width: 1008,
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4478965Z       height: 681,
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4479177Z       theme: 'light'
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4479365Z     }
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4479567Z   ],
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4479904Z   browser: 'Browser plugin not available; repository Playwright/Electron',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4480727Z   scope: 'Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4481577Z   version: '0.1.0-alpha.34',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4482122Z   packaged: false,
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4482554Z   desktopBundleSha256: '55dd9e95fdabfc1cdfbc4cbf6c798aa013de43e94f589269c939fc61ac844f62',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4483016Z   workbenchFilesSha256: {
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4483409Z     'app.js': '5871d07d0f10cf18872705593cf352b4ff5501ea3a6b952b7f574983dd80c38c',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4483949Z     'app.css': '5ad4bedb38c49d6153c4202df8130ad23cbf04282a9c0b213c19786539685cdb',
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4484503Z     'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4487411Z   },
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4487708Z   failure: 'locator.click: Timeout 30000ms exceeded.\n' +
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4488035Z     'Call log:\n' +
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4488834Z     "\x1B[2m  - waiting for getByRole('region', { name: '人物形象版本', exact: true }).getByRole('button', { name: '预览此形象', exact: true })\x1B[22m\n" +
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4489382Z     '\n' +
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4489778Z     '    at D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-character-looks.mjs:289:6'
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4490207Z }
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.4623288Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:character-looks	2026-10-25T09:06:39.5778632Z ##[error]Process completed with exit code 1.
