@@ -137,6 +137,32 @@ manifest.sceneTree = {
   checks: sceneTree.checks,
   scope: sceneTree.scope,
 };
+const sceneOperations = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/scene-tree-operations/scene-tree-operations-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  sceneOperations.status !== "passed" ||
+  sceneOperations.version !== pkg.version ||
+  sceneOperations.packaged !== true ||
+  sceneOperations.appAsarSha256 !== appAsarSha256 ||
+  sceneOperations.checks?.length !== 5 ||
+  sceneOperations.errors?.length !== 0
+)
+  throw new Error(
+    "Installed scene creation, tree movement and protected material draft proof is missing or stale",
+  );
+manifest.sceneTreeOperations = {
+  version: sceneOperations.version,
+  appAsarSha256,
+  checks: sceneOperations.checks,
+  scope: sceneOperations.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

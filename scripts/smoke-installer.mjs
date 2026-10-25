@@ -147,6 +147,10 @@ try {
     ],
     ["smoke-planning.mjs", "planning/planning-smoke.json"],
     ["smoke-scene-tree.mjs", "scene-tree/scene-tree-smoke.json"],
+    [
+      "smoke-scene-tree-operations.mjs",
+      "scene-tree-operations/scene-tree-operations-smoke.json",
+    ],
     ["smoke-world-proposals.mjs", "world-proposals/world-proposals-smoke.json"],
     ["smoke-pilots.mjs", "pilots/pilots-smoke.json"],
     ["smoke-pilot-agent.mjs", "pilot-agent/pilot-agent-smoke.json"],

@@ -1,6 +1,6 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Plus } from "lucide-react";
-import type { Book } from "./api";
+import { api, type Book } from "./api";
 import { useSceneTree } from "./use-scene-tree";
 import { SceneTreeBranch } from "./scene-tree-branch";
 type Props = {
@@ -12,6 +12,8 @@ type Props = {
   onManage: () => void;
   onScene: (id: string) => void;
   onPlan: () => void;
+  onBeforeMove: () => Promise<boolean>;
+  onCreateScene: () => void;
 };
 export const ChapterTree = memo(function ChapterTree({
   book,
@@ -22,9 +24,68 @@ export const ChapterTree = memo(function ChapterTree({
   onManage,
   onScene,
   onPlan,
+  onBeforeMove,
+  onCreateScene,
 }: Props) {
   const [status, setStatus] = useState("all");
   const scenes = useSceneTree(book.id);
+  const [moving, setMoving] = useState(false),
+    [moveError, setMoveError] = useState(""),
+    [moveMessage, setMoveMessage] = useState("");
+  const alive = useRef(true),
+    locked = useRef(false),
+    dragged = useRef<string | null>(null);
+  useEffect(() => {
+    alive.current = true;
+    return () => {
+      alive.current = false;
+    };
+  }, []);
+  const disabled = moving || scenes.loading || !!book.archivedAt;
+  async function move(
+    sceneId: string,
+    chapterId: string | null,
+    beforeId: string | null = null,
+  ) {
+    if (locked.current || disabled || !scenes.snapshot || sceneId === beforeId)
+      return;
+    const expected = {
+      revision: scenes.snapshot.revision,
+      diskHash: scenes.snapshot.diskHash,
+    };
+    locked.current = true;
+    setMoving(true);
+    setMoveError("");
+    setMoveMessage("");
+    try {
+      if (!(await onBeforeMove()) || !alive.current) return;
+      await api("planning.move", {
+        bookId: book.id,
+        mutation: { sceneId, chapterId, beforeId },
+        expected,
+      });
+      if (alive.current) {
+        scenes.refresh();
+        setMoveMessage("已保存场景位置；正文未改动。");
+      }
+    } catch (e) {
+      if (alive.current) setMoveError((e as Error).message);
+    } finally {
+      locked.current = false;
+      if (alive.current) setMoving(false);
+    }
+  }
+  function drop(
+    event: React.DragEvent,
+    chapterId: string | null,
+    beforeId: string | null = null,
+  ) {
+    event.preventDefault();
+    event.stopPropagation();
+    const id = dragged.current;
+    dragged.current = null;
+    if (id) void move(id, chapterId, beforeId);
+  }
   const byChapter = useMemo(
     () =>
       new Map(
@@ -64,21 +125,33 @@ export const ChapterTree = memo(function ChapterTree({
           <option value="final">正式</option>
         </select>
       </label>
+      <div className="scene-tree-tools">
+        <small>场景为计划，不自动改正文。</small>
+        <button onClick={onCreateScene} disabled={!!book.archivedAt}>
+          新建场景资料
+        </button>
+        <button onClick={onPlan}>编排场景位置</button>
+        <button
+          onClick={() => {
+            setMoveError("");
+            setMoveMessage("");
+            scenes.refresh();
+          }}
+          disabled={scenes.loading || moving}
+        >
+          刷新场景树
+        </button>
+        {scenes.loading && <small role="status">正在读取场景…</small>}
+        {scenes.error && <p role="alert">场景树未刷新：{scenes.error}</p>}
+        {moveError && <p role="alert">{moveError}</p>}
+        {moveMessage && <p role="status">{moveMessage}</p>}
+        {!!scenes.snapshot?.errorCount && (
+          <p role="alert">
+            {scenes.snapshot.errorCount}份资料不可读取，请保留文件并检查。
+          </p>
+        )}
+      </div>
       <div className="chapter-list">
-        <div className="scene-tree-tools">
-          <small>场景为计划，不自动改正文。</small>
-          <button onClick={onPlan}>编排场景位置</button>
-          <button onClick={scenes.refresh} disabled={scenes.loading}>
-            刷新场景树
-          </button>
-          {scenes.loading && <small role="status">正在读取场景…</small>}
-          {scenes.error && <p role="alert">场景树未刷新：{scenes.error}</p>}
-          {!!scenes.snapshot?.errorCount && (
-            <p role="alert">
-              {scenes.snapshot.errorCount}份资料不可读取，请保留文件并检查。
-            </p>
-          )}
-        </div>
         {[{ id: null, title: "未分卷" }, ...(book.volumes || [])].map(
           (volume) => {
             const chapters = book.chapters.filter(
@@ -98,6 +171,10 @@ export const ChapterTree = memo(function ChapterTree({
                     <button
                       className={`chapter-entry ${chapter.id === chapterId ? "selected" : ""}`}
                       data-chapter-id={chapter.id}
+                      onDragOver={(e) => {
+                        if (dragged.current && !disabled) e.preventDefault();
+                      }}
+                      onDrop={(e) => drop(e, chapter.id)}
                       onClick={() => onOpen(chapter.id)}
                     >
                       <FileText size={17} />
@@ -120,6 +197,23 @@ export const ChapterTree = memo(function ChapterTree({
                       expanded={chapter.id === chapterId}
                       query={query}
                       onScene={onScene}
+                      chapterId={chapter.id}
+                      columnState="active"
+                      allScenes={byChapter.get(chapter.id)?.scenes || []}
+                      targets={
+                        scenes.snapshot?.columns.filter(
+                          (c) => c.state === "active",
+                        ) || []
+                      }
+                      disabled={disabled}
+                      onMove={move}
+                      onDragStart={(id) => {
+                        dragged.current = id;
+                      }}
+                      onDragEnd={() => {
+                        dragged.current = null;
+                      }}
+                      onDrop={drop}
                     />
                   </React.Fragment>
                 ))}
@@ -136,7 +230,7 @@ export const ChapterTree = memo(function ChapterTree({
               (scene) =>
                 column.title.includes(query) || scene.title.includes(query),
             );
-            if (!list.length) return null;
+            if (!list.length && column.id !== null) return null;
             const label =
               column.id === null
                 ? "未安排"
@@ -146,13 +240,48 @@ export const ChapterTree = memo(function ChapterTree({
                 key={column.id || "unassigned-scenes"}
                 className="scene-tree-extra"
               >
-                <h3 className="volume-label">{label}</h3>
+                <h3
+                  className="volume-label"
+                  onDragOver={(e) => {
+                    if (
+                      column.state === "active" &&
+                      dragged.current &&
+                      !disabled
+                    )
+                      e.preventDefault();
+                  }}
+                  onDrop={(e) => {
+                    if (column.state === "active") drop(e, column.id);
+                  }}
+                >
+                  {label}
+                </h3>
+                {!list.length && (
+                  <p className="muted">暂无未安排场景；可拖入此处。</p>
+                )}
                 <SceneTreeBranch
                   title={label}
                   scenes={list}
                   expanded
                   query={query}
                   onScene={onScene}
+                  chapterId={column.id}
+                  columnState={column.state}
+                  allScenes={column.scenes}
+                  targets={
+                    scenes.snapshot?.columns.filter(
+                      (c) => c.state === "active",
+                    ) || []
+                  }
+                  disabled={disabled}
+                  onMove={move}
+                  onDragStart={(id) => {
+                    dragged.current = id;
+                  }}
+                  onDragEnd={() => {
+                    dragged.current = null;
+                  }}
+                  onDrop={drop}
                 />
               </div>
             );

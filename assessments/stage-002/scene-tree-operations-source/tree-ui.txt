@@ -1,0 +1,102 @@
+
+> zinovel-studio@0.1.0-alpha.36 test:scene-tree D:\Work\zinovel-studio
+> node scripts/smoke-scene-tree.mjs && node scripts/smoke-scene-tree-operations.mjs
+
+(node:41484) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context',
+    'Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material',
+    'Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard',
+    'Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'tree-light.png',
+      width: 1008,
+      height: 682,
+      theme: 'light'
+    },
+    {
+      name: 'quota-protected.png',
+      width: 1008,
+      height: 682,
+      theme: 'light'
+    },
+    {
+      name: 'tree-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  frontend: {
+    'app.js': {
+      bytes: 2642442,
+      sha256: 'e11857f8ea2524786630b630368b5556d030f870c1733871c4fb67f56a70af2c'
+    },
+    'app.css': {
+      bytes: 78518,
+      sha256: '6ee55dd8fe9b8597e1786a193cea0a5c7b6adfa0554e7e41a4489ac3bf0f32a6'
+    },
+    'index.html': {
+      bytes: 534,
+      sha256: 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+    }
+  },
+  version: '0.1.0-alpha.36',
+  packaged: false,
+  desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+  scope: 'Synthetic scene tree, fixed planning identity/order and material draft navigation; no automatic manuscript splitting, native IME, huge-book performance or complete product qualification'
+}
+(node:3044) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript',
+    'Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart',
+    'Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard',
+    'Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged',
+    'Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'filtered-neighbor-order.png',
+      width: 1008,
+      height: 682,
+      theme: 'light'
+    },
+    {
+      name: 'stale-planning-preserved.png',
+      width: 1008,
+      height: 682,
+      theme: 'light'
+    },
+    {
+      name: 'tree-operations-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'unknown-draft-preserved.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification',
+  version: '0.1.0-alpha.36',
+  packaged: false,
+  desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+  frontend: {
+    'app.js': 'e11857f8ea2524786630b630368b5556d030f870c1733871c4fb67f56a70af2c',
+    'app.css': '6ee55dd8fe9b8597e1786a193cea0a5c7b6adfa0554e7e41a4489ac3bf0f32a6',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  }
+}

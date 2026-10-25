@@ -1,0 +1,60 @@
+windows	Run pnpm test:scene-tree	﻿2026-10-25T10:44:23.9344374Z ##[group]Run pnpm test:scene-tree
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9344624Z ^[[36;1mpnpm test:scene-tree^[[0m
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9391825Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9392023Z env:
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9392185Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9392415Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9392668Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9392922Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9393149Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9393521Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:23.9393703Z ##[endgroup]
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.3156910Z 
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.3157670Z > zinovel-studio@0.1.0-alpha.36 test:scene-tree D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.3158059Z > node scripts/smoke-scene-tree.mjs
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.3158174Z 
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.7059749Z (node:4536) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:24.7060728Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5814428Z {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5814770Z   status: 'failed',
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5814989Z   checks: [],
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5815154Z   errors: [],
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5817260Z node:internal/modules/run_main:111
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5817755Z   viewports: [],
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5818047Z     triggerUncaughtException(
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5821351Z     ^
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5821491Z 
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5821648Z locator.waitFor: Timeout 30000ms exceeded.
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5822197Z Call log:
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5825351Z ^[[2m  - waiting for locator('.chapters').getByRole('group', { name: '抵达旧港的场景列表', exact: true }).getByRole('button', { name: '场景21', exact: true }) to be visible^[[22m
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5825886Z 
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826118Z     at D:\a\zinovel-studio\zinovel-studio\scripts\smoke-scene-tree.mjs:199:66 {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826359Z   name: 'TimeoutError'
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826487Z }
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826547Z 
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826603Z Node.js v26.12.1
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826726Z   frontend: {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826842Z     'app.js': {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5826975Z       bytes: 2628544,
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5827265Z       sha256: 'a6c5bd5fd1dc0b39d6e3b85765e0b6c9e599dbc8266be683b318828efea55767'
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5827588Z     },
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5827742Z     'app.css': {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5827871Z       bytes: 77724,
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5828183Z       sha256: 'f74ad7795640069b54dfcded4526f3191ab04dee48a1f8ead1635287caa4c6dd'
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5828459Z     },
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5828563Z     'index.html': {
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5828720Z       bytes: 534,
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5829019Z       sha256: 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5829361Z     }
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5829459Z   },
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5829576Z   version: '0.1.0-alpha.36',
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5829721Z   packaged: false,
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5830070Z   desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5830528Z   failure: 'locator.waitFor: Timeout 30000ms exceeded.\n' +
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5830812Z     'Call log:\n' +
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5831498Z     "\x1B[2m  - waiting for locator('.chapters').getByRole('group', { name: '抵达旧港的场景列表', exact: true }).getByRole('button', { name: '场景21', exact: true }) to be visible\x1B[22m\n" +
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5831966Z     '\n' +
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5832316Z     '    at D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-scene-tree.mjs:199:66'
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5832654Z }
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.5954018Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:scene-tree	2026-10-25T10:44:55.6750028Z ##[error]Process completed with exit code 1.

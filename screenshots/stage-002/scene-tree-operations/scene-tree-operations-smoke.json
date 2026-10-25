@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "checks": [
+    "Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript",
+    "Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart",
+    "Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard",
+    "Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged",
+    "Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "filtered-neighbor-order.png",
+      "width": 1008,
+      "height": 682,
+      "theme": "light"
+    },
+    {
+      "name": "stale-planning-preserved.png",
+      "width": 1008,
+      "height": 682,
+      "theme": "light"
+    },
+    {
+      "name": "tree-operations-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "unknown-draft-preserved.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification",
+  "version": "0.1.0-alpha.36",
+  "packaged": false,
+  "desktopBundleSha256": "b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353",
+  "frontend": {
+    "app.js": "e11857f8ea2524786630b630368b5556d030f870c1733871c4fb67f56a70af2c",
+    "app.css": "6ee55dd8fe9b8597e1786a193cea0a5c7b6adfa0554e7e41a4489ac3bf0f32a6",
+    "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+  }
+}

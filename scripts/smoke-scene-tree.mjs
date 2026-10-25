@@ -85,6 +85,16 @@ const report = { status: "running", checks: [], errors: [], viewports: [] };
 const tree = () => page.locator(".chapters");
 const material = () =>
   page.getByRole("region", { name: "创作资料", exact: true });
+async function showTree() {
+  if (!(await tree().isVisible()))
+    await page
+      .getByRole("button", { name: "关闭创作参考", exact: true })
+      .click();
+}
+async function showMaterial() {
+  if (!(await material().isVisible()))
+    await page.getByTitle("打开创作参考", { exact: true }).click();
+}
 const host = (action, payload) =>
   page.evaluate(
     ({ action, payload }) => window.novel.request(action, payload),
@@ -110,6 +120,10 @@ async function launch() {
   });
   owned = await captureOwnedProcesses(application.process().pid);
   page = await application.firstWindow();
+  if (process.env.ZINOVEL_TREE_START_COMPACT === "1")
+    await application.evaluate(({ BrowserWindow }) =>
+      BrowserWindow.getAllWindows()[0].setContentSize(1008, 681),
+    );
   const identity = await application.evaluate(({ app }) => ({
     version: app.getVersion(),
     packaged: app.isPackaged,
@@ -172,11 +186,11 @@ try {
     name: "抵达旧港的场景列表",
     exact: true,
   });
-  assert.equal(await group.getByRole("button").count(), 20);
+  assert.equal(await group.locator(".scene-tree-item").count(), 20);
   await tree()
     .getByRole("button", { name: "抵达旧港下一页场景", exact: true })
     .click();
-  assert.equal(await group.getByRole("button").count(), 4);
+  assert.equal(await group.locator(".scene-tree-item").count(), 4);
   assert.equal(
     await group
       .getByRole("button", { name: "场景不可读取 不可读取", exact: true })
@@ -196,6 +210,7 @@ try {
     .getByRole("status")
     .filter({ hasText: "资料已恢复" })
     .waitFor();
+  await showTree();
   await group.getByRole("button", { name: "场景21", exact: true }).waitFor();
   const restoredPlanning = await host("planning.read", { bookId: book.id });
   assert.equal(
@@ -246,10 +261,12 @@ try {
   );
   const cached = "仅本机草稿𠮷🌊，切换场景后找回。";
   await material().getByLabel("资料笔记", { exact: true }).fill(cached);
+  await showTree();
   await tree().getByRole("button", { name: "场景01", exact: true }).click();
   await page.waitForFunction(
     () => document.querySelector('[aria-label="资料标题"]')?.value === "场景01",
   );
+  await showTree();
   await tree().getByRole("button", { name: "开场𠮷🌊", exact: true }).click();
   await page.waitForFunction(
     (value) =>
@@ -274,7 +291,9 @@ try {
   });
   const unsaved = "暂存失败仍须保留𠮷🌊";
   await material().getByLabel("资料笔记", { exact: true }).fill(unsaved);
+  await showTree();
   await tree().getByRole("button", { name: "场景01", exact: true }).click();
+  await showMaterial();
   assert.equal(
     await material().getByLabel("资料标题", { exact: true }).inputValue(),
     scenes[0].title,
@@ -284,6 +303,7 @@ try {
     await material().getByLabel("资料笔记", { exact: true }).inputValue(),
     unsaved,
   );
+  await showMaterial();
   await application.evaluate(({ BrowserWindow }) =>
     BrowserWindow.getAllWindows()[0].close(),
   );
@@ -338,6 +358,7 @@ try {
     "Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
   );
 
+  await showTree();
   await tree()
     .getByRole("button", { name: "编排场景位置", exact: true })
     .click();

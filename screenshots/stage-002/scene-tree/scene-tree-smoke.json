@@ -10,14 +10,14 @@
   "viewports": [
     {
       "name": "tree-light.png",
-      "width": 1426,
-      "height": 923,
+      "width": 1008,
+      "height": 682,
       "theme": "light"
     },
     {
       "name": "quota-protected.png",
-      "width": 1426,
-      "height": 923,
+      "width": 1008,
+      "height": 682,
       "theme": "light"
     },
     {
@@ -29,12 +29,12 @@
   ],
   "frontend": {
     "app.js": {
-      "bytes": 2628476,
-      "sha256": "41742022792e28388588ceff242add428e656802b03b122bbd2b548caa0d336f"
+      "bytes": 2642442,
+      "sha256": "e11857f8ea2524786630b630368b5556d030f870c1733871c4fb67f56a70af2c"
     },
     "app.css": {
-      "bytes": 77724,
-      "sha256": "f74ad7795640069b54dfcded4526f3191ab04dee48a1f8ead1635287caa4c6dd"
+      "bytes": 78518,
+      "sha256": "6ee55dd8fe9b8597e1786a193cea0a5c7b6adfa0554e7e41a4489ac3bf0f32a6"
     },
     "index.html": {
       "bytes": 534,

@@ -93,11 +93,12 @@
     "assessments/stage-002/planning-write-guard/README.md",
     "assessments/stage-002/manuscript-write-guard/README.md",
     "assessments/release/v0.1.0-alpha.35/README.md",
-    "assessments/stage-008/alpha35-safety-priority-review.md"
+    "assessments/stage-008/alpha35-safety-priority-review.md",
+    "assessments/stage-002/scene-tree-operations-source/README.md"
   ],
   "reports": [],
   "limitations": [
-    "alpha.35不可变标签4f8994e已启动独立发行40183617073，尚待结果；主线alpha.36补卷章场景树与导航草稿保护，本版资格关闭",
+    "公开alpha.35已完成独立发行/下载/hash/实际安装。主线36的366项、树导航4组及创建/直接移动5组通过；最新源码CI、精确安装和新增公开35在内四条升级尚待，ready=false",
     "Windows x64未签名阶段预览；本版安装自动验证中的文件选择采用结果替换，实际宿主读取原图；不把历史原生选择证据算为本版，也不扩大为原生IME验收",
     "完整106项仍26 verified/50 in-progress/30 planned：人物参考/变体、封面排字比例、章图位置与带图DOCX/PDF/EPUB、目录/注释、远端发布及空间时态等仍待完成；未将初次图像生成当成完整视觉交付",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

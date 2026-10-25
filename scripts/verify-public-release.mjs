@@ -233,6 +233,12 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.sceneTree?.checks?.length, 4);
+    assert.equal(manifest.sceneTreeOperations?.version, manifest.version);
+    assert.equal(
+      manifest.sceneTreeOperations?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
+    assert.equal(manifest.sceneTreeOperations?.checks?.length, 5);
   }
   const installerDirectory = resolve(
     root,

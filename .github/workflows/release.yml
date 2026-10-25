@@ -63,6 +63,8 @@ jobs:
       - run: pnpm test:material-proposal
       - run: pnpm test:planning-ui
       - run: pnpm test:scene-tree
+        env:
+          ZINOVEL_TREE_START_COMPACT: '1'
       - run: pnpm test:world-proposals
       - run: pnpm test:pilots
       - run: pnpm test:pilot-agent

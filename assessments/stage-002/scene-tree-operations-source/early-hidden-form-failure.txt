@@ -1,0 +1,45 @@
+(node:81496) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [
+    'Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript',
+    'Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'filtered-neighbor-order.png',
+      width: 1008,
+      height: 682,
+      theme: 'light'
+    }
+  ],
+  scope: 'Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification',
+  version: '0.1.0-alpha.36',
+  packaged: false,
+  desktopBundleSha256: 'b6f4be0b8c880d6dac43d7915cc9165e5f56ab081abfc721dda7f3f627518353',
+  frontend: {
+    'app.js': '6eb91efbb435ffcb004b5fcdaa44be4e9b692f220df7b9856267d52fcc3a9852',
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+locator.inputValue: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('region', { name: '创作资料', exact: true }).getByLabel('资料笔记', { exact: true })
+
+    at D:\Work\zinovel-studio\scripts\smoke-scene-tree-operations.mjs:252:56 {
+  name: 'TimeoutError'
+}
+
+Node.js v26.10.0
+    'app.css': '53025561a841da9d081645d59e01fc57ba7546464bb78435e06b429fc5604f90',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  },
+  failure: 'locator.inputValue: Timeout 30000ms exceeded.\n' +
+    'Call log:\n' +
+    "\x1B[2m  - waiting for getByRole('region', { name: '创作资料', exact: true }).getByLabel('资料笔记', { exact: true })\x1B[22m\n" +
+    '\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-scene-tree-operations.mjs:252:56'
+}

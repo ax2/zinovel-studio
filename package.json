@@ -31,7 +31,7 @@
     "test:material-context": "node scripts/smoke-material-context.mjs",
     "test:material-proposal": "node scripts/smoke-material-proposal.mjs",
     "test:planning-ui": "node scripts/smoke-planning.mjs",
-    "test:scene-tree": "node scripts/smoke-scene-tree.mjs",
+    "test:scene-tree": "node scripts/smoke-scene-tree.mjs && node scripts/smoke-scene-tree-operations.mjs",
     "test:world-proposals": "node scripts/smoke-world-proposals.mjs",
     "test:pilots": "node scripts/smoke-pilots.mjs",
     "test:pilot-agent": "node scripts/smoke-pilot-agent.mjs",

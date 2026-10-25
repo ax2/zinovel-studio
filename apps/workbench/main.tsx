@@ -84,6 +84,10 @@ function App() {
     id: string;
     request: number;
   } | null>(null);
+  const [newSceneRequest, setNewSceneRequest] = useState<{
+    bookId: string;
+    request: number;
+  } | null>(null);
   const [reveal, setReveal] = useState<RevealTarget | null>(null);
   const [replaceSnapshot, setReplaceSnapshot] =
     useState<WritingSnapshot | null>(null);
@@ -219,6 +223,7 @@ function App() {
           try {
             if (!canCloseEditors()) {
               await api("app.close-cancelled");
+              revealUnsavedEditors();
               setError("请先保存资料或形象的未存内容，再关闭窗口。");
               return;
             }
@@ -271,8 +276,14 @@ function App() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
+  function revealUnsavedEditors() {
+    setPanelOpen(true);
+    setMaterialsOpen(true);
+    setReferenceOpen(false);
+  }
   function editorsReady() {
     if (canCloseEditors()) return true;
+    revealUnsavedEditors();
     setError("请先保存资料或形象的未存内容，再切换作品。");
     return false;
   }
@@ -390,6 +401,7 @@ function App() {
     const selected = latest.current.book;
     if (!selected) return;
     if (!canCloseEditors()) {
+      revealUnsavedEditors();
       setError("请先保存创作资料或形象的未存内容，再打开另一场景。");
       return;
     }
@@ -402,6 +414,31 @@ function App() {
   }, []);
   const planTreeScenes = useCallback(async () => {
     if (await saveRef.current()) setPlanningOpen(true);
+  }, []);
+  const permitTreeMove = useCallback(async () => {
+    const bookId = latest.current.book?.id;
+    if (!bookId || !canCloseEditors()) {
+      if (bookId) revealUnsavedEditors();
+      setError("请先保存资料或形象的未存内容，再移动场景。");
+      return false;
+    }
+    setError("");
+    return (await saveRef.current()) && latest.current.book?.id === bookId;
+  }, []);
+  const createTreeScene = useCallback(async () => {
+    const selected = latest.current.book;
+    if (!selected || selected.archivedAt) return;
+    if (!canCloseEditors()) {
+      revealUnsavedEditors();
+      setError("请先保存资料或形象的未存内容，再新建场景。");
+      return;
+    }
+    if (!(await saveRef.current()) || latest.current.book?.id !== selected.id)
+      return;
+    setMaterialsOpen(true);
+    setReferenceOpen(false);
+    setPanelOpen(true);
+    setNewSceneRequest({ bookId: selected.id, request: Date.now() });
   }, []);
   const count = Array.from(body.replace(/\s/g, "")).length;
   const statusLabel =
@@ -795,6 +832,8 @@ function App() {
             onManage={manageTreeBook}
             onScene={openTreeScene}
             onPlan={planTreeScenes}
+            onBeforeMove={permitTreeMove}
+            onCreateScene={createTreeScene}
           />
           <main className="workspace">
             <div className="toolbar">
@@ -1057,6 +1096,11 @@ function App() {
               <MaterialsPanel
                 key={book.id}
                 book={book}
+                newSceneRequest={
+                  newSceneRequest?.bookId === book.id
+                    ? newSceneRequest.request
+                    : undefined
+                }
                 requested={
                   requestedMaterial?.bookId === book.id
                     ? requestedMaterial

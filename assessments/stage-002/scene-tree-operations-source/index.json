@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.36",
+  "packaged": false,
+  "checks": {
+    "navigation": 4,
+    "operations": 5,
+    "materials": 4,
+    "characterLooks": 4,
+    "shelf": 2
+  },
+  "frontend": {
+    "app.js": {
+      "bytes": 2642442,
+      "sha256": "e11857f8ea2524786630b630368b5556d030f870c1733871c4fb67f56a70af2c"
+    },
+    "app.css": {
+      "bytes": 78518,
+      "sha256": "6ee55dd8fe9b8597e1786a193cea0a5c7b6adfa0554e7e41a4489ac3bf0f32a6"
+    },
+    "index.html": {
+      "bytes": 534,
+      "sha256": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+    }
+  },
+  "scope": "Final source build; native install and four public-version upgrades remain pending. CI artifact compressed payload read only in memory; exact report/PNG saved without retaining ZIP."
+}

@@ -46,11 +46,13 @@ export function MaterialsPanel({
   openChapter,
   source,
   requested,
+  newSceneRequest,
 }: {
   book: Book;
   openChapter: (id: string, anchor?: TextAnchor) => Promise<void>;
   source: EvidenceSource | null;
   requested?: { id: string; request: number } | null;
+  newSceneRequest?: number;
 }) {
   const [kind, setKind] = useState(""),
     [query, setQuery] = useState(""),
@@ -68,6 +70,8 @@ export function MaterialsPanel({
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(""),
     [error, setError] = useState("");
+  const [blockedDraft, setBlockedDraft] = useState(false);
+  const detailStart = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<Material[] | null>(null),
     [historical, setHistorical] = useState<Material | null>(null);
   const [createKind, setCreateKind] = useState("character");
@@ -119,13 +123,30 @@ export function MaterialsPanel({
     fallback: Input,
     baseline: Expected | null,
   ) {
+    requestAnimationFrame(() =>
+      detailStart.current?.scrollIntoView({ block: "start" }),
+    );
+    setBlockedDraft(false);
     setDirty(false);
     setInput(fallback);
     setExpected(baseline);
     try {
       const raw = localStorage.getItem(draftKey(id));
-      if (raw) {
+      if (raw !== null) {
+        if (raw.length > 8 * 1024 * 1024)
+          throw new Error("资料草稿过大，原记录已保留；请勿覆盖。");
         const draft = JSON.parse(raw);
+        if (!draft || typeof draft !== "object" || Array.isArray(draft))
+          throw new Error("资料本地草稿格式异常，原记录已保留。");
+        if (
+          (draft.schemaVersion !== undefined && draft.schemaVersion !== 1) ||
+          Object.keys(draft).some(
+            (key) => !["schemaVersion", "input", "expected"].includes(key),
+          )
+        )
+          throw new Error(
+            "不支持的资料草稿格式，原记录已保留；请明确处理后再编辑。",
+          );
         if (
           !draft.input ||
           typeof draft.input.title !== "string" ||
@@ -139,20 +160,31 @@ export function MaterialsPanel({
           title: draft.input.title || "未命名草稿",
         });
         if (
-          id !== "new" &&
-          (draft.expected?.id !== id ||
-            !Number.isSafeInteger(draft.expected?.revision) ||
-            typeof draft.expected?.diskHash !== "string")
+          (id === "new" && draft.expected != null) ||
+          (id !== "new" &&
+            (draft.expected?.id !== id ||
+              !Number.isSafeInteger(draft.expected?.revision) ||
+              draft.expected.revision < 1 ||
+              typeof draft.expected?.diskHash !== "string" ||
+              !/^[a-f0-9]{64}$/.test(draft.expected.diskHash)))
         )
           throw new Error("资料草稿基线无效，原记录已保留");
         setInput(draft.input);
         setExpected(draft.expected);
         setDirty(true);
-        setMessage("已找回本机未保存调整；保存时仍会检查原版本。");
+        setMessage(
+          id === "new" && draft.input.kind !== fallback.kind
+            ? `已有未保存的${materialKind(draft.input.kind).label}草稿，已保留并找回。请先保存或明确清空，再新建${materialKind(fallback.kind).label}。`
+            : "已找回本机未保存调整；保存时仍会检查原版本。",
+        );
+        return true;
       }
     } catch (e) {
+      setBlockedDraft(true);
       setError((e as Error).message);
+      return true;
     }
+    return false;
   }
   async function select(id: string, discard = false) {
     if (!mayLeave(discard)) return;
@@ -191,14 +223,32 @@ export function MaterialsPanel({
       void select(requested.id);
     }
   }, [requested?.request]);
+  useEffect(() => {
+    if (!newSceneRequest) return;
+    const restored = beginDraft("scene");
+    if (restored === undefined) return;
+    setCreateKind("scene");
+    setKind("scene");
+    setDeleted(false);
+    setQuery("");
+    setOffset(0);
+    if (!restored)
+      setMessage(
+        "填写场景资料，保存后出现在未安排中；随后可在树中移动到章节。",
+      );
+  }, [newSceneRequest]);
   function edit(next: Input) {
+    if (blockedDraft) {
+      setError("原本机草稿尚未明确处理，未覆盖缓存。");
+      return;
+    }
     setInput(next);
     setDirty(true);
     setMessage("");
     try {
       localStorage.setItem(
         draftKey(),
-        JSON.stringify({ input: next, expected }),
+        JSON.stringify({ schemaVersion: 1, input: next, expected }),
       );
       safety.current.saved = true;
     } catch {
@@ -207,6 +257,9 @@ export function MaterialsPanel({
     }
   }
   function create() {
+    beginDraft(createKind);
+  }
+  function beginDraft(kind: string) {
     if (!mayLeave()) return;
     detailRequest.current++;
     setCurrent(null);
@@ -214,10 +267,10 @@ export function MaterialsPanel({
     setHistorical(null);
     setError("");
     setMessage("");
-    restoreDraft("new", fresh(createKind), null);
+    return restoreDraft("new", fresh(kind), null);
   }
   async function save() {
-    if (!input) return;
+    if (!input || blockedDraft) return;
     setBusy(true);
     setError("");
     const key = draftKey();
@@ -376,6 +429,7 @@ export function MaterialsPanel({
           新建资料
         </button>
       </div>
+      <div ref={detailStart} className="material-detail-start" />
       {error && (
         <p role="alert" className="inline-error">
           {error}
@@ -395,6 +449,11 @@ export function MaterialsPanel({
                 ? "以下为已保存资料。"
                 : "填写后点击保存资料。"}
           </p>
+          {blockedDraft && (
+            <p role="status">
+              本机草稿尚未识别，原缓存保留；当前表单只读。可保留并离开，或用下方明确放弃/清空按钮处理。
+            </p>
+          )}
           {current?.deletedAt && (
             <p role="status">此资料在回收站中，恢复后可编辑。</p>
           )}
@@ -405,7 +464,7 @@ export function MaterialsPanel({
             </p>
           )}
           <fieldset
-            disabled={busy || !!current?.deletedAt}
+            disabled={busy || blockedDraft || !!current?.deletedAt}
             className="material-form"
           >
             <label>
@@ -529,7 +588,12 @@ export function MaterialsPanel({
           <div className="material-actions">
             <button
               className="primary"
-              disabled={busy || !!current?.deletedAt || !input.title.trim()}
+              disabled={
+                busy ||
+                blockedDraft ||
+                !!current?.deletedAt ||
+                !input.title.trim()
+              }
               onClick={save}
             >
               保存资料
@@ -550,6 +614,8 @@ export function MaterialsPanel({
                     setInput(fresh(createKind));
                     setExpected(null);
                     setDirty(false);
+                    setBlockedDraft(false);
+                    setError("");
                     setMessage("已清空未保存的新建资料");
                   } catch {
                     setError("未能清空本机草稿，原输入仍保留。");
@@ -562,7 +628,10 @@ export function MaterialsPanel({
           </div>
           {current && (
             <div className="material-actions">
-              <button disabled={busy || dirty} onClick={recycle}>
+              <button
+                disabled={busy || dirty || blockedDraft}
+                onClick={recycle}
+              >
                 {current.deletedAt ? "恢复资料" : "移入资料回收站"}
               </button>
               <button
@@ -645,7 +714,7 @@ export function MaterialsPanel({
               key={`${current.id}:${current.revision}`}
               book={book}
               material={current}
-              disabled={busy || dirty}
+              disabled={busy || dirty || blockedDraft}
               refreshMaterial={() => void select(current.id)}
             />
           )}
@@ -654,7 +723,7 @@ export function MaterialsPanel({
               key={`ai-${current.id}`}
               bookId={book.id}
               material={current}
-              disabled={busy || dirty}
+              disabled={busy || dirty || blockedDraft}
               updated={(value) => {
                 setCurrent(value);
                 setInput(value);
@@ -674,7 +743,7 @@ export function MaterialsPanel({
               bookId={book.id}
               material={current}
               source={source}
-              disabled={busy || dirty}
+              disabled={busy || dirty || blockedDraft}
               setPending={setBusy}
               openChapter={openChapter}
               updated={(value) => {

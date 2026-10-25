@@ -1097,6 +1097,7 @@ p {
   margin: 20px 12px 6px;
 }
 .scene-tree-tools {
+  flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
@@ -1107,7 +1108,7 @@ p {
   margin: 0;
   color: var(--muted);
 }
-.chapter-list > .scene-tree-tools > button {
+.scene-tree-tools > button {
   width: auto;
   padding: 6px;
   margin: 0;
@@ -1115,6 +1116,7 @@ p {
   border: 1px solid var(--border);
 }
 .scene-tree-tools p {
+  margin: 0;
   font-size: 12px;
   overflow-wrap: anywhere;
 }
@@ -1160,6 +1162,15 @@ p {
 .scene-tree-pages small {
   margin: 0 auto;
 }
+.scene-tree-row { display: flex;flex-wrap: wrap;align-items: start; }
+.material-detail-start { scroll-margin-top: 112px; }
+.scene-tree-row > .scene-tree-item { flex: 1;width: auto;min-width: 0; }
+.scene-tree-action { flex: none;background: transparent;padding: 5px;border: 0; }
+.scene-tree-position { flex-basis: 100%;min-width: 0;padding: 5px;border: 1px solid var(--border);border-radius: 5px; }
+.scene-tree-position small { display: block;margin: 0;font-size: 10px; }
+.scene-tree-position label { display: block;font-size: 11px; }
+.scene-tree-position select { display: block;max-width: 100%;width: 100%;margin: 5px 0; }
+.scene-tree-position button { padding: 5px;font-size: 11px;margin-right: 5px; }
 .book-manage {
   font-size: 12px;
   margin-top: 12px;

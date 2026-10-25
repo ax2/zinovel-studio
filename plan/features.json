@@ -26,7 +26,8 @@
       "acceptance": "创建、排序和移动保留稳定 ID",
       "evidence": [
         "iterations/stage-001/WORKLOG.md",
-        "assessments/stage-002/scene-tree-source/README.md"
+        "assessments/stage-002/scene-tree-source/README.md",
+        "assessments/stage-002/scene-tree-operations-source/README.md"
       ]
     },
     {

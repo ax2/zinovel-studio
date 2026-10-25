@@ -56,5 +56,13 @@ export function useSceneTree(bookId: string) {
       window.removeEventListener("novel-scene-planning-changed", changed);
     };
   }, [bookId, refresh]);
-  return { snapshot, error, loading, refresh: () => setRefresh((n) => n + 1) };
+  return {
+    snapshot,
+    error,
+    loading,
+    refresh: () => {
+      setLoading(true);
+      setRefresh((n) => n + 1);
+    },
+  };
 }
