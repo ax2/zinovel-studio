@@ -1,5 +1,7 @@
 # 图像生成接入复评（alpha.30 之后）
 
+后续交付：alpha.31现已完成实际安装、独立标签CI及公开EXE下载/hash验证，见[阶段发行证据](../assessments/release/v0.1.0-alpha.31/README.md)。以下保留本页原源码验收时点；主线32的窗口恢复及只读目标比较另有独立报告。
+
 状态：alpha.31源码已有独立图像配置、宿主协调、作者准备/发送、候选审阅/采用、本地补存与退出保护；旧配置未确认响应模式仍不可运行。混合坏项保留有效候选、整批无效准确记录、新Windows凭据强制中断保留与基础目标UI已修复并实际验证，完整324项/图像8组/模型6组/基础桌面10组/凭据隔离3组通过，见image-partial-and-credentials.md。本版CI/安装/发行资格仍待，不继承alpha.30；alpha.30没有图像生成。
 
 2026-10-25核对[官方Images API](https://developers.openai.com/api/reference/resources/images)与[图像生成指南](https://developers.openai.com/api/docs/guides/image-generation)：GPT图像默认返回base64，其他支持该参数的模型可明确请求response_format=b64_json；不同模型的参数支持不相同。因此不能根据一个模型名字猜全部兼容性，不能对所有兼容服务强塞同一response_format。以下为项目实现选择，不是供应商保证。

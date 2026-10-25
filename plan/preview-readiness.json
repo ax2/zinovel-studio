@@ -70,11 +70,14 @@
     "assessments/release/v0.1.0-alpha.31/README.md",
     "assessments/stage-006/image-partial-ci.json",
     "design/image-target-review.md",
-    "assessments/stage-006/image-renderer-recovery.md"
+    "assessments/stage-006/image-renderer-recovery.md",
+    "assessments/stage-006/image-target-comparison.md",
+    "assessments/release/v0.1.0-alpha.31/ci-public/verification.json",
+    "assessments/stage-006/image-renderer-ci.json"
   ],
   "reports": [],
   "limitations": [
-    "alpha.31已冻结标签7cb3026并完成175项本机安装及升级；独立发行CI40169223370进行中。alpha.32源码324项/图像9组通过，已实际仅崩溃renderer并保留同main内待补存结果；目标复评仍仅设计。本版无安装/升级/发行资格，不继承31报告",
+    "alpha.31标签7cb3026已独立CI通过并公开，实际下载EXE复算hash通过。alpha.32恢复专项6117865完整源码CI40169788555 success；新增目标只读比较本机完整327项/账本31项/图像9组通过，明确复评采用未实现。本版没有安装/升级/发行资格，不继承31报告",
     "Windows x64未签名阶段预览；本版安装自动验证中的文件选择采用结果替换，实际宿主读取原图；不把历史原生选择证据算为本版，也不扩大为原生IME验收",
     "完整106项仍26 verified/49 in-progress/31 planned：人物参考/变体、封面排字比例、章图位置与带图DOCX/PDF/EPUB、目录/注释、远端发布及空间时态等仍待完成；未将初次图像生成当成完整视觉交付",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"

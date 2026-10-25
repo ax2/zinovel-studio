@@ -795,6 +795,126 @@ test("chapter illustrations freeze chapter identity, revision and body hash and 
   assert.deepEqual(await readFile(f.path), before);
 });
 
+test("read-only target comparison exposes the same character's current version without rewriting the paid task or authorizing stale adoption", async () => {
+  const f = await fixture(),
+    material = await f.store.materials.save(f.book.id, {
+      title: "比较用人物",
+      kind: "character",
+      status: "planned",
+      fields: {},
+      notes: "旧计划",
+      chapterIds: [],
+    });
+  f.input.target = {
+    purpose: "portrait",
+    material: expected(material),
+    chapter: null,
+  };
+  const value = await received(f),
+    before = await readFile(f.path),
+    newer = await f.store.materials.save(
+      f.book.id,
+      { ...material, notes: "新衣装计划" },
+      material,
+    ),
+    comparison = await f.store.imageTasks.compareTarget(
+      f.book.id,
+      expected(value),
+      0,
+    );
+  assert.equal(comparison.changed, true);
+  assert.deepEqual(comparison.original, value.target);
+  assert.deepEqual(comparison.current.material, expected(newer));
+  assert.equal(comparison.assetId, value.candidates[0].assetId);
+  assert.equal(comparison.responseHash, value.responseHash);
+  assert.deepEqual(comparison.task, expected(value));
+  await assert.rejects(
+    f.store.imageTasks.adopt(f.book.id, expected(value), 0, {
+      ...adoptionInput(),
+      purpose: "portrait",
+      linkedIds: [material.id],
+    }),
+    /目标资料已改变/,
+  );
+  assert.deepEqual(await readFile(f.path), before);
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 0);
+});
+
+test("chapter comparison reads the current formally saved version but refuses unresolved external manuscript edits without changing either file", async () => {
+  const f = await fixture(),
+    chapter = await f.store.readChapter(f.book.id, f.book.chapters[0].id);
+  f.input.target = {
+    purpose: "illustration",
+    material: null,
+    chapter: expected(chapter),
+  };
+  const value = await received(f),
+    before = await readFile(f.path);
+  const saved = await f.store.saveChapter({
+    bookId: f.book.id,
+    chapterId: chapter.id,
+    expectedRevision: chapter.revision,
+    expectedHash: chapter.diskHash,
+    title: chapter.title,
+    body: "正式改稿𠮷🌊。",
+  });
+  assert.equal(saved.status, "saved");
+  const current = await f.store.readChapter(f.book.id, chapter.id),
+    comparison = await f.store.imageTasks.compareTarget(
+      f.book.id,
+      expected(value),
+      0,
+    );
+  assert.equal(comparison.changed, true);
+  assert.deepEqual(comparison.original.chapter, expected(chapter));
+  assert.deepEqual(comparison.current.chapter, expected(current));
+  const file = join(f.root, f.book.id, "manuscript", chapter.id + ".md"),
+    outside = "未处理的外部改稿🌊。";
+  await writeFile(file, outside);
+  await assert.rejects(
+    f.store.imageTasks.compareTarget(f.book.id, expected(value), 0),
+    /尚未处理的外部修改/,
+  );
+  assert.equal(await readFile(file, "utf8"), outside);
+  assert.deepEqual(await readFile(f.path), before);
+});
+
+test("target comparison preserves unchanged tasks and refuses accepted, discarded and stale task identities", async () => {
+  const f = await fixture(),
+    value = await received(f),
+    before = await readFile(f.path);
+  const comparison = await f.store.imageTasks.compareTarget(
+    f.book.id,
+    expected(value),
+    0,
+  );
+  assert.equal(comparison.changed, false);
+  assert.deepEqual(await readFile(f.path), before);
+  const adopted = await f.store.imageTasks.adopt(
+    f.book.id,
+    expected(value),
+    0,
+    adoptionInput(),
+  );
+  await assert.rejects(
+    f.store.imageTasks.compareTarget(f.book.id, expected(value), 0),
+    /任务已改变/,
+  );
+  await assert.rejects(
+    f.store.imageTasks.compareTarget(f.book.id, expected(adopted.task), 0),
+    /待采用/,
+  );
+  const g = await fixture(),
+    pending = await received(g),
+    discarded = await g.store.imageTasks.discard(g.book.id, expected(pending));
+  await assert.rejects(
+    g.store.imageTasks.compareTarget(g.book.id, expected(discarded), 0),
+    /待采用/,
+  );
+  assert.equal((await f.store.assets.list(f.book.id)).items.length, 1);
+  assert.equal((await g.store.assets.list(g.book.id)).items.length, 0);
+});
+
 test("received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy", async () => {
   const f = await fixture(),
     task = await f.store.imageTasks.create(f.book.id, f.input),

@@ -2,6 +2,8 @@
 
 alpha.29安全修复，承接OPS-06与OPS-01的基础保障，不冒充完整多模型/文字图像能力路由已完成。
 
+后续进展：alpha.30已增加独立配置与文字路由；alpha.31增加独立图像调用，并把新Windows凭据改为自包含CurrentUser DPAPI封装，保留旧Electron密文读取。首次新Key保存后强制中断及旧密文重启兼容已通过同版实际安装，见[31阶段资格](../assessments/release/v0.1.0-alpha.31/README.md)和[原生凭据修复](../assessments/stage-006/image-partial-and-credentials.md)。已丢失旧加密材料的Key不能因此恢复；以下alpha.29历史安全问题、服务绑定规则和负面证据继续保留。
+
 ## 实际问题与处置
 
 旧ModelSettings保存新baseURL时默认保留existing.encryptedKey，原界面Key留空提示保持原值。合成环境中先保存服务A的假Key，再通过真实设置界面切换到不同端口的服务B并留空，官方Harness对B的三次真实请求全部携带A的假Key。证据assessments/stage-003/model-credential-legacy/model-credentials-smoke.json，状态confirmed-vulnerability；不含真实凭据，header只记录布尔比较。首次探针少了target.body，被正式章节守卫正确拒绝，补完整目标后复现，旧日志保留。

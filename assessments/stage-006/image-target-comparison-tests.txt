@@ -1,0 +1,39 @@
+✔ a real prior v1 synthetic receipt without optional partial-response fields retains its original immutable response hash (3.8027ms)
+✔ explicit adoption atomically adds one resource with receipt, retains response hash, manuscript and old assets; repeat reads later edits without recreating anything (210.6879ms)
+✔ adoption refuses wrong purpose, discarded tasks, stale CAS and corrupted bytes without visible resources (123.042ms)
+✔ a target edited while decoding refuses adoption after the book queue resumes and retains the paid candidate (145.8644ms)
+✔ a previously accepted resource removed outside the app is never silently recreated by adoption retry (124.1447ms)
+✔ a restored pending candidate is adopted only into the explicitly selected restored book, preserving the origin task and source assets (335.7084ms)
+✔ simultaneous adoption clicks commit once, and a separately occupied reserved identity is never overwritten or silently attached (265.2007ms)
+✔ actual process exit at adoption journal recovers both exact records through one journal without duplicate assets or a network call (325.6637ms)
+✔ actual process exit at adoption first-record recovers both exact records through one journal without duplicate assets or a network call (315.8618ms)
+✔ actual HTTP waits for durable book-local send intent; decoded candidates survive restart without becoming assets or editing a manuscript (132.4882ms)
+✔ stable creation IDs reconcile existing state without re-sending and reject different frozen inputs (59.6515ms)
+✔ restart makes a durable send intent unknown; it cannot be relabelled as unsent or receive a fabricated return from a new session (88.9623ms)
+✔ target versions are checked before sending, but later author edits do not discard paid returned candidates (175.8929ms)
+✔ foreign targets, plaintext credentials, unsupported schema, invalid UTF-8 and changed fingerprints refuse without overwriting originals (117.7132ms)
+✔ raw-byte conflicts, wrong attempts and corrupt shared image objects never overwrite task state or create visible assets (140.9222ms)
+✔ full book backup and restore retain unadopted candidates and frozen origin without resuming a provider request (211.8786ms)
+✔ a worker exits after durable intent journal creation; startup recovery retains unknown result rather than automatically sending (232.8487ms)
+✔ image services cannot be attached to a different writer kernel (32.0658ms)
+✔ restored interrupted tasks can be explicitly discarded while keeping dispatch unknown, never rewritten as unsent (237.3222ms)
+✔ chapter illustrations freeze chapter identity, revision and body hash and reject an external same-revision edit before sending (70.8074ms)
+✔ read-only target comparison exposes the same character's current version without rewriting the paid task or authorizing stale adoption (261.1435ms)
+✔ chapter comparison reads the current formally saved version but refuses unresolved external manuscript edits without changing either file (252.35ms)
+✔ target comparison preserves unchanged tasks and refuses accepted, discarded and stale task identities (501.8209ms)
+✔ received bytes, usage and flags are captured before queue waits and cannot be changed by the caller while the book is busy (177.3008ms)
+✔ paid candidate decoding waits for a reserved existing slot while ordinary excess previews still refuse (48.8261ms)
+✔ a worker exit after receive intent keeps known response hashes and incomplete files, then exact original bytes can be saved without another request (370.2718ms)
+✔ a worker exit after candidate blob publication is reconciled locally to received and never creates visible resource metadata (366.1389ms)
+✔ a mixed-response receipt survives actual process exit before blobs, rejects altered errors and restores only exact original positions without a request (407.0314ms)
+✔ partial image receipts retain valid original positions, bounded failures, late cancellation and adoption identity through restart (324.4164ms)
+✔ all invalid structured items record a known received response and per-item failures, never unknown or adoptable phantom images (227.4161ms)
+✔ duplicate, missing and unbounded per-item positions refuse the receipt without overwriting send intent (125.8613ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6576.7374

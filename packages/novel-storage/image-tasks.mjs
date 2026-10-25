@@ -7,6 +7,7 @@ import { assetCreationHash } from "../novel-domain/asset-creation-hash.mjs";
 import { imageGenerationLimits } from "../novel-domain/image-generation.mjs";
 import {
   imageTaskInput,
+  imageTaskTarget,
   imageTaskCreationHash,
   imageTaskOutcome,
   imageTaskResponseHash,
@@ -522,6 +523,74 @@ export class ImageTaskStore {
         })),
       };
       return this.view(ctx, await this.commit(ctx, next, previous));
+    });
+  }
+  async compareTarget(bookId, expected, index) {
+    const requested = expectedValue(expected);
+    if (
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= imageGenerationLimits.count
+    )
+      throw new Error("图像候选不存在");
+    return this.storage.exclusive(async () => {
+      const ctx = await this.context(bookId),
+        previous = await this.current(ctx, requested),
+        item = previous.data.candidates[index];
+      if (
+        previous.data.status !== "received" ||
+        !item ||
+        item.decision !== "pending"
+      )
+        throw new Error("只有待采用的已接收候选可比较目标");
+      const original = imageTaskTarget(previous.data.target),
+        current = structuredClone(original);
+      if (original.material) {
+        const record = await this.materials.record(
+          ctx.root,
+          original.material.id,
+        );
+        current.material = {
+          id: original.material.id,
+          revision: record.data.revision,
+          diskHash: record.diskHash,
+        };
+      }
+      if (original.chapter) {
+        const chapter = ctx.book.chapters.find(
+          (value) => value.id === original.chapter.id && !value.deletedAt,
+        );
+        if (!chapter) throw new Error("图像目标章节已回收或不存在");
+        const raw = await readUtf8File(
+            await this.storage.path(ctx.root, `manuscript/${chapter.id}.md`),
+          ),
+          diskHash = binaryHash(Buffer.from(raw));
+        if (chapter.hash !== diskHash)
+          throw new Error(
+            "目标正文存在尚未处理的外部修改，请先在编辑器处理冲突",
+          );
+        current.chapter = {
+          id: chapter.id,
+          revision: chapter.revision,
+          diskHash,
+        };
+      }
+      // Read-only comparison is not permission to adopt. The eventual confirmed
+      // adoption must recheck both task and target after decoding, then commit once.
+      await this.target(ctx, current);
+      return {
+        task: {
+          id: previous.data.id,
+          revision: previous.data.revision,
+          diskHash: previous.diskHash,
+        },
+        index,
+        assetId: item.assetId,
+        responseHash: previous.data.responseHash,
+        original,
+        current,
+        changed: JSON.stringify(original) !== JSON.stringify(current),
+      };
     });
   }
   async adopt(bookId, expected, index, input) {

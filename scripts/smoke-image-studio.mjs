@@ -514,30 +514,32 @@ try {
   );
   // Kill only the renderer. Keep the paid bytes and job in the real main process;
   // instrument the native recovery choice, not the recovery implementation.
-  const beforeRendererCrash = await app.evaluate(({ BrowserWindow, dialog }) => {
-    const win = BrowserWindow.getAllWindows()[0];
-    globalThis.__imageRecoveryQA = {
-      originalMessageBox: dialog.showMessageBox,
-      originalErrorBox: dialog.showErrorBox,
-      dialogs: [],
-      errors: [],
-    };
-    dialog.showMessageBox = async (...args) => {
-      const options = args.at(-1);
-      globalThis.__imageRecoveryQA.dialogs.push({
-        title: options.title,
-        buttons: options.buttons,
-        protectsImages: options.detail.includes("当前进程保留其结果"),
-      });
-      return new Promise((resolve) => {
-        globalThis.__imageRecoveryQA.reopen = resolve;
-      });
-    };
-    dialog.showErrorBox = (title) => {
-      globalThis.__imageRecoveryQA.errors.push(title);
-    };
-    return { main: process.pid, renderer: win.webContents.getOSProcessId() };
-  });
+  const beforeRendererCrash = await app.evaluate(
+    ({ BrowserWindow, dialog }) => {
+      const win = BrowserWindow.getAllWindows()[0];
+      globalThis.__imageRecoveryQA = {
+        originalMessageBox: dialog.showMessageBox,
+        originalErrorBox: dialog.showErrorBox,
+        dialogs: [],
+        errors: [],
+      };
+      dialog.showMessageBox = async (...args) => {
+        const options = args.at(-1);
+        globalThis.__imageRecoveryQA.dialogs.push({
+          title: options.title,
+          buttons: options.buttons,
+          protectsImages: options.detail.includes("当前进程保留其结果"),
+        });
+        return new Promise((resolve) => {
+          globalThis.__imageRecoveryQA.reopen = resolve;
+        });
+      };
+      dialog.showErrorBox = (title) => {
+        globalThis.__imageRecoveryQA.errors.push(title);
+      };
+      return { main: process.pid, renderer: win.webContents.getOSProcessId() };
+    },
+  );
   const crashedRenderer = page.waitForEvent("crash", { timeout: 45000 });
   await app.evaluate(({ BrowserWindow }) =>
     BrowserWindow.getAllWindows()[0].webContents.forcefullyCrashRenderer(),
@@ -552,29 +554,39 @@ try {
   });
   // Playwright deliberately rejects pending page waits at the crash event.
   // Attach the new-document wait after that event and before choosing reopen.
-  const reopenedDocument = page.waitForEvent("domcontentloaded", { timeout: 45000 });
+  const reopenedDocument = page.waitForEvent("domcontentloaded", {
+    timeout: 45000,
+  });
   await app.evaluate(() =>
-    globalThis.__imageRecoveryQA.reopen({ response: 0, checkboxChecked: false }),
+    globalThis.__imageRecoveryQA.reopen({
+      response: 0,
+      checkboxChecked: false,
+    }),
   );
   await reopenedDocument;
   // This Playwright version permanently closes the crashed Page's operation
   // scope. Observe the already reopened same window through a fresh CDP client;
   // do not reload it a second time or replace the app's recovery handler.
-  const [activePort, activeSocket] = (await readFile(join(data, "DevToolsActivePort"), "utf8"))
-    .split(/\r?\n/);
+  const [activePort, activeSocket] = (
+    await readFile(join(data, "DevToolsActivePort"), "utf8")
+  ).split(/\r?\n/);
   assert.match(activePort, /^\d{1,5}$/);
   assert.match(activeSocket, /^\/devtools\/browser\/[a-f0-9-]+$/i);
-  recoveryObserver = await chromium.connectOverCDP(`ws://127.0.0.1:${activePort}${activeSocket}`);
+  recoveryObserver = await chromium.connectOverCDP(
+    `ws://127.0.0.1:${activePort}${activeSocket}`,
+  );
   assert.equal(recoveryObserver.contexts().length, 1);
   const recoveredPages = recoveryObserver.contexts()[0].pages();
   assert.equal(recoveredPages.length, 1);
   page = recoveredPages[0];
   page.on("pageerror", (error) => report.errors.push(error.message));
   page.on("console", (event) => {
-    if (["error", "warning"].includes(event.type())) report.errors.push(event.text());
+    if (["error", "warning"].includes(event.type()))
+      report.errors.push(event.text());
   });
   page.on("request", (event) => {
-    if (/^https?:/.test(event.url())) report.errors.push("Unexpected renderer HTTP request");
+    if (/^https?:/.test(event.url()))
+      report.errors.push("Unexpected renderer HTTP request");
   });
   await page.locator(".book-card").filter({ hasText: book.title }).click();
   await page.getByLabel("正文编辑器").waitFor();
@@ -596,10 +608,15 @@ try {
   assert.notEqual(afterRendererCrash.renderer, beforeRendererCrash.renderer);
   assert.equal(afterRendererCrash.windows, 1);
   assert.deepEqual(afterRendererCrash.errors, []);
-  assert.deepEqual(afterRendererCrash.dialogs, [{
-    title: "写作窗口需要恢复", buttons: ["重新打开"], protectsImages: true,
-  }]);
-  report.rendererRecoveryObserver = "Fresh CDP observation of the app-reopened original window; no extra reload";
+  assert.deepEqual(afterRendererCrash.dialogs, [
+    {
+      title: "写作窗口需要恢复",
+      buttons: ["重新打开"],
+      protectsImages: true,
+    },
+  ]);
+  report.rendererRecoveryObserver =
+    "Fresh CDP observation of the app-reopened original window; no extra reload";
   assert.equal((await request("image.status")).localResponseRetained, true);
   assert.equal(calls[1].length, 2);
   await open();

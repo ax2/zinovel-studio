@@ -1,6 +1,14 @@
 # v0.1.0-alpha.31 阶段候选
 
-本机阶段资格通过，独立标签CI和公开附件核对尚待。生产源码为9522f1fc4050b1e8bcf5cc5108e53493569da9c0，完整源码CI40168182783已success，摘要见../../stage-006/image-partial-ci.json。324项源码检查及图像8组、模型6组等范围见../../stage-006/image-partial-and-credentials.md。
+已公开：不可变标签7cb30267d98206cbc3d5df7425442ca5f5bef78a的独立发行CI40169223370首次完整success，2026-10-25 14:48:17北京时间公开。公开EXE已实际下载并复算hash，四附件、三份元数据摘要及匿名可见核对通过，见ci-public/verification.json。应用生产源码为9522f1fc4050b1e8bcf5cc5108e53493569da9c0，完整源码CI40168182783已success，摘要见../../stage-006/image-partial-ci.json。324项源码检查及图像8组、模型6组等范围见../../stage-006/image-partial-and-credentials.md。
+
+## 独立公开字节
+
+公开EXE155520773字节，SHA256 `7c41eed5bc9844dd3ca187690efa5dea9cf53683f23ef2b51ff987b6f63e93dc`。与GitHub附件digest、公开manifest及SHA256SUMS一致；下载文件在实际D盘`D:\zinovel-releases\v0.1.0-alpha.31\ci-public`。公开包的执行证明来自成功发行CI对精确字节的实际安装/重装/卸载和alpha.3升级；本机另做下载/hash，未声称再次执行该下载包。以下本机独立构建字节不同，分开保留。
+
+主线已进入alpha.32并重置ready=false/reports[]。32恢复专项6117865的完整源码CI40169788555成功，之后目标只读比较有327项本机检查；均不借本版安装资格，也不改本版不可变标签。稳定门禁false，完整106项26/49/31继续推进。
+
+## 本机精确候选
 
 安装EXE为155520728字节，SHA256 `76abc8c5da45b0b01e93a2744114ff671efb84a9a333fd85a1a264d997df0b3e`；asar `9125f87466031013e86ed0278dbb764f0780aef3bb7567d1c7216f9a337876f8`。打包EXE启动、基础桌面及原生图像运行时检查通过；运行时清单132个物理文件、622463187字节、567条包记录。
 
