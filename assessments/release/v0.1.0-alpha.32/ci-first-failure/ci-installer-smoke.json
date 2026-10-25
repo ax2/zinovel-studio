@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0-alpha.32",
+  "installerSha256": "64e0dd08370a44673892fb72e046fcf719769206211e66460401a82d83fe56df",
+  "install": "D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\installer-qa-d0nalk\\中文 安装目录",
+  "checks": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer"
+  ],
+  "status": "failed",
+  "installMs": 15308,
+  "failure": "Error: Command failed: C:\\hostedtoolcache\\windows\\node\\26.12.1\\x64\\node.exe D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-tasks.mjs\n(node:7504) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n(Use `node --trace-deprecation ...` to show where the warning was created)\nnode:internal/errors:999\r\n  const err = new Error(message);\r\n              ^\r\n\r\nError: Command failed: taskkill.exe /PID 8760 /F\r\nERROR: The process with PID 8760 could not be terminated.\r\r\nReason: There is no running instance of the task.\r\r\r\n\r\n    at genericNodeError (node:internal/errors:999:15)\r\n    at wrappedFn (node:internal/errors:544:14)\r\n    at ChildProcess.exithandler (node:child_process:420:12)\r\n    at ChildProcess.emit (node:events:514:20)\r\n    at maybeClose (node:internal/child_process:1156:16)\r\n    at ChildProcess._handle.onexit (node:internal/child_process:334:5) {\r\n  code: 1,\r\n  killed: false,\r\n  signal: null,\r\n  cmd: 'taskkill.exe /PID 8760 /F',\r\n  stdout: '',\r\n  stderr: 'ERROR: The process with PID 8760 could not be terminated.\\r\\n' +\r\n    'Reason: There is no running instance of the task.\\r\\r\\n'\r\n}\r\n\r\nNode.js v26.12.1\r\n\n    at genericNodeError (node:internal/errors:999:15)\n    at wrappedFn (node:internal/errors:544:14)\n    at ChildProcess.exithandler (node:child_process:420:12)\n    at ChildProcess.emit (node:events:514:20)\n    at maybeClose (node:internal/child_process:1156:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:334:5)"
+}

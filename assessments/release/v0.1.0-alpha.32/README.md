@@ -1,6 +1,6 @@
 # v0.1.0-alpha.32 阶段候选
 
-本机阶段资格通过，独立标签CI与公开附件核对尚待。应用生产源码d3cd1743b37867fdc71cce84427d818735ec152f，完整337项/图像账本41项/真实界面11组通过，完整源码CI40172110041已success，摘要../../stage-006/image-reviewed-adoption-ci.json。明确目标复评、原生成事实保留、renderer-only恢复及旧31拒绝新回执的范围见../../stage-006/image-reviewed-adoption.md。
+标签发行失败，alpha.32未公开，不重跑或移动该标签。详情见[首次CI失败](ci-first-failure/README.md)；以下本机178项及双升级证据保留为历史，不能给33资格。应用生产源码d3cd1743b37867fdc71cce84427d818735ec152f，完整337项/图像账本41项/真实界面11组通过，完整源码CI40172110041已success，摘要../../stage-006/image-reviewed-adoption-ci.json。明确目标复评、原生成事实保留、renderer-only恢复及旧31拒绝新回执的范围见../../stage-006/image-reviewed-adoption.md。
 
 本机安装EXE155523463字节，SHA256 `99297c7543792d6cbcb1e694be84a3398c0def3d479f16af28fe3a7fdcdfb8f3`；asar `961085a7647adf8d1ab302e39bd4201cc433ae17f542385afd298885e037b1cb`。打包启动、基础桌面与原生三格式解码/许可检查通过。完整运行目录和EXE已复制到实际D盘`D:\zinovel-releases\v0.1.0-alpha.32`，复制后重核hash，未生成ZIP，archive-verification.json留证。
 

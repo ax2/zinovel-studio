@@ -704,8 +704,13 @@ try {
     await new Promise((done) => setTimeout(done, 25));
   assert.equal(calls[1].length, 4);
   const credentialBeforeCrash = await credentialProbe();
-  owned = await captureOwnedProcesses(app.process().pid);
-  await terminateOwnedProcesses(owned);
+  const interruptedHostPid = app.process().pid;
+  owned = await captureOwnedProcesses(interruptedHostPid);
+  const terminatedImageHost = await terminateOwnedProcesses(owned);
+  assert.equal(
+    terminatedImageHost.find((item) => item.pid === interruptedHostPid)?.status,
+    "terminated",
+  );
   app = null;
   owned = null;
   hold = false;

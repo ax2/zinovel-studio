@@ -1,0 +1,14 @@
+{
+  "artifactId": 12591187585,
+  "scope": "Compressed HTTP payload read in memory; only named JSON files retained; no ZIP file written",
+  "files": [
+    {
+      "file": "ci-task-smoke.json",
+      "bytes": 906
+    },
+    {
+      "file": "ci-installer-smoke.json",
+      "bytes": 3051
+    }
+  ]
+}

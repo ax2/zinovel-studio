@@ -153,7 +153,7 @@ try {
   assert.ok(
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
-  if (manifest.version === "0.1.0-alpha.32") {
+  if (["0.1.0-alpha.32", "0.1.0-alpha.33"].includes(manifest.version)) {
     const recent = manifest.recentUpgrade;
     assert.equal(recent?.fromVersion, "0.1.0-alpha.31");
     assert.equal(
@@ -177,6 +177,15 @@ try {
       "reviewedTargetNarrowConfirmation",
     ])
       assert.equal(manifest.imageStudio[key], true);
+  }
+  if (manifest.version === "0.1.0-alpha.33") {
+    assert.equal(manifest.processRecovery?.handlePinned, true);
+    assert.equal(manifest.processRecovery?.birthPrecision, "100ns");
+    assert.equal(manifest.processRecovery?.rootStatus, "terminated");
+    assert.equal(
+      manifest.processRecovery?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
   }
   const installerDirectory = resolve(
     root,

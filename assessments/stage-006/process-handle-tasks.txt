@@ -1,0 +1,28 @@
+
+> zinovel-studio@0.1.0-alpha.33 test:tasks D:\Work\zinovel-studio
+> node scripts/smoke-tasks.mjs
+
+(node:35996) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes',
+    'forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded',
+    'task list filters by book and remains bounded, accessible and dismissible in narrow viewport'
+  ],
+  errors: [],
+  viewport: { width: 1426, height: 923, dpr: 1.25 },
+  version: '0.1.0-alpha.33',
+  packaged: false,
+  desktopBundleSha256: '64a56e6fd1351441dc6acde97156fb6f034744a512c0aac00b060104ab0b907d',
+  termination: {
+    method: 'identity-verified pinned-handle termination of captured original processes',
+    handlePinned: true,
+    birthPrecision: '100ns',
+    rootStatus: 'terminated',
+    outcomes: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ownedProcessesConfirmedExited: 6,
+    verification: 'Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject'
+  }
+}

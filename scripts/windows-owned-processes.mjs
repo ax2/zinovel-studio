@@ -1,8 +1,5 @@
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import assert from "node:assert/strict";
 
-const run = promisify(execFile);
 async function snapshot() {
   const { windowsProcessSnapshot } = await import(
     "./windows-process-snapshot.mjs"
@@ -27,7 +24,11 @@ function creationTime(value) {
     Number.isFinite(time),
     "owned process creation time must be readable",
   );
-  return time;
+  const fraction =
+    typeof value === "string" && /\.\d{3}(\d{1,4})Z$/.exec(value);
+  return (
+    BigInt(time) * 10000n + BigInt(fraction ? fraction[1].padEnd(4, "0") : 0)
+  );
 }
 
 /** ParentProcessId survives parent exit; an older process cannot belong to a reused PID. */
@@ -99,20 +100,17 @@ export async function confirmOwnedProcessesExited(owned, timeoutMs = 30000) {
 /** Failed synthetic UI probes must not hang behind a native save-confirmation dialog. */
 export async function terminateOwnedProcesses(owned) {
   // Stop the host first so a synthetic abrupt shutdown cannot persist a child
-  // exit as an ordinary task failure. Never /T: its PID-only tree can include
-  // unrelated older processes whose original parent's PID has been reused.
-  for (const [pid, created] of owned) {
-    const current = (await snapshot()).find((item) => item.ProcessId === pid);
-    if (!current || JSON.stringify(current.CreationDate) !== created) continue;
-    try {
-      await run("taskkill.exe", ["/PID", String(pid), "/F"], {
-        windowsHide: true,
-        timeout: 15000,
-      });
-    } catch (error) {
-      const after = (await snapshot()).find((item) => item.ProcessId === pid);
-      if (after && JSON.stringify(after.CreationDate) === created) throw error;
-    }
-  }
+  // exit as an ordinary task failure. Verified handles pin each original object;
+  // a PID-only tree could include unrelated processes after parent PID reuse.
+  const { terminateWindowsProcessIdentity } = await import(
+    "./windows-process-snapshot.mjs"
+  );
+  const outcomes = [];
+  for (const [pid, created] of owned)
+    outcomes.push({
+      pid,
+      ...(await terminateWindowsProcessIdentity(pid, created)),
+    });
   await confirmOwnedProcessesExited(owned);
+  return outcomes;
 }

@@ -1,0 +1,194 @@
+release	Install, run packaged Harness, reinstall and uninstall	﻿2026-10-25T07:42:18.2111933Z ##[group]Run pnpm test:installer
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2112190Z ^[[36;1mpnpm test:installer^[[0m
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2163047Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2163272Z env:
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2163449Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2163694Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2163986Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2164254Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2164493Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2164733Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.2164927Z ##[endgroup]
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.7022096Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.7022832Z > zinovel-studio@0.1.0-alpha.32 test:installer D:\a\zinovel-studio\zinovel-studio
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.7023219Z > node scripts/smoke-installer.mjs
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:18.7023421Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2978063Z {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2978562Z   "dataDirectory": "D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\desktop-qa-GgB1Vt",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2978846Z   "platform": "win32",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2979004Z   "viewport": {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2979138Z     "width": 1008,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2979266Z     "height": 681,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2979761Z     "dpr": 1
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2979888Z   },
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2980001Z   "checks": [
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2980311Z     "installed executable is packaged; system-only PATH without development Node/pnpm",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2980713Z     "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2980958Z     "reading mode and theme switching",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2981213Z     "immediate window close flush and process restart persistence",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2981540Z     "external edit conflict, explicit keep-current, external preimage history restoration",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2981956Z     "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2982370Z     "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2982721Z     "literal find/replace previews before mutation and undoes as one transaction",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2983028Z     "stale AI proposal cannot overwrite edits made during generation",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2983323Z     "isolated renderer has no Node globals; IPC rejects unknown operations",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2983622Z     "narrow-window assistant remains reachable through reference drawer"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2983835Z   ],
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2983954Z   "errors": [],
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984078Z   "runtime": {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984210Z     "electron": "44.7.0",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984361Z     "node": "24.21.0"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984485Z   },
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984600Z   "status": "passed"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:44.2984740Z }
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9614666Z {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9618444Z   "version": "0.1.0-alpha.32",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9619604Z   "installerSha256": "64e0dd08370a44673892fb72e046fcf719769206211e66460401a82d83fe56df",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9620939Z   "install": "D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\installer-qa-d0nalk\\中文 安装目录",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9621584Z   "checks": [
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9623493Z     "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9624122Z     "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9626886Z     "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9627504Z     "installed: reading mode and theme switching",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9628014Z     "installed: immediate window close flush and process restart persistence",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9628890Z     "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9631638Z     "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9632383Z     "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9633054Z     "installed: literal find/replace previews before mutation and undoes as one transaction",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9633616Z     "installed: stale AI proposal cannot overwrite edits made during generation",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9634151Z     "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9634706Z     "installed: narrow-window assistant remains reachable through reference drawer"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9635078Z   ],
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9635256Z   "status": "failed",
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9635463Z   "installMs": 15308,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9640898Z   "failure": "Error: Command failed: C:\\hostedtoolcache\\windows\\node\\26.12.1\\x64\\node.exe D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-tasks.mjs\n(node:7504) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n(Use `node --trace-deprecation ...` to show where the warning was created)\nnode:internal/errors:999\r\n  const err = new Error(message);\r\n              ^\r\n\r\nError: Command failed: taskkill.exe /PID 8760 /F\r\nERROR: The process with PID 8760 could not be terminated.\r\r\nReason: There is no running instance of the task.\r\r\r\n\r\n    at genericNodeError (node:internal/errors:999:15)\r\n    at wrappedFn (node:internal/errors:544:14)\r\n    at ChildProcess.exithandler (node:child_process:420:12)\r\n    at ChildProcess.emit (node:events:514:20)\r\n    at maybeClose (node:internal/child_process:1156:16)\r\n    at ChildProcess._handle.onexit (node:internal/child_process:334:5) {\r\n  code: 1,\r\n  killed: false,\r\n  signal: null,\r\n  cmd: 'taskkill.exe /PID 8760 /F',\r\n  stdout: '',\r\n  stderr: 'ERROR: The process with PID 8760 could not be terminated.\\r\\n' +\r\n    'Reason: There is no running instance of the task.\\r\\r\\n'\r\n}\r\n\r\nNode.js v26.12.1\r\n\n    at genericNodeError (node:internal/errors:999:15)\n    at wrappedFn (node:internal/errors:544:14)\n    at ChildProcess.exithandler (node:child_process:420:12)\n    at ChildProcess.emit (node:events:514:20)\n    at maybeClose (node:internal/child_process:1156:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:334:5)"
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9646666Z }
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9647045Z node:internal/modules/run_main:111
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9647811Z     triggerUncaughtException(
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9648074Z     ^
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9648180Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9648715Z Error: Command failed: C:\hostedtoolcache\windows\node\26.12.1\x64\node.exe D:\a\zinovel-studio\zinovel-studio\scripts\smoke-tasks.mjs
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9650218Z (node:7504) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9653681Z (Use `node --trace-deprecation ...` to show where the warning was created)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654027Z node:internal/errors:999
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654181Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654281Z   const err = new Error(message);
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654434Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654507Z               ^
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654606Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654611Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654626Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654770Z Error: Command failed: taskkill.exe /PID 8760 /F
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9654955Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9655127Z ERROR: The process with PID 8760 could not be terminated.
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9655542Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9655547Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9655698Z Reason: There is no running instance of the task.
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9655885Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9656923Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9656927Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9656932Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9656937Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657102Z     at genericNodeError (node:internal/errors:999:15)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657288Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657411Z     at wrappedFn (node:internal/errors:544:14)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657589Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657748Z     at ChildProcess.exithandler (node:child_process:420:12)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9657969Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9658096Z     at ChildProcess.emit (node:events:514:20)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9658263Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9658408Z     at maybeClose (node:internal/child_process:1156:16)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9658604Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9658802Z     at ChildProcess._handle.onexit (node:internal/child_process:334:5) {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659047Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659126Z   code: 1,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659226Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659299Z   killed: false,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659410Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659488Z   signal: null,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659589Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659701Z   cmd: 'taskkill.exe /PID 8760 /F',
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659859Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9659926Z   stdout: '',
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9660027Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9660236Z   stderr: 'ERROR: The process with PID 8760 could not be terminated.\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9660472Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9660636Z     'Reason: There is no running instance of the task.\r\r\n'
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661051Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661129Z }
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661212Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661216Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661223Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661491Z Node.js v26.12.1
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661609Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661613Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9661746Z     at genericNodeError (node:internal/errors:999:15)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9662066Z     at wrappedFn (node:internal/errors:544:14)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9662786Z     at ChildProcess.exithandler (node:child_process:420:12)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9663125Z     at ChildProcess.emit (node:events:514:20)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9663478Z     at maybeClose (node:internal/child_process:1156:16)
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9663870Z     at ChildProcess._handle.onexit (node:internal/child_process:334:5) {
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9664186Z   code: 1,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9664351Z   killed: false,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9664513Z   signal: null,
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9664964Z   cmd: 'C:\\hostedtoolcache\\windows\\node\\26.12.1\\x64\\node.exe D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-tasks.mjs',
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9665423Z   stdout: '{\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9665852Z     "  status: 'failed',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9666056Z     '  checks: [\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9667383Z     "    'bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes'\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9668446Z     '  ],\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9669013Z     '  errors: [],\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9669289Z     '  viewport: { width: 1008, height: 681, dpr: 1 },\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9669840Z     "  error: 'Error: Command failed: taskkill.exe /PID 8760 /F\\n' +\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9670272Z     "    'ERROR: The process with PID 8760 could not be terminated.\\r\\n' +\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9670718Z     "    'Reason: There is no running instance of the task.\\r\\r\\n',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9671222Z     '  taskStates: [\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9671424Z     '    {\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9671669Z     "      id: '305b45e9-0435-4a93-ae91-99fd8ac4a15a',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9671957Z     "      status: 'running',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9672206Z     "      kind: 'writing',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9672457Z     '      errorCode: undefined,\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9672747Z     "      startedAt: '2026-10-25T07:42:50.381Z',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9673177Z     '      completedAt: undefined\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9673429Z     '    },\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9673596Z     '    {\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9674010Z     "      id: 'ed5fc5cf-2080-4685-a2ac-c944886abed7',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9674319Z     "      status: 'applied',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9674569Z     "      kind: 'writing',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9674821Z     '      errorCode: undefined,\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9675116Z     "      startedAt: '2026-10-25T07:42:45.615Z',\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9675617Z     "      completedAt: '2026-10-25T07:42:48.315Z'\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9675889Z     '    }\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9676070Z     '  ]\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9676239Z     '}\n',
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9677182Z   stderr: '(node:7504) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9678360Z     '(Use `node --trace-deprecation ...` to show where the warning was created)\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9678775Z     'node:internal/errors:999\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9679187Z     '  const err = new Error(message);\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9679575Z     '              ^\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9679788Z     '\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9680039Z     'Error: Command failed: taskkill.exe /PID 8760 /F\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9680433Z     'ERROR: The process with PID 8760 could not be terminated.\r\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9681038Z     'Reason: There is no running instance of the task.\r\r\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9681707Z     '\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9681994Z     '    at genericNodeError (node:internal/errors:999:15)\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9682366Z     '    at wrappedFn (node:internal/errors:544:14)\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9682781Z     '    at ChildProcess.exithandler (node:child_process:420:12)\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9683185Z     '    at ChildProcess.emit (node:events:514:20)\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9683560Z     '    at maybeClose (node:internal/child_process:1156:16)\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9684013Z     '    at ChildProcess._handle.onexit (node:internal/child_process:334:5) {\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9684393Z     '  code: 1,\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9684600Z     '  killed: false,\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9684832Z     '  signal: null,\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9685106Z     "  cmd: 'taskkill.exe /PID 8760 /F',\r\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9685364Z     "  stdout: '',\r\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9685939Z     "  stderr: 'ERROR: The process with PID 8760 could not be terminated.\\r\\n' +\r\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9686480Z     "    'Reason: There is no running instance of the task.\\r\\r\\n'\r\n" +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9686807Z     '}\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9686972Z     '\r\n' +
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9687156Z     'Node.js v26.12.1\r\n'
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9687357Z }
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9687453Z 
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9687533Z Node.js v26.12.1
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:52.9778486Z  ELIFECYCLE  Command failed with exit code 1.
+release	Install, run packaged Harness, reinstall and uninstall	2026-10-25T07:42:53.0848864Z ##[error]Process completed with exit code 1.

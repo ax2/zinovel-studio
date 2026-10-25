@@ -52,9 +52,39 @@ const manifest = {
 const imageRuntime = JSON.parse(
   await readFile(new URL("image-runtime-verification.json", release), "utf8"),
 );
+const taskRecovery = JSON.parse(
+  await readFile(
+    new URL("screenshots/release/installed/tasks/task-smoke.json", root),
+    "utf8",
+  ),
+);
 const appAsarSha256 = createHash("sha256")
   .update(await readFile(new URL("win-unpacked/resources/app.asar", release)))
   .digest("hex");
+if (
+  taskRecovery.status !== "passed" ||
+  taskRecovery.version !== pkg.version ||
+  taskRecovery.packaged !== true ||
+  taskRecovery.appAsarSha256 !== appAsarSha256 ||
+  taskRecovery.checks?.length !== 3 ||
+  taskRecovery.termination?.handlePinned !== true ||
+  taskRecovery.termination.birthPrecision !== "100ns" ||
+  taskRecovery.termination.rootStatus !== "terminated" ||
+  taskRecovery.termination.ownedProcessesConfirmedExited < 3
+)
+  throw new Error(
+    "Installed pinned-handle task recovery proof is missing or stale",
+  );
+manifest.processRecovery = {
+  version: taskRecovery.version,
+  appAsarSha256,
+  handlePinned: true,
+  birthPrecision: "100ns",
+  rootStatus: "terminated",
+  originalProcessesConfirmedExited:
+    taskRecovery.termination.ownedProcessesConfirmedExited,
+  verification: taskRecovery.termination.verification,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

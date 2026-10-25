@@ -171,7 +171,8 @@ try {
   const pid = application.process().pid;
   const owned = await captureOwnedProcesses(pid);
   assert.ok(owned.size > 2);
-  await terminateOwnedProcesses(owned);
+  const outcomes = await terminateOwnedProcesses(owned);
+  assert.equal(outcomes.find((item) => item.pid === pid)?.status, "terminated");
   application = undefined;
   await launch();
   await verify(interrupted, "interrupted");
@@ -183,7 +184,7 @@ try {
   );
   report.ownedProcessesConfirmedExited = owned.size;
   report.terminationVerification =
-    "Windows Toolhelp + GetProcessTimes PID and creation time";
+    "Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject";
   assert.deepEqual(report.errors, []);
   report.status = "passed";
 } catch (error) {

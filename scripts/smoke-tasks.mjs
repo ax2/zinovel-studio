@@ -7,6 +7,7 @@ import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { resolve, join } from "node:path";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { NovelStore } from "../packages/novel-storage/store.mjs";
 import { modelFixture } from "../tests/fixtures/model-server.mjs";
 import {
@@ -64,6 +65,24 @@ async function launch() {
     cwd: process.env.ZINOVEL_TEST_EXECUTABLE ? data : root,
     env,
   });
+  const runtime = await application.evaluate(({ app }) => ({
+      version: app.getVersion(),
+      packaged: app.isPackaged,
+      path: app.getAppPath(),
+    })),
+    pkg = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
+  assert.equal(runtime.version, pkg.version);
+  report.version = runtime.version;
+  report.packaged = runtime.packaged;
+  const bundle = runtime.packaged
+      ? runtime.path
+      : join(root, "dist/desktop/main.cjs"),
+    hash = createHash("sha256")
+      .update(await readFile(bundle))
+      .digest("hex"),
+    field = runtime.packaged ? "appAsarSha256" : "desktopBundleSha256";
+  if (report[field]) assert.equal(report[field], hash);
+  report[field] = hash;
   page = await application.firstWindow();
   if (process.env.ZINOVEL_QA_VIEWPORT === "ci")
     await page.setViewportSize({ width: 1008, height: 681 });
@@ -228,11 +247,23 @@ try {
     owned.size > 2,
     "expected the owned desktop and Harness child tree",
   );
-  await terminateOwnedProcesses(owned);
+  const outcomes = await terminateOwnedProcesses(owned),
+    rootOutcome = outcomes.find((item) => item.pid === pid);
+  assert.equal(
+    rootOutcome?.status,
+    "terminated",
+    "The held original desktop handle must actually be terminated for this crash probe",
+  );
   report.termination = {
-    method: "identity-verified termination of captured original processes",
+    method:
+      "identity-verified pinned-handle termination of captured original processes",
+    handlePinned: true,
+    birthPrecision: "100ns",
+    rootStatus: rootOutcome.status,
+    outcomes,
     ownedProcessesConfirmedExited: owned.size,
-    verification: "Windows Toolhelp + GetProcessTimes PID and creation time",
+    verification:
+      "Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject",
   };
   releaseFinal();
   await application.close().catch(() => {});

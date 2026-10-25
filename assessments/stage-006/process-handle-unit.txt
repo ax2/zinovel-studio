@@ -1,0 +1,21 @@
+✔ a signaled retained process object is already exited and must not be terminated again (0.7ms)
+✔ exit racing a failed termination is confirmed by the same pinned handle, not an English error message or PID (0.1328ms)
+✔ a process with the same PID and millisecond but a different 100ns birth identity is never touched (0.1444ms)
+✔ access denied is not success while the original remains live; read-only exit confirmation is allowed (0.3713ms)
+✔ missing PID is safe, unreadable birth time and failed waits remain unproven (0.1457ms)
+✔ termination timeout and post-termination wait failure close the handle and never broaden the target (0.1856ms)
+✔ native Windows inventory reads the live process identity without returning names or command lines (23.5851ms)
+✔ owned descendants exclude older stale-parent processes and their children after a parent PID is reused (0.2049ms)
+✔ same-millisecond ancestry still excludes an older stale-parent process using full 100ns birth order (0.0994ms)
+✔ real Windows termination leaves an unrelated live child alone and refuses a mismatched exact birth time (301.2271ms)
+✔ an exited Windows process retained by a native handle is absent from live inventory and safe to recheck (83.7145ms)
+✔ ownership requires readable birth times along the entire ancestry (0.8601ms)
+✔ exit verification distinguishes living original processes, reused PIDs and unreadable identities (0.2453ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 481.4924

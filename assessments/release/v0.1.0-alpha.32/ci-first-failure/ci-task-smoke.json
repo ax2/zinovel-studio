@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "checks": [
+    "bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1008,
+    "height": 681,
+    "dpr": 1
+  },
+  "error": "Error: Command failed: taskkill.exe /PID 8760 /F\nERROR: The process with PID 8760 could not be terminated.\r\nReason: There is no running instance of the task.\r\r\n",
+  "taskStates": [
+    {
+      "id": "305b45e9-0435-4a93-ae91-99fd8ac4a15a",
+      "status": "running",
+      "kind": "writing",
+      "startedAt": "2026-10-25T07:42:50.381Z"
+    },
+    {
+      "id": "ed5fc5cf-2080-4685-a2ac-c944886abed7",
+      "status": "applied",
+      "kind": "writing",
+      "startedAt": "2026-10-25T07:42:45.615Z",
+      "completedAt": "2026-10-25T07:42:48.315Z"
+    }
+  ]
+}
