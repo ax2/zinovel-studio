@@ -24,7 +24,7 @@ import {
 
 if (process.platform !== "win32" || !process.argv[2] || !process.argv[3])
   throw new Error(
-    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_SOURCE_INSTALLER PUBLIC_SOURCE_MANIFEST [recent-upgrade|current-upgrade|appearance-upgrade]",
+    "Usage on Windows: node scripts/smoke-recent-upgrade.mjs PUBLIC_SOURCE_INSTALLER PUBLIC_SOURCE_MANIFEST [recent-upgrade|current-upgrade|appearance-upgrade|scene-upgrade]",
   );
 const root = resolve(import.meta.dirname, ".."),
   run = promisify(execFile),
@@ -47,20 +47,30 @@ const root = resolve(import.meta.dirname, ".."),
   expected = (value) => ({ id: value.id, ...baseline(value) });
 const stage = process.argv[4] ?? "recent-upgrade";
 assert.ok(
-  ["recent-upgrade", "current-upgrade", "appearance-upgrade"].includes(stage),
+  [
+    "recent-upgrade",
+    "current-upgrade",
+    "appearance-upgrade",
+    "scene-upgrade",
+  ].includes(stage),
 );
-const appearancePublic = stage === "appearance-upgrade",
+const scenePublic = stage === "scene-upgrade",
+  appearancePublic = stage === "appearance-upgrade" || scenePublic,
   currentPublic = stage !== "recent-upgrade",
-  sourceVersion = appearancePublic
-    ? "0.1.0-alpha.35"
-    : currentPublic
-      ? "0.1.0-alpha.33"
-      : "0.1.0-alpha.31",
-  sourceLabel = appearancePublic
-    ? "公开35"
-    : currentPublic
-      ? "公开33"
-      : "公开31";
+  sourceVersion = scenePublic
+    ? "0.1.0-alpha.36"
+    : appearancePublic
+      ? "0.1.0-alpha.35"
+      : currentPublic
+        ? "0.1.0-alpha.33"
+        : "0.1.0-alpha.31",
+  sourceLabel = scenePublic
+    ? "公开36"
+    : appearancePublic
+      ? "公开35"
+      : currentPublic
+        ? "公开33"
+        : "公开31";
 assert.equal(previous.version, sourceVersion);
 if (appearancePublic) {
   assert.equal(previous.characterLooks?.version, sourceVersion);
@@ -447,10 +457,38 @@ try {
   });
   const priorRecords = [];
   const appearanceRecords = [];
+  const sceneRecords = [];
   let oldAppearance = null,
     oldLookDraft = null,
     oldMaterialDraft = null,
-    newScene = null;
+    newScene = null,
+    oldArrangedScene = null,
+    oldPlanning = null;
+  async function verifySceneTree(name) {
+    if (await panel().isVisible())
+      await panel()
+        .getByRole("button", { name: "关闭图像工作室", exact: true })
+        .click();
+    if (!(await page.locator(".chapters").isVisible()))
+      await page
+        .getByRole("button", { name: "关闭创作参考", exact: true })
+        .click();
+    await page.getByRole("button", { name: "刷新场景树", exact: true }).click();
+    const summary = page.getByLabel(`${book.chapters[0].title}的计划场景`, {
+      exact: true,
+    });
+    await summary.waitFor();
+    if ((await summary.locator("..").getAttribute("open")) === null)
+      await summary.click();
+    await page
+      .getByRole("group", {
+        name: `${book.chapters[0].title}的场景列表`,
+        exact: true,
+      })
+      .getByRole("button", { name: oldArrangedScene.title, exact: true })
+      .waitFor();
+    await page.screenshot({ path: join(out, name) });
+  }
   const lookKey = `zinovel.character-look-draft.${book.id}.${character.id}`,
     materialKey = `zinovel.material-draft.${book.id}.new`,
     cacheHash = (raw) =>
@@ -521,6 +559,40 @@ try {
     });
   }
   if (appearancePublic) {
+    if (scenePublic) {
+      oldArrangedScene = await request("materials.save", {
+        bookId: book.id,
+        input: {
+          kind: "scene",
+          title: `${sourceLabel}已安排场景𠮷🌊`,
+          status: "planned",
+          fields: { goal: "旧程序安排的计划位置" },
+          notes: "合成升级场景",
+          chapterIds: [],
+        },
+      });
+      oldPlanning = await request("planning.move", {
+        bookId: book.id,
+        mutation: {
+          sceneId: oldArrangedScene.id,
+          chapterId: book.chapters[0].id,
+          beforeId: null,
+        },
+        expected: await request("planning.read", { bookId: book.id }),
+      });
+      for (const path of [
+        join(data, "library", book.id, "planning.json"),
+        join(
+          data,
+          "library",
+          book.id,
+          "materials",
+          `${oldArrangedScene.id}.json`,
+        ),
+      ])
+        sceneRecords.push({ path, bytes: await readFile(path) });
+      await verifySceneTree("old-public36-arranged-scene.png");
+    }
     const form = await openCharacterForm(currentCharacter),
       looks = page.getByRole("region", { name: "人物形象版本", exact: true });
     await looks
@@ -528,7 +600,7 @@ try {
       .click();
     await looks
       .getByLabel("形象名称", { exact: true })
-      .fill("公开35少年定妆𠮷🌊");
+      .fill(`${sourceLabel}少年定妆𠮷🌊`);
     await looks.getByLabel("年龄描述", { exact: true }).fill("十六岁");
     await looks.getByLabel("衣装", { exact: true }).fill("少年蓝衣");
     await looks
@@ -608,7 +680,7 @@ try {
       .click();
     await looks
       .getByLabel("形象名称", { exact: true })
-      .fill("公开35未保存形象𠮷🌊");
+      .fill(`${sourceLabel}未保存形象𠮷🌊`);
     await looks.getByLabel("衣装", { exact: true }).fill("待作者决定的外套");
     await looks
       .getByLabel("此版本使用的固定图像", { exact: true })
@@ -619,7 +691,12 @@ try {
     );
     assert.ok(oldLookDraft);
     await page.screenshot({
-      path: join(out, "old-public35-fixed-look-and-draft.png"),
+      path: join(
+        out,
+        scenePublic
+          ? "old-public36-fixed-look-and-draft.png"
+          : "old-public35-fixed-look-and-draft.png",
+      ),
     });
     await form
       .getByRole("combobox", { name: "新建类型", exact: true })
@@ -627,7 +704,7 @@ try {
     await form.getByRole("button", { name: "新建资料", exact: true }).click();
     await form
       .getByLabel("资料标题", { exact: true })
-      .fill("公开35未保存场景𠮷🌊");
+      .fill(`${sourceLabel}未保存场景𠮷🌊`);
     await form.getByLabel("场景目标", { exact: true }).fill("找到旧桥的送信人");
     await form
       .getByLabel("资料笔记", { exact: true })
@@ -639,14 +716,16 @@ try {
     assert.ok(oldMaterialDraft);
     assert.equal(
       Object.hasOwn(JSON.parse(oldMaterialDraft), "schemaVersion"),
-      false,
+      scenePublic,
     );
+    if (scenePublic)
+      assert.equal(JSON.parse(oldMaterialDraft).schemaVersion, 1);
     assert.deepEqual(calls, { text: 0, image: 2 });
   }
   const beforeRequests = currentPublic ? 2 : 1,
     finalRequests = beforeRequests + 1;
   const verifyPrior = async () => {
-    for (const item of [...priorRecords, ...appearanceRecords])
+    for (const item of [...priorRecords, ...appearanceRecords, ...sceneRecords])
       assert.deepEqual(await readFile(item.path), item.bytes);
   };
   const verifyPriorInHost = async () => {
@@ -683,7 +762,7 @@ try {
       });
       assert.equal(
         await looks.getByLabel("形象名称", { exact: true }).inputValue(),
-        "公开35未保存形象𠮷🌊",
+        `${sourceLabel}未保存形象𠮷🌊`,
       );
       assert.equal(
         cacheHash(
@@ -723,6 +802,30 @@ try {
           ),
           cacheHash(oldMaterialDraft),
         );
+    }
+    if (scenePublic) {
+      const currentPlanning = await request("planning.read", {
+        bookId: book.id,
+      });
+      assert.equal(currentPlanning.revision, oldPlanning.revision);
+      assert.equal(currentPlanning.diskHash, oldPlanning.diskHash);
+      assert.equal(
+        currentPlanning.columns.find(
+          (column) => column.id === book.chapters[0].id,
+        ).scenes[0].id,
+        oldArrangedScene.id,
+      );
+      assert.equal(
+        (
+          await request("materials.read", {
+            bookId: book.id,
+            id: oldArrangedScene.id,
+          })
+        ).diskHash,
+        oldArrangedScene.diskHash,
+      );
+      await verifySceneTree("new-public36-arranged-scene.png");
+      report.sceneTreeReadbacks = (report.sceneTreeReadbacks || 0) + 1;
     }
   };
   await page.screenshot({ path: join(out, "before-upgrade.png") });
@@ -789,7 +892,7 @@ try {
     await form.getByLabel("资料标题", { exact: true }).waitFor();
     assert.equal(
       await form.getByLabel("资料标题", { exact: true }).inputValue(),
-      "公开35未保存场景𠮷🌊",
+      `${sourceLabel}未保存场景𠮷🌊`,
     );
     assert.equal(
       cacheHash(
@@ -811,7 +914,7 @@ try {
     await form.getByRole("status").filter({ hasText: "已保存资料" }).waitFor();
     const result = await request("materials.list", {
       bookId: book.id,
-      options: { kind: "scene", query: "公开35未保存场景𠮷🌊" },
+      options: { kind: "scene", query: `${sourceLabel}未保存场景𠮷🌊` },
     });
     assert.equal(result.items.length, 1);
     newScene = await request("materials.read", {
@@ -823,10 +926,16 @@ try {
       await page.evaluate((key) => localStorage.getItem(key), materialKey),
       null,
     );
-    report.legacyDraftPreservedUntilExplicitSave = true;
+    if (scenePublic) report.schema1DraftPreservedUntilExplicitSave = true;
+    else report.legacyDraftPreservedUntilExplicitSave = true;
     report.explicitSchema1DraftCreated = true;
     await page.screenshot({
-      path: join(out, "new-author-saved-legacy-scene.png"),
+      path: join(
+        out,
+        scenePublic
+          ? "new-author-saved-schema1-scene.png"
+          : "new-author-saved-legacy-scene.png",
+      ),
     });
   }
   await close();
@@ -893,6 +1002,23 @@ try {
       revision: newScene.revision,
       diskHash: newScene.diskHash,
     };
+    if (scenePublic) {
+      assert.ok(report.sceneTreeReadbacks >= 3);
+      report.plannedScenePreserved = true;
+      report.originalMaterialDraftSchema = 1;
+      report.plannedScene = {
+        id: oldArrangedScene.id,
+        diskHash: oldArrangedScene.diskHash,
+        chapterId: book.chapters[0].id,
+        planningHash: oldPlanning.diskHash,
+        planningRevision: oldPlanning.revision,
+      };
+      report.sceneFiles = sceneRecords.map((item) => ({
+        name: item.path.split(/[\\/]/).slice(-1)[0],
+        sha256: createHash("sha256").update(item.bytes).digest("hex"),
+        bytes: item.bytes.length,
+      }));
+    }
   }
   report.requests = calls;
   report.uninstallPreserved = true;
@@ -903,8 +1029,12 @@ try {
   );
   if (appearancePublic)
     report.checks.push(
-      "Actual public alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade",
-      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; legacy scene draft remains unchanged across upgrade/restart until explicit author edit creates schema1 and saves one stable formal scene; uninstall preserves all data without model replay",
+      `Actual public ${sourceVersion} author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus ${scenePublic ? "schema1" : "legacy unversioned"} scene draft; exact collection/history/image/v2 bytes survive upgrade`,
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    );
+  if (scenePublic)
+    report.checks.push(
+      "Actual public36 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
     );
   report.status = "passed";
 } catch (error) {

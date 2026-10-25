@@ -113,6 +113,25 @@ try {
   report.checks.push(
     "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
   );
+  for (const encoding of ["utf-16le", "utf-16be"]) {
+    const path = join(work, `${encoding}.txt`);
+    const bytes = Buffer.from("\uFEFF第一章 旧字\r\n旧稿𠮷🙂", "utf16le");
+    if (encoding === "utf-16be") bytes.swap16();
+    originals.set(path, bytes);
+    await writeFile(path, bytes);
+    await choose(path);
+    await page
+      .getByRole("alert")
+      .filter({ hasText: "UTF-8 解码失败" })
+      .waitFor();
+    await page.getByLabel("导入编码").selectOption(encoding);
+    await page.getByRole("button", { name: "重新预览", exact: true }).click();
+    await page.waitForFunction(
+      () =>
+        document.querySelector("textarea.import-body")?.value === "旧稿𠮷🙂",
+    );
+  }
+  report.encodings = ["utf-8", "utf-16le", "utf-16be", "gb18030"];
   await page.getByLabel("导入编码").selectOption("utf-16le");
   await choose(legacy);
   await page.getByRole("alert").filter({ hasText: "UTF-8 解码失败" }).waitFor();
@@ -142,7 +161,7 @@ try {
   );
   assert.equal((await host("library.list")).books.length, 0);
   report.checks.push(
-    "A new selection resets displayed decoding/splitting to the host defaults; GB18030 retries correctly and failed re-preview revokes the prior host commit token",
+    "A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token",
   );
   await app.evaluate(({ BrowserWindow }) =>
     BrowserWindow.getAllWindows()[0].setSize(806, 803),

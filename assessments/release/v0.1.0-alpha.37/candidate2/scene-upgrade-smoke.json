@@ -1,0 +1,103 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.36",
+  "toVersion": "0.1.0-alpha.37",
+  "previousInstallerSha256": "50425dd87f735bfda379863e1844d6846632ceafe70611a575743cfa58ecb3d3",
+  "currentInstallerSha256": "3ca68ed7bb5ba62b5ece5d74b874c63fbd82e5d39997f49c7cf715c68c6d9b76",
+  "installDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-gw6ARK\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-gw6ARK\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.36 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "Actual public 0.1.0-alpha.36 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "Actual public36 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.36 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 7130,
+  "previousAsarSha256": "6684495567bd9d2a0c057277e3877905deaeba448fbd478cbc48601c6425421c",
+  "upgradeMs": 12396,
+  "appAsarSha256": "9b96733b9a4dcfe3b1efa8ee31945bea611cefeb62545d6f6003b8badf90e6f5",
+  "sceneTreeReadbacks": 3,
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "schema1DraftPreservedUntilExplicitSave": true,
+  "explicitSchema1DraftCreated": true,
+  "postUninstallDataReadable": true,
+  "previousV2ReceiptPreserved": true,
+  "previousV2Readable": true,
+  "previousAdoptedAssetPreserved": true,
+  "previousV2Files": [
+    {
+      "name": "710c39f4-5ef3-4810-b498-f130bcd662c2.json",
+      "sha256": "251eddfa7724c6ca8a5aac126b0e8447b751f8d28a3b0a9f59f823ad20352aac",
+      "bytes": 2914
+    },
+    {
+      "name": "e344ebf0-e421-4efc-991f-bc319a68860a.json",
+      "sha256": "7525b2cd470a2e31ffcebe62a1dad82d34cb603beb8ca63a8c2ccea805add5bc",
+      "bytes": 870
+    },
+    {
+      "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+      "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+      "bytes": 449
+    }
+  ],
+  "appearanceFiles": [
+    {
+      "name": "be8e7fb3-d74f-4366-b7a7-8eec17a423d2.json",
+      "sha256": "1a1d81cd3fc7f7a51ebd092c00c93efbbaf9a69d52b9afa0757a06329a5f7494",
+      "bytes": 2582
+    },
+    {
+      "name": "1-e1589486266bc4c32293f2f6393ee3e213cffdbc897e06e460c2e653c840f1cf.json",
+      "sha256": "e1589486266bc4c32293f2f6393ee3e213cffdbc897e06e460c2e653c840f1cf",
+      "bytes": 2144
+    },
+    {
+      "name": "2-efb591ce46da5c16e8a33cbd390b55b99eb7baa84bd653bf0e7956a39593c475.json",
+      "sha256": "efb591ce46da5c16e8a33cbd390b55b99eb7baa84bd653bf0e7956a39593c475",
+      "bytes": 2582
+    }
+  ],
+  "fixedAppearancePreserved": true,
+  "fixedAppearancePreviewReadable": true,
+  "lookDraftPreserved": true,
+  "lookDraftSha256": "6d5dcf46e0458562deb397f95c937d8c28d256400bb0aba752d739008fa5ad26",
+  "oldMaterialDraftSha256": "757c9c91b80ac1c6d4ea421dc022a6c65df8e9aa11873dfb23a9bfdcda897b76",
+  "newScene": {
+    "id": "f78c5c27-6e83-447e-9ce7-8991b52be265",
+    "revision": 1,
+    "diskHash": "e9dad310dfdd115c66e23262c4c243513d990eb33cb2d3631f373c8ab771a7a4"
+  },
+  "plannedScenePreserved": true,
+  "originalMaterialDraftSchema": 1,
+  "plannedScene": {
+    "id": "819b2bdc-d929-4c53-b7da-04e3633d3040",
+    "diskHash": "49ae6547a67730f4b2d6cefd3d3fe0fb17770891ef493926a43f86a9621fd7a7",
+    "chapterId": "75428a33-abe7-4cda-aca9-0e4202c7b3c0",
+    "planningHash": "32f303428107cbcc9a2044b8b693978dfde4e26a030d78cb02b89aff1b8209d6",
+    "planningRevision": 1
+  },
+  "sceneFiles": [
+    {
+      "name": "planning.json",
+      "sha256": "32f303428107cbcc9a2044b8b693978dfde4e26a030d78cb02b89aff1b8209d6",
+      "bytes": 253
+    },
+    {
+      "name": "819b2bdc-d929-4c53-b7da-04e3633d3040.json",
+      "sha256": "49ae6547a67730f4b2d6cefd3d3fe0fb17770891ef493926a43f86a9621fd7a7",
+      "bytes": 506
+    }
+  ],
+  "requests": {
+    "text": 0,
+    "image": 3
+  },
+  "uninstallPreserved": true
+}

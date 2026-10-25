@@ -1,0 +1,14 @@
+✔ volume order, stable chapter IDs, reviewed status and trash survive restart (115.5624ms)
+✔ UTF-8 import preview preserves source bytes and chapter/volume order (41.533ms)
+✔ verified backup restores into a new book; corruption is rejected without overwriting originals (73.0797ms)
+✔ preview supports legacy Chinese encoding and retains deliberately empty chapters (3.3256ms)
+✔ utf-16le preview and actual new-book import preserve supplementary text; malformed input stays untouched (31.2541ms)
+✔ utf-16be preview and actual new-book import preserve supplementary text; malformed input stays untouched (28.0701ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 454.8563

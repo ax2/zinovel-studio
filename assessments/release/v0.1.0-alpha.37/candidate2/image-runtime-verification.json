@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.37",
+  "node": "24.21.0",
+  "sharp": "0.35.5",
+  "vips": "8.18.7",
+  "appAsarSha256": "9b96733b9a4dcfe3b1efa8ee31945bea611cefeb62545d6f6003b8badf90e6f5",
+  "notices": [
+    "sharp-Apache-2.0.txt",
+    "sharp-win32-x64-LICENSE.txt",
+    "sharp-win32-x64-upstream-README.md",
+    "sharp-win32-x64-versions.json",
+    "GPL-3.0.txt",
+    "LGPL-3.0.txt"
+  ],
+  "nativeFiles": [
+    {
+      "name": "libvips-42.dll",
+      "sha256": "06dab07cc386748513337a31672b1d5269fbc770a14ff403080575665bf0813f",
+      "bytes": 19018240
+    },
+    {
+      "name": "libvips-cpp-8.18.7.dll",
+      "sha256": "25001dbd05305a0a29119ab49933622c70b4a20ea12ef1d5d20ca40181db53bf",
+      "bytes": 333312
+    },
+    {
+      "name": "sharp-win32-x64-0.35.5.node",
+      "sha256": "971048779f9c8598df14641dfc03c625885c93f473a788e65ca2deb50d0b083e",
+      "bytes": 443904
+    }
+  ],
+  "scope": "Packaged EXE embedded Node, app-local native modules, actual three-format decode, unpacked writable DLLs and exact retained licence bytes; not modified-DLL execution or complete distribution certification"
+}

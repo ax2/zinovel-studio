@@ -126,3 +126,29 @@ test("preview supports legacy Chinese encoding and retains deliberately empty ch
     ["", "正文"],
   );
 });
+
+for (const encoding of ["utf-16le", "utf-16be"])
+  test(`${encoding} preview and actual new-book import preserve supplementary text; malformed input stays untouched`, async () => {
+    const { root, store } = await setup(),
+      source = join(root, `${encoding}.txt`);
+    const original = Buffer.from(
+      "\uFEFF第一章 旧稿\r\n𠮷🙂\r\n原稿",
+      "utf16le",
+    );
+    if (encoding === "utf-16be") original.swap16();
+    await writeFile(source, original);
+    const preview = await previewImport([source], encoding);
+    assert.equal(preview.chapters[0].title, "第一章 旧稿");
+    assert.equal(preview.chapters[0].body, "𠮷🙂\n原稿");
+    const book = await store.importBook("旧编码合成稿", preview.chapters);
+    assert.equal(
+      (await store.readChapter(book.id, book.chapters[0].id)).body,
+      "𠮷🙂\n原稿",
+    );
+    assert.deepEqual(await readFile(source), original);
+    const malformed = Buffer.concat([original, Buffer.from([0xd8])]);
+    await writeFile(source, malformed);
+    await assert.rejects(previewImport([source], encoding));
+    assert.deepEqual(await readFile(source), malformed);
+    assert.equal((await store.listBooks()).books.length, 1);
+  });

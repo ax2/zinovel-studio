@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "checks": [
+    "renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
+    "switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
+    "provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
+    "after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim",
+  "launchPid": 81000,
+  "viewport": {
+    "width": 986,
+    "height": 863,
+    "scale": 1.25
+  },
+  "version": "0.1.0-alpha.37",
+  "switchedTaskStatus": "cancelled",
+  "readingLayout": {
+    "dialog": {
+      "left": 0,
+      "right": 986.4000244140625,
+      "top": 0,
+      "bottom": 863.2000122070312,
+      "width": 986.4000244140625,
+      "height": 863.2000122070312
+    },
+    "paragraph": {
+      "left": 275,
+      "right": 936.4000244140625,
+      "top": 287.8999938964844,
+      "bottom": 323.8999938964844,
+      "width": 661.4000244140625,
+      "height": 36
+    },
+    "layout": {
+      "left": 0,
+      "right": 986.4000244140625,
+      "top": 144,
+      "bottom": 801.2000122070312,
+      "width": 986.4000244140625,
+      "height": 657.2000122070312
+    },
+    "horizontalOverflow": false,
+    "viewport": {
+      "width": 986,
+      "height": 863
+    }
+  },
+  "providerRequests": 2,
+  "failedTaskStatus": "failed",
+  "foreignBookTextSent": false,
+  "rendererRequestsDenied": 1
+}

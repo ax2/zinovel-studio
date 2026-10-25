@@ -178,7 +178,9 @@ if (
   importBoundary.packaged !== true ||
   importBoundary.appAsarSha256 !== appAsarSha256 ||
   importBoundary.checks?.length !== 3 ||
-  importBoundary.errors?.length !== 0
+  importBoundary.errors?.length !== 0 ||
+  JSON.stringify(importBoundary.encodings) !==
+    JSON.stringify(["utf-8", "utf-16le", "utf-16be", "gb18030"])
 )
   throw new Error(
     "Installed import boundary and frozen decoding preview proof is missing or stale",
@@ -188,6 +190,7 @@ manifest.importBoundary = {
   appAsarSha256,
   checks: importBoundary.checks,
   scope: importBoundary.scope,
+  encodings: importBoundary.encodings,
 };
 const importReview = JSON.parse(
   await readFile(
@@ -814,6 +817,108 @@ manifest.appearanceUpgrade = {
 };
 manifest.qualification.push(
   ...appearance.checks.map((check) => `public-appearance-upgrade: ${check}`),
+);
+const sceneUpgrade = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/scene-upgrade/recent-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const sceneSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.36/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const sceneFlags = [
+  ...appearanceFlags.filter(
+    (key) => key !== "legacyDraftPreservedUntilExplicitSave",
+  ),
+  "schema1DraftPreservedUntilExplicitSave",
+  "plannedScenePreserved",
+];
+if (
+  sceneUpgrade.status !== "passed" ||
+  sceneUpgrade.fromVersion !== "0.1.0-alpha.36" ||
+  sceneUpgrade.fromVersion !== sceneSource.version ||
+  sceneUpgrade.toVersion !== pkg.version ||
+  sceneUpgrade.currentInstallerSha256 !== sha256 ||
+  sceneUpgrade.appAsarSha256 !== appAsarSha256 ||
+  sceneUpgrade.previousInstallerSha256 !== sceneSource.sha256 ||
+  sceneUpgrade.previousAsarSha256 !== sceneSource.imageStudio.appAsarSha256 ||
+  sceneUpgrade.checks?.length !== 6 ||
+  sceneUpgrade.errors?.length !== 0 ||
+  !sceneFlags.every((key) => sceneUpgrade[key] === true) ||
+  sceneUpgrade.originalMaterialDraftSchema !== 1 ||
+  !Number.isSafeInteger(sceneUpgrade.sceneTreeReadbacks) ||
+  sceneUpgrade.sceneTreeReadbacks < 3 ||
+  !Number.isFinite(sceneUpgrade.upgradeMs) ||
+  sceneUpgrade.upgradeMs <= 0 ||
+  JSON.stringify(sceneUpgrade.requests) !==
+    JSON.stringify({ text: 0, image: 3 }) ||
+  sceneUpgrade.previousV2Files?.length !== 3 ||
+  !Array.isArray(sceneUpgrade.appearanceFiles) ||
+  sceneUpgrade.appearanceFiles.length < 3 ||
+  sceneUpgrade.sceneFiles?.length !== 2 ||
+  ![
+    ...(sceneUpgrade.previousV2Files || []),
+    ...(sceneUpgrade.appearanceFiles || []),
+    ...(sceneUpgrade.sceneFiles || []),
+  ].every(
+    (file) =>
+      hashIsValid(file.sha256) &&
+      Number.isSafeInteger(file.bytes) &&
+      file.bytes > 0,
+  ) ||
+  !hashIsValid(sceneUpgrade.plannedScene?.diskHash) ||
+  !hashIsValid(sceneUpgrade.plannedScene?.planningHash) ||
+  !/^[a-f0-9-]{36}$/.test(sceneUpgrade.plannedScene?.id || "") ||
+  !/^[a-f0-9-]{36}$/.test(sceneUpgrade.plannedScene?.chapterId || "") ||
+  !Number.isSafeInteger(sceneUpgrade.plannedScene?.planningRevision) ||
+  sceneUpgrade.plannedScene.planningRevision < 1 ||
+  !/^[a-f0-9-]{36}$/.test(sceneUpgrade.newScene?.id || "") ||
+  !Number.isSafeInteger(sceneUpgrade.newScene?.revision) ||
+  sceneUpgrade.newScene.revision < 1 ||
+  !hashIsValid(sceneUpgrade.newScene?.diskHash) ||
+  !hashIsValid(sceneUpgrade.lookDraftSha256) ||
+  !hashIsValid(sceneUpgrade.oldMaterialDraftSha256) ||
+  sceneUpgrade.sceneFiles.find((file) => file.name === "planning.json")
+    ?.sha256 !== sceneUpgrade.plannedScene.planningHash ||
+  sceneUpgrade.sceneFiles.find(
+    (file) => file.name === `${sceneUpgrade.plannedScene.id}.json`,
+  )?.sha256 !== sceneUpgrade.plannedScene.diskHash
+)
+  throw new Error(
+    "Public alpha.36 planned scene/position and schema1 draft upgrade proof is missing or stale",
+  );
+manifest.sceneUpgrade = {
+  fromVersion: sceneUpgrade.fromVersion,
+  previousInstallerSha256: sceneUpgrade.previousInstallerSha256,
+  previousAsarSha256: sceneUpgrade.previousAsarSha256,
+  appAsarSha256,
+  upgradeMs: sceneUpgrade.upgradeMs,
+  ...Object.fromEntries(sceneFlags.map((key) => [key, true])),
+  originalMaterialDraftSchema: 1,
+  sceneTreeReadbacks: sceneUpgrade.sceneTreeReadbacks,
+  plannedScene: sceneUpgrade.plannedScene,
+  sceneFiles: sceneUpgrade.sceneFiles,
+  appearanceFiles: sceneUpgrade.appearanceFiles,
+  previousV2Files: sceneUpgrade.previousV2Files,
+  lookDraftSha256: sceneUpgrade.lookDraftSha256,
+  oldMaterialDraftSha256: sceneUpgrade.oldMaterialDraftSha256,
+  newScene: sceneUpgrade.newScene,
+  requests: sceneUpgrade.requests,
+  checks: sceneUpgrade.checks,
+  scope: sceneUpgrade.scope,
+};
+manifest.qualification.push(
+  ...sceneUpgrade.checks.map((check) => `public-scene-upgrade: ${check}`),
 );
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(

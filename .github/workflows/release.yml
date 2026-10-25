@@ -142,6 +142,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Public appearance release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/appearance-upgrade-source/ZiNovel-Studio-0.1.0-alpha.35-windows-x64-setup.exe .cache/appearance-upgrade-source/release-manifest.json appearance-upgrade
           if ($LASTEXITCODE -ne 0) { throw 'Fixed appearance and legacy draft upgrade failed' }
+      - name: Upgrade public alpha.36 arranged scenes and schema1 drafts
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/scene-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.36 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/scene-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Public scene release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/scene-upgrade-source/ZiNovel-Studio-0.1.0-alpha.36-windows-x64-setup.exe .cache/scene-upgrade-source/release-manifest.json scene-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Arranged scene and schema1 draft upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft
         shell: pwsh

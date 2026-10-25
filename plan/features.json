@@ -39,14 +39,16 @@
       "name": "现有目录导入",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "只读试扫，确认后新建书而不改源",
       "evidence": [
         "iterations/stage-002/WORKLOG.md",
         "assessments/stage-002/import-review/README.md",
         "packages/novel-storage/import-session.mjs",
-        "scripts/smoke-import-review.mjs"
-      ]
+        "scripts/smoke-import-review.mjs",
+        "assessments/release/v0.1.0-alpha.37/candidate2/README.md"
+      ],
+      "validation": "assessments/stage-002/import-review/acceptance.md"
     },
     {
       "id": "LIB-04",
@@ -54,14 +56,16 @@
       "name": "TXT/Markdown 编码预览",
       "priority": "P0",
       "stage": "Stage-002",
-      "status": "in-progress",
+      "status": "verified",
       "acceptance": "乱码与章节拆分可修正后导入",
       "evidence": [
         "iterations/stage-002/WORKLOG.md",
         "assessments/stage-002/import-review/README.md",
         "packages/novel-storage/import-session.mjs",
-        "scripts/smoke-import-review.mjs"
-      ]
+        "scripts/smoke-import-review.mjs",
+        "assessments/release/v0.1.0-alpha.37/candidate2/README.md"
+      ],
+      "validation": "assessments/stage-002/import-review/acceptance.md"
     },
     {
       "id": "LIB-05",

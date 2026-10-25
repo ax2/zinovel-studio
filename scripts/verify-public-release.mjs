@@ -289,12 +289,89 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.importBoundary?.checks?.length, 3);
+    assert.deepEqual(manifest.importBoundary?.encodings, [
+      "utf-8",
+      "utf-16le",
+      "utf-16be",
+      "gb18030",
+    ]);
     assert.equal(manifest.importReview?.version, manifest.version);
     assert.equal(
       manifest.importReview?.appAsarSha256,
       manifest.imageStudio.appAsarSha256,
     );
     assert.equal(manifest.importReview?.checks?.length, 4);
+    const scene = manifest.sceneUpgrade;
+    assert.equal(scene?.fromVersion, "0.1.0-alpha.36");
+    assert.equal(
+      scene.previousInstallerSha256,
+      "50425dd87f735bfda379863e1844d6846632ceafe70611a575743cfa58ecb3d3",
+    );
+    assert.equal(
+      scene.previousAsarSha256,
+      "6684495567bd9d2a0c057277e3877905deaeba448fbd478cbc48601c6425421c",
+    );
+    assert.equal(scene.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.equal(scene.originalMaterialDraftSchema, 1);
+    assert.ok(scene.sceneTreeReadbacks >= 3);
+    assert.ok(Number.isSafeInteger(scene.sceneTreeReadbacks));
+    assert.match(scene.plannedScene.id, /^[a-f0-9-]{36}$/);
+    assert.match(scene.plannedScene.chapterId, /^[a-f0-9-]{36}$/);
+    assert.ok(
+      Number.isSafeInteger(scene.plannedScene.planningRevision) &&
+        scene.plannedScene.planningRevision > 0,
+    );
+    assert.match(scene.plannedScene.diskHash, /^[a-f0-9]{64}$/);
+    assert.match(scene.plannedScene.planningHash, /^[a-f0-9]{64}$/);
+    assert.match(scene.newScene.id, /^[a-f0-9-]{36}$/);
+    assert.ok(
+      Number.isSafeInteger(scene.newScene.revision) &&
+        scene.newScene.revision > 0,
+    );
+    assert.ok(scene.upgradeMs > 0);
+    assert.equal(scene.checks?.length, 6);
+    assert.deepEqual(scene.requests, { text: 0, image: 3 });
+    for (const key of [
+      "plannedScenePreserved",
+      "schema1DraftPreservedUntilExplicitSave",
+      "fixedAppearancePreserved",
+      "fixedAppearancePreviewReadable",
+      "postUninstallDataReadable",
+      "uninstallPreserved",
+      "previousV2Readable",
+      "previousV2ReceiptPreserved",
+      "previousAdoptedAssetPreserved",
+      "lookDraftPreserved",
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "explicitSchema1DraftCreated",
+    ])
+      assert.equal(scene[key], true);
+    assert.equal(scene.sceneFiles?.length, 2);
+    assert.equal(scene.previousV2Files?.length, 3);
+    assert.ok(scene.appearanceFiles?.length >= 3);
+    for (const file of [
+      ...scene.sceneFiles,
+      ...scene.previousV2Files,
+      ...scene.appearanceFiles,
+    ]) {
+      assert.match(file.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(file.bytes) && file.bytes > 0);
+    }
+    assert.equal(
+      scene.sceneFiles.find((file) => file.name === "planning.json")?.sha256,
+      scene.plannedScene.planningHash,
+    );
+    assert.equal(
+      scene.sceneFiles.find(
+        (file) => file.name === `${scene.plannedScene.id}.json`,
+      )?.sha256,
+      scene.plannedScene.diskHash,
+    );
+    assert.match(scene.newScene.diskHash, /^[a-f0-9]{64}$/);
+    assert.match(scene.lookDraftSha256, /^[a-f0-9]{64}$/);
+    assert.match(scene.oldMaterialDraftSha256, /^[a-f0-9]{64}$/);
   }
   const installerDirectory = resolve(
     root,
