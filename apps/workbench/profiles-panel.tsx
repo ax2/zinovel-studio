@@ -182,7 +182,8 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
         </div>
         <p className="muted">
           文字写作由官方 DeepSeek Harness 执行。各配置独立保存
-          Key、服务与预算；只有明确生成才发送所选小说内容。图像配置目前仅可保存，图像生成尚未接入。
+          Key、服务与预算；只有明确生成才发送所选小说内容。图像服务需先确认内联响应模式，再到
+          AI 图像工作室核对并发送。
         </p>
         {error && (
           <p role="alert" className="inline-error">
@@ -240,9 +241,7 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
           <>
             {(["text", "image"] as const).map((capability) => (
               <label key={capability}>
-                {capability === "text"
-                  ? "文字写作服务"
-                  : "图像服务（生成尚未接入）"}
+                {capability === "text" ? "文字写作服务" : "独立图像服务"}
                 <select
                   aria-label={
                     capability === "text" ? "文字写作服务" : "图像服务"
@@ -403,7 +402,7 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                         Anthropic 兼容文字接口 · Harness
                       </option>
                       <option value="openai-images">
-                        OpenAI 兼容图像接口 · 尚未接入
+                        OpenAI 兼容内联图像接口
                       </option>
                     </select>
                   </label>
@@ -487,7 +486,8 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                   ) : (
                     <>
                       <p>
-                        以下预算仅供独立保存；本版不会调用图像服务或产生图像费用。
+                        图像预算独立于文字服务。只有在 AI
+                        图像工作室明确发送才调用服务；手填估算不代表供应商账单。
                       </p>
                       <label>
                         明确的图像响应模式
@@ -517,7 +517,7 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                         </select>
                       </label>
                       <p>
-                        请按所选服务文档确认参数支持；不根据模型名称猜测，也不下载服务返回的远端图片URL。当前适配选项仅保存，作者生成界面与安装验收仍在开发。
+                        请按所选服务文档确认参数支持；不根据模型名称猜测，也不下载服务返回的远端图片URL。保存选项本身不会调用服务，旧配置保持未确认直到明确选择。
                       </p>
                       <label>
                         每次图像数量上限

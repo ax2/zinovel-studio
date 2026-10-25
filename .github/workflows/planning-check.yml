@@ -87,6 +87,7 @@ jobs:
       - run: pnpm test:pdf-layout
       - run: pnpm test:docx-layout
       - run: pnpm test:assets
+      - run: pnpm test:image-studio
       - run: pnpm test:maps-ipc
       - run: pnpm test:maps-ui
       - run: pnpm test:atlas-ui

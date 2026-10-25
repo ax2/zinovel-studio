@@ -113,7 +113,7 @@ function usage(value) {
 }
 
 /** Transport only: no profile resolution, book access, adoption, retry or renderer IPC.
- * The future task service must persist the send intent in beforeDispatch.
+ * The host task service persists the send intent in beforeDispatch.
  * A successful late response is retained even if cancellation arrives during decoding.
  */
 export async function requestImageCandidates(

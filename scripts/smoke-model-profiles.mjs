@@ -60,7 +60,7 @@ const report = {
   checks: [],
   errors: [],
   scope:
-    "Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; image adapter intentionally unavailable; no real provider or native IME qualification",
+    "Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
 };
 const request = (action, payload = {}) =>
   page.evaluate(
@@ -423,7 +423,7 @@ try {
     responseMode: "request-base64",
   });
   assert.equal(view.profiles.find((p) => p.id === image.id).hasKey, true);
-  assert.equal(view.profiles.find((p) => p.id === image.id).runnable, false);
+  assert.equal(view.profiles.find((p) => p.id === image.id).runnable, true);
   await panel()
     .getByRole("button", { name: "关闭模型管理", exact: true })
     .click();
@@ -435,7 +435,7 @@ try {
   });
   assert.equal(received[2].length, 0);
   report.checks.push(
-    "Separate image configuration retains its own key, budget and explicitly saved response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; image adapter remains explicitly unavailable with zero requests",
+    "Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests",
   );
 
   // External corruption is injected only into this test's own application settings.

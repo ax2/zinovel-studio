@@ -40,7 +40,7 @@ const frozenProfile = (resolved) => ({
   diskHash: resolved.diskHash,
 });
 
-/** Host-only coordinator. Not registered with renderer IPC until adapter/UI qualification.
+/** Host-only coordinator. The desktop exposes only strict author actions through its IPC allowlist.
  * One active or unsaved image response globally; never retries a paid network request.
  */
 export class ImageJobService {

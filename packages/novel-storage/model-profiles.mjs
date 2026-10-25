@@ -18,7 +18,7 @@ const LIMIT = 2 * 1024 * 1024,
   uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const protocols = {
   "anthropic-text": { capability: "text", runnable: true },
-  "openai-images": { capability: "image", runnable: false },
+  "openai-images": { capability: "image", runnable: true },
 };
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const clone = (value) => structuredClone(value);
@@ -187,7 +187,8 @@ function publicProfile(profile) {
     label: profile.label,
     protocol: profile.protocol,
     capability: spec.capability,
-    runnable: spec.runnable,
+    runnable:
+      spec.runnable && (spec.capability === "text" || !!profile.imageOptions),
     baseURL: profile.baseURL,
     model: profile.model,
     ...(profile.protocol === "anthropic-text"
@@ -496,9 +497,8 @@ export class ModelProfiles {
       (profile) => profile.id === state.record.routes[capability],
     );
     if (!profile) throw new Error("未选择该能力的模型服务");
-    if (!protocols[profile.protocol].runnable)
-      throw new Error("图像生成适配器尚未接入，未发送任何请求");
     const view = publicProfile(profile);
+    if (!view.runnable) throw new Error("图像响应模式尚未确认，未发送任何请求");
     if (view.credentialMismatch)
       throw new Error("模型服务与已存凭据不匹配，未使用旧密钥");
     const result = {

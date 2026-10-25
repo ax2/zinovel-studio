@@ -181,6 +181,7 @@ try {
       "publication-pdf/publication-pdf-smoke.json",
     ],
     ["smoke-assets.mjs", "assets/assets-smoke.json"],
+    ["smoke-image-studio.mjs", "image-studio/image-studio-smoke.json"],
     [
       "smoke-publication-docx-output.mjs",
       "publication-docx/publication-docx-smoke.json",

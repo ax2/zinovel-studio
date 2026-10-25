@@ -251,6 +251,135 @@ if (
           try {
             let value: unknown;
             switch (action) {
+              case "image.settings":
+              case "image.status":
+              case "image.list":
+              case "image.read":
+              case "image.prepare":
+              case "image.start":
+              case "image.cancel":
+              case "image.retry-save":
+              case "image.discard-retained":
+              case "image.reconcile":
+              case "image.preview":
+              case "image.adopt":
+              case "image.discard": {
+                const fields: Record<string, string[]> = {
+                  "image.settings": [],
+                  "image.status": [],
+                  "image.list": ["bookId", "offset"],
+                  "image.read": ["bookId", "id"],
+                  "image.prepare": ["bookId", "input"],
+                  "image.start": ["bookId", "expected", "choice"],
+                  "image.cancel": ["bookId", "id"],
+                  "image.retry-save": ["bookId", "id"],
+                  "image.discard-retained": [
+                    "bookId",
+                    "expected",
+                    "confirmation",
+                  ],
+                  "image.reconcile": ["bookId", "expected"],
+                  "image.preview": ["bookId", "id", "index"],
+                  "image.adopt": ["bookId", "expected", "index", "input"],
+                  "image.discard": ["bookId", "expected"],
+                };
+                if (
+                  Object.keys(payload).some(
+                    (key) => !fields[action].includes(key),
+                  )
+                )
+                  throw new Error("图像操作不接受额外字段或外部路径");
+                if (
+                  publicationClosing &&
+                  ![
+                    "image.settings",
+                    "image.status",
+                    "image.list",
+                    "image.read",
+                    "image.cancel",
+                  ].includes(action)
+                )
+                  throw new Error("程序正在关闭，未开始新的图像操作");
+                if (action === "image.settings")
+                  value = await settings.imagePublic();
+                else if (action === "image.status") value = imageJobs.status();
+                else if (action === "image.list")
+                  value = await store.imageTasks.list(
+                    payload.bookId,
+                    payload.offset ?? 0,
+                  );
+                else if (action === "image.read")
+                  value = await store.imageTasks.read(
+                    payload.bookId,
+                    payload.id,
+                  );
+                else if (action === "image.prepare")
+                  value = await imageJobs.prepare(
+                    payload.bookId,
+                    payload.input,
+                  );
+                else if (action === "image.start")
+                  value = await imageJobs.start(
+                    payload.bookId,
+                    payload.expected,
+                    payload.choice,
+                  );
+                else if (action === "image.cancel")
+                  value = imageJobs.cancel(payload.bookId, payload.id);
+                else if (action === "image.retry-save")
+                  value = await imageJobs.retryLocalSave(
+                    payload.bookId,
+                    payload.id,
+                  );
+                else if (action === "image.discard-retained")
+                  value = await imageJobs.discardRetained(
+                    payload.bookId,
+                    payload.expected,
+                    payload.confirmation,
+                  );
+                else if (action === "image.discard") {
+                  const job = imageJobs.status();
+                  if (
+                    job?.bookId === payload.bookId &&
+                    job?.id === payload.expected?.id
+                  )
+                    throw new Error(
+                      "当前进程仍保留该任务，请先取消等待或明确处理待补存候选",
+                    );
+                  value = await store.imageTasks.discard(
+                    payload.bookId,
+                    payload.expected,
+                  );
+                } else {
+                  const operation =
+                    action === "image.adopt"
+                      ? store.imageTasks.adopt(
+                          payload.bookId,
+                          payload.expected,
+                          payload.index,
+                          payload.input,
+                        )
+                      : action === "image.reconcile"
+                        ? store.imageTasks.reconcileReceived(
+                            payload.bookId,
+                            payload.expected,
+                          )
+                        : store.imageTasks
+                            .preview(payload.bookId, payload.id, payload.index)
+                            .then((result: any) => ({
+                              blob: result.blob,
+                              diskHash: result.diskHash,
+                              thumbnail: `data:image/png;base64,${Buffer.from(result.thumbnail).toString("base64")}`,
+                            }));
+                  assetOperations.add(operation);
+                  try {
+                    value = await operation;
+                  } finally {
+                    assetOperations.delete(operation);
+                  }
+                }
+                break;
+              }
               case "profiles.list":
                 if (Object.keys(payload).length)
                   throw new Error("模型列表读取不接受自定义路径");
@@ -1569,8 +1698,10 @@ if (
             type: "warning",
             title: "写作窗口需要恢复",
             message: "写作窗口已停止运行，作品文件已保留。",
-            detail: `原因：${details.reason}。重新打开后可恢复已有编辑缓存；未写入缓存的最后输入可能丢失。`,
-            buttons: ["重新打开", "退出"],
+            detail: imageJobs.status()
+              ? "图像任务仍在处理或有候选等待补存，当前进程保留其结果。请重新打开窗口后处理，尚未允许释放候选原图。"
+              : `原因：${details.reason}。重新打开后可恢复已有编辑缓存；未写入缓存的最后输入可能丢失。`,
+            buttons: imageJobs.status() ? ["重新打开"] : ["重新打开", "退出"],
             defaultId: 0,
             cancelId: 0,
           });

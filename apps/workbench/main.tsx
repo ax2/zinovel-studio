@@ -41,6 +41,7 @@ import { PilotStudio } from "./pilot-studio";
 import { NovelReader } from "./novel-reader";
 import { PublicationPanel } from "./publication-panel";
 import { AssetsPanel } from "./assets-panel";
+import { ImageStudio } from "./image-studio";
 import { MapsPanel } from "./maps-panel";
 import { ContinuityWorkbench } from "./continuity-workbench";
 import { KnowledgeMatrix } from "./knowledge-matrix";
@@ -74,6 +75,7 @@ function App() {
   const [backupOpen, setBackupOpen] = useState(false);
   const [diagnosticsOpen, setDiagnosticsOpen] = useState(false);
   const [assetsOpen, setAssetsOpen] = useState(false);
+  const [imageStudioOpen, setImageStudioOpen] = useState(false);
   const [mapsOpen, setMapsOpen] = useState(false);
   const [continuityOpen, setContinuityOpen] = useState(false);
   const [knowledgeOpen, setKnowledgeOpen] = useState(false);
@@ -213,17 +215,22 @@ function App() {
   useEffect(
     () =>
       window.novel.onClosing(() => {
-        if (!canCloseEditors()) {
-          void api("app.close-cancelled");
-          return;
-        }
-        saveRef.current().then((ok) => {
-          if (ok) api("app.close-ready");
-          else {
-            api("app.close-cancelled");
-            setError("关闭前尚有未保存内容，请先处理保存问题。");
+        void (async () => {
+          try {
+            if (!canCloseEditors()) {
+              await api("app.close-cancelled");
+              return;
+            }
+            if (await saveRef.current()) await api("app.close-ready");
+            else {
+              await api("app.close-cancelled");
+              setError("关闭前尚有未保存内容，请先处理保存问题。");
+            }
+          } catch (e) {
+            await api("app.close-cancelled").catch(() => {});
+            setError((e as Error).message);
           }
-        });
+        })();
       }),
     [],
   );
@@ -601,6 +608,17 @@ function App() {
           }}
         />
       )}
+      {imageStudioOpen && book && (
+        <ImageStudio
+          key={book.id}
+          book={book}
+          onClose={() => setImageStudioOpen(false)}
+          onModels={() => {
+            setImageStudioOpen(false);
+            setSettingsOpen(true);
+          }}
+        />
+      )}
       {assetsOpen && book && (
         <AssetsPanel
           key={book.id}
@@ -786,6 +804,14 @@ function App() {
                 }}
               >
                 图像资源
+              </button>
+              <button
+                disabled={composition}
+                onClick={async () => {
+                  if (await save()) setImageStudioOpen(true);
+                }}
+              >
+                AI 图像
               </button>
               <button
                 disabled={composition}

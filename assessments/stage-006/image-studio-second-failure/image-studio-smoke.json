@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "checks": [
+    "Explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after visible unknown-cost confirmation; real PNG/JPEG/WebP candidates decode/hash/preview; explicit adoption adds one resource and preserves existing asset/manuscript"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
+  "version": "0.1.0-alpha.31",
+  "packaged": false,
+  "desktopBundleSha256": "80d90dbab7b63c4c1ea190ed241f0b0def81ad118203286ed4fb1aca26a098f9",
+  "viewports": [
+    {
+      "name": "image-studio-desktop.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    }
+  ],
+  "failure": "locator.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).getByLabel('图像提示词', { exact: true })\u001b[22m\n\n    at prepare (D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:216:54)\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:380:22"
+}

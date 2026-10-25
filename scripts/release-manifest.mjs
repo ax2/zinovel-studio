@@ -342,6 +342,42 @@ const modelProfiles = JSON.parse(
     "utf8",
   ),
 );
+const imageStudio = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/image-studio/image-studio-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  imageStudio.status !== "passed" ||
+  imageStudio.version !== pkg.version ||
+  imageStudio.packaged !== true ||
+  imageStudio.appAsarSha256 !== appAsarSha256 ||
+  imageStudio.errors?.length !== 0 ||
+  imageStudio.checks?.length !== 5 ||
+  JSON.stringify(imageStudio.requests) !== JSON.stringify([0, 4, 0]) ||
+  imageStudio.closeProtected !== true ||
+  imageStudio.remoteUnknownAfterRestart !== true ||
+  imageStudio.retainedSaveRecoveredLocally !== true ||
+  imageStudio.originalsPreserved !== true ||
+  imageStudio.mixedBatchRecovery !== true
+)
+  throw new Error("Installed image author workflow proof is missing or stale");
+manifest.imageStudio = {
+  version: imageStudio.version,
+  appAsarSha256: imageStudio.appAsarSha256,
+  checks: imageStudio.checks,
+  scope: imageStudio.scope,
+  requests: imageStudio.requests,
+  closeProtected: true,
+  remoteUnknownAfterRestart: true,
+  retainedSaveRecoveredLocally: true,
+  originalsPreserved: true,
+  mixedBatchRecovery: true,
+};
 if (
   modelProfiles.status !== "passed" ||
   modelProfiles.version !== pkg.version ||

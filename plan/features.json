@@ -897,8 +897,14 @@
       "name": "角色定妆图",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "参考图/年龄/衣装版本可追踪"
+      "status": "in-progress",
+      "acceptance": "参考图/年龄/衣装版本可追踪",
+      "evidence": [
+        "design/image-generation-delivery.md",
+        "assessments/stage-006/image-studio-source.md",
+        "scripts/smoke-image-studio.mjs",
+        "tests/image-tasks.test.mjs"
+      ]
     },
     {
       "id": "ART-02",
@@ -973,8 +979,13 @@
       "name": "封面与卷首图",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "比例/标题/缩略图可预览"
+      "status": "in-progress",
+      "acceptance": "比例/标题/缩略图可预览",
+      "evidence": [
+        "design/image-generation-delivery.md",
+        "assessments/stage-006/image-studio-source.md",
+        "scripts/smoke-image-studio.mjs"
+      ]
     },
     {
       "id": "ART-07",
@@ -982,8 +993,13 @@
       "name": "章节插图",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "绑定最终章版本与插图位置"
+      "status": "in-progress",
+      "acceptance": "绑定最终章版本与插图位置",
+      "evidence": [
+        "design/image-generation-delivery.md",
+        "assessments/stage-006/image-studio-source.md",
+        "tests/image-tasks.test.mjs"
+      ]
     },
     {
       "id": "ART-08",

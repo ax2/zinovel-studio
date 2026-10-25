@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，新增独立模型管理、凭据与文字路由及重试模型说明。167项本机安装和alpha.3升级、完整源码CI通过；标签cc1ac34独立发行CI40158310006首次完整success。公开155500176字节EXE已实际下载/hash复算，四附件、元数据摘要和匿名可见通过。本机与CI文件哈希分别保留。主线alpha.31图像传输10项与持久任务账本与明确采用23项、协调服务10项，明确适配配置1项，完整312项源码通过，图像资源Electron回归5组通过；尚无生成/采用界面或本版安装资格，image profile仍不可运行。稳定资格未完成，106项范围不变。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31传输](assessments/stage-006/image-transport-source.md)、[31账本](assessments/stage-006/image-ledger-source.md)、[31采用](assessments/stage-006/image-adoption-source.md)、[31协调服务](assessments/stage-006/image-jobs-source.md)、[31模式配置](assessments/stage-006/image-options-source.md)、[图像完整设计](design/image-generation-delivery.md)。
+最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，含独立模型管理与文字路由，167项本机安装/升级及独立标签CI通过，公开安装EXE已实际下载复算hash。主线alpha.31新增AI图像工作室，312项源码、图像5组/模型管理6组/基础桌面10组回归通过；旧图像配置仍需明确确认响应模式才可运行。本批CI、完整安装与发行尚待，混合坏图批次保留有效候选为发行前必修，31门禁保持false。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31作者工作流与复评](assessments/stage-006/image-studio-source.md)、[图像完整设计](design/image-generation-delivery.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、46项 in-progress、34项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、49项 in-progress、31项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.30 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.30/ZiNovel-Studio-0.1.0-alpha.30-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 

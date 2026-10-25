@@ -1,0 +1,30 @@
+(node:64216) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.',
+  version: '0.1.0-alpha.31',
+  packaged: false,
+  desktopBundleSha256: '80d90dbab7b63c4c1ea190ed241f0b0def81ad118203286ed4fb1aca26a098f9',
+  failure: 'locator.selectOption: Timeout 30000ms exceeded.\n' +
+    'Call log:\n' +
+    "\x1B[2m  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).getByLabel('审阅候选', { exact: true })\x1B[22m\n" +
+    '\n' +
+    '    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:332:8'
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+locator.selectOption: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).getByLabel('审阅候选', { exact: true })
+
+    at D:\Work\zinovel-studio\scripts\smoke-image-studio.mjs:332:8 {
+  name: 'TimeoutError'
+}
+
+Node.js v26.10.0

@@ -237,6 +237,22 @@ export class ModelSettings {
       throw new Error("请先建立并明确选择独立图像配置；未使用旧文字服务");
     return this.profiles.resolve("image", choice, { secret });
   }
+  async imagePublic(): Promise<any> {
+    const { snapshot, view } = await this.state();
+    if (snapshot.mode !== "profiles" || !view.initialized)
+      return {
+        profile: null,
+        modelChoice: null,
+        profilesEnabled: snapshot.mode === "profiles",
+      };
+    return {
+      profile:
+        view.profiles.find((entry: any) => entry.id === view.routes.image) ||
+        null,
+      modelChoice: { revision: view.revision, diskHash: view.diskHash },
+      profilesEnabled: true,
+    };
+  }
   save(input: Input) {
     return this.serial(() => this.saveExclusive(input));
   }

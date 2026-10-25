@@ -117,7 +117,7 @@ test("image configuration has its own route, key and budget; unavailable adapter
   );
   await assert.rejects(
     f.store.resolve("image", expected(view), { secret: true }),
-    /尚未接入/,
+    /尚未确认/,
   );
   assert.equal(decodes, 0);
   assert.equal(
@@ -126,7 +126,7 @@ test("image configuration has its own route, key and budget; unavailable adapter
   );
   assert.equal(decodes, 1);
 });
-test("explicit image response options persist independently, preserve their own key, reject unsupported fields and remain unavailable before desktop integration", async () => {
+test("explicit image response options persist independently, preserve their own key and authorize only their own confirmed image route", async () => {
   const f = await fixture();
   const image = {
     label: "有明确模式的图像",
@@ -141,7 +141,7 @@ test("explicit image response options persist independently, preserve their own 
     (entry) => entry.protocol === "openai-images",
   );
   assert.deepEqual(item.imageOptions, { responseMode: "request-base64" });
-  assert.equal(item.runnable, false);
+  assert.equal(item.runnable, true);
   const before = await readFile(f.store.path);
   for (const bad of [
     { responseMode: "url" },
@@ -179,14 +179,28 @@ test("explicit image response options persist independently, preserve their own 
     inspected.profiles.find((entry) => entry.id === item.id).imageOptions,
     { responseMode: "default-base64" },
   );
+  const selected = await reopened.select("image", item.id, expected(inspected));
+  assert.equal(
+    (await reopened.resolve("image", expected(selected), { secret: true }))
+      .apiKey,
+    image.apiKey,
+  );
   view = await reopened.update(
     item.id,
     { ...image, imageOptions: null },
-    expected(inspected),
+    expected(selected),
   );
   assert.equal(
     view.profiles.find((entry) => entry.id === item.id).imageOptions,
     null,
+  );
+  assert.equal(
+    view.profiles.find((entry) => entry.id === item.id).runnable,
+    false,
+  );
+  await assert.rejects(
+    reopened.resolve("image", expected(view), { secret: true }),
+    /尚未确认/,
   );
 });
 

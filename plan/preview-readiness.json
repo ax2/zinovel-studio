@@ -64,13 +64,14 @@
     "assessments/stage-003/model-profiles-desktop.md",
     "assessments/release/v0.1.0-alpha.30/README.md",
     "design/image-generation-delivery.md",
-    "assessments/stage-006/image-transport-source.md"
+    "assessments/stage-006/image-transport-source.md",
+    "assessments/stage-006/image-studio-source.md"
   ],
   "reports": [],
   "limitations": [
-    "alpha.31图像传输源码278项通过，尚未接入持久任务/宿主/界面，无本版安装资格；30独立发行及公开EXE下载/hash已通过，不继承旧资格",
+    "alpha.31图像作者工作流312项源码及图像5组/模型管理6组/桌面10组通过；混合坏图批次有效候选保留必须先修，manifest要求mixedBatchRecovery证据；无本版安装资格，不继承30资格",
     "Windows x64未签名阶段预览；CI文件选择采用结果替换，本机同版打包程序另有真实原生导入/取消证据，不扩大为CI或原生IME验收",
-    "完整106项仍26 verified/46 in-progress/34 planned：带图DOCX/PDF/EPUB、目录/注释、远端发布、完整P0离线/权限/诊断/异盘增量备份及空间时态/图像生成等仍待完成",
+    "完整106项仍26 verified/49 in-progress/31 planned：人物参考/变体、封面排字比例、章图位置与带图DOCX/PDF/EPUB、目录/注释、远端发布及空间时态等仍待完成；未将初次图像生成当成完整视觉交付",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"

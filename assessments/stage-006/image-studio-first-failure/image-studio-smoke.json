@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows safeStorage, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality, native IME or installation claim.",
+  "version": "0.1.0-alpha.31",
+  "packaged": false,
+  "desktopBundleSha256": "80d90dbab7b63c4c1ea190ed241f0b0def81ad118203286ed4fb1aca26a098f9",
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).getByLabel('审阅候选', { exact: true })\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:332:8"
+}

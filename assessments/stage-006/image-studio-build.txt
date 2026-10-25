@@ -1,0 +1,5 @@
+
+> zinovel-studio@0.1.0-alpha.31 build D:\Work\zinovel-studio
+> node scripts/build.mjs
+
+Built desktop and writing workbench.

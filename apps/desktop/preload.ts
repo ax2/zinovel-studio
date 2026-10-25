@@ -1,5 +1,18 @@
 import { contextBridge, ipcRenderer } from "electron";
 const allowed = new Set([
+  "image.settings",
+  "image.status",
+  "image.list",
+  "image.read",
+  "image.prepare",
+  "image.start",
+  "image.cancel",
+  "image.retry-save",
+  "image.discard-retained",
+  "image.reconcile",
+  "image.preview",
+  "image.adopt",
+  "image.discard",
   "profiles.list",
   "profiles.migrate",
   "profiles.add",
