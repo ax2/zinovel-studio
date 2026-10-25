@@ -1,0 +1,37 @@
+{
+  "status": "failed",
+  "checks": [
+    "Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+    "Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+    "Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version"
+  ],
+  "errors": [],
+  "sourceDisk": {
+    "DriveLetter": "D",
+    "DiskNumber": 1,
+    "PartitionNumber": 2
+  },
+  "backupDisk": {
+    "DriveLetter": "C",
+    "DiskNumber": 0,
+    "PartitionNumber": 3
+  },
+  "independentDisks": true,
+  "browser": "Browser plugin unavailable; repository Playwright/Electron",
+  "scope": "Synthetic books; actual desktop host and author controls; native picker results and one object-write barrier instrumented. Not physical disk-loss, native-picker clicks or system-IME qualification.",
+  "version": "0.1.0-alpha.30",
+  "packaged": true,
+  "appAsarSha256": "804afd1cd5a84abab4bf2d9fa689749b455fefecc7b0cbd6cb325f55c58897f2",
+  "geometry": {
+    "left": 30,
+    "right": 776.4000244140625,
+    "top": 59.67499923706055,
+    "bottom": 743.5250358581543,
+    "width": 806,
+    "height": 803,
+    "scrollWidth": 745,
+    "clientWidth": 745,
+    "scale": 1.25
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(\n\n    at file:///D:/Work/zinovel-studio/scripts/smoke-backup-vault.mjs:480:10"
+}

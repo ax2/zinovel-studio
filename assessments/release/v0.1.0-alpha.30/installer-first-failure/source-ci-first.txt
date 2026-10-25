@@ -1,0 +1,57 @@
+windows	Run pnpm test:model-profiles	﻿2026-10-25T02:50:22.9902345Z ##[group]Run pnpm test:model-profiles
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9902670Z ^[[36;1mpnpm test:model-profiles^[[0m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9956968Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9957252Z env:
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9957469Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9957971Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9958326Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9958697Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9959014Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9959320Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:22.9959573Z ##[endgroup]
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.4514352Z 
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.4515064Z > zinovel-studio@0.1.0-alpha.30 test:model-profiles D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.4515603Z > node scripts/smoke-model-profiles.mjs
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.4515765Z 
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.8093007Z (node:2940) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:23.8094365Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5392761Z {
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5393050Z   status: 'failed',
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5393241Z   checks: [
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5394093Z     'Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task'
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5397206Z   ],
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5398244Z   errors: [],
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5400766Z   scope: 'Synthetic keys and manuscript; real desktop UI, Windows safeStorage and official Harness to separate loopback endpoints; image adapter intentionally unavailable; no real provider or native IME qualification',
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5401867Z   version: '0.1.0-alpha.30',
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5402195Z   packaged: false,
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5402562Z   failure: 'locator.click: Timeout 30000ms exceeded.\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5402964Z     'Call log:\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5404206Z     "\x1B[2m  - waiting for getByRole('button', { name: '管理多个模型与能力', exact: true })\x1B[22m\n" +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5404756Z     '\x1B[2m    - locator resolved to <button type="button">管理多个模型与能力</button>\x1B[22m\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5405142Z     '\x1B[2m  - attempting click action\x1B[22m\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5405487Z     '\x1B[2m    - waiting for element to be visible, enabled and stable\x1B[22m\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5405859Z     '\x1B[2m  - element was detached from the DOM, retrying\x1B[22m\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5406124Z     '\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5406462Z     '    at open (D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-model-profiles.mjs:103:46)\n' +
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5406988Z     '    at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-model-profiles.mjs:185:3'
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5407328Z }
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5407584Z node:internal/modules/run_main:111
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5407813Z     triggerUncaughtException(
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5408006Z     ^
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5408087Z 
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5408201Z locator.click: Timeout 30000ms exceeded.
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5408410Z Call log:
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5408771Z ^[[2m  - waiting for getByRole('button', { name: '管理多个模型与能力', exact: true })^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5409247Z ^[[2m    - locator resolved to <button type="button">管理多个模型与能力</button>^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5409588Z ^[[2m  - attempting click action^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5409926Z ^[[2m    - waiting for element to be visible, enabled and stable^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5410290Z ^[[2m  - element was detached from the DOM, retrying^[[22m
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5412419Z 
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5412675Z     at open (D:\a\zinovel-studio\zinovel-studio\scripts\smoke-model-profiles.mjs:103:46)
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5413200Z     at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-model-profiles.mjs:185:3 {
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5413548Z   name: 'TimeoutError'
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5413757Z }
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5414356Z 
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5414430Z Node.js v26.12.1
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.5522612Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:model-profiles	2026-10-25T02:50:56.6413137Z ##[error]Process completed with exit code 1.

@@ -94,13 +94,17 @@ async function close() {
   app = null;
 }
 async function open() {
+  const current = await request("settings.get");
   await page.getByTitle("模型设置", { exact: true }).first().click();
-  const legacy = page.getByRole("button", {
-    name: "管理多个模型与能力",
-    exact: true,
-  });
-  await Promise.race([legacy.waitFor(), panel().waitFor()]);
-  if (await legacy.isVisible()) await legacy.click();
+  if (!current.profilesEnabled) {
+    await page
+      .getByRole("dialog", { name: "模型设置", exact: true })
+      .getByLabel("服务地址", { exact: true })
+      .waitFor();
+    await page
+      .getByRole("button", { name: "管理多个模型与能力", exact: true })
+      .click();
+  }
   await panel().waitFor();
 }
 async function generate(choice) {

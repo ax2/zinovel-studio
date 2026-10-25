@@ -474,7 +474,8 @@ try {
   await panel().waitFor({ state: "hidden" });
   await until(
     () => page.getByLabel("正文编辑器").innerText(),
-    (text) => text.includes("备份前作者新增𠮷🌊。"),
+    (text) =>
+      text.includes("备份前作者新增𠮷🌊。") && !text.includes("取消与重试"),
     "Restored book was not opened",
   );
   assert.ok(
