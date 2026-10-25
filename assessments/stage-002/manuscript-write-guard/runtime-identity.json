@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0-alpha.35",
+  "packaged": false,
+  "bundles": {
+    "dist/desktop/main.cjs": {
+      "bytes": 1523869,
+      "sha256": "66dfca8bada355f4ae3c7e88a37c950bbfb1659f02782f69c11f33647a5d6a4b"
+    },
+    "dist/workbench/app.js": {
+      "bytes": 2617226,
+      "sha256": "5871d07d0f10cf18872705593cf352b4ff5501ea3a6b952b7f574983dd80c38c"
+    },
+    "dist/workbench/app.css": {
+      "bytes": 76609,
+      "sha256": "5ad4bedb38c49d6153c4202df8130ad23cbf04282a9c0b213c19786539685cdb"
+    }
+  },
+  "scope": "Source Electron merge/recovery/acceptance runs; storage commit-handoff assertions are separate controlled Node tests."
+}

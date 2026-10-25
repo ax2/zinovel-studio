@@ -1,0 +1,8 @@
+{
+  "checks": [
+    "concurrent same-service settings updates preserve encrypted key; public settings retain an exact six-field whitelist including a false credentialMismatch flag, with no plaintext or encrypted key returned",
+    "real filesystem save failure retains original and blocks close; actual renderer crash recovers cached draft and saves exact bytes",
+    "actual blocked renderer triggers host close watchdog; default return keeps window and manuscript, recovery reload remains usable"
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,81 @@
+✖ external manuscript edit at the commit handoff survives a stale manual save (61.7353ms)
+✖ external book metadata at the commit handoff prevents both metadata overwrite and body save (51.1751ms)
+✖ a receipt identity occupied after preflight is preserved without applying the manuscript (58.7615ms)
+✖ a caller cannot replace the queued manuscript payload before its write begins (54.9726ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 361.7095
+
+✖ failing tests:
+
+test at tests\manuscript-write-guard.test.mjs:26:1
+✖ external manuscript edit at the commit handoff survives a stale manual save (61.7353ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:29:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:24:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:28:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\manuscript-write-guard.test.mjs:33:1
+✖ external book metadata at the commit handoff prevents both metadata overwrite and body save (51.1751ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:38:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:24:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:37:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\manuscript-write-guard.test.mjs:42:1
+✖ a receipt identity occupied after preflight is preserved without applying the manuscript (58.7615ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:47:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:24:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:46:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\manuscript-write-guard.test.mjs:51:1
+✖ a caller cannot replace the queued manuscript payload before its write begins (54.9726ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '队列后的另一份文本，不属于原保存操作'
+  - '作者待保存的新稿𠮷🌊'
+  
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/manuscript-write-guard.test.mjs:54:24)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '队列后的另一份文本，不属于原保存操作',
+    expected: '作者待保存的新稿𠮷🌊',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

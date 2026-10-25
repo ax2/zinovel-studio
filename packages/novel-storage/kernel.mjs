@@ -168,13 +168,15 @@ export class BookStorageKernel {
     );
     await this.recover(root);
   }
-  async manifest(root) {
+  async manifestRecord(root) {
     await this.recover(root);
-    const book = JSON.parse(
-      await readUtf8File(await this.path(root, "book.json")),
-    );
+    const raw = await readUtf8File(await this.path(root, "book.json"));
+    const book = JSON.parse(raw);
     if (book.schemaVersion !== 1 || !Array.isArray(book.chapters))
       throw new Error("不支持的作品格式，请勿覆盖原稿");
-    return book;
+    return { book, raw };
+  }
+  async manifest(root) {
+    return (await this.manifestRecord(root)).book;
   }
 }

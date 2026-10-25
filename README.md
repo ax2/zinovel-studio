@@ -1,12 +1,12 @@
 # ZiNovel Studio
 
-最新公开版仍为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)。alpha.34本机安装及三升级通过后，新增反例发现既有场景规划并发保护缺口，已在公开前主动取消独立发行；保留原标签不重跑。主线alpha.35已修正提交前像、历史占用和等待期输入保护，360项及实际场景编排通过，继续补卷章场景树与导入；本版安装/升级/发行资格关闭。旧版手改planning.json/规划历史前请先关闭程序。详见[保护修正](assessments/stage-002/planning-write-guard/README.md)。
+最新公开版仍为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)。alpha.34在新增数据保护反例后主动取消发行，保留原标签。主线alpha.35已修正规划与正文保存的提交前像、历史/回执占用和排队输入保护，366项及实际编排、合并、窗口故障与接受恢复通过；本版安装/升级/发行资格仍关闭。旧版手改manuscript/、book.json、planning.json、规划历史或接受回执前请先关闭程序。详见[规划保护](assessments/stage-002/planning-write-guard/README.md)与[正文保护](assessments/stage-002/manuscript-write-guard/README.md)。优先交付数据保护修正，再继续场景树与导入。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、49项 in-progress、31项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，26项 verified、50项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.31 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.31/ZiNovel-Studio-0.1.0-alpha.31-windows-x64-setup.exe)。已通过全套 CI、实际安装/运行/重装/卸载及公开 alpha.3 升级验证。当前未代码签名，完整产品上架资格尚未完成。
 

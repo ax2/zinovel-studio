@@ -1,0 +1,14 @@
+✔ external manuscript edit at the commit handoff survives a stale manual save (36.2946ms)
+✔ external book metadata at the commit handoff prevents both metadata overwrite and body save (33.0618ms)
+✔ a receipt identity occupied after preflight is preserved without applying the manuscript (29.6133ms)
+✔ a caller cannot replace the queued manuscript payload before its write begins (46.6758ms)
+✔ an empty occupied receipt is never treated as absent (27.4754ms)
+✔ the accepted receipt is captured with its queued manuscript (57.1745ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 359.4293

@@ -743,7 +743,22 @@ export class NovelStore {
       }
     });
   }
-  saveChapter(input, acceptanceReceipt = undefined) {
+  async saveChapter(input, acceptanceReceipt = undefined) {
+    input = {
+      bookId: input.bookId,
+      chapterId: input.chapterId,
+      title: input.title,
+      body: input.body,
+      expectedRevision: input.expectedRevision,
+      expectedHash: input.expectedHash,
+    };
+    if (acceptanceReceipt)
+      acceptanceReceipt = {
+        id: acceptanceReceipt.id,
+        taskId: acceptanceReceipt.taskId,
+        beforeHash: acceptanceReceipt.beforeHash,
+        afterHash: acceptanceReceipt.afterHash,
+      };
     return this.#storage.exclusive(async () => {
       if (
         typeof input.body !== "string" ||
@@ -752,7 +767,7 @@ export class NovelStore {
       )
         throw new Error("单章正文超过 8 MiB 或格式无效");
       const root = await this.#storage.bookRoot(input.bookId),
-        book = await this.#storage.manifest(root);
+        { book, raw: bookRaw } = await this.#storage.manifestRecord(root);
       const chapter = book.chapters.find(
         (c) => c.id === checkedId(input.chapterId),
       );
@@ -768,6 +783,7 @@ export class NovelStore {
           current: { ...chapter, body: disk, diskHash: digest(disk) },
         };
       let receiptChanges = {};
+      const expectedBefore = { [path]: disk, "book.json": bookRaw };
       if (acceptanceReceipt) {
         const receipt = acceptanceReceipt;
         checkedId(receipt.id);
@@ -778,8 +794,12 @@ export class NovelStore {
         )
           throw new Error("接受回执与正文版本不匹配");
         const receiptPath = `.zinovel/task-receipts/${receipt.id}.json`;
-        if (await readOptional(await this.#storage.path(root, receiptPath)))
+        if (
+          (await readOptional(await this.#storage.path(root, receiptPath))) !==
+          null
+        )
           throw new Error("接受回执已存在，不能重复改稿");
+        expectedBefore[receiptPath] = null;
         receiptChanges = {
           [receiptPath]: json({
             schemaVersion: 1,
@@ -798,11 +818,15 @@ export class NovelStore {
       chapter.updatedAt = new Date().toISOString();
       book.updatedAt = chapter.updatedAt;
       book.revision++;
-      await this.#storage.transaction(root, {
-        [path]: input.body,
-        "book.json": json(book),
-        ...receiptChanges,
-      });
+      await this.#storage.transaction(
+        root,
+        {
+          [path]: input.body,
+          "book.json": json(book),
+          ...receiptChanges,
+        },
+        { expectedBefore },
+      );
       return {
         status: "saved",
         book,
