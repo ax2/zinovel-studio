@@ -126,6 +126,70 @@ test("image configuration has its own route, key and budget; unavailable adapter
   );
   assert.equal(decodes, 1);
 });
+test("explicit image response options persist independently, preserve their own key, reject unsupported fields and remain unavailable before desktop integration", async () => {
+  const f = await fixture();
+  const image = {
+    label: "有明确模式的图像",
+    protocol: "openai-images",
+    baseURL: "https://images.example/v1",
+    model: "fixture-image",
+    apiKey: "synthetic-image-options-key",
+    imageOptions: { responseMode: "request-base64" },
+  };
+  let view = await f.store.add(image, expected(f.view));
+  const item = view.profiles.find(
+    (entry) => entry.protocol === "openai-images",
+  );
+  assert.deepEqual(item.imageOptions, { responseMode: "request-base64" });
+  assert.equal(item.runnable, false);
+  const before = await readFile(f.store.path);
+  for (const bad of [
+    { responseMode: "url" },
+    { responseMode: "default-base64", baseURL: "https://other.example" },
+    true,
+  ])
+    await assert.rejects(
+      f.store.update(item.id, { ...image, imageOptions: bad }, expected(view)),
+      /响应模式/,
+    );
+  await assert.rejects(
+    f.store.add(
+      { ...text(), imageOptions: { responseMode: "default-base64" } },
+      expected(view),
+    ),
+    /混用/,
+  );
+  assert.deepEqual(await readFile(f.store.path), before);
+  view = await f.store.update(
+    item.id,
+    { ...image, apiKey: "", imageOptions: { responseMode: "default-base64" } },
+    expected(view),
+  );
+  assert.equal(
+    view.profiles.find((entry) => entry.id === item.id).hasKey,
+    true,
+  );
+  assert.deepEqual(
+    view.profiles.find((entry) => entry.id === item.id).imageOptions,
+    { responseMode: "default-base64" },
+  );
+  const reopened = new ModelProfiles(f.root, codec),
+    inspected = await reopened.inspect();
+  assert.deepEqual(
+    inspected.profiles.find((entry) => entry.id === item.id).imageOptions,
+    { responseMode: "default-base64" },
+  );
+  view = await reopened.update(
+    item.id,
+    { ...image, imageOptions: null },
+    expected(inspected),
+  );
+  assert.equal(
+    view.profiles.find((entry) => entry.id === item.id).imageOptions,
+    null,
+  );
+});
+
 test("profile service changes clear old key unless explicitly replaced; protocol changes, active deletion and incompatible budgets refuse", async () => {
   const f = await fixture(),
     id = f.view.routes.text;

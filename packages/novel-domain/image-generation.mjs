@@ -10,6 +10,16 @@ export const imageGenerationLimits = Object.freeze({
   responseBytes: 64 * 1024 * 1024,
 });
 
+export function imageAdapterOptions(value) {
+  if (value === undefined || value === null) return null;
+  if (
+    !exact(value, ["responseMode"]) ||
+    !["default-base64", "request-base64"].includes(value.responseMode)
+  )
+    throw new Error("请明确选择受支持的内联base64图像响应模式");
+  return { responseMode: value.responseMode };
+}
+
 export function imageGenerationRequest(input) {
   if (
     !exact(input, ["prompt", "n", "size", "responseMode"]) ||

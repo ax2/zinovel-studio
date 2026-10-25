@@ -1,0 +1,29 @@
+
+> zinovel-studio@0.1.0-alpha.31 test:desktop D:\Work\zinovel-studio
+> node scripts/smoke-desktop.mjs
+
+(node:66612) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-j94KCV",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration",
+    "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "literal find/replace previews before mutation and undoes as one transaction",
+    "stale AI proposal cannot overwrite edits made during generation",
+    "isolated renderer has no Node globals; IPC rejects unknown operations",
+    "narrow-window assistant remains reachable through reference drawer"
+  ],
+  "errors": [],
+  "status": "passed"
+}

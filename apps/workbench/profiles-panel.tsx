@@ -19,6 +19,7 @@ type Profile = {
   model: string;
   budget?: BudgetSettings;
   imageBudget?: ImageBudget;
+  imageOptions?: { responseMode: "default-base64" | "request-base64" } | null;
   hasKey: boolean;
   credentialMismatch: boolean;
 };
@@ -41,6 +42,7 @@ type Draft = {
   model: string;
   budget: BudgetSettings;
   imageBudget: ImageBudget;
+  imageOptions: { responseMode: "default-base64" | "request-base64" } | null;
   originalService?: string;
   hasKey: boolean;
 };
@@ -59,6 +61,7 @@ const empty = (): Draft => ({
     pricing: null,
   },
   imageBudget: { maxImages: 1, maxCost: 0, pricing: null },
+  imageOptions: null,
   hasKey: false,
 });
 const expected = (view: View): ModelChoice => ({
@@ -361,7 +364,10 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                       apiKey: key,
                       ...(draft.protocol === "anthropic-text"
                         ? { budget: draft.budget }
-                        : { imageBudget: draft.imageBudget }),
+                        : {
+                            imageBudget: draft.imageBudget,
+                            imageOptions: draft.imageOptions,
+                          }),
                     },
                   });
                 }}
@@ -482,6 +488,36 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                     <>
                       <p>
                         以下预算仅供独立保存；本版不会调用图像服务或产生图像费用。
+                      </p>
+                      <label>
+                        明确的图像响应模式
+                        <select
+                          aria-label="图像响应模式"
+                          value={draft.imageOptions?.responseMode || ""}
+                          onChange={(e) =>
+                            setDraft({
+                              ...draft,
+                              imageOptions: e.target.value
+                                ? {
+                                    responseMode: e.target.value as
+                                      | "default-base64"
+                                      | "request-base64",
+                                  }
+                                : null,
+                            })
+                          }
+                        >
+                          <option value="">未确认；保持不可运行</option>
+                          <option value="default-base64">
+                            服务默认返回内联base64；不发送response_format
+                          </option>
+                          <option value="request-base64">
+                            明确请求response_format=b64_json
+                          </option>
+                        </select>
+                      </label>
+                      <p>
+                        请按所选服务文档确认参数支持；不根据模型名称猜测，也不下载服务返回的远端图片URL。当前适配选项仅保存，作者生成界面与安装验收仍在开发。
                       </p>
                       <label>
                         每次图像数量上限
@@ -625,7 +661,10 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                           clearKey: true,
                           ...(draft.protocol === "anthropic-text"
                             ? { budget: draft.budget }
-                            : { imageBudget: draft.imageBudget }),
+                            : {
+                                imageBudget: draft.imageBudget,
+                                imageOptions: draft.imageOptions,
+                              }),
                         },
                       })
                     }

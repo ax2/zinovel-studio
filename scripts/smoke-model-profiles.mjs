@@ -152,6 +152,10 @@ try {
   report.packaged = runtime.packaged;
   if (runtime.packaged)
     report.appAsarSha256 = hash(await readFile(runtime.path));
+  else
+    report.desktopBundleSha256 = hash(
+      await readFile(join(runtime.path, "dist/desktop/main.cjs")),
+    );
   await request("settings.save", {
     baseURL: servers[0].url,
     model: "synthetic-text-A",
@@ -399,12 +403,39 @@ try {
     .click();
   assert.equal(await panel().getByLabel("每次图像数量上限").inputValue(), "2");
   assert.equal(await panel().getByLabel("每张图像单价").inputValue(), "3");
-  await panel().getByRole("button", { name: "取消编辑", exact: true }).click();
+  assert.equal(
+    await panel().getByLabel("图像响应模式", { exact: true }).inputValue(),
+    "",
+  );
+  await panel()
+    .getByLabel("图像响应模式", { exact: true })
+    .selectOption("request-base64");
+  await panel()
+    .getByLabel("图像响应模式", { exact: true })
+    .scrollIntoViewIfNeeded();
+  await page.screenshot({ path: join(out, "image-response-mode.png") });
+  await panel()
+    .getByRole("button", { name: "保存独立配置", exact: true })
+    .click();
+  await panel().getByRole("status").filter({ hasText: "配置已保存" }).waitFor();
+  view = await request("profiles.list");
+  assert.deepEqual(view.profiles.find((p) => p.id === image.id).imageOptions, {
+    responseMode: "request-base64",
+  });
+  assert.equal(view.profiles.find((p) => p.id === image.id).hasKey, true);
+  assert.equal(view.profiles.find((p) => p.id === image.id).runnable, false);
   await panel()
     .getByRole("button", { name: "关闭模型管理", exact: true })
     .click();
+  await close();
+  await launch();
+  view = await request("profiles.list");
+  assert.deepEqual(view.profiles.find((p) => p.id === image.id).imageOptions, {
+    responseMode: "request-base64",
+  });
+  assert.equal(received[2].length, 0);
   report.checks.push(
-    "Separate image configuration retains its own key and per-image budget without borrowing text pricing; image cannot route to text; restart retains both routes and DPAPI B credential, does not auto-generate, and image adapter is explicitly unavailable with zero requests",
+    "Separate image configuration retains its own key, budget and explicitly saved response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; image adapter remains explicitly unavailable with zero requests",
   );
 
   // External corruption is injected only into this test's own application settings.

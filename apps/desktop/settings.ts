@@ -231,6 +231,12 @@ export class ModelSettings {
   async writingPublic(choice?: unknown) {
     return (await this.writing(choice)).settings;
   }
+  async image(choice: unknown, { secret = false } = {}): Promise<any> {
+    const { snapshot, view } = await this.state();
+    if (snapshot.mode !== "profiles" || !view.initialized)
+      throw new Error("请先建立并明确选择独立图像配置；未使用旧文字服务");
+    return this.profiles.resolve("image", choice, { secret });
+  }
   save(input: Input) {
     return this.serial(() => this.saveExclusive(input));
   }

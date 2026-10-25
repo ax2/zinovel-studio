@@ -18,6 +18,7 @@ import { claimDesktopSingleInstance } from "./upstream/single-instance";
 import { desktopNodeEnvironment } from "./upstream/node-environment";
 import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
 import { ModelSettings } from "./settings";
+import { ImageJobService } from "../../packages/novel-harness/image-jobs.mjs";
 import { previewImport } from "../../packages/novel-storage/importer.mjs";
 import { randomUUID } from "node:crypto";
 import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
@@ -58,6 +59,19 @@ function publicationHash(hash: unknown): string {
   return hash;
 }
 const settings = new ModelSettings(dataRoot);
+const imageJobs = new ImageJobService(
+  store.imageTasks,
+  (capability: string, choice: unknown, options: { secret?: boolean }) => {
+    if (capability !== "image") throw new Error("图像任务不能使用文字模型");
+    return settings.image(choice, options);
+  },
+);
+function assertImageCloseSafe() {
+  if (imageJobs.status())
+    throw new Error(
+      "图像任务仍在运行或有结果尚未保存。请返回图像任务完成取消、本地补存或明确放弃后再退出；当前未释放候选原图。",
+    );
+}
 const journal = new TaskJournal(join(dataRoot, "tasks"));
 const acceptance = new TaskAcceptance(journal, store);
 const materialAcceptance = new MaterialTaskAcceptance(journal, store.materials);
@@ -91,6 +105,7 @@ function cancelCloseAttempt() {
   closeTimer = undefined;
 }
 async function closeAfterRecovery() {
+  assertImageCloseSafe();
   publicationClosing = true;
   continuityQueries.cancelAll();
   knowledgeQueries.cancelAll();
@@ -1461,6 +1476,7 @@ if (
                 break;
               }
               case "app.close-ready":
+                assertImageCloseSafe();
                 publicationClosing = true;
                 continuityQueries.cancelAll();
                 knowledgeQueries.cancelAll();

@@ -9,7 +9,10 @@ import {
   modelCredentialPlan,
 } from "../novel-domain/model-service.mjs";
 import { validateSettings } from "../novel-harness/runtime.mjs";
-import { imageGenerationBudget as imageBudget } from "../novel-domain/image-generation.mjs";
+import {
+  imageGenerationBudget as imageBudget,
+  imageAdapterOptions,
+} from "../novel-domain/image-generation.mjs";
 
 const LIMIT = 2 * 1024 * 1024,
   uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
@@ -46,7 +49,8 @@ function configuration(input) {
   )
     throw new Error("请明确填写模型服务地址和模型标识");
   if (
-    (input.protocol === "anthropic-text" && input.imageBudget !== undefined) ||
+    (input.protocol === "anthropic-text" &&
+      (input.imageBudget !== undefined || input.imageOptions !== undefined)) ||
     (input.protocol === "openai-images" && input.budget !== undefined)
   )
     throw new Error("文字和图像预算不能混用");
@@ -60,6 +64,9 @@ function configuration(input) {
     baseURL: text.baseURL,
     model: text.model,
     imageBudget: imageBudget(input.imageBudget),
+    ...(input.imageOptions !== undefined
+      ? { imageOptions: imageAdapterOptions(input.imageOptions) }
+      : {}),
   };
 }
 function profileRecord(input) {
@@ -72,6 +79,7 @@ function profileRecord(input) {
       "model",
       "budget",
       "imageBudget",
+      "imageOptions",
       "encryptedKey",
       "credentialScope",
     ]) ||
@@ -184,7 +192,10 @@ function publicProfile(profile) {
     model: profile.model,
     ...(profile.protocol === "anthropic-text"
       ? { budget: clone(profile.budget) }
-      : { imageBudget: clone(profile.imageBudget) }),
+      : {
+          imageBudget: clone(profile.imageBudget),
+          imageOptions: clone(profile.imageOptions ?? null),
+        }),
     hasKey: !!profile.encryptedKey && !mismatch,
     credentialMismatch: mismatch,
   };
@@ -385,6 +396,7 @@ export class ModelProfiles {
           "model",
           "budget",
           "imageBudget",
+          "imageOptions",
           "apiKey",
           "clearKey",
         ])
@@ -418,6 +430,7 @@ export class ModelProfiles {
           "model",
           "budget",
           "imageBudget",
+          "imageOptions",
           "apiKey",
           "clearKey",
         ])

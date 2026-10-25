@@ -1,0 +1,18 @@
+✔ explicit migration preserves independent legacy ciphertext; active text routes freeze the exact profile and never expose keys (58.2764ms)
+✔ image configuration has its own route, key and budget; unavailable adapter refuses before decrypting or borrowing text capability (40.6084ms)
+✔ explicit image response options persist independently, preserve their own key, reject unsupported fields and remain unavailable before desktop integration (75.1339ms)
+✔ profile service changes clear old key unless explicitly replaced; protocol changes, active deletion and incompatible budgets refuse (72.6023ms)
+✔ stale revisions, same-revision external edits, future schema and bad UTF8 are preserved without resetting or rewriting (29.074ms)
+✔ encryption failure and an external edit during encryption cannot corrupt prior configuration or falsely save a key (26.1129ms)
+✔ two service instances cannot concurrently mutate one file; second migration and profile-path links refuse adoption (25.0563ms)
+✔ duplicate names, hidden cipher fields and unpriced image thresholds cannot enter the stored profile document (39.9237ms)
+✔ profile count and oversized-file limits refuse additional writes without erasing existing metadata (213.7309ms)
+✔ migration activation failure publishes no profiles; an activation interrupted after its pointer can be explicitly retried (20.059ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 682.1217
