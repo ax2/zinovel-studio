@@ -146,3 +146,5 @@ LIB-02按创建/排序/移动稳定ID验收记verified，聚合27/49/30；其他
 ## 2026-10-25 alpha.37安装候选通过
 
 继续评估导入容量后，分行改迭代、字符数按码点常量空间统计，新增BOM/CRLF/空行/空章/补充平面语义用例，边界6项和全量372通过。e4a2ba9候选完整NSIS194项安装/运行/重装/卸载通过，7655/12802/4151ms；新增导入三组绑定实际packaged=true和asar8e2d9d16…，EXE2a195df0…/155535131字节。51份新安装JSON、完整目录、EXE及原生解码/DLL/许可证据留档，无ZIP。详见assessments/release/v0.1.0-alpha.37；最新公开36升级与独立CI仍待，37资格false，LIB-03/04继续进行中。设计评估见design/manuscript-import.md，未以编码开关代替全部手工边界修正要求。
+
+公开收尾：不可变d19434bf111ef3515710dda6cd2ea007d04ede35，独立发行40189552007 success（含全量源码/界面和191项安装、公开3/31/33/35四升级、205条manifest），2026-10-25 19:57:24北京时间发布四附件。原生产ee6dfc0源码CI40187388767成功；d194主线CI40189549004因后续主线提交取消，不冒充该独立源码CI成功，标签发行内源码检查已完整通过。公开EXE 155534457字节，SHA256 50425dd87f735bfda379863e1844d6846632ceafe70611a575743cfa58ecb3d3，asar 6684495567bd9d2a0c057277e3877905deaeba448fbd478cbc48601c6425421c，与本机cf146993…/4a615eb1…分别归档。匿名可见、三元数据digest、SHA256SUMS及实际下载hash通过；再额外实际安装公开NSIS 8865ms、运行官方Harness/编辑/历史等11项、卸载3816ms，安装和卸载合计13项，程序/登记移除且合成正文hash保留。完整公开安装目录与EXE在D:/zinovel-releases/v0.1.0-alpha.36/ci-public，无ZIP。详见assessments/release/v0.1.0-alpha.36/ci-public；未签名预览，稳定资格false，主线37导入修正不在本包。
