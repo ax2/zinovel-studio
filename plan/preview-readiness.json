@@ -89,13 +89,15 @@
     "assessments/release/v0.1.0-alpha.34/source-ci.json",
     "assessments/release/v0.1.0-alpha.34/compact-package/character-looks-smoke.json",
     "assessments/stage-006/character-looks-compact-ci/README.md",
-    "assessments/stage-006/post-alpha34-priority-review.md"
+    "assessments/stage-006/post-alpha34-priority-review.md",
+    "assessments/stage-002/planning-write-guard/README.md",
+    "assessments/stage-002/manuscript-write-guard/README.md"
   ],
   "reports": [],
   "limitations": [
-    "alpha.34发行40180606034因新增反例证实既有规划写保护缺口而主动取消，未公开、不重跑/移动原标签；alpha.35修复已通过360项及实际编排，但场景树/安装/升级尚待，本版ready=false",
+    "alpha.34发现数据保护反例后公开前主动取消，不重跑原标签。alpha.35正文与规划修复通过366项及实际编排/合并/故障/接受恢复；本版安装与三条升级尚待，ready=false",
     "Windows x64未签名阶段预览；本版安装自动验证中的文件选择采用结果替换，实际宿主读取原图；不把历史原生选择证据算为本版，也不扩大为原生IME验收",
-    "完整106项仍26 verified/49 in-progress/31 planned：人物参考/变体、封面排字比例、章图位置与带图DOCX/PDF/EPUB、目录/注释、远端发布及空间时态等仍待完成；未将初次图像生成当成完整视觉交付",
+    "完整106项仍26 verified/50 in-progress/30 planned：人物参考/变体、封面排字比例、章图位置与带图DOCX/PDF/EPUB、目录/注释、远端发布及空间时态等仍待完成；未将初次图像生成当成完整视觉交付",
     "真实模型文学质量、原生IME与辅助技术、大书性能、自动升级及完整分发审计仍待验收；稳定门禁false"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"

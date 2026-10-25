@@ -154,9 +154,12 @@ try {
     manifest.upgrade?.previousInstallerSha256 && manifest.upgrade.upgradeMs > 0,
   );
   if (
-    ["0.1.0-alpha.32", "0.1.0-alpha.33", "0.1.0-alpha.34"].includes(
-      manifest.version,
-    )
+    [
+      "0.1.0-alpha.32",
+      "0.1.0-alpha.33",
+      "0.1.0-alpha.34",
+      "0.1.0-alpha.35",
+    ].includes(manifest.version)
   ) {
     const recent = manifest.recentUpgrade;
     assert.equal(recent?.fromVersion, "0.1.0-alpha.31");
@@ -182,7 +185,11 @@ try {
     ])
       assert.equal(manifest.imageStudio[key], true);
   }
-  if (["0.1.0-alpha.33", "0.1.0-alpha.34"].includes(manifest.version)) {
+  if (
+    ["0.1.0-alpha.33", "0.1.0-alpha.34", "0.1.0-alpha.35"].includes(
+      manifest.version,
+    )
+  ) {
     assert.equal(manifest.processRecovery?.handlePinned, true);
     assert.equal(manifest.processRecovery?.birthPrecision, "100ns");
     assert.equal(manifest.processRecovery?.rootStatus, "terminated");
@@ -191,7 +198,7 @@ try {
       manifest.imageStudio.appAsarSha256,
     );
   }
-  if (manifest.version === "0.1.0-alpha.34") {
+  if (["0.1.0-alpha.34", "0.1.0-alpha.35"].includes(manifest.version)) {
     const current = manifest.currentPublicUpgrade;
     assert.equal(current?.fromVersion, "0.1.0-alpha.33");
     assert.equal(
