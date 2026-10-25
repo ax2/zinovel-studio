@@ -36,6 +36,8 @@ export function ImportDialog({
     try {
       const result = await api("import.choose", { directory });
       if (!result.cancelled) {
+        setEncoding("utf-8");
+        setSplit(true);
         setId(result.id);
         setPreview(result.preview || null);
         setError(result.error || "");
@@ -76,7 +78,7 @@ export function ImportDialog({
           </button>
         </div>
         <p className="muted">
-          先检查编码、分卷和章节边界；确认后新建作品，原文件保持不变。自动拆分时将标题行移为章节标题，并统一换行符。
+          先检查编码、分卷和章节边界；确认后新建作品，原文件保持不变。导入以本次预览为准，源稿后续修改需重新预览。自动拆分时将标题行移为章节标题，并统一换行符。
         </p>
         <div className="button-row">
           <button disabled={busy} onClick={() => choose(false)}>

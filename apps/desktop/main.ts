@@ -947,11 +947,15 @@ if (
                   const preview = await previewImport(selected.filePaths);
                   imports.set(id, { paths: selected.filePaths, preview });
                   value = { id, preview };
-                } catch {
+                } catch (error) {
                   value = {
                     id,
                     error:
-                      "初次 UTF-8 解码失败或内容不符合导入条件，请更换编码重试。",
+                      error instanceof TypeError
+                        ? "初次 UTF-8 解码失败，请更换编码重试。"
+                        : error instanceof Error
+                          ? error.message
+                          : "无法预览所选稿件",
                   };
                 }
                 break;

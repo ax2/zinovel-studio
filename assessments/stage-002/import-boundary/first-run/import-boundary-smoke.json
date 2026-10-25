@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "checks": [
+    "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+    "A new selection resets displayed decoding/splitting to the host defaults; GB18030 retries correctly and failed re-preview revokes the prior host commit token"
+  ],
+  "errors": [],
+  "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.",
+  "failure": "Error: locator.inputValue: Error: Node is not an <input>, <textarea> or <select> element\nCall log:\n\u001b[2m  - waiting for getByLabel('正文编辑器')\u001b[22m\n"
+}

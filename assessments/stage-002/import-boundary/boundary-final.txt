@@ -1,0 +1,13 @@
+✔ overlapping selections count unique files rather than selection occurrences (14.8275ms)
+✔ file growth after enumeration still enforces the individual 32 MiB limit (3.7978ms)
+✔ replacement after enumeration is rejected without reading the replacement as the selected file (4.6814ms)
+✔ a source growing during the handle read cannot force an unbounded read (3.5817ms)
+✔ chapter limit is enforced while splitting and across source files (9.2ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.8778

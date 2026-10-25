@@ -46,6 +46,7 @@ jobs:
       - run: pnpm test:agent
       - run: pnpm test:tool-isolation
       - run: pnpm test:library
+      - run: pnpm test:import-boundary
       - run: pnpm test:editor-tools
       - run: pnpm test:recovery
       - run: pnpm test:merge

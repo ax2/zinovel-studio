@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": [
+    "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+    "A new selection resets displayed decoding/splitting to the host defaults; GB18030 retries correctly and failed re-preview revokes the prior host commit token",
+    "Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals"
+  ],
+  "errors": [],
+  "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim."
+}
