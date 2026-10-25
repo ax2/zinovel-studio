@@ -1,0 +1,25 @@
+(node:41648) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [
+    'Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources',
+    'A new selection resets displayed decoding/splitting to the host defaults; GB18030 retries correctly and failed re-preview revokes the prior host commit token'
+  ],
+  errors: [],
+  scope: 'Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.',
+  failure: 'Error: locator.inputValue: Error: Node is not an <input>, <textarea> or <select> element\n' +
+    'Call log:\n' +
+    "\x1B[2m  - waiting for getByLabel('正文编辑器')\x1B[22m\n"
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+locator.inputValue: Error: Node is not an <input>, <textarea> or <select> element
+Call log:
+  - waiting for getByLabel('正文编辑器')
+
+    at D:\Work\zinovel-studio\scripts\smoke-import-boundary.mjs:132:47
+
+Node.js v26.10.0

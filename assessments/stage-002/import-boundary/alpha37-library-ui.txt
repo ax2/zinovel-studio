@@ -1,0 +1,17 @@
+
+> zinovel-studio@0.1.0-alpha.37 test:library D:\Work\zinovel-studio
+> node scripts/smoke-library.mjs
+
+(node:80828) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  checks: [
+    'native file selection -> multi-volume preview -> new book; source bytes unchanged',
+    'chapter state, trash/restore, new volume and chapter reassignment preserve IDs',
+    'full-text hit opens correct chapter and selects exact UTF-16 range',
+    'complete directory backup verified and restored as separate book, original retained'
+  ],
+  errors: [],
+  status: 'passed',
+  nativeDialogSelection: 'programmatically selects fixture paths; all application IPC/storage operations are real'
+}

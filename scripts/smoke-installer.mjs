@@ -147,6 +147,7 @@ try {
     ],
     ["smoke-planning.mjs", "planning/planning-smoke.json"],
     ["smoke-scene-tree.mjs", "scene-tree/scene-tree-smoke.json"],
+    ["smoke-import-boundary.mjs", "import-boundary/import-boundary-smoke.json"],
     [
       "smoke-scene-tree-operations.mjs",
       "scene-tree-operations/scene-tree-operations-smoke.json",

@@ -3,6 +3,19 @@ import { constants } from "node:fs";
 import { basename, extname, join, resolve } from "node:path";
 import { createHash } from "node:crypto";
 
+function* manuscriptLines(text) {
+  let start = 0;
+  for (;;) {
+    const end = text.indexOf("\n", start);
+    if (end < 0) {
+      yield text.slice(start);
+      return;
+    }
+    yield text.slice(start, end);
+    start = end + 1;
+  }
+}
+
 export function splitManuscript(text, fallbackTitle, limit = 2000) {
   const chapters = [];
   let volume = "",
@@ -18,10 +31,9 @@ export function splitManuscript(text, fallbackTitle, limit = 2000) {
     lines = [];
     explicit = false;
   };
-  for (const line of text
-    .replace(/^\uFEFF/, "")
-    .replace(/\r\n?/g, "\n")
-    .split("\n")) {
+  for (const line of manuscriptLines(
+    text.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n"),
+  )) {
     const heading = line.replace(/^#{1,3}\s+/, "").trim();
     if (/^第[零〇一二三四五六七八九十百千万两\d]+卷.{0,120}$/.test(heading)) {
       flush();
@@ -108,15 +120,15 @@ export async function previewImport(paths, encoding = "utf-8", split = true) {
   if (!chapters.length) throw new Error("没有找到可导入的 TXT 或 Markdown");
   if (chapters.length > 2000)
     throw new Error("拆分后超过 2000 章，请调整导入范围");
+  let totalCharacters = 0;
+  for (const chapter of chapters)
+    for (const character of chapter.body) totalCharacters++;
   return {
     chapters,
     sources,
     encoding,
     split,
-    totalCharacters: chapters.reduce(
-      (total, item) => total + Array.from(item.body).length,
-      0,
-    ),
+    totalCharacters,
   };
 }
 

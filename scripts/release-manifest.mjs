@@ -163,6 +163,32 @@ manifest.sceneTreeOperations = {
   checks: sceneOperations.checks,
   scope: sceneOperations.scope,
 };
+const importBoundary = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/installed/import-boundary/import-boundary-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+if (
+  importBoundary.status !== "passed" ||
+  importBoundary.version !== pkg.version ||
+  importBoundary.packaged !== true ||
+  importBoundary.appAsarSha256 !== appAsarSha256 ||
+  importBoundary.checks?.length !== 3 ||
+  importBoundary.errors?.length !== 0
+)
+  throw new Error(
+    "Installed import boundary and frozen decoding preview proof is missing or stale",
+  );
+manifest.importBoundary = {
+  version: importBoundary.version,
+  appAsarSha256,
+  checks: importBoundary.checks,
+  scope: importBoundary.scope,
+};
 if (
   imageRuntime.status !== "passed" ||
   imageRuntime.version !== pkg.version ||

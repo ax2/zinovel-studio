@@ -1,0 +1,15 @@
+✔ overlapping selections count unique files rather than selection occurrences (12.7776ms)
+✔ file growth after enumeration still enforces the individual 32 MiB limit (3.6468ms)
+✔ replacement after enumeration is rejected without reading the replacement as the selected file (4.0956ms)
+✔ volume order, stable chapter IDs, reviewed status and trash survive restart (105.1385ms)
+✔ UTF-8 import preview preserves source bytes and chapter/volume order (42.4232ms)
+✔ verified backup restores into a new book; corruption is rejected without overwriting originals (73.8338ms)
+✔ preview supports legacy Chinese encoding and retains deliberately empty chapters (3.7429ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 411.0482

@@ -3,6 +3,7 @@ import electronPath from "electron";
 import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import {
   captureOwnedProcesses,
   confirmOwnedProcessesExited,
@@ -29,6 +30,11 @@ const out = join(
 await mkdir(out, { recursive: true });
 const env = { ...process.env, ZINOVEL_DATA_ROOT: join(work, "data") };
 delete env.ELECTRON_RUN_AS_NODE;
+if (process.env.ZINOVEL_TEST_EXECUTABLE) {
+  for (const key of Object.keys(env))
+    if (key.toLowerCase() === "path") delete env[key];
+  env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
+}
 let app, page, owned;
 const report = {
   status: "running",
@@ -58,12 +64,31 @@ async function choose(path, directoryChoice = false) {
 }
 try {
   app = await electron.launch({
-    executablePath: electronPath,
-    args: [root],
+    executablePath: process.env.ZINOVEL_TEST_EXECUTABLE || electronPath,
+    args: process.env.ZINOVEL_TEST_EXECUTABLE ? [] : [root],
     cwd: root,
     env,
   });
   owned = await captureOwnedProcesses(app.process().pid);
+  const runtime = await app.evaluate(({ app }) => ({
+    version: app.getVersion(),
+    packaged: app.isPackaged,
+    path: app.getAppPath(),
+  }));
+  assert.equal(
+    runtime.version,
+    JSON.parse(await readFile(join(root, "package.json"), "utf8")).version,
+  );
+  report.version = runtime.version;
+  report.packaged = runtime.packaged;
+  report[runtime.packaged ? "appAsarSha256" : "desktopBundleSha256"] =
+    createHash("sha256")
+      .update(
+        await readFile(
+          runtime.packaged ? runtime.path : join(root, "dist/desktop/main.cjs"),
+        ),
+      )
+      .digest("hex");
   page = await app.firstWindow();
   page.on("pageerror", (e) => report.errors.push(e.message));
   await app.evaluate(({ BrowserWindow }) =>
@@ -129,7 +154,10 @@ try {
     .getByRole("button", { name: "确认导入为新作品", exact: true })
     .click();
   await page.getByLabel("正文编辑器").waitFor();
-  assert.equal((await page.getByLabel("正文编辑器").innerText()).trim(), "你好");
+  assert.equal(
+    (await page.getByLabel("正文编辑器").innerText()).trim(),
+    "你好",
+  );
   const books = (await host("library.list")).books;
   assert.equal(books.length, 1);
   assert.equal(books[0].chapters.length, 1);

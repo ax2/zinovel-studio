@@ -123,3 +123,15 @@ test("chapter limit is enforced while splitting and across source files", async 
   await assert.rejects(previewImport([source, trigger]), /2000 章/);
   assert.equal(await fs.readFile(source, "utf8"), text);
 });
+
+test("incremental line parsing preserves BOM/CRLF/empty lines and code-point counts", async () => {
+  const { source } = await fixture();
+  await fs.writeFile(source, "\uFEFF第一章 雨\r\n𠮷🙂\r\n\r\n尾\r\n");
+  const preview = await previewImport([source]);
+  assert.equal(preview.chapters[0].body, "𠮷🙂\n\n尾\n");
+  assert.equal(preview.totalCharacters, 6);
+  assert.deepEqual(
+    splitManuscript("第一章 空\n第二章 空\n", "默认").map((x) => x.body),
+    ["", ""],
+  );
+});

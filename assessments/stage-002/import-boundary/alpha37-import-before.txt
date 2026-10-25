@@ -1,0 +1,52 @@
+✖ overlapping selections count unique files rather than selection occurrences (89.1082ms)
+✖ file growth after enumeration still enforces the individual 32 MiB limit (264.7677ms)
+✖ replacement after enumeration is rejected without reading the replacement as the selected file (3.7777ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 436.8561
+
+✖ failing tests:
+
+test at tests\import-boundary.test.mjs:36:1
+✖ overlapping selections count unique files rather than selection occurrences (89.1082ms)
+  Error: 导入超过 2000 个文件，请缩小范围
+      at visit (file:///D:/Work/zinovel-studio/packages/novel-storage/importer.mjs:72:15)
+      at async previewImport (file:///D:/Work/zinovel-studio/packages/novel-storage/importer.mjs:75:29)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/import-boundary.test.mjs:38:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests\import-boundary.test.mjs:44:1
+✖ file growth after enumeration still enforces the individual 32 MiB limit (264.7677ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async afterScan (file:///D:/Work/zinovel-studio/tests/import-boundary.test.mjs:31:9)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/import-boundary.test.mjs:46:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /32 MiB/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\import-boundary.test.mjs:52:1
+✖ replacement after enumeration is rejected without reading the replacement as the selected file (3.7777ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async afterScan (file:///D:/Work/zinovel-studio/tests/import-boundary.test.mjs:31:9)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/import-boundary.test.mjs:54:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /改变|变化/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

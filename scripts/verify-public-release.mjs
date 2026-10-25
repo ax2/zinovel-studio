@@ -282,6 +282,14 @@ try {
     assert.match(appearance.lookDraftSha256, /^[a-f0-9]{64}$/);
     assert.match(appearance.oldMaterialDraftSha256, /^[a-f0-9]{64}$/);
   }
+  if (milestone >= 37) {
+    assert.equal(manifest.importBoundary?.version, manifest.version);
+    assert.equal(
+      manifest.importBoundary?.appAsarSha256,
+      manifest.imageStudio.appAsarSha256,
+    );
+    assert.equal(manifest.importBoundary?.checks?.length, 3);
+  }
   const installerDirectory = resolve(
     root,
     process.argv[5] || join(output, "installer"),

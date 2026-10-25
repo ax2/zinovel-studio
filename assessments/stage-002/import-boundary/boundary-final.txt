@@ -1,13 +1,18 @@
-✔ overlapping selections count unique files rather than selection occurrences (14.8275ms)
-✔ file growth after enumeration still enforces the individual 32 MiB limit (3.7978ms)
-✔ replacement after enumeration is rejected without reading the replacement as the selected file (4.6814ms)
-✔ a source growing during the handle read cannot force an unbounded read (3.5817ms)
-✔ chapter limit is enforced while splitting and across source files (9.2ms)
-ℹ tests 5
+✔ overlapping selections count unique files rather than selection occurrences (13.5522ms)
+✔ file growth after enumeration still enforces the individual 32 MiB limit (3.6394ms)
+✔ replacement after enumeration is rejected without reading the replacement as the selected file (3.5745ms)
+✔ a source growing during the handle read cannot force an unbounded read (3.4569ms)
+✔ chapter limit is enforced while splitting and across source files (8.7725ms)
+✔ incremental line parsing preserves BOM/CRLF/empty lines and code-point counts (4.4302ms)
+✔ volume order, stable chapter IDs, reviewed status and trash survive restart (101.8388ms)
+✔ UTF-8 import preview preserves source bytes and chapter/volume order (40.6873ms)
+✔ verified backup restores into a new book; corruption is rejected without overwriting originals (71.8142ms)
+✔ preview supports legacy Chinese encoding and retains deliberately empty chapters (3.3441ms)
+ℹ tests 10
 ℹ suites 0
-ℹ pass 5
+ℹ pass 10
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 161.8778
+ℹ duration_ms 378.4357

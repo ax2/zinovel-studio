@@ -1,0 +1,19 @@
+
+> zinovel-studio@0.1.0-alpha.37 test:import-boundary D:\Work\zinovel-studio
+> node scripts/smoke-import-boundary.mjs
+
+(node:13568) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources',
+    'A new selection resets displayed decoding/splitting to the host defaults; GB18030 retries correctly and failed re-preview revokes the prior host commit token',
+    'Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals'
+  ],
+  errors: [],
+  scope: 'Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.',
+  version: '0.1.0-alpha.37',
+  packaged: false,
+  desktopBundleSha256: '4c15f82574ecc19199ea0efd05ab10be9de30f95dab8bb28a13fc602b73ec85a'
+}

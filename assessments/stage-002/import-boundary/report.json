@@ -6,5 +6,8 @@
     "Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals"
   ],
   "errors": [],
-  "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim."
+  "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.",
+  "version": "0.1.0-alpha.37",
+  "packaged": false,
+  "desktopBundleSha256": "4c15f82574ecc19199ea0efd05ab10be9de30f95dab8bb28a13fc602b73ec85a"
 }
