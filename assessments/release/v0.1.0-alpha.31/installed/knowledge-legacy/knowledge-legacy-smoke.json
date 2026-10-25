@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "checks": [
+    "41 actual legacy records paginate 40/1; explicit source selection starts with unspecified knowledge state and permits author scope/state review",
+    "legacy source and author edits survive full desktop restart; a changed old-card baseline rejects creation without a new record",
+    "refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact",
+    "manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "legacy-linked-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "legacy-changed-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

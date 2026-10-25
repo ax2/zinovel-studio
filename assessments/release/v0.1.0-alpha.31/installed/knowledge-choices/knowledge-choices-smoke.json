@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author selection freezes one explicit event without removing contradictory records; matrix shows the choice separately",
+    "external same-cell decision cannot be cleared with a stale UI baseline; re-reading permits explicit author change",
+    "manuscript edit expires the old choice; original quote remains visible and current-source rebinding alone does not silently reconfirm the choice",
+    "explicit new selection survives full restart; clearing preserves four prior choice versions and unchosen event bytes; dark narrow history remains reachable"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "choice-matrix-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "choice-history-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}
