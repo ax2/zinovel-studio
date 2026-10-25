@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "checks": [
+    "Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript",
+    "Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart",
+    "Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard",
+    "Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged",
+    "Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "filtered-neighbor-order.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "stale-planning-preserved.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "tree-operations-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "unknown-draft-preserved.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification",
+  "version": "0.1.0-alpha.37",
+  "packaged": true,
+  "appAsarSha256": "8e2d9d16ce803e7aa6a54dfc92f965ac157f1f31dbf9ed85a6b4c1bf72c5c046"
+}

@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual pointer drag moves one scene across chapters before a neighbor; board and outline share the order and semantic fields; keyboard Enter reorders without changing manuscript",
+    "real restart retains order; external same-revision edit blocks stale move without overwrite; deleted chapter remains visible and scene can be reassigned; deleted scene restores at its original position",
+    "open original scene form and edit choice; refreshed outline shows same field; dark narrow viewport supports chapter filtering and exact chapter navigation; backup restores placement under new book identity; manuscript bytes unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "outline-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "board-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "external-conflict.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "outline-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "version": "0.1.0-alpha.37",
+  "packaged": true,
+  "appAsarSha256": "8e2d9d16ce803e7aa6a54dfc92f965ac157f1f31dbf9ed85a6b4c1bf72c5c046"
+}

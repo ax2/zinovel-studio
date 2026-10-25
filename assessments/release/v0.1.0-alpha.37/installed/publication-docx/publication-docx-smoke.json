@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.37",
+  "snapshotHash": "5e7b49dd59a1b5d82d6f4c32fd38b525eaccac843b3ea9ad6fb4d0b0a4bf2918",
+  "sha256": "813c86feb08b6fa125d9505311bca0aac0971c64a9d291a69d2ffa23a8e78f87",
+  "bytes": 11450,
+  "reader": {
+    "name": "DeepSeek LibreOffice Kit",
+    "version": "0.1.5",
+    "backend": "native",
+    "missingFonts": []
+  },
+  "scope": "Development-only independent reader; native engine is not shipped by the application",
+  "checks": [
+    "installed or source host DOCX exports real editable paragraphs/native heading styles, public metadata, exact selected chapter order and rare-character counts; original bytes remain unchanged",
+    "independent native LibreOffice reader converts the actual exported DOCX; spatial text extraction verifies complete public selection, excludes private/unselected text, checks all glyph bounds and rasterizes every page"
+  ]
+}

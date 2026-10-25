@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual editor flush, native-choice-instrumented import, exact originals, current PNG preview, purpose/source/rights/linked character metadata and Ctrl+S saved once; local draft including temporarily empty title survives modal close",
+    "external metadata conflict preserves author input; explicit disk comparison/rebase saves new version; JPEG EXIF preview and old-image history remain independent; explicit history adoption creates a new version retaining later originals; recycle/restore preserve originals",
+    "corrupt image import creates no visible record; external original corruption refuses preview and preserves damaged bytes; explicit synthetic repair re-enables preview",
+    "quota error protects modal input; unknown future draft survives full restart until explicit discard; synthetic durable host commit without panel receipt recovers by creation identity after restart without duplicate records",
+    "desktop/806px narrow/dark screenshots, zero horizontal overflow, zero renderer errors or external page requests; all source files and formal manuscript remain byte-identical"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "asset-desktop.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "asset-narrow.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-dark-narrow.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-quota-protected.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "asset-corrupt-original.png",
+      "width": 806,
+      "height": 803
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "nativeDialog": "Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim",
+  "version": "0.1.0-alpha.37",
+  "packaged": true,
+  "appAsarSha256": "8e2d9d16ce803e7aa6a54dfc92f965ac157f1f31dbf9ed85a6b4c1bf72c5c046"
+}

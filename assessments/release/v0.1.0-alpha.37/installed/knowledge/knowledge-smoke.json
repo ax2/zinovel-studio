@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "checks": [
+    "synthetic localStorage quota failure blocks dialog close without losing input; after storage recovers the same draft reopens intact and can be explicitly discarded",
+    "actual UI distinguishes belief, suspicion and empty cells; saved Unicode source binding never changes manuscript",
+    "event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
+    "retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
+    "dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "matrix-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "matrix-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

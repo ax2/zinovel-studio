@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.37",
+  "commit": "e4a2ba91bffeb517785b17b3766f386813937a35",
+  "files": 51,
+  "checks": 194,
+  "installerSha256": "2a195df06e755f1bc66b8ed982a183e8ce2b7e15a202052faf6562762cd0fb89",
+  "appAsarSha256": "8e2d9d16ce803e7aa6a54dfc92f965ac157f1f31dbf9ed85a6b4c1bf72c5c046",
+  "bytes": 155535131,
+  "installMs": 7655,
+  "reinstallMs": 12802,
+  "uninstallMs": 4151,
+  "scope": "Local installed candidate only; public alpha36 upgrade, independent CI/release and public bytes still pending; preview gate false"
+}
