@@ -93,6 +93,7 @@ export function TaskHistory({
   openChapter,
   onRetry,
   retryTarget,
+  retryModelLabel,
 }: {
   bookId?: string;
   onClose: () => void;
@@ -100,6 +101,7 @@ export function TaskHistory({
   openChapter: (id: string, bookId?: string) => Promise<void>;
   onRetry?: (task: StoredTask) => void;
   retryTarget?: { bookId: string; chapterId: string } | null;
+  retryModelLabel?: string;
 }) {
   const [tasks, setTasks] = useState<TaskSummary[]>([]),
     [selected, setSelected] = useState<StoredTask | null>(null),
@@ -501,6 +503,10 @@ export function TaskHistory({
               ) && (
                 <p className="muted">
                   重试会重新调用模型，使用当前章节和选区生成新候选；原任务与部分结果保留。请先打开对应章节。
+                  <span aria-label="重试文字模型">
+                    本次使用：
+                    {retryModelLabel || "请在写作助理核对当前模型选择"}。
+                  </span>
                 </p>
               )}
           </>

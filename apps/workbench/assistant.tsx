@@ -430,8 +430,9 @@ export function WritingAssistant({
           onClose={() => setTasksOpen(false)}
           openChapter={openChapter}
           retryTarget={snapshot}
+          retryModelLabel={model.label}
           onRetry={
-            running
+            running || !model.ready
               ? undefined
               : (task) => {
                   setTasksOpen(false);

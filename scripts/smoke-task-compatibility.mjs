@@ -170,6 +170,15 @@ try {
     await page.getByRole("button", { name: "继续审阅", exact: true }).count(),
     0,
   );
+  const retryModel = await page.evaluate(() =>
+    window.novel.request("settings.get", {}),
+  );
+  assert.ok(
+    (
+      await page.getByLabel("重试文字模型", { exact: true }).innerText()
+    ).includes(retryModel.model),
+  );
+  await page.screenshot({ path: join(screenshots, "retry-current-model.png") });
   await page
     .getByRole("button", { name: "用当前选区重试", exact: true })
     .click();
