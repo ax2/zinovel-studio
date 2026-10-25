@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript",
+    "retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
+    "actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "knowledge-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "relation-stale-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    },
+    {
+      "name": "relation-actions-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ]
+}

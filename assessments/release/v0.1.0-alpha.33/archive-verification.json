@@ -1,0 +1,18 @@
+{
+  "scope": "Full runnable directory and installer copied and rehashed; installer qualification separately pending; no ZIP",
+  "archive": "D:\\zinovel-releases\\v0.1.0-alpha.33",
+  "files": [
+    {
+      "file": "ZiNovel-Studio-0.1.0-alpha.33-windows-x64-setup.exe",
+      "bytes": 155523395,
+      "sha256": "be57e84e427450b311ec2ff60e25551e9950408a0f4f9aed2b7100023a979518"
+    },
+    {
+      "file": "win-unpacked\\resources\\app.asar",
+      "bytes": 203139313,
+      "sha256": "917b97fb4f587c37bef1835c49b71767106be22d6ab7404e6813858a46afa248"
+    }
+  ],
+  "status": "passed",
+  "version": "0.1.0-alpha.33"
+}

@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "checks": [
+    "bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes",
+    "forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded",
+    "task list filters by book and remains bounded, accessible and dismissible in narrow viewport"
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "version": "0.1.0-alpha.33",
+  "packaged": true,
+  "appAsarSha256": "917b97fb4f587c37bef1835c49b71767106be22d6ab7404e6813858a46afa248",
+  "termination": {
+    "method": "identity-verified pinned-handle termination of captured original processes",
+    "handlePinned": true,
+    "birthPrecision": "100ns",
+    "rootStatus": "terminated",
+    "outcomes": [
+      {
+        "pid": 25276,
+        "status": "terminated"
+      },
+      {
+        "pid": 37756,
+        "status": "terminated"
+      },
+      {
+        "pid": 69380,
+        "status": "exited-during-termination"
+      },
+      {
+        "pid": 43576,
+        "status": "absent"
+      },
+      {
+        "pid": 56940,
+        "status": "absent"
+      },
+      {
+        "pid": 89272,
+        "status": "already-exited"
+      }
+    ],
+    "ownedProcessesConfirmedExited": 6,
+    "verification": "Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject"
+  }
+}

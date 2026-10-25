@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版仍为[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)。alpha.32本机178项与双升级通过，但不可变标签的独立安装CI在任务强杀验证辅助代码失败，未公开Release，不移动或重跑该标签。主线alpha.33延续明确复评功能并修复进程退出验证，346项与13项进程检查通过；本版安装和新CI仍待，ready=false。详见[32失败证据](assessments/release/v0.1.0-alpha.32/ci-first-failure/README.md)、[33句柄恢复验证](assessments/stage-006/process-handle-recovery.md)、[复评功能](assessments/stage-006/image-reviewed-adoption.md)。
+最新公开版仍为[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)。alpha.32不可变标签安装CI失败未公开。主线alpha.33已通过346项、13项进程检查、178项实际安装与公开alpha.3/alpha.31双升级；图像目标复评和句柄恢复均绑定本版asar。阶段预览已具本机资格，等待新标签独立发行与公开字节核对。详见[33验收](assessments/release/v0.1.0-alpha.33/README.md)和[32失败证据](assessments/release/v0.1.0-alpha.32/ci-first-failure/README.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
