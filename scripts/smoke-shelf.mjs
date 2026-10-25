@@ -101,6 +101,9 @@ try {
     .click();
   await page.getByTitle("上移分卷 第二卷", { exact: true }).click();
   await page.getByRole("button", { name: "关闭作品管理", exact: true }).click();
+  await page.waitForFunction(
+    () => document.querySelector(".volume-label")?.textContent === "第二卷",
+  );
   assert.equal(
     await page.locator(".volume-label").first().textContent(),
     "第二卷",
