@@ -1,0 +1,18 @@
+✔ image coordinator freezes only host-resolved image identity, sends once, saves candidates without adoption and exposes no key (145.7649ms)
+✔ unconfirmed adapters, mismatched mode and renderer-supplied credential fields refuse before creating any task (25.5276ms)
+✔ a stale model or raw codec error never uses a fallback or exposes private errors and releases the global slot (41.5692ms)
+✔ cancellation while awaiting host model resolution records a not-sent cancellation with zero HTTP requests (55.5628ms)
+✔ only one global request is allowed; cancelling after actual HTTP receipt records unknown and never retries (77.079ms)
+✔ a paid response whose blob save fails keeps one response in memory, reports unsafe shutdown, blocks new requests and retries only local storage (102.6687ms)
+✔ retained unsaved candidates are released only after explicit, version-checked durable discard, keeping the known response receipt (96.2611ms)
+✔ successful receive commit without a receipt reconciles the exact retained response locally (99.8509ms)
+✔ an HTTP rejection whose outcome write fails is retained and retries only the durable outcome (71.046ms)
+✔ a durable send-intent commit with a missing receipt still records the actual transport not-sent fact (68.0006ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 917.8375

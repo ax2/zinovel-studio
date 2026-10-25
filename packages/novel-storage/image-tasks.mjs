@@ -237,8 +237,10 @@ export class ImageTaskStore {
         status: "send-intent",
         attemptId: randomUUID(),
       };
-      const saved = await this.commit(ctx, next, previous);
+      // Keep same-process ownership if the durable commit succeeds but its receipt
+      // fails. The coordinator can then record the known not-sent transport fact.
       this.#active.add(`${bookId}/${next.id}`);
+      const saved = await this.commit(ctx, next, previous);
       return this.view(ctx, saved);
     });
   }
