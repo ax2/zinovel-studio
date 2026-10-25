@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新阶段版[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)已公开，含独立模型管理与文字路由，167项本机安装/升级及独立标签CI通过，公开安装EXE已实际下载复算hash。主线alpha.31新增AI图像工作室，324项源码、图像8组/模型管理6组/基础桌面10组/凭据隔离3组回归通过；旧图像配置仍需明确确认响应模式才可运行。混合候选保留与首次Key崩溃持久性已修复并实际验证，完整源码CI和175项实际安装/重装/卸载、alpha.3升级已通过，31本机阶段资格开放，独立标签构建和公开发行待验收。详见[30资格](assessments/release/v0.1.0-alpha.30/README.md)、[31作者工作流](assessments/stage-006/image-studio-source.md)、[混合候选与凭据修复](assessments/stage-006/image-partial-and-credentials.md)、[图像完整设计](design/image-generation-delivery.md)。
+最新公开阶段版仍为[alpha.30](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.30)。alpha.31已冻结标签7cb3026，新增AI图像工作室、混合候选保留与Windows新Key崩溃持久性修复，完整324项源码及175项实际安装/重装/卸载、公开alpha.3升级通过；[独立发行CI](https://github.com/ax2/zinovel-studio/actions/runs/40169223370)正在重新构建和验收，尚未称公开附件通过。主线alpha.32补足仅渲染进程崩溃后的待补存结果恢复实测，图像9组与324项源码通过，目标变化后的复评采用仍在设计，本版没有安装资格，ready=false。详见[31阶段资格](assessments/release/v0.1.0-alpha.31/README.md)、[32恢复专项](assessments/stage-006/image-renderer-recovery.md)、[目标复评设计](design/image-target-review.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

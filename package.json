@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-alpha.31",
+  "version": "0.1.0-alpha.32",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",

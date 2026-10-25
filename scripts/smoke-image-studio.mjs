@@ -1,4 +1,4 @@
-import { _electron as electron } from "playwright";
+import { _electron as electron, chromium } from "playwright";
 import electronPath from "electron";
 import sharp from "sharp";
 import { mkdir, mkdtemp, readFile, writeFile, rename } from "node:fs/promises";
@@ -154,7 +154,7 @@ const report = {
   errors: [],
   browser: "Browser plugin not available; repository Playwright/Electron",
   scope:
-    "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
+    "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption, process restart and renderer-only crash. Native recovery choice instrumented; fresh CDP observes the original app-reopened window without extra reload. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
 };
 const env = { ...process.env, ZINOVEL_DATA_ROOT: data };
 delete env.ELECTRON_RUN_AS_NODE;
@@ -164,7 +164,7 @@ if (process.env.ZINOVEL_TEST_EXECUTABLE) {
       delete env[key];
   env.PATH = join(process.env.SystemRoot || "C:\\Windows", "System32");
 }
-let app, page, owned;
+let app, page, owned, recoveryObserver;
 const request = (action, payload = {}) =>
   page.evaluate(
     ({ action, payload }) => window.novel.request(action, payload),
@@ -511,6 +511,106 @@ try {
       ),
     }),
     /仍保留/,
+  );
+  // Kill only the renderer. Keep the paid bytes and job in the real main process;
+  // instrument the native recovery choice, not the recovery implementation.
+  const beforeRendererCrash = await app.evaluate(({ BrowserWindow, dialog }) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    globalThis.__imageRecoveryQA = {
+      originalMessageBox: dialog.showMessageBox,
+      originalErrorBox: dialog.showErrorBox,
+      dialogs: [],
+      errors: [],
+    };
+    dialog.showMessageBox = async (...args) => {
+      const options = args.at(-1);
+      globalThis.__imageRecoveryQA.dialogs.push({
+        title: options.title,
+        buttons: options.buttons,
+        protectsImages: options.detail.includes("当前进程保留其结果"),
+      });
+      return new Promise((resolve) => {
+        globalThis.__imageRecoveryQA.reopen = resolve;
+      });
+    };
+    dialog.showErrorBox = (title) => {
+      globalThis.__imageRecoveryQA.errors.push(title);
+    };
+    return { main: process.pid, renderer: win.webContents.getOSProcessId() };
+  });
+  const crashedRenderer = page.waitForEvent("crash", { timeout: 45000 });
+  await app.evaluate(({ BrowserWindow }) =>
+    BrowserWindow.getAllWindows()[0].webContents.forcefullyCrashRenderer(),
+  );
+  await crashedRenderer;
+  await app.evaluate(async () => {
+    for (let i = 0; i < 1000; i++) {
+      if (globalThis.__imageRecoveryQA.reopen) return;
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    }
+    throw new Error("Renderer recovery did not reach the native choice");
+  });
+  // Playwright deliberately rejects pending page waits at the crash event.
+  // Attach the new-document wait after that event and before choosing reopen.
+  const reopenedDocument = page.waitForEvent("domcontentloaded", { timeout: 45000 });
+  await app.evaluate(() =>
+    globalThis.__imageRecoveryQA.reopen({ response: 0, checkboxChecked: false }),
+  );
+  await reopenedDocument;
+  // This Playwright version permanently closes the crashed Page's operation
+  // scope. Observe the already reopened same window through a fresh CDP client;
+  // do not reload it a second time or replace the app's recovery handler.
+  const [activePort, activeSocket] = (await readFile(join(data, "DevToolsActivePort"), "utf8"))
+    .split(/\r?\n/);
+  assert.match(activePort, /^\d{1,5}$/);
+  assert.match(activeSocket, /^\/devtools\/browser\/[a-f0-9-]+$/i);
+  recoveryObserver = await chromium.connectOverCDP(`ws://127.0.0.1:${activePort}${activeSocket}`);
+  assert.equal(recoveryObserver.contexts().length, 1);
+  const recoveredPages = recoveryObserver.contexts()[0].pages();
+  assert.equal(recoveredPages.length, 1);
+  page = recoveredPages[0];
+  page.on("pageerror", (error) => report.errors.push(error.message));
+  page.on("console", (event) => {
+    if (["error", "warning"].includes(event.type())) report.errors.push(event.text());
+  });
+  page.on("request", (event) => {
+    if (/^https?:/.test(event.url())) report.errors.push("Unexpected renderer HTTP request");
+  });
+  await page.locator(".book-card").filter({ hasText: book.title }).click();
+  await page.getByLabel("正文编辑器").waitFor();
+  const afterRendererCrash = await app.evaluate(({ BrowserWindow, dialog }) => {
+    const state = globalThis.__imageRecoveryQA;
+    dialog.showMessageBox = state.originalMessageBox;
+    dialog.showErrorBox = state.originalErrorBox;
+    const result = {
+      main: process.pid,
+      renderer: BrowserWindow.getAllWindows()[0].webContents.getOSProcessId(),
+      windows: BrowserWindow.getAllWindows().length,
+      dialogs: state.dialogs,
+      errors: state.errors,
+    };
+    delete globalThis.__imageRecoveryQA;
+    return result;
+  });
+  assert.equal(afterRendererCrash.main, beforeRendererCrash.main);
+  assert.notEqual(afterRendererCrash.renderer, beforeRendererCrash.renderer);
+  assert.equal(afterRendererCrash.windows, 1);
+  assert.deepEqual(afterRendererCrash.errors, []);
+  assert.deepEqual(afterRendererCrash.dialogs, [{
+    title: "写作窗口需要恢复", buttons: ["重新打开"], protectsImages: true,
+  }]);
+  report.rendererRecoveryObserver = "Fresh CDP observation of the app-reopened original window; no extra reload";
+  assert.equal((await request("image.status")).localResponseRetained, true);
+  assert.equal(calls[1].length, 2);
+  await open();
+  await panel().locator(`[data-task-id="${paid.id}"]`).click();
+  await panel()
+    .getByRole("button", { name: "重试本地保存（不重新请求）", exact: true })
+    .waitFor();
+  await screenshot("renderer-recovered-paid-result.png");
+  report.rendererRecoveryRetainsPaidResult = true;
+  report.checks.push(
+    "Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request",
   );
   for (const path of [blocker, retained]) {
     const rel = relative(resolve(data), resolve(path));
@@ -1033,6 +1133,7 @@ try {
       else await close();
     }
   } finally {
+    if (recoveryObserver) await recoveryObserver.close().catch(() => {});
     for (const server of servers) {
       server.closeAllConnections();
       await new Promise((done) => server.close(done));

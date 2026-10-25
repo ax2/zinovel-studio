@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "checks": [
+    "Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript"
+  ],
+  "errors": [],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption and process restart. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
+  "version": "0.1.0-alpha.32",
+  "packaged": false,
+  "desktopBundleSha256": "6be8b2a329644d35e6237de0569d46825cfbacddba1bfbec0d577b85fadc6f63",
+  "workbench": {
+    "app.js": "261834e7a62e30eed698370533d81dddab5f29920182937abd434d910cc53d16",
+    "app.css": "c7991f00c798ae039a4bc5fbd7d6777a3ec11404916c58107cd0b26f0f8105e4",
+    "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+  },
+  "viewports": [
+    {
+      "name": "image-studio-desktop.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "theme": "light",
+      "scroll": 1426
+    }
+  ],
+  "failure": "page.waitForEvent: Page crashed\n=========================== logs ===========================\nwaiting for event \"domcontentloaded\"\n============================================================\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-image-studio.mjs:540:29"
+}
