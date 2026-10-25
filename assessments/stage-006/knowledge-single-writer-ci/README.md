@@ -1,0 +1,9 @@
+# alpha.34知识上下文CI单写入修正
+
+1298fe6源码CI40176952675于2026-10-25 08:38:29 UTC在test:knowledge-context失败。此前形象单元检查通过，失败发生于旧知识脚本preview后的store.knowledge.save，atomic.mjs重命名pending.json返回EPERM。原始CI摘要/日志/失败JSON及PNG保留；artifact12592462467在内存读取压缩HTTP数据，仅保留精确stage-004路径的两件证据，没有ZIP落盘。首次宽后缀同时匹配历史资料而拒绝提取，改为精确阶段路径后取回，未拿其他版本记录冒充。
+
+代码核查发现两份知识上下文脚本启动桌面后仍用测试进程自己的NovelStore写入认知，部分读取也可能触发恢复；这与同一本书唯一活动BookStorageKernel的约束冲突。失败栈能定位此写入阶段，但没有记录当时原生句柄，不能声称确定EPERM的具体持有者，扫描器/其他文件访问是否参与也未证实。
+
+修正只改两份QA脚本：种子数据在启动前建立，启动后的knowledge.save与materials/pilots/chapter读取全部调用可信窗口的实际宿主IPC；任务完成后的事件修改也先走原宿主再关闭重启。不创建第二个活动写入内核，不改生产atomicWriteText、不盲重试或吞掉EPERM，未降低旧快照拒绝或工具/请求边界断言。
+
+本机两份实际Electron+官方Harness共6组通过，renderer错误为空；陈旧快照仍零请求拒绝，刷新后仅所选认知进入模型工具，作者选择和历史任务内容在后续修改/重启后冻结，人物资料与试写不自动应用、正文不变。原始local-runtime及两份JSON在本目录。下一步新提交独立CI，尚未宣称云端已修好。alpha.33公开发行40176289336独立success，已下载公开EXE/hash，不受这次后续源码失败结论替代。

@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "mixed-knowledge-preview-light.png",
+      "width": 1008,
+      "height": 681,
+      "theme": "light"
+    }
+  ],
+  "failure": "Error: EPERM: operation not permitted, rename 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json.336baf87-24cb-441e-9f2c-48ca233873f0.tmp' -> 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json'\n    at async rename (node:internal/fs/promises:1618:10)\n    at async atomicWriteText (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/atomic.mjs:19:5)\n    at async BookStorageKernel.recover (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:110:5)\n    at async BookStorageKernel.transaction (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:169:5)\n    at async KnowledgeStore.write (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:200:5)\n    at async file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:290:7"
+}

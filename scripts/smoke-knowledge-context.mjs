@@ -79,6 +79,12 @@ if (process.env.ZINOVEL_TEST_EXECUTABLE) {
 }
 const report = { status: "running", checks: [], errors: [], viewports: [] };
 let application, page;
+// After launch, the actual host is the only active book writer, including recovery reads.
+const hostRequest = (action, payload) =>
+  page.evaluate(
+    ({ action, payload }) => window.novel.request(action, payload),
+    { action, payload },
+  );
 const preview = () => page.getByLabel("将发送的资料快照", { exact: true });
 async function launch() {
   application = await electron.launch({
@@ -141,16 +147,16 @@ try {
   assert.match(await preview().textContent(), /状态：相信/);
   assert.equal(model.requests.length, 0);
   await shot("mixed-knowledge-preview-light.png");
-  event = await store.knowledge.save(
-    book.id,
-    {
+  event = await hostRequest("knowledge.save", {
+    bookId: book.id,
+    input: {
       ...input,
       state: "suspects",
       statement: "林舟现在怀疑船主寄信，仍未证实。",
     },
-    event,
+    expected: event,
     source,
-  );
+  });
   const editor = page.getByLabel("正文编辑器");
   await editor.press("Control+a");
   await page.getByRole("button", { name: "生成候选", exact: true }).click();
@@ -200,14 +206,14 @@ try {
     .getByRole("dialog", { name: "写作任务记录" })
     .getByText(/林舟现在怀疑船主寄信/)
     .waitFor();
+  event = await hostRequest("knowledge.save", {
+    bookId: book.id,
+    input: { ...input, state: "knows", statement: "任务后修改的新认知哨兵" },
+    expected: event,
+    source,
+  });
   await application.close();
   application = null;
-  event = await store.knowledge.save(
-    book.id,
-    { ...input, state: "knows", statement: "任务后修改的新认知哨兵" },
-    event,
-    source,
-  );
   await launch();
   await page.getByRole("button", { name: "写作任务记录", exact: true }).click();
   await page.locator(".task-row").first().click();
@@ -232,7 +238,12 @@ try {
   await expandPreview();
   await shot("knowledge-choice-dark-narrow.png");
   assert.equal(
-    (await store.readChapter(book.id, chapter.id)).body,
+    (
+      await hostRequest("chapter.read", {
+        bookId: book.id,
+        chapterId: chapter.id,
+      })
+    ).body,
     chapter.body,
   );
   assert.deepEqual(report.errors, []);

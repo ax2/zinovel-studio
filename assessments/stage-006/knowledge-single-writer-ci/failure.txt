@@ -1,0 +1,58 @@
+windows	Run pnpm test:knowledge-context	﻿2026-10-25T08:38:26.4816079Z ##[group]Run pnpm test:knowledge-context
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4816479Z ^[[36;1mpnpm test:knowledge-context^[[0m
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4888559Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4888918Z env:
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4889177Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4889587Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4890037Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4890499Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4890895Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4891284Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:26.4891604Z ##[endgroup]
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.0910830Z 
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.0912358Z > zinovel-studio@0.1.0-alpha.34 test:knowledge-context D:\a\zinovel-studio\zinovel-studio
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.0913961Z > node scripts/smoke-knowledge-context.mjs && node scripts/smoke-knowledge-context-targets.mjs
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.0914689Z 
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.6369524Z (node:3356) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:27.6371378Z (Use `node --trace-deprecation ...` to show where the warning was created)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8081499Z {
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8082433Z   status: 'failed',
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8082794Z   checks: [],
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8083091Z   errors: [],
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8083385Z   viewports: [
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8083665Z     {
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8084347Z       name: 'mixed-knowledge-preview-light.png',
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8088502Z       width: 1008,
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8088923Z       height: 681,
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8089253Z       theme: 'light'
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8090052Z     }
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8091658Z   ],
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8094827Z   failure: "Error: EPERM: operation not permitted, rename 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json.336baf87-24cb-441e-9f2c-48ca233873f0.tmp' -> 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json'\n" +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8097816Z     '    at async rename (node:internal/fs/promises:1618:10)\n' +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8098969Z     '    at async atomicWriteText (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/atomic.mjs:19:5)\n' +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8100551Z     '    at async BookStorageKernel.recover (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:110:5)\n' +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8102234Z     '    at async BookStorageKernel.transaction (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:169:5)\n' +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8103899Z     '    at async KnowledgeStore.write (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:200:5)\n' +
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8105645Z     '    at async file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:290:7'
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8106416Z }
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8106840Z node:internal/modules/run_main:111
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8107305Z     triggerUncaughtException(
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8107682Z     ^
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8107840Z 
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8110696Z Error: EPERM: operation not permitted, rename 'D:\a\zinovel-studio\zinovel-studio\.cache\knowledge-context-ui-H4hUYX\library\0d97a2e7-6028-4b90-be0d-137ba123a8f8\.zinovel\pending.json.336baf87-24cb-441e-9f2c-48ca233873f0.tmp' -> 'D:\a\zinovel-studio\zinovel-studio\.cache\knowledge-context-ui-H4hUYX\library\0d97a2e7-6028-4b90-be0d-137ba123a8f8\.zinovel\pending.json'
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8113419Z     at async rename (node:internal/fs/promises:1618:10)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8114464Z     at async atomicWriteText (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/atomic.mjs:19:5)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8118211Z     at async BookStorageKernel.recover (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:110:5)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8119828Z     at async BookStorageKernel.transaction (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/kernel.mjs:169:5)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8122054Z     at async KnowledgeStore.write (file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:200:5)
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8123446Z     at async file:///D:/a/zinovel-studio/zinovel-studio/packages/novel-storage/knowledge.mjs:290:7 {
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8124231Z   errno: -4048,
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8124545Z   code: 'EPERM',
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8125312Z   syscall: 'rename',
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8126987Z   path: 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json.336baf87-24cb-441e-9f2c-48ca233873f0.tmp',
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8129807Z   dest: 'D:\\a\\zinovel-studio\\zinovel-studio\\.cache\\knowledge-context-ui-H4hUYX\\library\\0d97a2e7-6028-4b90-be0d-137ba123a8f8\\.zinovel\\pending.json'
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8131396Z }
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8131584Z 
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8131714Z Node.js v26.12.1
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.8248977Z  ELIFECYCLE  Command failed with exit code 1.
+windows	Run pnpm test:knowledge-context	2026-10-25T08:38:29.9450530Z ##[error]Process completed with exit code 1.

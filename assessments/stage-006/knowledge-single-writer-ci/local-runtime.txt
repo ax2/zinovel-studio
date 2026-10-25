@@ -1,0 +1,40 @@
+
+> zinovel-studio@0.1.0-alpha.34 test:knowledge-context D:\Work\zinovel-studio
+> node scripts/smoke-knowledge-context.mjs && node scripts/smoke-knowledge-context-targets.mjs
+
+(node:37440) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call',
+    'official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel',
+    'task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'mixed-knowledge-preview-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'knowledge-choice-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+(node:52324) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'passed',
+  checks: [
+    'material proposal UI rejects stale knowledge with zero requests then uses only material-read, frozen-reference-read and proposal after refresh; original card unchanged',
+    'pilot UI rejects stale knowledge before estimation and generation; refreshed estimate sends zero requests and official Harness uses only pilot-read, frozen-reference-read and pilot proposal',
+    'both target prompts/tool results contain selected knowledge without unselected truth, other knowledge or whole formal manuscript; no candidate is applied automatically'
+  ],
+  errors: []
+}

@@ -93,6 +93,12 @@ const shots = join(
 await mkdir(shots, { recursive: true });
 const report = { status: "running", checks: [], errors: [] };
 let application, page;
+// After launch, the actual host is the only active book writer, including recovery reads.
+const hostRequest = (action, payload) =>
+  page.evaluate(
+    ({ action, payload }) => window.novel.request(action, payload),
+    { action, payload },
+  );
 async function settings(url) {
   await page.getByLabel("主导航").getByTitle("模型设置").click();
   await page.getByLabel("服务地址").fill(url);
@@ -143,12 +149,12 @@ try {
     .fill("根据所选认知完善人物动机，保持已有事实。");
   await select(material);
   assert.equal(materialModel.requests.length, 0);
-  event = await store.knowledge.save(
-    book.id,
-    { ...input, statement: "人物资料生成前更新的怀疑。" },
-    event,
+  event = await hostRequest("knowledge.save", {
+    bookId: book.id,
+    input: { ...input, statement: "人物资料生成前更新的怀疑。" },
+    expected: event,
     source,
-  );
+  });
   await material
     .getByRole("button", { name: "生成资料候选", exact: true })
     .click();
@@ -181,7 +187,8 @@ try {
   await page.screenshot({ path: join(shots, "material-knowledge-review.png") });
   await page.getByLabel("关闭资料候选", { exact: true }).click();
   assert.equal(
-    (await store.materials.read(book.id, person.id)).notes,
+    (await hostRequest("materials.read", { bookId: book.id, id: person.id }))
+      .notes,
     person.notes,
   );
   await settings(pilotModel.url);
@@ -196,12 +203,12 @@ try {
   });
   await assistant.getByText("AI 试写当前分支", { exact: true }).click();
   await select(assistant);
-  event = await store.knowledge.save(
-    book.id,
-    { ...input, statement: "试写生成前更新的怀疑。" },
-    event,
+  event = await hostRequest("knowledge.save", {
+    bookId: book.id,
+    input: { ...input, statement: "试写生成前更新的怀疑。" },
+    expected: event,
     source,
-  );
+  });
   await assistant
     .getByRole("button", { name: "估算试写任务", exact: true })
     .click();
@@ -248,9 +255,17 @@ try {
     messages,
     /UNSELECTED_TRUTH_SENTINEL|OTHER_KNOWLEDGE_SENTINEL|FORMAL_UNSELECTED_BODY_SENTINEL|作者设定为真/,
   );
-  assert.equal((await store.pilots.read(book.id, pilot.id)).body, pilot.body);
   assert.equal(
-    (await store.readChapter(book.id, chapter.id)).body,
+    (await hostRequest("pilots.read", { bookId: book.id, id: pilot.id })).body,
+    pilot.body,
+  );
+  assert.equal(
+    (
+      await hostRequest("chapter.read", {
+        bookId: book.id,
+        chapterId: chapter.id,
+      })
+    ).body,
     chapter.body,
   );
   assert.deepEqual(report.errors, []);
