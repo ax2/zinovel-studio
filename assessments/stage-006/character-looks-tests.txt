@@ -1,0 +1,18 @@
+✔ appearance edits, resource replacements and manuscript work never silently replace an explicitly chosen frozen version (272.011ms)
+✔ queued inputs are captured, concurrent stale saves reject, and character baseline changes require a fresh author review (128.9066ms)
+✔ cross-character, wrong-purpose, foreign-book, missing-confirmation and malformed Unicode requests never choose an image (140.3019ms)
+✔ selected appearances survive backup to a new book ID with historical image bytes and selection provenance intact (318.8267ms)
+✔ a slow image preview releases the book queue and rejects an appearance selection changed during decode (134.6ms)
+✔ history corruption is visible and retained; future collections refuse overwrites rather than appearing empty (115.2864ms)
+✔ explicit unselection is required before recycling and recycled image resources cannot become a new current portrait (204.2642ms)
+✔ archived books and linked appearance directories reject writes and preserve all originals (176.7942ms)
+✔ actual process exit after journal recovers both fixed selection and its historical source once (258.2838ms)
+✔ actual process exit after first-file recovers both fixed selection and its historical source once (252.3747ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2140.5387

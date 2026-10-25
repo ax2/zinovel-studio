@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版仍为[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)。alpha.32不可变标签安装CI失败未公开。主线alpha.33已通过346项、13项进程检查、178项实际安装与公开alpha.3/alpha.31双升级；图像目标复评和句柄恢复均绑定本版asar。阶段预览已具本机资格，等待新标签独立发行与公开字节核对。详见[33验收](assessments/release/v0.1.0-alpha.33/README.md)和[32失败证据](assessments/release/v0.1.0-alpha.32/ci-first-failure/README.md)。
+最新公开版仍为[alpha.31](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.31)。alpha.33已冻结标签fe42752并触发[独立安装发行](https://github.com/ax2/zinovel-studio/actions/runs/40176289336)，尚待公开字节复核；32标签失败未发布。主线alpha.34开始人物形象版本与定妆选择，存储10项及全量356项通过，作者界面和本版安装仍待、预览门禁关闭。详见[33验收](assessments/release/v0.1.0-alpha.33/README.md)及[形象存储](assessments/stage-006/character-looks-storage.md)。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 

@@ -903,7 +903,12 @@
         "design/image-generation-delivery.md",
         "assessments/stage-006/image-studio-source.md",
         "scripts/smoke-image-studio.mjs",
-        "tests/image-tasks.test.mjs"
+        "tests/image-tasks.test.mjs",
+        "design/character-looks.md",
+        "packages/novel-domain/character-looks.mjs",
+        "packages/novel-storage/character-looks.mjs",
+        "tests/character-looks.test.mjs",
+        "assessments/stage-006/character-looks-storage.md"
       ]
     },
     {
@@ -912,8 +917,15 @@
       "name": "表情与服装变体",
       "priority": "P1",
       "stage": "Stage-006",
-      "status": "planned",
-      "acceptance": "候选关联角色，不覆盖已选图"
+      "status": "in-progress",
+      "acceptance": "候选关联角色，不覆盖已选图",
+      "evidence": [
+        "design/character-looks.md",
+        "packages/novel-domain/character-looks.mjs",
+        "packages/novel-storage/character-looks.mjs",
+        "tests/character-looks.test.mjs",
+        "assessments/stage-006/character-looks-storage.md"
+      ]
     },
     {
       "id": "ART-03",
