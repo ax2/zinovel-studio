@@ -77,6 +77,7 @@ try {
     return window.novel.request("settings.get");
   });
   assert.equal(settings.hasKey, true);
+  assert.equal(settings.credentialMismatch, false);
   assert.equal(settings.model, "fixture-two");
   assert.equal(
     (await readFile(join(data, "model.json"), "utf8")).includes(
@@ -87,12 +88,13 @@ try {
   assert.deepEqual(Object.keys(settings).sort(), [
     "baseURL",
     "budget",
+    "credentialMismatch",
     "encryptionAvailable",
     "hasKey",
     "model",
   ]);
   report.checks.push(
-    "concurrent settings updates preserve encrypted key; public settings are explicitly whitelisted",
+    "concurrent same-service settings updates preserve encrypted key; public settings retain an exact six-field whitelist including a false credentialMismatch flag, with no plaintext or encrypted key returned",
   );
 
   await rename(pending, held);

@@ -1,0 +1,41 @@
+release	Run pnpm test:offline-writing	﻿2026-10-24T15:37:26.6458796Z ##[group]Run pnpm test:offline-writing
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6459204Z ^[[36;1mpnpm test:offline-writing^[[0m
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6529808Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6530159Z env:
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6530420Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6530828Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6531295Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6531765Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6532197Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6532597Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+release	Run pnpm test:offline-writing	2026-10-24T15:37:26.6532903Z ##[endgroup]
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.2385498Z 
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.2386384Z > zinovel-studio@0.1.0-alpha.28 test:offline-writing D:\a\zinovel-studio\zinovel-studio
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.2387049Z > node scripts/smoke-offline-writing.mjs
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.2387258Z 
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.7127247Z (node:1384) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+release	Run pnpm test:offline-writing	2026-10-24T15:37:27.7129523Z (Use `node --trace-deprecation ...` to show where the warning was created)
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6037543Z {
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6037863Z   status: 'failed',
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6038109Z   checks: [],
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6038304Z   errors: [],
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6038752Z   browser: 'Browser plugin not available; repository Playwright/Electron',
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6040898Z   scope: 'Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim',
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6045012Z   launchPid: 6404,
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6047204Z   failure: 'page.evaluate: Execution context was destroyed, most likely because of a navigation\n' +
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6048721Z     '    at launch (D:\\a\\zinovel-studio\\zinovel-studio\\scripts\\smoke-offline-writing.mjs:126:32)\n' +
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6049493Z     '    at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-offline-writing.mjs:201:3'
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6049952Z }
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6050237Z node:internal/modules/run_main:111
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6050517Z     triggerUncaughtException(
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6050759Z     ^
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6050870Z 
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6051193Z page.evaluate: Execution context was destroyed, most likely because of a navigation
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6051849Z     at launch (D:\a\zinovel-studio\zinovel-studio\scripts\smoke-offline-writing.mjs:126:32)
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6052514Z     at async file:///D:/a/zinovel-studio/zinovel-studio/scripts/smoke-offline-writing.mjs:201:3 {
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6052961Z   name: 'Error'
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6053147Z }
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6053242Z 
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6053316Z Node.js v26.12.1
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.6189971Z  ELIFECYCLE  Command failed with exit code 1.
+release	Run pnpm test:offline-writing	2026-10-24T15:37:28.7391884Z ##[error]Process completed with exit code 1.
