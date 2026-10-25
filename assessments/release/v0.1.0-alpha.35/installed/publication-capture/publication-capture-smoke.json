@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": [
+    "real window-bound IPC cancels a 256-chapter capture before commit without creating a snapshot",
+    "explicit reordered two-chapter capture persists; preview metadata excludes body/private author materials, chapter IPC returns exact BOM/CRLF/astral text and rejects out-of-scope chapters",
+    "external author edit and full desktop restart preserve the original frozen snapshot; no manuscript conversion, model request or automatic replay"
+  ],
+  "errors": [],
+  "scope": "Real desktop IPC capture/persistence only; no author publication dialog or export UI qualification"
+}

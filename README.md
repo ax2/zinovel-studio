@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版仍为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)。alpha.34在新增数据保护反例后主动取消发行，保留原标签。主线alpha.35已修正规划与正文保存的提交前像、历史/回执占用和排队输入保护，366项及实际编排、合并、窗口故障与接受恢复通过；本版安装/升级/发行资格仍关闭。旧版手改manuscript/、book.json、planning.json、规划历史或接受回执前请先关闭程序。详见[规划保护](assessments/stage-002/planning-write-guard/README.md)与[正文保护](assessments/stage-002/manuscript-write-guard/README.md)。优先交付数据保护修正，再继续场景树与导入。
+最新公开版仍为[alpha.33](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.33)。alpha.35正文/规划保护与定妆版本已通过366项、182项实际安装和公开alpha.3/31/33三条升级，阶段本机资格齐备，等待新标签独立发行与公开字节核对。alpha.34公开前已取消且不重跑；旧版手改作品文件前请关闭程序并保留独立备份。详见[35本机证据](assessments/release/v0.1.0-alpha.35/README.md)、[规划保护](assessments/stage-002/planning-write-guard/README.md)和[正文保护](assessments/stage-002/manuscript-write-guard/README.md)。完整平台仍在开发，稳定资格关闭。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
