@@ -304,3 +304,9 @@ d3cd174源码完整CI40172110041 success，原始摘要image-reviewed-adoption-c
 
 
 2026-10-25公开收尾：不可变4f8994e，源码CI40183611914与独立发行40183617073均success，18:30:14北京时间公开四附件。EXE155531102字节，SHA256a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a，公开asarb3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2，与本机候选004f4de5…/9d8b888d…分开。匿名可见、三个元数据digest、校验文件和实际下载hash均通过。另对下载公开NSIS实际安装11335ms，运行官方Harness/编辑/历史恢复11项，真实卸载4162ms并保留1份合成稿件，13项附加检查passed。完整公开安装目录保留D:/zinovel-releases/v0.1.0-alpha.35/ci-public/win-installed，无ZIP。详见assessments/release/v0.1.0-alpha.35/ci-public；不扩大为签名、商店或完整106项完成。
+
+## 2026-10-26 alpha.40参考图准备切片
+
+39安装202/七条公开升级和237清单已完成，标签999fb9c进入独立发行，主线40资格false。重新读取官方Images编辑API，当前JSON images/data URL可单独适配，不把普通生成能力推断为编辑能力。增加有限衍生PNG、指纹与同书固定资源版本准备/复核：1536边/4MiB，真实高熵图按实际编码长度降至1024；EXIF方向纠正、元数据移除、透明图不放大、坏图拒绝、原件不变。资源处理期间改版、跨书、回收、原图损坏拒绝，复用当前AssetStore和唯一内核及既有解码槽位，不另开活跃写者。
+
+七组新底层及全量410项/类型/规划通过，证据assessments/stage-006/reference-image-preparation；参考协议复评见reference-edit-adapter-reassessment.md。当前未接入图像任务/网络发送/UI，不冒充ART-01/02完成或真实供应商视觉质量。后续必须把实际衍生字节持久冻结进任务，新增独立能力声明和预览/确认，并验收未知远端结果/付费响应恢复，不能在重启时悄悄重制不同参考图。

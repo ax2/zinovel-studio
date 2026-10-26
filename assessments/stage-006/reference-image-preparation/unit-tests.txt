@@ -1,0 +1,15 @@
+✔ same-book fixed reference preparation preserves original and creates no canonical records (556.6172ms)
+✔ reference metadata changes during decode refuse a stale preview (398.8371ms)
+✔ recycled references and corrupted originals cannot be sent from an old preparation (494.2543ms)
+✔ reference derivative freezes exact PNG bytes, auto-orients and strips source metadata (1040.3816ms)
+✔ small transparent references are not enlarged or flattened (16.5708ms)
+✔ invalid and truncated reference originals fail before producing sendable bytes (6.61ms)
+✔ high entropy references reduce dimensions to meet the actual encoded-byte cap (1153.6533ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2717.6376
