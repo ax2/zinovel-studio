@@ -485,18 +485,28 @@ try {
       upgrade.plannedScene.diskHash,
     );
   }
-  if (milestone >= 39) {
-    const upgrade = manifest.originPublicUpgrade,
-      origin = upgrade?.originalImportOrigin;
-    assert.equal(upgrade?.fromVersion, "0.1.0-alpha.38");
-    assert.equal(
-      upgrade.previousInstallerSha256,
+  for (const [minimum, field, fromVersion, sourceSha, sourceAsar] of [
+    [
+      39,
+      "originPublicUpgrade",
+      "0.1.0-alpha.38",
       "dfd50f8264cd0673d0e67a70cac62209508e0f52b107a6a210361ab8abd537d8",
-    );
-    assert.equal(
-      upgrade.previousAsarSha256,
       "af93ff4697439cc21005cdc1fd7b555cf906989135a6150f5ab30d34e6dd351c",
-    );
+    ],
+    [
+      40,
+      "guardPublicUpgrade",
+      "0.1.0-alpha.39",
+      "0c259b017e48c87c32a2fb453a8411805db3f34d8864681725c46f440970e826",
+      "b6267f420f38efd68433eedc44aeb90eee0aa849cd394b8f95b08008a8aa2589",
+    ],
+  ]) {
+    if (milestone < minimum) continue;
+    const upgrade = manifest[field],
+      origin = upgrade?.originalImportOrigin;
+    assert.equal(upgrade?.fromVersion, fromVersion);
+    assert.equal(upgrade.previousInstallerSha256, sourceSha);
+    assert.equal(upgrade.previousAsarSha256, sourceAsar);
     assert.equal(upgrade.appAsarSha256, manifest.imageStudio.appAsarSha256);
     assert.equal(upgrade.checks?.length, 8);
     assert.ok(upgrade.upgradeMs > 0);
@@ -607,6 +617,24 @@ try {
       )?.sha256,
       upgrade.plannedScene.diskHash,
     );
+  }
+  if (milestone >= 40) {
+    const reference = manifest.referenceEditing;
+    assert.equal(reference?.version, manifest.version);
+    assert.equal(reference.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.equal(reference.checks?.length, 5);
+    assert.equal(reference.forcedEditRestart, true);
+    assert.equal(reference.originalsPreserved, true);
+    assert.equal(reference.requests, 2);
+    assert.match(reference.referenceSha256, /^[a-f0-9]{64}$/);
+    assert.ok(reference.viewports?.some((view) => view.width >= 900));
+    assert.ok(reference.viewports?.some((view) => view.width <= 900));
+    for (const view of reference.viewports)
+      assert.ok(
+        view.scroll <= view.width + 1 &&
+          view.referenceBounds?.y >= 0 &&
+          view.referenceBounds.y + view.referenceBounds.height <= view.height,
+      );
   }
   const installerDirectory = resolve(
     root,

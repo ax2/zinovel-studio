@@ -35,14 +35,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - run: python -m pip install -r scripts/requirements-pdf-qa.txt
       - run: pnpm check
       - run: node scripts/check-upstream.mjs
       - run: pnpm build
       - run: pnpm test:model-profiles
         env:
-          ZINOVEL_PROFILE_START_NARROW: '1'
+          ZINOVEL_PROFILE_START_NARROW: "1"
       - run: pnpm test:agent
       - run: pnpm test:tool-isolation
       - run: pnpm test:library
@@ -67,7 +67,7 @@ jobs:
       - run: pnpm test:planning-ui
       - run: pnpm test:scene-tree
         env:
-          ZINOVEL_TREE_START_COMPACT: '1'
+          ZINOVEL_TREE_START_COMPACT: "1"
       - run: pnpm test:world-proposals
       - run: pnpm test:pilots
       - run: pnpm test:pilot-agent
@@ -173,6 +173,16 @@ jobs:
           gh release download v0.1.0-alpha.38 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/origin-upgrade-source
           if ($LASTEXITCODE -ne 0) { throw 'Public origin release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/origin-upgrade-source/ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe .cache/origin-upgrade-source/release-manifest.json origin-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Original import-origin and manuscript upgrade failed' }
+      - name: Upgrade public alpha.39 concurrent-write guarded manuscripts and import origins
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/guard-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.39 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/guard-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Public origin release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/guard-upgrade-source/ZiNovel-Studio-0.1.0-alpha.39-windows-x64-setup.exe .cache/guard-upgrade-source/release-manifest.json guard-upgrade
           if ($LASTEXITCODE -ne 0) { throw 'Original import-origin and manuscript upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft

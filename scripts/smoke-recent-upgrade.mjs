@@ -54,16 +54,20 @@ assert.ok(
     "scene-upgrade",
     "import-upgrade",
     "origin-upgrade",
+    "guard-upgrade",
   ].includes(stage),
 );
-const originPublic = stage === "origin-upgrade",
+const guardPublic = stage === "guard-upgrade",
+  originPublic = stage === "origin-upgrade" || guardPublic,
   importPublic = stage === "import-upgrade" || originPublic,
   scenePublic = stage === "scene-upgrade" || importPublic,
   appearancePublic = stage === "appearance-upgrade" || scenePublic,
   currentPublic = stage !== "recent-upgrade",
   sourceVersion = importPublic
     ? originPublic
-      ? "0.1.0-alpha.38"
+      ? guardPublic
+        ? "0.1.0-alpha.39"
+        : "0.1.0-alpha.38"
       : "0.1.0-alpha.37"
     : scenePublic
       ? "0.1.0-alpha.36"
@@ -74,7 +78,9 @@ const originPublic = stage === "origin-upgrade",
           : "0.1.0-alpha.31",
   sourceLabel = importPublic
     ? originPublic
-      ? "公开38"
+      ? guardPublic
+        ? "公开39"
+        : "公开38"
       : "公开37"
     : scenePublic
       ? "公开36"
@@ -1021,7 +1027,7 @@ try {
           path: join(
             out,
             originPublic
-              ? "new-public38-origin-preserved.png"
+              ? `new-public${sourceSuffix}-origin-preserved.png`
               : "new-public37-legacy-origin-not-fabricated.png",
           ),
         });
@@ -1276,7 +1282,7 @@ try {
         sha256: createHash("sha256").update(item.bytes).digest("hex"),
       }));
       report.checks.push(
-        "Actual public38 import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement",
+        `Actual public${sourceSuffix} import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement`,
       );
     }
   }
