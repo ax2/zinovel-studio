@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context",
+    "Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material",
+    "Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
+    "Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "tree-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "quota-protected.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "tree-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "frontend": {
+    "app.js": {
+      "bytes": 2660784,
+      "sha256": "867f511ed6deb38c939a44ff340561dd10108c896246e760960c81de1e8a38a9"
+    },
+    "app.css": {
+      "bytes": 79315,
+      "sha256": "85a08bca6ed421888d75e926dcc59a4b8c6c4a4109ab01ce7a643cd58f3b6c2d"
+    },
+    "index.html": {
+      "bytes": 534,
+      "sha256": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+    }
+  },
+  "version": "0.1.0-alpha.39",
+  "packaged": false,
+  "desktopBundleSha256": "3ee352a70785472f07c32fc78f95a5960c55b48186374feb6ea2e8b374031f89",
+  "scope": "Synthetic scene tree, fixed planning identity/order and material draft navigation; no automatic manuscript splitting, native IME, huge-book performance or complete product qualification"
+}

@@ -150,7 +150,7 @@ export class NovelStore {
   createChapter(bookId, title, volumeId = null) {
     return this.#storage.exclusive(async () => {
       const root = await this.#storage.bookRoot(bookId),
-        book = await this.#storage.manifest(root);
+        { book, raw } = await this.#storage.manifestRecord(root);
       if (
         volumeId &&
         !(book.volumes || []).some((volume) => volume.id === volumeId)
@@ -168,17 +168,24 @@ export class NovelStore {
       book.chapters.push(chapter);
       book.revision++;
       book.updatedAt = chapter.updatedAt;
-      await this.#storage.transaction(root, {
-        [`manuscript/${chapter.id}.md`]: "",
-        "book.json": json(book),
-      });
+      const path = `manuscript/${chapter.id}.md`;
+      await this.#storage.transaction(
+        root,
+        { [path]: "", "book.json": json(book) },
+        { expectedBefore: { [path]: null, "book.json": raw } },
+      );
       return { book, chapter: { ...chapter, body: "" } };
     });
   }
   updateStructure(bookId, expectedRevision, mutation) {
+    try {
+      mutation = { ...mutation };
+    } catch (error) {
+      return Promise.reject(error);
+    }
     return this.#storage.exclusive(async () => {
       const root = await this.#storage.bookRoot(bookId),
-        book = await this.#storage.manifest(root);
+        { book, raw } = await this.#storage.manifestRecord(root);
       if (book.revision !== expectedRevision)
         throw new Error("作品目录已经改变，请刷新后重试");
       book.volumes ||= [];
@@ -286,7 +293,11 @@ export class NovelStore {
       book.chapters = orderedChapters(book, { includeDeleted: true });
       book.revision++;
       book.updatedAt = new Date().toISOString();
-      await this.#storage.transaction(root, { "book.json": json(book) });
+      await this.#storage.transaction(
+        root,
+        { "book.json": json(book) },
+        { expectedBefore: { "book.json": raw } },
+      );
       return book;
     });
   }
@@ -426,7 +437,7 @@ export class NovelStore {
   }
   async #annotationContext(bookId, chapterId) {
     const root = await this.#storage.bookRoot(bookId),
-      book = await this.#storage.manifest(root);
+      { book, raw: bookRaw } = await this.#storage.manifestRecord(root);
     const chapter = book.chapters.find(
       (item) => item.id === checkedId(chapterId) && !item.deletedAt,
     );
@@ -436,9 +447,10 @@ export class NovelStore {
     );
     const path = `annotations/${chapterId}.json`,
       raw = await readOptional(await this.#storage.path(root, path));
-    const data = raw
-      ? JSON.parse(raw)
-      : { schemaVersion: 1, revision: 0, items: [] };
+    const data =
+      raw === null
+        ? { schemaVersion: 1, revision: 0, items: [] }
+        : JSON.parse(raw);
     if (
       data.schemaVersion !== 1 ||
       !Number.isSafeInteger(data.revision) ||
@@ -450,6 +462,8 @@ export class NovelStore {
       path,
       data,
       body,
+      raw,
+      bookRaw,
       hash: digest(body),
       metadataHash: raw === null ? null : digest(raw),
     };
@@ -479,8 +493,13 @@ export class NovelStore {
     expectedBodyHash,
     mutation,
   ) {
+    try {
+      mutation = { ...mutation };
+    } catch (error) {
+      return Promise.reject(error);
+    }
     return this.#storage.exclusive(async () => {
-      const { root, path, data, body, hash, metadataHash } =
+      const { root, path, data, body, hash, metadataHash, raw, bookRaw } =
         await this.#annotationContext(bookId, chapterId);
       if (
         data.revision !== expectedRevision ||
@@ -531,7 +550,17 @@ export class NovelStore {
         item.updatedAt = now;
       }
       data.revision++;
-      await this.#storage.transaction(root, { [path]: json(data) });
+      await this.#storage.transaction(
+        root,
+        { [path]: json(data) },
+        {
+          expectedBefore: { [path]: raw },
+          expectedReadOnly: {
+            "book.json": bookRaw,
+            [`manuscript/${chapterId}.md`]: body,
+          },
+        },
+      );
       return { revision: data.revision };
     });
   }

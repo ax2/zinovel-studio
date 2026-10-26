@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.39",
+  "unitTests": 403,
+  "desktopBundleSha256": "3ee352a70785472f07c32fc78f95a5960c55b48186374feb6ea2e8b374031f89",
+  "reports": [
+    {
+      "name": "library",
+      "checks": 4
+    },
+    {
+      "name": "tree",
+      "checks": 4
+    },
+    {
+      "name": "operations",
+      "checks": 5
+    },
+    {
+      "name": "annotations",
+      "checks": 3
+    },
+    {
+      "name": "recovery",
+      "checks": 3
+    }
+  ],
+  "desktopChecks": 19,
+  "scope": "Four structure and four annotation original failures; twelve focused cases now pass. Controlled commit-handoff counterexamples plus normal actual desktop workflows; no actual desktop concurrent-file injection or alpha39 installer qualification."
+}

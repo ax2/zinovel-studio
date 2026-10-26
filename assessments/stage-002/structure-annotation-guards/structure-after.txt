@@ -1,0 +1,12 @@
+✔ structure refuses an external same-revision book change at transaction handoff (60.8048ms)
+✔ chapter creation preserves an external book change and creates no orphan manuscript (45.8834ms)
+✔ a newly occupied manuscript identity is not overwritten by createChapter (46.939ms)
+✔ queued structure mutation captures the author request before yielding (65.0037ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 515.4671

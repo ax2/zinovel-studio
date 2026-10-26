@@ -1,0 +1,24 @@
+✔ an occupied annotation file survives the transaction handoff (73.7215ms)
+✔ a body change at annotation commit rejects the stale anchor without writing annotations (57.0345ms)
+✔ a concurrent chapter trash refuses annotation commit and preserves book bytes (48.2997ms)
+✔ an empty occupied annotation file is rejected and preserved (46.1325ms)
+✔ queued annotation mutation captures the original author request (75.453ms)
+✔ anchors relocate by quote/context and report deleted or ambiguous references without guessing (2.8823ms)
+✔ annotations use revision and body guards, survive backup and restore independently of manuscript (402.6817ms)
+✔ publication captures only selected ordered text and public metadata, persists across restart and remains frozen after source edits (205.8154ms)
+✔ publication refuses duplicate, foreign, deleted and stale-directory selections without creating a snapshot (107.8562ms)
+✔ capture releases the shared queue between batches and cancellation leaves source and recovery journal unchanged (111.9807ms)
+✔ external byte changes during capture are detected; a subsequent explicit capture keeps actual bytes and exposes differing saved hashes (123.7478ms)
+✔ bad UTF-8 and oversized capture inputs preserve source bytes and never poison pending recovery (66.3592ms)
+✔ damaged and future snapshots remain on disk and are reported individually alongside valid snapshots (138.6144ms)
+✔ backup restore preserves immutable original provenance through two new book identities and rejects foreign snapshot copies (349.9422ms)
+✔ transaction create-only preimages refuse existing files and invalid conditions before creating a journal (83.0334ms)
+✔ capture freezes caller input before awaiting and reports a committed snapshot after cancellation closes (133.0285ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1658.2983

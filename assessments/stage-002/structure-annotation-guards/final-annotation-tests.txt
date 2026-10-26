@@ -1,0 +1,16 @@
+✔ an occupied annotation file survives the transaction handoff (68.2923ms)
+✔ a body change at annotation commit rejects the stale anchor without writing annotations (50.0431ms)
+✔ a concurrent chapter trash refuses annotation commit and preserves book bytes (46.0611ms)
+✔ an empty occupied annotation file is rejected and preserved (40.328ms)
+✔ queued annotation mutation captures the original author request (70.6939ms)
+✔ read-only dependency guards never rewrite or journal their inputs (77.2492ms)
+✔ invalid read-only guard conditions refuse changes without creating a journal (43.1838ms)
+✔ Windows case aliases cannot make a read-only dependency writable (44.2284ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 712.2355

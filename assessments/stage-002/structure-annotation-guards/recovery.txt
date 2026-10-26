@@ -1,0 +1,14 @@
+
+> zinovel-studio@0.1.0-alpha.39 test:recovery D:\Work\zinovel-studio
+> node scripts/smoke-recovery.mjs
+
+(node:66496) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  checks: [
+    'concurrent same-service settings updates preserve encrypted key; public settings retain an exact six-field whitelist including a false credentialMismatch flag, with no plaintext or encrypted key returned',
+    'real filesystem save failure retains original and blocks close; actual renderer crash recovers cached draft and saves exact bytes',
+    'actual blocked renderer triggers host close watchdog; default return keeps window and manuscript, recovery reload remains usable'
+  ],
+  status: 'passed'
+}

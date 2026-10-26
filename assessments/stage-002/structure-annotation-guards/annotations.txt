@@ -1,0 +1,15 @@
+
+> zinovel-studio@0.1.0-alpha.39 test:editor-tools D:\Work\zinovel-studio
+> node scripts/smoke-editor-tools.mjs
+
+(node:57880) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  checks: [
+    '120 matches: select two across pages, retain 118 exact originals, one-step undo',
+    'note/bookmark/scene persist separately; insertion relocates quote and UI selects exact original',
+    'deleted anchor disables navigation; explicit rebind, resolve, recycle, restore and process restart retain state'
+  ],
+  errors: [],
+  status: 'passed'
+}

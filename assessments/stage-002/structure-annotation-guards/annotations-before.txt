@@ -1,0 +1,80 @@
+✖ an occupied annotation file survives the transaction handoff (76.2151ms)
+✖ a body change at annotation commit rejects the stale anchor without writing annotations (60.4306ms)
+✖ a concurrent chapter trash refuses annotation commit and preserves book bytes (56.8373ms)
+✔ an empty occupied annotation file is rejected and preserved (37.3626ms)
+✖ queued annotation mutation captures the original author request (58.7714ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 570.1965
+
+✖ failing tests:
+
+test at tests\annotation-write-guard.test.mjs:28:1
+✖ an occupied annotation file survives the transaction handoff (76.2151ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:31:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:26:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:30:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\annotation-write-guard.test.mjs:34:1
+✖ a body change at annotation commit rejects the stale anchor without writing annotations (60.4306ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:37:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:26:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\annotation-write-guard.test.mjs:40:1
+✖ a concurrent chapter trash refuses annotation commit and preserves book bytes (56.8373ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:45:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:26:8)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:44:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\annotation-write-guard.test.mjs:52:1
+✖ queued annotation mutation captures the original author request (58.7714ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '调用之后另一个请求' !== '原意'
+  
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/annotation-write-guard.test.mjs:54:75)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '调用之后另一个请求',
+    expected: '原意',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,81 @@
+✖ structure refuses an external same-revision book change at transaction handoff (81.7567ms)
+✖ chapter creation preserves an external book change and creates no orphan manuscript (73.7285ms)
+✖ a newly occupied manuscript identity is not overwritten by createChapter (119.2255ms)
+✖ queued structure mutation captures the author request before yielding (72.5151ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 792.7419
+
+✖ failing tests:
+
+test at tests\structure-write-guard.test.mjs:31:1
+✖ structure refuses an external same-revision book change at transaction handoff (81.7567ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:35:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:28:9)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:34:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\structure-write-guard.test.mjs:42:1
+✖ chapter creation preserves an external book change and creates no orphan manuscript (73.7285ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:46:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:28:9)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:45:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\structure-write-guard.test.mjs:51:1
+✖ a newly occupied manuscript identity is not overwritten by createChapter (119.2255ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:59:5
+      at async atCommit (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:28:9)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:54:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /前像|已改变/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests\structure-write-guard.test.mjs:64:1
+✖ queued structure mutation captures the author request before yielding (72.5151ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '调用后被换掉的卷名'
+  - '作者确认卷名'
+  
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/structure-write-guard.test.mjs:69:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '调用后被换掉的卷名',
+    expected: '作者确认卷名',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

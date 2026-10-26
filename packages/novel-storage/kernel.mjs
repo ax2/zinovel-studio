@@ -115,9 +115,26 @@ export class BookStorageKernel {
       !options ||
       typeof options !== "object" ||
       Array.isArray(options) ||
-      Object.keys(options).some((key) => key !== "expectedBefore")
+      Object.keys(options).some(
+        (key) => !["expectedBefore", "expectedReadOnly"].includes(key),
+      )
     )
       throw new Error("事务前像条件无效，原文件已保留");
+    // Read dependencies are compared at handoff but never rewritten or journaled.
+    const readOnly =
+      options.expectedReadOnly === undefined ? {} : options.expectedReadOnly;
+    if (
+      !readOnly ||
+      typeof readOnly !== "object" ||
+      Array.isArray(readOnly) ||
+      Object.entries(readOnly).some(
+        ([path, before]) =>
+          Object.hasOwn(changes, path) ||
+          typeof before !== "string" ||
+          !before.isWellFormed(),
+      )
+    )
+      throw new Error("事务只读前像条件无效，原文件已保留");
     const expected =
       options.expectedBefore === undefined ? {} : options.expectedBefore;
     if (
@@ -145,7 +162,17 @@ export class BookStorageKernel {
         throw new Error("事务文本格式无效或包含不完整Unicode，原文件已保留");
       await this.path(root, path);
     }
+    for (const path of Object.keys(readOnly)) {
+      const key = process.platform === "win32" ? path.toLowerCase() : path;
+      if (seen.has(key))
+        throw new Error("事务只读前像与写入路径重复，原文件已保留");
+      await this.path(root, path);
+    }
     await this.recover(root);
+    for (const [path, before] of Object.entries(readOnly)) {
+      if ((await readOptional(await this.path(root, path))) !== before)
+        throw new Error("事务只读前像已改变，未写入依赖旧内容的修改");
+    }
     const entries = [];
     for (const [path, after] of requested) {
       const before = await readOptional(await this.path(root, path));
