@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.33",
+  "toVersion": "0.1.0-alpha.39",
+  "previousInstallerSha256": "403acb68b027ff23e069391fe755f3f7bef53a30b1e4140647b16f2063b2a38f",
+  "currentInstallerSha256": "008e29cb935b336bee0af3f5bd9a85d0d579db7224b48fd94119f8b53a821116",
+  "installDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-Ku4qIO\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-Ku4qIO\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.33 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.33 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 10072,
+  "previousAsarSha256": "0f406e098c4070226b1306573c22010c283377a8003a84751e268d684ff59b89",
+  "upgradeMs": 14236,
+  "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "previousV2ReceiptPreserved": true,
+  "previousV2Readable": true,
+  "previousAdoptedAssetPreserved": true,
+  "previousV2Files": [
+    {
+      "name": "65425fa5-6bd3-4fe4-a0f3-487aa83aacff.json",
+      "sha256": "ac894540d59bb468e95b3e473fd9867bb03ddd893710dd69a73f8f00e7ae62f7",
+      "bytes": 2914
+    },
+    {
+      "name": "4bb850d6-261e-41e1-920b-773cc559da55.json",
+      "sha256": "8beeaccd8321b3b5089cd83330099231de3f8c6b5dbfdea5fb8a1d42ad8a91d9",
+      "bytes": 870
+    },
+    {
+      "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+      "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+      "bytes": 449
+    }
+  ],
+  "requests": {
+    "text": 0,
+    "image": 3
+  },
+  "uninstallPreserved": true
+}

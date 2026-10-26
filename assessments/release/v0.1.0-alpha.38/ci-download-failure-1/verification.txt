@@ -1,0 +1,28 @@
+read tcp 192.168.5.16:35934->185.199.108.133:443: wsarecv: An existing connection was forcibly closed by the remote host.
+node:internal/errors:999
+  const err = new Error(message);
+              ^
+
+Error: Command failed: gh release download v0.1.0-alpha.38 --repo ax2/zinovel-studio --dir D:\zinovel-releases\v0.1.0-alpha.38\ci-public --clobber --pattern ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe
+read tcp 192.168.5.16:35934->185.199.108.133:443: wsarecv: An existing connection was forcibly closed by the remote host.
+
+    at genericNodeError (node:internal/errors:999:15)
+    at wrappedFn (node:internal/errors:544:14)
+    at checkExecSyncError (node:child_process:943:11)
+    at execFileSync (node:child_process:979:15)
+    at run (file:///D:/Work/zinovel-studio/scripts/verify-public-release.mjs:22:3)
+    at file:///D:/Work/zinovel-studio/scripts/verify-public-release.mjs:493:3
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'read tcp 192.168.5.16:35934->185.199.108.133:443: wsarecv: An existing connection was forcibly closed by the remote host.\n'
+  ],
+  pid: 10256,
+  stdout: '',
+  stderr: 'read tcp 192.168.5.16:35934->185.199.108.133:443: wsarecv: An existing connection was forcibly closed by the remote host.\n'
+}
+
+Node.js v26.10.0

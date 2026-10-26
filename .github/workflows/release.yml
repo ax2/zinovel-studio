@@ -163,6 +163,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Public manual-import release download failed' }
           node scripts/smoke-recent-upgrade.mjs .cache/import-upgrade-source/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe .cache/import-upgrade-source/release-manifest.json import-upgrade
           if ($LASTEXITCODE -ne 0) { throw 'Legacy manual-import book and absent-origin upgrade failed' }
+      - name: Upgrade public alpha.38 original import origins and manuscripts
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force .cache/origin-upgrade-source | Out-Null
+          gh release download v0.1.0-alpha.38 --repo ax2/zinovel-studio --pattern '*-setup.exe' --pattern release-manifest.json --dir .cache/origin-upgrade-source
+          if ($LASTEXITCODE -ne 0) { throw 'Public origin release download failed' }
+          node scripts/smoke-recent-upgrade.mjs .cache/origin-upgrade-source/ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe .cache/origin-upgrade-source/release-manifest.json origin-upgrade
+          if ($LASTEXITCODE -ne 0) { throw 'Original import-origin and manuscript upgrade failed' }
       - run: pnpm release:manifest
       - name: Upload verified preview assets as a draft
         shell: pwsh

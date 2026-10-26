@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory",
+    "Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart",
+    "A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript",
+    "Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "origin-light-pagination.png",
+      "width": 994,
+      "height": 766,
+      "theme": "light"
+    },
+    {
+      "name": "origin-restored-dark.png",
+      "width": 994,
+      "height": 766,
+      "theme": "dark"
+    },
+    {
+      "name": "origin-unknown-preserved.png",
+      "width": 994,
+      "height": 766,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron import-origin viewer and host storage/backup. Native chooser returns synthetic fixture paths; no user manuscript, native IME or arbitrary external-write atomicity claim.",
+  "version": "0.1.0-alpha.39",
+  "packaged": true,
+  "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+  "originSchemaVersion": 1,
+  "sourceCount": 21,
+  "chapterCount": 21,
+  "absolutePathsExcluded": true,
+  "receiptSha256": "271d9ef24464b7df1380681ba0ecedf89067c65c6885f4b2f084370e6d8a7ec5",
+  "restoredRecordBytesPreserved": true,
+  "unknownRecordPreserved": true
+}

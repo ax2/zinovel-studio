@@ -485,6 +485,129 @@ try {
       upgrade.plannedScene.diskHash,
     );
   }
+  if (milestone >= 39) {
+    const upgrade = manifest.originPublicUpgrade,
+      origin = upgrade?.originalImportOrigin;
+    assert.equal(upgrade?.fromVersion, "0.1.0-alpha.38");
+    assert.equal(
+      upgrade.previousInstallerSha256,
+      "dfd50f8264cd0673d0e67a70cac62209508e0f52b107a6a210361ab8abd537d8",
+    );
+    assert.equal(
+      upgrade.previousAsarSha256,
+      "af93ff4697439cc21005cdc1fd7b555cf906989135a6150f5ab30d34e6dd351c",
+    );
+    assert.equal(upgrade.appAsarSha256, manifest.imageStudio.appAsarSha256);
+    assert.equal(upgrade.checks?.length, 8);
+    assert.ok(upgrade.upgradeMs > 0);
+    for (const count of [
+      upgrade.originReadbacks,
+      upgrade.legacyImportReadbacks,
+      upgrade.sceneTreeReadbacks,
+    ])
+      assert.ok(Number.isSafeInteger(count) && count >= 3);
+    assert.equal(upgrade.originalMaterialDraftSchema, 1);
+    assert.deepEqual(upgrade.requests, { text: 0, image: 3 });
+    for (const flag of [
+      "legacyImportPreserved",
+      "importOriginPreserved",
+      "plannedScenePreserved",
+      "schema1DraftPreservedUntilExplicitSave",
+      "fixedAppearancePreserved",
+      "postUninstallDataReadable",
+      "uninstallPreserved",
+      "reviewedOldCandidateWithoutRequest",
+      "credentialsPreserved",
+      "profileBytesPreserved",
+      "previousV2ReceiptPreserved",
+      "previousV2Readable",
+      "previousAdoptedAssetPreserved",
+      "fixedAppearancePreviewReadable",
+      "lookDraftPreserved",
+      "explicitSchema1DraftCreated",
+    ])
+      assert.equal(upgrade[flag], true);
+    assert.equal(origin?.schemaVersion, 1);
+    assert.equal(origin.applicationVersion, upgrade.fromVersion);
+    assert.equal(origin.importedBookId, upgrade.legacyImportedBook?.id);
+    assert.match(origin.importedBookId, /^[a-f0-9-]{36}$/);
+    assert.equal(origin.originalChapterCount, 2);
+    assert.equal(origin.manualAdjustmentCount, 2);
+    assert.equal(origin.encoding, "utf-8");
+    assert.equal(origin.automaticSplit, true);
+    assert.ok(Number.isFinite(Date.parse(origin.importedAt)));
+    assert.equal(origin.sources?.length, 1);
+    assert.equal(origin.chapters?.length, 3);
+    assert.equal(upgrade.legacyImportedBook.chapterIds?.length, 3);
+    assert.equal(new Set(upgrade.legacyImportedBook.chapterIds).size, 3);
+    assert.equal(upgrade.legacyImportedBook.chapterHashes?.length, 3);
+    assert.equal(upgrade.legacyImportFiles?.length, 4);
+    assert.equal(upgrade.originFiles?.length, 1);
+    assert.equal(upgrade.originFiles[0].name, "import-origin.json");
+    assert.equal(
+      upgrade.originFiles[0].sha256,
+      createHash("sha256")
+        .update(JSON.stringify(origin, null, 2) + "\n")
+        .digest("hex"),
+    );
+    for (const source of origin.sources) {
+      assert.match(source.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(source.bytes) && source.bytes > 0);
+    }
+    for (const [index, chapter] of origin.chapters.entries()) {
+      assert.match(chapter.id, /^[a-f0-9-]{36}$/);
+      assert.match(chapter.sha256, /^[a-f0-9]{64}$/);
+      assert.equal(chapter.id, upgrade.legacyImportedBook.chapterIds[index]);
+      assert.equal(
+        chapter.sha256,
+        upgrade.legacyImportedBook.chapterHashes[index],
+      );
+      assert.equal(
+        upgrade.legacyImportFiles.find(
+          (file) => file.name === `${chapter.id}.md`,
+        )?.sha256,
+        chapter.sha256,
+      );
+    }
+    assert.ok(
+      upgrade.legacyImportFiles.some((file) => file.name === "book.json"),
+    );
+    assert.equal(upgrade.sceneFiles?.length, 2);
+    assert.equal(upgrade.previousV2Files?.length, 3);
+    assert.ok(upgrade.appearanceFiles?.length >= 3);
+    for (const file of [
+      ...upgrade.originFiles,
+      ...upgrade.legacyImportFiles,
+      ...upgrade.sceneFiles,
+      ...upgrade.previousV2Files,
+      ...upgrade.appearanceFiles,
+    ]) {
+      assert.match(file.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(Number.isSafeInteger(file.bytes) && file.bytes > 0);
+    }
+    for (const id of [
+      upgrade.plannedScene.id,
+      upgrade.plannedScene.chapterId,
+      upgrade.newScene.id,
+    ])
+      assert.match(id, /^[a-f0-9-]{36}$/);
+    for (const revision of [
+      upgrade.plannedScene.planningRevision,
+      upgrade.newScene.revision,
+    ])
+      assert.ok(Number.isSafeInteger(revision) && revision > 0);
+    assert.match(upgrade.newScene.diskHash, /^[a-f0-9]{64}$/);
+    assert.equal(
+      upgrade.sceneFiles.find((file) => file.name === "planning.json")?.sha256,
+      upgrade.plannedScene.planningHash,
+    );
+    assert.equal(
+      upgrade.sceneFiles.find(
+        (file) => file.name === `${upgrade.plannedScene.id}.json`,
+      )?.sha256,
+      upgrade.plannedScene.diskHash,
+    );
+  }
   const installerDirectory = resolve(
     root,
     process.argv[5] || join(output, "installer"),

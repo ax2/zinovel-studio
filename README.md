@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版为[alpha.37](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.37)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.37/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe)。交付手工导入分章/合并/改名、四编码预览和快照确认保护；源码与独立发行CI、198项完整安装、五条公开升级及218条清单通过，公开EXE另外下载/hash和实际安装运行、卸载。详见[公开证据](assessments/release/v0.1.0-alpha.37/ci-public/README.md)。当前未签名，完整平台和稳定上架仍未完成。
+最新公开版为[alpha.38](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.38)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.38/ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe)。新增书内导入来源记录、分页查看和备份恢复保留；源码/发行CI、202项完整安装、六条公开升级和229条清单通过，公开EXE另已下载/hash并实际安装运行、卸载。详见[公开证据](assessments/release/v0.1.0-alpha.38/ci-public/README.md)。未签名，完整上架尚未完成。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
@@ -8,11 +8,11 @@
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，29项 verified、47项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.37 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.37) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.37/ZiNovel-Studio-0.1.0-alpha.37-windows-x64-setup.exe)。独立CI198项安装/重装/卸载、五升级和218条清单通过，公开文件另有本机安装运行与卸载证据；完整运行目录和EXE留档，无ZIP。
+Windows 技术预览版：[v0.1.0-alpha.38 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.38) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.38/ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe)。独立CI202项安装/重装/卸载、六升级和229条清单通过，公开字节另有本机安装运行与卸载证据；完整目录与EXE保留，无ZIP。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
-主线alpha.39补充目录/新章与批注提交前像、正文和目录只读依赖、排队输入捕获；403项基础及19组真实桌面操作通过，安装与升级尚待，39资格false。alpha.38源码/发行CI已成功公开，独立下载/hash和本机安装复验进行中。完整106项仍29/47/30。
+主线alpha.39补充目录/新章与批注提交前像、正文和目录只读依赖、排队输入捕获；403项基础及19组真实桌面操作、202项安装和七条升级/237条manifest通过，阶段标签入口开启，独立发行仍待。alpha.38已公开且下载/hash与额外安装运行、卸载13项完成。完整106项仍29/47/30。
 
 ## 产品方向
 

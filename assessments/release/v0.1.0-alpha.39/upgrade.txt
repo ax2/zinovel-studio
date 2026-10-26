@@ -1,0 +1,31 @@
+{
+  status: 'passed',
+  installDirectory: 'D:\\work\\zinovel-studio\\.cache\\upgrade-qa-bteZPj\\中文 升级目录',
+  syntheticDataDirectory: 'D:\\work\\zinovel-studio\\.cache\\upgrade-qa-bteZPj\\synthetic-data',
+  fromVersion: '0.1.0-alpha.3',
+  toVersion: '0.1.0-alpha.39',
+  previousInstallerSha256: '01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7',
+  currentInstallerSha256: '008e29cb935b336bee0af3f5bd9a85d0d579db7224b48fd94119f8b53a821116',
+  checks: [
+    'manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings',
+    'new version silently installed over old app in the same directory; all prior library/task/settings bytes retained and opened in the exact new packaged EXE with system-only PATH',
+    'old candidate recovered in new review UI, saved review draft separately without changing formal manuscript; upgraded app uninstalled while retaining user data'
+  ],
+  errors: [],
+  previousInstallMs: 20573,
+  upgradeMs: 19355,
+  uninstallObservation: {
+    attempts: 23,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 4628
+  },
+  uninstallRegistryObservation: {
+    attempts: 1,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 41
+  }
+}
+(node:69736) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

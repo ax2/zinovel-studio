@@ -1084,6 +1084,157 @@ manifest.importPublicUpgrade = {
 manifest.qualification.push(
   ...importUpgrade.checks.map((check) => `public-import-upgrade: ${check}`),
 );
+const originUpgrade = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/origin-upgrade/recent-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const originSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.38/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const originalOrigin = originUpgrade.originalImportOrigin;
+const originFlags = [
+  ...sceneFlags,
+  "legacyImportPreserved",
+  "importOriginPreserved",
+];
+if (
+  originUpgrade.status !== "passed" ||
+  originUpgrade.fromVersion !== "0.1.0-alpha.38" ||
+  originSource.version !== originUpgrade.fromVersion ||
+  originUpgrade.toVersion !== pkg.version ||
+  originUpgrade.currentInstallerSha256 !== sha256 ||
+  originUpgrade.appAsarSha256 !== appAsarSha256 ||
+  originUpgrade.previousInstallerSha256 !== originSource.sha256 ||
+  originUpgrade.previousAsarSha256 !== originSource.imageStudio.appAsarSha256 ||
+  originUpgrade.checks?.length !== 8 ||
+  originUpgrade.errors?.length !== 0 ||
+  !originFlags.every((key) => originUpgrade[key] === true) ||
+  !Number.isSafeInteger(originUpgrade.originReadbacks) ||
+  originUpgrade.originReadbacks < 3 ||
+  !Number.isSafeInteger(originUpgrade.legacyImportReadbacks) ||
+  originUpgrade.legacyImportReadbacks < 3 ||
+  !Number.isSafeInteger(originUpgrade.sceneTreeReadbacks) ||
+  originUpgrade.sceneTreeReadbacks < 3 ||
+  originUpgrade.originalMaterialDraftSchema !== 1 ||
+  !Number.isFinite(originUpgrade.upgradeMs) ||
+  originUpgrade.upgradeMs <= 0 ||
+  JSON.stringify(originUpgrade.requests) !==
+    JSON.stringify({ text: 0, image: 3 }) ||
+  originalOrigin?.schemaVersion !== 1 ||
+  originalOrigin.applicationVersion !== originSource.version ||
+  originalOrigin.importedBookId !== originUpgrade.legacyImportedBook?.id ||
+  originalOrigin.originalChapterCount !== 2 ||
+  originalOrigin.manualAdjustmentCount !== 2 ||
+  originalOrigin.encoding !== "utf-8" ||
+  originalOrigin.automaticSplit !== true ||
+  !Number.isFinite(Date.parse(originalOrigin.importedAt)) ||
+  !/^[a-f0-9-]{36}$/.test(originalOrigin.importedBookId || "") ||
+  originalOrigin.sources?.length !== 1 ||
+  originalOrigin.chapters?.length !== 3 ||
+  !originalOrigin.sources.every(
+    (source) =>
+      hashIsValid(source.sha256) &&
+      Number.isSafeInteger(source.bytes) &&
+      source.bytes > 0,
+  ) ||
+  !originalOrigin.chapters.every(
+    (chapter, index) =>
+      chapter.id === originUpgrade.legacyImportedBook?.chapterIds?.[index] &&
+      hashIsValid(chapter.sha256) &&
+      chapter.sha256 ===
+        originUpgrade.legacyImportedBook?.chapterHashes?.[index],
+  ) ||
+  originUpgrade.legacyImportFiles?.length !== 4 ||
+  originUpgrade.originFiles?.length !== 1 ||
+  originUpgrade.originFiles[0].name !== "import-origin.json" ||
+  originUpgrade.originFiles[0].sha256 !==
+    createHash("sha256")
+      .update(JSON.stringify(originalOrigin, null, 2) + "\n")
+      .digest("hex") ||
+  originUpgrade.sceneFiles?.length !== 2 ||
+  originUpgrade.previousV2Files?.length !== 3 ||
+  !Array.isArray(originUpgrade.appearanceFiles) ||
+  originUpgrade.appearanceFiles.length < 3 ||
+  ![
+    ...(originUpgrade.legacyImportFiles || []),
+    ...(originUpgrade.originFiles || []),
+    ...(originUpgrade.sceneFiles || []),
+    ...(originUpgrade.previousV2Files || []),
+    ...(originUpgrade.appearanceFiles || []),
+  ].every(
+    (file) =>
+      hashIsValid(file.sha256) &&
+      Number.isSafeInteger(file.bytes) &&
+      file.bytes > 0,
+  ) ||
+  !originUpgrade.legacyImportFiles.some((file) => file.name === "book.json") ||
+  !originalOrigin.chapters.every(
+    (chapter) =>
+      originUpgrade.legacyImportFiles.find(
+        (file) => file.name === `${chapter.id}.md`,
+      )?.sha256 === chapter.sha256,
+  ) ||
+  !hashIsValid(originUpgrade.plannedScene?.diskHash) ||
+  !/^[a-f0-9-]{36}$/.test(originUpgrade.plannedScene?.id || "") ||
+  !/^[a-f0-9-]{36}$/.test(originUpgrade.plannedScene?.chapterId || "") ||
+  !Number.isSafeInteger(originUpgrade.plannedScene?.planningRevision) ||
+  originUpgrade.plannedScene.planningRevision < 1 ||
+  !hashIsValid(originUpgrade.plannedScene?.planningHash) ||
+  originUpgrade.sceneFiles.find((file) => file.name === "planning.json")
+    ?.sha256 !== originUpgrade.plannedScene.planningHash ||
+  originUpgrade.sceneFiles.find(
+    (file) => file.name === `${originUpgrade.plannedScene.id}.json`,
+  )?.sha256 !== originUpgrade.plannedScene.diskHash ||
+  !hashIsValid(originUpgrade.newScene?.diskHash) ||
+  !/^[a-f0-9-]{36}$/.test(originUpgrade.newScene?.id || "") ||
+  !Number.isSafeInteger(originUpgrade.newScene?.revision) ||
+  originUpgrade.newScene.revision < 1 ||
+  !hashIsValid(originUpgrade.lookDraftSha256) ||
+  !hashIsValid(originUpgrade.oldMaterialDraftSha256)
+)
+  throw new Error(
+    "Public alpha.38 original import-origin and exact manuscript upgrade proof is missing or stale",
+  );
+manifest.originPublicUpgrade = {
+  fromVersion: originUpgrade.fromVersion,
+  previousInstallerSha256: originUpgrade.previousInstallerSha256,
+  previousAsarSha256: originUpgrade.previousAsarSha256,
+  appAsarSha256,
+  upgradeMs: originUpgrade.upgradeMs,
+  ...Object.fromEntries(originFlags.map((key) => [key, true])),
+  originReadbacks: originUpgrade.originReadbacks,
+  legacyImportReadbacks: originUpgrade.legacyImportReadbacks,
+  sceneTreeReadbacks: originUpgrade.sceneTreeReadbacks,
+  originalMaterialDraftSchema: originUpgrade.originalMaterialDraftSchema,
+  originalImportOrigin: originalOrigin,
+  originFiles: originUpgrade.originFiles,
+  legacyImportedBook: originUpgrade.legacyImportedBook,
+  legacyImportFiles: originUpgrade.legacyImportFiles,
+  plannedScene: originUpgrade.plannedScene,
+  sceneFiles: originUpgrade.sceneFiles,
+  previousV2Files: originUpgrade.previousV2Files,
+  appearanceFiles: originUpgrade.appearanceFiles,
+  newScene: originUpgrade.newScene,
+  lookDraftSha256: originUpgrade.lookDraftSha256,
+  oldMaterialDraftSha256: originUpgrade.oldMaterialDraftSha256,
+  requests: originUpgrade.requests,
+  checks: originUpgrade.checks,
+  scope: originUpgrade.scope,
+};
+manifest.qualification.push(
+  ...originUpgrade.checks.map((check) => `public-origin-upgrade: ${check}`),
+);
 await writeFile(new URL("SHA256SUMS.txt", release), `${sha256}  ${name}\n`);
 await writeFile(
   new URL("release-manifest.json", release),

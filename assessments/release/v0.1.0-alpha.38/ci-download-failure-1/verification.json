@@ -1,0 +1,7 @@
+{
+  "tag": "v0.1.0-alpha.38",
+  "runId": "40199680815",
+  "checkedAt": "2026-10-26T11:24:42.059Z",
+  "status": "failed",
+  "error": "Command failed: gh release download v0.1.0-alpha.38 --repo ax2/zinovel-studio --dir D:\\zinovel-releases\\v0.1.0-alpha.38\\ci-public --clobber --pattern ZiNovel-Studio-0.1.0-alpha.38-windows-x64-setup.exe\nread tcp 192.168.5.16:35934->185.199.108.133:443: wsarecv: An existing connection was forcibly closed by the remote host.\n"
+}

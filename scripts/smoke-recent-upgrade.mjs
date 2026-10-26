@@ -53,14 +53,18 @@ assert.ok(
     "appearance-upgrade",
     "scene-upgrade",
     "import-upgrade",
+    "origin-upgrade",
   ].includes(stage),
 );
-const importPublic = stage === "import-upgrade",
+const originPublic = stage === "origin-upgrade",
+  importPublic = stage === "import-upgrade" || originPublic,
   scenePublic = stage === "scene-upgrade" || importPublic,
   appearancePublic = stage === "appearance-upgrade" || scenePublic,
   currentPublic = stage !== "recent-upgrade",
   sourceVersion = importPublic
-    ? "0.1.0-alpha.37"
+    ? originPublic
+      ? "0.1.0-alpha.38"
+      : "0.1.0-alpha.37"
     : scenePublic
       ? "0.1.0-alpha.36"
       : appearancePublic
@@ -69,7 +73,9 @@ const importPublic = stage === "import-upgrade",
           ? "0.1.0-alpha.33"
           : "0.1.0-alpha.31",
   sourceLabel = importPublic
-    ? "公开37"
+    ? originPublic
+      ? "公开38"
+      : "公开37"
     : scenePublic
       ? "公开36"
       : appearancePublic
@@ -78,6 +84,7 @@ const importPublic = stage === "import-upgrade",
           ? "公开33"
           : "公开31";
 assert.equal(previous.version, sourceVersion);
+const sourceSuffix = sourceVersion.split(".").at(-1);
 if (appearancePublic) {
   assert.equal(previous.characterLooks?.version, sourceVersion);
   assert.equal(
@@ -395,8 +402,10 @@ try {
   await launch(previous.version);
   let legacyImportedBook = null;
   const legacyImportRecords = [];
+  let importedOrigin = null;
+  const originRecords = [];
   if (importPublic) {
-    const source = join(work, "公开37手工分章原稿𠮷.txt");
+    const source = join(work, `${sourceLabel}手工分章原稿𠮷.txt`);
     await writeFile(
       source,
       "第一章 原题\n甲𠮷🙂乙\n第二章 尾声\n旧版导入的结尾。",
@@ -440,7 +449,7 @@ try {
       .getByRole("button", { name: "从光标处拆分", exact: true })
       .click();
     await page.getByText("1 个源文件 · 3 章", { exact: false }).waitFor();
-    await page.getByLabel("导入作品名称").fill("公开37手工导入升级书");
+    await page.getByLabel("导入作品名称").fill(`${sourceLabel}手工导入升级书`);
     await page
       .getByRole("button", { name: "确认导入为新作品", exact: true })
       .click();
@@ -473,12 +482,26 @@ try {
       ),
     ])
       legacyImportRecords.push({ path, bytes: await readFile(path) });
-    await assert.rejects(
-      access(join(importedRoot, ".zinovel/import-origin.json")),
-      { code: "ENOENT" },
-    );
+    if (originPublic) {
+      importedOrigin = await request("book.import-origin", {
+        bookId: legacyImportedBook.id,
+      });
+      assert.equal(importedOrigin.origin.schemaVersion, 1);
+      assert.equal(importedOrigin.origin.applicationVersion, sourceVersion);
+      assert.equal(importedOrigin.origin.sources.length, 1);
+      assert.equal(importedOrigin.origin.chapters.length, 3);
+      assert.equal(importedOrigin.origin.originalChapterCount, 2);
+      assert.ok(importedOrigin.origin.manualAdjustmentCount >= 2);
+      assert.equal(importedOrigin.restoredCopy, false);
+      const path = join(importedRoot, ".zinovel/import-origin.json");
+      originRecords.push({ path, bytes: await readFile(path) });
+    } else
+      await assert.rejects(
+        access(join(importedRoot, ".zinovel/import-origin.json")),
+        { code: "ENOENT" },
+      );
     await page.screenshot({
-      path: join(out, "old-public37-manual-import.png"),
+      path: join(out, `old-public${sourceSuffix}-manual-import.png`),
     });
     await page.getByTitle("返回书库", { exact: true }).click();
     await page
@@ -693,9 +716,7 @@ try {
         ),
       ])
         sceneRecords.push({ path, bytes: await readFile(path) });
-      await verifySceneTree(
-        `old-public${importPublic ? "37" : "36"}-arranged-scene.png`,
-      );
+      await verifySceneTree(`old-public${sourceSuffix}-arranged-scene.png`);
     }
     const form = await openCharacterForm(currentCharacter),
       looks = page.getByRole("region", { name: "人物形象版本", exact: true });
@@ -798,7 +819,7 @@ try {
       path: join(
         out,
         scenePublic
-          ? `old-public${importPublic ? "37" : "36"}-fixed-look-and-draft.png`
+          ? `old-public${sourceSuffix}-fixed-look-and-draft.png`
           : "old-public35-fixed-look-and-draft.png",
       ),
     });
@@ -834,6 +855,7 @@ try {
       ...appearanceRecords,
       ...sceneRecords,
       ...legacyImportRecords,
+      ...originRecords,
     ])
       assert.deepEqual(await readFile(item.path), item.bytes);
   };
@@ -933,9 +955,7 @@ try {
         ).diskHash,
         oldArrangedScene.diskHash,
       );
-      await verifySceneTree(
-        `new-public${importPublic ? "37" : "36"}-arranged-scene.png`,
-      );
+      await verifySceneTree(`new-public${sourceSuffix}-arranged-scene.png`);
       report.sceneTreeReadbacks = (report.sceneTreeReadbacks || 0) + 1;
     }
     if (importPublic) {
@@ -955,12 +975,15 @@ try {
         );
       assert.deepEqual(
         await request("book.import-origin", { bookId: actual.id }),
-        { origin: null, restoredCopy: false },
+        originPublic ? importedOrigin : { origin: null, restoredCopy: false },
       );
-      await assert.rejects(
-        access(join(data, "library", actual.id, ".zinovel/import-origin.json")),
-        { code: "ENOENT" },
-      );
+      if (!originPublic)
+        await assert.rejects(
+          access(
+            join(data, "library", actual.id, ".zinovel/import-origin.json"),
+          ),
+          { code: "ENOENT" },
+        );
       if (!report.legacyImportReadbacks) {
         await page.getByTitle("返回书库", { exact: true }).click();
         await page
@@ -973,12 +996,34 @@ try {
           .getByRole("button", { name: "管理作品 / 回收站", exact: true })
           .click();
         await page.getByText("导入来源与确认记录", { exact: true }).click();
-        await page
-          .getByRole("region", { name: "导入来源说明", exact: true })
-          .getByText("此作品没有保留导入来源说明。", { exact: false })
+        const originRegion = page.getByRole("region", {
+          name: "导入来源说明",
+          exact: true,
+        });
+        await originRegion
+          .getByText(
+            originPublic ? "初始 2 章" : "此作品没有保留导入来源说明。",
+            { exact: false },
+          )
           .waitFor();
+        if (originPublic) {
+          await originRegion
+            .getByText("导入时的章节与内容指纹（3）", { exact: true })
+            .click();
+          await originRegion
+            .getByText(`${sourceLabel}手工分章原稿𠮷.txt`, { exact: false })
+            .waitFor();
+          await originRegion
+            .getByText("旧版手工后半章", { exact: false })
+            .waitFor();
+        }
         await page.screenshot({
-          path: join(out, "new-public37-legacy-origin-not-fabricated.png"),
+          path: join(
+            out,
+            originPublic
+              ? "new-public38-origin-preserved.png"
+              : "new-public37-legacy-origin-not-fabricated.png",
+          ),
         });
         await page
           .getByRole("button", { name: "关闭作品管理", exact: true })
@@ -1206,7 +1251,7 @@ try {
   if (importPublic) {
     assert.ok(report.legacyImportReadbacks >= 3);
     report.legacyImportPreserved = true;
-    report.legacyOriginNotFabricated = true;
+    report.legacyOriginNotFabricated = !originPublic;
     report.legacyImportedBook = {
       id: legacyImportedBook.id,
       title: legacyImportedBook.title,
@@ -1219,8 +1264,21 @@ try {
       bytes: item.bytes.length,
     }));
     report.checks.push(
-      "Actual public37 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; new UI honestly reports absent legacy origin instead of inventing metadata",
+      `Actual ${sourceVersion} author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; ${originPublic ? "original import-origin is preserved" : "new UI honestly reports absent legacy origin instead of inventing metadata"}`,
     );
+    if (originPublic) {
+      report.importOriginPreserved = true;
+      report.originReadbacks = report.legacyImportReadbacks;
+      report.originalImportOrigin = importedOrigin.origin;
+      report.originFiles = originRecords.map((item) => ({
+        name: "import-origin.json",
+        bytes: item.bytes.length,
+        sha256: createHash("sha256").update(item.bytes).digest("hex"),
+      }));
+      report.checks.push(
+        "Actual public38 import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement",
+      );
+    }
   }
   report.status = "passed";
 } catch (error) {

@@ -1,0 +1,1142 @@
+{
+  "product": "ZiNovel Studio",
+  "version": "0.1.0-alpha.39",
+  "commit": "a0aa11c12a1c5594a69c252fc7e229ff0550173a",
+  "platform": "win32",
+  "arch": "x64",
+  "installer": "ZiNovel-Studio-0.1.0-alpha.39-windows-x64-setup.exe",
+  "bytes": 155539904,
+  "sha256": "008e29cb935b336bee0af3f5bd9a85d0d579db7224b48fd94119f8b53a821116",
+  "signature": "unsigned-preview",
+  "electron": "44.7.0",
+  "embeddedNode": "24.21.0",
+  "harness": "0.2.1-rc.2",
+  "qualification": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer",
+    "installed: bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes",
+    "installed: forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded",
+    "installed: task list filters by book and remains bounded, accessible and dismissible in narrow viewport",
+    "installed: four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
+    "installed: acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
+    "installed: before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once",
+    "installed: library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
+    "installed: all-book task list opens the exact linked book and chapter",
+    "installed: cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically",
+    "installed: official Harness text is atomically captured while the SSE response is still open and no proposal exists",
+    "installed: UI cancellation flushes visible text, survives restart and provides reference-only recovery without replay or manuscript writes",
+    "installed: forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay",
+    "installed: UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs",
+    "installed: changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact",
+    "installed: settings and exact reported usage survive restart without model replay or manuscript modification",
+    "installed: expanded budget settings stay inside the viewport and can be saved in a narrow window",
+    "installed: local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes",
+    "installed: real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
+    "installed: close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
+    "installed: stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
+    "installed: partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
+    "installed: light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
+    "installed: same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance",
+    "installed: real Electron creates all 13 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged",
+    "installed: author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification",
+    "installed: saved cards survive actual desktop restart, unsaved local adjustment is recovered explicitly, aliases search finds the character and author-confirmed status remains distinct from canon",
+    "installed: external same-revision edit blocks stale save and preserves both copies; trash restore retains identity and historical version is loaded only as an explicit new revision",
+    "installed: evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence",
+    "installed: real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history",
+    "installed: linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
+    "installed: relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes",
+    "installed: cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence",
+    "installed: material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details",
+    "installed: local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content",
+    "installed: task's exact source versions survive later card edits and real desktop restart without replay or manuscript writes; scope and context are visible in task history",
+    "installed: two worker processes actually exit after material intent / durable book receipt; actual desktop startup restores pending review or applied state without overwriting later author edits or calling the model",
+    "installed: real official Harness exposes exactly material-read/propose; preview sends no model requests; typed candidate leaves original card/manuscript unchanged; saved author review survives restart without replay and explicit acceptance preserves host-owned fields",
+    "installed: accepted task is read-only; subsequent proposal rejects competing card edits and keeps both candidate and current card; light desktop and dark narrow semantic review remain usable",
+    "installed: actual pointer drag moves one scene across chapters before a neighbor; board and outline share the order and semantic fields; keyboard Enter reorders without changing manuscript",
+    "installed: real restart retains order; external same-revision edit blocks stale move without overwrite; deleted chapter remains visible and scene can be reassigned; deleted scene restores at its original position",
+    "installed: open original scene form and edit choice; refreshed outline shows same field; dark narrow viewport supports chapter filtering and exact chapter navigation; backup restores placement under new book identity; manuscript bytes unchanged",
+    "installed: Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context",
+    "installed: Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material",
+    "installed: Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
+    "installed: Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged",
+    "installed: Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+    "installed: A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token",
+    "installed: Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals",
+    "installed: Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources",
+    "installed: Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite",
+    "installed: Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays",
+    "installed: Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable",
+    "installed: Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory",
+    "installed: Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart",
+    "installed: A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript",
+    "installed: Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched",
+    "installed: Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript",
+    "installed: Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart",
+    "installed: Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard",
+    "installed: Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged",
+    "installed: Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart",
+    "installed: real Electron and official Harness complete organization/item/ability/research proposals with explicit review and acceptance; four estimates dispatch zero requests; twelve local fixture requests expose only material-read/propose",
+    "installed: research classification and verification remain disabled/read-only during review and unchanged after acceptance; model is told it has no network verification tool; manuscript bytes, author status and chapter references remain unchanged",
+    "installed: actual UI creates source-bound scene experiment, independent branches and saved comparison; selection and feedback freeze the prior version; Chinese keyboard edits/undo/redo; real close/relaunch restores unsaved body and temporarily blank title",
+    "installed: synthetic localStorage quota exhaustion blocks sample navigation and native window close; explicit Ctrl+S persists current changes and clears close guard",
+    "installed: external same-revision body changes block save and preserve both; explicit disk comparison/rebase preserves external version in history; soft delete/restore keeps identity and body; source freshness changes without changing original scene snapshot",
+    "installed: dark narrow comparison has no page/dialog overflow; explicit promotion opens a new chapter with exact trial text and original first-chapter bytes unchanged; whole-book backup restores branch/group/selection/feedback under new book identity",
+    "installed: real worker exit(91) before/after pilot write; actual desktop startup reconciles correct task type, preserves later author edits and never replays model output",
+    "installed: official Harness makes exactly three scoped tool requests; preview/estimate zero requests; changed source blocks dispatch; no unrelated sample/material/manuscript sent; review is proposal-only, saves draft, reopens in same session and after real relaunch, explicit acceptance changes only pilot body",
+    "installed: stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate",
+    "installed: actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript",
+    "installed: retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
+    "installed: actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged",
+    "installed: distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range",
+    "installed: 61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click",
+    "installed: deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes",
+    "installed: synthetic localStorage quota failure blocks dialog close without losing input; after storage recovers the same draft reopens intact and can be explicitly discarded",
+    "installed: actual UI distinguishes belief, suspicion and empty cells; saved Unicode source binding never changes manuscript",
+    "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
+    "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
+    "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution",
+    "installed: actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation",
+    "installed: external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry",
+    "installed: Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes",
+    "installed: Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged",
+    "installed: Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
+    "installed: Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",
+    "installed: Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode",
+    "installed: renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
+    "installed: switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
+    "installed: provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
+    "installed: after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors",
+    "installed: Actual author save and failed synthetic settings produce fixed metadata only; unique manuscript/title/IDs/path/credential absent from preview and export; injected path refused before native chooser and cancelled choice writes nothing",
+    "installed: Explicit native-selected JSON created once; actual delayed write guards panel and native-window close until completion; repeat refuses overwrite byte-for-byte; prospective data-root Junction child refused before creation; manuscript and private task/settings storage never gathered or changed",
+    "installed: Desktop and dark narrow previews fit; clear is explicitly confirmed and cancellation preserves events; clear removes metadata alone; complete process restart discards prior errors and metadata while author manuscript persists without automatic diagnostic storage",
+    "installed: Changing service address and leaving Key blank clears the old encrypted credential; official generation refuses before any new-endpoint request; explicit replacement credential is the only credential observed on three real Harness tool-roundtrip requests",
+    "installed: Same-service model selection and canonical trailing slash preserve the credential; changing address and explicit key clearing discard unsaved Key input; returning to old endpoint cannot resurrect an old credential; original manuscript unchanged and stored bytes contain no plaintext key",
+    "installed: Unversioned legacy encrypted settings still generate through the original endpoint; cancelling service editing preserves exact legacy bytes; externally mismatched service scope refuses decryption/use without changing stored bytes or contacting another provider; unknown future schema refuses read/save and preserves exact bytes until explicit synthetic repair",
+    "installed: Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task",
+    "installed: Real author UI creates independent B and selects it; stale or missing displayed revision refuses before network; the ordinary writing button sends only selected B key through official Harness; old task metadata remains frozen and manuscript is not auto-applied",
+    "installed: An externally changed profile revision rejects UI save without overwriting bytes and keeps the Chinese form draft; explicit cancel/refresh permits confirmed deletion of an unused empty-key configuration; clearing B key affects neither A nor image C and prevents B network until its key is explicitly replaced",
+    "installed: Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests",
+    "installed: Future schema and foreign store identity preserve exact bytes and refuse use; missing list blocks generation without legacy fallback; explicit desktop recovery restores only the original single configuration while preserving held newer profiles and exact migration backup; original manuscript remains unchanged",
+    "installed: Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports",
+    "installed: Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+    "installed: Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+    "installed: Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
+    "installed: Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations",
+    "installed: actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
+    "installed: real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
+    "installed: restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
+    "installed: author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests",
+    "installed: real window-bound IPC cancels a 256-chapter capture before commit without creating a snapshot",
+    "installed: explicit reordered two-chapter capture persists; preview metadata excludes body/private author materials, chapter IPC returns exact BOM/CRLF/astral text and rejects out-of-scope chapters",
+    "installed: external author edit and full desktop restart preserve the original frozen snapshot; no manuscript conversion, model request or automatic replay",
+    "installed: actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
+    "installed: actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
+    "installed: native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF/DOCX writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer and DOCX cancellation creates no directory; injected PDF print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
+    "installed: desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
+    "installed: form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export",
+    "installed: actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts",
+    "installed: independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages",
+    "installed: actual editor flush, native-choice-instrumented import, exact originals, current PNG preview, purpose/source/rights/linked character metadata and Ctrl+S saved once; local draft including temporarily empty title survives modal close",
+    "installed: external metadata conflict preserves author input; explicit disk comparison/rebase saves new version; JPEG EXIF preview and old-image history remain independent; explicit history adoption creates a new version retaining later originals; recycle/restore preserve originals",
+    "installed: corrupt image import creates no visible record; external original corruption refuses preview and preserves damaged bytes; explicit synthetic repair re-enables preview",
+    "installed: quota error protects modal input; unknown future draft survives full restart until explicit discard; synthetic durable host commit without panel receipt recovers by creation identity after restart without duplicate records",
+    "installed: desktop/806px narrow/dark screenshots, zero horizontal overflow, zero renderer errors or external page requests; all source files and formal manuscript remain byte-identical",
+    "installed: Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait",
+    "installed: Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged",
+    "installed: Full restart restores only the local appearance draft and clears choice confirmation; dark narrow author controls explicitly choose the newer version, reject arbitrary-path IPC, preserve manuscript bytes and emit no renderer errors or HTTP requests",
+    "installed: Synthetic local quota failure retains typed appearance notes and cancels actual window close until formal save; an unknown future draft survives full restart byte-for-byte, blocks replacement, and is removed only by explicit discard without changing saved appearances or manuscript",
+    "installed: Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript",
+    "installed: Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request",
+    "installed: Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
+    "installed: Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
+    "installed: Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses",
+    "installed: Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call",
+    "installed: Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+    "installed: Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP",
+    "installed: Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review",
+    "installed: A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+    "installed: Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained",
+    "installed: installed or source host DOCX exports real editable paragraphs/native heading styles, public metadata, exact selected chapter order and rare-character counts; original bytes remain unchanged",
+    "installed: independent native LibreOffice reader converts the actual exported DOCX; spatial text extraction verifies complete public selection, excludes private/unselected text, checks all glyph bounds and rasterizes every page",
+    "installed: real isolated main-window IPC creates/edits a typed map with stable place/region/route IDs; creation reconciliation returns the later version; foreign location and missing creation identity reject without writes; actual JPEG decode freezes EXIF-oriented background",
+    "installed: actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair",
+    "installed: actual host atlas IPC persists explicit epoch/parent/anchor IDs, rejects foreign maps and stale raw-hash saves without overwriting external bytes, returns filtered lightweight diagnostics, preserves exact preimage history and adopts it as a new revision; retired parent is disclosed without changing directory references; no atlas editing UI claim",
+    "installed: actual Electron close retains exact formal manuscript, other-book metadata and selected original image; author workspace is nonblank, renderer has no Node globals, no page errors or external page requests",
+    "installed: legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+    "installed: actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+    "installed: image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+    "installed: standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow",
+    "installed: actual map controls create two stable places by pointer/form, same-book location association, three-vertex region, real vertex drag and undo, routed bends and author calibration; Ctrl+S/save applies raw coordinates; explicit background selection freezes bytes and clears prior scale; manuscript unchanged after entry flush",
+    "installed: unfinished coordinate input survives modal close and full Electron restart; synthetic localStorage quota blocks modal and native window close without losing raw input; completing coordinates and explicitly saving still writes the formal map and clears the close guard",
+    "installed: same-revision external edits reject stale saves and retain disk bytes/local input; author explicitly compares and adopts the baseline; exact external preimage survives in history; actual read-only historical background loads and author adopts it as a new revision; keyboard point movement/undo and view-only zoom do not silently write the map",
+    "installed: future local draft remains byte-identical and read-only until explicit discard; map recycle and restore preserve identity; a synthetic checkpoint representing an already committed creation with an unconfirmed result reconciles the later revision without duplicate or rewind; not a simulated IPC transport loss",
+    "installed: desktop and 806px dark/narrow map render without dialog overflow; actual host backup/restore to a new book preserves saved map IDs, original image and frozen background while excluding unfinished local coordinate input; folder chooser results are instrumented",
+    "installed: actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes",
+    "installed: synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry",
+    "installed: formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard",
+    "installed: synthetic competing local cache is retained while the current author explicitly saves formal data; reopen restores the competing draft without silently rebasing, stale baseline blocks save until readable comparison and explicit adoption; both author versions remain in saved history",
+    "installed: desktop and 806px light/dark atlas render without horizontal dialog overflow; actual whole-book backup/restore retains saved epochs and three-level references under source lineage, excludes unsaved local notes; original three map files and formal manuscript remain exact, zero renderer errors/HTTP; native folder results are instrumented",
+    "installed: Actual author UI exported HTML opens independently with reversed chapter order, previous/next/directory/reload, frozen Unicode body and no script execution",
+    "installed: External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow",
+    "installed: Actual author UI export inventory matches every file byte; no HTTP requests or workbench IPC/Node globals; standalone Chromium viewer only",
+    "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
+    "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
+    "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
+    "installed: real desktop restart preserves manuscript, selected pilot, planning placement and all five materials with zero replay; all model content is synthetic fixture data, not literary-quality evidence",
+    "installed: actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call",
+    "installed: official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel",
+    "installed: task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable",
+    "installed: material proposal UI rejects stale knowledge with zero requests then uses only material-read, frozen-reference-read and proposal after refresh; original card unchanged",
+    "installed: pilot UI rejects stale knowledge before estimation and generation; refreshed estimate sends zero requests and official Harness uses only pilot-read, frozen-reference-read and pilot proposal",
+    "installed: both target prompts/tool results contain selected knowledge without unselected truth, other knowledge or whole formal manuscript; no candidate is applied automatically",
+    "installed: actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record",
+    "installed: simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity",
+    "installed: synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another",
+    "installed: old-format draft without creation identity migrates before explicit save; four deliberate author creation intents remain exactly four records and manuscript bytes never change",
+    "installed: actual author selection freezes one explicit event without removing contradictory records; matrix shows the choice separately",
+    "installed: external same-cell decision cannot be cleared with a stale UI baseline; re-reading permits explicit author change",
+    "installed: manuscript edit expires the old choice; original quote remains visible and current-source rebinding alone does not silently reconfirm the choice",
+    "installed: explicit new selection survives full restart; clearing preserves four prior choice versions and unchosen event bytes; dark narrow history remains reachable",
+    "installed: 41 actual legacy records paginate 40/1; explicit source selection starts with unspecified knowledge state and permits author scope/state review",
+    "installed: legacy source and author edits survive full desktop restart; a changed old-card baseline rejects creation without a new record",
+    "installed: refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact",
+    "installed: manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged",
+    "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
+    "real NSIS uninstall removes app and registration and retains synthetic user manuscript",
+    "upgrade: manifest-verified alpha.3 installed and actually edited/saved Unicode manuscript and OS-encrypted synthetic settings",
+    "upgrade: new version silently installed over old app in the same directory; all prior library/task/settings bytes retained and opened in the exact new packaged EXE with system-only PATH",
+    "upgrade: old candidate recovered in new review UI, saved review draft separately without changing formal manuscript; upgraded app uninstalled while retaining user data",
+    "recent-upgrade: Exact public 0.1.0-alpha.31 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate",
+    "recent-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "recent-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "current-public-upgrade: Exact public 0.1.0-alpha.33 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "current-public-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "current-public-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "public-appearance-upgrade: Exact public 0.1.0-alpha.35 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "public-appearance-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "public-appearance-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "public-appearance-upgrade: Actual public 0.1.0-alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "public-appearance-upgrade: New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "public-scene-upgrade: Exact public 0.1.0-alpha.36 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "public-scene-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "public-scene-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "public-scene-upgrade: Actual public 0.1.0-alpha.36 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "public-scene-upgrade: New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "public-scene-upgrade: Actual public 0.1.0-alpha.36 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+    "public-import-upgrade: Exact public 0.1.0-alpha.37 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "public-import-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "public-import-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "public-import-upgrade: Actual public 0.1.0-alpha.37 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "public-import-upgrade: New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "public-import-upgrade: Actual public 0.1.0-alpha.37 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+    "public-import-upgrade: Actual 0.1.0-alpha.37 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; new UI honestly reports absent legacy origin instead of inventing metadata",
+    "public-origin-upgrade: Exact public 0.1.0-alpha.38 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "public-origin-upgrade: Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "public-origin-upgrade: Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "public-origin-upgrade: Actual public 0.1.0-alpha.38 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "public-origin-upgrade: New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "public-origin-upgrade: Actual public 0.1.0-alpha.38 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+    "public-origin-upgrade: Actual 0.1.0-alpha.38 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; original import-origin is preserved",
+    "public-origin-upgrade: Actual public38 import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement"
+  ],
+  "generatedAt": "2026-10-26T11:58:41.594Z",
+  "processRecovery": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "handlePinned": true,
+    "birthPrecision": "100ns",
+    "rootStatus": "terminated",
+    "originalProcessesConfirmedExited": 6,
+    "verification": "Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject"
+  },
+  "characterLooks": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait",
+      "Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged",
+      "Full restart restores only the local appearance draft and clears choice confirmation; dark narrow author controls explicitly choose the newer version, reject arbitrary-path IPC, preserve manuscript bytes and emit no renderer errors or HTTP requests",
+      "Synthetic local quota failure retains typed appearance notes and cancels actual window close until formal save; an unknown future draft survives full restart byte-for-byte, blocks replacement, and is removed only by explicit discard without changing saved appearances or manuscript"
+    ],
+    "scope": "Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim"
+  },
+  "sceneTree": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context",
+      "Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material",
+      "Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
+      "Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged"
+    ],
+    "scope": "Synthetic scene tree, fixed planning identity/order and material draft navigation; no automatic manuscript splitting, native IME, huge-book performance or complete product qualification"
+  },
+  "sceneTreeOperations": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript",
+      "Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart",
+      "Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard",
+      "Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged",
+      "Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart"
+    ],
+    "scope": "Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification"
+  },
+  "importBoundary": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+      "A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token",
+      "Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals"
+    ],
+    "scope": "Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.",
+    "encodings": [
+      "utf-8",
+      "utf-16le",
+      "utf-16be",
+      "gb18030"
+    ]
+  },
+  "importReview": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources",
+      "Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite",
+      "Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays",
+      "Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable"
+    ],
+    "scope": "Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim."
+  },
+  "importOrigin": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "originSchemaVersion": 1,
+    "sourceCount": 21,
+    "chapterCount": 21,
+    "receiptSha256": "271d9ef24464b7df1380681ba0ecedf89067c65c6885f4b2f084370e6d8a7ec5",
+    "absolutePathsExcluded": true,
+    "restoredRecordBytesPreserved": true,
+    "unknownRecordPreserved": true,
+    "checks": [
+      "Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory",
+      "Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart",
+      "A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript",
+      "Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched"
+    ],
+    "scope": "Browser plugin not available; actual Electron import-origin viewer and host storage/backup. Native chooser returns synthetic fixture paths; no user manuscript, native IME or arbitrary external-write atomicity claim."
+  },
+  "imageRuntime": {
+    "status": "passed",
+    "version": "0.1.0-alpha.39",
+    "node": "24.21.0",
+    "sharp": "0.35.5",
+    "vips": "8.18.7",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "notices": [
+      "sharp-Apache-2.0.txt",
+      "sharp-win32-x64-LICENSE.txt",
+      "sharp-win32-x64-upstream-README.md",
+      "sharp-win32-x64-versions.json",
+      "GPL-3.0.txt",
+      "LGPL-3.0.txt"
+    ],
+    "nativeFiles": [
+      {
+        "name": "libvips-42.dll",
+        "sha256": "06dab07cc386748513337a31672b1d5269fbc770a14ff403080575665bf0813f",
+        "bytes": 19018240
+      },
+      {
+        "name": "libvips-cpp-8.18.7.dll",
+        "sha256": "25001dbd05305a0a29119ab49933622c70b4a20ea12ef1d5d20ca40181db53bf",
+        "bytes": 333312
+      },
+      {
+        "name": "sharp-win32-x64-0.35.5.node",
+        "sha256": "971048779f9c8598df14641dfc03c625885c93f473a788e65ca2deb50d0b083e",
+        "bytes": 443904
+      }
+    ],
+    "scope": "Packaged EXE embedded Node, app-local native modules, actual three-format decode, unpacked writable DLLs and exact retained licence bytes; not modified-DLL execution or complete distribution certification"
+  },
+  "pdfPublication": {
+    "version": "0.1.0-alpha.39",
+    "snapshotHash": "beab54ee6aa59f706f724c38e2825778481a79aed4ba43aa3ecabb98aab5390d",
+    "sha256": "cd0903919f39268a334b15839c71faaf98c0fcd3c95c211b0cbf9f10dd32b64f",
+    "bytes": 103968,
+    "checks": [
+      "actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts",
+      "independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages"
+    ],
+    "scope": "Synthetic frozen selection exported by installed EXE; independent parser and PDFium, no professional print certification"
+  },
+  "docxPublication": {
+    "version": "0.1.0-alpha.39",
+    "snapshotHash": "beab54ee6aa59f706f724c38e2825778481a79aed4ba43aa3ecabb98aab5390d",
+    "sha256": "adfdfa1df8d626c4438f3c3ec5e89b06e578b6e52c42e5a34743e5bf4b02ddf8",
+    "bytes": 11452,
+    "reader": {
+      "name": "DeepSeek LibreOffice Kit",
+      "version": "0.1.5",
+      "backend": "native",
+      "missingFonts": []
+    },
+    "checks": [
+      "installed or source host DOCX exports real editable paragraphs/native heading styles, public metadata, exact selected chapter order and rare-character counts; original bytes remain unchanged",
+      "independent native LibreOffice reader converts the actual exported DOCX; spatial text extraction verifies complete public selection, excludes private/unselected text, checks all glyph bounds and rasterizes every page"
+    ],
+    "scope": "Actual installed host export; editable OOXML and native development-only LibreOffice reader; no installed Word claim"
+  },
+  "imagePublication": {
+    "version": "0.1.0-alpha.39",
+    "snapshotHash": "0cacad315af43cf1cc31dffad15217291ae03e678bdc4c3198177a84ab57f545",
+    "images": [
+      {
+        "path": "images/adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a.png",
+        "bytes": 7032,
+        "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a"
+      },
+      {
+        "path": "images/ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575.png",
+        "bytes": 516,
+        "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575"
+      }
+    ],
+    "checks": [
+      "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+      "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+      "image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+      "standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow"
+    ],
+    "scope": "Actual author UI and host transactions; folder/file picker results instrumented; standalone Chromium file reader is not an actual mobile device"
+  },
+  "offlineWriting": {
+    "version": "0.1.0-alpha.39",
+    "readingLayout": {
+      "dialog": {
+        "left": 0,
+        "right": 986.4000244140625,
+        "top": 0,
+        "bottom": 863.2000122070312,
+        "width": 986.4000244140625,
+        "height": 863.2000122070312
+      },
+      "paragraph": {
+        "left": 275,
+        "right": 936.4000244140625,
+        "top": 287.8999938964844,
+        "bottom": 323.8999938964844,
+        "width": 661.4000244140625,
+        "height": 36
+      },
+      "layout": {
+        "left": 0,
+        "right": 986.4000244140625,
+        "top": 144,
+        "bottom": 801.2000122070312,
+        "width": 986.4000244140625,
+        "height": 657.2000122070312
+      },
+      "horizontalOverflow": false,
+      "viewport": {
+        "width": 986,
+        "height": 863
+      }
+    },
+    "checks": [
+      "renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
+      "switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
+      "provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
+      "after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors"
+    ],
+    "scope": "Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim"
+  },
+  "backupBoundary": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "independentDisks": true,
+    "sourceDisk": {
+      "DriveLetter": "D",
+      "DiskNumber": 1,
+      "PartitionNumber": 2
+    },
+    "backupDisk": {
+      "DriveLetter": "C",
+      "DiskNumber": 0,
+      "PartitionNumber": 3
+    },
+    "backupFiles": 10,
+    "checks": [
+      "actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
+      "real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
+      "restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
+      "author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests"
+    ],
+    "scope": "Actual host file transactions; Windows disk numbers are distinct; picker results instrumented; not a hardware-loss or system-IME simulation"
+  },
+  "incrementalBackup": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "independentDisks": true,
+    "sourceDisk": {
+      "DriveLetter": "D",
+      "DiskNumber": 1,
+      "PartitionNumber": 2
+    },
+    "backupDisk": {
+      "DriveLetter": "C",
+      "DiskNumber": 0,
+      "PartitionNumber": 3
+    },
+    "checks": [
+      "Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+      "Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+      "Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
+      "Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations"
+    ],
+    "scope": "Synthetic books; actual desktop host and author controls; native picker results and one object-write barrier instrumented. Not physical disk-loss, native-picker clicks or system-IME qualification."
+  },
+  "diagnostics": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Actual author save and failed synthetic settings produce fixed metadata only; unique manuscript/title/IDs/path/credential absent from preview and export; injected path refused before native chooser and cancelled choice writes nothing",
+      "Explicit native-selected JSON created once; actual delayed write guards panel and native-window close until completion; repeat refuses overwrite byte-for-byte; prospective data-root Junction child refused before creation; manuscript and private task/settings storage never gathered or changed",
+      "Desktop and dark narrow previews fit; clear is explicitly confirmed and cancellation preserves events; clear removes metadata alone; complete process restart discards prior errors and metadata while author manuscript persists without automatic diagnostic storage"
+    ],
+    "scope": "Synthetic desktop host and author controls; save-dialog results instrumented, not native dialog clicks, system IME, upstream session-log audit or complete product qualification; packaged field identifies actual EXE execution"
+  },
+  "modelCredentials": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "oldCredentialForwarded": false,
+    "checks": [
+      "Changing service address and leaving Key blank clears the old encrypted credential; official generation refuses before any new-endpoint request; explicit replacement credential is the only credential observed on three real Harness tool-roundtrip requests",
+      "Same-service model selection and canonical trailing slash preserve the credential; changing address and explicit key clearing discard unsaved Key input; returning to old endpoint cannot resurrect an old credential; original manuscript unchanged and stored bytes contain no plaintext key",
+      "Unversioned legacy encrypted settings still generate through the original endpoint; cancelling service editing preserves exact legacy bytes; externally mismatched service scope refuses decryption/use without changing stored bytes or contacting another provider; unknown future schema refuses read/save and preserves exact bytes until explicit synthetic repair"
+    ],
+    "scope": "Synthetic keys only; actual desktop settings UI and official Harness requests to two separate local endpoints; header evidence stores booleans, never credentials; no real provider or native IME qualification"
+  },
+  "imageStudio": {
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript",
+      "Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request",
+      "Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
+      "Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
+      "Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses",
+      "Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call",
+      "Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+      "Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP",
+      "Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review",
+      "A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+      "Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained"
+    ],
+    "scope": "Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption, process restart and renderer-only crash. Native recovery choice instrumented; fresh CDP observes the original app-reopened window without extra reload. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.",
+    "requests": [
+      0,
+      9,
+      0
+    ],
+    "closeProtected": true,
+    "remoteUnknownAfterRestart": true,
+    "retainedSaveRecoveredLocally": true,
+    "originalsPreserved": true,
+    "mixedBatchRecovery": true,
+    "crashCredentialsRetained": true,
+    "characterTargetVersionChecked": true,
+    "chapterTargetVersionChecked": true,
+    "rendererRecoveryRetainsPaidResult": true,
+    "reviewedTargetAdoption": true,
+    "reviewedChapterAdoption": true,
+    "reviewedTargetNarrowConfirmation": true
+  },
+  "modelProfiles": {
+    "newCredentialEnvelope": "win-dpapi-v1",
+    "legacyCipherAfterRestart": true,
+    "version": "0.1.0-alpha.39",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "checks": [
+      "Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task",
+      "Real author UI creates independent B and selects it; stale or missing displayed revision refuses before network; the ordinary writing button sends only selected B key through official Harness; old task metadata remains frozen and manuscript is not auto-applied",
+      "An externally changed profile revision rejects UI save without overwriting bytes and keeps the Chinese form draft; explicit cancel/refresh permits confirmed deletion of an unused empty-key configuration; clearing B key affects neither A nor image C and prevents B network until its key is explicitly replaced",
+      "Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests",
+      "Future schema and foreign store identity preserve exact bytes and refuse use; missing list blocks generation without legacy fallback; explicit desktop recovery restores only the original single configuration while preserving held newer profiles and exact migration backup; original manuscript remains unchanged",
+      "Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports"
+    ],
+    "scope": "Synthetic keys and manuscript; real desktop UI, CurrentUser DPAPI for new keys, actual legacy Electron ciphertext and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification",
+    "requests": [
+      3,
+      6,
+      0
+    ]
+  },
+  "upgrade": {
+    "fromVersion": "0.1.0-alpha.3",
+    "previousInstallerSha256": "01e765cc7e7da20fac00b6f8b924b53ff38721f0f8099c713494631a66b0bce7",
+    "upgradeMs": 19355
+  },
+  "recentUpgrade": {
+    "fromVersion": "0.1.0-alpha.31",
+    "previousInstallerSha256": "7c41eed5bc9844dd3ca187690efa5dea9cf53683f23ef2b51ff987b6f63e93dc",
+    "upgradeMs": 16785,
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "requests": {
+      "text": 0,
+      "image": 2
+    },
+    "checks": [
+      "Exact public 0.1.0-alpha.31 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt"
+    ],
+    "scope": "Exact public 0.1.0-alpha.31 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  },
+  "currentPublicUpgrade": {
+    "fromVersion": "0.1.0-alpha.33",
+    "previousInstallerSha256": "403acb68b027ff23e069391fe755f3f7bef53a30b1e4140647b16f2063b2a38f",
+    "previousAsarSha256": "0f406e098c4070226b1306573c22010c283377a8003a84751e268d684ff59b89",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "upgradeMs": 14236,
+    "requests": {
+      "text": 0,
+      "image": 3
+    },
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "previousV2ReceiptPreserved": true,
+    "previousV2Readable": true,
+    "previousAdoptedAssetPreserved": true,
+    "previousV2Files": [
+      {
+        "name": "65425fa5-6bd3-4fe4-a0f3-487aa83aacff.json",
+        "sha256": "ac894540d59bb468e95b3e473fd9867bb03ddd893710dd69a73f8f00e7ae62f7",
+        "bytes": 2914
+      },
+      {
+        "name": "4bb850d6-261e-41e1-920b-773cc559da55.json",
+        "sha256": "8beeaccd8321b3b5089cd83330099231de3f8c6b5dbfdea5fb8a1d42ad8a91d9",
+        "bytes": 870
+      },
+      {
+        "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+        "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+        "bytes": 449
+      }
+    ],
+    "checks": [
+      "Exact public 0.1.0-alpha.33 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt"
+    ],
+    "scope": "Exact public 0.1.0-alpha.33 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  },
+  "appearanceUpgrade": {
+    "fromVersion": "0.1.0-alpha.35",
+    "previousInstallerSha256": "a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a",
+    "previousAsarSha256": "b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "upgradeMs": 14292,
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "previousV2ReceiptPreserved": true,
+    "previousV2Readable": true,
+    "previousAdoptedAssetPreserved": true,
+    "fixedAppearancePreserved": true,
+    "fixedAppearancePreviewReadable": true,
+    "lookDraftPreserved": true,
+    "legacyDraftPreservedUntilExplicitSave": true,
+    "explicitSchema1DraftCreated": true,
+    "postUninstallDataReadable": true,
+    "appearanceFiles": [
+      {
+        "name": "52653757-36c8-4bcd-959a-64a3a3af780b.json",
+        "sha256": "a7d9082d85a7d523910d80e6cdf3889055e455c30d7fa75d8f91e60654ce008e",
+        "bytes": 2582
+      },
+      {
+        "name": "1-d73dce3ea430b19519f410668cddf2e114be04b2e9f29ef51ee8fb6c04641d59.json",
+        "sha256": "d73dce3ea430b19519f410668cddf2e114be04b2e9f29ef51ee8fb6c04641d59",
+        "bytes": 2144
+      },
+      {
+        "name": "2-e1090acfbaa1cfaec512a17355444b376783dc739acfe3ff6ab821625bee650a.json",
+        "sha256": "e1090acfbaa1cfaec512a17355444b376783dc739acfe3ff6ab821625bee650a",
+        "bytes": 2582
+      }
+    ],
+    "previousV2Files": [
+      {
+        "name": "0ee7bbf7-80cf-41b8-b812-bcc796645b7e.json",
+        "sha256": "1f52621b6fb3d031036870ff488ce9d93c16efd477d281785c1d11354a26be4e",
+        "bytes": 2914
+      },
+      {
+        "name": "888ebd73-e942-4ca1-b6a2-2d7ba5e4ef68.json",
+        "sha256": "3ddcd70e25543a86378f8e6fd2258e63c0abaafaec193ac3357a4c8ac3f94d25",
+        "bytes": 870
+      },
+      {
+        "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+        "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+        "bytes": 449
+      }
+    ],
+    "lookDraftSha256": "25e07461cd41432f10886e0211195f17da9d8c95b5f27fb86ed0905f5e263614",
+    "oldMaterialDraftSha256": "03b9e3b4891de1fd6ded0b17f75ea65627c3dd00f8a9e17645e68cba64214b4a",
+    "newScene": {
+      "id": "fa3dd898-3ed9-48cc-b930-68da8bf57ec0",
+      "revision": 1,
+      "diskHash": "b3fc9e0c5a578886b9f7ca88212377527a5c191957ef8f78869e1a55dd5525c9"
+    },
+    "requests": {
+      "text": 0,
+      "image": 3
+    },
+    "checks": [
+      "Exact public 0.1.0-alpha.35 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+      "Actual public 0.1.0-alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade",
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay"
+    ],
+    "scope": "Exact public 0.1.0-alpha.35 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  },
+  "sceneUpgrade": {
+    "fromVersion": "0.1.0-alpha.36",
+    "previousInstallerSha256": "50425dd87f735bfda379863e1844d6846632ceafe70611a575743cfa58ecb3d3",
+    "previousAsarSha256": "6684495567bd9d2a0c057277e3877905deaeba448fbd478cbc48601c6425421c",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "upgradeMs": 17432,
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "previousV2ReceiptPreserved": true,
+    "previousV2Readable": true,
+    "previousAdoptedAssetPreserved": true,
+    "fixedAppearancePreserved": true,
+    "fixedAppearancePreviewReadable": true,
+    "lookDraftPreserved": true,
+    "explicitSchema1DraftCreated": true,
+    "postUninstallDataReadable": true,
+    "schema1DraftPreservedUntilExplicitSave": true,
+    "plannedScenePreserved": true,
+    "originalMaterialDraftSchema": 1,
+    "sceneTreeReadbacks": 3,
+    "plannedScene": {
+      "id": "39fff1ff-f6f8-42ea-8c49-abd5c28deaac",
+      "diskHash": "ce6ec6dfa1c82b3b58ab8fad4e2e6e466e943b94235e8346c4b561a3537c6387",
+      "chapterId": "336f624c-e410-4e8c-82bb-82668d64060e",
+      "planningHash": "81df0e727e99d3e0147af872dd7f67928f1f57a4849761b2dff5881e05c4b9d5",
+      "planningRevision": 1
+    },
+    "sceneFiles": [
+      {
+        "name": "planning.json",
+        "sha256": "81df0e727e99d3e0147af872dd7f67928f1f57a4849761b2dff5881e05c4b9d5",
+        "bytes": 253
+      },
+      {
+        "name": "39fff1ff-f6f8-42ea-8c49-abd5c28deaac.json",
+        "sha256": "ce6ec6dfa1c82b3b58ab8fad4e2e6e466e943b94235e8346c4b561a3537c6387",
+        "bytes": 506
+      }
+    ],
+    "appearanceFiles": [
+      {
+        "name": "cf7523d2-2756-4ea4-9c3a-4ee7230e2127.json",
+        "sha256": "fe3edf8e1dd125f042e14a01897eaff85a7cfe52917f69962ab24ea9f7e1c199",
+        "bytes": 2582
+      },
+      {
+        "name": "1-9076e3c9367b80db898e8427c5541ac341aefd404b29cead4d8d7fe33eb6c6bf.json",
+        "sha256": "9076e3c9367b80db898e8427c5541ac341aefd404b29cead4d8d7fe33eb6c6bf",
+        "bytes": 2144
+      },
+      {
+        "name": "2-7aedb3464c9b0cab4c6f8a1a2206dc0d86f0d404ae2fdca2719a965fc1fdf834.json",
+        "sha256": "7aedb3464c9b0cab4c6f8a1a2206dc0d86f0d404ae2fdca2719a965fc1fdf834",
+        "bytes": 2582
+      }
+    ],
+    "previousV2Files": [
+      {
+        "name": "67c55deb-80db-4062-8031-bd7521060e58.json",
+        "sha256": "3aae49eecd217e35504a0d0651ab700701741d5480aee745b1fac620322705a4",
+        "bytes": 2914
+      },
+      {
+        "name": "abb1c7b9-5093-45e1-ab0d-4a3704cbf9ad.json",
+        "sha256": "720ea99a45ef5a3816d7b47adac5857603dabe12c0feea5e62379c23210df294",
+        "bytes": 870
+      },
+      {
+        "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+        "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+        "bytes": 449
+      }
+    ],
+    "lookDraftSha256": "374d661797356af9e2463c27fc4dc96bc743039c2315c2e56dbbed67a3fb751c",
+    "oldMaterialDraftSha256": "757c9c91b80ac1c6d4ea421dc022a6c65df8e9aa11873dfb23a9bfdcda897b76",
+    "newScene": {
+      "id": "53c06f75-2908-4ad3-a2c3-79df70332d14",
+      "revision": 1,
+      "diskHash": "5fa2b2815a58f3262f3aba38064b4f631795d9a2a88ebd9dea98d8630f8a2ebf"
+    },
+    "requests": {
+      "text": 0,
+      "image": 3
+    },
+    "checks": [
+      "Exact public 0.1.0-alpha.36 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+      "Actual public 0.1.0-alpha.36 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+      "Actual public 0.1.0-alpha.36 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save"
+    ],
+    "scope": "Exact public 0.1.0-alpha.36 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  },
+  "importPublicUpgrade": {
+    "fromVersion": "0.1.0-alpha.37",
+    "previousInstallerSha256": "5331029f3dbd689b1f3ca0839447812eca91158555de4af7011d1d6a1d395a72",
+    "previousAsarSha256": "12f96bfa9def62b8edcd755bb485cd000470747a87e8b16b53e80f8cb40a31e9",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "upgradeMs": 14461,
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "previousV2ReceiptPreserved": true,
+    "previousV2Readable": true,
+    "previousAdoptedAssetPreserved": true,
+    "fixedAppearancePreserved": true,
+    "fixedAppearancePreviewReadable": true,
+    "lookDraftPreserved": true,
+    "explicitSchema1DraftCreated": true,
+    "postUninstallDataReadable": true,
+    "schema1DraftPreservedUntilExplicitSave": true,
+    "plannedScenePreserved": true,
+    "legacyImportPreserved": true,
+    "legacyOriginNotFabricated": true,
+    "originalMaterialDraftSchema": 1,
+    "sceneTreeReadbacks": 3,
+    "legacyImportReadbacks": 3,
+    "plannedScene": {
+      "id": "82e89eb4-842c-4e77-8ca7-5722f7db58be",
+      "diskHash": "a1d254f04e580dbe207538881e4ee5b1ed3c3cd688f1ec118edfac27aa565d57",
+      "chapterId": "b39cd4ff-1b19-4620-bc10-42b9cc8b169c",
+      "planningHash": "820beba397b00f8664c8884cdd59f7dd2fcede4e808a4e9e3f35ed8b4b41203b",
+      "planningRevision": 1
+    },
+    "sceneFiles": [
+      {
+        "name": "planning.json",
+        "sha256": "820beba397b00f8664c8884cdd59f7dd2fcede4e808a4e9e3f35ed8b4b41203b",
+        "bytes": 253
+      },
+      {
+        "name": "82e89eb4-842c-4e77-8ca7-5722f7db58be.json",
+        "sha256": "a1d254f04e580dbe207538881e4ee5b1ed3c3cd688f1ec118edfac27aa565d57",
+        "bytes": 506
+      }
+    ],
+    "legacyImportedBook": {
+      "id": "6a1e5150-fbb2-4fbb-ad5c-98826456422a",
+      "title": "公开37手工导入升级书",
+      "chapterIds": [
+        "b9fec557-ba8c-4e9a-92e7-c1826b9f35d3",
+        "2ff7785c-b35d-40d7-bf70-44fd099fa53b",
+        "7dd52ddc-b8be-405c-935f-f114e835f403"
+      ],
+      "chapterHashes": [
+        "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+        "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+        "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+      ]
+    },
+    "legacyImportFiles": [
+      {
+        "name": "book.json",
+        "sha256": "9b1b15fdca5994fc74197f6c88237dc5eac3b8392b1d0f28a01649a651e5b5f6",
+        "bytes": 1161
+      },
+      {
+        "name": "b9fec557-ba8c-4e9a-92e7-c1826b9f35d3.md",
+        "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+        "bytes": 7
+      },
+      {
+        "name": "2ff7785c-b35d-40d7-bf70-44fd099fa53b.md",
+        "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+        "bytes": 7
+      },
+      {
+        "name": "7dd52ddc-b8be-405c-935f-f114e835f403.md",
+        "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575",
+        "bytes": 24
+      }
+    ],
+    "appearanceFiles": [
+      {
+        "name": "c79d1f7d-e233-442c-a03a-f21df3485f2e.json",
+        "sha256": "5144e287ec3d68c78b8d42d91855d20c547ef5ad0d115a61710e4a190dcc7c9e",
+        "bytes": 2582
+      },
+      {
+        "name": "1-a41d19ac014683c7aea8a875aaaa9ffb5d8e6311cd37497aaa844e94cfb286f9.json",
+        "sha256": "a41d19ac014683c7aea8a875aaaa9ffb5d8e6311cd37497aaa844e94cfb286f9",
+        "bytes": 2144
+      },
+      {
+        "name": "2-796c7bc322a69a94751d9f46ce29637f8172f76fb1779da883457d2277f7c044.json",
+        "sha256": "796c7bc322a69a94751d9f46ce29637f8172f76fb1779da883457d2277f7c044",
+        "bytes": 2582
+      }
+    ],
+    "previousV2Files": [
+      {
+        "name": "6ded5f2a-6c0e-477b-a11a-2e565af1ef36.json",
+        "sha256": "7a8f76cdbc47ab24332523c27899226af907e71e5e6146d9df8b6909b0225f43",
+        "bytes": 2914
+      },
+      {
+        "name": "0fc679c5-4070-48f3-b35b-c06bdaf0b326.json",
+        "sha256": "2adf2d95bc4158fba36fb2f211392bc61a3f7e6975d9ebff93aeeb8c1f7ac972",
+        "bytes": 870
+      },
+      {
+        "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+        "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+        "bytes": 449
+      }
+    ],
+    "newScene": {
+      "id": "f4227520-b555-4a01-bde2-47aad495b075",
+      "revision": 1,
+      "diskHash": "a6513be6563537aac22aad412973ba48255ebbd527008d4b4366e5da36c2dedb"
+    },
+    "lookDraftSha256": "0194714a92ce04ab8721c06d35a97cfb8cc50dbf2051bb2a3674d815a181d6ab",
+    "oldMaterialDraftSha256": "c436273cdf78644bf9eef3607be8896a1fea6e0342afaf597c3ef9242d337bbd",
+    "requests": {
+      "text": 0,
+      "image": 3
+    },
+    "checks": [
+      "Exact public 0.1.0-alpha.37 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+      "Actual public 0.1.0-alpha.37 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+      "Actual public 0.1.0-alpha.37 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+      "Actual 0.1.0-alpha.37 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; new UI honestly reports absent legacy origin instead of inventing metadata"
+    ],
+    "scope": "Exact public 0.1.0-alpha.37 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  },
+  "originPublicUpgrade": {
+    "fromVersion": "0.1.0-alpha.38",
+    "previousInstallerSha256": "dfd50f8264cd0673d0e67a70cac62209508e0f52b107a6a210361ab8abd537d8",
+    "previousAsarSha256": "af93ff4697439cc21005cdc1fd7b555cf906989135a6150f5ab30d34e6dd351c",
+    "appAsarSha256": "92457dbbfd01e15dcfe773e9d2b3349df841d2421e9a08934030a91ea8fb0f42",
+    "upgradeMs": 16691,
+    "reviewedOldCandidateWithoutRequest": true,
+    "credentialsPreserved": true,
+    "profileBytesPreserved": true,
+    "uninstallPreserved": true,
+    "previousV2ReceiptPreserved": true,
+    "previousV2Readable": true,
+    "previousAdoptedAssetPreserved": true,
+    "fixedAppearancePreserved": true,
+    "fixedAppearancePreviewReadable": true,
+    "lookDraftPreserved": true,
+    "explicitSchema1DraftCreated": true,
+    "postUninstallDataReadable": true,
+    "schema1DraftPreservedUntilExplicitSave": true,
+    "plannedScenePreserved": true,
+    "legacyImportPreserved": true,
+    "importOriginPreserved": true,
+    "originReadbacks": 3,
+    "legacyImportReadbacks": 3,
+    "sceneTreeReadbacks": 3,
+    "originalMaterialDraftSchema": 1,
+    "originalImportOrigin": {
+      "schemaVersion": 1,
+      "importedBookId": "789adc8b-8368-4960-bfd6-43bfe4f20856",
+      "importedAt": "2026-10-26T11:52:21.832Z",
+      "applicationVersion": "0.1.0-alpha.38",
+      "encoding": "utf-8",
+      "automaticSplit": true,
+      "originalChapterCount": 2,
+      "manualAdjustmentCount": 2,
+      "sources": [
+        {
+          "name": "公开38手工分章原稿𠮷.txt",
+          "bytes": 73,
+          "sha256": "8c0fd1d56b735572105f476c3b789ff6abe8e776b895bcaae82947e63b25f33a"
+        }
+      ],
+      "chapters": [
+        {
+          "id": "85c6f551-5f63-4242-932b-c2f9528b3959",
+          "title": "旧版确认的首章",
+          "volume": "",
+          "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8"
+        },
+        {
+          "id": "d492adba-d3e3-4ba9-a12a-71a053f45c04",
+          "title": "旧版手工后半章",
+          "volume": "",
+          "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750"
+        },
+        {
+          "id": "0cb79d03-5d07-46c9-8086-d9cf23ab352d",
+          "title": "第二章 尾声",
+          "volume": "",
+          "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+        }
+      ]
+    },
+    "originFiles": [
+      {
+        "name": "import-origin.json",
+        "bytes": 1104,
+        "sha256": "0494e7a4a55ed3a3344779e254d1cab36aaa24048256efb0415dc2d096d20e3c"
+      }
+    ],
+    "legacyImportedBook": {
+      "id": "789adc8b-8368-4960-bfd6-43bfe4f20856",
+      "title": "公开38手工导入升级书",
+      "chapterIds": [
+        "85c6f551-5f63-4242-932b-c2f9528b3959",
+        "d492adba-d3e3-4ba9-a12a-71a053f45c04",
+        "0cb79d03-5d07-46c9-8086-d9cf23ab352d"
+      ],
+      "chapterHashes": [
+        "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+        "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+        "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+      ]
+    },
+    "legacyImportFiles": [
+      {
+        "name": "book.json",
+        "sha256": "da2130a5f0ad5326ac2cdc9650244d91e4dfecb4824e44a8af1d0e06daca5fca",
+        "bytes": 1161
+      },
+      {
+        "name": "85c6f551-5f63-4242-932b-c2f9528b3959.md",
+        "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+        "bytes": 7
+      },
+      {
+        "name": "d492adba-d3e3-4ba9-a12a-71a053f45c04.md",
+        "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+        "bytes": 7
+      },
+      {
+        "name": "0cb79d03-5d07-46c9-8086-d9cf23ab352d.md",
+        "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575",
+        "bytes": 24
+      }
+    ],
+    "plannedScene": {
+      "id": "1d204e67-540a-4bde-8069-a01fd879ec7f",
+      "diskHash": "d0be2fabe3cdaedfbbb875ba54277180a8f7429e75a8e406f9371d423c9d4607",
+      "chapterId": "2d62d9a5-914f-4f06-809b-12d1bc20a9ec",
+      "planningHash": "ab158f4d56b346f4327ed93ff3dae7d2501e7c1105674f8f809c1fe25bb90847",
+      "planningRevision": 1
+    },
+    "sceneFiles": [
+      {
+        "name": "planning.json",
+        "sha256": "ab158f4d56b346f4327ed93ff3dae7d2501e7c1105674f8f809c1fe25bb90847",
+        "bytes": 253
+      },
+      {
+        "name": "1d204e67-540a-4bde-8069-a01fd879ec7f.json",
+        "sha256": "d0be2fabe3cdaedfbbb875ba54277180a8f7429e75a8e406f9371d423c9d4607",
+        "bytes": 506
+      }
+    ],
+    "previousV2Files": [
+      {
+        "name": "decbe981-eb5b-438d-845e-56a79b34e2ce.json",
+        "sha256": "92d0cb621e176a2ad87fe5ea556d2b18fbe432b921ff968b4e1aba7714c466c0",
+        "bytes": 2914
+      },
+      {
+        "name": "e01e47e4-f577-4fa8-9b2a-b660d1800de1.json",
+        "sha256": "caf03ba00ba569b291e4c083af4a6b2b282887a065297ba29ace5f496d6ba7aa",
+        "bytes": 870
+      },
+      {
+        "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+        "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+        "bytes": 449
+      }
+    ],
+    "appearanceFiles": [
+      {
+        "name": "28f25c29-9da9-4ad9-9a9e-9bdcba408a1f.json",
+        "sha256": "42f5f4edb94e154081758ebac31244dcc55d1980c36a4564737ad7978e9b7e59",
+        "bytes": 2582
+      },
+      {
+        "name": "1-4ed859386445ecc902385d82b606b9f4cecee511c466a60d6cdb2c6f58c22dce.json",
+        "sha256": "4ed859386445ecc902385d82b606b9f4cecee511c466a60d6cdb2c6f58c22dce",
+        "bytes": 2144
+      },
+      {
+        "name": "2-4c180ed924714399e62aed82ccfb77d2fa63f1bcd2ac8e9e6b57581f04bd2886.json",
+        "sha256": "4c180ed924714399e62aed82ccfb77d2fa63f1bcd2ac8e9e6b57581f04bd2886",
+        "bytes": 2582
+      }
+    ],
+    "newScene": {
+      "id": "e0ad393a-9c85-4989-acf0-e8648f09ed51",
+      "revision": 1,
+      "diskHash": "b6d7fc89bbc7d71b87bcb7cf53209c3ded30800a317fc728f43877d7e9c62aa8"
+    },
+    "lookDraftSha256": "c9f8e4edc8beab42a2da8c6fd63aaf29f7c0f089b9cead30ff5d666afed67e84",
+    "oldMaterialDraftSha256": "a84aaff1e4f5d0c5ea9ef07c4ee27c32cefd987ba6e4c20590728b0b9ebf9c61",
+    "requests": {
+      "text": 0,
+      "image": 3
+    },
+    "checks": [
+      "Exact public 0.1.0-alpha.38 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+      "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+      "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+      "Actual public 0.1.0-alpha.38 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+      "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+      "Actual public 0.1.0-alpha.38 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+      "Actual 0.1.0-alpha.38 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; original import-origin is preserved",
+      "Actual public38 import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement"
+    ],
+    "scope": "Exact public 0.1.0-alpha.38 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification"
+  }
+}
