@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context",
+    "Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material",
+    "Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
+    "Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "tree-light.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "quota-protected.png",
+      "width": 1426,
+      "height": 923,
+      "theme": "light"
+    },
+    {
+      "name": "tree-dark-narrow.png",
+      "width": 806,
+      "height": 803,
+      "theme": "dark"
+    }
+  ],
+  "version": "0.1.0-alpha.40",
+  "packaged": true,
+  "appAsarSha256": "9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087",
+  "scope": "Synthetic scene tree, fixed planning identity/order and material draft navigation; no automatic manuscript splitting, native IME, huge-book performance or complete product qualification"
+}

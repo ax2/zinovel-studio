@@ -1,0 +1,190 @@
+{
+  "status": "passed",
+  "fromVersion": "0.1.0-alpha.38",
+  "toVersion": "0.1.0-alpha.40",
+  "previousInstallerSha256": "dfd50f8264cd0673d0e67a70cac62209508e0f52b107a6a210361ab8abd537d8",
+  "currentInstallerSha256": "804f484a9bbbfac9cd996522ff53dc21c6f45768735512c3b4aafe262d5b4dad",
+  "installDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-ERAf2m\\中文 最近版升级",
+  "syntheticDataDirectory": "D:\\work\\zinovel-studio\\.cache\\recent-upgrade-ERAf2m\\synthetic-data",
+  "checks": [
+    "Exact public 0.1.0-alpha.38 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade",
+    "Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request",
+    "Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt",
+    "Actual public 0.1.0-alpha.38 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus schema1 scene draft; exact collection/history/image/v2 bytes survive upgrade",
+    "New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay",
+    "Actual public 0.1.0-alpha.38 host creates an arranged scene and planning snapshot; old tree, upgraded tree, full restart and post-uninstall portable runtime show the same scene ID/chapter position, exact material/planning bytes and unchanged schema1 draft until author save",
+    "Actual 0.1.0-alpha.38 author UI renames/splits a frozen source into three formal chapters; exact book/manuscript bytes, IDs and hashes survive current install, full restart and post-uninstall runtime; original import-origin is preserved",
+    "Actual public38 import-origin schema1, original producer version, source fingerprint and three chapter fingerprints remain byte-for-byte identical through new host, restart and post-uninstall runtime; no invented migration or receipt replacement"
+  ],
+  "errors": [],
+  "scope": "Exact public 0.1.0-alpha.38 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification",
+  "previousInstallMs": 19982,
+  "previousAsarSha256": "af93ff4697439cc21005cdc1fd7b555cf906989135a6150f5ab30d34e6dd351c",
+  "upgradeMs": 34419,
+  "appAsarSha256": "9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087",
+  "sceneTreeReadbacks": 3,
+  "legacyImportReadbacks": 3,
+  "reviewedOldCandidateWithoutRequest": true,
+  "credentialsPreserved": true,
+  "profileBytesPreserved": true,
+  "schema1DraftPreservedUntilExplicitSave": true,
+  "explicitSchema1DraftCreated": true,
+  "postUninstallDataReadable": true,
+  "previousV2ReceiptPreserved": true,
+  "previousV2Readable": true,
+  "previousAdoptedAssetPreserved": true,
+  "previousV2Files": [
+    {
+      "name": "c7e92c10-3759-4ab1-9119-d3f6656d6207.json",
+      "sha256": "32d53609cac0885acecda08113ab0536546001c737a9c8f1f5139ef83fc3dfcd",
+      "bytes": 2914
+    },
+    {
+      "name": "712500b0-cb88-4837-8fe0-f7f0787c919d.json",
+      "sha256": "ad9b9b6f6ab75442db09dda5235a696181644035b8847bce04771670abb86cbf",
+      "bytes": 870
+    },
+    {
+      "name": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png",
+      "sha256": "ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa",
+      "bytes": 449
+    }
+  ],
+  "appearanceFiles": [
+    {
+      "name": "1667f8fd-101d-4f61-80c0-e8b420f47ef4.json",
+      "sha256": "d65cb29f83a9df5e1ffdf5bac79321d1c78b8c58ee45598864646c10abd5a8fe",
+      "bytes": 2582
+    },
+    {
+      "name": "1-8d3617a7f8e4266b39fa2aad9b49fe6c331da255bf596aff85cadb094abdeb24.json",
+      "sha256": "8d3617a7f8e4266b39fa2aad9b49fe6c331da255bf596aff85cadb094abdeb24",
+      "bytes": 2144
+    },
+    {
+      "name": "2-049c755f384e23152a6c39e05723538074d904ed635f7474c114fb0ef2705ac0.json",
+      "sha256": "049c755f384e23152a6c39e05723538074d904ed635f7474c114fb0ef2705ac0",
+      "bytes": 2582
+    }
+  ],
+  "fixedAppearancePreserved": true,
+  "fixedAppearancePreviewReadable": true,
+  "lookDraftPreserved": true,
+  "lookDraftSha256": "85fe8e92138a66c093e34edb19a36c0e25f167e8d3d4da626f7e87eb98708256",
+  "oldMaterialDraftSha256": "a84aaff1e4f5d0c5ea9ef07c4ee27c32cefd987ba6e4c20590728b0b9ebf9c61",
+  "newScene": {
+    "id": "21fe2724-3ed5-48dc-a0aa-0f50c30ef46b",
+    "revision": 1,
+    "diskHash": "6c2dec1f45f09c6cad0fca4388eeedf1eac10ce0522bbe4d31013930f2254ed2"
+  },
+  "plannedScenePreserved": true,
+  "originalMaterialDraftSchema": 1,
+  "plannedScene": {
+    "id": "cc0884b1-3144-4122-a046-921c525e75ab",
+    "diskHash": "940727f27b94300e8983716ffa9800d5e11beb7b121b460d5a8bb9e6e61ca08f",
+    "chapterId": "ccca4b0f-1bd2-4b71-9e44-51ca25c761dd",
+    "planningHash": "fde3f073b81dc65c3093c4a81850334434c8ceda9893e08e1c28690f20d95c4c",
+    "planningRevision": 1
+  },
+  "sceneFiles": [
+    {
+      "name": "planning.json",
+      "sha256": "fde3f073b81dc65c3093c4a81850334434c8ceda9893e08e1c28690f20d95c4c",
+      "bytes": 253
+    },
+    {
+      "name": "cc0884b1-3144-4122-a046-921c525e75ab.json",
+      "sha256": "940727f27b94300e8983716ffa9800d5e11beb7b121b460d5a8bb9e6e61ca08f",
+      "bytes": 506
+    }
+  ],
+  "requests": {
+    "text": 0,
+    "image": 3
+  },
+  "uninstallPreserved": true,
+  "legacyImportPreserved": true,
+  "legacyOriginNotFabricated": false,
+  "legacyImportedBook": {
+    "id": "aca5ce08-0d93-424c-83f5-442d84fa49a2",
+    "title": "公开38手工导入升级书",
+    "chapterIds": [
+      "7ef4990f-eb12-4cb8-9b54-b784b2259e4e",
+      "a7b39811-83cf-4c46-94a9-a9d8d8c0b8f7",
+      "3ab87374-359f-4246-aa03-c396828186b5"
+    ],
+    "chapterHashes": [
+      "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+      "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+      "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+    ]
+  },
+  "legacyImportFiles": [
+    {
+      "name": "book.json",
+      "sha256": "7cf12aa43f231545e554fcf5c90dbe3873ad1c060ac8f91029dbb2c3bcd6341d",
+      "bytes": 1161
+    },
+    {
+      "name": "7ef4990f-eb12-4cb8-9b54-b784b2259e4e.md",
+      "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8",
+      "bytes": 7
+    },
+    {
+      "name": "a7b39811-83cf-4c46-94a9-a9d8d8c0b8f7.md",
+      "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750",
+      "bytes": 7
+    },
+    {
+      "name": "3ab87374-359f-4246-aa03-c396828186b5.md",
+      "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575",
+      "bytes": 24
+    }
+  ],
+  "importOriginPreserved": true,
+  "originReadbacks": 3,
+  "originalImportOrigin": {
+    "schemaVersion": 1,
+    "importedBookId": "aca5ce08-0d93-424c-83f5-442d84fa49a2",
+    "importedAt": "2026-10-26T13:13:59.519Z",
+    "applicationVersion": "0.1.0-alpha.38",
+    "encoding": "utf-8",
+    "automaticSplit": true,
+    "originalChapterCount": 2,
+    "manualAdjustmentCount": 2,
+    "sources": [
+      {
+        "name": "公开38手工分章原稿𠮷.txt",
+        "bytes": 73,
+        "sha256": "8c0fd1d56b735572105f476c3b789ff6abe8e776b895bcaae82947e63b25f33a"
+      }
+    ],
+    "chapters": [
+      {
+        "id": "7ef4990f-eb12-4cb8-9b54-b784b2259e4e",
+        "title": "旧版确认的首章",
+        "volume": "",
+        "sha256": "025dc46867835a55b284eafe83e2a348384a215de7856e78742867cbcc957bf8"
+      },
+      {
+        "id": "a7b39811-83cf-4c46-94a9-a9d8d8c0b8f7",
+        "title": "旧版手工后半章",
+        "volume": "",
+        "sha256": "cc9123bd8989f18bbadf780f71e36259d8420de16b97b934bc4875113c828750"
+      },
+      {
+        "id": "3ab87374-359f-4246-aa03-c396828186b5",
+        "title": "第二章 尾声",
+        "volume": "",
+        "sha256": "9a2442f0106a586bc7cf323756e3510d43903459e619f826b21cd4e6600ca575"
+      }
+    ]
+  },
+  "originFiles": [
+    {
+      "name": "import-origin.json",
+      "bytes": 1104,
+      "sha256": "4427cba91fcc9553ea3071c496eb590180691f6157345e6351c9b198940e0129"
+    }
+  ]
+}

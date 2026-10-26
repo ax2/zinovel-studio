@@ -1,0 +1,1809 @@
+
+> zinovel-studio@0.1.0-alpha.40 test:installer D:\Work\zinovel-studio
+> node scripts/smoke-installer.mjs
+
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-H8s7mJ",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "installed executable is packaged; system-only PATH without development Node/pnpm",
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration",
+    "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "literal find/replace previews before mutation and undoes as one transaction",
+    "stale AI proposal cannot overwrite edits made during generation",
+    "isolated renderer has no Node globals; IPC rejects unknown operations",
+    "narrow-window assistant remains reachable through reference drawer"
+  ],
+  "errors": [],
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "captures": [
+    {
+      "name": "desktop-light.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "desktop-dark.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "conflict.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "ai-review.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "toolbar-with-reference.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "desktop-narrow.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1045,
+        "height": 829
+      }
+    }
+  ],
+  "status": "passed"
+}
+{
+  status: 'passed',
+  checks: [
+    'bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes',
+    'forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded',
+    'task list filters by book and remains bounded, accessible and dismissible in narrow viewport'
+  ],
+  errors: [],
+  viewport: { width: 1426, height: 923, dpr: 1.25 },
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  termination: {
+    method: 'identity-verified pinned-handle termination of captured original processes',
+    handlePinned: true,
+    birthPrecision: '100ns',
+    rootStatus: 'terminated',
+    outcomes: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ownedProcessesConfirmedExited: 6,
+    verification: 'Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject'
+  }
+}
+{
+  status: 'passed',
+  checks: [
+    'four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates',
+    'acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted',
+    'before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once'
+  ],
+  errors: [],
+  cases: [
+    {
+      checkpoint: 'intent-written',
+      laterExternalEdit: false,
+      recoveredStatus: 'awaiting-review',
+      manuscriptPreserved: true
+    },
+    {
+      checkpoint: 'manuscript-saved',
+      laterExternalEdit: false,
+      recoveredStatus: 'applied',
+      manuscriptPreserved: true
+    },
+    {
+      checkpoint: 'intent-written',
+      laterExternalEdit: true,
+      recoveredStatus: 'acceptance-uncertain',
+      manuscriptPreserved: true
+    },
+    {
+      checkpoint: 'manuscript-saved',
+      laterExternalEdit: true,
+      recoveredStatus: 'applied',
+      manuscriptPreserved: true
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical',
+    'all-book task list opens the exact linked book and chapter',
+    'cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically'
+  ],
+  errors: []
+}
+{
+  status: 'passed',
+  checks: [
+    'official Harness text is atomically captured while the SSE response is still open and no proposal exists',
+    'UI cancellation flushes visible text, survives restart and provides reference-only recovery without replay or manuscript writes',
+    'forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay'
+  ],
+  errors: [],
+  ownedProcessesConfirmedExited: 6,
+  terminationVerification: 'Windows Toolhelp + GetProcessTimes full 100ns identity + WaitForSingleObject'
+}
+{
+  status: 'passed',
+  checks: [
+    'UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs',
+    'changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact',
+    'settings and exact reported usage survive restart without model replay or manuscript modification',
+    'expanded budget settings stay inside the viewport and can be saved in a narrow window',
+    'local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes'
+  ],
+  errors: []
+}
+{
+  status: 'passed',
+  checks: [
+    'real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes',
+    'close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart',
+    'stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds',
+    'partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes',
+    'light desktop and dark narrow review remain readable, scrollable and without horizontal overflow',
+    'same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance'
+  ],
+  errors: [],
+  viewport: { width: 1426, height: 923, dpr: 1.25 }
+}
+{
+  status: 'passed',
+  checks: [
+    'real Electron creates all 13 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged',
+    'author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification',
+    'saved cards survive actual desktop restart, unsaved local adjustment is recovered explicitly, aliases search finds the character and author-confirmed status remains distinct from canon',
+    'external same-revision edit blocks stale save and preserves both copies; trash restore retains identity and historical version is loaded only as an explicit new revision'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'initial-materials.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'organization-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'item-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'ability-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'research-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'research-boundary-history.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'character-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'external-conflict.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'character-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence',
+    'real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history',
+    'linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current',
+    'relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes',
+    'cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'planted-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'source-changed.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'dependency-changed.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'knowledge-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'missing-evidence-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details',
+    'local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content',
+    "task's exact source versions survive later card edits and real desktop restart without replay or manuscript writes; scope and context are visible in task history"
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'context-preview-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'repeated-stale-source-blocked.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'frozen-task-context.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'context-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'two worker processes actually exit after material intent / durable book receipt; actual desktop startup restores pending review or applied state without overwriting later author edits or calling the model',
+    'real official Harness exposes exactly material-read/propose; preview sends no model requests; typed candidate leaves original card/manuscript unchanged; saved author review survives restart without replay and explicit acceptance preserves host-owned fields',
+    'accepted task is read-only; subsequent proposal rejects competing card edits and keeps both candidate and current card; light desktop and dark narrow semantic review remain usable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'review-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'stale-proposal.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'review-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'review-dark-fields.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual pointer drag moves one scene across chapters before a neighbor; board and outline share the order and semantic fields; keyboard Enter reorders without changing manuscript',
+    'real restart retains order; external same-revision edit blocks stale move without overwrite; deleted chapter remains visible and scene can be reassigned; deleted scene restores at its original position',
+    'open original scene form and edit choice; refreshed outline shows same field; dark narrow viewport supports chapter filtering and exact chapter navigation; backup restores placement under new book identity; manuscript bytes unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'outline-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'board-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'external-conflict.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'outline-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087'
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context',
+    'Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material',
+    'Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard',
+    'Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'tree-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'quota-protected.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'tree-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  scope: 'Synthetic scene tree, fixed planning identity/order and material draft navigation; no automatic manuscript splitting, native IME, huge-book performance or complete product qualification'
+}
+{
+  status: 'passed',
+  checks: [
+    'Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources',
+    'A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token',
+    'Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals'
+  ],
+  errors: [],
+  scope: 'Browser plugin not available; actual Electron UI/host IPC. Native dialog fixture selection is stubbed. Synthetic manuscripts only; no native IME or arbitrary external-write atomicity claim.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  encodings: [ 'utf-8', 'utf-16le', 'utf-16be', 'gb18030' ]
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources',
+    'Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite',
+    'Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays',
+    'Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'manual-split-light.png',
+      width: 994,
+      height: 766,
+      theme: 'light'
+    },
+    {
+      name: 'manual-review-dark.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087'
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory',
+    'Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart',
+    'A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript',
+    'Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'origin-light-pagination.png',
+      width: 994,
+      height: 766,
+      theme: 'light'
+    },
+    {
+      name: 'origin-restored-dark.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    },
+    {
+      name: 'origin-unknown-preserved.png',
+      width: 994,
+      height: 766,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Browser plugin not available; actual Electron import-origin viewer and host storage/backup. Native chooser returns synthetic fixture paths; no user manuscript, native IME or arbitrary external-write atomicity claim.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  originSchemaVersion: 1,
+  sourceCount: 21,
+  chapterCount: 21,
+  absolutePathsExcluded: true,
+  receiptSha256: 'd22a6e152594fa0fe8880451cf009186a17b7e7ecb871445f04d17c75f18df87',
+  restoredRecordBytesPreserved: true,
+  unknownRecordPreserved: true
+}
+{
+  status: 'passed',
+  checks: [
+    'Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript',
+    'Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart',
+    'Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard',
+    'Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged',
+    'Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'filtered-neighbor-order.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'stale-planning-preserved.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'tree-operations-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'unknown-draft-preserved.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  scope: 'Actual planned-scene pointer/keyboard operations, stale-CAS refusal and draft guard; no manuscript rearrangement, native IME or large-book performance qualification',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087'
+}
+{
+  status: 'passed',
+  checks: [
+    'real Electron and official Harness complete organization/item/ability/research proposals with explicit review and acceptance; four estimates dispatch zero requests; twelve local fixture requests expose only material-read/propose',
+    'research classification and verification remain disabled/read-only during review and unchanged after acceptance; model is told it has no network verification tool; manuscript bytes, author status and chapter references remain unchanged'
+  ],
+  errors: [],
+  viewports: [ { width: 1426, height: 923, theme: 'light' } ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual UI creates source-bound scene experiment, independent branches and saved comparison; selection and feedback freeze the prior version; Chinese keyboard edits/undo/redo; real close/relaunch restores unsaved body and temporarily blank title',
+    'synthetic localStorage quota exhaustion blocks sample navigation and native window close; explicit Ctrl+S persists current changes and clears close guard',
+    'external same-revision body changes block save and preserve both; explicit disk comparison/rebase preserves external version in history; soft delete/restore keeps identity and body; source freshness changes without changing original scene snapshot',
+    'dark narrow comparison has no page/dialog overflow; explicit promotion opens a new chapter with exact trial text and original first-chapter bytes unchanged; whole-book backup restores branch/group/selection/feedback under new book identity'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'comparison-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'comparison-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  browser: 'Browser plugin not available; Playwright Electron',
+  inputBoundary: 'Chinese insertText and keyboard undo; native Windows IME not exercised'
+}
+{
+  status: 'passed',
+  checks: [
+    'real worker exit(91) before/after pilot write; actual desktop startup reconciles correct task type, preserves later author edits and never replays model output',
+    'official Harness makes exactly three scoped tool requests; preview/estimate zero requests; changed source blocks dispatch; no unrelated sample/material/manuscript sent; review is proposal-only, saves draft, reopens in same session and after real relaunch, explicit acceptance changes only pilot body',
+    'stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'pilot-review-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'pilot-stale-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript',
+    'retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence',
+    'actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'knowledge-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'relation-stale-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'relation-actions-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range',
+    '61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click',
+    'deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'relations-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'relation-evidence-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'synthetic localStorage quota failure blocks dialog close without losing input; after storage recovers the same draft reopens intact and can be explicitly discarded',
+    'actual UI distinguishes belief, suspicion and empty cells; saved Unicode source binding never changes manuscript',
+    'event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible',
+    'retire/restore, source jump, author edit invalidation and explicit current-source rebind work',
+    'dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'matrix-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'matrix-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution',
+    'actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation',
+    'external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry',
+    'Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes'
+  ],
+  errors: [],
+  viewports: [
+    { name: 'phone-dark-progress.png', width: 1426, height: 923 },
+    { name: 'directory-refresh-light.png', width: 1426, height: 923 },
+    { name: 'narrow-reader.png', width: 806, height: 803 }
+  ],
+  cleanupOwnership: { rootPid: 32680, rendererPid: 44000, captured: 5 }
+}
+{
+  status: 'passed',
+  checks: [
+    'Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged',
+    'Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes',
+    'Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog',
+    'Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode'
+  ],
+  errors: [],
+  syntheticDataRoot: 'D:\\Work\\zinovel-studio\\.cache\\utf8-ui-WUXlQ3',
+  preservedMalformedSha256: '0bc24594674911e8145f3fbef0e7285775a6c4a9777703cc075a2ef24985472c',
+  ownedProcessesConfirmedExited: 5
+}
+{
+  status: 'passed',
+  checks: [
+    'renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider',
+    'switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book',
+    'provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions',
+    'after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors'
+  ],
+  errors: [],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Chromium HTTP(S) is denied after attachment/reload; a controlled loopback provider fails with HTTP503. This is model unavailability and local-write independence, not an OS-wide airplane-mode or real-model literary-quality claim',
+  launchPid: 33732,
+  viewport: { width: 986, height: 863, scale: 1.25 },
+  version: '0.1.0-alpha.40',
+  switchedTaskStatus: 'cancelled',
+  readingLayout: {
+    dialog: {
+      left: 0,
+      right: 986.4000244140625,
+      top: 0,
+      bottom: 863.2000122070312,
+      width: 986.4000244140625,
+      height: 863.2000122070312
+    },
+    paragraph: {
+      left: 275,
+      right: 936.4000244140625,
+      top: 287.8999938964844,
+      bottom: 323.8999938964844,
+      width: 661.4000244140625,
+      height: 36
+    },
+    layout: {
+      left: 0,
+      right: 986.4000244140625,
+      top: 144,
+      bottom: 801.2000122070312,
+      width: 986.4000244140625,
+      height: 657.2000122070312
+    },
+    horizontalOverflow: false,
+    viewport: { width: 986, height: 863 }
+  },
+  providerRequests: 2,
+  failedTaskStatus: 'failed',
+  foreignBookTextSent: false,
+  rendererRequestsDenied: 1
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual author save and failed synthetic settings produce fixed metadata only; unique manuscript/title/IDs/path/credential absent from preview and export; injected path refused before native chooser and cancelled choice writes nothing',
+    'Explicit native-selected JSON created once; actual delayed write guards panel and native-window close until completion; repeat refuses overwrite byte-for-byte; prospective data-root Junction child refused before creation; manuscript and private task/settings storage never gathered or changed',
+    'Desktop and dark narrow previews fit; clear is explicitly confirmed and cancellation preserves events; clear removes metadata alone; complete process restart discards prior errors and metadata while author manuscript persists without automatic diagnostic storage'
+  ],
+  errors: [],
+  scope: 'Synthetic desktop host and author controls; save-dialog results instrumented, not native dialog clicks, system IME, upstream session-log audit or complete product qualification; packaged field identifies actual EXE execution',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  geometry: {
+    left: 30,
+    right: 776.4000244140625,
+    top: 54.875,
+    bottom: 748.3250122070312,
+    width: 806,
+    height: 803,
+    client: 745,
+    scroll: 745,
+    scale: 1.25
+  },
+  exportBytes: 1108
+}
+{
+  status: 'passed',
+  checks: [
+    'Changing service address and leaving Key blank clears the old encrypted credential; official generation refuses before any new-endpoint request; explicit replacement credential is the only credential observed on three real Harness tool-roundtrip requests',
+    'Same-service model selection and canonical trailing slash preserve the credential; changing address and explicit key clearing discard unsaved Key input; returning to old endpoint cannot resurrect an old credential; original manuscript unchanged and stored bytes contain no plaintext key',
+    'Unversioned legacy encrypted settings still generate through the original endpoint; cancelling service editing preserves exact legacy bytes; externally mismatched service scope refuses decryption/use without changing stored bytes or contacting another provider; unknown future schema refuses read/save and preserves exact bytes until explicit synthetic repair'
+  ],
+  errors: [],
+  scope: 'Synthetic keys only; actual desktop settings UI and official Harness requests to two separate local endpoints; header evidence stores booleans, never credentials; no real provider or native IME qualification',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  geometry: {
+    left: 123.20000457763672,
+    right: 683.2000045776367,
+    top: 106.05000305175781,
+    bottom: 697.1500396728516,
+    width: 806,
+    height: 803,
+    scroll: 558,
+    client: 558,
+    scale: 1.25,
+    theme: 'dark'
+  },
+  oldCredentialForwarded: false,
+  newCredentialRequests: 3
+}
+{
+  status: 'passed',
+  checks: [
+    'Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task',
+    'Real author UI creates independent B and selects it; stale or missing displayed revision refuses before network; the ordinary writing button sends only selected B key through official Harness; old task metadata remains frozen and manuscript is not auto-applied',
+    'An externally changed profile revision rejects UI save without overwriting bytes and keeps the Chinese form draft; explicit cancel/refresh permits confirmed deletion of an unused empty-key configuration; clearing B key affects neither A nor image C and prevents B network until its key is explicitly replaced',
+    'Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests',
+    'Future schema and foreign store identity preserve exact bytes and refuse use; missing list blocks generation without legacy fallback; explicit desktop recovery restores only the original single configuration while preserving held newer profiles and exact migration backup; original manuscript remains unchanged',
+    'Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports'
+  ],
+  errors: [],
+  scope: 'Synthetic keys and manuscript; real desktop UI, CurrentUser DPAPI for new keys, actual legacy Electron ciphertext and official Harness to separate loopback endpoints; model management never calls image services; no real provider or native IME qualification',
+  initialViewport: { width: 1426, height: 923, scale: 1.25 },
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  newCredentialEnvelope: 'win-dpapi-v1',
+  legacyCipherAfterRestart: true,
+  geometry: {
+    left: 123.20000457763672,
+    right: 683.2000045776367,
+    top: 48.1875,
+    bottom: 755,
+    width: 806,
+    height: 803,
+    scroll: 543,
+    client: 543,
+    scale: 1.25,
+    theme: 'dark'
+  },
+  requests: [ 3, 6, 0 ]
+}
+{
+  status: 'passed',
+  checks: [
+    'Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption',
+    'Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied',
+    'Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version',
+    'Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations'
+  ],
+  errors: [],
+  sourceDisk: { DriveLetter: 'D', DiskNumber: 1, PartitionNumber: 2 },
+  backupDisk: { DriveLetter: 'C', DiskNumber: 0, PartitionNumber: 3 },
+  independentDisks: true,
+  browser: 'Browser plugin unavailable; repository Playwright/Electron',
+  scope: 'Synthetic books; actual desktop host and author controls; native picker results and one object-write barrier instrumented. Not physical disk-loss, native-picker clicks or system-IME qualification.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  geometry: {
+    left: 30,
+    right: 776.4000244140625,
+    top: 59.67499923706055,
+    bottom: 743.5250358581543,
+    width: 806,
+    height: 803,
+    scrollWidth: 745,
+    clientWidth: 745,
+    scale: 1.25
+  },
+  manifests: [
+    {
+      id: '2fcb9015-dac2-4584-af1b-400e04405813',
+      hash: '5678d65578e3e3ff3b92632801ee86bc0d95d984201c7e4f85e8c524a6b36ced',
+      files: 11
+    },
+    {
+      id: '7ccf3761-ea10-4bb5-a013-2a40047bd190',
+      hash: '8428286622f20f6e5bb0ba3a7caef2ea36ce1e56aa742f63de72c229c82668ec',
+      files: 10
+    },
+    {
+      id: 'a3d6e060-2f4e-4550-a30b-ebd99420d346',
+      hash: '5d0f651bf005843624db1a24e94657f5b6f7c7d49398200eeb0696269ab71939',
+      files: 10
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty',
+    'real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately',
+    'restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes',
+    'author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests'
+  ],
+  errors: [],
+  sourceDisk: { DriveLetter: 'D', DiskNumber: 1, PartitionNumber: 2 },
+  backupDisk: { DriveLetter: 'C', DiskNumber: 0, PartitionNumber: 3 },
+  independentDisks: true,
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Actual host file transactions; Windows disk numbers are distinct; picker results instrumented; not a hardware-loss or system-IME simulation',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  backupFiles: 10,
+  snapshotHash: 'c9bb6314d458739b0b96c6ec128479b6f450a3876a729dfdcd4fcb7b1f5cf59b',
+  backupManifestSha256: '0d1c33f0d7b78797382a22f3389f1e7c9194036424c54dddd113f3e8e06c9d26'
+}
+{
+  status: 'passed',
+  checks: [
+    'real window-bound IPC cancels a 256-chapter capture before commit without creating a snapshot',
+    'explicit reordered two-chapter capture persists; preview metadata excludes body/private author materials, chapter IPC returns exact BOM/CRLF/astral text and rejects out-of-scope chapters',
+    'external author edit and full desktop restart preserve the original frozen snapshot; no manuscript conversion, model request or automatic replay'
+  ],
+  errors: [],
+  scope: 'Real desktop IPC capture/persistence only; no author publication dialog or export UI qualification'
+}
+{
+  status: 'passed',
+  checks: [
+    'actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot',
+    'actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy',
+    'native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF/DOCX writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer and DOCX cancellation creates no directory; injected PDF print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content',
+    'desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests',
+    'form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export'
+  ],
+  errors: [],
+  viewports: [
+    { name: 'desktop-frozen-preview.png', width: 1426, height: 923 },
+    { name: 'desktop-pdf-layout.png', width: 1426, height: 923 },
+    { name: 'desktop-docx-layout.png', width: 1426, height: 923 },
+    { name: 'narrow-frozen-preview.png', width: 806, height: 803 },
+    { name: 'narrow-reading-body.png', width: 806, height: 803 },
+    { name: 'narrow-pdf-layout.png', width: 806, height: 803 },
+    { name: 'dark-narrow-frozen-preview.png', width: 806, height: 803 },
+    { name: 'dark-narrow-pdf-layout.png', width: 806, height: 803 }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  nativeDialog: 'Folder choice instrumented; real host writes and real files verified; native picker interaction not covered',
+  version: '0.1.0-alpha.40',
+  htmlDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-7LIZpG\\中文 空格 导出目录\\小说-雾港选章-html-fd4f626f-2433-4d9e-9c9b-9b3d0e5c812b',
+  pdfDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-7LIZpG\\中文 空格 导出目录\\小说-雾港选章-pdf-cc8313b3-0025-457c-bd19-98104da320a7',
+  docxDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-7LIZpG\\中文 空格 导出目录\\小说-雾港选章-docx-845aba45-352c-4f5c-9e6c-db0df151f6d9'
+}
+{
+  status: 'passed',
+  version: '0.1.0-alpha.40',
+  checks: [
+    'actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts',
+    'independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages'
+  ],
+  snapshotHash: 'd7dcc1b7de657a8e49b816870068b49c0307e298acbb5ed9a73ce3f6ebc546ca',
+  sha256: 'bf1a418c4b6fc354e2436c7d19849c162dc3ee5af35545592a66015ea1273d93',
+  bytes: 103968,
+  inspection: 'inspection.json',
+  renderer: 'independent PDFium; actual page review separate'
+}
+{
+  status: 'passed',
+  checks: [
+    'actual editor flush, native-choice-instrumented import, exact originals, current PNG preview, purpose/source/rights/linked character metadata and Ctrl+S saved once; local draft including temporarily empty title survives modal close',
+    'external metadata conflict preserves author input; explicit disk comparison/rebase saves new version; JPEG EXIF preview and old-image history remain independent; explicit history adoption creates a new version retaining later originals; recycle/restore preserve originals',
+    'corrupt image import creates no visible record; external original corruption refuses preview and preserves damaged bytes; explicit synthetic repair re-enables preview',
+    'quota error protects modal input; unknown future draft survives full restart until explicit discard; synthetic durable host commit without panel receipt recovers by creation identity after restart without duplicate records',
+    'desktop/806px narrow/dark screenshots, zero horizontal overflow, zero renderer errors or external page requests; all source files and formal manuscript remain byte-identical'
+  ],
+  errors: [],
+  viewports: [
+    { name: 'asset-desktop.png', width: 1426, height: 923 },
+    { name: 'asset-narrow.png', width: 806, height: 803 },
+    { name: 'asset-dark-narrow.png', width: 806, height: 803 },
+    { name: 'asset-quota-protected.png', width: 806, height: 803 },
+    { name: 'asset-corrupt-original.png', width: 806, height: 803 }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  nativeDialog: 'Native file selection instrumented; actual host reads, decodes, stores and previews synthetic originals; no native picker interaction claim',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087'
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait',
+    'Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged',
+    'Full restart restores only the local appearance draft and clears choice confirmation; dark narrow author controls explicitly choose the newer version, reject arbitrary-path IPC, preserve manuscript bytes and emit no renderer errors or HTTP requests',
+    'Synthetic local quota failure retains typed appearance notes and cancels actual window close until formal save; an unknown future draft survives full restart byte-for-byte, blocks replacement, and is removed only by explicit discard without changing saved appearances or manuscript'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'fixed-portrait-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'preview-confirm-dark-narrow.png',
+      width: 808,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'choose-portrait-dark-narrow.png',
+      width: 808,
+      height: 803,
+      theme: 'dark'
+    },
+    {
+      name: 'quota-close-protected.png',
+      width: 808,
+      height: 803,
+      theme: 'dark'
+    }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Synthetic offline appearance versions and explicit portrait choice; no reference-image generation, real visual quality or native IME claim',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087'
+}
+{
+  status: 'passed',
+  checks: [
+    'Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript',
+    'Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request',
+    'Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request',
+    'Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request',
+    'Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses',
+    'Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call',
+    'Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link',
+    'Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP',
+    'Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review',
+    'A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request',
+    'Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained'
+  ],
+  errors: [],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Synthetic prompts/manuscript/keys/images; actual host IPC, Windows CurrentUser DPAPI, HTTP, decode/storage/adoption, process restart and renderer-only crash. Native recovery choice instrumented; fresh CDP observes the original app-reopened window without extra reload. No real provider, literary/visual quality or native IME certification; installer lifecycle is verified separately by its suite.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  viewports: [
+    {
+      name: 'image-studio-desktop.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'renderer-recovered-paid-result.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'mixed-candidates.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'all-invalid-results.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'portrait-target-review.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'chapter-target-review.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 1426
+    },
+    {
+      name: 'chapter-target-review-dark-narrow.png',
+      width: 806,
+      height: 803,
+      scale: 1.25,
+      theme: 'dark',
+      scroll: 806
+    },
+    {
+      name: 'chapter-target-confirm-dark-narrow.png',
+      width: 806,
+      height: 803,
+      scale: 1.25,
+      theme: 'dark',
+      scroll: 806
+    },
+    {
+      name: 'image-studio-narrow.png',
+      width: 806,
+      height: 803,
+      scale: 1.25,
+      theme: 'light',
+      scroll: 806
+    },
+    {
+      name: 'image-studio-dark-narrow.png',
+      width: 806,
+      height: 803,
+      scale: 1.25,
+      theme: 'dark',
+      scroll: 806
+    }
+  ],
+  rendererRecoveryObserver: 'Fresh CDP observation of the app-reopened original window; no extra reload',
+  rendererRecoveryRetainsPaidResult: true,
+  closeProtected: true,
+  retainedSaveRecoveredLocally: true,
+  crashCredentialProbe: {
+    before: {
+      provider: 'current-user-dpapi',
+      available: true,
+      readable: true,
+      roundtrip: true,
+      fingerprint: undefined
+    },
+    after: {
+      provider: 'current-user-dpapi',
+      available: true,
+      readable: true,
+      roundtrip: true,
+      fingerprint: undefined
+    },
+    wrappedKeyChanged: null
+  },
+  crashCredentialsRetained: true,
+  remoteUnknownAfterRestart: true,
+  reviewedTargetAdoption: true,
+  characterTargetVersionChecked: true,
+  reviewedChapterAdoption: true,
+  reviewedTargetNarrowConfirmation: true,
+  chapterTargetVersionChecked: true,
+  mixedBatchRecovery: true,
+  originalsPreserved: true,
+  requests: [ 0, 9, 0 ]
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual author UI chooses a fixed same-book asset and character; preparation persists schema3 and exact preview without HTTP, canonical asset creation or manuscript change',
+    'One explicit DPAPI-resolved edit key calls only /images/edits with the frozen metadata-free PNG; explicit candidate adoption adds a new portrait and preserves original/reference/character/manuscript',
+    'Full restart retains the exact schema2 reference draft, schema3 adopted receipt and frozen reference preview; dark narrow view remains reachable with no automatic HTTP replay',
+    'A real host asset edit after preparation causes the old reference task to fail before dispatch; frozen preview and reference draft remain, with no new request or automatic asset rebinding',
+    'After actual HTTP edit dispatch and durable schema3 intent, the owned desktop process tree is forcibly terminated; restart preserves exact task/reference bytes, displays remote-unknown and never replays the request'
+  ],
+  errors: [],
+  browser: 'Browser plugin unavailable; repository Playwright/Electron',
+  scope: 'Actual host/UI and controlled HTTP for pinned reference preparation, preview, one send, adoption, stale reference refusal and restart. Synthetic pictures/keys; no actual provider, visual consistency, native IME or installation qualification.',
+  version: '0.1.0-alpha.40',
+  packaged: true,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  viewports: [
+    {
+      name: 'reference-before-send-light.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      scroll: 1426,
+      referenceBounds: [Object]
+    },
+    {
+      name: 'reference-restarted-dark.png',
+      width: 808,
+      height: 803,
+      scale: 1.25,
+      scroll: 808,
+      referenceBounds: [Object]
+    },
+    {
+      name: 'reference-stale-refused-dark.png',
+      width: 808,
+      height: 803,
+      scale: 1.25,
+      scroll: 808,
+      referenceBounds: [Object]
+    },
+    {
+      name: 'reference-forced-exit-unknown.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      scroll: 1426,
+      referenceBounds: [Object]
+    }
+  ],
+  forcedEditRestart: true,
+  requests: 2,
+  referenceSha256: '65ef2088c8c9493161ce4a4216401f146034dfebcb2258e6cb5e22b4d84f4b87',
+  originalsPreserved: true
+}
+{
+  status: 'passed',
+  version: '0.1.0-alpha.40',
+  snapshotHash: 'd7dcc1b7de657a8e49b816870068b49c0307e298acbb5ed9a73ce3f6ebc546ca',
+  sha256: 'd6fe84fc8ec9c60fa00d6d1f69ff3f7e76cb034d5e0b9203b288faa845f0f6fa',
+  bytes: 11452,
+  reader: {
+    name: 'DeepSeek LibreOffice Kit',
+    version: '0.1.5',
+    backend: 'native',
+    missingFonts: []
+  },
+  scope: 'Development-only independent reader; native engine is not shipped by the application',
+  checks: [
+    'installed or source host DOCX exports real editable paragraphs/native heading styles, public metadata, exact selected chapter order and rare-character counts; original bytes remain unchanged',
+    'independent native LibreOffice reader converts the actual exported DOCX; spatial text extraction verifies complete public selection, excludes private/unselected text, checks all glyph bounds and rasterizes every page'
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'real isolated main-window IPC creates/edits a typed map with stable place/region/route IDs; creation reconciliation returns the later version; foreign location and missing creation identity reject without writes; actual JPEG decode freezes EXIF-oriented background',
+    'actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair',
+    'actual host atlas IPC persists explicit epoch/parent/anchor IDs, rejects foreign maps and stale raw-hash saves without overwriting external bytes, returns filtered lightweight diagnostics, preserves exact preimage history and adopts it as a new revision; retired parent is disclosed without changing directory references; no atlas editing UI claim',
+    'actual Electron close retains exact formal manuscript, other-book metadata and selected original image; author workspace is nonblank, renderer has no Node globals, no page errors or external page requests'
+  ],
+  errors: [],
+  scope: 'Real Electron author workspace and host IPC, including native image decode and actual file transactions; map editing UI is not tested here',
+  ownedProcessesConfirmedExited: 5,
+  manuscriptSha256: 'db0abe7c692c4dd9526a62b9f3186ac0a4a82faa7edd82e78f28bc0168eb1807'
+}
+{
+  status: 'passed',
+  checks: [
+    'legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected',
+    'actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images',
+    'image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash',
+    'standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow'
+  ],
+  errors: [],
+  viewports: [
+    { name: 'author-desktop-selection.png', width: 1426, height: 923 },
+    { name: 'author-desktop-frozen.png', width: 1426, height: 923 },
+    { name: 'author-dark-narrow-frozen.png', width: 806, height: 803 },
+    { name: 'html-desktop-cover.png', width: 1287, height: 838 },
+    {
+      name: 'html-phone-dark-illustration.png',
+      width: 390,
+      height: 844
+    }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Actual author UI and host transactions; folder/file picker results instrumented; standalone Chromium file reader is not an actual mobile device',
+  version: '0.1.0-alpha.40',
+  formatOptions: [
+    { value: 'html', disabled: false },
+    { value: 'md', disabled: true },
+    { value: 'txt', disabled: true },
+    { value: 'pdf', disabled: true },
+    { value: 'docx', disabled: true }
+  ],
+  htmlDirectory: 'D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-oeFHvO\\中文 图像导出目录\\小说-带图雾港-html-6421ec7c-4c90-418d-a02a-21b9f59fa3a1',
+  snapshotHash: '058f2d5fd2e76c74272d1db57354989c393dbcef6eed57afc84a1ff8cb5cdfad',
+  imageFiles: [
+    {
+      path: 'images/adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a.png',
+      bytes: 7032,
+      sha256: 'adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a'
+    },
+    {
+      path: 'images/ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575.png',
+      bytes: 516,
+      sha256: 'ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual map controls create two stable places by pointer/form, same-book location association, three-vertex region, real vertex drag and undo, routed bends and author calibration; Ctrl+S/save applies raw coordinates; explicit background selection freezes bytes and clears prior scale; manuscript unchanged after entry flush',
+    'unfinished coordinate input survives modal close and full Electron restart; synthetic localStorage quota blocks modal and native window close without losing raw input; completing coordinates and explicitly saving still writes the formal map and clears the close guard',
+    'same-revision external edits reject stale saves and retain disk bytes/local input; author explicitly compares and adopts the baseline; exact external preimage survives in history; actual read-only historical background loads and author adopts it as a new revision; keyboard point movement/undo and view-only zoom do not silently write the map',
+    'future local draft remains byte-identical and read-only until explicit discard; map recycle and restore preserve identity; a synthetic checkpoint representing an already committed creation with an unconfirmed result reconciles the later revision without duplicate or rewind; not a simulated IPC transport loss',
+    'desktop and 806px dark/narrow map render without dialog overflow; actual host backup/restore to a new book preserves saved map IDs, original image and frozen background while excluding unfinished local coordinate input; folder chooser results are instrumented'
+  ],
+  errors: [],
+  viewports: [
+    { name: 'map-desktop.png', width: 1426, height: 923 },
+    { name: 'map-quota-protected.png', width: 1426, height: 923 },
+    { name: 'map-narrow.png', width: 806, height: 803 },
+    { name: 'map-dark-narrow.png', width: 806, height: 803 }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Real author map UI and host persistence; native folder selection for backup/restore is instrumented, no native IME or physical phone claim',
+  regionGesture: {
+    before: '99.99999237060547,70.0000228881836 500.0000305175781,70.0000228881836 449.9999694824219,314.9999694824219',
+    box: {
+      x: 608.79931640625,
+      y: 539.9168090820312,
+      width: 11.9638671875,
+      height: 11.9638671875
+    },
+    hit: { tag: 'circle', vertex: '2' },
+    immediate: '99.99999237060547,70.0000228881836 500.0000305175781,70.0000228881836 497.56237792968744,334.0249633789062',
+    afterPaint: '99.99999237060547,70.0000228881836 500.0000305175781,70.0000228881836 497.56237792968744,334.0249633789062',
+    events: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object]
+    ]
+  }
+}
+{
+  status: 'passed',
+  checks: [
+    'actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes',
+    'synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry',
+    'formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard',
+    'synthetic competing local cache is retained while the current author explicitly saves formal data; reopen restores the competing draft without silently rebasing, stale baseline blocks save until readable comparison and explicit adoption; both author versions remain in saved history',
+    'desktop and 806px light/dark atlas render without horizontal dialog overflow; actual whole-book backup/restore retains saved epochs and three-level references under source lineage, excludes unsaved local notes; original three map files and formal manuscript remain exact, zero renderer errors/HTTP; native folder results are instrumented'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'atlas-desktop.png',
+      theme: 'light',
+      width: 1426,
+      height: 923,
+      dpr: 1.25,
+      mapView: 'independent saved frames; atlas does not scale map coordinates'
+    },
+    {
+      name: 'atlas-quota-protected.png',
+      theme: 'light',
+      width: 1426,
+      height: 923,
+      dpr: 1.25,
+      mapView: 'independent saved frames; atlas does not scale map coordinates'
+    },
+    {
+      name: 'atlas-narrow.png',
+      theme: 'light',
+      width: 806,
+      height: 803,
+      dpr: 1.0000000149011612,
+      mapView: 'independent saved frames; atlas does not scale map coordinates'
+    },
+    {
+      name: 'atlas-dark-narrow.png',
+      theme: 'dark',
+      width: 806,
+      height: 803,
+      dpr: 1.0000000149011612,
+      mapView: 'independent saved frames; atlas does not scale map coordinates'
+    },
+    {
+      name: 'atlas-dark-narrow-directory.png',
+      theme: 'dark',
+      width: 806,
+      height: 803,
+      dpr: 1.0000000149011612,
+      mapView: 'independent saved frames; atlas does not scale map coordinates'
+    }
+  ],
+  browser: 'Browser plugin not available; repository Playwright/Electron',
+  scope: 'Real author atlas controls, navigation, modal/host close guards, actual file persistence and restart; backup/restore folder selection is instrumented; no native IME or physical phone claim'
+}
+{
+  status: 'passed',
+  checks: [
+    'Actual author UI exported HTML opens independently with reversed chapter order, previous/next/directory/reload, frozen Unicode body and no script execution',
+    'External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow',
+    'Actual author UI export inventory matches every file byte; no HTTP requests or workbench IPC/Node globals; standalone Chromium viewer only'
+  ],
+  errors: [],
+  environment: {
+    browser: 'Electron 44 bundled Chromium, standalone file pages; not workbench or actual mobile device',
+    browserPlugin: 'Browser plugin not available; repository Playwright/Electron fallback',
+    artifactRoot: 'D:\\Work\\zinovel-studio\\.cache\\publication-ui-7LIZpG\\中文 空格 导出目录\\小说-雾港选章-html-fd4f626f-2433-4d9e-9c9b-9b3d0e5c812b'
+  },
+  viewports: [
+    { name: 'directory-desktop.png', width: 1287, height: 864 },
+    { name: 'chapter-phone-dark.png', width: 390, height: 844 },
+    { name: 'frozen-body-phone-dark.png', width: 390, height: 844 },
+    { name: 'directory-phone-dark.png', width: 390, height: 844 }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged',
+    'scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text',
+    'new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2',
+    'real desktop restart preserves manuscript, selected pilot, planning placement and all five materials with zero replay; all model content is synthetic fixture data, not literary-quality evidence'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'empty-book-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'planned-chapter-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'written-chapter-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call',
+    'official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel',
+    'task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'mixed-knowledge-preview-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'knowledge-choice-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'material proposal UI rejects stale knowledge with zero requests then uses only material-read, frozen-reference-read and proposal after refresh; original card unchanged',
+    'pilot UI rejects stale knowledge before estimation and generation; refreshed estimate sends zero requests and official Harness uses only pilot-read, frozen-reference-read and pilot proposal',
+    'both target prompts/tool results contain selected knowledge without unselected truth, other knowledge or whole formal manuscript; no candidate is applied automatically'
+  ],
+  errors: []
+}
+{
+  status: 'passed',
+  checks: [
+    'actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record',
+    'simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity',
+    'synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another',
+    'old-format draft without creation identity migrates before explicit save; four deliberate author creation intents remain exactly four records and manuscript bytes never change'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'cleanup-error-protected.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'creation-recovered-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    'actual author selection freezes one explicit event without removing contradictory records; matrix shows the choice separately',
+    'external same-cell decision cannot be cleared with a stale UI baseline; re-reading permits explicit author change',
+    'manuscript edit expires the old choice; original quote remains visible and current-source rebinding alone does not silently reconfirm the choice',
+    'explicit new selection survives full restart; clearing preserves four prior choice versions and unchosen event bytes; dark narrow history remains reachable'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'choice-matrix-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'choice-history-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+{
+  status: 'passed',
+  checks: [
+    '41 actual legacy records paginate 40/1; explicit source selection starts with unspecified knowledge state and permits author scope/state review',
+    'legacy source and author edits survive full desktop restart; a changed old-card baseline rejects creation without a new record',
+    'refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact',
+    'manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged'
+  ],
+  errors: [],
+  viewports: [
+    {
+      name: 'legacy-linked-light.png',
+      width: 1426,
+      height: 923,
+      theme: 'light'
+    },
+    {
+      name: 'legacy-changed-dark-narrow.png',
+      width: 806,
+      height: 803,
+      theme: 'dark'
+    }
+  ]
+}
+(node:43400) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  "version": "0.1.0-alpha.40",
+  "installerSha256": "804f484a9bbbfac9cd996522ff53dc21c6f45768735512c3b4aafe262d5b4dad",
+  "install": "D:\\Work\\zinovel-studio\\.cache\\installer-qa-m3ekIO\\中文 安装目录",
+  "checks": [
+    "real NSIS per-user install to Chinese/space directory; bundled manifest version",
+    "installed: installed executable is packaged; system-only PATH without development Node/pnpm",
+    "installed: create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "installed: reading mode and theme switching",
+    "installed: immediate window close flush and process restart persistence",
+    "installed: external edit conflict, explicit keep-current, external preimage history restoration",
+    "installed: OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "installed: AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "installed: literal find/replace previews before mutation and undoes as one transaction",
+    "installed: stale AI proposal cannot overwrite edits made during generation",
+    "installed: isolated renderer has no Node globals; IPC rejects unknown operations",
+    "installed: narrow-window assistant remains reachable through reference drawer",
+    "installed: bound task survives real desktop restart without replay; wrong chapter cannot accept; correct chapter receives author-edited candidate with durable receipt; one undo restores original bytes",
+    "installed: forced termination of the owned desktop and real Harness tree recovers interrupted status and partial proposal, never replays the model or edits manuscript; partial result is view-only and can be explicitly discarded",
+    "installed: task list filters by book and remains bounded, accessible and dismissible in narrow viewport",
+    "installed: four worker processes actually exited at durable checkpoints; desktop startup reconciled all task states without automatically applying candidates",
+    "installed: acceptance receipt survives later author edits; current manuscript is preserved; uncertain results cannot be silently accepted",
+    "installed: before-write interruption retains author-adjusted candidate; a newer review saved after recovery survives actual desktop restart and supersedes the prior acceptance intent; explicit retry saves exactly once",
+    "installed: library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
+    "installed: all-book task list opens the exact linked book and chapter",
+    "installed: cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically",
+    "installed: official Harness text is atomically captured while the SSE response is still open and no proposal exists",
+    "installed: UI cancellation flushes visible text, survives restart and provides reference-only recovery without replay or manuscript writes",
+    "installed: forced termination of the owned desktop and Harness tree preserves the last durable stream; restart exposes an interrupted reference with no automatic replay",
+    "installed: UI saves step/context/output budgets; real official Harness is stopped before the second request and usage is displayed without invented costs",
+    "installed: changing settings and explicitly retrying creates a new task with the new frozen budget; old budget/result stay intact",
+    "installed: settings and exact reported usage survive restart without model replay or manuscript modification",
+    "installed: expanded budget settings stay inside the viewport and can be saved in a narrow window",
+    "installed: local preflight shows scoped heuristic and currency without network use; complete-request fee gate blocks dispatch; frozen custom rates price actual usage separately and survive settings changes",
+    "installed: real desktop reviews two independent blocks, preserves rejected original and exact Unicode outside selection, manual edits compose without reviving rejected changes",
+    "installed: close preserves formal manuscript and original task candidate; unsaved choices reset while explicitly saved review drafts survive real desktop restart",
+    "installed: stale review draft saves reject competing revision changes without losing the on-screen edit or overwriting the saved external draft; reloading and saving a new revision succeeds",
+    "installed: partial acceptance persists through existing task receipt with original candidate retained; single undo and redo restore exact manuscript bytes",
+    "installed: light desktop and dark narrow review remain readable, scrollable and without horizontal overflow",
+    "installed: same-page same-chapter candidates compare without writes; saved drafts display separately, mismatched base disables choosing that version, nested Escape returns to task history, selected alternative proceeds through explicit review and guarded acceptance",
+    "installed: real Electron creates all 13 typed cards through labeled forms with Unicode; organization/item/ability/research reference two chapters with rules/costs/source boundaries; manuscript bytes unchanged",
+    "installed: author explicitly changes research classification through fact/rumor/fiction; all prior classifications and source citations remain in revision history; UI distinguishes author labels from program verification",
+    "installed: saved cards survive actual desktop restart, unsaved local adjustment is recovered explicitly, aliases search finds the character and author-confirmed status remains distinct from canon",
+    "installed: external same-revision edit blocks stale save and preserves both copies; trash restore retains identity and historical version is loaded only as an explicit new revision",
+    "installed: evidence navigation resolves the current editor text after manuscript changes and selects the exact original quote without silently reconfirming evidence",
+    "installed: real keyboard selection binds exact saved manuscript to a planted clue without changing it; manual manuscript save automatically marks old evidence stale; explicit reconfirm updates only the selected evidence and retains prior history",
+    "installed: linked character definition changes mark source-stable relationship evidence for review; explicit reconfirmation records current dependency versions without changing manuscript bytes; unrelated knowledge stays current",
+    "installed: relationship and reader/character knowledge records remain distinct; retirement keeps prior evidence; actual app restart preserves identities, scopes and states without replay or manuscript writes",
+    "installed: cross-chapter navigation selects the source after the target editor commits; duplicate and deleted quotes produce explicit warnings and never rewrite manuscript or evidence",
+    "installed: material-only already-stale evidence changes again with identical preview prose; current proof rejects generation with zero requests; refresh permits explicit generation without sending unselected source body or dependency details",
+    "installed: local preview sends zero model requests; changed selected card blocks generation before dispatch; refresh uses current explicit same-book snapshot; real official Harness exposes exactly three scoped tools and performs selection-read, material-read, proposal round trip with no other-book or unselected content",
+    "installed: task's exact source versions survive later card edits and real desktop restart without replay or manuscript writes; scope and context are visible in task history",
+    "installed: two worker processes actually exit after material intent / durable book receipt; actual desktop startup restores pending review or applied state without overwriting later author edits or calling the model",
+    "installed: real official Harness exposes exactly material-read/propose; preview sends no model requests; typed candidate leaves original card/manuscript unchanged; saved author review survives restart without replay and explicit acceptance preserves host-owned fields",
+    "installed: accepted task is read-only; subsequent proposal rejects competing card edits and keeps both candidate and current card; light desktop and dark narrow semantic review remain usable",
+    "installed: actual pointer drag moves one scene across chapters before a neighbor; board and outline share the order and semantic fields; keyboard Enter reorders without changing manuscript",
+    "installed: real restart retains order; external same-revision edit blocks stale move without overwrite; deleted chapter remains visible and scene can be reassigned; deleted scene restores at its original position",
+    "installed: open original scene form and edit choice; refreshed outline shows same field; dark narrow viewport supports chapter filtering and exact chapter navigation; backup restores placement under new book identity; manuscript bytes unchanged",
+    "installed: Actual chapter/scene tree preserves stable planning order, pages 24 entries as 20/4, keeps unassigned/deleted/missing identities visible and missing records disabled; explicit scene recovery retains identity/placement; scene-title search retains chapter context",
+    "installed: Keyboard scene navigation opens the existing semantic form; switching scenes restores the exact local draft without silently saving it as formal material",
+    "installed: Controlled local quota failure blocks another scene, book navigation and an actual native-window close while retaining typed notes; explicit formal save succeeds and releases the guard",
+    "installed: Actual board move refreshes the tree through the shared planning event and survives full restart; dark compact tree remains reachable through existing reference controls; all manuscript bytes are unchanged",
+    "installed: Real directory traversal uses numeric order, ignores hidden sources, and supports explicit split-off preview without modifying sources",
+    "installed: A new selection resets displayed decoding/splitting to the host defaults; UTF16 LE/BE and GB18030 retries decode Chinese/supplementary text correctly and failed re-preview revokes the prior host commit token",
+    "installed: Author confirmation imports the frozen preview into one new book while preserving externally changed source bytes and all unselected originals",
+    "installed: Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources",
+    "installed: Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite",
+    "installed: Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays",
+    "installed: Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable",
+    "installed: Actual 21-file manual-reviewed import atomically creates private provenance; UI pages through every source and original chapter, with exact encoding/version/count/hash fields and no absolute source directory",
+    "installed: Manual manuscript edits preserve the original import snapshot; actual host backup and UI restore keep exact receipt bytes/IDs, explain restored lineage, and remain readable after full desktop restart",
+    "installed: A directly created/legacy book explicitly reports missing provenance rather than inventing an import or inferring missing manuscript",
+    "installed: Unknown future provenance displays an explicit retained-original error and never an empty legacy state; exact bytes and all 21 source originals remain untouched",
+    "installed: Real pointer drag reorders scene IDs within the chapter; filtered keyboard up/down uses the full unfiltered neighbor order without dropping hidden scenes or changing manuscript",
+    "installed: Tree chapter selector moves across volumes and rescues a scene from a deleted chapter; source/destination retain all stable IDs, orphan reorder is disabled and positions survive restart",
+    "installed: Tree movement honors an actual material-cache quota failure: no planning bytes change and author input remains; explicit formal save resolves the guard",
+    "installed: Same-revision external planning edit rejects a stale tree action and preserves exact bytes; explicit refresh permits a new move, actual restart retains both columns and compact dark controls remain reachable with every manuscript byte unchanged",
+    "installed: Tree creation restores a legacy unsaved character draft without overwriting or formally saving it; unknown future draft remains read-only and byte-identical across actual restart until explicit discard; author saves a schema1 scene, sees it unassigned, then moves the same stable ID and reads it after restart",
+    "installed: real Electron and official Harness complete organization/item/ability/research proposals with explicit review and acceptance; four estimates dispatch zero requests; twelve local fixture requests expose only material-read/propose",
+    "installed: research classification and verification remain disabled/read-only during review and unchanged after acceptance; model is told it has no network verification tool; manuscript bytes, author status and chapter references remain unchanged",
+    "installed: actual UI creates source-bound scene experiment, independent branches and saved comparison; selection and feedback freeze the prior version; Chinese keyboard edits/undo/redo; real close/relaunch restores unsaved body and temporarily blank title",
+    "installed: synthetic localStorage quota exhaustion blocks sample navigation and native window close; explicit Ctrl+S persists current changes and clears close guard",
+    "installed: external same-revision body changes block save and preserve both; explicit disk comparison/rebase preserves external version in history; soft delete/restore keeps identity and body; source freshness changes without changing original scene snapshot",
+    "installed: dark narrow comparison has no page/dialog overflow; explicit promotion opens a new chapter with exact trial text and original first-chapter bytes unchanged; whole-book backup restores branch/group/selection/feedback under new book identity",
+    "installed: real worker exit(91) before/after pilot write; actual desktop startup reconciles correct task type, preserves later author edits and never replays model output",
+    "installed: official Harness makes exactly three scoped tool requests; preview/estimate zero requests; changed source blocks dispatch; no unrelated sample/material/manuscript sent; review is proposal-only, saves draft, reopens in same session and after real relaunch, explicit acceptance changes only pilot body",
+    "installed: stale candidate rejects without replacing newer author manuscript; dark narrow review remains usable; explicit cancel stops in-flight provider request; restart neither retries model nor applies retained candidate",
+    "installed: actual filters distinguish world/reader/character knowledge; relation evidence opens exact source card; quoted manuscript navigation selects original saved range without writing manuscript",
+    "installed: retired event remains visible; external text modification becomes stale; narrow dark view and source relocation work; unreadable card is disclosed; real restart preserves source bytes and evidence",
+    "installed: actual host IPC aborts an in-flight evidence scan; stale request cleanup cannot cancel the next filtered query; current manuscript bytes remain unchanged",
+    "installed: distinct and opposite relation events retain all source text; selecting multi-target event highlights both edges; participant focus includes incoming and outgoing records; graph-to-table opens the exact event and its original manuscript range",
+    "installed: 61 actual relationship records show an explicit 60-event graph limit; all 61 remain reachable across 40/21 table pages; unreadable-source details stay in normal layout and open by a real click",
+    "installed: deleted/missing nodes and retired edges stay visible; external manuscript change makes graph evidence stale; narrow dark graph detail relocates the exact original quote; real restart and read-only graph preserve all source card bytes",
+    "installed: synthetic localStorage quota failure blocks dialog close without losing input; after storage recovers the same draft reopens intact and can be explicitly discarded",
+    "installed: actual UI distinguishes belief, suspicion and empty cells; saved Unicode source binding never changes manuscript",
+    "installed: event and proposition drafts survive full desktop restart; revision CAS and original quote history remain visible",
+    "installed: retire/restore, source jump, author edit invalidation and explicit current-source rebind work",
+    "installed: dark narrow view and manual proposition creation complete without model requests; narrative source bytes preserved",
+    "installed: unsaved editor text is saved before actual reader entry; opaque isolated reader has no author secrets, editing fields, model requests or script execution",
+    "installed: actual wheel scroll, chapter/volume/final-only navigation and full app restart restore exact-hash paragraph plus font/line-height/theme/390px desktop simulation",
+    "installed: external source change preserves old bookmark until explicit record; directory deletion blocks stale navigation, removes deleted chapter on refresh and retains a missing current bookmark until explicit new recording; future local record and quota failures preserve bytes until explicit reset/retry",
+    "installed: Escape closes reader, empty book has a clear state, and reading never mutates manuscript bytes outside the deliberately authored/external test changes",
+    "installed: Real desktop restore IPC rejects hash-valid malformed backup metadata before creating a new book or staging directory; folder selection is instrumented, source and backup bytes are unchanged",
+    "installed: Actual chapter navigation reports malformed UTF-8, retains the prior editor, and Ctrl+S preserves raw source and metadata bytes",
+    "installed: Malformed metadata book is excluded from the usable library without rewriting it; export IPC fails before the instrumented save dialog",
+    "installed: Explicit reopen after external UTF-8 repair succeeds and preserves BOM, CRLF, a legitimate replacement character and astral Unicode",
+    "installed: renderer fetch is denied by CSP and an independent session fetch proves Chromium HTTP interception; actual author writes/saves without a model and while the official Harness waits for a controlled failing provider",
+    "installed: switching to another book cancels the pending original task and permits independent manual writing; default model payload contains no other-book manuscript/material markers and task history stays bound to the originating book",
+    "installed: provider503 leaves a failed task, never applies a candidate or rewrites either manuscript; both books retain exact author additions",
+    "installed: after full application restart and loopback provider shutdown, manual save and visibly readable narrow preview remain usable without horizontal overflow, additional provider requests or page errors",
+    "installed: Actual author save and failed synthetic settings produce fixed metadata only; unique manuscript/title/IDs/path/credential absent from preview and export; injected path refused before native chooser and cancelled choice writes nothing",
+    "installed: Explicit native-selected JSON created once; actual delayed write guards panel and native-window close until completion; repeat refuses overwrite byte-for-byte; prospective data-root Junction child refused before creation; manuscript and private task/settings storage never gathered or changed",
+    "installed: Desktop and dark narrow previews fit; clear is explicitly confirmed and cancellation preserves events; clear removes metadata alone; complete process restart discards prior errors and metadata while author manuscript persists without automatic diagnostic storage",
+    "installed: Changing service address and leaving Key blank clears the old encrypted credential; official generation refuses before any new-endpoint request; explicit replacement credential is the only credential observed on three real Harness tool-roundtrip requests",
+    "installed: Same-service model selection and canonical trailing slash preserve the credential; changing address and explicit key clearing discard unsaved Key input; returning to old endpoint cannot resurrect an old credential; original manuscript unchanged and stored bytes contain no plaintext key",
+    "installed: Unversioned legacy encrypted settings still generate through the original endpoint; cancelling service editing preserves exact legacy bytes; externally mismatched service scope refuses decryption/use without changing stored bytes or contacting another provider; unknown future schema refuses read/save and preserves exact bytes until explicit synthetic repair",
+    "installed: Explicit desktop migration preserves exact original encrypted settings in a hash-bound backup and activates the matching store identity; no network until explicit generation; actual Harness A uses only DPAPI credential A and freezes its profile on the task",
+    "installed: Real author UI creates independent B and selects it; stale or missing displayed revision refuses before network; the ordinary writing button sends only selected B key through official Harness; old task metadata remains frozen and manuscript is not auto-applied",
+    "installed: An externally changed profile revision rejects UI save without overwriting bytes and keeps the Chinese form draft; explicit cancel/refresh permits confirmed deletion of an unused empty-key configuration; clearing B key affects neither A nor image C and prevents B network until its key is explicitly replaced",
+    "installed: Separate image configuration retains its own key, budget and explicitly confirmed response mode across restart without borrowing text pricing; image cannot route to text; DPAPI B credential and both routes retained; model management never generates images, with zero image requests",
+    "installed: Future schema and foreign store identity preserve exact bytes and refuse use; missing list blocks generation without legacy fallback; explicit desktop recovery restores only the original single configuration while preserving held newer profiles and exact migration backup; original manuscript remains unchanged",
+    "installed: Actual dark narrow desktop profile form accepts synthetic Chinese text, changing endpoint discards unsaved key, Escape closes idle dialog, layout stays inside viewport; all requests checked as credential-identity booleans, no plaintext keys stored in settings or reports",
+    "installed: Native chooser cancellation creates nothing; injected renderer path rejected before picker; source Junction destination fails before adoption",
+    "installed: Actual author save backed up to chosen disk; every object independently hashed; publication/image included; unchanged repeat adds zero content bytes and a complete second logical version; cross-book capabilities denied",
+    "installed: Deterministic mid-object capture: modal and native window close guarded; author cancels; zero new committed versions; old objects remain valid; subsequent retry commits third complete version",
+    "installed: Application restart invalidates old capability; author reopens vault; desktop and dark narrow view fit; restore requires final explicit confirmation; oldest version opens as distinct book retaining frozen publication hash/image and original provenance; newer original manuscript unchanged; foreign vault append denied; damaged shared object refuses another restore without new book or existing-book change; synthetic repair preserves prior generations",
+    "installed: actual author edit and save precede backup; managed library root, another book and canonical existing/prospective Junction aliases reject before any file creation or other-book change; cancellation leaves the selected destination empty",
+    "installed: real host independently hashes every backup file, includes current manuscript and old frozen image/text publication, and restores into a distinct new book without changing originals; disk independence is recorded separately",
+    "installed: restored provenance preserves the old publication hash and frozen image; intentionally damaged backup refuses another restore and leaves original manuscript and manifest unchanged; explicit synthetic repair restores original backup bytes",
+    "installed: author workspace reload opens the restored book and displays the latest saved Unicode text without renderer errors or network requests",
+    "installed: real window-bound IPC cancels a 256-chapter capture before commit without creating a snapshot",
+    "installed: explicit reordered two-chapter capture persists; preview metadata excludes body/private author materials, chapter IPC returns exact BOM/CRLF/astral text and rejects out-of-scope chapters",
+    "installed: external author edit and full desktop restart preserve the original frozen snapshot; no manuscript conversion, model request or automatic replay",
+    "installed: actual unsaved editor entry flushes before publication; public metadata and explicitly reordered chapter selection survive modal close; Ctrl+S saves form without creating a snapshot",
+    "installed: actual create and chapter preview show the exact frozen selection, escape literal script and exclude unselected/private contents; full desktop restart reads the durable copy",
+    "installed: native-folder cancellation is instrumented and creates no files; real host TXT/MD/HTML/PDF/DOCX writes to Chinese/space directory verify every file hash and preserve source bytes; PDF cancellation opens no renderer and DOCX cancellation creates no directory; injected PDF print failure cleans owned HTML, retry uses actual A4/sans/12pt/1.5 renderer and closes it; actual same-book chapter save succeeds while printing is held by QA, without changing frozen content",
+    "installed: desktop and 806px narrow dialog render without horizontal overflow; no page errors or external page requests",
+    "installed: form quota failure blocks close and preserves input until retry; unknown future form survives modal close and full restart until explicit reset; later form/source edits cannot change the selected frozen export",
+    "installed: actual exported PDF independently verifies required frozen text, excluded private content, explicit chapter order and exact rare-character counts",
+    "installed: independent parser verifies A4 page bounds, embedded fonts, Unicode maps, fixed page labels and absence of active actions; PDFium rasterizes all pages",
+    "installed: actual editor flush, native-choice-instrumented import, exact originals, current PNG preview, purpose/source/rights/linked character metadata and Ctrl+S saved once; local draft including temporarily empty title survives modal close",
+    "installed: external metadata conflict preserves author input; explicit disk comparison/rebase saves new version; JPEG EXIF preview and old-image history remain independent; explicit history adoption creates a new version retaining later originals; recycle/restore preserve originals",
+    "installed: corrupt image import creates no visible record; external original corruption refuses preview and preserves damaged bytes; explicit synthetic repair re-enables preview",
+    "installed: quota error protects modal input; unknown future draft survives full restart until explicit discard; synthetic durable host commit without panel receipt recovers by creation identity after restart without duplicate records",
+    "installed: desktop/806px narrow/dark screenshots, zero horizontal overflow, zero renderer errors or external page requests; all source files and formal manuscript remain byte-identical",
+    "installed: Actual Electron author controls save an offline fixed-resource appearance without selecting it, preview it, and require a separate explicit acknowledgement before choosing current portrait",
+    "installed: Later age/outfit edits create a new appearance revision while the original chosen portrait and its historical image remain explicitly visible and unchanged",
+    "installed: Full restart restores only the local appearance draft and clears choice confirmation; dark narrow author controls explicitly choose the newer version, reject arbitrary-path IPC, preserve manuscript bytes and emit no renderer errors or HTTP requests",
+    "installed: Synthetic local quota failure retains typed appearance notes and cancels actual window close until formal save; an unknown future draft survives full restart byte-for-byte, blocks replacement, and is removed only by explicit discard without changing saved appearances or manuscript",
+    "installed: Budget excess creates no request and retains form; explicit prepare sends nothing; one separately DPAPI-resolved image key calls only selected endpoint after unknown-cost confirmation; real PNG/JPEG/WebP decode/hash/preview and explicit adoption preserve existing asset/manuscript",
+    "installed: Actual renderer-only crash changes renderer PID while retaining the same main PID; native recovery offers reopen only for unsaved paid images; reloaded author UI retains the job and local-save action with no extra HTTP request",
+    "installed: Actual filesystem obstruction retains returned paid bytes and receipt; native window close is rejected without renderer error, direct discard bypass refuses; removing only the synthetic obstruction lets UI save locally with no second HTTP request",
+    "installed: Cancellation after actual request dispatch preserves remote-unknown state, does not claim cancellation is free, and does not automatically repeat the request",
+    "installed: Actual verified owned-process termination after send intent/HTTP restarts to unknown; no automatic generation or resuming old task, and explicit start on the interrupted task refuses",
+    "installed: Author comparison and cancellation do not write task or call a service; extra IPC fields refuse; target changing after comparison refuses and unchecks confirmation while retaining input; reopening drops confirmation; explicit refreshed portrait review adopts existing bytes with a versioned receipt and no HTTP call",
+    "installed: Actual portrait selection freezes character identity/hash; a later host material edit refuses old adoption without losing input or paid candidates; a separately prepared current revision can be explicitly adopted with the exact character link",
+    "installed: Unchanged chapter comparison permits ordinary adoption; formal author title change preserves manuscript bytes but invalidates old target; actual current title/body review requires explicit confirmation; closing/reopening in dark narrow view resets it and reachable controls adopt existing image with both revisions and zero extra HTTP",
+    "installed: Actual chapter selection freezes chapter/body version; same-revision external manuscript changes refuse before HTTP while preserving external bytes; explicit synthetic repair permits a new author-confirmed task and later local adoption through an explicit current-target review",
+    "installed: A real mixed HTTP batch preserves valid original positions 1/3 and bounded bad-item 2, previews/adopts original 3 without private errors; all-invalid structured response is known received with no adoptable images; full restart retains hashes, identities/errors/adoption and never reissues either request",
+    "installed: Unknown future draft retained through full restart until explicit discard; Chinese/astral prompt persists without generation; narrow history/review reachable, no horizontal overflow/renderer requests/errors; original manuscript/old asset preserved and explicit author material edit retained",
+    "installed: Actual author UI chooses a fixed same-book asset and character; preparation persists schema3 and exact preview without HTTP, canonical asset creation or manuscript change",
+    "installed: One explicit DPAPI-resolved edit key calls only /images/edits with the frozen metadata-free PNG; explicit candidate adoption adds a new portrait and preserves original/reference/character/manuscript",
+    "installed: Full restart retains the exact schema2 reference draft, schema3 adopted receipt and frozen reference preview; dark narrow view remains reachable with no automatic HTTP replay",
+    "installed: A real host asset edit after preparation causes the old reference task to fail before dispatch; frozen preview and reference draft remain, with no new request or automatic asset rebinding",
+    "installed: After actual HTTP edit dispatch and durable schema3 intent, the owned desktop process tree is forcibly terminated; restart preserves exact task/reference bytes, displays remote-unknown and never replays the request",
+    "installed: installed or source host DOCX exports real editable paragraphs/native heading styles, public metadata, exact selected chapter order and rare-character counts; original bytes remain unchanged",
+    "installed: independent native LibreOffice reader converts the actual exported DOCX; spatial text extraction verifies complete public selection, excludes private/unselected text, checks all glyph bounds and rasterizes every page",
+    "installed: real isolated main-window IPC creates/edits a typed map with stable place/region/route IDs; creation reconciliation returns the later version; foreign location and missing creation identity reject without writes; actual JPEG decode freezes EXIF-oriented background",
+    "installed: actual host save rejects same-revision external edit and retains bytes; explicit new baseline saves external preimage history, historical background preview/adoption creates a new revision; map recycle/restore and clear background preserve identities; malformed UTF-8 remains byte-identical until explicit synthetic repair",
+    "installed: actual host atlas IPC persists explicit epoch/parent/anchor IDs, rejects foreign maps and stale raw-hash saves without overwriting external bytes, returns filtered lightweight diagnostics, preserves exact preimage history and adopts it as a new revision; retired parent is disclosed without changing directory references; no atlas editing UI claim",
+    "installed: actual Electron close retains exact formal manuscript, other-book metadata and selected original image; author workspace is nonblank, renderer has no Node globals, no page errors or external page requests",
+    "installed: legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+    "installed: actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+    "installed: image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+    "installed: standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow",
+    "installed: actual map controls create two stable places by pointer/form, same-book location association, three-vertex region, real vertex drag and undo, routed bends and author calibration; Ctrl+S/save applies raw coordinates; explicit background selection freezes bytes and clears prior scale; manuscript unchanged after entry flush",
+    "installed: unfinished coordinate input survives modal close and full Electron restart; synthetic localStorage quota blocks modal and native window close without losing raw input; completing coordinates and explicitly saving still writes the formal map and clears the close guard",
+    "installed: same-revision external edits reject stale saves and retain disk bytes/local input; author explicitly compares and adopts the baseline; exact external preimage survives in history; actual read-only historical background loads and author adopts it as a new revision; keyboard point movement/undo and view-only zoom do not silently write the map",
+    "installed: future local draft remains byte-identical and read-only until explicit discard; map recycle and restore preserve identity; a synthetic checkpoint representing an already committed creation with an unconfirmed result reconciles the later revision without duplicate or rewind; not a simulated IPC transport loss",
+    "installed: desktop and 806px dark/narrow map render without dialog overflow; actual host backup/restore to a new book preserves saved map IDs, original image and frozen background while excluding unfinished local coordinate input; folder chooser results are instrumented",
+    "installed: actual author controls create manual epoch order and world/city/interior hierarchy with explicit parent anchors; empty epoch name and half-selected anchor reject formal save yet survive modal close and full Electron restart; completing and saving works; filtered directory and open-parent controls navigate exact maps without changing their graph bytes",
+    "installed: synthetic atlas storage quota blocks modal/native window close without losing inputs; explicit formal save still works; actual same-revision external file change rejects stale save, readable comparison and explicit baseline retain true preimage history; read-only history adoption creates a new revision without replacing map geometry",
+    "installed: formal atlas save with synthetic local cleanup failure blocks duplicate saving/close until retry; cleanup retry does not create another revision; future local schema remains byte-identical and read-only across modal reopen until explicit discard",
+    "installed: synthetic competing local cache is retained while the current author explicitly saves formal data; reopen restores the competing draft without silently rebasing, stale baseline blocks save until readable comparison and explicit adoption; both author versions remain in saved history",
+    "installed: desktop and 806px light/dark atlas render without horizontal dialog overflow; actual whole-book backup/restore retains saved epochs and three-level references under source lineage, excludes unsaved local notes; original three map files and formal manuscript remain exact, zero renderer errors/HTTP; native folder results are instrumented",
+    "installed: Actual author UI exported HTML opens independently with reversed chapter order, previous/next/directory/reload, frozen Unicode body and no script execution",
+    "installed: External stylesheet and fixed font selectors pass restrictive CSP; real controls persist dark theme and 24px across file navigation/reload; 390px desktop simulation has no horizontal overflow",
+    "installed: Actual author UI export inventory matches every file byte; no HTTP requests or workbench IPC/Node globals; standalone Chromium viewer only",
+    "installed: actual empty-book entry points and labeled forms create idea and source-bound pilot selection without formal chapters; explicit promotion creates exactly one chapter, followed by master outline, character, detailed outline and scene; frozen pilot selection stays unchanged",
+    "installed: scene is placed against exact promoted chapter identity and opens that manuscript; four explicit planning references travel through official Harness then author review acceptance writes only formal text",
+    "installed: new reference options appear automatically after authoring cards; a UI edit refreshes only options while selected version 1 stays frozen, generation rejects with zero requests, explicit refresh selects version 2",
+    "installed: real desktop restart preserves manuscript, selected pilot, planning placement and all five materials with zero replay; all model content is synthetic fixture data, not literary-quality evidence",
+    "installed: actual UI selects a knowledge event and frozen author choice; preview sends zero requests and a changed event blocks generation before any model call",
+    "installed: official Harness uses exactly selection-read, bounded frozen-context-read and proposal tools; request and tool output contain selected suspicion plus frozen belief, no unselected truth/person/other-book sentinel",
+    "installed: task context survives later event edits and full desktop restart without replay or manuscript changes; dark narrow selected-choice preview stays readable",
+    "installed: material proposal UI rejects stale knowledge with zero requests then uses only material-read, frozen-reference-read and proposal after refresh; original card unchanged",
+    "installed: pilot UI rejects stale knowledge before estimation and generation; refreshed estimate sends zero requests and official Harness uses only pilot-read, frozen-reference-read and pilot proposal",
+    "installed: both target prompts/tool results contain selected knowledge without unselected truth, other knowledge or whole formal manuscript; no candidate is applied automatically",
+    "installed: actual save commits once when localStorage.removeItem fails; repeat save and dialog close are protected; cleanup retry preserves one record",
+    "installed: simultaneous draft cleanup and fallback persistence failure followed by forced app exit still recovers the already-saved creation through its durable draft identity",
+    "installed: synthetic durable-save/no-renderer-receipt checkpoint plus later author edit rejects stale retry; explicit lookup and full restart retain on-screen draft, and explicit recovery edits the same record rather than creating another",
+    "installed: old-format draft without creation identity migrates before explicit save; four deliberate author creation intents remain exactly four records and manuscript bytes never change",
+    "installed: actual author selection freezes one explicit event without removing contradictory records; matrix shows the choice separately",
+    "installed: external same-cell decision cannot be cleared with a stale UI baseline; re-reading permits explicit author change",
+    "installed: manuscript edit expires the old choice; original quote remains visible and current-source rebinding alone does not silently reconfirm the choice",
+    "installed: explicit new selection survives full restart; clearing preserves four prior choice versions and unchosen event bytes; dark narrow history remains reachable",
+    "installed: 41 actual legacy records paginate 40/1; explicit source selection starts with unspecified knowledge state and permits author scope/state review",
+    "installed: legacy source and author edits survive full desktop restart; a changed old-card baseline rejects creation without a new record",
+    "installed: refreshing and explicitly linking writes new event plus frozen provenance while old card bytes stay exact",
+    "installed: manual old notes change is distinct from old-event retirement; frozen source quote remains readable and navigates to its saved manuscript range; formal manuscript unchanged",
+    "same-version reinstall preserves exact manuscript bytes and opens them in installed UI",
+    "real NSIS uninstall removes app and registration and retains synthetic user manuscript"
+  ],
+  "status": "passed",
+  "installMs": 15623,
+  "reinstallMs": 31391,
+  "uninstallObservation": {
+    "attempts": 34,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 6822
+  },
+  "uninstallRegistryObservation": {
+    "attempts": 2,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 428
+  },
+  "uninstallMs": 8523
+}

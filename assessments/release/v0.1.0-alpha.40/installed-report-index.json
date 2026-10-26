@@ -1,0 +1,115 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.40",
+  "phase": "complete-local-qualification",
+  "productionCommit": "c6d6e433a864a85030d51f49c93f4309c087b9c8",
+  "sourceCi": "https://github.com/ax2/zinovel-studio/actions/runs/40326178233",
+  "files": 54,
+  "reports": 61,
+  "checks": 207,
+  "installerSha256": "804f484a9bbbfac9cd996522ff53dc21c6f45768735512c3b4aafe262d5b4dad",
+  "appAsarSha256": "9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087",
+  "bytes": 155542961,
+  "installMs": 15623,
+  "reinstallMs": 31391,
+  "uninstallMs": 8523,
+  "reportPaths": [
+    "assessments/release/v0.1.0-alpha.40/installed/acceptance/acceptance-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/assets/assets-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/atlas-ui/atlas-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/budget/budget-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/candidate-review/candidate-review-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/character-looks/character-looks-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/compatibility/compatibility-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/context/context-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/continuity/continuity-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/creative-journey/creative-journey-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/desktop-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/diagnostics/diagnostics-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/evidence/evidence-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/image-studio/image-studio-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/import-boundary/import-boundary-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/import-origin/import-origin-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/import-review/import-review-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/incremental-backup/incremental-backup-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/independent-backup/independent-backup-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge/knowledge-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge-choices/knowledge-choices-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge-context/knowledge-context-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge-context-targets/knowledge-context-targets-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge-creation/knowledge-creation-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/knowledge-legacy/knowledge-legacy-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/maps-ipc/maps-ipc-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/maps-ui/maps-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/material-proposal/material-proposal-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/materials/materials-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/model-credentials/model-credentials-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/model-profiles/model-profiles-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/offline-writing/offline-writing-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/pilot-agent/pilot-agent-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/pilots/pilots-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/planning/planning-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-capture/publication-capture-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-docx/docx-inspection.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-docx/publication-docx-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-html/publication-html-output-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-pdf/inspection.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-pdf/publication-pdf-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-resources/publication-resources-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/publication-ui/publication-ui-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/reader/reader-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/reference-images/reference-images-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/relationships/relationships-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/scene-tree/scene-tree-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/scene-tree-operations/scene-tree-operations-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/stream/stream-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/tasks/task-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/utf8-integrity/utf8-integrity-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installed/world-proposals/world-proposals-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/installer-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/guard-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/origin-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/recent-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/current-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/appearance-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/scene-upgrade-smoke.json",
+    "assessments/release/v0.1.0-alpha.40/import-upgrade-smoke.json"
+  ],
+  "scope": "Exact frozen c6d6e43 candidate: production419 CI, latest source423, installation207, eight independently pinned public source upgrades and manifest250. Independent tag/public bytes pending. Synthetic reference and HTTP only.",
+  "qualification": 250,
+  "upgrades": [
+    {
+      "from": "0.1.0-alpha.39",
+      "ms": 33037
+    },
+    {
+      "from": "0.1.0-alpha.38",
+      "ms": 34419
+    },
+    {
+      "from": "0.1.0-alpha.3",
+      "ms": 44938
+    },
+    {
+      "from": "0.1.0-alpha.31",
+      "ms": 32298
+    },
+    {
+      "from": "0.1.0-alpha.33",
+      "ms": 28062
+    },
+    {
+      "from": "0.1.0-alpha.35",
+      "ms": 23842
+    },
+    {
+      "from": "0.1.0-alpha.36",
+      "ms": 31235
+    },
+    {
+      "from": "0.1.0-alpha.37",
+      "ms": 22964
+    }
+  ]
+}

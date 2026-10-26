@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual directory preview rename/volume correction and keyboard cursor split preserve whole supplementary Unicode characters and expose three planned chapters without touching sources",
+    "Direct-join merge restores split body exactly; explicit reset restores original volume/chapter titles and body from frozen preview, with no source rewrite",
+    "Real preload/host IPC rejects stale preview commit and unknown preview chapter ID with zero books created; renderer cannot submit arbitrary chapter arrays",
+    "Confirmed directory review creates exactly one real book; cancel creates none, full restart retains formal chapter IDs/volume metadata/body and source originals, dark review is readable"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "manual-split-light.png",
+      "width": 994,
+      "height": 766,
+      "theme": "light"
+    },
+    {
+      "name": "manual-review-dark.png",
+      "width": 994,
+      "height": 766,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron manual import review and host revision/duplicate guards. Native source chooser is stubbed; synthetic text only, no native IME claim.",
+  "version": "0.1.0-alpha.40",
+  "packaged": true,
+  "appAsarSha256": "9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087"
+}

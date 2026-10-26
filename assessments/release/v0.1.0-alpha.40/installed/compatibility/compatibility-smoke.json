@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "checks": [
+    "library-level task history pages through 101 legacy records; unbound candidates remain readable but cannot be applied or guessed into a book; original files stay byte-identical",
+    "all-book task list opens the exact linked book and chapter",
+    "cancelled partial proposal is view-only; explicit retry calls real official Harness with the latest chapter and selection in a new linked task, retains the old task and never edits manuscript automatically"
+  ],
+  "errors": []
+}

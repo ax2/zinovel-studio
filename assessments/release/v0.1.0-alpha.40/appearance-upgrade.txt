@@ -1,0 +1,79 @@
+{
+  status: 'passed',
+  fromVersion: '0.1.0-alpha.35',
+  toVersion: '0.1.0-alpha.40',
+  previousInstallerSha256: 'a063382bc44bf4aad5ba70e731ab456a33f7ce4638d9d1f80cefb9ba41a6896a',
+  currentInstallerSha256: '804f484a9bbbfac9cd996522ff53dc21c6f45768735512c3b4aafe262d5b4dad',
+  installDirectory: 'D:\\work\\zinovel-studio\\.cache\\recent-upgrade-R5YPLL\\中文 最近版升级',
+  syntheticDataDirectory: 'D:\\work\\zinovel-studio\\.cache\\recent-upgrade-R5YPLL\\synthetic-data',
+  checks: [
+    'Exact public 0.1.0-alpha.35 installed in an isolated Chinese/space path; old UI saves Unicode manuscript and old host encrypts independent image profile and generates a v1 pending candidate; actual old UI also reviews a separate candidate into v2, preserving its receipt and adopted asset through upgrade',
+    'Current NSIS upgrade preserves exact manuscript/profile/v1-task bytes; actual UI explicitly reviews the old candidate into v2 without a new request; original Key makes only a separately confirmed later request',
+    'Full restart retains both target facts without replay; real uninstall removes executable/registration while preserving manuscript, encrypted profiles and v2 receipt',
+    'Actual public 0.1.0-alpha.35 author UI creates a fixed chosen historical portrait, edits the current appearance without changing the chosen version, and retains a separate unsaved appearance plus legacy unversioned scene draft; exact collection/history/image/v2 bytes survive upgrade',
+    'New installed host and post-uninstall exact portable runtime read the old chosen version/real preview and unchanged cached appearance with acknowledgement reset; scene draft remains unchanged across upgrade/restart until explicit author edit saves schema1 and one stable formal scene; uninstall preserves all data without model replay'
+  ],
+  errors: [],
+  scope: 'Exact public 0.1.0-alpha.35 NSIS to current candidate; synthetic initial book seeded by current core, actual old UI writes manuscript and old host creates encrypted profiles/image task, actual current UI reviews old paid candidate. No real provider, native IME or full downgrade qualification',
+  previousInstallMs: 14802,
+  previousAsarSha256: 'b3ade2abee031f9444cb51ec226df23740e5dca7d6d997009a64e7adc4b8a5f2',
+  upgradeMs: 23842,
+  appAsarSha256: '9a66cefee50b7824a2baa5598cd700f28fedc34e0222da4353735efd55f64087',
+  reviewedOldCandidateWithoutRequest: true,
+  credentialsPreserved: true,
+  profileBytesPreserved: true,
+  legacyDraftPreservedUntilExplicitSave: true,
+  explicitSchema1DraftCreated: true,
+  postUninstallDataReadable: true,
+  previousV2ReceiptPreserved: true,
+  previousV2Readable: true,
+  previousAdoptedAssetPreserved: true,
+  previousV2Files: [
+    {
+      name: '5b32c7c7-82e7-4602-87fe-1d8528f9cbb9.json',
+      sha256: 'b12fdb7324e7f22c740aa7578451c839d4aa2121826270c1ae43fabc5d6cb880',
+      bytes: 2914
+    },
+    {
+      name: '4b2f54c3-45d4-4da3-819b-9633072cc272.json',
+      sha256: '69916e038b94aa3e66b26e25244fb628adaca846327c54db0c380763ed03fa7a',
+      bytes: 870
+    },
+    {
+      name: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa.png',
+      sha256: 'ddc11a04cb86df9054adb34b10d1e792115d7692315c47ffeaa35fb85d0b17fa',
+      bytes: 449
+    }
+  ],
+  appearanceFiles: [
+    {
+      name: 'e13b6f09-b638-4c94-a955-3d661e80229d.json',
+      sha256: '4833efa23d548c2210870d93617c6ec713a1494ddf2ac47fd8d5993c44c821f5',
+      bytes: 2582
+    },
+    {
+      name: '1-fe6c1ebf779794d3d722c03fc3d5c801e91362209162eb199793e3d8e2661644.json',
+      sha256: 'fe6c1ebf779794d3d722c03fc3d5c801e91362209162eb199793e3d8e2661644',
+      bytes: 2144
+    },
+    {
+      name: '2-7d6e98258e1089f384390b1a90ce20e1bf2f683fab456a218b7c71137534c777.json',
+      sha256: '7d6e98258e1089f384390b1a90ce20e1bf2f683fab456a218b7c71137534c777',
+      bytes: 2582
+    }
+  ],
+  fixedAppearancePreserved: true,
+  fixedAppearancePreviewReadable: true,
+  lookDraftPreserved: true,
+  lookDraftSha256: 'ba3a869c164894f22dbcad587d10889f4ce8e5f3650807e97181c18ff67f3f5b',
+  oldMaterialDraftSha256: '03b9e3b4891de1fd6ded0b17f75ea65627c3dd00f8a9e17645e68cba64214b4a',
+  newScene: {
+    id: 'b5c983d2-209f-406f-b27c-a7c7ba27020c',
+    revision: 1,
+    diskHash: '8109c943f755b2274b8d9ddaf19c59543d7dc0711562e49b22bf7c9c115d2b74'
+  },
+  requests: { text: 0, image: 3 },
+  uninstallPreserved: true
+}
+(node:46008) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
