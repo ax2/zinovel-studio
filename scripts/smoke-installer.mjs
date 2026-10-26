@@ -191,6 +191,7 @@ try {
     ["smoke-assets.mjs", "assets/assets-smoke.json"],
     ["smoke-character-looks.mjs", "character-looks/character-looks-smoke.json"],
     ["smoke-image-studio.mjs", "image-studio/image-studio-smoke.json"],
+    ["smoke-reference-images.mjs", "reference-images/reference-images-smoke.json"],
     [
       "smoke-publication-docx-output.mjs",
       "publication-docx/publication-docx-smoke.json",

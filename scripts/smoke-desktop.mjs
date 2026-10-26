@@ -56,6 +56,65 @@ const evidence = {
   checks: [],
   errors,
 };
+async function capture(page, name) {
+  if (process.env.ZINOVEL_QA_CAPTURE_MODE !== "electron")
+    return page.screenshot({ path: join(screenshots, name) });
+  await application.evaluate(({ BrowserWindow }) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    if (win.isMinimized()) win.restore();
+    win.show();
+    win.focus();
+  });
+  const painted = await page.evaluate(
+    () =>
+      new Promise((resolve) => {
+        const timer = setTimeout(() => resolve(false), 3000);
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            clearTimeout(timer);
+            resolve(true);
+          }),
+        );
+      }),
+  );
+  assert.equal(
+    painted,
+    true,
+    "Visible app did not produce animation frames before capture",
+  );
+  const image = await application.evaluate(async ({ BrowserWindow }) => {
+    const win = BrowserWindow.getAllWindows()[0];
+    const before = {
+      visible: win.isVisible(),
+      minimized: win.isMinimized(),
+      focused: win.isFocused(),
+    };
+    if (win.isMinimized()) win.restore();
+    win.show();
+    win.focus();
+    const snapshot = await win.webContents.capturePage();
+    if (snapshot.isEmpty())
+      throw new Error("Electron returned an empty capture");
+    return {
+      before,
+      size: snapshot.getSize(),
+      png: snapshot.toPNG().toString("base64"),
+    };
+  });
+  assert.ok(image.size.width > 400 && image.size.height > 300);
+  const bytes = Buffer.from(image.png, "base64");
+  assert.equal(bytes.subarray(1, 4).toString(), "PNG");
+  await writeFile(join(screenshots, name), bytes);
+  evidence.captures = [
+    ...(evidence.captures || []),
+    {
+      name,
+      method: "Electron.webContents.capturePage",
+      before: image.before,
+      size: image.size,
+    },
+  ];
+}
 try {
   let page = await launch();
   if (process.env.ZINOVEL_TEST_EXECUTABLE) {
@@ -106,9 +165,9 @@ try {
     chapter = book.chapters[0];
   const file = join(data, "library", book.id, "manuscript", `${chapter.id}.md`);
   assert.equal(await readFile(file, "utf8"), manuscript);
-  await page.screenshot({ path: join(screenshots, "desktop-light.png") });
+  await capture(page, "desktop-light.png");
   await page.getByRole("button", { name: "深色主题", exact: true }).click();
-  await page.screenshot({ path: join(screenshots, "desktop-dark.png") });
+  await capture(page, "desktop-dark.png");
   await page.getByRole("button", { name: "浅色主题", exact: true }).click();
   await page.getByRole("button", { name: "阅读", exact: true }).click();
   assert.equal(
@@ -148,7 +207,7 @@ try {
   await page.getByLabel("正文编辑器").press("Control+s");
   await page.getByRole("heading", { name: "正文已在其他地方修改" }).waitFor();
   assert.equal(await readFile(file, "utf8"), external);
-  await page.screenshot({ path: join(screenshots, "conflict.png") });
+  await capture(page, "conflict.png");
   await page.getByRole("button", { name: "保留当前编辑", exact: true }).click();
   await page.waitForFunction(
     () => document.querySelector(".save-state")?.textContent === "已保存",
@@ -198,7 +257,7 @@ try {
     model.replacement,
   );
   assert.equal(await readFile(file, "utf8"), external);
-  await page.screenshot({ path: join(screenshots, "ai-review.png") });
+  await capture(page, "ai-review.png");
   await page.getByRole("button", { name: "接受候选", exact: true }).click();
   await page.getByRole("button", { name: "写作工具", exact: true }).click();
   await page
@@ -233,9 +292,7 @@ try {
   evidence.checks.push(
     "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
   );
-  await page.screenshot({
-    path: join(screenshots, "toolbar-with-reference.png"),
-  });
+  await capture(page, "toolbar-with-reference.png");
   assert.equal(
     await page.locator(".toolbar button").evaluateAll((buttons) =>
       buttons.every((button) => {
@@ -321,7 +378,7 @@ try {
   await application.evaluate(({ BrowserWindow }) =>
     BrowserWindow.getAllWindows()[0].setSize(850, 700),
   );
-  await page.screenshot({ path: join(screenshots, "desktop-narrow.png") });
+  await capture(page, "desktop-narrow.png");
   assert.equal(
     await page.evaluate(
       () => document.documentElement.scrollWidth > innerWidth,

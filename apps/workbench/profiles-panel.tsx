@@ -13,7 +13,7 @@ type ImageBudget = {
 type Profile = {
   id: string;
   label: string;
-  protocol: "anthropic-text" | "openai-images";
+  protocol: "anthropic-text" | "openai-images" | "openai-images-edits";
   capability: "text" | "image";
   baseURL: string;
   model: string;
@@ -403,6 +403,9 @@ export function ProfilesPanel({ onClose }: { onClose: () => void }) {
                       </option>
                       <option value="openai-images">
                         OpenAI 兼容内联图像接口
+                      </option>
+                      <option value="openai-images-edits">
+                        参考图编辑接口 · JSON images / 内联结果
                       </option>
                     </select>
                   </label>

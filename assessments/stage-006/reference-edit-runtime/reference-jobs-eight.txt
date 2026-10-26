@@ -1,0 +1,16 @@
+✔ a restarted reference task sends exact frozen metadata-free PNG once to the explicit edits route (382.0628ms)
+✔ edit capability must be explicit and renderer paths cannot become references (85.3921ms)
+✔ source changes immediately before dispatch refuse the intent without a network request (226.8893ms)
+✔ a corrupted frozen derivative is preserved and never sent or silently regenerated (199.6185ms)
+✔ a durable edit intent remains remote-unknown after restart and cannot be sent again (225.7271ms)
+✔ a paid reference response retries only local persistence while retaining the original reference (254.3696ms)
+✔ a source metadata edit at send-intent commit survives the read-only dependency guard (204.4022ms)
+✔ backup restore retains reference bytes and receipts but never resumes the original edit (423.5256ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2384.7248

@@ -1,0 +1,23 @@
+{
+  "dataDirectory": "D:\\work\\zinovel-studio\\.cache\\desktop-qa-ssFIxw",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "installed executable is packaged; system-only PATH without development Node/pnpm",
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip"
+  ],
+  "errors": [],
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "status": "failed",
+  "failure": "page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\n    at D:\\work\\zinovel-studio\\scripts\\smoke-desktop.mjs:111:14",
+  "taskStates": [],
+  "visibleAlerts": [],
+  "allAlerts": []
+}

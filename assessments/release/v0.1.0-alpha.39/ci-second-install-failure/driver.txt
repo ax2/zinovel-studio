@@ -1,0 +1,149 @@
+{
+  status: 'failed',
+  version: '0.1.0-alpha.39',
+  installerSha256: '0c259b017e48c87c32a2fb453a8411805db3f34d8864681725c46f440970e826',
+  appAsarSha256: 'b6267f420f38efd68433eedc44aeb90eee0aa849cd394b8f95b08008a8aa2589',
+  checks: [
+    'Actual independently downloaded public NSIS installs to a Chinese/space directory; installed manifest version and complete asar SHA match the public CI manifest'
+  ],
+  installMs: 33900,
+  failure: 'Error: Command failed: C:\\Program Files\\nodejs\\node.exe D:\\work\\zinovel-studio\\scripts\\smoke-desktop.mjs\n' +
+    '(node:47340) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n' +
+    '(Use `node --trace-deprecation ...` to show where the warning was created)\n' +
+    'node:internal/modules/run_main:111\r\n' +
+    '    triggerUncaughtException(\r\n' +
+    '    ^\r\n' +
+    '\r\n' +
+    'page.screenshot: Timeout 30000ms exceeded.\r\n' +
+    'Call log:\r\n' +
+    '\x1B[2m  - taking page screenshot\x1B[22m\r\n' +
+    '\x1B[2m  - waiting for fonts to load...\x1B[22m\r\n' +
+    '\x1B[2m  - fonts loaded\x1B[22m\r\n' +
+    '\r\n' +
+    '    at D:\\work\\zinovel-studio\\scripts\\smoke-desktop.mjs:201:14 {\r\n' +
+    "  name: 'TimeoutError'\r\n" +
+    '}\r\n' +
+    '\r\n' +
+    'Node.js v26.10.0\r\n' +
+    '\n' +
+    '    at genericNodeError (node:internal/errors:999:15)\n' +
+    '    at wrappedFn (node:internal/errors:544:14)\n' +
+    '    at ChildProcess.exithandler (node:child_process:417:12)\n' +
+    '    at ChildProcess.emit (node:events:514:20)\n' +
+    '    at maybeClose (node:internal/child_process:1156:16)\n' +
+    '    at ChildProcess._handle.onexit (node:internal/child_process:334:5)',
+  executableRemoval: {
+    attempts: 33,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 6582
+  },
+  registryRemoval: {
+    attempts: 3,
+    permissionRetries: 0,
+    permissionErrorCodes: [],
+    elapsedMs: 622
+  }
+}
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+Error: Command failed: C:\Program Files\nodejs\node.exe D:\work\zinovel-studio\scripts\smoke-desktop.mjs
+(node:47340) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+node:internal/modules/run_main:111
+
+    triggerUncaughtException(
+
+    ^
+
+
+
+page.screenshot: Timeout 30000ms exceeded.
+
+Call log:
+
+  - taking page screenshot
+
+  - waiting for fonts to load...
+
+  - fonts loaded
+
+
+
+    at D:\work\zinovel-studio\scripts\smoke-desktop.mjs:201:14 {
+
+  name: 'TimeoutError'
+
+}
+
+
+
+Node.js v26.10.0
+
+
+    at genericNodeError (node:internal/errors:999:15)
+    at wrappedFn (node:internal/errors:544:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:514:20)
+    at maybeClose (node:internal/child_process:1156:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:334:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'C:\\Program Files\\nodejs\\node.exe D:\\work\\zinovel-studio\\scripts\\smoke-desktop.mjs',
+  stdout: '{\n' +
+    '  "dataDirectory": "D:\\\\work\\\\zinovel-studio\\\\.cache\\\\desktop-qa-8PDSBq",\n' +
+    '  "platform": "win32",\n' +
+    '  "viewport": {\n' +
+    '    "width": 1426,\n' +
+    '    "height": 923,\n' +
+    '    "dpr": 1.25\n' +
+    '  },\n' +
+    '  "checks": [\n' +
+    '    "installed executable is packaged; system-only PATH without development Node/pnpm",\n' +
+    '    "create book/chapter; Chinese, astral Unicode and paragraph round trip",\n' +
+    '    "reading mode and theme switching",\n' +
+    '    "immediate window close flush and process restart persistence",\n' +
+    '    "external edit conflict, explicit keep-current, external preimage history restoration"\n' +
+    '  ],\n' +
+    '  "errors": [],\n' +
+    '  "runtime": {\n' +
+    '    "electron": "44.7.0",\n' +
+    '    "node": "24.21.0"\n' +
+    '  },\n' +
+    '  "status": "failed",\n' +
+    '  "failure": "page.screenshot: Timeout 30000ms exceeded.\\nCall log:\\n\\u001b[2m  - taking page screenshot\\u001b[22m\\n\\u001b[2m  - waiting for fonts to load...\\u001b[22m\\n\\u001b[2m  - fonts loaded\\u001b[22m\\n\\n    at D:\\\\work\\\\zinovel-studio\\\\scripts\\\\smoke-desktop.mjs:201:14",\n' +
+    '  "taskStates": [\n' +
+    '    {\n' +
+    '      "id": "f25801c9-b5bf-4632-b97c-13abe5e7fbfd",\n' +
+    '      "status": "awaiting-review",\n' +
+    '      "kind": "writing",\n' +
+    '      "startedAt": "2026-10-26T12:38:30.614Z",\n' +
+    '      "completedAt": "2026-10-26T12:38:37.147Z"\n' +
+    '    }\n' +
+    '  ],\n' +
+    '  "visibleAlerts": [],\n' +
+    '  "allAlerts": []\n' +
+    '}\n',
+  stderr: '(node:47340) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.\n' +
+    '(Use `node --trace-deprecation ...` to show where the warning was created)\n' +
+    'node:internal/modules/run_main:111\r\n' +
+    '    triggerUncaughtException(\r\n' +
+    '    ^\r\n' +
+    '\r\n' +
+    'page.screenshot: Timeout 30000ms exceeded.\r\n' +
+    'Call log:\r\n' +
+    '\x1B[2m  - taking page screenshot\x1B[22m\r\n' +
+    '\x1B[2m  - waiting for fonts to load...\x1B[22m\r\n' +
+    '\x1B[2m  - fonts loaded\x1B[22m\r\n' +
+    '\r\n' +
+    '    at D:\\work\\zinovel-studio\\scripts\\smoke-desktop.mjs:201:14 {\r\n' +
+    "  name: 'TimeoutError'\r\n" +
+    '}\r\n' +
+    '\r\n' +
+    'Node.js v26.10.0\r\n'
+}
+
+Node.js v26.10.0

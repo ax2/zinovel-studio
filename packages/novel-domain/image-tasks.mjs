@@ -7,6 +7,7 @@ import {
   assetInput,
 } from "./assets.mjs";
 import { assetCreationHash } from "./asset-creation-hash.mjs";
+import { imageEditProtocol, imageTaskReference } from "./image-reference.mjs";
 import {
   imageGenerationPreflight,
   imageGenerationLimits,
@@ -61,7 +62,7 @@ export function imageTaskTarget(value) {
 }
 function profile(value) {
   keys(value, ["id", "label", "model", "protocol", "revision", "diskHash"]);
-  if (value.protocol !== "openai-images")
+  if (!["openai-images", imageEditProtocol].includes(value.protocol))
     throw new Error("图像任务不能借用文字协议");
   return {
     id: assetId(value.id),
@@ -73,14 +74,25 @@ function profile(value) {
   };
 }
 export function imageTaskInput(input) {
-  keys(input, ["id", "request", "budget", "profile", "target"]);
+  keys(input, ["id", "request", "budget", "profile", "target", "reference"]);
   const checked = imageGenerationPreflight(input.request, input.budget);
+  const selected = profile(input.profile);
+  if (
+    (selected.protocol === imageEditProtocol) !==
+    (input.reference !== undefined)
+  )
+    throw new Error(
+      "参考编辑需要独立编辑协议及明确参考版本，普通生成不能混用参考图",
+    );
   return {
     id: assetId(input.id),
     request: checked.request,
     budget: checked.budget,
-    profile: profile(input.profile),
+    profile: selected,
     target: imageTaskTarget(input.target),
+    ...(input.reference !== undefined
+      ? { reference: imageTaskReference(input.reference) }
+      : {}),
   };
 }
 export function imageTaskCreationHash(bookId, input) {
@@ -180,7 +192,7 @@ function candidate(value, index, version) {
       "input",
       "creationHash",
       "adoptedAt",
-      ...(version === 2 ? ["targetReview"] : []),
+      ...(version >= 2 ? ["targetReview"] : []),
     ]);
     if (
       assetCreationHash(
@@ -284,10 +296,12 @@ export function validateImageTask(value, id, origins) {
     "interruptedAfterResponse",
     "responseHash",
     "candidateErrors",
+    "reference",
   ]);
   if (
     value.format !== "zinovel-image-task" ||
-    ![1, 2].includes(value.schemaVersion) ||
+    ![1, 2, 3].includes(value.schemaVersion) ||
+    (value.schemaVersion === 3) !== (value.reference !== undefined) ||
     value.id !== assetId(id) ||
     !origins.includes(assetId(value.bookId)) ||
     ![
@@ -315,6 +329,7 @@ export function validateImageTask(value, id, origins) {
     budget: value.budget,
     profile: value.profile,
     target: value.target,
+    ...(value.reference !== undefined ? { reference: value.reference } : {}),
   });
   if (
     imageTaskCreationHash(value.bookId, input) !== assetHash(value.creationHash)

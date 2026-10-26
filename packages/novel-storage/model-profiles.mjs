@@ -19,6 +19,7 @@ const LIMIT = 2 * 1024 * 1024,
 const protocols = {
   "anthropic-text": { capability: "text", runnable: true },
   "openai-images": { capability: "image", runnable: true },
+  "openai-images-edits": { capability: "image", runnable: true },
 };
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const clone = (value) => structuredClone(value);
@@ -51,7 +52,8 @@ function configuration(input) {
   if (
     (input.protocol === "anthropic-text" &&
       (input.imageBudget !== undefined || input.imageOptions !== undefined)) ||
-    (input.protocol === "openai-images" && input.budget !== undefined)
+    (["openai-images", "openai-images-edits"].includes(input.protocol) &&
+      input.budget !== undefined)
   )
     throw new Error("文字和图像预算不能混用");
   const text = validateSettings({

@@ -16,6 +16,7 @@ const allowed = new Set([
   "image.discard-retained",
   "image.reconcile",
   "image.preview",
+  "image.reference-preview",
   "image.adopt",
   "image.compare-target",
   "image.adopt-reviewed",

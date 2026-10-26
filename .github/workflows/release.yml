@@ -95,6 +95,7 @@ jobs:
       - run: pnpm test:assets
       - run: pnpm test:character-looks
       - run: pnpm test:image-studio
+      - run: pnpm test:reference-images
       - run: pnpm test:maps-ipc
       - run: pnpm test:maps-ui
       - run: pnpm test:atlas-ui
@@ -212,6 +213,7 @@ jobs:
             screenshots/stage-003/model-credentials/
             screenshots/stage-003/model-profiles/
             screenshots/stage-006/image-studio/
+            screenshots/stage-006/reference-images/
             screenshots/stage-008/tool-isolation/
             assessments/stage-005/reader-cleanup-negative.json
             release/builder-debug.yml

@@ -1,6 +1,8 @@
 import { assetId } from "../novel-domain/assets.mjs";
 import { imageTaskInput } from "../novel-domain/image-tasks.mjs";
 import { binaryHash } from "../novel-storage/image-decoder.mjs";
+import { prepareAssetReference } from "../novel-storage/reference-image.mjs";
+import { imageEditProtocol } from "../novel-domain/image-reference.mjs";
 import {
   requestImageCandidates,
   ImageProviderError,
@@ -55,29 +57,66 @@ export class ImageJobService {
     this.transport = transport;
   }
   async prepare(bookId, input) {
-    exact(input, ["id", "request", "target", "choice"]);
+    exact(input, ["id", "request", "target", "choice", "reference"]);
     const choice = choiceValue(input.choice),
       captured = structuredClone({
         id: input.id,
         request: input.request,
         target: input.target,
+        ...(input.reference !== undefined
+          ? { reference: input.reference }
+          : {}),
       }),
       selected = await this.resolveModel("image", choice, { secret: false });
     // Adapter options must be explicitly confirmed on the selected profile.
     if (
       !selected.profile.runnable ||
-      selected.profile.protocol !== "openai-images" ||
+      !["openai-images", imageEditProtocol].includes(
+        selected.profile.protocol,
+      ) ||
+      (selected.profile.protocol === imageEditProtocol) !==
+        (captured.reference !== undefined) ||
       selected.profile.imageOptions?.responseMode !==
         captured.request?.responseMode
     )
       throw new Error("所选图像适配选项尚未明确确认，未发送请求");
+    let prepared = null;
+    if (captured.reference) {
+      const source = await prepareAssetReference(
+        this.tasks.assets,
+        bookId,
+        captured.reference,
+      );
+      const derivative = source.derivative;
+      prepared = {
+        bytes: source.bytes,
+        reference: {
+          algorithm: derivative.algorithm,
+          asset: source.reference.asset,
+          sourceBlob: source.sourceBlob,
+          derivative: {
+            sha256: derivative.sha256,
+            bytes: derivative.bytes,
+            format: "png",
+            mime: "image/png",
+            width: derivative.width,
+            height: derivative.height,
+            orientation: 1,
+            displayWidth: derivative.width,
+            displayHeight: derivative.height,
+          },
+        },
+      };
+    }
     return this.tasks.create(
       bookId,
       imageTaskInput({
         ...captured,
+        ...(prepared ? { reference: prepared.reference } : {}),
         budget: selected.profile.imageBudget,
         profile: frozenProfile(selected),
       }),
+      prepared?.bytes,
     );
   }
   status() {
@@ -157,6 +196,9 @@ export class ImageJobService {
       )
         throw new Error("图像模型或明确适配选项已改变，未发送请求");
       job.task = task;
+      const referenceBytes = task.reference
+        ? await this.tasks.referenceBytes(job.bookId, expected(task))
+        : null;
       job.phase = "requesting";
       const response = await this.transport(
         {
@@ -165,6 +207,12 @@ export class ImageJobService {
           model: task.profile.model,
           request: task.request,
           budget: task.budget,
+          ...(task.reference
+            ? {
+                protocol: imageEditProtocol,
+                reference: { metadata: task.reference, bytes: referenceBytes },
+              }
+            : {}),
         },
         {
           signal: job.controller.signal,

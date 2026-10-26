@@ -89,3 +89,8 @@ scene-upgrade本机首次完整通过6组，升级12396ms。实际公开36创建
 
 
 公开收尾：不可变1709111d1bb53be9e08810f7ef04d07eaf4e3f2f，源码CI40199661062及发行40199680815均success。391项源码、202项完整安装、公开3/31/33/35/36/37六条升级和229条manifest通过；2026-10-25 22:16:05北京时间发布四附件。公开EXE 155539827字节，SHA256 dfd50f8264cd0673d0e67a70cac62209508e0f52b107a6a210361ab8abd537d8，asar af93ff4697439cc21005cdc1fd7b555cf906989135a6150f5ab30d34e6dd351c；本机候选cd679afb…/a2e9301e…分别保留。三个元数据digest、SHA256SUMS、匿名可见及实际下载hash均通过。首轮直接下载在28229440字节时连接重置，失败日志与partial保留；终态失败后代理重试完整下载校验成功，没有把部分文件当安装包。另对实际下载NSIS安装11635ms、官方Harness/编辑/历史等11项、卸载5252ms，共13项通过，登记/EXE移除且1份合成正文hash保留。完整公开安装运行目录、EXE及元数据保留D:/zinovel-releases/v0.1.0-alpha.38/ci-public，无ZIP。未签名预览，完整上架资格false。
+
+
+公开收尾：不可变999fb9c152f61712c43751b8772863e4d7d59153的独立发行40319320517 success，标签内全量403项源码、202项安装/重装/卸载、公开3/31/33/35/36/37/38七升级及237条manifest通过。生产a0aa11c独立源码CI40316214238 success；999fb9c主线开发CI40319280810因后续40提交取消，不冒充该CI通过，标签发行内检查已完整成功。2026-10-26 20:25:11北京时间公开四附件。公开EXE 155539985字节，SHA256 0c259b017e48c87c32a2fb453a8411805db3f34d8864681725c46f440970e826，asar b6267f420f38efd68433eedc44aeb90eee0aa849cd394b8f95b08008a8aa2589；本机候选008e29cb…/92457dbb…分开保留。匿名可见、三个元数据digest、SHA256SUMS及实际下载hash通过。额外实际下载NSIS安装13606ms、官方Harness/编辑/历史等11项、卸载5475ms，共13项通过，程序/登记移除且1份合成正文hash保持。完整公开安装运行目录、EXE和元数据在D:/zinovel-releases/v0.1.0-alpha.39/ci-public，无ZIP。未签名预览，完整上架资格false。
+
+两轮CDP截图在主题切换后超时，安装/版本和原稿回读已通过，失败后均实际卸载，原报告另存ci-first-install-failure和ci-second-install-failure。第三轮采用Electron.webContents.capturePage完成全部13项；第一套原生抓帧可能早于主题绘制，不作深色外观证明。另对同asar保留目录显式等待两次真实动画帧后，全部11项再通过，六张原生截图和窗口状态记录在native-frame-validation.json，浅/深色hash不同且深色图已查看。没有改应用、跳过功能断言、重建包或以DOM文本冒充像素；CDP在本机的超时原因仍未确定。

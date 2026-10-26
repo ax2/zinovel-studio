@@ -3,7 +3,15 @@ import {
   imageGenerationLimits,
   imageGenerationPreflight,
 } from "../novel-domain/image-generation.mjs";
-import { inspectAssetImage } from "../novel-storage/image-decoder.mjs";
+import {
+  inspectAssetImage,
+  copyImageBytes,
+  binaryHash,
+} from "../novel-storage/image-decoder.mjs";
+import {
+  imageEditProtocol,
+  imageTaskReference,
+} from "../novel-domain/image-reference.mjs";
 
 const messages = Object.freeze({
   INPUT: "图像服务配置、凭据或请求无效，未发送请求",
@@ -140,7 +148,41 @@ export async function requestImageCandidates(
       /[\u0000-\u001f\u007f-\u009f]/.test(config.apiKey)
     )
       fail("INPUT", false);
-    endpoint = modelServiceURL(config.baseURL) + "/images/generations";
+    const editing = config.protocol === imageEditProtocol;
+    if (
+      (config.protocol !== undefined &&
+        !["openai-images", imageEditProtocol].includes(config.protocol)) ||
+      editing !== (config.reference !== undefined)
+    )
+      fail("INPUT", false);
+    let reference = null;
+    if (editing) {
+      if (
+        !config.reference ||
+        Object.keys(config.reference).some(
+          (key) => !["metadata", "bytes"].includes(key),
+        )
+      )
+        fail("INPUT", false);
+      const metadata = imageTaskReference(config.reference.metadata),
+        bytes = copyImageBytes(config.reference.bytes);
+      if (
+        bytes.length !== metadata.derivative.bytes ||
+        binaryHash(bytes) !== metadata.derivative.sha256
+      )
+        fail("INPUT", false);
+      const decoded = await inspectAssetImage(bytes, 2048);
+      if (
+        Object.keys(decoded.blob).some(
+          (key) => decoded.blob[key] !== metadata.derivative[key],
+        )
+      )
+        fail("INPUT", false);
+      reference = `data:image/png;base64,${bytes.toString("base64")}`;
+    }
+    endpoint =
+      modelServiceURL(config.baseURL) +
+      (editing ? "/images/edits" : "/images/generations");
     apiKey = config.apiKey.trim();
     preflight = imageGenerationPreflight(config.request, config.budget);
     const request = preflight.request;
@@ -149,6 +191,7 @@ export async function requestImageCandidates(
       prompt: request.prompt,
       n: request.n,
       size: request.size,
+      ...(reference ? { images: [{ image_url: reference }] } : {}),
       ...(request.responseMode === "request-base64"
         ? { response_format: "b64_json" }
         : {}),

@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "browser": "Browser plugin unavailable; repository Playwright/Electron",
+  "scope": "Actual host/UI and controlled HTTP for pinned reference preparation, preview, one send, adoption, stale reference refusal and restart. Synthetic pictures/keys; no actual provider, visual consistency, native IME or installation qualification.",
+  "version": "0.1.0-alpha.40",
+  "packaged": false,
+  "desktopBundleSha256": "43379dbfaa2e5b1f64a8dacad01eb93aa9308260a0d4baf18a20831b79b4800f",
+  "workbench": {
+    "app.js": "306f4386bd5353572b9a764614f44e4723df3e3359cda20aca677e25a624ba59",
+    "app.css": "85a08bca6ed421888d75e926dcc59a4b8c6c4a4109ab01ce7a643cd58f3b6c2d",
+    "index.html": "ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950"
+  },
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog', { name: 'AI 图像工作室', exact: true }).getByLabel('关联人物', { exact: true })\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-reference-images.mjs:240:6"
+}

@@ -927,7 +927,9 @@
         "apps/workbench/character-looks.tsx",
         "scripts/smoke-character-looks.mjs",
         "screenshots/stage-006/character-looks/character-looks-smoke.json",
-        "assessments/stage-006/character-looks-ui.md"
+        "assessments/stage-006/character-looks-ui.md",
+        "design/reference-image-editing.md",
+        "assessments/stage-006/reference-edit-runtime/README.md"
       ]
     },
     {
@@ -947,7 +949,9 @@
         "apps/workbench/character-looks.tsx",
         "scripts/smoke-character-looks.mjs",
         "screenshots/stage-006/character-looks/character-looks-smoke.json",
-        "assessments/stage-006/character-looks-ui.md"
+        "assessments/stage-006/character-looks-ui.md",
+        "design/reference-image-editing.md",
+        "assessments/stage-006/reference-edit-runtime/README.md"
       ]
     },
     {

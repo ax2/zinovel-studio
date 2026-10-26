@@ -124,7 +124,7 @@ export class ImageTaskStore {
       throw new Error("图像任务已改变，请保留当前调整并刷新");
     return record;
   }
-  async commit(ctx, next, previous) {
+  async commit(ctx, next, previous, readOnly = {}) {
     validateImageTask(next, next.id, ctx.origins);
     const raw = json(next);
     if (Buffer.byteLength(raw) > MAX_RECORD)
@@ -132,7 +132,10 @@ export class ImageTaskStore {
     await this.storage.transaction(
       ctx.root,
       { [taskPath(next.id)]: raw },
-      { expectedBefore: { [taskPath(next.id)]: previous?.raw ?? null } },
+      {
+        expectedBefore: { [taskPath(next.id)]: previous?.raw ?? null },
+        expectedReadOnly: readOnly,
+      },
     );
     return { data: next, raw, diskHash: binaryHash(Buffer.from(raw)) };
   }
@@ -174,8 +177,27 @@ export class ImageTaskStore {
       throw error;
     }
   }
-  async create(bookId, input) {
+  /** @param {Uint8Array} [referenceBytes] */
+  async create(bookId, input, referenceBytes) {
     const captured = imageTaskInput(input);
+    let referenceImage = null;
+    if (captured.reference) {
+      const bytes = copyImageBytes(referenceBytes);
+      if (
+        bytes.length !== captured.reference.derivative.bytes ||
+        binaryHash(bytes) !== captured.reference.derivative.sha256
+      )
+        throw new Error("参考衍生图字节与已确认指纹不符，未创建任务");
+      referenceImage = await this.assets.decode(bytes, 2048);
+      if (
+        Object.keys(referenceImage.blob).some(
+          (key) =>
+            referenceImage.blob[key] !== captured.reference.derivative[key],
+        )
+      )
+        throw new Error("参考衍生图解码与记录不符，未创建任务");
+    } else if (referenceBytes !== undefined)
+      throw new Error("普通生成不能提交参考图字节");
     return this.storage.exclusive(async () => {
       const ctx = await this.context(bookId),
         creationHash = imageTaskCreationHash(bookId, captured);
@@ -193,6 +215,12 @@ export class ImageTaskStore {
       if ((await this.names(ctx)).length >= MAX_TASKS)
         throw new Error("作品图像任务达到当前保护上限，未发送请求");
       await this.target(ctx, captured.target);
+      let reference = null;
+      if (captured.reference) {
+        await this.reference(ctx, captured.reference, false);
+        await this.assets.putBlob(ctx, referenceImage);
+        reference = await this.reference(ctx, captured.reference);
+      }
       const at = new Date().toISOString();
       return this.view(
         ctx,
@@ -200,7 +228,7 @@ export class ImageTaskStore {
           ctx,
           {
             format: "zinovel-image-task",
-            schemaVersion: 1,
+            schemaVersion: captured.reference ? 3 : 1,
             bookId,
             creationHash,
             ...captured,
@@ -213,6 +241,7 @@ export class ImageTaskStore {
             interruptedAfterResponse: false,
           },
           null,
+          reference ? { [reference.source.path]: reference.source.raw } : {},
         ),
       );
     });
@@ -221,6 +250,52 @@ export class ImageTaskStore {
     return this.storage.exclusive(async () => {
       const ctx = await this.context(bookId);
       return this.view(ctx, await this.record(ctx, assetId(id)));
+    });
+  }
+  async reference(ctx, reference, derivative = true) {
+    const record = await this.assets.current(ctx, reference.asset);
+    if (
+      record.data.deletedAt ||
+      Object.keys(record.data.blob).some(
+        (key) => record.data.blob[key] !== reference.sourceBlob[key],
+      )
+    )
+      throw new Error("参考原图已改变或回收，请重新准备图像任务");
+    await this.assets.blobBytes(ctx, reference.sourceBlob);
+    return {
+      bytes: derivative
+        ? await this.assets.blobBytes(ctx, reference.derivative)
+        : null,
+      source: record,
+    };
+  }
+  referenceBytes(bookId, value) {
+    const expected = expectedValue(value);
+    return this.storage.exclusive(async () => {
+      const ctx = await this.context(bookId),
+        task = await this.current(ctx, expected);
+      if (
+        task.data.bookId !== bookId ||
+        task.data.status !== "prepared" ||
+        !task.data.reference
+      )
+        throw new Error("此任务没有当前作品可发送的固定参考图");
+      return (await this.reference(ctx, task.data.reference)).bytes;
+    });
+  }
+  referencePreview(bookId, id) {
+    return this.storage.exclusive(async () => {
+      const ctx = await this.context(bookId),
+        task = await this.record(ctx, assetId(id));
+      if (!task.data.reference) throw new Error("此图像任务没有参考图");
+      const bytes = await this.assets.blobBytes(
+        ctx,
+        task.data.reference.derivative,
+      );
+      return {
+        reference: structuredClone(task.data.reference),
+        dataUrl: `data:image/png;base64,${bytes.toString("base64")}`,
+      };
     });
   }
   async markSending(bookId, expected) {
@@ -234,6 +309,9 @@ export class ImageTaskStore {
       )
         throw new Error("图像任务不是当前作品的待发送任务，不会自动重试");
       await this.target(ctx, previous.data.target);
+      const reference = previous.data.reference
+        ? await this.reference(ctx, previous.data.reference)
+        : null;
       const next = {
         ...previous.data,
         revision: previous.data.revision + 1,
@@ -244,7 +322,12 @@ export class ImageTaskStore {
       // Keep same-process ownership if the durable commit succeeds but its receipt
       // fails. The coordinator can then record the known not-sent transport fact.
       this.#active.add(`${bookId}/${next.id}`);
-      const saved = await this.commit(ctx, next, previous);
+      const saved = await this.commit(
+        ctx,
+        next,
+        previous,
+        reference ? { [reference.source.path]: reference.source.raw } : {},
+      );
       return this.view(ctx, saved);
     });
   }
@@ -721,7 +804,7 @@ export class ImageTaskStore {
         adoptedAt: next.updatedAt,
       };
       if (review) {
-        next.schemaVersion = 2;
+        if (next.schemaVersion !== 3) next.schemaVersion = 2;
         const adoption = next.candidates[index].adoption;
         adoption.targetReview = { schemaVersion: 1, target: review.target };
         adoption.targetReview.hash = imageTaskTargetReviewHash(

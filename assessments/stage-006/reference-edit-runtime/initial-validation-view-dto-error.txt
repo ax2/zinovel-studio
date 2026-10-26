@@ -1,0 +1,28 @@
+✔ a restarted reference task sends exact frozen metadata-free PNG once to the explicit edits route (455.5731ms)
+✔ edit capability must be explicit and renderer paths cannot become references (99.87ms)
+✔ source changes immediately before dispatch refuse the intent without a network request (273.5371ms)
+✔ a corrupted frozen derivative is preserved and never sent or silently regenerated (212.5038ms)
+✔ a durable edit intent remains remote-unknown after restart and cannot be sent again (242.5486ms)
+✔ a paid reference response retries only local persistence while retaining the original reference (648.3063ms)
+✔ a source metadata edit at send-intent commit survives the read-only dependency guard (739.7511ms)
+✔ backup restore retains reference bytes and receipts but never resumes the original edit (982.2679ms)
+✖ explicit current-target adoption retains schema3 reference and cannot downgrade to v2 (661.6692ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4685.1723
+
+✖ failing tests:
+
+test at tests\image-reference-jobs.test.mjs:291:1
+✖ explicit current-target adoption retains schema3 reference and cannot downgrade to v2 (661.6692ms)
+  Error: 图像任务字段不支持，原记录已保留
+      at keys (file:///D:/Work/zinovel-studio/packages/novel-domain/image-tasks.mjs:23:11)
+      at validateImageTask (file:///D:/Work/zinovel-studio/packages/novel-domain/image-tasks.mjs:278:3)
+      at TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/image-reference-jobs.test.mjs:338:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

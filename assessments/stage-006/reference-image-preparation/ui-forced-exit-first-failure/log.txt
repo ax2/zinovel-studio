@@ -1,0 +1,51 @@
+(node:27584) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  status: 'failed',
+  checks: [],
+  errors: [],
+  browser: 'Browser plugin unavailable; repository Playwright/Electron',
+  scope: 'Actual host/UI and controlled HTTP for pinned reference preparation, preview, one send, adoption, stale reference refusal and restart. Synthetic pictures/keys; no actual provider, visual consistency, native IME or installation qualification.',
+  version: '0.1.0-alpha.40',
+  packaged: false,
+  desktopBundleSha256: '43379dbfaa2e5b1f64a8dacad01eb93aa9308260a0d4baf18a20831b79b4800f',
+  workbench: {
+    'app.js': '22d0e9970e38d089ffe2c8f5b0de2d5b081bec0ed76a641e2d1178b630e76ecf',
+    'app.css': '85a08bca6ed421888d75e926dcc59a4b8c6c4a4109ab01ce7a643cd58f3b6c2d',
+    'index.html': 'ace4f3f71676672ae695c41aa15348b57efd5f5f1434234b41cc538d7c54d950'
+  },
+  viewports: [
+    {
+      name: 'reference-before-send-light.png',
+      width: 1426,
+      height: 923,
+      scale: 1.25,
+      scroll: 1426,
+      referenceBounds: [Object]
+    }
+  ],
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+page.screenshot: Timeout 30000ms exceeded.
+Call log:
+  - taking page screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+
+    at screenshot (D:\Work\zinovel-studio\scripts\smoke-reference-images.mjs:222:14)
+    at async file:///D:/Work/zinovel-studio/scripts/smoke-reference-images.mjs:280:3 {
+  name: 'TimeoutError'
+}
+
+Node.js v26.10.0
+  failure: 'page.screenshot: Timeout 30000ms exceeded.\n' +
+    'Call log:\n' +
+    '\x1B[2m  - taking page screenshot\x1B[22m\n' +
+    '\x1B[2m  - waiting for fonts to load...\x1B[22m\n' +
+    '\x1B[2m  - fonts loaded\x1B[22m\n' +
+    '\n' +
+    '    at screenshot (D:\\Work\\zinovel-studio\\scripts\\smoke-reference-images.mjs:222:14)\n' +
+    '    at async file:///D:/Work/zinovel-studio/scripts/smoke-reference-images.mjs:280:3'
+}

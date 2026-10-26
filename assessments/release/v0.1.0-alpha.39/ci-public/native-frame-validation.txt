@@ -1,0 +1,110 @@
+(node:38920) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+{
+  "dataDirectory": "D:\\Work\\zinovel-studio\\.cache\\desktop-qa-UTNhUf",
+  "platform": "win32",
+  "viewport": {
+    "width": 1426,
+    "height": 923,
+    "dpr": 1.25
+  },
+  "checks": [
+    "installed executable is packaged; system-only PATH without development Node/pnpm",
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration",
+    "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "literal find/replace previews before mutation and undoes as one transaction",
+    "stale AI proposal cannot overwrite edits made during generation",
+    "isolated renderer has no Node globals; IPC rejects unknown operations",
+    "narrow-window assistant remains reachable through reference drawer"
+  ],
+  "errors": [],
+  "runtime": {
+    "electron": "44.7.0",
+    "node": "24.21.0"
+  },
+  "captures": [
+    {
+      "name": "desktop-light.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "desktop-dark.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "conflict.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "ai-review.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "toolbar-with-reference.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1783,
+        "height": 1154
+      }
+    },
+    {
+      "name": "desktop-narrow.png",
+      "method": "Electron.webContents.capturePage",
+      "before": {
+        "visible": true,
+        "minimized": false,
+        "focused": true
+      },
+      "size": {
+        "width": 1045,
+        "height": 829
+      }
+    }
+  ],
+  "status": "passed"
+}

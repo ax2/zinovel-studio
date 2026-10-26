@@ -263,6 +263,7 @@ if (
               case "image.discard-retained":
               case "image.reconcile":
               case "image.preview":
+              case "image.reference-preview":
               case "image.adopt":
               case "image.compare-target":
               case "image.adopt-reviewed":
@@ -283,6 +284,7 @@ if (
                   ],
                   "image.reconcile": ["bookId", "expected"],
                   "image.preview": ["bookId", "id", "index"],
+                  "image.reference-preview": ["bookId", "id"],
                   "image.adopt": ["bookId", "expected", "index", "input"],
                   "image.compare-target": ["bookId", "expected", "index"],
                   "image.adopt-reviewed": [
@@ -321,6 +323,11 @@ if (
                   );
                 else if (action === "image.read")
                   value = await store.imageTasks.read(
+                    payload.bookId,
+                    payload.id,
+                  );
+                else if (action === "image.reference-preview")
+                  value = await store.imageTasks.referencePreview(
                     payload.bookId,
                     payload.id,
                   );

@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.39",
+  "installerSha256": "0c259b017e48c87c32a2fb453a8411805db3f34d8864681725c46f440970e826",
+  "appAsarSha256": "b6267f420f38efd68433eedc44aeb90eee0aa849cd394b8f95b08008a8aa2589",
+  "checks": [
+    "Actual independently downloaded public NSIS installs to a Chinese/space directory; installed manifest version and complete asar SHA match the public CI manifest",
+    "installed executable is packaged; system-only PATH without development Node/pnpm",
+    "create book/chapter; Chinese, astral Unicode and paragraph round trip",
+    "reading mode and theme switching",
+    "immediate window close flush and process restart persistence",
+    "external edit conflict, explicit keep-current, external preimage history restoration",
+    "OS-encrypted settings; real Electron child Harness calls two tools; review then selection-only acceptance",
+    "AI selection acceptance is one reversible editor transaction; redo reproduces exact bytes",
+    "literal find/replace previews before mutation and undoes as one transaction",
+    "stale AI proposal cannot overwrite edits made during generation",
+    "isolated renderer has no Node globals; IPC rejects unknown operations",
+    "narrow-window assistant remains reachable through reference drawer",
+    "Exact public installed runtime retained without ZIP; actual uninstall removes executable/registration and preserves all synthetic manuscript hashes"
+  ],
+  "installMs": 13606,
+  "retainedRuntime": "D:\\zinovel-releases\\v0.1.0-alpha.39\\ci-public\\win-installed",
+  "executableRemoval": {
+    "attempts": 21,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 4107
+  },
+  "registryRemoval": {
+    "attempts": 2,
+    "permissionRetries": 0,
+    "permissionErrorCodes": [],
+    "elapsedMs": 290
+  },
+  "uninstallMs": 5475,
+  "preservedManuscripts": 1
+}

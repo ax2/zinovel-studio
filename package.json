@@ -61,6 +61,7 @@
     "test:publication-ui": "node scripts/smoke-publication-ui.mjs && node scripts/smoke-publication-html-output.mjs && node scripts/smoke-publication-pdf-output.mjs && node scripts/smoke-publication-docx-output.mjs",
     "test:assets": "node scripts/smoke-assets.mjs",
     "test:image-studio": "node scripts/smoke-image-studio.mjs",
+    "test:reference-images": "node scripts/smoke-reference-images.mjs",
     "test:maps-ipc": "node scripts/smoke-maps-ipc.mjs",
     "test:maps-ui": "node scripts/smoke-maps-ui.mjs",
     "test:atlas-ui": "node scripts/smoke-map-atlas-ui.mjs",

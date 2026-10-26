@@ -30,6 +30,8 @@ type TargetSummary = Expected & {
 };
 type ImageModel = {
   id: string;
+  protocol: string;
+  baseURL: string;
   label: string;
   model: string;
   runnable: boolean;
@@ -47,7 +49,23 @@ type Task = Expected & {
   restoredSource: boolean;
   createdAt: string;
   request: { prompt: string; n: number; size: string; responseMode: string };
-  profile: { label: string; model: string; revision: number; diskHash: string };
+  profile: {
+    id: string;
+    protocol: string;
+    label: string;
+    model: string;
+    revision: number;
+    diskHash: string;
+  };
+  reference?: {
+    asset: Expected;
+    derivative: {
+      sha256: string;
+      bytes: number;
+      width: number;
+      height: number;
+    };
+  };
   target: ImageTarget;
   budget: ImageModel["imageBudget"];
   interruptedAfterResponse: boolean;
@@ -74,7 +92,7 @@ type Job = {
   cancelRequested: boolean;
 };
 type Draft = {
-  schemaVersion: 1;
+  schemaVersion: 1 | 2;
   bookId: string;
   prompt: string;
   purpose: AssetPurpose;
@@ -84,6 +102,7 @@ type Draft = {
   size: string;
   title: string;
   rights: string;
+  reference?: Expected;
 };
 const purposes: Record<AssetPurpose, string> = {
   cover: "封面候选",
@@ -149,10 +168,20 @@ function draftValue(raw: string, bookId: string): Draft {
   if (
     raw.length > 40000 ||
     !value ||
-    value.schemaVersion !== 1 ||
+    ![1, 2].includes(value.schemaVersion) ||
     value.bookId !== bookId ||
     Object.keys(value).sort().join(",") !==
-      "bookId,chapterId,materialId,n,prompt,purpose,rights,schemaVersion,size,title" ||
+      (value.schemaVersion === 2
+        ? "bookId,chapterId,materialId,n,prompt,purpose,reference,rights,schemaVersion,size,title"
+        : "bookId,chapterId,materialId,n,prompt,purpose,rights,schemaVersion,size,title") ||
+    (value.schemaVersion === 2 &&
+      (!value.reference ||
+        Object.keys(value.reference).sort().join(",") !==
+          "diskHash,id,revision" ||
+        !/^[a-f0-9-]{36}$/.test(value.reference.id) ||
+        !/^[a-f0-9]{64}$/.test(value.reference.diskHash) ||
+        !Number.isSafeInteger(value.reference.revision) ||
+        value.reference.revision < 1)) ||
     !Object.hasOwn(purposes, value.purpose) ||
     !Number.isInteger(value.n) ||
     Math.abs(value.n) > 1000000 ||
@@ -225,6 +254,70 @@ export function ImageStudio({
   const [comparison, setComparison] = useState<TargetComparison | null>(null),
     [targetSummaries, setTargetSummaries] = useState<TargetSummary[]>([]),
     [reviewConfirmed, setReviewConfirmed] = useState(false);
+  const [referenceRows, setReferenceRows] = useState<
+    (Expected & { title: string })[]
+  >([]);
+  const [referenceQuery, setReferenceQuery] = useState(""),
+    [referenceOffset, setReferenceOffset] = useState(0),
+    [referenceTotal, setReferenceTotal] = useState(0);
+  const [referencePreview, setReferencePreview] = useState(""),
+    [referenceIdentity, setReferenceIdentity] = useState(""),
+    [referenceError, setReferenceError] = useState("");
+  const editing = model?.protocol === "openai-images-edits";
+  useEffect(() => {
+    if (!editing) return;
+    let live = true;
+    api<{ items: typeof referenceRows; total: number }>("assets.list", {
+      bookId: book.id,
+      options: { query: referenceQuery, offset: referenceOffset },
+    }).then(
+      (result) => {
+        if (live) {
+          setReferenceRows(result.items);
+          setReferenceTotal(result.total);
+        }
+      },
+      (e) => {
+        if (live) setError(message(e));
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [book.id, editing, referenceQuery, referenceOffset, refresh]);
+  useEffect(() => {
+    let live = true;
+    setReferencePreview("");
+    setReferenceIdentity("");
+    setReferenceError("");
+    setConfirmed(false);
+    if (task?.reference) {
+      const selected = task;
+      api<{ dataUrl: string; reference: Task["reference"] }>(
+        "image.reference-preview",
+        { bookId: book.id, id: selected.id },
+      ).then(
+        (result) => {
+          if (!live) return;
+          if (
+            JSON.stringify(result.reference) !==
+            JSON.stringify(selected.reference)
+          ) {
+            setReferenceError("参考图记录已经改变，请重新读取任务");
+            return;
+          }
+          setReferencePreview(result.dataUrl);
+          setReferenceIdentity(`${selected.id}/${selected.diskHash}`);
+        },
+        (e) => {
+          if (live) setReferenceError(message(e));
+        },
+      );
+    }
+    return () => {
+      live = false;
+    };
+  }, [book.id, task?.id, task?.diskHash]);
   useEffect(() => {
     setComparison(null);
     setTargetSummaries([]);
@@ -500,6 +593,16 @@ export function ImageStudio({
       !!task &&
       previewIdentity === `${task.id}/${task.diskHash}/${index}` &&
       !!preview;
+  const referenceMatches =
+    !task?.reference ||
+    (!!referencePreview && referenceIdentity === `${task.id}/${task.diskHash}`);
+  const taskModelMatches =
+    !!task &&
+    !!model &&
+    !!choice &&
+    task.profile.id === model.id &&
+    task.profile.revision === choice.revision &&
+    task.profile.diskHash === choice.diskHash;
   let cost = "费用未知：未配置每图单价；未知不代表免费。";
   if (task?.budget.pricing) {
     try {
@@ -521,7 +624,7 @@ export function ImageStudio({
           <div>
             <h2>AI 图像工作室</h2>
             <p>
-              封面、定妆、地图与章图候选。只发送明确确认的提示词；生成结果不会自动改正文或替换已有图片。
+              封面、定妆、地图与章图候选。只发送明确确认的提示词和参考图；生成结果不会自动改正文或替换已有图片。
             </p>
           </div>
           <button onClick={close}>关闭图像工作室</button>
@@ -708,8 +811,95 @@ export function ImageStudio({
                   />
                 </label>
                 <p>
-                  仅发送上述提示词，不自动附加整书正文或人物卡。目标版本用于关联与冲突核对。参考图编辑和人物多视角一致性仍待专门接入。
+                  仅发送提示词与明确选择的参考图，不自动附加整书正文或人物卡。参考编辑不保证人物一致性，候选仍需作者审阅。
                 </p>
+                {editing && (
+                  <div className="reference-selection">
+                    <h4>选择同书固定参考图</h4>
+                    <p>
+                      原图保留。准备任务后会显示实际发送的缩放图；资源改变需要重新选择，不自动跟随最新图。
+                    </p>
+                    <label>
+                      检索参考资源
+                      <input
+                        aria-label="检索参考资源"
+                        value={referenceQuery}
+                        onChange={(e) => {
+                          setReferenceQuery(e.target.value);
+                          setReferenceOffset(0);
+                        }}
+                      />
+                    </label>
+                    <label>
+                      参考图资源
+                      <select
+                        aria-label="参考图资源"
+                        value={
+                          draft.reference
+                            ? `${draft.reference.id}/${draft.reference.diskHash}`
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const value = referenceRows.find(
+                            (row) =>
+                              `${row.id}/${row.diskHash}` === e.target.value,
+                          );
+                          if (value)
+                            change({
+                              ...draft,
+                              schemaVersion: 2,
+                              reference: expected(value),
+                            });
+                          else {
+                            const { reference: _reference, ...plain } = draft;
+                            change({ ...plain, schemaVersion: 1 });
+                          }
+                        }}
+                      >
+                        <option value="">请选择资源版本</option>
+                        {draft.reference &&
+                          !referenceRows.some(
+                            (row) =>
+                              row.id === draft.reference?.id &&
+                              row.diskHash === draft.reference?.diskHash,
+                          ) && (
+                            <option
+                              value={`${draft.reference.id}/${draft.reference.diskHash}`}
+                            >
+                              已缓存参考版本 r{draft.reference.revision}
+                              （可重新选择）
+                            </option>
+                          )}
+                        {referenceRows.map((row) => (
+                          <option
+                            key={`${row.id}/${row.diskHash}`}
+                            value={`${row.id}/${row.diskHash}`}
+                          >
+                            {row.title} · r{row.revision}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <div className="button-row">
+                      <button
+                        type="button"
+                        disabled={!referenceOffset}
+                        onClick={() =>
+                          setReferenceOffset((n) => Math.max(0, n - 40))
+                        }
+                      >
+                        上一页参考资源
+                      </button>
+                      <button
+                        type="button"
+                        disabled={referenceOffset + 40 >= referenceTotal}
+                        onClick={() => setReferenceOffset((n) => n + 40)}
+                      >
+                        下一页参考资源
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <label>
                   候选数量
                   <input
@@ -738,7 +928,12 @@ export function ImageStudio({
                   </select>
                 </label>
                 <button
-                  disabled={!ready || !!job || !draft.prompt.trim()}
+                  disabled={
+                    !ready ||
+                    !!job ||
+                    !draft.prompt.trim() ||
+                    (editing && !draft.reference)
+                  }
                   onClick={() =>
                     void perform(async () => {
                       if (!model?.imageOptions || !choice || !persist()) return;
@@ -772,6 +967,7 @@ export function ImageStudio({
                             material: material ? expected(material) : null,
                             chapter: chapter ? expected(chapter) : null,
                           },
+                          ...(editing ? { reference: draft.reference } : {}),
                         },
                       });
                       if (alive.current) {
@@ -863,18 +1059,63 @@ export function ImageStudio({
                   />
                 </label>
                 <p>{cost}</p>
+                {task.reference && (
+                  <section aria-label="本次固定参考图">
+                    <h4>本次发送的参考图（原图保留）</h4>
+                    {referenceMatches && referencePreview ? (
+                      <img
+                        src={referencePreview}
+                        alt="本次固定参考图"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: 280,
+                          objectFit: "contain",
+                        }}
+                      />
+                    ) : (
+                      <p>
+                        {referenceError ||
+                          "正在读取冻结参考图，读取成功后才能发送。"}
+                      </p>
+                    )}
+                    <p>
+                      原资源 r{task.reference.asset.revision}；发送图{" "}
+                      {task.reference.derivative.width} ×{" "}
+                      {task.reference.derivative.height}，
+                      {Math.ceil(task.reference.derivative.bytes / 1024)}{" "}
+                      KiB。参考图输入也可能计费，手填单价不代表实际账单。
+                    </p>
+                  </section>
+                )}
                 {task.status === "prepared" && (
                   <>
+                    {taskModelMatches ? (
+                      <p>目标服务：{model?.baseURL}</p>
+                    ) : (
+                      <p role="alert">
+                        当前所选模型与冻结任务不同，请重新准备任务或恢复原配置。
+                      </p>
+                    )}
                     <label className="checkbox-row">
                       <input
                         type="checkbox"
+                        disabled={!referenceMatches}
                         checked={confirmed}
                         onChange={(e) => setConfirmed(e.target.checked)}
                       />
-                      我确认提示词、用途、所选图像服务及可能的费用，明确发送一次
+                      {task.reference
+                        ? "我确认提示词、参考图、用途、目标服务与参考输入费用，明确发送一次"
+                        : "我确认提示词、用途、所选图像服务及可能的费用，明确发送一次"}
                     </label>
                     <button
-                      disabled={busy || !!job || !confirmed || !ready}
+                      disabled={
+                        busy ||
+                        !!job ||
+                        !confirmed ||
+                        !ready ||
+                        !referenceMatches ||
+                        !taskModelMatches
+                      }
                       onClick={() =>
                         void perform(async () => {
                           const result = await api<{
