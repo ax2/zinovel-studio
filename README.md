@@ -1,6 +1,6 @@
 # ZiNovel Studio
 
-最新公开版为[alpha.39](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.39)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.39/ZiNovel-Studio-0.1.0-alpha.39-windows-x64-setup.exe)。增加目录/新章与批注写入前像保护；独立发行202项安装、七条升级和237条清单通过，公开EXE另下载/hash与实际安装运行、卸载。两轮CDP截图超时和后续原生帧验证分别留档，见[公开证据](assessments/release/v0.1.0-alpha.39/ci-public/README.md)。未签名，完整上架仍未完成。
+最新公开版为[alpha.40](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.40)，包含[Windows安装EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.40/ZiNovel-Studio-0.1.0-alpha.40-windows-x64-setup.exe)。交付固定参考图预览、独立编辑配置、明确一次发送与强退恢复；独立423项源码、207项安装/八升级和250条清单通过，公开包另下载/hash与实际13+5组复验，见[公开证据](assessments/release/v0.1.0-alpha.40/ci-public/README.md)。未签名，完整上架仍未完成。
 
 **模型凭据提醒：** alpha.27及沿用旧设置逻辑的版本，更换模型服务地址且留空Key会保留上一服务的Key。请先在原地址下清除已保存Key，再修改地址并输入新服务对应Key，不要向不信任的服务沿用旧Key。已在公开alpha.29修复，请优先更新；公开Release说明已同步提醒。
 
@@ -8,11 +8,11 @@
 
 **当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，29项 verified、47项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
-Windows 技术预览版：[v0.1.0-alpha.39 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.39) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.39/ZiNovel-Studio-0.1.0-alpha.39-windows-x64-setup.exe)。源码403项、独立202安装/七升级与237清单通过，公开字节额外本机验证完成；完整目录和EXE保留，无ZIP。
+Windows 技术预览版：[v0.1.0-alpha.40 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.40) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.40/ZiNovel-Studio-0.1.0-alpha.40-windows-x64-setup.exe)。公开EXE、完整运行目录和独立验证证据均保留，无ZIP。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
-主线alpha.40已接通同书固定参考图、实际输入图预览、独立编辑配置与一次发送；419项基础及五组真实桌面验证通过（含已发送后实际强退），源码证据持续归档，207项实际安装、八条公开升级及250条清单通过，61份passed报告齐备；阶段标签入口开启，独立发行与公开包复验仍待，真实供应商/视觉质量仍待。39已完成独立发行、公开下载/hash与额外实际安装运行/卸载，原生帧验证完成。完整106项仍29/47/30。
+主线alpha.41开发带图DOCX：428项基础、5组实际作者操作、四组独立排版/22页及Word原生编辑验证通过；源码证据见[带图DOCX](assessments/stage-007/illustrated-docx/README.md)。41安装、新格式升级及独立发行尚待，资格false，不在公开40包内。完整106项仍29/47/30。
 
 ## 产品方向
 

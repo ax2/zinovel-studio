@@ -7,6 +7,7 @@ export const publicationDocxLimits: Readonly<{
 export function publicationDocx(
   input: unknown,
   layout?: unknown,
+  inputImages?: Map<string, Uint8Array>,
 ): Promise<
   Readonly<{
     bytes: Buffer;
@@ -17,5 +18,12 @@ export function publicationDocx(
     recipeHash: string;
     engine: string;
     paragraphCount: number;
+    illustrationCount: number;
+    embeddedImages: readonly Readonly<{
+      sha256: string;
+      bytes: number;
+      width: number;
+      height: number;
+    }>[];
   }>
 >;

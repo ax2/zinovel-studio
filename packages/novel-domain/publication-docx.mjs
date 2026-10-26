@@ -8,10 +8,12 @@ import {
   AlignmentType,
   HeadingLevel,
   Tab,
+  ImageRun,
 } from "docx";
 import { createHash } from "node:crypto";
 import { verifyPublicationSnapshot } from "./publication.mjs";
 import { publicationDocxOptions } from "./publication-docx-options.mjs";
+import { publicationDocxImages } from "./publication-docx-images.mjs";
 
 export const publicationDocxLimits = Object.freeze({
   bytes: 8 * 1024 * 1024,
@@ -37,11 +39,10 @@ function runs(text) {
 }
 
 /** Editable OOXML from a verified public projection; no active author markup. */
-export async function publicationDocx(input, layout) {
+export async function publicationDocx(input, layout, inputImages = new Map()) {
   const snapshot = verifyPublicationSnapshot(input),
     options = publicationDocxOptions(layout);
-  if (snapshot.content.resources?.length)
-    throw new Error("带图DOCX排版尚未接入，未丢弃图像");
+  const resources = snapshot.content.resources || [];
   if (
     Buffer.byteLength(JSON.stringify(snapshot.content)) >
     publicationDocxLimits.bytes
@@ -94,10 +95,79 @@ export async function publicationDocx(input, layout) {
     .filter(Boolean)
     .flatMap(paragraphs);
   const contents = chapters.map((chapter) => ({
+    id: chapter.id,
     title: single(chapter.title),
     volumeTitle: chapter.volumeTitle ? single(chapter.volumeTitle) : "",
     paragraphs: paragraphs(chapter.body),
   }));
+  const imageText = resources.map((item) => ({
+    ...item,
+    alt: single(item.alt),
+    caption: item.caption ? paragraphs(item.caption) : [],
+    credit: item.credit ? paragraphs(item.credit) : [],
+  }));
+  const images = await publicationDocxImages(resources, inputImages);
+  const dimensions = {
+    Letter: [12240, 15840],
+    A4: [11906, 16838],
+    A5: [8391, 11906],
+  }[options.paper];
+  const margin = Math.round(
+    ((options.margin === "wide" ? 22 : 16) * 1440) / 25.4,
+  );
+  const figureWidth = (dimensions[0] - margin * 2) / 15;
+  const figureHeight = (dimensions[1] - margin * 2 - 227) / 15 - 160;
+  function figures(placement, chapterId) {
+    return imageText
+      .filter(
+        (item) => item.placement === placement && item.chapterId === chapterId,
+      )
+      .flatMap((item) => {
+        const ratio = Math.min(
+          1,
+          figureWidth / item.image.width,
+          figureHeight / item.image.height,
+        );
+        const captions = [...item.caption, ...item.credit];
+        return [
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            keepNext: captions.length > 0,
+            keepLines: true,
+            spacing: { before: 120, after: 120, line: 240 },
+            children: [
+              new ImageRun({
+                type: "png",
+                data: images.get(item.image.sha256),
+                transformation: {
+                  width: item.image.width * ratio,
+                  height: item.image.height * ratio,
+                },
+                altText: {
+                  name: "小说插图",
+                  title: item.alt,
+                  description: item.alt,
+                },
+              }),
+            ],
+          }),
+          ...captions.map(
+            (text) =>
+              new Paragraph({
+                style: "PublicationCaption",
+                alignment:
+                  Array.from(text).length > 120
+                    ? AlignmentType.LEFT
+                    : AlignmentType.CENTER,
+                children: runs(text),
+                keepLines: false,
+                widowControl: true,
+                wordWrap: true,
+              }),
+          ),
+        ];
+      });
+  }
   const font = options.font === "serif" ? "SimSun" : "Microsoft YaHei",
     size = options.size * 2;
   const children = [
@@ -105,6 +175,7 @@ export async function publicationDocx(input, layout) {
       heading: HeadingLevel.TITLE,
       children: runs(title),
     }),
+    ...figures("cover", null),
     ...front.map((text) => new Paragraph({ children: runs(text) })),
   ];
   for (const chapter of contents) {
@@ -124,6 +195,7 @@ export async function publicationDocx(input, layout) {
           keepNext: true,
         }),
       );
+    children.push(...figures("chapter-start", chapter.id));
     for (const text of chapter.paragraphs)
       children.push(
         new Paragraph({
@@ -135,15 +207,8 @@ export async function publicationDocx(input, layout) {
           wordWrap: true,
         }),
       );
+    children.push(...figures("chapter-end", chapter.id));
   }
-  const dimensions = {
-    Letter: [12240, 15840],
-    A4: [11906, 16838],
-    A5: [8391, 11906],
-  }[options.paper];
-  const margin = Math.round(
-    ((options.margin === "wide" ? 22 : 16) * 1440) / 25.4,
-  );
   const document = new Document({
     title: metadata.title,
     creator: metadata.author,
@@ -156,6 +221,16 @@ export async function publicationDocx(input, layout) {
     ],
     styles: {
       paragraphStyles: [
+        {
+          id: "PublicationCaption",
+          name: "Publication caption",
+          basedOn: "Normal",
+          run: { font, size: 20, color: "444444" },
+          paragraph: {
+            alignment: AlignmentType.CENTER,
+            spacing: { line: 288, before: 0, after: 120 },
+          },
+        },
         {
           id: "PublicationFooter",
           name: "Publication footer",
@@ -232,7 +307,13 @@ export async function publicationDocx(input, layout) {
   return Object.freeze({
     bytes,
     options,
-    templateVersion,
+    templateVersion: resources.length ? 2 : templateVersion,
+    illustrationCount: resources.length,
+    embeddedImages: Object.freeze([
+      ...new Map(
+        resources.map((item) => [item.image.sha256, item.image]),
+      ).values(),
+    ]),
     snapshotId: snapshot.id,
     snapshotHash: snapshot.hash,
     recipeHash: createHash("sha256")
@@ -240,7 +321,7 @@ export async function publicationDocx(input, layout) {
         JSON.stringify({
           snapshotHash: snapshot.hash,
           options,
-          templateVersion,
+          templateVersion: resources.length ? 2 : templateVersion,
         }),
       )
       .digest("hex"),

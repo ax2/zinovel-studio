@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "D:\Work\zinovel-studio\scripts\inspect-publication-docx.py", line 53, in <module>
+    assert styles[0] == "Title"
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError

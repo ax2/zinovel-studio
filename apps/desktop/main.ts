@@ -1455,10 +1455,10 @@ if (
                     throw new Error("请选择支持的本地导出格式");
                   if (
                     initialSnapshot.content.resources?.length &&
-                    payload.format !== "html"
+                    !["html", "docx"].includes(payload.format)
                   )
                     throw new Error(
-                      "含图发布副本当前支持HTML导出，其他格式尚未接入，不会丢弃图片",
+                      "含图发布副本当前支持HTML和DOCX导出，其他格式尚未接入，不会丢弃图片",
                     );
                   const pdfOptions =
                     payload.format === "pdf"
@@ -1511,7 +1511,7 @@ if (
                         : payload.format === "docx"
                           ? { options: docxOptions }
                           : undefined,
-                      payload.format === "html"
+                      ["html", "docx"].includes(payload.format)
                         ? await store.publicationResources.images(
                             payload.bookId,
                             snapshot,

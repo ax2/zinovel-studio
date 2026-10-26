@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.1.0-alpha.40",
-  "ready": true,
+  "version": "0.1.0-alpha.41",
+  "ready": false,
   "authorization": "2026-10-23 用户要求阶段性成果发布 Release，并包含可执行安装程序。",
   "evidence": [
     "assessments/stage-004/knowledge-choices.md",
@@ -174,10 +174,9 @@
     "assessments/release/v0.1.0-alpha.40/import-upgrade-smoke.json"
   ],
   "limitations": [
-    "alpha.40生产419项独立CI、本机423项、安装207项、八条公开升级和250条清单通过，61份passed报告绑定本机候选；标签独立重建与公开包复验仍待。",
-    "Windows x64未签名预览；原生中文IME、读屏及真实文学/视觉质量尚待，稳定资格false。",
-    "完整106项29 verified/47 in-progress/30 planned；参考编辑仅合成图与受控HTTP验证，真实人物一致性、带图出版、远端发布、大书性能及完整写入口审计继续。",
-    "受控事务反例不代表跨进程文件锁或任意外部并发原子性。"
+    "alpha.41开发中：带图DOCX尚待实际导出、阅读器渲染、安装和完整升级验证，不借用alpha.40报告。",
+    "alpha.40独立发行40330405305及公开包下载/hash、13项安装运行/卸载与5项参考专项通过；alpha.41使用独立资格，不能借用40报告。",
+    "完整106项29 verified/47 in-progress/30 planned；稳定上架资格false，真实文学/视觉质量及其他未完成范围保持。"
   ],
   "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
 }

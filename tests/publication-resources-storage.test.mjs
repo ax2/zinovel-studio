@@ -13,6 +13,7 @@ import {
 } from "../packages/novel-domain/publication.mjs";
 import { publicationPdfDocument } from "../packages/novel-domain/publication-pdf.mjs";
 import { publicationDocx } from "../packages/novel-domain/publication-docx.mjs";
+import { exportPublication } from "../packages/novel-storage/publication-export.mjs";
 
 async function fixture() {
   const root = await mkdtemp(join(tmpdir(), "publication-resource-"));
@@ -269,7 +270,7 @@ test("schema2 capture freezes selected image hashes with text, survives restart 
   assert.throws(() => publicationText(snapshot, "txt"), /带图/);
   assert.throws(() => publicationHtml(snapshot), /发行图/);
   assert.throws(() => publicationPdfDocument(snapshot), /带图/);
-  await assert.rejects(publicationDocx(snapshot), /带图/);
+  await assert.rejects(publicationDocx(snapshot), /发行图/);
   await f.store.assets.setDeleted(f.book.id, f.asset, true);
   const backup = await f.store.createBackup(f.book.id, f.root);
   // No further writes through the original instance after this explicit restart.
@@ -294,6 +295,24 @@ test("schema2 capture freezes selected image hashes with text, survives restart 
     },
   );
   assert.equal(binaryHash(bytes), image.sha256);
+  const images = await restarted.publicationResources.images(
+    restored.id,
+    restoredSnapshot,
+  );
+  const exported = await exportPublication(
+    restoredSnapshot,
+    f.root,
+    "docx",
+    undefined,
+    undefined,
+    images,
+  );
+  assert.equal(exported.manifest.illustrationCount, 1);
+  assert.deepEqual(exported.manifest.embeddedImages, [image]);
+  assert.equal(
+    binaryHash(await readFile(join(exported.path, "book.docx"))),
+    exported.manifest.files[0].sha256,
+  );
 });
 
 test("image version changes during text capture reject before commit and retain the source manuscript", async () => {

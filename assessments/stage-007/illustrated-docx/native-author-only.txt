@@ -1,0 +1,3 @@
+(node:80972) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[ { name: 'actual-author-export', pages: 3 } ]

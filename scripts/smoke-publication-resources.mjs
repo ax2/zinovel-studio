@@ -390,6 +390,54 @@ try {
   assert.ok(
     !manifest.files.some((item) => item.path.includes(assets[2].blob.sha256)),
   );
+  assert.equal(
+    report.formatOptions.find((option) => option.value === "docx").disabled,
+    false,
+  );
+  await panel().getByLabel("发布副本导出格式").selectOption("docx");
+  await panel()
+    .getByRole("button", { name: "导出此副本", exact: true })
+    .click();
+  await panel()
+    .getByText(/本地导出完成：.*docx/)
+    .waitFor();
+  const docxDirectories = (await readdir(exports)).filter((name) =>
+    name.includes("-docx-"),
+  );
+  assert.equal(docxDirectories.length, 1);
+  report.docxDirectory = join(exports, docxDirectories[0]);
+  report.docxSnapshot = JSON.parse(
+    await readFile(
+      join(
+        data,
+        "library",
+        book.id,
+        ".zinovel/publications",
+        `${saved.id}.json`,
+      ),
+      "utf8",
+    ),
+  );
+  assert.equal(report.docxSnapshot.hash, saved.hash);
+  const docxManifest = JSON.parse(
+    await readFile(
+      join(report.docxDirectory, "publication-manifest.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(docxManifest.snapshotHash, saved.hash);
+  assert.equal(docxManifest.templateVersion, 2);
+  assert.equal(docxManifest.illustrationCount, 2);
+  assert.equal(docxManifest.embeddedImages.length, 2);
+  assert.deepEqual(
+    docxManifest.embeddedImages.map((image) => image.sha256).sort(),
+    report.imageFiles.map((image) => image.sha256).sort(),
+  );
+  assert.equal(
+    digest(await readFile(join(report.docxDirectory, "book.docx"))),
+    docxManifest.files[0].sha256,
+  );
+  await shot("author-illustrated-docx-export.png");
   await panel()
     .getByRole("button", { name: "关闭发布副本", exact: true })
     .click();
@@ -477,6 +525,7 @@ try {
   await close();
   assert.deepEqual(report.errors, []);
   report.checks.push(
+    "actual author UI exports the old frozen cover and chapter illustration to editable DOCX after source replacement/recycle; v2 recipe, two embedded image fingerprints, exported file hash and original manuscript are preserved",
     "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
     "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
     "image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",

@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "checks": [
+    "Actual author UI chooses a fixed same-book asset and character; preparation persists schema3 and exact preview without HTTP, canonical asset creation or manuscript change",
+    "One explicit DPAPI-resolved edit key calls only /images/edits with the frozen metadata-free PNG; explicit candidate adoption adds a new portrait and preserves original/reference/character/manuscript",
+    "Full restart retains the exact schema2 reference draft, schema3 adopted receipt and frozen reference preview; dark narrow view remains reachable with no automatic HTTP replay",
+    "A real host asset edit after preparation causes the old reference task to fail before dispatch; frozen preview and reference draft remain, with no new request or automatic asset rebinding",
+    "After actual HTTP edit dispatch and durable schema3 intent, the owned desktop process tree is forcibly terminated; restart preserves exact task/reference bytes, displays remote-unknown and never replays the request"
+  ],
+  "errors": [],
+  "browser": "Browser plugin unavailable; repository Playwright/Electron",
+  "scope": "Actual host/UI and controlled HTTP for pinned reference preparation, preview, one send, adoption, stale reference refusal and restart. Synthetic pictures/keys; no actual provider, visual consistency, native IME or installation qualification.",
+  "version": "0.1.0-alpha.40",
+  "packaged": true,
+  "appAsarSha256": "d5dcde746f3d4831ce2e9e40f5b74af5f32920644ca6521bf0667b6758e74bbf",
+  "viewports": [
+    {
+      "name": "reference-before-send-light.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "scroll": 1426,
+      "referenceBounds": {
+        "x": 587.4874877929688,
+        "y": 372.3625183105469,
+        "width": 180,
+        "height": 279.9999694824219
+      }
+    },
+    {
+      "name": "reference-restarted-dark.png",
+      "width": 808,
+      "height": 803,
+      "scale": 1.25,
+      "scroll": 808,
+      "referenceBounds": {
+        "x": 46.79999923706055,
+        "y": 364.76251220703125,
+        "width": 180.00000381469727,
+        "height": 280
+      }
+    },
+    {
+      "name": "reference-stale-refused-dark.png",
+      "width": 808,
+      "height": 803,
+      "scale": 1.25,
+      "scroll": 808,
+      "referenceBounds": {
+        "x": 46.79999923706055,
+        "y": 327.1625061035156,
+        "width": 180.00000381469727,
+        "height": 280.0000305175781
+      }
+    },
+    {
+      "name": "reference-forced-exit-unknown.png",
+      "width": 1426,
+      "height": 923,
+      "scale": 1.25,
+      "scroll": 1426,
+      "referenceBounds": {
+        "x": 587.4874877929688,
+        "y": 353.9624938964844,
+        "width": 180,
+        "height": 280.0000305175781
+      }
+    }
+  ],
+  "forcedEditRestart": true,
+  "requests": 2,
+  "referenceSha256": "65ef2088c8c9493161ce4a4216401f146034dfebcb2258e6cb5e22b4d84f4b87",
+  "originalsPreserved": true
+}

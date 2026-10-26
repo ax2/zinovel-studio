@@ -1,0 +1,160 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.41",
+  "checks": [
+    "Actual author DOCX contains the exact two frozen PNGs and placements, public alternative text and editable Unicode manuscript; independent OOXML/Pillow and source snapshot fingerprints agree",
+    "Actual author DOCX renders through the native independent reader with complete text, headings, footers and bounded images; the source file stays unchanged",
+    "Three source-generator Letter/A4/A5 layouts preserve all source text and long captions, aspect ratios, image bounds and every page footer; source cases are distinguished from the author executable export"
+  ],
+  "scope": "Three source-generator layouts plus actual author UI DOCX, independent OOXML/Pillow/native reader PDF and page raster checks; no Microsoft Word, professional publishing or store qualification claim",
+  "cases": [
+    {
+      "name": "letter-default",
+      "input": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\letter-default.docx",
+      "pdf": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\letter-default.pdf",
+      "options": {
+        "paper": "Letter",
+        "font": "serif",
+        "size": 11,
+        "leading": 1.8,
+        "margin": "standard",
+        "keepParagraphs": "balanced"
+      },
+      "status": "passed",
+      "sha256": "4aeb7b8419335b826ca4cb4d5975df7484d60f45030551a84a7a7aebc3327c07",
+      "paragraphs": 19,
+      "chapterHeadings": 2,
+      "paper": "Letter",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 5,
+      "pdfSha256": "4dce5542487f6c28cb9076f9ee8c26ec3c05542c7f0a445ad8234549b789b461",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png"
+      ],
+      "verifiedFooters": [
+        "1 / 5",
+        "2 / 5",
+        "3 / 5",
+        "4 / 5",
+        "5 / 5"
+      ]
+    },
+    {
+      "name": "a4-flow",
+      "input": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\a4-flow.docx",
+      "pdf": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\a4-flow.pdf",
+      "options": {
+        "paper": "A4",
+        "font": "sans",
+        "size": 12,
+        "leading": 1.5,
+        "margin": "standard",
+        "keepParagraphs": "flow"
+      },
+      "status": "passed",
+      "sha256": "223b6c8e18b0d74f5bafa02547b8c6cd21108d785dac326d2f19c792031ce189",
+      "paragraphs": 19,
+      "chapterHeadings": 2,
+      "paper": "A4",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 5,
+      "pdfSha256": "7bff6d325abd27e1c62d46fc9d76985bd8578e8a088b8c1aec08b712586793e1",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png"
+      ],
+      "verifiedFooters": [
+        "1 / 5",
+        "2 / 5",
+        "3 / 5",
+        "4 / 5",
+        "5 / 5"
+      ]
+    },
+    {
+      "name": "a5-large-wide",
+      "input": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\a5-large-wide.docx",
+      "pdf": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\a5-large-wide.pdf",
+      "options": {
+        "paper": "A5",
+        "font": "serif",
+        "size": 18,
+        "leading": 2.4,
+        "margin": "wide",
+        "keepParagraphs": "balanced"
+      },
+      "status": "passed",
+      "sha256": "463c9dc6fd12596d4ff37b5df166d65292d2d3c448c67b0eec171c7dd64b12d4",
+      "paragraphs": 19,
+      "chapterHeadings": 2,
+      "paper": "A5",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 9,
+      "pdfSha256": "f489247604f0adbd2842a7fd9c6b42aa425e8c15c7a626be983bcc68cdc1a966",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png",
+        "page-004.png",
+        "page-005.png",
+        "page-006.png",
+        "page-007.png",
+        "page-008.png",
+        "page-009.png"
+      ],
+      "verifiedFooters": [
+        "1 / 9",
+        "2 / 9",
+        "3 / 9",
+        "4 / 9",
+        "5 / 9",
+        "6 / 9",
+        "7 / 9",
+        "8 / 9",
+        "9 / 9"
+      ]
+    },
+    {
+      "name": "actual-author-export",
+      "input": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-k0I8rr\\中文 图像导出目录\\小说-带图雾港-docx-8ae214e3-6caf-4e49-b3a7-f63ce85270cf\\book.docx",
+      "pdf": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-hAG03R\\actual-author-export.pdf",
+      "options": {
+        "paper": "Letter",
+        "font": "serif",
+        "size": 11,
+        "leading": 1.8,
+        "margin": "standard",
+        "keepParagraphs": "balanced"
+      },
+      "status": "passed",
+      "sha256": "baa28f0e8e729040f34817b5f5c32a3e87f1c430c70162f776a6738644e0d0c2",
+      "paragraphs": 13,
+      "chapterHeadings": 2,
+      "paper": "Letter",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 3,
+      "pdfSha256": "4d4fd38ce098200d88769402c8093f1512c29b580a0fcd86c19c36f8724502e4",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png"
+      ],
+      "verifiedFooters": [
+        "1 / 3",
+        "2 / 3",
+        "3 / 3"
+      ]
+    }
+  ]
+}

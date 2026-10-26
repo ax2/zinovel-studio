@@ -1,0 +1,66 @@
+(node:85640) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ illustrated DOCX embeds exact one PNG for three ordered placements with editable text and public alt/captions (25.3873ms)
+✖ illustrated DOCX rejects missing, extra, changed and wrong-sized input bytes before output (17.0282ms)
+✖ illustrated DOCX rejects forged dimensions, truncated PNG and metadata inconsistent with frozen rendition (35.847ms)
+✖ illustrated DOCX captures every caller buffer before async decoding (17.442ms)
+(node:47476) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ DOCX accepts controlled Letter/A4/A5 options and rejects implicit unsafe values (2.23ms)
+✔ DOCX creates editable Unicode text, native headings, fields, public metadata and exact provenance (79.3411ms)
+✔ DOCX refuses changed snapshots, invalid XML and resource excess before packaging (115.5127ms)
+(node:76708) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ publication resources freeze a full-size oriented rendition, deduplicate uses and exclude private asset text (376.6004ms)
+✔ publication resource preparation rejects stale/deleted or corrupted originals and never replaces an existing bad rendition (120.0836ms)
+✔ publication image cancellation after progress does not return a completed resource selection (79.1694ms)
+✔ publication rendition preparation bounds concurrent work and releases capacity after completion (96.0037ms)
+✔ schema2 capture freezes selected image hashes with text, survives restart and restored-book provenance, and never silently drops images on export (241.5142ms)
+✔ image version changes during text capture reject before commit and retain the source manuscript (117.1675ms)
+✔ frozen HTML includes exact local image bytes and escaped public captions while later source changes cannot affect it (160.7235ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 10
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1476.3116
+
+✖ failing tests:
+
+test at tests\publication-docx-images.test.mjs:18:1
+✖ illustrated DOCX embeds exact one PNG for three ordered placements with editable text and public alt/captions (25.3873ms)
+  Error: 发布快照身份或时间无效
+      at makePublicationSnapshot (file:///D:/Work/zinovel-studio/packages/novel-domain/publication.mjs:119:11)
+      at fixture (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:15:17)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:19:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests\publication-docx-images.test.mjs:31:1
+✖ illustrated DOCX rejects missing, extra, changed and wrong-sized input bytes before output (17.0282ms)
+  Error: 发布快照身份或时间无效
+      at makePublicationSnapshot (file:///D:/Work/zinovel-studio/packages/novel-domain/publication.mjs:119:11)
+      at fixture (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:15:17)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:32:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\publication-docx-images.test.mjs:35:1
+✖ illustrated DOCX rejects forged dimensions, truncated PNG and metadata inconsistent with frozen rendition (35.847ms)
+  Error: 发布快照身份或时间无效
+      at makePublicationSnapshot (file:///D:/Work/zinovel-studio/packages/novel-domain/publication.mjs:119:11)
+      at fixture (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:15:17)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:36:261)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\publication-docx-images.test.mjs:38:1
+✖ illustrated DOCX captures every caller buffer before async decoding (17.442ms)
+  Error: 发布快照身份或时间无效
+      at makePublicationSnapshot (file:///D:/Work/zinovel-studio/packages/novel-domain/publication.mjs:119:11)
+      at fixture (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:15:17)
+      at async TestContext.<anonymous> (file:///D:/Work/zinovel-studio/tests/publication-docx-images.test.mjs:39:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

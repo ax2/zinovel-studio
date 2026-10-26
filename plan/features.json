@@ -1194,7 +1194,10 @@
         "assessments/stage-007/docx-export-source.md",
         "assessments/release/v0.1.0-alpha.24/README.md",
         "design/publishing.md",
-        "assessments/stage-007/publication-scope-reassessment.md"
+        "assessments/stage-007/publication-scope-reassessment.md",
+        "tests/publication-docx-images.test.mjs",
+        "scripts/smoke-illustrated-docx-layout.mjs",
+        "assessments/stage-007/illustrated-docx/README.md"
       ],
       "validation": "assessments/stage-007/docx-pdf-acceptance.md"
     },

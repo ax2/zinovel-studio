@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "pages": 22,
+  "unchangedAfterReportModeUpdate": true,
+  "hashes": {
+    "a4-flow\\page-001.png": "c2cf5642afab34077e35f6609bca68b640d9f1c239887cf1ebff14dafee6107f",
+    "a4-flow\\page-002.png": "5515ce8b47c1456efe547998cb7c50835165658f6c287aacb82a7a1def17e4b2",
+    "a4-flow\\page-003.png": "f9f160d3f8fd5ef117921f2f9192b1ebd6d4502f8ce23ed4cc17762551cdba9b",
+    "a4-flow\\page-004.png": "5468c8b97d109509f559b000f967332f11c74a24dd430f2ab02802437061cbbf",
+    "a4-flow\\page-005.png": "cf3da5daedfdbea38a61bf87a91895f936290e9e6070a6bc44a32e3cda470293",
+    "a5-large-wide\\page-001.png": "72d48e1be13407516ad2a9ed3403f3f2430676fc45b5fb1387f99d022aba9082",
+    "a5-large-wide\\page-002.png": "084de8488f53151f208d9c5e93a5f9d84db9e9601c5d21126019f51b0fe33260",
+    "a5-large-wide\\page-003.png": "69dfe317105b7b1f31559412a2c99f5f87371d541346409c2182701629f1b142",
+    "a5-large-wide\\page-004.png": "5abe9d56f78912730980bdcf4c649bfaa755725a659f38202735585845f43fad",
+    "a5-large-wide\\page-005.png": "f8bd879654ef86769895a9e87fee37d6ec579f75d532e8c28fcb10fc0924e593",
+    "a5-large-wide\\page-006.png": "a68c99e1592590d228442bc7e1177229d867a132538878800ad8c0e62151655f",
+    "a5-large-wide\\page-007.png": "02f4461d171929355417786870ece36219026ecf4b12b744d101d788d5408a7d",
+    "a5-large-wide\\page-008.png": "6dfe8931caa08fd2fae9981e7d4b9698ba4661aacd27ce94c4552ecace36da96",
+    "a5-large-wide\\page-009.png": "64a298a3e2e9b53ac39cc4f10718b8a4ecdf2aaa0c03fd27fb295f5991baf206",
+    "actual-author-export\\page-001.png": "9f7394371dfa2c64f2b3aec396909064dfd3c6f80eb3678fbc9862064685cccb",
+    "actual-author-export\\page-002.png": "62d0c5fbe7ddc1c0a5f4a96088d0dab98179fa83709b2da60cfa051e642f0894",
+    "actual-author-export\\page-003.png": "ed8cc5f323a4aead9367638905edb9915854e61d11fa183236fcf8bdc78d960d",
+    "letter-default\\page-001.png": "c527f0d13c2cd03fce7711bf2e4d046fab909f9ef93279ab7a41a5dfcd101da7",
+    "letter-default\\page-002.png": "90f12e0232e6772c39509421745dea140f326474b972df6849f52ed3a1060121",
+    "letter-default\\page-003.png": "d8dd10fd288db6270f460474a43c1b5aea1d888866a1528ea53f4ab5dcf751b7",
+    "letter-default\\page-004.png": "af079543f4e00d7f7a8c15144a0732c66899d15e642f380a8b71771f1799e435",
+    "letter-default\\page-005.png": "81cd7144316d69d08b8fbd1c982eee695538104eebc92ce9ced461e9ca5212af"
+  }
+}

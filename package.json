@@ -1,6 +1,6 @@
 {
   "name": "zinovel-studio",
-  "version": "0.1.0-alpha.40",
+  "version": "0.1.0-alpha.41",
   "private": true,
   "description": "Local-first novel writing desktop based on official DeepSeek Harness",
   "license": "MIT",
@@ -76,7 +76,8 @@
     "test:character-looks": "node scripts/smoke-character-looks.mjs",
     "test:import-boundary": "node scripts/smoke-import-boundary.mjs",
     "test:import-review": "node scripts/smoke-import-review.mjs",
-    "test:import-origin": "node scripts/smoke-import-origin.mjs"
+    "test:import-origin": "node scripts/smoke-import-origin.mjs",
+    "test:illustrated-docx": "node scripts/smoke-illustrated-docx-layout.mjs"
   },
   "engines": {
     "node": ">=26"

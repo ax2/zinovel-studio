@@ -911,12 +911,7 @@ export function PublicationPanel({
                       >
                         PDF 排版副本
                       </option>
-                      <option
-                        value="docx"
-                        disabled={!!preview.content.resources?.length}
-                      >
-                        DOCX 可编辑副本
-                      </option>
+                      <option value="docx">DOCX 可编辑副本</option>
                     </select>
                   </label>
                   <button
@@ -929,7 +924,7 @@ export function PublicationPanel({
                 </div>
                 {!!preview.content.resources?.length && (
                   <p>
-                    此副本包含冻结图像，当前支持带图HTML；其他格式尚未接入，未丢弃图片。
+                    此副本包含冻结图像，当前支持带图HTML和DOCX；其他格式尚未接入，未丢弃图片。
                   </p>
                 )}
                 {(format === "pdf" || format === "docx") && (

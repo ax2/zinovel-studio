@@ -1,0 +1,10 @@
+(node:23604) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///D:/Work/zinovel-studio/scripts/smoke-illustrated-docx-layout.mjs:26
+assert.ok(ui.docxSnapshot?.content.resources.length);
+                                  ^
+
+TypeError: Cannot read properties of undefined (reading 'resources')
+    at file:///D:/Work/zinovel-studio/scripts/smoke-illustrated-docx-layout.mjs:26:35
+
+Node.js v26.10.0

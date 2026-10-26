@@ -67,7 +67,7 @@ export async function exportPublication(
     const docx = docxOptions
       ? await (
           await import("../novel-domain/publication-docx.mjs")
-        ).publicationDocx(snapshot, docxOptions)
+        ).publicationDocx(snapshot, docxOptions, images)
       : null;
     const value = document
       ? await pdf.render(document)
@@ -110,6 +110,8 @@ export async function exportPublication(
             templateVersion: docx.templateVersion,
             recipeHash: docx.recipeHash,
             engine: docx.engine,
+            illustrationCount: docx.illustrationCount,
+            embeddedImages: docx.embeddedImages,
           }
         : {}),
     };

@@ -191,7 +191,10 @@ try {
     ["smoke-assets.mjs", "assets/assets-smoke.json"],
     ["smoke-character-looks.mjs", "character-looks/character-looks-smoke.json"],
     ["smoke-image-studio.mjs", "image-studio/image-studio-smoke.json"],
-    ["smoke-reference-images.mjs", "reference-images/reference-images-smoke.json"],
+    [
+      "smoke-reference-images.mjs",
+      "reference-images/reference-images-smoke.json",
+    ],
     [
       "smoke-publication-docx-output.mjs",
       "publication-docx/publication-docx-smoke.json",
@@ -200,6 +203,11 @@ try {
     [
       "smoke-publication-resources.mjs",
       "publication-resources/publication-resources-smoke.json",
+    ],
+    [
+      "smoke-illustrated-docx-layout.mjs",
+      "illustrated-docx-author-only/illustrated-docx-smoke.json",
+      ["--author-only"],
     ],
     ["smoke-maps-ui.mjs", "maps-ui/maps-ui-smoke.json"],
     ["smoke-map-atlas-ui.mjs", "atlas-ui/atlas-ui-smoke.json"],

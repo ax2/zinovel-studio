@@ -90,6 +90,7 @@ jobs:
       - run: pnpm test:publication-capture
       - run: pnpm test:publication-ui
       - run: pnpm test:publication-resources
+      - run: pnpm test:illustrated-docx
       - run: pnpm test:pdf-layout
       - run: pnpm test:docx-layout
       - run: pnpm test:assets

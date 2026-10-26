@@ -1,0 +1,8 @@
+(node:66568) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[
+  { name: 'letter-default', pages: 5 },
+  { name: 'a4-flow', pages: 5 },
+  { name: 'a5-large-wide', pages: 9 },
+  { name: 'actual-author-export', pages: 3 }
+]

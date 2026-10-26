@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "id": "6ed0e93a-4123-41ae-a6ef-954ba2a69609",
+  "createdAt": "2026-10-26T13:47:00.391Z",
+  "content": {
+    "bookId": "d777503d-010b-40c0-810a-2027aefed28b",
+    "bookRevision": 1,
+    "metadata": {
+      "title": "带图雾港",
+      "author": "合成作者",
+      "synopsis": "公开简介",
+      "rights": "合成",
+      "aiDisclosure": "测试"
+    },
+    "chapters": [
+      {
+        "id": "e3ef47e8-46dd-4c8f-a5ab-dc8578965524",
+        "title": "旧信",
+        "volumeTitle": "",
+        "revision": 1,
+        "savedHash": "8eedf8c27a1874ffd96fd35f710efe396aa9c2c7582f0d06d1b4b3b192ebd2d8",
+        "bodyHash": "8eedf8c27a1874ffd96fd35f710efe396aa9c2c7582f0d06d1b4b3b192ebd2d8",
+        "body": "第一章𠮷🌊，原稿保持。"
+      },
+      {
+        "id": "bdc71e96-23db-4d42-9986-f64b2e3ac1c3",
+        "title": "渡口",
+        "volumeTitle": "",
+        "revision": 1,
+        "savedHash": "5cf6afcff5181f86841f2bd02f5bc796f1d0d9622811b22d98d09682f72e78d4",
+        "bodyHash": "5cf6afcff5181f86841f2bd02f5bc796f1d0d9622811b22d98d09682f72e78d4",
+        "body": "第二章结尾。"
+      }
+    ],
+    "resources": [
+      {
+        "source": {
+          "assetId": "3edcc69c-af2a-4c55-b7c6-4ee1229e70e8",
+          "revision": 1,
+          "recordHash": "de6fd9cecf654c6eca6a4fa1f61fe82eb5ba38704ec3b4fe1c2aa6d6b26af39f",
+          "blobHash": "6128f83eb678ff59f8d311939011f6aab39b9d2d1bd5bd12a1bd54ccf15137e7"
+        },
+        "image": {
+          "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+          "bytes": 7032,
+          "width": 100,
+          "height": 160
+        },
+        "renderVersion": 1,
+        "placement": "cover",
+        "chapterId": null,
+        "alt": "封面𠮷🌊",
+        "caption": "公开图注<script>window.IMAGE_SCRIPT_RAN=true</script>",
+        "credit": "公开署名"
+      },
+      {
+        "source": {
+          "assetId": "db4691c9-6fe7-44bb-9e7e-88762586a3dc",
+          "revision": 1,
+          "recordHash": "bf4e90a9442cb6f90e5727a567d00207c5c0317c92620e2a969bca7fe4b374b3",
+          "blobHash": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575"
+        },
+        "image": {
+          "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+          "bytes": 516,
+          "width": 140,
+          "height": 80
+        },
+        "renderVersion": 1,
+        "placement": "chapter-end",
+        "chapterId": "bdc71e96-23db-4d42-9986-f64b2e3ac1c3",
+        "alt": "章尾插图𠮷🌊",
+        "caption": "",
+        "credit": ""
+      }
+    ]
+  },
+  "hash": "03edd3c6ea461e41619cf1f67e6d58e457bb8dbe4a5c72982c4459d7ce499dbd"
+}
