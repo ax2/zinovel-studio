@@ -115,6 +115,27 @@ async function launch() {
     timeout: 45000,
   });
   page = await app.firstWindow();
+  const runtime = await app.evaluate(({ app }) => ({
+    version: app.getVersion(),
+    packaged: app.isPackaged,
+    path: app.getAppPath(),
+  }));
+  assert.equal(
+    runtime.version,
+    JSON.parse(await readFile(join(root, "package.json"), "utf8")).version,
+  );
+  report.version = runtime.version;
+  report.packaged = runtime.packaged;
+  const binding = runtime.packaged ? "appAsarSha256" : "desktopBundleSha256";
+  const hash = createHash("sha256")
+    .update(
+      await readFile(
+        runtime.packaged ? runtime.path : join(root, "dist/desktop/main.cjs"),
+      ),
+    )
+    .digest("hex");
+  if (report[binding]) assert.equal(report[binding], hash);
+  report[binding] = hash;
   page.on("pageerror", (e) => report.errors.push(e.message));
   page.on("console", (message) => {
     if (message.type() === "error") report.errors.push(message.text());

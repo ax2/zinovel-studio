@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "installer-passed-upgrades-pending",
+  "version": "0.1.0-alpha.41",
+  "installerSha256": "f1d82db8b37121721e427ea27ee6f599cca1ff6dd2bf78ef05687196e15d9068",
+  "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+  "checks": 221,
+  "installMs": 13751,
+  "reinstallMs": 15410,
+  "uninstallMs": 5049,
+  "features": {
+    "resources": {
+      "version": "0.1.0-alpha.41",
+      "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+      "checks": [
+        "actual author UI exports the frozen cover and chapter illustration as tagged PDF after source replacement/recycle; image inventory, snapshot and output fingerprints match DOCX/HTML while original manuscript stays unchanged",
+        "actual author UI exports the old frozen cover and chapter illustration to editable DOCX after source replacement/recycle; v2 recipe, two embedded image fingerprints, exported file hash and original manuscript are preserved",
+        "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+        "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+        "image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+        "standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow"
+      ],
+      "scope": "Actual author UI and host transactions; folder/file picker results instrumented; standalone Chromium file reader is not an actual mobile device"
+    },
+    "docx": {
+      "version": "0.1.0-alpha.41",
+      "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+      "checks": [
+        "Actual author DOCX contains the exact two frozen PNGs and placements, public alternative text and editable Unicode manuscript; independent OOXML/Pillow and source snapshot fingerprints agree",
+        "Actual author DOCX renders through the native independent reader with complete text, headings, footers and bounded images; the source file stays unchanged"
+      ],
+      "scope": "Actual author executable DOCX only; independent OOXML/Pillow/native reader PDF and page raster checks; no source-generator layout, Microsoft Word or store qualification claim"
+    },
+    "pdf": {
+      "version": "0.1.0-alpha.41",
+      "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+      "checks": [
+        "Actual author PDF retains all frozen public text, fonts, paper, ordered headings and page labels; independent inspection verifies source snapshot and final PDF hash",
+        "Actual author PDF has exact image placements and public alternative text; five flat-patch raster samples per image match the frozen PNG and fit print margins"
+      ],
+      "scope": "Actual author executable PDF only; independent source-image sample, structure and rendered page checks; no full photo fidelity, screen-reader or store qualification"
+    },
+    "project": {
+      "version": "0.1.0-alpha.41",
+      "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+      "checks": [
+        "actual import preview distinguishes six planning documents from one chapter; exact imported BOM/CRLF source preserved on disk; author Unicode editing and versioned save persist",
+        "stale save preserves author buffer and external disk version; dirty close is blocked; full desktop restart reads external version; explicit save archives it; historical text loads only into review buffer; dark narrow layout fits",
+        "author creates a second-volume detail asset through UI; all source files and imported manuscript remain byte-for-byte unchanged; no model/network request needed"
+      ],
+      "scope": "Browser plugin not available; actual Electron renderer/host with synthetic novel project. Native chooser instrumented; no native IME, installer or literature quality claim."
+    },
+    "batch": {
+      "version": "0.1.0-alpha.41",
+      "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+      "checks": [
+        "actual author parameter preview makes zero requests; official Harness completes twelve fixed-identity stage requests for two distinct novels with seventeen generated assets each, full volume detail, exact trial chapter count and matching site publication sidecars; target words stay separate from actual trial output",
+        "duplicate batch start, unrelated text generation and generic cancel refuse while the batch owns the Harness; only two novel tools are exposed, prior manuscript is unchanged, and portable receipts bind six real task identities to each new draft",
+        "full desktop restart shows completed batch and all three books without any replay; completed start refuses, private batch ledger has no credential, and desktop/dark narrow UI stays within viewport",
+        "actual author stop closes the current official Harness request, waits for the durable cancellation record, leaves a paused batch and creates no incomplete novel",
+        "actual owned desktop/SDK force exit after server receipt recovers remote-unknown without replay; unacknowledged start refuses, explicit author acknowledgement creates a new charged request identity, and the completed retry creates exactly one draft with original books preserved"
+      ],
+      "scope": "Browser plugin not available; actual Electron author UI + official DeepSeek Harness SDK/agent with a deterministic local SSE server. No real paid provider, native IME, literary, installed or store-quality claim."
+    }
+  },
+  "archive": "D:/zinovel-releases/v0.1.0-alpha.41/local-qualification",
+  "scope": "Actual local NSIS installation/reinstallation/uninstallation, five exact-package author features; all upgrade routes and independent tag/public release remain pending"
+}

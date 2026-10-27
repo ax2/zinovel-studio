@@ -252,7 +252,7 @@ try {
       [join(root, "scripts", script), ...scriptArgs],
       {
         ...childOptions,
-        timeout: 240000,
+        timeout: script === "smoke-novel-batch.mjs" ? 600000 : 240000,
         env: {
           ...process.env,
           ZINOVEL_TEST_EXECUTABLE: executable,

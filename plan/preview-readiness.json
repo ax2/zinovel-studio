@@ -110,7 +110,13 @@
     "assessments/stage-006/reference-edit-runtime/README.md",
     "design/reference-image-editing.md"
   ],
-  "reports": [
+  "reports": [],
+  "limitations": [
+    "alpha.41本机221项安装/重装/卸载及五组新作者功能已通过，九条升级和独立标签资格未完成；不借用alpha.40报告。",
+    "完整109项29 verified/49 in-progress/31 planned；模型配置迁入、真实文学/视觉质量及其他范围继续，稳定上架资格false。"
+  ],
+  "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。",
+  "previousQualificationReports": [
     "assessments/release/v0.1.0-alpha.40/installed/acceptance/acceptance-smoke.json",
     "assessments/release/v0.1.0-alpha.40/installed/assets/assets-smoke.json",
     "assessments/release/v0.1.0-alpha.40/installed/atlas-ui/atlas-ui-smoke.json",
@@ -172,11 +178,5 @@
     "assessments/release/v0.1.0-alpha.40/appearance-upgrade-smoke.json",
     "assessments/release/v0.1.0-alpha.40/scene-upgrade-smoke.json",
     "assessments/release/v0.1.0-alpha.40/import-upgrade-smoke.json"
-  ],
-  "limitations": [
-    "alpha.41开发中：带图DOCX尚待实际导出、阅读器渲染、安装和完整升级验证，不借用alpha.40报告。",
-    "alpha.40独立发行40330405305及公开包下载/hash、13项安装运行/卸载与5项参考专项通过；alpha.41使用独立资格，不能借用40报告。",
-    "完整106项29 verified/47 in-progress/30 planned；稳定上架资格false，真实文学/视觉质量及其他未完成范围保持。"
-  ],
-  "publicationGate": "此文件仅允许进入预览流水线；同标签必须继续通过全套 CI、EXE 实际安装运行重装卸载、真实跨版本升级与安装包哈希清单生成才能发布。"
+  ]
 }

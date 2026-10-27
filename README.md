@@ -14,7 +14,7 @@ Windows 技术预览版：[v0.1.0-alpha.40 下载与说明](https://github.com/a
 
 主线alpha.41的带图DOCX已通过428项基础、作者操作与Word原生编辑检查；[带图PDF](assessments/stage-007/illustrated-pdf/README.md)另通过22页与真实故障检查。[创作工程](assessments/stage-002/book-project/README.md)加入后全量439项、类型/规划与实际作者桌面流程通过。41安装、新格式升级及独立发行尚待，资格false，不在公开40包内。
 
-2026-10-27追加三项优先开发，见[小说工程与批量创作设计](design/novel-projects-and-batch-generation.md)。当前源码已接入工程资产编辑、写作工程/小说站导入和[灵感批量工程](assessments/stage-004/novel-batch/README.md)：449项基础及实际官方Harness本地模拟20请求通过；批量文学质量/安装、二进制图像映射和本地模型配置迁入未完成，新增109项状态见上。公开alpha.40不包含这些主线改动。
+2026-10-27追加三项优先开发，见[小说工程与批量创作设计](design/novel-projects-and-batch-generation.md)。已接入工程资产编辑、写作工程/小说站导入和[灵感批量工程](assessments/stage-004/novel-batch/README.md)：本机453项与[221项实际安装套件](assessments/release/v0.1.0-alpha.41/local/README.md)通过，候选EXE/完整运行目录已保留；九条升级、独立标签资格和公开41尚待。真实文学质量、二进制图像映射及本地模型配置迁入继续，109项状态见上。公开alpha.40不包含这些主线改动。
 
 ## 产品方向
 

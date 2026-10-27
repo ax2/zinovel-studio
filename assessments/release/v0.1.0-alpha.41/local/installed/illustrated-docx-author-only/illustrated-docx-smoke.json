@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.41",
+  "packaged": true,
+  "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1",
+  "checks": [
+    "Actual author DOCX contains the exact two frozen PNGs and placements, public alternative text and editable Unicode manuscript; independent OOXML/Pillow and source snapshot fingerprints agree",
+    "Actual author DOCX renders through the native independent reader with complete text, headings, footers and bounded images; the source file stays unchanged"
+  ],
+  "scope": "Actual author executable DOCX only; independent OOXML/Pillow/native reader PDF and page raster checks; no source-generator layout, Microsoft Word or store qualification claim",
+  "cases": [
+    {
+      "name": "actual-author-export",
+      "input": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-G0E3tV\\中文 图像导出目录\\小说-带图雾港-docx-ece75b6b-9601-4c46-8abf-0e0459001162\\book.docx",
+      "pdf": "D:\\Work\\zinovel-studio\\.cache\\illustrated-docx-eWehZ3\\actual-author-export.pdf",
+      "options": {
+        "paper": "Letter",
+        "font": "serif",
+        "size": 11,
+        "leading": 1.8,
+        "margin": "standard",
+        "keepParagraphs": "balanced"
+      },
+      "status": "passed",
+      "sha256": "7c828c073102f344745f635659316fa5a24747df2a0d55ac2f85431bc3002dea",
+      "paragraphs": 13,
+      "chapterHeadings": 2,
+      "paper": "Letter",
+      "allTextEditable": true,
+      "scope": "Independent python-docx and OOXML checks; optional PDF comes from a separately identified native reader",
+      "pdfPages": 3,
+      "pdfSha256": "fcc9627507739958190a6b7a66f16f4acf12f41eec13af552dca09d3b80f953c",
+      "renderedPages": [
+        "page-001.png",
+        "page-002.png",
+        "page-003.png"
+      ],
+      "verifiedFooters": [
+        "1 / 3",
+        "2 / 3",
+        "3 / 3"
+      ]
+    }
+  ]
+}

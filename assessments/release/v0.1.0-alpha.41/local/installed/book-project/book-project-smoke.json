@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual import preview distinguishes six planning documents from one chapter; exact imported BOM/CRLF source preserved on disk; author Unicode editing and versioned save persist",
+    "stale save preserves author buffer and external disk version; dirty close is blocked; full desktop restart reads external version; explicit save archives it; historical text loads only into review buffer; dark narrow layout fits",
+    "author creates a second-volume detail asset through UI; all source files and imported manuscript remain byte-for-byte unchanged; no model/network request needed"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "project-import-preview.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "project-editor-desktop.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "project-conflict-buffer-retained.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "project-editor-dark-narrow.png",
+      "width": 792,
+      "height": 766,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron renderer/host with synthetic novel project. Native chooser instrumented; no native IME, installer or literature quality claim.",
+  "version": "0.1.0-alpha.41",
+  "packaged": true,
+  "appAsarSha256": "d78e07652a1da4c41066ec47c6a765a455792d886663aab8b0598ad08dfa22f1"
+}

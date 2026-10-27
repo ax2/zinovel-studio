@@ -1,4 +1,6 @@
 import { validateOriginUpgrade } from "./origin-upgrade-proof.mjs";
+import { validateAlpha41Installed } from "./alpha41-installed-proof.mjs";
+import { validateReferenceUpgrade } from "./reference-upgrade-proof.mjs";
 import { readFile, writeFile, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -358,7 +360,7 @@ if (
       item.bytes > 0,
   ) ||
   !Array.isArray(imagePublication.checks) ||
-  imagePublication.checks.length !== 4
+  imagePublication.checks.length !== 6
 )
   throw new Error(
     "Installed frozen image publication proof is missing or stale",
@@ -370,6 +372,23 @@ manifest.imagePublication = {
   checks: imagePublication.checks,
   scope: imagePublication.scope,
 };
+const alpha41Reports = { resources: imagePublication };
+for (const [key, path] of [
+  ["docx", "illustrated-docx-author-only/illustrated-docx-smoke.json"],
+  ["pdf", "illustrated-pdf-author-only/illustrated-pdf-smoke.json"],
+  ["project", "book-project/book-project-smoke.json"],
+  ["batch", "novel-batch/novel-batch-smoke.json"],
+])
+  alpha41Reports[key] = JSON.parse(
+    await readFile(
+      new URL(`screenshots/release/installed/${path}`, root),
+      "utf8",
+    ),
+  );
+manifest.alpha41AuthorFeatures = validateAlpha41Installed(alpha41Reports, {
+  version: pkg.version,
+  appAsarSha256,
+});
 const offlineWriting = JSON.parse(
   await readFile(
     new URL(
@@ -1124,6 +1143,44 @@ for (const [stage, sourceVersion, field, label] of [
     ...report.checks.map((check) => `${label}: ${check}`),
   );
 }
+const referenceUpgrade = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/reference-upgrade/reference-upgrade-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const referenceProducer = JSON.parse(
+  await readFile(
+    new URL(
+      "screenshots/release/reference-upgrade/old-public40/reference-images/reference-images-smoke.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+const referenceSource = JSON.parse(
+  await readFile(
+    new URL(
+      "assessments/release/v0.1.0-alpha.40/ci-public/release-manifest.json",
+      root,
+    ),
+    "utf8",
+  ),
+);
+manifest.referencePublicUpgrade = validateReferenceUpgrade(
+  referenceUpgrade,
+  referenceProducer,
+  referenceSource,
+  { version: pkg.version, sha256, appAsarSha256 },
+);
+manifest.qualification.push(
+  ...referenceUpgrade.checks.map(
+    (check) => `public-reference-upgrade: ${check}`,
+  ),
+);
 const referenceEditing = JSON.parse(
   await readFile(
     new URL(
@@ -1153,7 +1210,7 @@ if (
       view.referenceBounds?.y >= 0 &&
       view.referenceBounds.y + view.referenceBounds.height <= view.height,
   ) ||
-  smoke.checks.length < 207
+  smoke.checks.length < 221
 )
   throw new Error(
     "Installed pinned reference edit, actual forced exit and original preservation proof is missing or stale",

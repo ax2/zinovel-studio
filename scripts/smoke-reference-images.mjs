@@ -439,6 +439,23 @@ try {
   report.requests = observations.length;
   report.referenceSha256 = prepared.reference.derivative.sha256;
   report.originalsPreserved = true;
+  if (process.env.ZINOVEL_REFERENCE_UPGRADE_EXPORT === "1") {
+    assert.equal(report.packaged, true);
+    assert.equal(report.version, "0.1.0-alpha.40");
+    report.upgradeState = {
+      data,
+      bookId: book.id,
+      chapterId: book.chapters[0].id,
+      adoptedTaskId: prepared.id,
+      unknownTaskId: interrupted.id,
+      draftKey: `zinovel-image-studio/${book.id}`,
+      draftValue: await page.evaluate(
+        (key) => localStorage.getItem(key),
+        `zinovel-image-studio/${book.id}`,
+      ),
+      modelPort: server.address().port,
+    };
+  }
   report.status = "passed";
 } catch (e) {
   report.status = "failed";
