@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author parameter preview makes zero requests; official Harness completes twelve fixed-identity stage requests for two distinct novels with fourteen generated assets each, full volume detail and exactly two trial chapters; target words stay separate from actual trial output",
+    "duplicate batch start, unrelated text generation and generic cancel refuse while the batch owns the Harness; only two novel tools are exposed, prior manuscript is unchanged, and portable receipts bind six real task identities to each new draft",
+    "full desktop restart shows completed batch and all three books without any replay; completed start refuses, private batch ledger has no credential, and desktop/dark narrow UI stays within viewport"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "batch-parameters-preview.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "batch-completed-desktop.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "batch-completed-dark-narrow.png",
+      "width": 792,
+      "height": 766,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron author UI + official DeepSeek Harness SDK/agent with a deterministic local SSE server. No real paid provider, native IME, literary, installed or store-quality claim.",
+  "version": "0.1.0-alpha.41",
+  "packaged": false,
+  "desktopBundleSha256": "57bb247c2b4d897784eca01e8466f71225375a77767204cd078b1e1a55c9d57c",
+  "requestCount": 12
+}

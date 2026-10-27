@@ -17,6 +17,8 @@ import { renderPublicationPdf } from "./publication-pdf";
 import { claimDesktopSingleInstance } from "./upstream/single-instance";
 import { desktopNodeEnvironment } from "./upstream/node-environment";
 import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
+import { NovelBatch } from "../../packages/novel-harness/novel-batch.mjs";
+import { batchFingerprint } from "../../packages/novel-domain/novel-batch.mjs";
 import { ModelSettings } from "./settings";
 import { ImageJobService } from "../../packages/novel-harness/image-jobs.mjs";
 import { ImportSessions } from "../../packages/novel-storage/import-session.mjs";
@@ -97,6 +99,61 @@ const harness = new NovelHarness({
   resources: resolve(__dirname, "../resources"),
   environment: desktopNodeEnvironment(process.execPath, undefined, process.env),
 });
+const batchModelIdentity = (config: any) => ({
+  ...config,
+  ...(config.modelProfile
+    ? {
+        modelProfile: {
+          id: config.modelProfile.id,
+          label: config.modelProfile.label,
+          protocol: config.modelProfile.protocol,
+        },
+      }
+    : {}),
+});
+const batches = new NovelBatch({
+  root: join(dataRoot, "novel-batches"),
+  acquire: (id: string) => harness.reserve(id),
+  release: (id: string) => harness.release(id),
+  generate: async ({ requestId, prompt, settings: frozen, batchId }: any) => {
+    let config;
+    try {
+      const visible = await settings.public();
+      config = await settings.secret("modelChoice" in visible ? visible.modelChoice : undefined);
+      if (
+        !config.apiKey?.trim() ||
+        batchFingerprint(batchModelIdentity(config.settings)) !==
+          batchFingerprint(batchModelIdentity(frozen)) ||
+        prompt.context.length > config.settings.budget.maxContextCharacters
+      )
+        throw new Error("模型、地址、凭据或预算不能满足冻结请求");
+    } catch {
+      throw Object.assign(
+        new Error("批量任务模型配置不满足冻结请求，未发送模型"),
+        { code: "BATCH_NOT_SENT" },
+      );
+    }
+    return harness.generate(
+      { ...prompt, requestId, reservationId: batchId },
+      config.settings,
+      config.apiKey,
+    );
+  },
+  readTask: (id: string) => harness.task(id),
+  cancel: () => harness.cancel(),
+  commit: (output: any, receipt: any) =>
+    store.importBook(
+      output.title,
+      output.chapters,
+      undefined,
+      output.documents,
+      receipt,
+    ),
+});
+async function stopBatch() {
+  const active = batches.status();
+  if (active) await batches.cancel(active.id);
+}
 const entry = resolve(__dirname, "../workbench/index.html");
 let window: BrowserWindow | undefined;
 let closing = false;
@@ -114,6 +171,7 @@ async function closeAfterRecovery() {
   legacyQueries.cancelAll();
   contextQueries.cancelAll();
   cancelCloseAttempt();
+  await stopBatch();
   await harness.cancel();
   await acceptance.whenIdle();
   await materialAcceptance.whenIdle();
@@ -216,6 +274,7 @@ if (
     .then(async () => {
       await store.initialize();
       await harness.initialize();
+      await batches.initialize();
       await acceptance.recoverAll();
       await materialAcceptance.recoverAll();
       await pilotAcceptance.recoverAll();
@@ -575,6 +634,24 @@ if (
                 break;
               case "library.list":
                 value = await store.listBooks();
+                break;
+              case "batch.list":
+                value = { ...(await batches.list()), active: batches.status() };
+                break;
+              case "batch.prepare":
+                value = await batches.create(
+                  payload.input,
+                  await settings.writingPublic(payload.modelChoice),
+                );
+                break;
+              case "batch.start":
+                if (publicationClosing) throw new Error("程序正在关闭");
+                value = await batches.run(payload.id, {
+                  acknowledgeUnknown: payload.acknowledgeUnknown === true,
+                });
+                break;
+              case "batch.cancel":
+                value = await batches.cancel(payload.id);
                 break;
               case "book.create":
                 value = await store.createBook(payload.title, true);
@@ -1756,6 +1833,8 @@ if (
                 break;
               }
               case "ai.cancel":
+                if (batches.status())
+                  throw new Error("请在灵感批量创作中取消对应批次");
                 await harness.cancel();
                 value = { cancelled: true };
                 break;
@@ -1786,6 +1865,7 @@ if (
                 legacyQueries.cancelAll();
                 contextQueries.cancelAll();
                 cancelCloseAttempt();
+                await stopBatch();
                 await harness.cancel();
                 await acceptance.whenIdle();
                 await materialAcceptance.whenIdle();
@@ -1862,6 +1942,7 @@ if (
         recoveryDialog = true;
         publicationClosing = true;
         try {
+          await stopBatch();
           await harness.cancel();
           await publicationCaptures.cancelAll();
           await backupSessions.cancelAll();

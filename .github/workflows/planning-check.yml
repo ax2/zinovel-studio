@@ -93,6 +93,7 @@ jobs:
       - run: pnpm test:illustrated-docx
       - run: pnpm test:illustrated-pdf
       - run: pnpm test:book-project
+      - run: pnpm test:novel-batch
       - run: pnpm test:pdf-layout
       - run: pnpm test:docx-layout
       - run: pnpm test:assets

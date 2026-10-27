@@ -211,6 +211,7 @@ try {
     ],
     ["smoke-maps-ui.mjs", "maps-ui/maps-ui-smoke.json"],
     ["smoke-book-project.mjs", "book-project/book-project-smoke.json"],
+    ["smoke-novel-batch.mjs", "novel-batch/novel-batch-smoke.json"],
     [
       "smoke-illustrated-pdf-layout.mjs",
       "illustrated-pdf-author-only/illustrated-pdf-smoke.json",

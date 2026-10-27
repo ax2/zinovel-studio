@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "Targeted actual Electron visual/interaction check with a synthetic paused ledger; not an actual interrupted provider request. Full real Harness force-exit proof is the separate twenty-request smoke.",
+  "checks": [
+    "unacknowledged unknown-result retry is disabled in UI and independently rejected by host without a new request intent",
+    "checking the explicit consent enables start; checkbox stays left-aligned with readable wrapped text in dark narrow view"
+  ],
+  "errors": [],
+  "geometry": {
+    "leftOffset": 4,
+    "height": 20,
+    "row": "row",
+    "checkboxWidth": 13
+  },
+  "viewport": {
+    "width": 792,
+    "height": 766,
+    "theme": "dark"
+  },
+  "frontendSha256": "ca975664d3eae9c1f92ead2f802e1899d45e0bd0111e0ded0de194e3472544af"
+}

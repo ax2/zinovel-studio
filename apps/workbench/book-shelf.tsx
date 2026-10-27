@@ -29,6 +29,7 @@ export function BookShelf({
   onOpen,
   onCreate,
   onImport,
+  onBatch,
   onRestore,
   onArchive,
 }: {
@@ -36,6 +37,7 @@ export function BookShelf({
   onOpen: (book: Book) => void;
   onCreate: () => void;
   onImport: () => void;
+  onBatch: () => void;
   onRestore: () => void;
   onArchive: (book: Book, archived: boolean) => Promise<void>;
 }) {
@@ -62,6 +64,7 @@ export function BookShelf({
           <p>每一个世界，都从第一句话开始。</p>
         </div>
         <div className="button-row">
+          <button onClick={onBatch}>灵感批量创作</button>
           <button onClick={onImport}>导入作品</button>
           <button onClick={onRestore}>恢复备份</button>
           <button className="primary" onClick={onCreate}>

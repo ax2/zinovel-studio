@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-27T13:23:43.715Z",
+  "status": "passed",
+  "unitTests": 449,
+  "专项源测试": 10,
+  "officialRuntimeGroups": 5,
+  "localSseRequests": 20,
+  "precedingCI": 40504866381,
+  "scope": "Source only; local synthetic model service, no real paid model/literary/installer/public-release acceptance",
+  "sourceFiles": {
+    "packages/novel-domain/novel-batch.mjs": "169fe86a23a03489b9a7cdb565d2580e71c0faa870e6b8c19ec64c5edf2b0847",
+    "packages/novel-harness/novel-batch.mjs": "73299e650b25fedc2bfff864e8bae70a23ccf3ffa3e198511040c3178d3465ce",
+    "packages/novel-harness/runtime.mjs": "28ba47da3aea29c3a9911fdadc9de57c824f1f471cacb04ac080c70e1fda5e5d",
+    "packages/novel-storage/store.mjs": "faad198d5e6b0935f1bbe54f2d3bb932b1ea00061f1f9b40f013d1378cd93c09",
+    "apps/desktop/main.ts": "4012a2f2d81b21763bb5b3ec723610356a2980b18cd9f48bdcc513b4cbf9835b",
+    "apps/workbench/novel-batch.tsx": "dd2d7296d4a17c4ff62cb44bd26588df37cdedd0f63ab176addf3600fd63969f",
+    "scripts/smoke-novel-batch.mjs": "3e0428a8ccef5c9c7ad8cb48ca86cb4e257c1af516fb5ae62c89231e08124fbe"
+  }
+}

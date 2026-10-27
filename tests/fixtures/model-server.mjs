@@ -3,6 +3,7 @@ export async function modelFixture({
   delayMs = 0,
   beforeReply,
   streamText,
+  replyText,
   afterText,
   omitUsage = false,
   readMaterials = false,
@@ -30,8 +31,17 @@ export async function modelFixture({
           ? { type: "tool_use", id: `fixture-tool-${requests.length}`, ...step }
           : { type: "text", text: "候选已提交，请作者审阅。" };
         stop = step ? "tool_use" : "end_turn";
-      } else if (typeof streamText === "string") {
-        block = { type: "text", text: streamText };
+      } else if (
+        typeof streamText === "string" ||
+        typeof replyText === "function"
+      ) {
+        block = {
+          type: "text",
+          text:
+            typeof replyText === "function"
+              ? await replyText(body, requests.length)
+              : streamText,
+        };
         stop = "end_turn";
       } else if (!previousTool) {
         block = {

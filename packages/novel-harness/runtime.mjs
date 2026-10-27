@@ -111,6 +111,22 @@ export class NovelHarness {
   #active;
   #journal;
   #ready;
+  #reservation;
+  reserve(owner) {
+    if (
+      typeof owner !== "string" ||
+      !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(owner)
+    )
+      throw new Error("写作任务所有者无效");
+    if (this.#active || this.#reservation)
+      throw new Error("已有写作任务运行中，请等待或取消");
+    this.#reservation = owner;
+  }
+  release(owner) {
+    if (this.#reservation !== owner || this.#active)
+      throw new Error("不能释放其他或仍运行中的写作任务");
+    this.#reservation = undefined;
+  }
   constructor({
     root,
     resources,
@@ -217,11 +233,20 @@ export class NovelHarness {
       materialContext,
       materialTarget = /** @type {any} */ (undefined),
       pilotTarget = /** @type {any} */ (undefined),
+      requestId = /** @type {string | undefined} */ (undefined),
+      reservationId = /** @type {string | undefined} */ (undefined),
     },
     settings,
     apiKey,
   ) {
     if (this.#active) throw new Error("已有写作任务运行中，请等待或取消");
+    if (this.#reservation !== reservationId)
+      throw new Error("批量创作占用当前写作模型，请等待或取消该批次");
+    if (
+      requestId !== undefined &&
+      !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(requestId)
+    )
+      throw new Error("宿主请求身份无效");
     if ([target, materialTarget, pilotTarget].filter(Boolean).length > 1)
       throw new Error("每个任务只能绑定一种写作对象");
     if (typeof apiKey !== "string" || !apiKey.trim())
@@ -251,6 +276,8 @@ export class NovelHarness {
           ? structuredClone(materialContext)
           : undefined,
         retryOf,
+        requestId,
+        reservationId,
       },
       settings,
       apiKey,
@@ -278,6 +305,8 @@ export class NovelHarness {
       materialContext,
       materialTarget,
       pilotTarget,
+      requestId,
+      reservationId,
     },
     settings,
     apiKey,
@@ -303,7 +332,7 @@ export class NovelHarness {
         throw new Error("重试任务必须绑定同一章节，并使用当前重新选择的范围");
     }
     const config = validateSettings(settings),
-      id = randomUUID(),
+      id = requestId || randomUUID(),
       work = join(this.root, "tasks", id);
     if (
       context.length + materialContextText(materialContext).length >
@@ -327,7 +356,14 @@ export class NovelHarness {
         skillVersion: skill.version,
         model: config.model,
         ...(config.modelProfile ? { modelProfile: config.modelProfile } : {}),
-        kind: pilotTarget ? "pilot" : materialTarget ? "material" : "writing",
+        kind: reservationId
+          ? "batch-stage"
+          : pilotTarget
+            ? "pilot"
+            : materialTarget
+              ? "material"
+              : "writing",
+        ...(reservationId ? { batchId: reservationId } : {}),
         bookId: pilotTarget?.bookId || materialTarget?.bookId || target?.bookId,
         pilotId: pilotTarget?.id,
         pilotTitle: pilotTarget?.input.title,

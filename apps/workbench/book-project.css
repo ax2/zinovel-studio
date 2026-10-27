@@ -4,3 +4,5 @@
 .project-modal select, .project-modal input { max-width: 100%; }
 .project-modal ul { overflow-wrap: anywhere; }
 .project-history { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 14px 0; }
+.project-modal .batch-consent { display: flex; flex-direction: row; align-items: flex-start; gap: 8px; margin: 14px 0; }
+.project-modal .batch-consent input { width: auto; flex: none; margin-top: 4px; }

@@ -21,6 +21,7 @@ import { BackupVault } from "./backup-vault.mjs";
 import { MapStore } from "./maps.mjs";
 import { MapAtlasStore } from "./map-atlas.mjs";
 import { BookProjectStore, createProjectChanges } from "./book-project.mjs";
+import { modelServiceURL } from "../novel-domain/model-service.mjs";
 import {
   captureProjectDocuments,
   projectScaffold,
@@ -318,10 +319,11 @@ export class NovelStore {
       return book;
     });
   }
-  importBook(title, chapters, importMetadata, projectDocuments) {
+  importBook(title, chapters, importMetadata, projectDocuments, generation) {
     // Capture the fields this operation consumes before joining the writer queue.
     // Strings stay shared/immutable; no full-manuscript deep copy is needed.
     try {
+      if (generation !== undefined) generation = structuredClone(generation);
       if (projectDocuments !== undefined)
         projectDocuments = captureProjectDocuments(projectDocuments);
       if (Array.isArray(chapters))
@@ -361,9 +363,107 @@ export class NovelStore {
       }
       if (bytes > 128 * 1024 * 1024)
         throw new Error("本轮导入超过 128 MiB，请分批导入");
-      const id = randomUUID(),
+      if (
+        generation !== undefined &&
+        (Object.keys(generation || {}).some(
+          (key) =>
+            ![
+              "bookId",
+              "batchId",
+              "bookIndex",
+              "inputHash",
+              "contentHash",
+              "targetWords",
+              "volumes",
+              "genre",
+              "model",
+              "service",
+              "modelProfileId",
+              "requestIds",
+            ].includes(key),
+        ) ||
+          !generation ||
+          !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(
+            generation.bookId || "",
+          ) ||
+          !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(
+            generation.batchId || "",
+          ) ||
+          !Number.isSafeInteger(generation.bookIndex) ||
+          generation.bookIndex < 0 ||
+          generation.bookIndex > 9 ||
+          !/^[a-f0-9]{64}$/.test(generation.inputHash || "") ||
+          !/^[a-f0-9]{64}$/.test(generation.contentHash || "") ||
+          !Number.isSafeInteger(generation.targetWords) ||
+          generation.targetWords < 1000 ||
+          generation.targetWords > 50000000 ||
+          typeof generation.genre !== "string" ||
+          !generation.genre.trim() ||
+          generation.genre.length > 80 ||
+          typeof generation.model !== "string" ||
+          !/^[\w.:-]{1,128}$/.test(generation.model) ||
+          modelServiceURL(generation.service) !== generation.service ||
+          (generation.modelProfileId !== null &&
+            !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(
+              generation.modelProfileId || "",
+            )) ||
+          !Array.isArray(generation.requestIds) ||
+          !generation.requestIds.length ||
+          generation.requestIds.length > 500 ||
+          new Set(generation.requestIds).size !==
+            generation.requestIds.length ||
+          generation.requestIds.some(
+            (id) =>
+              typeof id !== "string" ||
+              !/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id),
+          ) ||
+          !Array.isArray(generation.volumes) ||
+          !generation.volumes.length ||
+          generation.volumes.length > 20 ||
+          generation.volumes.some(
+            (v) => typeof v !== "string" || !v.trim() || v.length > 200,
+          ) ||
+          new Set(generation.volumes).size !== generation.volumes.length ||
+          projectDocuments === undefined ||
+          generation.contentHash !==
+            digest(
+              JSON.stringify({
+                title: name,
+                chapters,
+                documents: projectDocuments.map(({ path, text }) => ({
+                  path,
+                  text,
+                })),
+              }),
+            ))
+      )
+        throw new Error("批量创作提交身份或内容指纹无效");
+      const id = generation?.bookId || randomUUID(),
         root = join(this.root, id),
         now = new Date().toISOString();
+      const generationPath = ".zinovel/generated-origin.json";
+      if (generation) {
+        await mkdir(this.root, { recursive: true });
+        try {
+          const existingRoot = await this.#storage.bookRoot(id);
+          await this.#storage.recover(existingRoot);
+          const existing = await readOptional(
+            await this.#storage.path(existingRoot, "book.json"),
+          );
+          if (existing !== null) {
+            const receipt = await readOptional(
+              await this.#storage.path(existingRoot, generationPath),
+            );
+            if (receipt !== json({ ...generation, schemaVersion: 1 }))
+              throw new Error("批量创作目标已被其他作品占用，未覆盖");
+            const current = await this.#storage.manifest(existingRoot);
+            if (current.id !== id) throw new Error("批量创作目标身份不符");
+            return current;
+          }
+        } catch (error) {
+          if (error.code !== "ENOENT") throw error;
+        }
+      }
       const book = {
         schemaVersion: 1,
         id,
@@ -372,10 +472,21 @@ export class NovelStore {
         createdAt: now,
         updatedAt: now,
         chapters: [],
-        volumes: [],
+        volumes: generation
+          ? generation.volumes.map((title) => ({ id: randomUUID(), title }))
+          : [],
+        ...(generation
+          ? {
+              targetWords: generation.targetWords,
+              genre: generation.genre,
+              generationBatchId: generation.batchId,
+            }
+          : {}),
       };
       const changes = {},
-        volumes = new Map();
+        volumes = new Map(
+          book.volumes.map((volume) => [volume.title, volume.id]),
+        );
       for (const input of chapters) {
         let volumeId = null;
         if (input.volume) {
@@ -403,12 +514,22 @@ export class NovelStore {
       if (projectDocuments !== undefined)
         Object.assign(
           changes,
-          createProjectChanges(book, projectDocuments, "imported").changes,
+          createProjectChanges(
+            book,
+            projectDocuments,
+            generation ? "generated" : "imported",
+          ).changes,
         );
       if (importMetadata !== undefined)
         changes[importOriginPath] = createImportOrigin(book, importMetadata);
+      if (generation)
+        changes[generationPath] = json({ ...generation, schemaVersion: 1 });
       await mkdir(root, { recursive: true });
-      await this.#storage.transaction(root, changes);
+      await this.#storage.transaction(root, changes, {
+        expectedBefore: Object.fromEntries(
+          Object.keys(changes).map((path) => [path, null]),
+        ),
+      });
       return book;
     });
   }

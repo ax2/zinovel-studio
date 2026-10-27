@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author parameter preview makes zero requests; official Harness completes twelve fixed-identity stage requests for two distinct novels with seventeen generated assets each, full volume detail, exact trial chapter count and matching site publication sidecars; target words stay separate from actual trial output",
+    "duplicate batch start, unrelated text generation and generic cancel refuse while the batch owns the Harness; only two novel tools are exposed, prior manuscript is unchanged, and portable receipts bind six real task identities to each new draft",
+    "full desktop restart shows completed batch and all three books without any replay; completed start refuses, private batch ledger has no credential, and desktop/dark narrow UI stays within viewport",
+    "actual author stop closes the current official Harness request, waits for the durable cancellation record, leaves a paused batch and creates no incomplete novel",
+    "actual owned desktop/SDK force exit after server receipt recovers remote-unknown without replay; unacknowledged start refuses, explicit author acknowledgement creates a new charged request identity, and the completed retry creates exactly one draft with original books preserved"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "batch-parameters-preview.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "batch-completed-desktop.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "batch-completed-dark-narrow.png",
+      "width": 792,
+      "height": 766,
+      "theme": "dark"
+    },
+    {
+      "name": "batch-explicit-cancel.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "dark"
+    },
+    {
+      "name": "batch-unknown-after-forced-exit.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "dark"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron author UI + official DeepSeek Harness SDK/agent with a deterministic local SSE server. No real paid provider, native IME, literary, installed or store-quality claim.",
+  "version": "0.1.0-alpha.41",
+  "packaged": false,
+  "desktopBundleSha256": "25b5dfd6a2876de586be7c2f7819b0fb8b5f887db9d571cfb758034e11a574f7",
+  "requestCount": 20
+}

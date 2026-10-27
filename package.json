@@ -79,7 +79,8 @@
     "test:import-origin": "node scripts/smoke-import-origin.mjs",
     "test:illustrated-docx": "node scripts/smoke-illustrated-docx-layout.mjs",
     "test:illustrated-pdf": "node scripts/smoke-illustrated-pdf-layout.mjs",
-    "test:book-project": "node scripts/smoke-book-project.mjs"
+    "test:book-project": "node scripts/smoke-book-project.mjs",
+    "test:novel-batch": "node scripts/smoke-novel-batch.mjs"
   },
   "engines": {
     "node": ">=26"

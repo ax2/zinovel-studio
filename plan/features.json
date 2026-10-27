@@ -17,8 +17,9 @@
       "name": "灵感批量生成多本完整小说工程",
       "priority": "P0",
       "stage": "Stage-004",
-      "status": "planned",
-      "acceptance": "按类型、思路、预期字数、试写章数、小说数量生成有差异的多本作品；每书含完整必需资产及准确试写章数；预算、取消、失败隔离、重启恢复及实际模型调用可验证，模板不算完成"
+      "status": "in-progress",
+      "acceptance": "按类型、思路、预期字数、试写章数、小说数量生成有差异的多本作品；每书含完整必需资产及准确试写章数；预算、取消、失败隔离、重启恢复及实际模型调用可验证，模板不算完成",
+      "evidence": ["packages/novel-domain/novel-batch.mjs", "packages/novel-harness/novel-batch.mjs", "tests/novel-batch.test.mjs", "tests/novel-batch-reservation.test.mjs", "scripts/smoke-novel-batch.mjs", "assessments/stage-004/novel-batch/README.md"]
     },
     {
       "id": "MODEL-01",

@@ -6,7 +6,7 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；含图/目录/注释等格式条目继续进行中。新增完整小说工程、批量生成与本地模型迁入，合计109项：29项 verified、48项 in-progress、32项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；含图/目录/注释等格式条目继续进行中。新增完整小说工程、批量生成与本地模型迁入，合计109项：29项 verified、49项 in-progress、31项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.40 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.40) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.40/ZiNovel-Studio-0.1.0-alpha.40-windows-x64-setup.exe)。公开EXE、完整运行目录和独立验证证据均保留，无ZIP。
 
@@ -14,7 +14,7 @@ Windows 技术预览版：[v0.1.0-alpha.40 下载与说明](https://github.com/a
 
 主线alpha.41的带图DOCX已通过428项基础、作者操作与Word原生编辑检查；[带图PDF](assessments/stage-007/illustrated-pdf/README.md)另通过22页与真实故障检查。[创作工程](assessments/stage-002/book-project/README.md)加入后全量439项、类型/规划与实际作者桌面流程通过。41安装、新格式升级及独立发行尚待，资格false，不在公开40包内。
 
-2026-10-27追加三项优先开发，见[小说工程与批量创作设计](design/novel-projects-and-batch-generation.md)。当前源码已接入工程资产编辑和写作工程/小说站只读预览导入；二进制图像映射、批量大模型生成和本地模型配置迁入未完成，新增109项状态见上。公开alpha.40不包含这些主线改动。
+2026-10-27追加三项优先开发，见[小说工程与批量创作设计](design/novel-projects-and-batch-generation.md)。当前源码已接入工程资产编辑、写作工程/小说站导入和[灵感批量工程](assessments/stage-004/novel-batch/README.md)：449项基础及实际官方Harness本地模拟20请求通过；批量文学质量/安装、二进制图像映射和本地模型配置迁入未完成，新增109项状态见上。公开alpha.40不包含这些主线改动。
 
 ## 产品方向
 

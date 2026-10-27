@@ -275,6 +275,7 @@ export class TaskJournal {
         if (!entry.isDirectory() || !identifier.test(entry.name)) continue;
         try {
           const record = await this.#record(entry.name);
+          if (record.kind === "batch-stage") continue;
           if (
             unbound
               ? record.bookId &&

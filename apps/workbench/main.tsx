@@ -37,6 +37,7 @@ import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
 import { MaterialsPanel } from "./materials-panel";
 import { BookProjectPanel, ProjectImportDialog } from "./book-project-panel";
+import { NovelBatchDialog } from "./novel-batch";
 import { ScenePlanner } from "./scene-planner";
 import { PilotStudio } from "./pilot-studio";
 import { NovelReader } from "./novel-reader";
@@ -69,6 +70,7 @@ function App() {
   const [referenceOpen, setReferenceOpen] = useState(false),
     [typewriter, setTypewriter] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
+  const [batchOpen, setBatchOpen] = useState(false);
   const [projectOpen, setProjectOpen] = useState(false),
     [projectImportOpen, setProjectImportOpen] = useState(false);
   const [planningOpen, setPlanningOpen] = useState(false);
@@ -806,6 +808,7 @@ function App() {
           onOpen={openBook}
           onCreate={() => begin("book")}
           onImport={() => setImportOpen(true)}
+          onBatch={() => setBatchOpen(true)}
           onRestore={async () => {
             try {
               const result = await api("library.restore");
@@ -840,6 +843,7 @@ function App() {
           />
           <main className="workspace">
             <div className="toolbar">
+              <button onClick={() => setBatchOpen(true)}>灵感批量创作</button>
               <button
                 disabled={composition}
                 onClick={async () => {
@@ -1293,6 +1297,14 @@ function App() {
           }}
           onClose={() => setImportOpen(false)}
           onImported={imported}
+        />
+      )}
+      {batchOpen && (
+        <NovelBatchDialog
+          onClose={() => {
+            setBatchOpen(false);
+            void refresh();
+          }}
         />
       )}
       {projectImportOpen && (
