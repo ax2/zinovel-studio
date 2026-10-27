@@ -45,3 +45,7 @@ Novel project metadata import (alpha.41 development) bundles yaml 2.9.1,
 Copyright Eemeli Aro, ISC; complete supplied licence is retained in
 licenses/yaml-LICENSE. YAML is parsed as data with duplicate-key and alias
 checks; imported project settings or plugins are never executed.
+
+Model-settings import development uses smol-toml 1.9.1, BSD-3-Clause.
+The unmodified supplied notice is retained in licenses/smol-toml-LICENSE.
+Imported TOML is parsed as data; it never executes provider commands or plugins.

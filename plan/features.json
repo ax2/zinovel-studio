@@ -27,8 +27,9 @@
       "name": "WorkBuddy DSH Codex 本地模型配置迁入",
       "priority": "P0",
       "stage": "Stage-003",
-      "status": "planned",
-      "acceptance": "安全预览已知配置，新建不覆盖；API Key 宿主加密，OAuth不冒充Key；导入协议实际可运行并验证流式与工具调用，不泄漏秘密"
+      "status": "in-progress",
+      "acceptance": "安全预览已知配置，新建不覆盖；API Key 宿主加密，OAuth不冒充Key；导入协议实际可运行并验证流式与工具调用，不泄漏秘密",
+      "evidence": ["packages/novel-domain/model-import.mjs", "tests/model-import.test.mjs", "design/model-settings-import.md", "assessments/stage-003/model-import-parser.md"]
     },
     {
       "id": "LIB-01",

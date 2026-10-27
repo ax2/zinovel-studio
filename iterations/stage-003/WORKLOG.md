@@ -1,5 +1,11 @@
 # Stage-003 工作日志
 
+## 2026-10-27 模型配置迁入首个独立切片
+
+alpha.41程序候选冻结于主工作目录；feature/model-settings-import独立目录从973e4e4继续，避免新增依赖混入已在验收的EXE。新增宿主纯解析API、WorkBuddy/Codex/DSH已知静态格式、密钥闭包与公共预览隔离、TOML精确依赖和许可证。5项专项及完整458项/类型/规划通过，仅合成配置；[验收边界](../../assessments/stage-003/model-import-parser.md)和[协议设计](../../design/model-settings-import.md)持续维护。
+
+MODEL-01从planned改为in-progress，不称已可导入或可调用。后续实现宿主一次预览/重读与加密新增，再接官方Harness Chat/Responses适配、实际流式与工具验证；本切片没有安装包或Release。
+
 2026-10-22 开始，状态：进行中。
 
 目标：官方 Harness 任务与候选在重启后可恢复；准确绑定书章与编辑缓冲，过期候选不能覆盖正文；取消、并发和用量边界可验证。具体设计见 design/task-journal.md。
