@@ -20,6 +20,11 @@ import { PublicationResources } from "./publication-resources.mjs";
 import { BackupVault } from "./backup-vault.mjs";
 import { MapStore } from "./maps.mjs";
 import { MapAtlasStore } from "./map-atlas.mjs";
+import { BookProjectStore, createProjectChanges } from "./book-project.mjs";
+import {
+  captureProjectDocuments,
+  projectScaffold,
+} from "../novel-domain/book-project.mjs";
 import {
   mkdir,
   readFile,
@@ -63,6 +68,7 @@ export class NovelStore {
     this.root = resolve(root);
     this.#storage = new BookStorageKernel(this.root);
     this.importOrigins = new ImportOriginStore(this.#storage);
+    this.project = new BookProjectStore(this.#storage);
     this.backups = new BackupVault(this.#storage, (contents) =>
       this.#restoreContents(contents),
     );
@@ -128,7 +134,7 @@ export class NovelStore {
       return { books, errors };
     });
   }
-  createBook(title) {
+  createBook(title, withProject = false) {
     return this.#storage.exclusive(async () => {
       const name = titleOf(title),
         id = randomUUID();
@@ -143,7 +149,18 @@ export class NovelStore {
         updatedAt: new Date().toISOString(),
         chapters: [],
       };
-      await this.#storage.transaction(root, { "book.json": json(book) });
+      if (typeof withProject !== "boolean") throw new Error("作品工程选项无效");
+      const changes = {
+        "book.json": json(book),
+        ...(withProject
+          ? createProjectChanges(book, projectScaffold(name)).changes
+          : {}),
+      };
+      await this.#storage.transaction(root, changes, {
+        expectedBefore: Object.fromEntries(
+          Object.keys(changes).map((p) => [p, null]),
+        ),
+      });
       return book;
     });
   }
@@ -301,10 +318,12 @@ export class NovelStore {
       return book;
     });
   }
-  importBook(title, chapters, importMetadata) {
+  importBook(title, chapters, importMetadata, projectDocuments) {
     // Capture the fields this operation consumes before joining the writer queue.
     // Strings stay shared/immutable; no full-manuscript deep copy is needed.
     try {
+      if (projectDocuments !== undefined)
+        projectDocuments = captureProjectDocuments(projectDocuments);
       if (Array.isArray(chapters))
         chapters = chapters.map((chapter) => ({
           title: chapter?.title,
@@ -325,7 +344,7 @@ export class NovelStore {
       const name = titleOf(title);
       if (
         !Array.isArray(chapters) ||
-        !chapters.length ||
+        (!chapters.length && projectDocuments === undefined) ||
         chapters.length > 2000
       )
         throw new Error("导入需要 1–2000 个章节");
@@ -381,6 +400,11 @@ export class NovelStore {
         changes[`manuscript/${chapter.id}.md`] = input.body;
       }
       changes["book.json"] = json(book);
+      if (projectDocuments !== undefined)
+        Object.assign(
+          changes,
+          createProjectChanges(book, projectDocuments, "imported").changes,
+        );
       if (importMetadata !== undefined)
         changes[importOriginPath] = createImportOrigin(book, importMetadata);
       await mkdir(root, { recursive: true });

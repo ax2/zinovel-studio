@@ -3,29 +3,42 @@ import { createHash } from "node:crypto";
 import { assetLimits } from "./assets.mjs";
 
 /** Copy every input before awaiting, then decode only the exact frozen PNG bytes. */
-export async function publicationDocxImages(resources, input) {
+export async function publicationRasterImages(
+  resources,
+  input,
+  label = "DOCX",
+) {
+  if (!["DOCX", "PDF"].includes(label)) throw new Error("出版图像格式不支持");
+  const maximumMiB = label === "PDF" ? 128 : 64;
   const expected = new Map(
     resources.map((item) => [item.image.sha256, item.image]),
   );
   if (!(input instanceof Map) || input.size !== expected.size)
-    throw new Error("DOCX发行图缺失或范围不符，未创建导出");
+    throw new Error(`${label}发行图缺失或范围不符，未创建导出`);
   const images = new Map();
   let total = 0;
   for (const [hash, image] of expected) {
     const value = input.get(hash);
-    if (!(value instanceof Uint8Array) || value.byteLength !== image.bytes)
-      throw new Error("DOCX发行图大小不符，未创建导出");
+    if (
+      !(value instanceof Uint8Array) ||
+      value.byteLength !== image.bytes ||
+      image.bytes < 1 ||
+      image.bytes > 64 * 1024 * 1024
+    )
+      throw new Error(`${label}发行图大小不符，未创建导出`);
     const bytes = Buffer.from(value);
     total += bytes.length;
-    if (total > 64 * 1024 * 1024)
-      throw new Error("本次DOCX发行图超过64 MiB，请缩小选图范围");
+    if (total > maximumMiB * 1024 * 1024)
+      throw new Error(
+        `本次${label}发行图超过${maximumMiB} MiB，请缩小选图范围`,
+      );
     if (
       createHash("sha256").update(bytes).digest("hex") !== hash ||
       !bytes
         .subarray(0, 8)
         .equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
     )
-      throw new Error("DOCX发行图指纹或格式不符，未创建导出");
+      throw new Error(`${label}发行图指纹或格式不符，未创建导出`);
     let offset = 8,
       ended = false;
     while (offset + 12 <= bytes.length) {
@@ -33,14 +46,14 @@ export async function publicationDocxImages(resources, input) {
         end = offset + 12 + length;
       if (end > bytes.length) break;
       const type = bytes.toString("ascii", offset + 4, offset + 8);
-      if (type === "acTL") throw new Error("DOCX发行图不能是动画PNG");
+      if (type === "acTL") throw new Error(`${label}发行图不能是动画PNG`);
       offset = end;
       if (type === "IEND") {
         ended = length === 0 && offset === bytes.length;
         break;
       }
     }
-    if (!ended) throw new Error("DOCX发行PNG不完整或含附加内容");
+    if (!ended) throw new Error(`${label}发行PNG不完整或含附加内容`);
     images.set(hash, bytes);
   }
   for (const [hash, bytes] of images) {
@@ -62,7 +75,7 @@ export async function publicationDocxImages(resources, input) {
       metadata.iptc ||
       metadata.orientation
     )
-      throw new Error("DOCX发行图尺寸或去元数据配方不符");
+      throw new Error(`${label}发行图尺寸或去元数据配方不符`);
     await decoder.stats();
   }
   return images;

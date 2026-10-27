@@ -31,7 +31,7 @@ const ui = await read(
 );
 assert.equal(ui.status, "passed");
 assert.ok(ui.docxSnapshot?.content?.resources?.length);
-assert.equal(ui.checks.length, 5);
+assert.equal(ui.checks.length, 6);
 const store = new NovelStore(join(work, "library"));
 const bodies = [
   "第一段𠮷🌊。" +

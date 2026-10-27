@@ -6,13 +6,15 @@
 
 以小说为中心的本地 AI 创作工作台。基于官方开源 **DeepSeek Harness Desktop + DeepSeek Harness Agent** 规划，覆盖创意、试写、规划、设定、正文编辑、连续性、插图、审读及发布。
 
-**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；复核完整设计后，含图/目录/注释等尚未完成的格式条目继续进行中，29项 verified、47项 in-progress、30项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
+**当前状态：文本合订和纯文字DOCX/PDF导出已有实际安装证据；含图/目录/注释等格式条目继续进行中。新增完整小说工程、批量生成与本地模型迁入，合计109项：29项 verified、48项 in-progress、32项 planned。阶段成果发布含 Windows 安装 EXE 的预览 Release；完整产品上架资格仍未完成。**
 
 Windows 技术预览版：[v0.1.0-alpha.40 下载与说明](https://github.com/ax2/zinovel-studio/releases/tag/v0.1.0-alpha.40) · [下载安装 EXE](https://github.com/ax2/zinovel-studio/releases/download/v0.1.0-alpha.40/ZiNovel-Studio-0.1.0-alpha.40-windows-x64-setup.exe)。公开EXE、完整运行目录和独立验证证据均保留，无ZIP。
 
 **编码风险：** alpha.15 及更早版本读取含非法 UTF-8 字节的正文后保存，可能改写原始字节。请保留原始副本，其他编码使用导入预览处理，不要用旧版打开并保存损坏文件。alpha.15 因新增复现撤销本机资格，取消流水线时发布步骤已完成，复核后已将 Release 转回草稿；修复已随 alpha.17 完成安装与发行验证并交付；alpha.16冻结标签两轮失败，未公开发布。历史测试报告保留并附资格撤销记录。1000认知事件扫描仍超过500ms查询目标；自动故事时间推演、大书性能、多格式出版和完整上架要求继续推进。
 
-主线alpha.41开发带图DOCX：428项基础、5组实际作者操作、四组独立排版/22页及Word原生编辑验证通过；源码证据见[带图DOCX](assessments/stage-007/illustrated-docx/README.md)。41安装、新格式升级及独立发行尚待，资格false，不在公开40包内。完整106项仍29/47/30。
+主线alpha.41的带图DOCX已通过428项基础、作者操作与Word原生编辑检查；[带图PDF](assessments/stage-007/illustrated-pdf/README.md)另通过22页与真实故障检查。[创作工程](assessments/stage-002/book-project/README.md)加入后全量439项、类型/规划与实际作者桌面流程通过。41安装、新格式升级及独立发行尚待，资格false，不在公开40包内。
+
+2026-10-27追加三项优先开发，见[小说工程与批量创作设计](design/novel-projects-and-batch-generation.md)。当前源码已接入工程资产编辑和写作工程/小说站只读预览导入；二进制图像映射、批量大模型生成和本地模型配置迁入未完成，新增109项状态见上。公开alpha.40不包含这些主线改动。
 
 ## 产品方向
 

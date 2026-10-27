@@ -269,7 +269,7 @@ test("schema2 capture freezes selected image hashes with text, survives restart 
   assert.throws(() => verifyPublicationSnapshot(missing), /格式/);
   assert.throws(() => publicationText(snapshot, "txt"), /带图/);
   assert.throws(() => publicationHtml(snapshot), /发行图/);
-  assert.throws(() => publicationPdfDocument(snapshot), /带图/);
+  assert.equal(publicationPdfDocument(snapshot).resources.length, 1);
   await assert.rejects(publicationDocx(snapshot), /发行图/);
   await f.store.assets.setDeleted(f.book.id, f.asset, true);
   const backup = await f.store.createBackup(f.book.id, f.root);

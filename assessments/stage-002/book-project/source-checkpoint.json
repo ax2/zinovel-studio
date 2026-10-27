@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-27T12:33:42.486Z",
+  "status": "passed",
+  "unitTests": 439,
+  "desktopGroups": 3,
+  "scope": "Source only; no installed, model or public release qualification",
+  "sourceFiles": {
+    "packages/novel-domain/book-project.mjs": "f7ebfce1520c62a6af86c70aa6e788bfd4707f052b2b15944ef0a074d36accce",
+    "packages/novel-storage/book-project.mjs": "9416bc2f91b5d4182f947704f27ab9b5606e983c75f73ab77e9d986a475f65b2",
+    "packages/novel-storage/project-import.mjs": "005e535abef8dc9636aeb051e23bbe27d4a5d5aa99d5c4cf72e537045443657a",
+    "apps/workbench/book-project-panel.tsx": "cd2964dff32b65aaa5a8a9787c1a87747ce89f5c7dd169d05246e874851fa531",
+    "scripts/smoke-book-project.mjs": "38dc17599322ebdcb281f77236e630dce5638b790ecfd8f102682bf4e9057284"
+  }
+}

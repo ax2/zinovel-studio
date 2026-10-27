@@ -20,6 +20,7 @@ import { NovelHarness } from "../../packages/novel-harness/runtime.mjs";
 import { ModelSettings } from "./settings";
 import { ImageJobService } from "../../packages/novel-harness/image-jobs.mjs";
 import { ImportSessions } from "../../packages/novel-storage/import-session.mjs";
+import { ProjectImportSessions } from "../../packages/novel-storage/project-import.mjs";
 import { randomUUID } from "node:crypto";
 import { bindWritingTarget } from "../../packages/novel-harness/target.mjs";
 import { TaskJournal } from "../../packages/novel-harness/task-journal.mjs";
@@ -40,6 +41,7 @@ const dataRoot =
   join(app.getPath("appData"), "ZiNovel Studio");
 app.setPath("userData", dataRoot);
 const store = new NovelStore(join(dataRoot, "library"));
+const projectImports = new ProjectImportSessions(store);
 const publicationCaptures = new PublicationCaptures(store.publication);
 const backupSessions = new BackupSessions(store.backups);
 const diagnostics = new Diagnostics({
@@ -575,7 +577,56 @@ if (
                 value = await store.listBooks();
                 break;
               case "book.create":
-                value = await store.createBook(payload.title);
+                value = await store.createBook(payload.title, true);
+                break;
+              case "project.list":
+                value = await store.project.list(payload.bookId);
+                break;
+              case "project.initialize":
+                value = await store.project.initialize(payload.bookId);
+                break;
+              case "project.read":
+                value = await store.project.read(payload.bookId, payload.id);
+                break;
+              case "project.create":
+                value = await store.project.create(
+                  payload.bookId,
+                  payload.input,
+                );
+                break;
+              case "project.save":
+                value = await store.project.save(payload.bookId, payload.input);
+                break;
+              case "project.history":
+                value = await store.project.history(
+                  payload.bookId,
+                  payload.id,
+                  payload.revision,
+                );
+                break;
+              case "project.import-preview": {
+                const choice = await dialog.showOpenDialog(window!, {
+                  title:
+                    payload.kind === "site"
+                      ? "选择小说站单本小说索引 Markdown"
+                      : "选择单本小说创作工程目录",
+                  properties: [
+                    payload.kind === "site" ? "openFile" : "openDirectory",
+                  ],
+                  ...(payload.kind === "site"
+                    ? { filters: [{ name: "小说索引", extensions: ["md"] }] }
+                    : {}),
+                });
+                value = choice.canceled
+                  ? null
+                  : await projectImports.preview(choice.filePaths[0]);
+                break;
+              }
+              case "project.import-confirm":
+                value = await projectImports.confirm(
+                  payload.token,
+                  payload.fingerprint,
+                );
                 break;
               case "chapter.create":
                 value = await store.createChapter(
@@ -1455,10 +1506,10 @@ if (
                     throw new Error("请选择支持的本地导出格式");
                   if (
                     initialSnapshot.content.resources?.length &&
-                    !["html", "docx"].includes(payload.format)
+                    !["html", "docx", "pdf"].includes(payload.format)
                   )
                     throw new Error(
-                      "含图发布副本当前支持HTML和DOCX导出，其他格式尚未接入，不会丢弃图片",
+                      "含图发布副本当前支持HTML、DOCX和PDF导出，其他格式尚未接入，不会丢弃图片",
                     );
                   const pdfOptions =
                     payload.format === "pdf"
@@ -1502,16 +1553,18 @@ if (
                               document: Parameters<
                                 typeof renderPublicationPdf
                               >[0],
+                              images: Map<string, Uint8Array>,
                             ) =>
                               renderPublicationPdf(
                                 document,
                                 join(dataRoot, "publication-render"),
+                                images,
                               ),
                           }
                         : payload.format === "docx"
                           ? { options: docxOptions }
                           : undefined,
-                      ["html", "docx"].includes(payload.format)
+                      ["html", "docx", "pdf"].includes(payload.format)
                         ? await store.publicationResources.images(
                             payload.bookId,
                             snapshot,

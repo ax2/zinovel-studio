@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "pdfSha256": "6114ffa69283f427f2716189be7fa81b0cf087ed1ea5f3d7b63feaacfa7764ea",
+  "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+  "pages": 6,
+  "placements": [
+    {
+      "page": 0,
+      "box": [
+        107.24999553125,
+        97.50000073749976,
+        311.99998700000003,
+        455.249957031251
+      ],
+      "sourceSize": [
+        800,
+        1400
+      ]
+    },
+    {
+      "page": 2,
+      "box": [
+        110.24999540625,
+        97.49999593750005,
+        308.9999727250006,
+        454.4999810625
+      ],
+      "sourceSize": [
+        500,
+        900
+      ]
+    },
+    {
+      "page": 5,
+      "box": [
+        44.999998125,
+        156.74999346875,
+        374.25001320624875,
+        181.4999924375
+      ],
+      "sourceSize": [
+        2400,
+        180
+      ]
+    }
+  ],
+  "imageSamples": [
+    {
+      "placement": "cover",
+      "page": 1,
+      "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+      "maximumSampleDifference": 0,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.3214450151779147
+    },
+    {
+      "placement": "chapter-start",
+      "page": 3,
+      "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+      "maximumSampleDifference": 0,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.41665224930619615
+    },
+    {
+      "placement": "chapter-end",
+      "page": 6,
+      "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+      "maximumSampleDifference": 1,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.05624783765633623
+    }
+  ],
+  "alternativeText": [
+    "图像替代0𠮷",
+    "图像替代1𠮷",
+    "图像替代2𠮷"
+  ],
+  "renderedPages": [
+    "image-page-001.png",
+    "image-page-002.png",
+    "image-page-003.png",
+    "image-page-004.png",
+    "image-page-005.png",
+    "image-page-006.png"
+  ],
+  "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+}

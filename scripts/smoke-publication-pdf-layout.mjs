@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { build } from "esbuild";
 import electronPath from "electron";
 import { spawnSync } from "node:child_process";
@@ -108,6 +109,17 @@ app.whenReady().then(async()=>{
   format: "cjs",
   outfile: runner,
   external: ["electron"],
+  plugins: [
+    {
+      name: "source-sharp",
+      setup(build) {
+        build.onResolve({ filter: /^sharp$/ }, () => ({
+          path: createRequire(import.meta.url).resolve("sharp"),
+          external: true,
+        }));
+      },
+    },
+  ],
 });
 const env = {
   ...process.env,

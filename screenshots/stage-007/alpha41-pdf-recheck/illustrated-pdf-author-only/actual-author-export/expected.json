@@ -1,0 +1,25 @@
+{
+  "paper": "A5",
+  "required": [
+    "带图雾港",
+    "合成作者",
+    "公开简介",
+    "合成",
+    "测试",
+    "旧信",
+    "第一章𠮷🌊，原稿保持。",
+    "渡口",
+    "第二章结尾。",
+    "公开图注<script>window.IMAGE_SCRIPT_RAN=true</script>",
+    "公开署名"
+  ],
+  "forbidden": [
+    "PRIVATE_IMAGE_",
+    "PRIVATE_SOURCE_",
+    "UNSELECTED_CHAPTER_SENTINEL"
+  ],
+  "ordered": [
+    "旧信",
+    "渡口"
+  ]
+}

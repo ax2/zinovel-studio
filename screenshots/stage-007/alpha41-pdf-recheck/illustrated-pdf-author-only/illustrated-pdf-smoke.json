@@ -1,0 +1,198 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.41",
+  "checks": [
+    "Actual author PDF retains all frozen public text, fonts, paper, ordered headings and page labels; independent inspection verifies source snapshot and final PDF hash",
+    "Actual author PDF has exact image placements and public alternative text; five flat-patch raster samples per image match the frozen PNG and fit print margins"
+  ],
+  "scope": "Actual author executable PDF only; independent source-image sample, structure and rendered page checks; no full photo fidelity, screen-reader or store qualification",
+  "sourceEngine": null,
+  "actualAuthorEngine": {
+    "electron": "44.7.0",
+    "chromium": "152.0.7977.130"
+  },
+  "boundaries": [],
+  "reports": [
+    {
+      "name": "actual-author-export",
+      "file": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-o8tr2h\\中文 图像导出目录\\小说-带图雾港-pdf-092cbb09-3c95-456a-8b54-47c644b13dc8\\book.pdf",
+      "options": {
+        "paper": "A5",
+        "font": "serif",
+        "size": 11,
+        "leading": 1.8,
+        "margin": "standard",
+        "keepParagraphs": "balanced"
+      },
+      "inspection": {
+        "status": "passed",
+        "pages": 3,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "d9a2bf78d42d26fe443e49872c26b206c658d02f7289123b958d77fe14d5c3dd",
+        "renderedPages": [
+          "page-001.png",
+          "page-002.png",
+          "page-003.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "带图雾港",
+          "合成作者",
+          "公开简介",
+          "合成",
+          "测试",
+          "旧信",
+          "第一章𠮷🌊，原稿保持。",
+          "渡口",
+          "第二章结尾。",
+          "公开图注<script>window.IMAGE_SCRIPT_RAN=true</script>",
+          "公开署名"
+        ],
+        "outline": "[{'/Title': '带图雾港', '/Page': IndirectObject(2, 0, 2332974620288), '/Type': '/XYZ', '/Left': 46.46077, '/Top': 545.27032, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '旧信', '/Page': IndirectObject(13, 0, 2332974620288), '/Type': '/XYZ', '/Left': 47.513672, '/Top': 532.31738, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '渡口', '/Page': IndirectObject(19, 0, 2332974620288), '/Type': '/XYZ', '/Left': 45.644531, '/Top': 532.18848, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      },
+      "images": {
+        "status": "passed",
+        "pdfSha256": "d9a2bf78d42d26fe443e49872c26b206c658d02f7289123b958d77fe14d5c3dd",
+        "snapshotHash": "3bad0b79f1fb01b31c5924361c481400653e53ab7fcb4e19219ce92c128615c3",
+        "pages": 3,
+        "placements": [
+          {
+            "page": 0,
+            "box": [
+              172.4999928125,
+              97.49999593749999,
+              247.4999896875,
+              217.4999909375
+            ],
+            "sourceSize": [
+              100,
+              160
+            ]
+          },
+          {
+            "page": 2,
+            "box": [
+              157.4999934375,
+              128.24999465624995,
+              262.4999890625,
+              188.24999215624996
+            ],
+            "sourceSize": [
+              140,
+              80
+            ]
+          }
+        ],
+        "imageSamples": [
+          {
+            "placement": "cover",
+            "page": 1,
+            "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 1.4210854715202004e-14
+          },
+          {
+            "placement": "chapter-end",
+            "page": 3,
+            "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 7.105427357601002e-15
+          }
+        ],
+        "alternativeText": [
+          "封面𠮷🌊",
+          "章尾插图𠮷🌊"
+        ],
+        "renderedPages": [
+          "image-page-001.png",
+          "image-page-002.png",
+          "image-page-003.png"
+        ],
+        "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+      }
+    }
+  ]
+}

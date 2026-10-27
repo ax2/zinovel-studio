@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "docxSha256": "55a1b2226d7dc0908406ea0eeaef5e8044ef51373ea7ae56d407be359b8264c3",
+  "snapshotHash": "b30e1e7bbba4760befd4f842c468905dc20fcfb887e0c46d0208193bcfa64763",
+  "images": 2,
+  "placements": [
+    {
+      "placement": "cover",
+      "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+      "cx": 952500,
+      "cy": 1524000,
+      "alt": "封面𠮷🌊"
+    },
+    {
+      "placement": "chapter-end",
+      "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+      "cx": 1333500,
+      "cy": 762000,
+      "alt": "章尾插图𠮷🌊"
+    }
+  ],
+  "scope": "Independent standard-library OOXML and Pillow decoding; rendered PDF is separately identified",
+  "renderedImageBounds": [
+    {
+      "page": 1,
+      "x0": 268.5,
+      "x1": 343.5,
+      "top": 99.14999999999998,
+      "bottom": 219.14999999999998
+    },
+    {
+      "page": 3,
+      "x0": 253.5,
+      "x1": 358.5,
+      "top": 126.64999999999998,
+      "bottom": 186.64999999999998
+    }
+  ]
+}

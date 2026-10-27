@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { build } from "esbuild";
 import electronPath from "electron";
 import { spawn } from "node:child_process";
@@ -65,6 +66,17 @@ app.whenReady().then(async()=>{
   platform: "node",
   format: "cjs",
   external: ["electron"],
+  plugins: [
+    {
+      name: "source-sharp",
+      setup(build) {
+        build.onResolve({ filter: /^sharp$/ }, () => ({
+          path: createRequire(import.meta.url).resolve("sharp"),
+          external: true,
+        }));
+      },
+    },
+  ],
   outfile: runner,
 });
 const env = { ...process.env, ZINOVEL_PDF_FAULT_ROOT: work };

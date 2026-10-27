@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "docxSha256": "535d2b5b57c31b77a4b9122486b85cb318cec6fefffb6ea2995c21bdc448874d",
+  "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+  "images": 3,
+  "placements": [
+    {
+      "placement": "cover",
+      "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+      "cx": 2461986,
+      "cy": 4308475,
+      "alt": "图像替代0𠮷"
+    },
+    {
+      "placement": "chapter-start",
+      "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+      "cx": 2393597,
+      "cy": 4308475,
+      "alt": "图像替代1𠮷"
+    },
+    {
+      "placement": "chapter-end",
+      "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+      "cx": 3744595,
+      "cy": 280845,
+      "alt": "图像替代2𠮷"
+    }
+  ],
+  "scope": "Independent standard-library OOXML and Pillow decoding; rendered PDF is separately identified",
+  "renderedImageBounds": [
+    {
+      "page": 1,
+      "x0": 112.85,
+      "x1": 306.7,
+      "top": 135.25093700787397,
+      "bottom": 474.500937007874
+    },
+    {
+      "page": 3,
+      "x0": 115.55,
+      "x1": 304.05,
+      "top": 143.30093700787398,
+      "bottom": 482.550937007874
+    },
+    {
+      "page": 9,
+      "x0": 62.35,
+      "x1": 357.20000000000005,
+      "top": 281.20093700787396,
+      "bottom": 303.300937007874
+    }
+  ]
+}

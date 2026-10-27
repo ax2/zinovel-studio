@@ -1,0 +1,32 @@
+{
+  "status": "failed",
+  "checks": [
+    "actual import preview distinguishes six planning documents from one chapter; exact imported BOM/CRLF source preserved on disk; author Unicode editing and versioned save persist"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "project-import-preview.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "project-editor-desktop.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    },
+    {
+      "name": "project-conflict-buffer-retained.png",
+      "width": 1186,
+      "height": 863,
+      "theme": "light"
+    }
+  ],
+  "scope": "Browser plugin not available; actual Electron renderer/host with synthetic novel project. Native chooser instrumented; no native IME, installer or literature quality claim.",
+  "version": "0.1.0-alpha.41",
+  "packaged": false,
+  "desktopBundleSha256": "f55293471ee1016eb4a9894e421a8e175b406c9478f1f87bf42413ae69d095ee",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ '# 外部版本复核后的新总纲\\n作者保留了外部版本的历史。𠮷'\n- '﻿# 总纲\\n主角要送达旧信。𠮷🌊\\n'\n\n    at file:///D:/Work/zinovel-studio/scripts/smoke-book-project.mjs:92:10"
+}

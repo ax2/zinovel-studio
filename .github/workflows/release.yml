@@ -91,6 +91,8 @@ jobs:
       - run: pnpm test:publication-ui
       - run: pnpm test:publication-resources
       - run: pnpm test:illustrated-docx
+      - run: pnpm test:illustrated-pdf
+      - run: pnpm test:book-project
       - run: pnpm test:pdf-layout
       - run: pnpm test:docx-layout
       - run: pnpm test:assets
@@ -217,6 +219,9 @@ jobs:
             screenshots/stage-007/publication-docx/
             screenshots/stage-007/publication-docx-layout/
             screenshots/stage-007/publication-resources/
+            screenshots/stage-007/illustrated-docx/
+            screenshots/stage-007/illustrated-pdf/
+            screenshots/stage-002/book-project/
             screenshots/stage-008/offline-writing/
             screenshots/stage-008/independent-backup/
             screenshots/stage-008/incremental-backup/

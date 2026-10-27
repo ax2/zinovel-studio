@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "pdfSha256": "3d8da9daba8ce275dde1b725084c988ffed944a60697f5578a96678c8d3dfa0b",
+  "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+  "pages": 8,
+  "placements": [
+    {
+      "page": 0,
+      "box": [
+        117.74999509375,
+        148.4999938125,
+        302.24998740625,
+        471.74998034375
+      ],
+      "sourceSize": [
+        800,
+        1400
+      ]
+    },
+    {
+      "page": 2,
+      "box": [
+        119.999995,
+        147.74999384375002,
+        299.9999875,
+        470.999980375
+      ],
+      "sourceSize": [
+        500,
+        900
+      ]
+    },
+    {
+      "page": 7,
+      "box": [
+        62.249997406249996,
+        266.2499869862501,
+        357.75001389374876,
+        288.74998796875
+      ],
+      "sourceSize": [
+        2400,
+        180
+      ]
+    }
+  ],
+  "imageSamples": [
+    {
+      "placement": "cover",
+      "page": 1,
+      "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+      "maximumSampleDifference": 0,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.21428570535712765
+    },
+    {
+      "placement": "chapter-start",
+      "page": 3,
+      "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+      "maximumSampleDifference": 0,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.4166666493055118
+    },
+    {
+      "placement": "chapter-end",
+      "page": 8,
+      "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+      "maximumSampleDifference": 1,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 0.3374997459374889
+    }
+  ],
+  "alternativeText": [
+    "图像替代0𠮷",
+    "图像替代1𠮷",
+    "图像替代2𠮷"
+  ],
+  "renderedPages": [
+    "image-page-001.png",
+    "image-page-002.png",
+    "image-page-003.png",
+    "image-page-004.png",
+    "image-page-005.png",
+    "image-page-006.png",
+    "image-page-007.png",
+    "image-page-008.png"
+  ],
+  "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+}

@@ -70,7 +70,7 @@ export async function exportPublication(
         ).publicationDocx(snapshot, docxOptions, images)
       : null;
     const value = document
-      ? await pdf.render(document)
+      ? await pdf.render(document, images)
       : docx
         ? docx.bytes
         : publicationText(snapshot, format);
@@ -102,6 +102,19 @@ export async function exportPublication(
             templateVersion: document.templateVersion,
             htmlHash: document.htmlHash,
             engine: pdf.engine,
+            ...(document.resources?.length
+              ? {
+                  illustrationCount: document.resources.length,
+                  sourceImages: [
+                    ...new Map(
+                      document.resources.map((item) => [
+                        item.image.sha256,
+                        item.image,
+                      ]),
+                    ).values(),
+                  ],
+                }
+              : {}),
           }
         : {}),
       ...(docx

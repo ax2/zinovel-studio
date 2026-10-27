@@ -210,6 +210,12 @@ try {
       ["--author-only"],
     ],
     ["smoke-maps-ui.mjs", "maps-ui/maps-ui-smoke.json"],
+    ["smoke-book-project.mjs", "book-project/book-project-smoke.json"],
+    [
+      "smoke-illustrated-pdf-layout.mjs",
+      "illustrated-pdf-author-only/illustrated-pdf-smoke.json",
+      ["--author-only"],
+    ],
     ["smoke-map-atlas-ui.mjs", "atlas-ui/atlas-ui-smoke.json"],
     [
       "smoke-publication-html-output.mjs",

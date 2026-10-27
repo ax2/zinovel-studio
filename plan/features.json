@@ -2,6 +2,34 @@
   "schemaVersion": 1,
   "features": [
     {
+      "id": "PROJECT-01",
+      "area": "书库与导入",
+      "name": "小说站与写作技能完整工程资产",
+      "priority": "P0",
+      "stage": "Stage-002",
+      "status": "in-progress",
+      "acceptance": "只读预览导入小说站及写作工程；正文、总纲、分卷、细纲、世界、人物、当前状态、发布与图像资产分别保存；资产可编辑、冲突保护、版本恢复，真实宿主及安装升级验证",
+      "evidence": ["packages/novel-storage/book-project.mjs", "packages/novel-storage/project-import.mjs", "tests/book-project.test.mjs", "design/novel-projects-and-batch-generation.md"]
+    },
+    {
+      "id": "GEN-01",
+      "area": "创意与试写",
+      "name": "灵感批量生成多本完整小说工程",
+      "priority": "P0",
+      "stage": "Stage-004",
+      "status": "planned",
+      "acceptance": "按类型、思路、预期字数、试写章数、小说数量生成有差异的多本作品；每书含完整必需资产及准确试写章数；预算、取消、失败隔离、重启恢复及实际模型调用可验证，模板不算完成"
+    },
+    {
+      "id": "MODEL-01",
+      "area": "任务与保障",
+      "name": "WorkBuddy DSH Codex 本地模型配置迁入",
+      "priority": "P0",
+      "stage": "Stage-003",
+      "status": "planned",
+      "acceptance": "安全预览已知配置，新建不覆盖；API Key 宿主加密，OAuth不冒充Key；导入协议实际可运行并验证流式与工具调用，不泄漏秘密"
+    },
+    {
       "id": "LIB-01",
       "area": "书库与导入",
       "name": "多书书架",

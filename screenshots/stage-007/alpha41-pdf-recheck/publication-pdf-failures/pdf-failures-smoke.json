@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "mode": "crash",
+      "elapsedMs": 213.97440000000003,
+      "temporaryHtmlRemoved": true,
+      "nextRenderPassed": true
+    },
+    {
+      "mode": "timeout",
+      "elapsedMs": 90051.6512,
+      "temporaryHtmlRemoved": true,
+      "nextRenderPassed": true
+    }
+  ],
+  "scope": "Actual development Electron host renderer; forced renderer crash and real 90-second timeout, no installer claim"
+}

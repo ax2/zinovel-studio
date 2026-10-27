@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "pdfSha256": "d9a2bf78d42d26fe443e49872c26b206c658d02f7289123b958d77fe14d5c3dd",
+  "snapshotHash": "3bad0b79f1fb01b31c5924361c481400653e53ab7fcb4e19219ce92c128615c3",
+  "pages": 3,
+  "placements": [
+    {
+      "page": 0,
+      "box": [
+        172.4999928125,
+        97.49999593749999,
+        247.4999896875,
+        217.4999909375
+      ],
+      "sourceSize": [
+        100,
+        160
+      ]
+    },
+    {
+      "page": 2,
+      "box": [
+        157.4999934375,
+        128.24999465624995,
+        262.4999890625,
+        188.24999215624996
+      ],
+      "sourceSize": [
+        140,
+        80
+      ]
+    }
+  ],
+  "imageSamples": [
+    {
+      "placement": "cover",
+      "page": 1,
+      "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+      "maximumSampleDifference": 1,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 1.4210854715202004e-14
+    },
+    {
+      "placement": "chapter-end",
+      "page": 3,
+      "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+      "maximumSampleDifference": 1,
+      "samples": 5,
+      "aspectRoundingErrorPoints": 7.105427357601002e-15
+    }
+  ],
+  "alternativeText": [
+    "封面𠮷🌊",
+    "章尾插图𠮷🌊"
+  ],
+  "renderedPages": [
+    "image-page-001.png",
+    "image-page-002.png",
+    "image-page-003.png"
+  ],
+  "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+}

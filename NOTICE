@@ -40,3 +40,8 @@ for fixed Windows CreateFileW/WriteFile/FlushFileBuffers/CloseHandle calls.
 The existing exact dependency is now part of the runtime; its unmodified MIT
 notice is retained in licenses/vault-runtime/Koffi-LICENSE.txt. No general
 native function, filesystem or shell tool is exposed to the novel agent.
+
+Novel project metadata import (alpha.41 development) bundles yaml 2.9.1,
+Copyright Eemeli Aro, ISC; complete supplied licence is retained in
+licenses/yaml-LICENSE. YAML is parsed as data with duplicate-key and alias
+checks; imported project settings or plugins are never executed.

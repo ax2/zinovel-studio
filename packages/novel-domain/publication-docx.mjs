@@ -13,7 +13,7 @@ import {
 import { createHash } from "node:crypto";
 import { verifyPublicationSnapshot } from "./publication.mjs";
 import { publicationDocxOptions } from "./publication-docx-options.mjs";
-import { publicationDocxImages } from "./publication-docx-images.mjs";
+import { publicationRasterImages } from "./publication-raster-images.mjs";
 
 export const publicationDocxLimits = Object.freeze({
   bytes: 8 * 1024 * 1024,
@@ -106,7 +106,7 @@ export async function publicationDocx(input, layout, inputImages = new Map()) {
     caption: item.caption ? paragraphs(item.caption) : [],
     credit: item.credit ? paragraphs(item.credit) : [],
   }));
-  const images = await publicationDocxImages(resources, inputImages);
+  const images = await publicationRasterImages(resources, inputImages);
   const dimensions = {
     Letter: [12240, 15840],
     A4: [11906, 16838],

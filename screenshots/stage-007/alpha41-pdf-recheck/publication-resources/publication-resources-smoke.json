@@ -1,0 +1,169 @@
+{
+  "status": "passed",
+  "checks": [
+    "actual author UI exports the frozen cover and chapter illustration as tagged PDF after source replacement/recycle; image inventory, snapshot and output fingerprints match DOCX/HTML while original manuscript stays unchanged",
+    "actual author UI exports the old frozen cover and chapter illustration to editable DOCX after source replacement/recycle; v2 recipe, two embedded image fingerprints, exported file hash and original manuscript are preserved",
+    "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
+    "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",
+    "image IPC requires the selected snapshot/hash/index; unsupported image formats reject before directory choice; cancellation creates no files; actual HTML writes two image blobs and verifies every manifest file hash",
+    "standalone file reader loads cover and chapter-end illustration, escapes public script text, excludes private/unselected resources, makes no HTTP requests and preserves dark preference through reload; desktop and 390px reader fit without horizontal overflow"
+  ],
+  "errors": [],
+  "viewports": [
+    {
+      "name": "author-desktop-selection.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-desktop-frozen.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-illustrated-docx-export.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-illustrated-pdf-export.png",
+      "width": 1426,
+      "height": 923
+    },
+    {
+      "name": "author-dark-narrow-frozen.png",
+      "width": 806,
+      "height": 803
+    },
+    {
+      "name": "html-desktop-cover.png",
+      "width": 1287,
+      "height": 838
+    },
+    {
+      "name": "html-phone-dark-illustration.png",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "browser": "Browser plugin not available; repository Playwright/Electron",
+  "scope": "Actual author UI and host transactions; folder/file picker results instrumented; standalone Chromium file reader is not an actual mobile device",
+  "version": "0.1.0-alpha.41",
+  "formatOptions": [
+    {
+      "value": "html",
+      "disabled": false
+    },
+    {
+      "value": "md",
+      "disabled": true
+    },
+    {
+      "value": "txt",
+      "disabled": true
+    },
+    {
+      "value": "pdf",
+      "disabled": false
+    },
+    {
+      "value": "docx",
+      "disabled": false
+    }
+  ],
+  "htmlDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-o8tr2h\\中文 图像导出目录\\小说-带图雾港-html-178f9d3c-3720-496e-a048-237dab349f76",
+  "snapshotHash": "3bad0b79f1fb01b31c5924361c481400653e53ab7fcb4e19219ce92c128615c3",
+  "imageFiles": [
+    {
+      "path": "images/adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a.png",
+      "bytes": 7032,
+      "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a"
+    },
+    {
+      "path": "images/ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575.png",
+      "bytes": 516,
+      "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575"
+    }
+  ],
+  "docxDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-o8tr2h\\中文 图像导出目录\\小说-带图雾港-docx-837bf16c-a28c-4f06-8a12-82f0962e26cb",
+  "docxSnapshot": {
+    "schemaVersion": 2,
+    "id": "68bd9790-ce3e-414f-9682-93c646a208bc",
+    "createdAt": "2026-10-27T12:17:07.112Z",
+    "content": {
+      "bookId": "8eed2442-bb55-4674-8ab2-b353cedcca66",
+      "bookRevision": 1,
+      "metadata": {
+        "title": "带图雾港",
+        "author": "合成作者",
+        "synopsis": "公开简介",
+        "rights": "合成",
+        "aiDisclosure": "测试"
+      },
+      "chapters": [
+        {
+          "id": "0283c2c6-7969-4adb-85f3-dba6c8b5dce0",
+          "title": "旧信",
+          "volumeTitle": "",
+          "revision": 1,
+          "savedHash": "8eedf8c27a1874ffd96fd35f710efe396aa9c2c7582f0d06d1b4b3b192ebd2d8",
+          "bodyHash": "8eedf8c27a1874ffd96fd35f710efe396aa9c2c7582f0d06d1b4b3b192ebd2d8",
+          "body": "第一章𠮷🌊，原稿保持。"
+        },
+        {
+          "id": "d393220f-2f84-442d-bfe1-68a77a38d3e6",
+          "title": "渡口",
+          "volumeTitle": "",
+          "revision": 1,
+          "savedHash": "5cf6afcff5181f86841f2bd02f5bc796f1d0d9622811b22d98d09682f72e78d4",
+          "bodyHash": "5cf6afcff5181f86841f2bd02f5bc796f1d0d9622811b22d98d09682f72e78d4",
+          "body": "第二章结尾。"
+        }
+      ],
+      "resources": [
+        {
+          "source": {
+            "assetId": "219dedfc-2109-418c-b637-402fe1abbfdf",
+            "revision": 1,
+            "recordHash": "dd20d49e2e9266406e2fc05056118809a0347037964747688a51d7e26e974729",
+            "blobHash": "6128f83eb678ff59f8d311939011f6aab39b9d2d1bd5bd12a1bd54ccf15137e7"
+          },
+          "image": {
+            "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+            "bytes": 7032,
+            "width": 100,
+            "height": 160
+          },
+          "renderVersion": 1,
+          "placement": "cover",
+          "chapterId": null,
+          "alt": "封面𠮷🌊",
+          "caption": "公开图注<script>window.IMAGE_SCRIPT_RAN=true</script>",
+          "credit": "公开署名"
+        },
+        {
+          "source": {
+            "assetId": "a8a7a16c-2a39-47e1-83db-2a9408ef2f46",
+            "revision": 1,
+            "recordHash": "6e7356920d9b88fa9dc7f2b93fd0773470cb154da8004b9bb3982757a091eae8",
+            "blobHash": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575"
+          },
+          "image": {
+            "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+            "bytes": 516,
+            "width": 140,
+            "height": 80
+          },
+          "renderVersion": 1,
+          "placement": "chapter-end",
+          "chapterId": "d393220f-2f84-442d-bfe1-68a77a38d3e6",
+          "alt": "章尾插图𠮷🌊",
+          "caption": "",
+          "credit": ""
+        }
+      ]
+    },
+    "hash": "3bad0b79f1fb01b31c5924361c481400653e53ab7fcb4e19219ce92c128615c3"
+  },
+  "pdfDirectory": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-o8tr2h\\中文 图像导出目录\\小说-带图雾港-pdf-092cbb09-3c95-456a-8b54-47c644b13dc8"
+}

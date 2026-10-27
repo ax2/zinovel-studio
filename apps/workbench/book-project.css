@@ -1,0 +1,6 @@
+.project-modal { max-height: calc(100dvh - 40px); overflow: auto; }
+.project-modal textarea { width: 100%; resize: vertical; min-height: 220px; height: 40vh; line-height: 1.7; }
+.project-modal textarea, .project-modal select, .project-modal input { padding: 10px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 5px; font: inherit; }
+.project-modal select, .project-modal input { max-width: 100%; }
+.project-modal ul { overflow-wrap: anywhere; }
+.project-history { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin: 14px 0; }

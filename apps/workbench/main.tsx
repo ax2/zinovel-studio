@@ -36,6 +36,7 @@ import { ChapterTree } from "./chapter-tree";
 import { BookShelf } from "./book-shelf";
 import { ReferencePanel } from "./reference-panel";
 import { MaterialsPanel } from "./materials-panel";
+import { BookProjectPanel, ProjectImportDialog } from "./book-project-panel";
 import { ScenePlanner } from "./scene-planner";
 import { PilotStudio } from "./pilot-studio";
 import { NovelReader } from "./novel-reader";
@@ -68,6 +69,8 @@ function App() {
   const [referenceOpen, setReferenceOpen] = useState(false),
     [typewriter, setTypewriter] = useState(false);
   const [materialsOpen, setMaterialsOpen] = useState(false);
+  const [projectOpen, setProjectOpen] = useState(false),
+    [projectImportOpen, setProjectImportOpen] = useState(false);
   const [planningOpen, setPlanningOpen] = useState(false);
   const [pilotsOpen, setPilotsOpen] = useState(false);
   const [readerOpen, setReaderOpen] = useState(false);
@@ -840,6 +843,14 @@ function App() {
               <button
                 disabled={composition}
                 onClick={async () => {
+                  if (await save()) setProjectOpen(true);
+                }}
+              >
+                创作工程
+              </button>
+              <button
+                disabled={composition}
+                onClick={async () => {
                   if (await save()) setBackupOpen(true);
                 }}
               >
@@ -1276,8 +1287,28 @@ function App() {
       </footer>
       {importOpen && (
         <ImportDialog
+          onProjectImport={() => {
+            setImportOpen(false);
+            setProjectImportOpen(true);
+          }}
           onClose={() => setImportOpen(false)}
           onImported={imported}
+        />
+      )}
+      {projectImportOpen && (
+        <ProjectImportDialog
+          onClose={() => setProjectImportOpen(false)}
+          onImported={async (created) => {
+            setProjectImportOpen(false);
+            await imported(created);
+          }}
+        />
+      )}
+      {projectOpen && book && (
+        <BookProjectPanel
+          key={book.id}
+          book={book}
+          onClose={() => setProjectOpen(false)}
         />
       )}
       {annotationSnapshot && (

@@ -327,7 +327,7 @@ try {
   assert.equal(
     await panel()
       .getByLabel("发布副本导出格式")
-      .locator('option[value="pdf"]')
+      .locator('option[value="txt"]')
       .evaluate((option) => option.disabled),
     true,
   );
@@ -336,7 +336,7 @@ try {
       bookId: book.id,
       id: saved.id,
       hash: saved.hash,
-      format: "pdf",
+      format: "txt",
     }),
     /含图/,
   );
@@ -438,6 +438,37 @@ try {
     docxManifest.files[0].sha256,
   );
   await shot("author-illustrated-docx-export.png");
+  assert.equal(
+    report.formatOptions.find((option) => option.value === "pdf").disabled,
+    false,
+  );
+  await panel().getByLabel("发布副本导出格式").selectOption("pdf");
+  await panel()
+    .getByRole("button", { name: "导出此副本", exact: true })
+    .click();
+  await panel()
+    .getByText(/本地导出完成：.*pdf/)
+    .waitFor();
+  const pdfDirectories = (await readdir(exports)).filter((name) =>
+    name.includes("-pdf-"),
+  );
+  assert.equal(pdfDirectories.length, 1);
+  report.pdfDirectory = join(exports, pdfDirectories[0]);
+  const pdfManifest = JSON.parse(
+    await readFile(
+      join(report.pdfDirectory, "publication-manifest.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(pdfManifest.snapshotHash, saved.hash);
+  assert.equal(pdfManifest.templateVersion, 2);
+  assert.equal(pdfManifest.illustrationCount, 2);
+  assert.deepEqual(pdfManifest.sourceImages, docxManifest.embeddedImages);
+  assert.equal(
+    digest(await readFile(join(report.pdfDirectory, "book.pdf"))),
+    pdfManifest.files[0].sha256,
+  );
+  await shot("author-illustrated-pdf-export.png");
   await panel()
     .getByRole("button", { name: "关闭发布副本", exact: true })
     .click();
@@ -525,6 +556,7 @@ try {
   await close();
   assert.deepEqual(report.errors, []);
   report.checks.push(
+    "actual author UI exports the frozen cover and chapter illustration as tagged PDF after source replacement/recycle; image inventory, snapshot and output fingerprints match DOCX/HTML while original manuscript stays unchanged",
     "actual author UI exports the old frozen cover and chapter illustration to editable DOCX after source replacement/recycle; v2 recipe, two embedded image fingerprints, exported file hash and original manuscript are preserved",
     "legacy form migrates on explicit editing; incomplete image alternative text is preserved through close/reopen and blocks capture until corrected",
     "actual author selection captures two frozen images with public-only text; source replacement/recycle rejects stale recapture without altering old snapshot, preview or manuscript; full app restart loads exact old images",

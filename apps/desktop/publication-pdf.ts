@@ -3,16 +3,35 @@ import { mkdir, mkdtemp, writeFile, unlink, rmdir } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import type { PublicationPdfDocument } from "../../packages/novel-domain/publication-pdf.mjs";
+import { publicationRasterImages } from "../../packages/novel-domain/publication-raster-images.mjs";
 
 let rendering = false;
+async function removeOwnFile(path: string) {
+  try {
+    await unlink(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+}
 /** Runs outside the manuscript queue, without preload, script execution or network. */
 export async function renderPublicationPdf(
   document: PublicationPdfDocument,
   root: string,
+  inputImages: Map<string, Uint8Array> = new Map(),
 ) {
   if (rendering) throw new Error("已有PDF正在排版，请等待完成");
   rendering = true;
   let folder: string | undefined, file: string | undefined;
+  let imageDirectory: string | undefined;
+  const imageFiles: string[] = [];
+  const allowedImages = new Set<string>(),
+    loadedImages = new Set<string>();
+  let resolveImages: () => void = () => {};
+  let rejectImages: (error: Error) => void = () => {};
+  const imagesReady = new Promise<void>((resolve, reject) => {
+    resolveImages = resolve;
+    rejectImages = reject;
+  });
   let window: BrowserWindow | undefined, timer: NodeJS.Timeout | undefined;
   const isolated = session.fromPartition("zinovel-publication-pdf", {
     cache: false,
@@ -24,12 +43,40 @@ export async function renderPublicationPdf(
   isolated.setPermissionCheckHandler(() => false);
   isolated.webRequest.onBeforeRequest((details, callback) =>
     callback({
-      cancel: details.url !== allowed || details.resourceType !== "mainFrame",
+      cancel: !(
+        (details.url === allowed && details.resourceType === "mainFrame") ||
+        (allowedImages.has(details.url) && details.resourceType === "image")
+      ),
     }),
   );
+  isolated.webRequest.onCompleted((details) => {
+    if (allowedImages.has(details.url)) {
+      loadedImages.add(details.url);
+      if (loadedImages.size === allowedImages.size) resolveImages();
+    }
+  });
+  isolated.webRequest.onErrorOccurred((details) => {
+    if (allowedImages.has(details.url))
+      rejectImages(new Error("冻结发行图读取失败，未创建正式导出"));
+  });
   try {
+    const images = await publicationRasterImages(
+      document.resources || [],
+      inputImages,
+      "PDF",
+    );
     await mkdir(root, { recursive: true });
     folder = await mkdtemp(join(root, "pdf-"));
+    if (images.size) {
+      imageDirectory = join(folder, "images");
+      await mkdir(imageDirectory);
+      for (const [hash, bytes] of images) {
+        const path = join(imageDirectory, `${hash}.png`);
+        await writeFile(path, bytes, { flag: "wx" });
+        imageFiles.push(path);
+        allowedImages.add(pathToFileURL(path).href);
+      }
+    } else resolveImages();
     file = join(folder, "render.html");
     await writeFile(file, document.html, { encoding: "utf8", flag: "wx" });
     allowed = pathToFileURL(file).href;
@@ -65,7 +112,7 @@ export async function renderPublicationPdf(
       );
     });
     const render = (async () => {
-      await target.loadFile(file!);
+      await Promise.all([target.loadFile(file!), imagesReady]);
       const margin = document.options.margin === "wide" ? 22 : 16;
       return target.webContents.printToPDF({
         pageSize: document.options.paper,
@@ -96,10 +143,17 @@ export async function renderPublicationPdf(
   } finally {
     if (timer) clearTimeout(timer);
     allowed = "";
+    allowedImages.clear();
+    loadedImages.clear();
+    isolated.webRequest.onBeforeRequest(null);
+    isolated.webRequest.onCompleted(null);
+    isolated.webRequest.onErrorOccurred(null);
     if (window && !window.isDestroyed()) window.destroy();
     try {
       await isolated.clearStorageData();
-      if (file) await unlink(file);
+      if (file) await removeOwnFile(file);
+      for (const path of imageFiles) await removeOwnFile(path);
+      if (imageDirectory) await rmdir(imageDirectory);
       if (folder) await rmdir(folder);
     } finally {
       rendering = false;

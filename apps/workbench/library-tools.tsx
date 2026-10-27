@@ -17,9 +17,11 @@ import {
 export function ImportDialog({
   onClose,
   onImported,
+  onProjectImport,
 }: {
   onClose: () => void;
   onImported: (book: Book) => void;
+  onProjectImport: () => void;
 }) {
   const [id, setId] = useState(""),
     [preview, setPreview] = useState<ImportPreview | null>(null),
@@ -104,6 +106,9 @@ export function ImportDialog({
           先检查编码、分卷和章节边界；确认后新建作品，原文件保持不变。导入以本次预览为准，源稿后续修改需重新预览。自动拆分时将标题行移为章节标题，并统一换行符。
         </p>
         <div className="button-row">
+          <button disabled={busy} onClick={onProjectImport}>
+            导入小说站 / 创作工程
+          </button>
           <button disabled={busy} onClick={() => choose(false)}>
             <FolderOpen size={16} />
             选择 TXT / Markdown

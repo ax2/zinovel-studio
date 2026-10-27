@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "checks": [],
+  "errors": [],
+  "viewports": [],
+  "scope": "Browser plugin not available; actual Electron renderer/host with synthetic novel project. Native chooser instrumented; no native IME, installer or literature quality claim.",
+  "version": "0.1.0-alpha.41",
+  "packaged": false,
+  "desktopBundleSha256": "76919041b664ddd178b6ee0ab6cd16e17b1539688160e11a7596a6a89958692c",
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('1 章正文 · 6 份创作资产', { exact: true }) to be visible\u001b[22m\n\n    at D:\\Work\\zinovel-studio\\scripts\\smoke-book-project.mjs:45:60"
+}

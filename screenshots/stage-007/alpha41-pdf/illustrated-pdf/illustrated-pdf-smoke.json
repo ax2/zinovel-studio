@@ -1,0 +1,1009 @@
+{
+  "status": "passed",
+  "version": "0.1.0-alpha.41",
+  "checks": [
+    "Actual author PDF retains all frozen public text, fonts, paper, ordered headings and page labels; independent inspection verifies source snapshot and final PDF hash",
+    "Actual author PDF has exact image placements and public alternative text; five flat-patch raster samples per image match the frozen PNG and fit print margins",
+    "Three source A4/A5 layouts render frozen portrait/landscape/translucent images and long captions with complete text, all page images and bounded geometry",
+    "Actual source renderer refuses bad image inputs, recovers after missing staged PNG and forced renderer crash, denies loopback and unapproved local files independently of CSP, and retains the single-renderer lock"
+  ],
+  "scope": "Three source generator layouts, source renderer fault/security cases and actual author PDF are distinguished; synthetic fixtures only; no installed-app claim for source cases",
+  "sourceEngine": {
+    "electron": "44.7.0",
+    "chromium": "152.0.7977.130"
+  },
+  "actualAuthorEngine": {
+    "electron": "44.7.0",
+    "chromium": "152.0.7977.130"
+  },
+  "boundaries": [
+    "Missing, extra and corrupted inputs refuse before creating a rendering window or files",
+    "Actual staged PNG removal rejects with a read error and cleans the HTML plus every remaining PNG",
+    "Actual renderer crash after image loading cleans all temporary inputs and releases the single-renderer slot",
+    "With CSP deliberately removed in a synthetic plan, the host policy rejects both real loopback HTTP and an unapproved local PNG request; server observes zero requests"
+  ],
+  "reports": [
+    {
+      "name": "a5-default",
+      "file": "D:\\Work\\zinovel-studio\\.cache\\illustrated-pdf-DEWaqR\\a5-default.pdf",
+      "options": {},
+      "inspection": {
+        "status": "passed",
+        "pages": 6,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "6114ffa69283f427f2716189be7fa81b0cf087ed1ea5f3d7b63feaacfa7764ea",
+        "renderedPages": [
+          "page-001.png",
+          "page-004.png",
+          "page-006.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "带图排版合成书",
+          "合成作者",
+          "封面与章首章尾图像排版检查",
+          "合成图像",
+          "合成",
+          "章序1终",
+          "第一段𠮷🌊。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。",
+          "章序2终",
+          "第二章原稿。\n\n全文终点𠮷🌊。",
+          "公开图注0",
+          "公开署名0",
+          "长图注。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。",
+          "公开署名1",
+          "公开图注2",
+          "公开署名2"
+        ],
+        "outline": "[{'/Title': '带图排版合成书', '/Page': IndirectObject(2, 0, 2074839383120), '/Type': '/XYZ', '/Left': 46.46077, '/Top': 545.27032, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终', '/Page': IndirectObject(18, 0, 2074839383120), '/Type': '/XYZ', '/Left': 46.224609, '/Top': 532.38184, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终', '/Page': IndirectObject(30, 0, 2074839383120), '/Type': '/XYZ', '/Left': 46.224609, '/Top': 532.38184, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      },
+      "images": {
+        "status": "passed",
+        "pdfSha256": "6114ffa69283f427f2716189be7fa81b0cf087ed1ea5f3d7b63feaacfa7764ea",
+        "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+        "pages": 6,
+        "placements": [
+          {
+            "page": 0,
+            "box": [
+              107.24999553125,
+              97.50000073749976,
+              311.99998700000003,
+              455.249957031251
+            ],
+            "sourceSize": [
+              800,
+              1400
+            ]
+          },
+          {
+            "page": 2,
+            "box": [
+              110.24999540625,
+              97.49999593750005,
+              308.9999727250006,
+              454.4999810625
+            ],
+            "sourceSize": [
+              500,
+              900
+            ]
+          },
+          {
+            "page": 5,
+            "box": [
+              44.999998125,
+              156.74999346875,
+              374.25001320624875,
+              181.4999924375
+            ],
+            "sourceSize": [
+              2400,
+              180
+            ]
+          }
+        ],
+        "imageSamples": [
+          {
+            "placement": "cover",
+            "page": 1,
+            "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.3214450151779147
+          },
+          {
+            "placement": "chapter-start",
+            "page": 3,
+            "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.41665224930619615
+          },
+          {
+            "placement": "chapter-end",
+            "page": 6,
+            "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.05624783765633623
+          }
+        ],
+        "alternativeText": [
+          "图像替代0𠮷",
+          "图像替代1𠮷",
+          "图像替代2𠮷"
+        ],
+        "renderedPages": [
+          "image-page-001.png",
+          "image-page-002.png",
+          "image-page-003.png",
+          "image-page-004.png",
+          "image-page-005.png",
+          "image-page-006.png"
+        ],
+        "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+      }
+    },
+    {
+      "name": "a4-flow",
+      "file": "D:\\Work\\zinovel-studio\\.cache\\illustrated-pdf-DEWaqR\\a4-flow.pdf",
+      "options": {
+        "paper": "A4",
+        "font": "sans",
+        "size": 12,
+        "leading": 1.5,
+        "keepParagraphs": "flow"
+      },
+      "inspection": {
+        "status": "passed",
+        "pages": 5,
+        "sizes": [
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ]
+        ],
+        "sha256": "21b0490d24ac507f84ebf3d85c9314fccc04ece1170f9ea64d6402bc027b11ef",
+        "renderedPages": [
+          "page-001.png",
+          "page-003.png",
+          "page-005.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "带图排版合成书",
+          "合成作者",
+          "封面与章首章尾图像排版检查",
+          "合成图像",
+          "合成",
+          "章序1终",
+          "第一段𠮷🌊。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。",
+          "章序2终",
+          "第二章原稿。\n\n全文终点𠮷🌊。",
+          "公开图注0",
+          "公开署名0",
+          "长图注。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。",
+          "公开署名1",
+          "公开图注2",
+          "公开署名2"
+        ],
+        "outline": "[{'/Title': '带图排版合成书', '/Page': IndirectObject(2, 0, 2442213798208), '/Type': '/XYZ', '/Left': 45.445313, '/Top': 790.62701, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终', '/Page': IndirectObject(12, 0, 2442213798208), '/Type': '/XYZ', '/Left': 45.369141, '/Top': 776.83112, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终', '/Page': IndirectObject(19, 0, 2442213798208), '/Type': '/XYZ', '/Left': 45.369141, '/Top': 776.83124, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      },
+      "images": {
+        "status": "passed",
+        "pdfSha256": "21b0490d24ac507f84ebf3d85c9314fccc04ece1170f9ea64d6402bc027b11ef",
+        "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+        "pages": 5,
+        "placements": [
+          {
+            "page": 0,
+            "box": [
+              124.49999481249999,
+              102.74999571875003,
+              470.24998040625,
+              706.4999705625
+            ],
+            "sourceSize": [
+              800,
+              1400
+            ]
+          },
+          {
+            "page": 2,
+            "box": [
+              129.74999459375,
+              101.99999574999993,
+              464.999980625,
+              705.7499705937499
+            ],
+            "sourceSize": [
+              500,
+              900
+            ]
+          },
+          {
+            "page": 4,
+            "box": [
+              44.999998125,
+              159.74999334375002,
+              549.74997709375,
+              197.24999178125006
+            ],
+            "sourceSize": [
+              2400,
+              180
+            ]
+          }
+        ],
+        "imageSamples": [
+          {
+            "placement": "cover",
+            "page": 1,
+            "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.7499999687499894
+          },
+          {
+            "placement": "chapter-start",
+            "page": 3,
+            "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.16666665972223882
+          },
+          {
+            "placement": "chapter-end",
+            "page": 5,
+            "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.35624998515621087
+          }
+        ],
+        "alternativeText": [
+          "图像替代0𠮷",
+          "图像替代1𠮷",
+          "图像替代2𠮷"
+        ],
+        "renderedPages": [
+          "image-page-001.png",
+          "image-page-002.png",
+          "image-page-003.png",
+          "image-page-004.png",
+          "image-page-005.png"
+        ],
+        "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+      }
+    },
+    {
+      "name": "a5-large-wide",
+      "file": "D:\\Work\\zinovel-studio\\.cache\\illustrated-pdf-DEWaqR\\a5-large-wide.pdf",
+      "options": {
+        "paper": "A5",
+        "margin": "wide",
+        "size": 18,
+        "leading": 2.4
+      },
+      "inspection": {
+        "status": "passed",
+        "pages": 8,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "3d8da9daba8ce275dde1b725084c988ffed944a60697f5578a96678c8d3dfa0b",
+        "renderedPages": [
+          "page-001.png",
+          "page-005.png",
+          "page-008.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "带图排版合成书",
+          "合成作者",
+          "封面与章首章尾图像排版检查",
+          "合成图像",
+          "合成",
+          "章序1终",
+          "第一段𠮷🌊。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。旧信落在桌边，船夫听见潮声。他将路线画在纸上，等天亮再去渡口。",
+          "章序2终",
+          "第二章原稿。\n\n全文终点𠮷🌊。",
+          "公开图注0",
+          "公开署名0",
+          "长图注。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。潮水经过灯塔，船夫把旧信留在岸边。",
+          "公开署名1",
+          "公开图注2",
+          "公开署名2"
+        ],
+        "outline": "[{'/Title': '带图排版合成书', '/Page': IndirectObject(2, 0, 1759408028752), '/Type': '/XYZ', '/Left': 64.640625, '/Top': 525.58496, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终', '/Page': IndirectObject(18, 0, 1759408028752), '/Type': '/XYZ', '/Left': 64.253906, '/Top': 502.99121, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终', '/Page': IndirectObject(34, 0, 1759408028752), '/Type': '/XYZ', '/Left': 64.253906, '/Top': 502.99121, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      },
+      "images": {
+        "status": "passed",
+        "pdfSha256": "3d8da9daba8ce275dde1b725084c988ffed944a60697f5578a96678c8d3dfa0b",
+        "snapshotHash": "6c5fe04d0837d79a8173a86a7e6beca0b8e43261262e7aa6b5840c7efad038b9",
+        "pages": 8,
+        "placements": [
+          {
+            "page": 0,
+            "box": [
+              117.74999509375,
+              148.4999938125,
+              302.24998740625,
+              471.74998034375
+            ],
+            "sourceSize": [
+              800,
+              1400
+            ]
+          },
+          {
+            "page": 2,
+            "box": [
+              119.999995,
+              147.74999384375002,
+              299.9999875,
+              470.999980375
+            ],
+            "sourceSize": [
+              500,
+              900
+            ]
+          },
+          {
+            "page": 7,
+            "box": [
+              62.249997406249996,
+              266.2499869862501,
+              357.75001389374876,
+              288.74998796875
+            ],
+            "sourceSize": [
+              2400,
+              180
+            ]
+          }
+        ],
+        "imageSamples": [
+          {
+            "placement": "cover",
+            "page": 1,
+            "sha256": "115d07f2c74bc506424299832b8b7ec3f5bb8e12362865018804e3ed0ceda1df",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.21428570535712765
+          },
+          {
+            "placement": "chapter-start",
+            "page": 3,
+            "sha256": "30282f9e68935a11d0a1b5e5b2716feffea973406a1f853f2162cc33af4dbade",
+            "maximumSampleDifference": 0,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.4166666493055118
+          },
+          {
+            "placement": "chapter-end",
+            "page": 8,
+            "sha256": "cc5f75a6fdd2a52a094cfacdd26a2d3aabeae2f905a620b95b87f7bdfd644878",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 0.3374997459374889
+          }
+        ],
+        "alternativeText": [
+          "图像替代0𠮷",
+          "图像替代1𠮷",
+          "图像替代2𠮷"
+        ],
+        "renderedPages": [
+          "image-page-001.png",
+          "image-page-002.png",
+          "image-page-003.png",
+          "image-page-004.png",
+          "image-page-005.png",
+          "image-page-006.png",
+          "image-page-007.png",
+          "image-page-008.png"
+        ],
+        "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+      }
+    },
+    {
+      "name": "actual-author-export",
+      "file": "D:\\Work\\zinovel-studio\\.cache\\publication-images-ui-wJw9Kf\\中文 图像导出目录\\小说-带图雾港-pdf-f272cbf7-0ca9-4bdb-9349-48d23af59517\\book.pdf",
+      "options": {
+        "paper": "A5",
+        "font": "serif",
+        "size": 11,
+        "leading": 1.8,
+        "margin": "standard",
+        "keepParagraphs": "balanced"
+      },
+      "inspection": {
+        "status": "passed",
+        "pages": 3,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "951ea265c19176250d682791e306b5cf888d4117bb7e2387df3a42e9d7014e0a",
+        "renderedPages": [
+          "page-001.png",
+          "page-002.png",
+          "page-003.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "带图雾港",
+          "合成作者",
+          "公开简介",
+          "合成",
+          "测试",
+          "旧信",
+          "第一章𠮷🌊，原稿保持。",
+          "渡口",
+          "第二章结尾。",
+          "公开图注<script>window.IMAGE_SCRIPT_RAN=true</script>",
+          "公开署名"
+        ],
+        "outline": "[{'/Title': '带图雾港', '/Page': IndirectObject(2, 0, 3038500754864), '/Type': '/XYZ', '/Left': 46.46077, '/Top': 545.27032, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '旧信', '/Page': IndirectObject(13, 0, 3038500754864), '/Type': '/XYZ', '/Left': 47.513672, '/Top': 532.31738, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '渡口', '/Page': IndirectObject(19, 0, 3038500754864), '/Type': '/XYZ', '/Left': 45.644531, '/Top': 532.18848, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      },
+      "images": {
+        "status": "passed",
+        "pdfSha256": "951ea265c19176250d682791e306b5cf888d4117bb7e2387df3a42e9d7014e0a",
+        "snapshotHash": "b30e1e7bbba4760befd4f842c468905dc20fcfb887e0c46d0208193bcfa64763",
+        "pages": 3,
+        "placements": [
+          {
+            "page": 0,
+            "box": [
+              172.4999928125,
+              97.49999593749999,
+              247.4999896875,
+              217.4999909375
+            ],
+            "sourceSize": [
+              100,
+              160
+            ]
+          },
+          {
+            "page": 2,
+            "box": [
+              157.4999934375,
+              128.24999465624995,
+              262.4999890625,
+              188.24999215624996
+            ],
+            "sourceSize": [
+              140,
+              80
+            ]
+          }
+        ],
+        "imageSamples": [
+          {
+            "placement": "cover",
+            "page": 1,
+            "sha256": "adfc88e999a13f2453711c03462d2dc40ae94a8108faf475941ee104c5234f5a",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 1.4210854715202004e-14
+          },
+          {
+            "placement": "chapter-end",
+            "page": 3,
+            "sha256": "ed4585bf32731a78f775e0872317ea76c4989507d60233c62a3ecde7dd03a575",
+            "maximumSampleDifference": 1,
+            "samples": 5,
+            "aspectRoundingErrorPoints": 7.105427357601002e-15
+          }
+        ],
+        "alternativeText": [
+          "封面𠮷🌊",
+          "章尾插图𠮷🌊"
+        ],
+        "renderedPages": [
+          "image-page-001.png",
+          "image-page-002.png",
+          "image-page-003.png"
+        ],
+        "scope": "Independent pypdf structure, pdfplumber image bounds and PDFium raster sampling of synthetic frozen images; not exhaustive photo fidelity or screen-reader certification"
+      }
+    }
+  ]
+}

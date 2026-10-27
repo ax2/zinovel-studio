@@ -1,0 +1,2120 @@
+{
+  "status": "passed",
+  "snapshotHash": "d0d7f3f2fa4e0b877ef6b7460b5941d43bd3a8e53e13bc74b1b345a20d684972",
+  "scope": "Real development Electron renderer; no installed package claim; timings are single synthetic observations",
+  "reports": [
+    {
+      "name": "a5-serif",
+      "options": {},
+      "file": "D:\\Work\\zinovel-studio\\.cache\\pdf-layout-xrW9p0\\a5-serif.pdf",
+      "bytes": 160877,
+      "elapsedMs": 859.5065999999999,
+      "sha256": "83151b6c8f08e698c35943b07b4d4ef0724cd4beea00778caf5d42e68a9c2fc4",
+      "inspection": {
+        "status": "passed",
+        "pages": 21,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "83151b6c8f08e698c35943b07b4d4ef0724cd4beea00778caf5d42e68a9c2fc4",
+        "renderedPages": [
+          "page-001.png",
+          "page-011.png",
+          "page-021.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "段落编号001终",
+          "段落编号002终",
+          "段落编号003终",
+          "段落编号004终",
+          "段落编号005终",
+          "段落编号006终",
+          "段落编号007终",
+          "段落编号008终",
+          "段落编号009终",
+          "段落编号010终",
+          "段落编号011终",
+          "段落编号012终",
+          "段落编号013终",
+          "段落编号014终",
+          "段落编号015终",
+          "段落编号016终",
+          "段落编号017终",
+          "段落编号018终",
+          "段落编号019终",
+          "段落编号020终",
+          "段落编号021终",
+          "段落编号022终",
+          "段落编号023终",
+          "段落编号024终",
+          "雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信",
+          "章序1终",
+          "章序2终",
+          "全文终点𠮷🌊。",
+          "<script>leak()</script><img src=\"https://invalid.test/private\">"
+        ],
+        "outline": "[{'/Title': '雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信', '/Page': IndirectObject(2, 0, 2485674459008), '/Type': '/XYZ', '/Left': 45.515625, '/Top': 548.34747, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(19, 0, 2485674459008), '/Type': '/XYZ', '/Left': 45.708984, '/Top': 514.38184, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(42, 0, 2485674459008), '/Type': '/XYZ', '/Left': 45.708984, '/Top': 514.38184, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      }
+    },
+    {
+      "name": "a4-sans",
+      "options": {
+        "paper": "A4",
+        "font": "sans",
+        "size": 12,
+        "leading": 1.5,
+        "keepParagraphs": "flow"
+      },
+      "file": "D:\\Work\\zinovel-studio\\.cache\\pdf-layout-xrW9p0\\a4-sans.pdf",
+      "bytes": 137653,
+      "elapsedMs": 1360.6182000000001,
+      "sha256": "71e079100d6e53675b56f80737d92c382b49e19f2875669a8be61eb26b18c52e",
+      "inspection": {
+        "status": "passed",
+        "pages": 8,
+        "sizes": [
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ],
+          [
+            594.95996,
+            841.91998
+          ]
+        ],
+        "sha256": "71e079100d6e53675b56f80737d92c382b49e19f2875669a8be61eb26b18c52e",
+        "renderedPages": [
+          "page-001.png",
+          "page-005.png",
+          "page-008.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/AAAAAA+MicrosoftYaHei-Bold",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+MicrosoftYaHei",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "段落编号001终",
+          "段落编号002终",
+          "段落编号003终",
+          "段落编号004终",
+          "段落编号005终",
+          "段落编号006终",
+          "段落编号007终",
+          "段落编号008终",
+          "段落编号009终",
+          "段落编号010终",
+          "段落编号011终",
+          "段落编号012终",
+          "段落编号013终",
+          "段落编号014终",
+          "段落编号015终",
+          "段落编号016终",
+          "段落编号017终",
+          "段落编号018终",
+          "段落编号019终",
+          "段落编号020终",
+          "段落编号021终",
+          "段落编号022终",
+          "段落编号023终",
+          "段落编号024终",
+          "雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信",
+          "章序1终",
+          "章序2终",
+          "全文终点𠮷🌊。",
+          "<script>leak()</script><img src=\"https://invalid.test/private\">"
+        ],
+        "outline": "[{'/Title': '雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信', '/Page': IndirectObject(2, 0, 2466312436672), '/Type': '/XYZ', '/Left': 45.295311, '/Top': 794.75671, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(8, 0, 2466312436672), '/Type': '/XYZ', '/Left': 45.263672, '/Top': 760.33112, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(16, 0, 2466312436672), '/Type': '/XYZ', '/Left': 45.263672, '/Top': 760.33124, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      }
+    },
+    {
+      "name": "a5-large-wide",
+      "options": {
+        "size": 18,
+        "leading": 2.4,
+        "margin": "wide"
+      },
+      "file": "D:\\Work\\zinovel-studio\\.cache\\pdf-layout-xrW9p0\\a5-large-wide.pdf",
+      "bytes": 197973,
+      "elapsedMs": 855.5876000000003,
+      "sha256": "2fbe2cc50b2fea9d5498f596c00860b3103ca7e4fe8b038c443c1792f57ad33a",
+      "inspection": {
+        "status": "passed",
+        "pages": 65,
+        "sizes": [
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ],
+          [
+            420,
+            594.95996
+          ]
+        ],
+        "sha256": "2fbe2cc50b2fea9d5498f596c00860b3103ca7e4fe8b038c443c1792f57ad33a",
+        "renderedPages": [
+          "page-001.png",
+          "page-033.png",
+          "page-065.png"
+        ],
+        "contactSheet": "contact-sheet.png",
+        "fonts": [
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/BAAAAA+SimSun",
+            "embedded": true
+          },
+          {
+            "name": "/CAAAAA+ArialMT",
+            "embedded": true
+          },
+          {
+            "name": "/DAAAAA+SimSun-ExtB",
+            "embedded": true
+          },
+          {
+            "name": "Type3",
+            "embedded": true
+          }
+        ],
+        "outsidePaper": [],
+        "required": [
+          "段落编号001终",
+          "段落编号002终",
+          "段落编号003终",
+          "段落编号004终",
+          "段落编号005终",
+          "段落编号006终",
+          "段落编号007终",
+          "段落编号008终",
+          "段落编号009终",
+          "段落编号010终",
+          "段落编号011终",
+          "段落编号012终",
+          "段落编号013终",
+          "段落编号014终",
+          "段落编号015终",
+          "段落编号016终",
+          "段落编号017终",
+          "段落编号018终",
+          "段落编号019终",
+          "段落编号020终",
+          "段落编号021终",
+          "段落编号022终",
+          "段落编号023终",
+          "段落编号024终",
+          "雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信",
+          "章序1终",
+          "章序2终",
+          "全文终点𠮷🌊。",
+          "<script>leak()</script><img src=\"https://invalid.test/private\">"
+        ],
+        "outline": "[{'/Title': '雾港排版合成书——长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信长题名渡口旧信', '/Page': IndirectObject(2, 0, 1940306475584), '/Type': '/XYZ', '/Left': 63.09375, '/Top': 529.18494, '/Zoom': 0.0, '/Count': 2, '/%is_open%': True}, [{'/Title': '章序1终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(19, 0, 1940306475584), '/Type': '/XYZ', '/Left': 63.410156, '/Top': 463.99121, '/Zoom': 0.0, '/%is_open%': True}, {'/Title': '章序2终——长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名长章名', '/Page': IndirectObject(80, 0, 1940306475584), '/Type': '/XYZ', '/Left': 63.410156, '/Top': 463.99121, '/Zoom': 0.0, '/%is_open%': True}]]",
+        "scope": "Independent text/font/bounds checks and PDFium raster; visual review is separate"
+      }
+    }
+  ]
+}
